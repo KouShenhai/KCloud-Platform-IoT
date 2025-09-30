@@ -1,9 +1,9 @@
 /* eslint-disable */
 import {request} from '@umijs/max';
 
-/** 修改国际化消息 修改国际化消息 PUT /v3/i18n-messages */
+/** 修改国际化消息 修改国际化消息 PUT /api/v1/i18n-messages */
 export async function modifyI18nMessage(body: API.I18nMessageModifyCmd, options?: { [key: string]: any }) {
-	return request<any>('/v3/i18n-messages', {
+	return request<any>('/api/v1/i18n-messages', {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
@@ -13,9 +13,9 @@ export async function modifyI18nMessage(body: API.I18nMessageModifyCmd, options?
 	});
 }
 
-/** 保存国际化消息 保存国际化消息 POST /v3/i18n-messages */
+/** 保存国际化消息 保存国际化消息 POST /api/v1/i18n-messages */
 export async function saveI18nMessage(body: API.I18nMessageSaveCmd, options?: { [key: string]: any }) {
-	return request<any>('/v3/i18n-messages', {
+	return request<any>('/api/v1/i18n-messages', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -25,9 +25,9 @@ export async function saveI18nMessage(body: API.I18nMessageSaveCmd, options?: { 
 	});
 }
 
-/** 删除国际化消息 删除国际化消息 DELETE /v3/i18n-messages */
+/** 删除国际化消息 删除国际化消息 DELETE /api/v1/i18n-messages */
 export async function removeI18nMessage(body: number[], options?: { [key: string]: any }) {
-	return request<any>('/v3/i18n-messages', {
+	return request<any>('/api/v1/i18n-messages', {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',
@@ -37,23 +37,23 @@ export async function removeI18nMessage(body: number[], options?: { [key: string
 	});
 }
 
-/** 查看国际化消息详情 查看国际化消息详情 GET /v3/i18n-messages/${param0} */
+/** 查看国际化消息详情 查看国际化消息详情 GET /api/v1/i18n-messages/${param0} */
 export async function getI18nMessageById(
 	// 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
 	params: API.getByIdParams,
 	options?: { [key: string]: any },
 ) {
 	const {id: param0, ...queryParams} = params;
-	return request<API.Result>(`/v3/i18n-messages/${param0}`, {
+	return request<API.Result>(`/api/v1/i18n-messages/${param0}`, {
 		method: 'GET',
 		params: {...queryParams},
 		...(options || {}),
 	});
 }
 
-/** 导出国际化消息 导出国际化消息 POST /v3/i18n-messages/export */
+/** 导出国际化消息 导出国际化消息 POST /api/v1/i18n-messages/export */
 export async function exportI18nMessage(body: API.I18nMessageExportCmd, options?: { [key: string]: any }) {
-	return request<any>('/v3/i18n-messages/export', {
+	return request<any>('/api/v1/i18n-messages/export', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -63,7 +63,7 @@ export async function exportI18nMessage(body: API.I18nMessageExportCmd, options?
 	});
 }
 
-/** 导入国际化消息 导入国际化消息 POST /v3/i18n-messages/import */
+/** 导入国际化消息 导入国际化消息 POST /api/v1/i18n-messages/import */
 export async function importI18nMessage(body: {}, file?: File[], options?: { [key: string]: any }) {
 	const formData = new FormData();
 
@@ -87,7 +87,7 @@ export async function importI18nMessage(body: {}, file?: File[], options?: { [ke
 		}
 	});
 
-	return request<any>('/v3/i18n-messages/import', {
+	return request<any>('/api/v1/i18n-messages/import', {
 		method: 'POST',
 		data: formData,
 		requestType: 'form',
@@ -95,9 +95,9 @@ export async function importI18nMessage(body: {}, file?: File[], options?: { [ke
 	});
 }
 
-/** 分页查询国际化消息列表 分页查询国际化消息列表 POST /v3/i18n-messages/page */
+/** 分页查询国际化消息列表 分页查询国际化消息列表 POST /api/v1/i18n-messages/page */
 export async function pageI18nMessage(body: API.I18nMessagePageQry, options?: { [key: string]: any }) {
-	return request<API.Result>('/v3/i18n-messages/page', {
+	return request<API.Result>('/api/v1/i18n-messages/page', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

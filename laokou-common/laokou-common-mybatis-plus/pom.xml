@@ -43,8 +43,8 @@
       <artifactId>caffeine</artifactId>
       <exclusions>
         <exclusion>
-          <groupId>org.checkerframework</groupId>
-          <artifactId>checker-qual</artifactId>
+          <groupId>com.google.errorprone</groupId>
+          <artifactId>error_prone_annotations</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -84,16 +84,6 @@
     <dependency>
       <groupId>com.baomidou</groupId>
       <artifactId>mybatis-plus-jsqlparser</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>com.github.jsqlparser</groupId>
-          <artifactId>jsqlparser</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>com.github.jsqlparser</groupId>
-      <artifactId>jsqlparser</artifactId>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>

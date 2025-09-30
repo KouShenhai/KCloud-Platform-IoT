@@ -74,7 +74,7 @@ class TableTest {
 		// 数据源
 		String sourceName = "master";
 		// 版本号
-		String version = "v3";
+		String version = "v1";
 		// 作者
 		String author = "laokou";
 		// 表前缀
@@ -98,7 +98,7 @@ class TableTest {
 		// 数据源
 		String sourceName = "domain";
 		// 版本号
-		String version = "v3";
+		String version = "v1";
 		// 作者
 		String author = "laokou";
 		// 表前缀
@@ -122,7 +122,7 @@ class TableTest {
 		// 数据源
 		String sourceName = "iot";
 		// 版本号
-		String version = "v3";
+		String version = "v1";
 		// 作者
 		String author = "laokou";
 		// 表前缀
@@ -147,7 +147,7 @@ class TableTest {
 		// 数据源
 		String sourceName = "generator";
 		// 版本号
-		String version = "v3";
+		String version = "v1";
 		// 作者
 		String author = "laokou";
 		// 表前缀

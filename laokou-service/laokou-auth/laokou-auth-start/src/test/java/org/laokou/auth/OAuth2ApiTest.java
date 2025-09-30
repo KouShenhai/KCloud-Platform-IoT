@@ -471,22 +471,22 @@ class OAuth2ApiTest {
 	}
 
 	private String getCaptchaApiUrlV3() {
-		return getSchema(disabledSsl()) + "auth" + StringConstants.RISK + serverProperties.getPort() + "/v3/captchas/"
-				+ OAuth2ApiTest.UUID;
+		return getSchema(disabledSsl()) + "auth" + StringConstants.RISK + serverProperties.getPort()
+				+ "/api/v1/captchas/" + OAuth2ApiTest.UUID;
 	}
 
 	private String getTokenUrlV3() {
-		return getSchema(disabledSsl()) + "auth" + StringConstants.RISK + serverProperties.getPort() + "/v3/tokens";
+		return getSchema(disabledSsl()) + "auth" + StringConstants.RISK + serverProperties.getPort() + "/api/v1/tokens";
 	}
 
 	public String getSendMailCaptchaUrl() {
 		return getSchema(disabledSsl()) + "auth" + StringConstants.RISK + serverProperties.getPort()
-				+ "/v3/captchas/send/mail";
+				+ "/api/v1/captchas/send/mail";
 	}
 
 	public String getSendMobileCaptchaUrl() {
 		return getSchema(disabledSsl()) + "auth" + StringConstants.RISK + serverProperties.getPort()
-				+ "/v3/captchas/send/mobile";
+				+ "/api/v1/captchas/send/mobile";
 	}
 
 	private String getSchema(boolean disabled) {

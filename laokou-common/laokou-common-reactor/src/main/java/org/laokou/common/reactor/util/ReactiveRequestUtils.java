@@ -101,7 +101,7 @@ public class ReactiveRequestUtils {
 			return false;
 		}
 		for (String url : urls) {
-			if (ANT_PATH_MATCHER.match(url, requestURL)) {
+			if (pathMatcher(url, requestURL)) {
 				return true;
 			}
 		}
@@ -114,7 +114,7 @@ public class ReactiveRequestUtils {
 	 * @param url 路径URL
 	 * @return 匹配结果
 	 */
-	public static boolean pathMatcher(String requestURL, String url) {
+	private static boolean pathMatcher(String requestURL, String url) {
 		return ANT_PATH_MATCHER.match(url, requestURL);
 	}
 

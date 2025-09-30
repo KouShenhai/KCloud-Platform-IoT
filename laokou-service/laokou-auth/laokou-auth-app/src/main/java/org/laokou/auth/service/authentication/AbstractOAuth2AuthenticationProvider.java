@@ -218,10 +218,13 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 		authorizationBuilder.attribute(Principal.class.getName(), principal);
 		authorizationService.save(authorizationBuilder.build());
 
-		Map<String, Object> additionalParameters = Collections.emptyMap();
-		if (idToken != null) {
-			additionalParameters = new HashMap<>();
+		Map<String, Object> additionalParameters;
+		if (ObjectUtils.isNotNull(idToken)) {
+			additionalParameters = new HashMap<>(1);
 			additionalParameters.put(OidcParameterNames.ID_TOKEN, idToken.getTokenValue());
+		}
+		else {
+			additionalParameters = Collections.emptyMap();
 		}
 		return new OAuth2AccessTokenAuthenticationToken(registeredClient, clientPrincipal, accessToken, refreshToken,
 				additionalParameters);

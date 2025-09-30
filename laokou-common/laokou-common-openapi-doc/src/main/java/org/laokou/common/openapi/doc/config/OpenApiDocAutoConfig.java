@@ -25,7 +25,6 @@ import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
-import org.laokou.common.core.config.OAuth2ResourceServerProperties;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -41,7 +40,7 @@ public class OpenApiDocAutoConfig {
 
 	@Bean
 	@ConditionalOnMissingBean(OpenAPI.class)
-	OpenAPI openApi(OAuth2ResourceServerProperties oAuth2ResourceServerProperties) {
+	OpenAPI openApi() {
 		return new OpenAPI()
 			.info(new Info().title("API文档")
 				.description("API文档")
@@ -53,11 +52,6 @@ public class OpenApiDocAutoConfig {
 			.components(new Components().addSecuritySchemes(HttpHeaders.AUTHORIZATION,
 					new SecurityScheme().name(HttpHeaders.AUTHORIZATION)
 						.type(SecurityScheme.Type.OAUTH2)
-						// .flows(new OAuthFlows().authorizationCode(new OAuthFlow()
-						// .authorizationUrl(oAuth2ResourceServerProperties.getAuthorizationUrl())
-						// .tokenUrl(oAuth2ResourceServerProperties.getTokenUrl())
-						// .scopes(new
-						// Scopes().addString("read","读").addString("write","写"))))
 						.in(SecurityScheme.In.HEADER)
 						.scheme("Bearer")
 						.bearerFormat("JWT")));

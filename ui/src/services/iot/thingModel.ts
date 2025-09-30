@@ -1,9 +1,9 @@
 /* eslint-disable */
 import { request } from '@umijs/max';
 
-/** 修改物模型 修改物模型 PUT /v3/thing-models */
+/** 修改物模型 修改物模型 PUT /api/v1/thing-models */
 export async function modifyThingModel(body: API.ThingModelModifyCmd, options?: { [key: string]: any }) {
-  return request<any>('/api/iot/v3/thing-models', {
+  return request<any>('/apis/iot/v1/thing-models', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -13,9 +13,9 @@ export async function modifyThingModel(body: API.ThingModelModifyCmd, options?: 
   });
 }
 
-/** 保存物模型 保存物模型 POST /v3/thing-models */
+/** 保存物模型 保存物模型 POST /api/v1/thing-models */
 export async function saveThingModel(body: API.ThingModelSaveCmd, requestId: string, options?: { [key: string]: any }) {
-  return request<any>('/api/iot/v3/thing-models', {
+  return request<any>('/apis/iot/v1/thing-models', {
     method: 'POST',
     headers: {
 		'request-id': requestId,
@@ -26,9 +26,9 @@ export async function saveThingModel(body: API.ThingModelSaveCmd, requestId: str
   });
 }
 
-/** 删除物模型 删除物模型 DELETE /v3/thing-models */
+/** 删除物模型 删除物模型 DELETE /api/v1/thing-models */
 export async function removeThingModel(body: number[], options?: { [key: string]: any }) {
-  return request<any>('/api/iot/v3/thing-models', {
+  return request<any>('/apis/iot/v1/thing-models', {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -38,26 +38,26 @@ export async function removeThingModel(body: number[], options?: { [key: string]
   });
 }
 
-/** 查看物模型详情 查看物模型详情 GET /v3/thing-models/${param0} */
+/** 查看物模型详情 查看物模型详情 GET /api/v1/thing-models/${param0} */
 export async function getThingModelById(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
   params: API.getByIdParams,
   options?: { [key: string]: any },
 ) {
   const { id: param0, ...queryParams } = params;
-  return request<API.Result>(`/api/iot/v3/thing-models/${param0}`, {
+  return request<API.Result>(`/apis/iot/v1/thing-models/${param0}`, {
     method: 'GET',
     params: { ...queryParams },
     ...(options || {}),
   });
 }
 
-/** 导出物模型 导出物模型 POST /v3/thing-models/export */
+/** 导出物模型 导出物模型 POST /api/v1/thing-models/export */
 export async function exportThingModel(
   body: API.ThingThingModelExportCmd,
   options?: { [key: string]: any },
 ) {
-  return request<any>('/api/iot/v3/thing-models/export', {
+  return request<any>('/apis/iot/v1/thing-models/export', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ export async function exportThingModel(
   });
 }
 
-/** 导入物模型 导入物模型 POST /v3/thing-models/import */
+/** 导入物模型 导入物模型 POST /api/v1/thing-models/import */
 export async function importThingModel(body: {}, file?: File[], options?: { [key: string]: any }) {
   const formData = new FormData();
 
@@ -91,7 +91,7 @@ export async function importThingModel(body: {}, file?: File[], options?: { [key
     }
   });
 
-  return request<any>('/api/iot/v3/thing-models/import', {
+  return request<any>('/apis/iot/v1/thing-models/import', {
     method: 'POST',
     data: formData,
     requestType: 'form',
@@ -99,9 +99,9 @@ export async function importThingModel(body: {}, file?: File[], options?: { [key
   });
 }
 
-/** 分页查询物模型列表 分页查询物模型列表 POST /v3/thing-models/page */
+/** 分页查询物模型列表 分页查询物模型列表 POST /api/v1/thing-models/page */
 export async function pageThingModel(body: API.ThingModelPageQry, options?: { [key: string]: any }) {
-  return request<API.Result>('/api/iot/v3/thing-models/page', {
+  return request<API.Result>('/apis/iot/v1/thing-models/page', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

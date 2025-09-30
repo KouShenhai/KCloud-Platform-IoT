@@ -32,10 +32,8 @@
     <pig-nacos.version>3.0.2.OEM</pig-nacos.version>
     <!--postgresql版本-->
     <postgresql.version>42.7.8</postgresql.version>
-    <!--grpc版本-->
-    <grpc.version>1.75.0</grpc.version>
     <!--client-java版本-->
-    <client-java.version>19.0.3</client-java.version>
+    <client-java.version>22.0.0</client-java.version>
     <!--lombok版本-->
     <lombok.version>1.18.42</lombok.version>
     <!--jasypt版本-->
@@ -50,28 +48,8 @@
       <artifactId>nacos-console</artifactId>
       <exclusions>
         <exclusion>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-starter-security</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.mysql</groupId>
-          <artifactId>mysql-connector-j</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>io.grpc</groupId>
-          <artifactId>grpc-util</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>io.kubernetes</groupId>
-          <artifactId>client-java-api</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-starter-tomcat</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.apache.tomcat.embed</groupId>
-          <artifactId>tomcat-embed-core</artifactId>
+          <groupId>com.google.errorprone</groupId>
+          <artifactId>error_prone_annotations</artifactId>
         </exclusion>
         <exclusion>
           <groupId>org.apache.commons</groupId>
@@ -82,22 +60,11 @@
     <dependency>
       <groupId>io.github.pig-mesh.nacos</groupId>
       <artifactId>nacos-server</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>com.mysql</groupId>
-          <artifactId>mysql-connector-j</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>io.kubernetes</groupId>
       <artifactId>client-java-api</artifactId>
       <version>${client-java.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>io.grpc</groupId>
-      <artifactId>grpc-util</artifactId>
-      <version>${grpc.version}</version>
     </dependency>
     <dependency>
       <groupId>org.postgresql</groupId>
@@ -109,10 +76,6 @@
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <version>${lombok.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-undertow</artifactId>
     </dependency>
     <dependency>
       <groupId>com.github.ulisesbocchio</groupId>

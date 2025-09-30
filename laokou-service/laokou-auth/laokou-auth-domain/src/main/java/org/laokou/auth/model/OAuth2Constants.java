@@ -93,16 +93,6 @@ public final class OAuth2Constants {
 	public static final String MAIL_NOT_REGISTERED = "B_OAuth2_MailNotRegistered";
 
 	/**
-	 * 会话无效.
-	 */
-	public static final String SESSION_INVALID = "B_OAuth2_SessionInvalid";
-
-	/**
-	 * 会话过期.
-	 */
-	public static final String SESSION_EXPIRED = "B_OAuth2_SessionExpired";
-
-	/**
 	 * UUID不能为空.
 	 */
 	public static final String UUID_REQUIRE = "P_OAuth2_UuidIsNull";

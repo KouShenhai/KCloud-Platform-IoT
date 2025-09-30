@@ -17,9 +17,9 @@
 
 package org.laokou.common.security.config;
 
-import io.micrometer.common.lang.NonNullApi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.Nullable;
 import org.laokou.common.context.util.UserDetails;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.common.exception.StatusCode;
@@ -40,7 +40,6 @@ import java.security.Principal;
  * @author laokou
  */
 @Slf4j
-@NonNullApi
 @RequiredArgsConstructor
 public class OAuth2OpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 
@@ -62,7 +61,7 @@ public class OAuth2OpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 		if (accessToken.isActive()) {
             Object obj = authorization.getAttribute(Principal.class.getName());
             if (obj instanceof UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken) {
-                UserDetails userDetails = (UserDetails) usernamePasswordAuthenticationToken.getPrincipal();
+				UserDetails userDetails = (UserDetails) usernamePasswordAuthenticationToken.getPrincipal();
                 // 解密
                 return decryptInfo(userDetails);
             }
@@ -78,9 +77,10 @@ public class OAuth2OpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 	 * @param userDetails 用户信息
 	 * @return UserDetail
 	 */
-	public static UserDetails decryptInfo(UserDetails userDetails) {
+	public static UserDetails decryptInfo(@Nullable UserDetails userDetails) {
 		try {
 			// 解密
+			assert userDetails != null;
 			return userDetails.getDecryptInfo();
 		}
 		catch (GlobalException e) {

@@ -401,7 +401,7 @@ CREATE UNIQUE INDEX "config_info_data_id_group_id_tenant_id_idx" ON "public"."co
 
 INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-flow.json', 'IOT_GROUP', '[
   {
-    "resource": "/v3/users",
+    "resource": "/api/v1/users",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -409,7 +409,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/users/import",
+    "resource": "/api/v1/users/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -417,7 +417,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/users/export",
+    "resource": "/api/v1/users/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -425,7 +425,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/users/page",
+    "resource": "/api/v1/users/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -433,7 +433,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/users/{id}",
+    "resource": "/api/v1/users/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -441,7 +441,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/users/profile",
+    "resource": "/api/v1/users/profile",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -449,47 +449,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/tenants",
-    "limitApp": "default",
-    "count": 500000,
-    "grade": 1,
-    "strategy": 0,
-    "controlBehavior": 0
-  },
-  {
-    "resource": "/v3/tenants/import",
-    "limitApp": "default",
-    "count": 100000,
-    "grade": 1,
-    "strategy": 0,
-    "controlBehavior": 0
-  },
-  {
-    "resource": "/v3/tenants/export",
-    "limitApp": "default",
-    "count": 100000,
-    "grade": 1,
-    "strategy": 0,
-    "controlBehavior": 0
-  },
-  {
-    "resource": "/v3/tenants/page",
-    "limitApp": "default",
-    "count": 100000,
-    "grade": 1,
-    "strategy": 0,
-    "controlBehavior": 0
-  },
-  {
-    "resource": "/v3/tenants/{id}",
-    "limitApp": "default",
-    "count": 100000,
-    "grade": 1,
-    "strategy": 0,
-    "controlBehavior": 0
-  },
-  {
-    "resource": "/v3/sources",
+    "resource": "/api/v1/tenants",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -497,7 +457,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/sources/import",
+    "resource": "/api/v1/tenants/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -505,7 +465,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/sources/export",
+    "resource": "/api/v1/tenants/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -513,7 +473,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/sources/page",
+    "resource": "/api/v1/tenants/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -521,7 +481,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/sources/{id}",
+    "resource": "/api/v1/tenants/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -529,7 +489,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/roles",
+    "resource": "/api/v1/sources",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -537,7 +497,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/roles/import",
+    "resource": "/api/v1/sources/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -545,7 +505,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/roles/export",
+    "resource": "/api/v1/sources/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -553,7 +513,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/roles/page",
+    "resource": "/api/v1/sources/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -561,7 +521,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/roles/{id}",
+    "resource": "/api/v1/sources/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -569,7 +529,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/oss-logs",
+    "resource": "/api/v1/roles",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -577,7 +537,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/oss-logs/import",
+    "resource": "/api/v1/roles/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -585,7 +545,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/oss-logs/export",
+    "resource": "/api/v1/roles/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -593,7 +553,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/oss-logs/page",
+    "resource": "/api/v1/roles/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -601,7 +561,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/oss-logs/{id}",
+    "resource": "/api/v1/roles/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -609,7 +569,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/oss",
+    "resource": "/api/v1/oss-logs",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -617,7 +577,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/oss/import",
+    "resource": "/api/v1/oss-logs/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -625,7 +585,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/oss/export",
+    "resource": "/api/v1/oss-logs/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -633,7 +593,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/oss/page",
+    "resource": "/api/v1/oss-logs/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -641,7 +601,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/oss/{id}",
+    "resource": "/api/v1/oss-logs/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -649,7 +609,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/operate-logs",
+    "resource": "/api/v1/oss",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -657,7 +617,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/operate-logs/import",
+    "resource": "/api/v1/oss/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -665,7 +625,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/operate-logs/export",
+    "resource": "/api/v1/oss/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -673,7 +633,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/operate-logs/page",
+    "resource": "/api/v1/oss/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -681,7 +641,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/operate-logs/{id}",
+    "resource": "/api/v1/oss/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -689,7 +649,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/notice-logs",
+    "resource": "/api/v1/operate-logs",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -697,7 +657,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/notice-logs/import",
+    "resource": "/api/v1/operate-logs/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -705,7 +665,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/notice-logs/export",
+    "resource": "/api/v1/operate-logs/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -713,7 +673,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/notice-logs/page",
+    "resource": "/api/v1/operate-logs/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -721,7 +681,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/notice-logs/{id}",
+    "resource": "/api/v1/operate-logs/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -729,7 +689,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/menus",
+    "resource": "/api/v1/notice-logs",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -737,7 +697,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/menus/import",
+    "resource": "/api/v1/notice-logs/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -745,7 +705,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/menus/export",
+    "resource": "/api/v1/notice-logs/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -753,7 +713,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/menus/page",
+    "resource": "/api/v1/notice-logs/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -761,7 +721,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/menus/{id}",
+    "resource": "/api/v1/notice-logs/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -769,7 +729,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/login-log",
+    "resource": "/api/v1/menus",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -777,7 +737,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/login-log/import",
+    "resource": "/api/v1/menus/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -785,7 +745,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/login-log/export",
+    "resource": "/api/v1/menus/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -793,7 +753,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/login-log/page",
+    "resource": "/api/v1/menus/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -801,7 +761,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/login-log/{id}",
+    "resource": "/api/v1/menus/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -809,15 +769,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/login-log/all",
-    "limitApp": "default",
-    "count": 100000,
-    "grade": 1,
-    "strategy": 0,
-    "controlBehavior": 0
-  },
-  {
-    "resource": "/v3/i18n-messages",
+    "resource": "/api/v1/login-log",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -825,7 +777,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/i18n-messages/import",
+    "resource": "/api/v1/login-log/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -833,7 +785,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/i18n-messages/export",
+    "resource": "/api/v1/login-log/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -841,7 +793,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/i18n-messages/page",
+    "resource": "/api/v1/login-log/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -849,7 +801,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/i18n-messages/{id}",
+    "resource": "/api/v1/login-log/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -857,7 +809,15 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/domain-events",
+    "resource": "/api/v1/login-log/all",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/api/v1/i18n-messages",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -865,7 +825,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/domain-events/import",
+    "resource": "/api/v1/i18n-messages/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -873,7 +833,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/domain-events/export",
+    "resource": "/api/v1/i18n-messages/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -881,7 +841,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/domain-events/page",
+    "resource": "/api/v1/i18n-messages/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -889,7 +849,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/domain-events/{id}",
+    "resource": "/api/v1/i18n-messages/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -897,7 +857,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/dicts",
+    "resource": "/api/v1/domain-events",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -905,7 +865,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/dicts/import",
+    "resource": "/api/v1/domain-events/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -913,7 +873,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/dicts/export",
+    "resource": "/api/v1/domain-events/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -921,7 +881,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/dicts/page",
+    "resource": "/api/v1/domain-events/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -929,7 +889,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/dicts/{id}",
+    "resource": "/api/v1/domain-events/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -937,7 +897,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/dict-items",
+    "resource": "/api/v1/dicts",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -945,7 +905,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/dict-items/import",
+    "resource": "/api/v1/dicts/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -953,7 +913,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/dict-items/export",
+    "resource": "/api/v1/dicts/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -961,7 +921,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/dict-items/page",
+    "resource": "/api/v1/dicts/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -969,7 +929,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/dict-items/{id}",
+    "resource": "/api/v1/dicts/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -977,7 +937,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/depts",
+    "resource": "/api/v1/dict-items",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -985,7 +945,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/depts/import",
+    "resource": "/api/v1/dict-items/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -993,7 +953,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/depts/export",
+    "resource": "/api/v1/dict-items/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1001,7 +961,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/depts/page",
+    "resource": "/api/v1/dict-items/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1009,7 +969,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/depts/{id}",
+    "resource": "/api/v1/dict-items/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1017,7 +977,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/clusters",
+    "resource": "/api/v1/depts",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -1025,7 +985,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/clusters/import",
+    "resource": "/api/v1/depts/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1033,7 +993,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/clusters/export",
+    "resource": "/api/v1/depts/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1041,7 +1001,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/clusters/page",
+    "resource": "/api/v1/depts/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1049,7 +1009,47 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/clusters/{id}",
+    "resource": "/api/v1/depts/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/api/v1/clusters",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/api/v1/clusters/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/api/v1/clusters/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/api/v1/clusters/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/api/v1/clusters/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1094,7 +1094,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (11, 'gatewa
 ]', '5e013d830e3af21e5e321c0f4910fda0', '2024-05-25 18:12:47.358', '2024-11-11 20:51:44.543', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'gateway sentinel flow rule', '', '', 'json', '', '');
 INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (38, 'auth-flow.json', 'IOT_GROUP', '[
   {
-    "resource": "/v3/captchas/{uuid}",
+    "resource": "/api/v1/captchas/{uuid}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1102,7 +1102,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (38, 'auth-f
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/captchas/send/mobile",
+    "resource": "/api/v1/captchas/send/mobile",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1110,7 +1110,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (38, 'auth-f
     "controlBehavior": 0
   },
     {
-    "resource": "/v3/captchas/send/mail",
+    "resource": "/api/v1/captchas/send/mail",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1118,7 +1118,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (38, 'auth-f
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/secrets",
+    "resource": "/api/v1/secrets",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1126,7 +1126,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (38, 'auth-f
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/tokens",
+    "resource": "/api/v1/tokens",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1137,7 +1137,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (38, 'auth-f
 ', '2bb6ed92c98b4a1693426dadf1c96a30', '2024-11-11 21:17:37.578', '2024-11-11 21:18:17.553', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', '8140e92b-fb43-48f5-b63b-7506185206a5', 'auth sentinel flow rule', '', '', 'json', '', '');
 INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES (39, 'auth-flow.json', 'IOT_GROUP', '[
   {
-    "resource": "/v3/captchas/{uuid}",
+    "resource": "/api/v1/captchas/{uuid}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1145,7 +1145,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES (39, 'auth-fl
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/captchas/send/mobile",
+    "resource": "/api/v1/captchas/send/mobile",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1153,7 +1153,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES (39, 'auth-fl
     "controlBehavior": 0
   },
     {
-    "resource": "/v3/captchas/send/mail",
+    "resource": "/api/v1/captchas/send/mail",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1161,7 +1161,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES (39, 'auth-fl
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/secrets",
+    "resource": "/api/v1/secrets",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1169,7 +1169,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES (39, 'auth-fl
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/tokens",
+    "resource": "/api/v1/tokens",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1180,7 +1180,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES (39, 'auth-fl
 ', '2bb6ed92c98b4a1693426dadf1c96a30', '2024-11-11 21:16:13.23', '2024-11-11 21:17:25.382', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'auth sentinel flow rule', '', '', 'json', '', '');
 INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-flow.json', 'IOT_GROUP', '[
   {
-    "resource": "/v3/users",
+    "resource": "/api/v1/users",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -1188,7 +1188,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/users/import",
+    "resource": "/api/v1/users/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1196,7 +1196,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/users/export",
+    "resource": "/api/v1/users/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1204,7 +1204,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/users/page",
+    "resource": "/api/v1/users/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1212,7 +1212,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/users/{id}",
+    "resource": "/api/v1/users/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1220,7 +1220,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/users/profile",
+    "resource": "/api/v1/users/profile",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1228,7 +1228,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/tenants",
+    "resource": "/api/v1/tenants",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -1236,7 +1236,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/tenants/import",
+    "resource": "/api/v1/tenants/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1244,7 +1244,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/tenants/export",
+    "resource": "/api/v1/tenants/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1252,7 +1252,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/sources",
+    "resource": "/api/v1/sources",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -1260,7 +1260,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/sources/import",
+    "resource": "/api/v1/sources/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1268,7 +1268,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/sources/export",
+    "resource": "/api/v1/sources/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1276,7 +1276,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/sources/page",
+    "resource": "/api/v1/sources/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1284,7 +1284,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/sources/{id}",
+    "resource": "/api/v1/sources/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1292,7 +1292,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/roles",
+    "resource": "/api/v1/roles",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -1300,7 +1300,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/roles/import",
+    "resource": "/api/v1/roles/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1308,7 +1308,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/roles/export",
+    "resource": "/api/v1/roles/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1316,7 +1316,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/roles/page",
+    "resource": "/api/v1/roles/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1324,7 +1324,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/roles/{id}",
+    "resource": "/api/v1/roles/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1332,7 +1332,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/oss-logs",
+    "resource": "/api/v1/oss-logs",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -1340,7 +1340,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/oss-logs/import",
+    "resource": "/api/v1/oss-logs/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1348,7 +1348,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/oss-logs/export",
+    "resource": "/api/v1/oss-logs/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1356,7 +1356,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/oss-logs/page",
+    "resource": "/api/v1/oss-logs/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1364,7 +1364,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/oss-logs/{id}",
+    "resource": "/api/v1/oss-logs/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1372,7 +1372,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/oss",
+    "resource": "/api/v1/oss",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -1380,7 +1380,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/oss/import",
+    "resource": "/api/v1/oss/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1388,7 +1388,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/oss/export",
+    "resource": "/api/v1/oss/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1396,7 +1396,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/oss/page",
+    "resource": "/api/v1/oss/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1404,7 +1404,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/oss/{id}",
+    "resource": "/api/v1/oss/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1412,7 +1412,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/operate-logs",
+    "resource": "/api/v1/operate-logs",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -1420,7 +1420,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/operate-logs/import",
+    "resource": "/api/v1/operate-logs/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1428,7 +1428,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/operate-logs/export",
+    "resource": "/api/v1/operate-logs/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1436,7 +1436,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/operate-logs/page",
+    "resource": "/api/v1/operate-logs/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1444,7 +1444,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/operate-logs/{id}",
+    "resource": "/api/v1/operate-logs/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1452,7 +1452,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/notice-logs",
+    "resource": "/api/v1/notice-logs",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -1460,7 +1460,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/notice-logs/import",
+    "resource": "/api/v1/notice-logs/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1468,7 +1468,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/notice-logs/export",
+    "resource": "/api/v1/notice-logs/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1476,7 +1476,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/notice-logs/page",
+    "resource": "/api/v1/notice-logs/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1484,7 +1484,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/notice-logs/{id}",
+    "resource": "/api/v1/notice-logs/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1492,7 +1492,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/menus",
+    "resource": "/api/v1/menus",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -1500,7 +1500,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/menus/import",
+    "resource": "/api/v1/menus/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1508,7 +1508,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/menus/export",
+    "resource": "/api/v1/menus/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1516,7 +1516,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/menus/page",
+    "resource": "/api/v1/menus/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1524,7 +1524,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/menus/{id}",
+    "resource": "/api/v1/menus/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1532,7 +1532,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/login-log",
+    "resource": "/api/v1/login-log",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -1540,7 +1540,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/login-log/import",
+    "resource": "/api/v1/login-log/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1548,7 +1548,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/login-log/export",
+    "resource": "/api/v1/login-log/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1556,7 +1556,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/login-log/page",
+    "resource": "/api/v1/login-log/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1564,7 +1564,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/login-log/{id}",
+    "resource": "/api/v1/login-log/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1572,7 +1572,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/login-log/all",
+    "resource": "/api/v1/login-log/all",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1580,7 +1580,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/i18n-messages",
+    "resource": "/api/v1/i18n-messages",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -1588,7 +1588,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/i18n-messages/import",
+    "resource": "/api/v1/i18n-messages/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1596,7 +1596,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/i18n-messages/export",
+    "resource": "/api/v1/i18n-messages/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1604,7 +1604,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/i18n-messages/page",
+    "resource": "/api/v1/i18n-messages/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1612,7 +1612,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/i18n-messages/{id}",
+    "resource": "/api/v1/i18n-messages/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1620,7 +1620,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/domain-events",
+    "resource": "/api/v1/domain-events",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -1628,7 +1628,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/domain-events/import",
+    "resource": "/api/v1/domain-events/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1636,7 +1636,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/domain-events/export",
+    "resource": "/api/v1/domain-events/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1644,7 +1644,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/domain-events/page",
+    "resource": "/api/v1/domain-events/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1652,7 +1652,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/domain-events/{id}",
+    "resource": "/api/v1/domain-events/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1660,7 +1660,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/dicts",
+    "resource": "/api/v1/dicts",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -1668,7 +1668,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/dicts/import",
+    "resource": "/api/v1/dicts/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1676,7 +1676,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/dicts/export",
+    "resource": "/api/v1/dicts/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1684,7 +1684,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/dicts/page",
+    "resource": "/api/v1/dicts/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1692,7 +1692,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/dicts/{id}",
+    "resource": "/api/v1/dicts/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1700,7 +1700,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/dict-items",
+    "resource": "/api/v1/dict-items",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -1708,7 +1708,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/dict-items/import",
+    "resource": "/api/v1/dict-items/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1716,7 +1716,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/dict-items/export",
+    "resource": "/api/v1/dict-items/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1724,7 +1724,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/dict-items/page",
+    "resource": "/api/v1/dict-items/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1732,7 +1732,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/dict-items/{id}",
+    "resource": "/api/v1/dict-items/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1740,7 +1740,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/depts",
+    "resource": "/api/v1/depts",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -1748,7 +1748,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/depts/import",
+    "resource": "/api/v1/depts/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1756,7 +1756,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/depts/export",
+    "resource": "/api/v1/depts/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1764,7 +1764,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/depts/page",
+    "resource": "/api/v1/depts/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1772,7 +1772,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/depts/{id}",
+    "resource": "/api/v1/depts/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1780,7 +1780,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/clusters",
+    "resource": "/api/v1/clusters",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -1788,7 +1788,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/clusters/import",
+    "resource": "/api/v1/clusters/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1796,7 +1796,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/clusters/export",
+    "resource": "/api/v1/clusters/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1804,7 +1804,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/clusters/page",
+    "resource": "/api/v1/clusters/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1812,7 +1812,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/clusters/{id}",
+    "resource": "/api/v1/clusters/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1823,7 +1823,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
 ', '546e2d9817dd516db763f5ef3ef3a756', '2024-11-11 21:19:54.557', '2024-11-12 11:13:47.766', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', 'a61abd4c-ef96-42a5-99a1-616adee531f3', 'admin sentinel flow rule', '', '', 'json', '', '');
 INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-flow.json', 'IOT_GROUP', '[
   {
-    "resource": "/v3/users",
+    "resource": "/api/v1/users",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -1831,7 +1831,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/users/import",
+    "resource": "/api/v1/users/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1839,7 +1839,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/users/export",
+    "resource": "/api/v1/users/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1847,7 +1847,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/users/page",
+    "resource": "/api/v1/users/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1855,7 +1855,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/users/{id}",
+    "resource": "/api/v1/users/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1863,7 +1863,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/users/profile",
+    "resource": "/api/v1/users/profile",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1871,47 +1871,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/tenants",
-    "limitApp": "default",
-    "count": 500000,
-    "grade": 1,
-    "strategy": 0,
-    "controlBehavior": 0
-  },
-  {
-    "resource": "/v3/tenants/import",
-    "limitApp": "default",
-    "count": 100000,
-    "grade": 1,
-    "strategy": 0,
-    "controlBehavior": 0
-  },
-  {
-    "resource": "/v3/tenants/export",
-    "limitApp": "default",
-    "count": 100000,
-    "grade": 1,
-    "strategy": 0,
-    "controlBehavior": 0
-  },
-  {
-    "resource": "/v3/tenants/page",
-    "limitApp": "default",
-    "count": 100000,
-    "grade": 1,
-    "strategy": 0,
-    "controlBehavior": 0
-  },
-  {
-    "resource": "/v3/tenants/{id}",
-    "limitApp": "default",
-    "count": 100000,
-    "grade": 1,
-    "strategy": 0,
-    "controlBehavior": 0
-  },
-  {
-    "resource": "/v3/sources",
+    "resource": "/api/v1/tenants",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -1919,7 +1879,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/sources/import",
+    "resource": "/api/v1/tenants/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1927,7 +1887,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/sources/export",
+    "resource": "/api/v1/tenants/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1935,7 +1895,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/sources/page",
+    "resource": "/api/v1/tenants/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1943,7 +1903,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/sources/{id}",
+    "resource": "/api/v1/tenants/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1951,7 +1911,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/roles",
+    "resource": "/api/v1/sources",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -1959,7 +1919,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/roles/import",
+    "resource": "/api/v1/sources/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1967,7 +1927,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/roles/export",
+    "resource": "/api/v1/sources/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1975,7 +1935,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/roles/page",
+    "resource": "/api/v1/sources/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1983,7 +1943,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/roles/{id}",
+    "resource": "/api/v1/sources/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1991,7 +1951,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/oss-logs",
+    "resource": "/api/v1/roles",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -1999,7 +1959,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/oss-logs/import",
+    "resource": "/api/v1/roles/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2007,7 +1967,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/oss-logs/export",
+    "resource": "/api/v1/roles/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2015,7 +1975,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/oss-logs/page",
+    "resource": "/api/v1/roles/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2023,7 +1983,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/oss-logs/{id}",
+    "resource": "/api/v1/roles/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2031,7 +1991,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/oss",
+    "resource": "/api/v1/oss-logs",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -2039,7 +1999,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/oss/import",
+    "resource": "/api/v1/oss-logs/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2047,7 +2007,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/oss/export",
+    "resource": "/api/v1/oss-logs/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2055,7 +2015,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/oss/page",
+    "resource": "/api/v1/oss-logs/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2063,7 +2023,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/oss/{id}",
+    "resource": "/api/v1/oss-logs/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2071,7 +2031,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/operate-logs",
+    "resource": "/api/v1/oss",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -2079,7 +2039,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/operate-logs/import",
+    "resource": "/api/v1/oss/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2087,7 +2047,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/operate-logs/export",
+    "resource": "/api/v1/oss/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2095,7 +2055,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/operate-logs/page",
+    "resource": "/api/v1/oss/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2103,7 +2063,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/operate-logs/{id}",
+    "resource": "/api/v1/oss/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2111,7 +2071,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/notice-logs",
+    "resource": "/api/v1/operate-logs",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -2119,7 +2079,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/notice-logs/import",
+    "resource": "/api/v1/operate-logs/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2127,7 +2087,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/notice-logs/export",
+    "resource": "/api/v1/operate-logs/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2135,7 +2095,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/notice-logs/page",
+    "resource": "/api/v1/operate-logs/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2143,7 +2103,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/notice-logs/{id}",
+    "resource": "/api/v1/operate-logs/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2151,7 +2111,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/menus",
+    "resource": "/api/v1/notice-logs",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -2159,7 +2119,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/menus/import",
+    "resource": "/api/v1/notice-logs/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2167,7 +2127,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/menus/export",
+    "resource": "/api/v1/notice-logs/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2175,7 +2135,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/menus/page",
+    "resource": "/api/v1/notice-logs/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2183,7 +2143,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/menus/{id}",
+    "resource": "/api/v1/notice-logs/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2191,7 +2151,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/login-log",
+    "resource": "/api/v1/menus",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -2199,7 +2159,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/login-log/import",
+    "resource": "/api/v1/menus/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2207,7 +2167,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/login-log/export",
+    "resource": "/api/v1/menus/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2215,7 +2175,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/login-log/page",
+    "resource": "/api/v1/menus/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2223,7 +2183,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/login-log/{id}",
+    "resource": "/api/v1/menus/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2231,15 +2191,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/login-log/all",
-    "limitApp": "default",
-    "count": 100000,
-    "grade": 1,
-    "strategy": 0,
-    "controlBehavior": 0
-  },
-  {
-    "resource": "/v3/i18n-messages",
+    "resource": "/api/v1/login-log",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -2247,7 +2199,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/i18n-messages/import",
+    "resource": "/api/v1/login-log/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2255,7 +2207,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/i18n-messages/export",
+    "resource": "/api/v1/login-log/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2263,7 +2215,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/i18n-messages/page",
+    "resource": "/api/v1/login-log/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2271,7 +2223,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/i18n-messages/{id}",
+    "resource": "/api/v1/login-log/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2279,7 +2231,15 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/domain-events",
+    "resource": "/api/v1/login-log/all",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/api/v1/i18n-messages",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -2287,7 +2247,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/domain-events/import",
+    "resource": "/api/v1/i18n-messages/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2295,7 +2255,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/domain-events/export",
+    "resource": "/api/v1/i18n-messages/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2303,7 +2263,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/domain-events/page",
+    "resource": "/api/v1/i18n-messages/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2311,7 +2271,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/domain-events/{id}",
+    "resource": "/api/v1/i18n-messages/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2319,7 +2279,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/dicts",
+    "resource": "/api/v1/domain-events",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -2327,7 +2287,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/dicts/import",
+    "resource": "/api/v1/domain-events/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2335,7 +2295,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/dicts/export",
+    "resource": "/api/v1/domain-events/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2343,7 +2303,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/dicts/page",
+    "resource": "/api/v1/domain-events/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2351,7 +2311,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/dicts/{id}",
+    "resource": "/api/v1/domain-events/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2359,7 +2319,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/dict-items",
+    "resource": "/api/v1/dicts",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -2367,7 +2327,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/dict-items/import",
+    "resource": "/api/v1/dicts/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2375,7 +2335,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/dict-items/export",
+    "resource": "/api/v1/dicts/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2383,7 +2343,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/dict-items/page",
+    "resource": "/api/v1/dicts/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2391,7 +2351,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/dict-items/{id}",
+    "resource": "/api/v1/dicts/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2399,7 +2359,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/depts",
+    "resource": "/api/v1/dict-items",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -2407,7 +2367,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/depts/import",
+    "resource": "/api/v1/dict-items/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2415,7 +2375,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/depts/export",
+    "resource": "/api/v1/dict-items/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2423,7 +2383,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/depts/page",
+    "resource": "/api/v1/dict-items/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2431,7 +2391,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/depts/{id}",
+    "resource": "/api/v1/dict-items/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2439,7 +2399,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/clusters",
+    "resource": "/api/v1/depts",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -2447,7 +2407,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/clusters/import",
+    "resource": "/api/v1/depts/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2455,7 +2415,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/clusters/export",
+    "resource": "/api/v1/depts/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2463,7 +2423,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/clusters/page",
+    "resource": "/api/v1/depts/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2471,7 +2431,47 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/clusters/{id}",
+    "resource": "/api/v1/depts/{id}",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/api/v1/clusters",
+    "limitApp": "default",
+    "count": 500000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/api/v1/clusters/import",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/api/v1/clusters/export",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/api/v1/clusters/page",
+    "limitApp": "default",
+    "count": 100000,
+    "grade": 1,
+    "strategy": 0,
+    "controlBehavior": 0
+  },
+  {
+    "resource": "/api/v1/clusters/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2482,7 +2482,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
 ', '546e2d9817dd516db763f5ef3ef3a756', '2024-11-11 21:20:18.495', '2024-11-12 11:14:01.899', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'admin sentinel flow rule', '', '', 'json', '', '');
 INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (43, 'auth-flow.json', 'IOT_GROUP', '[
   {
-    "resource": "/v3/captchas/{uuid}",
+    "resource": "/api/v1/captchas/{uuid}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2490,7 +2490,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (43, 'auth-f
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/captchas/send/mobile",
+    "resource": "/api/v1/captchas/send/mobile",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2498,7 +2498,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (43, 'auth-f
     "controlBehavior": 0
   },
     {
-    "resource": "/v3/captchas/send/mail",
+    "resource": "/api/v1/captchas/send/mail",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2506,7 +2506,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (43, 'auth-f
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/secrets",
+    "resource": "/api/v1/secrets",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2514,7 +2514,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (43, 'auth-f
     "controlBehavior": 0
   },
   {
-    "resource": "/v3/tokens",
+    "resource": "/api/v1/tokens",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,

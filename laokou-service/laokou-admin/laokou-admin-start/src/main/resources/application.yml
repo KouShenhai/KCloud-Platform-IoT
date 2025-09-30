@@ -16,7 +16,7 @@
 #    */
 jasypt:
   encryptor:
-    password: @JASYPT-ENCRYPTOR-PASSWORD@
+    password: @SECRET-KEY@
 server:
   port: ${SERVER_PORT:9990}
   compression:
@@ -37,18 +37,21 @@ server:
   forward-headers-strategy: native
   shutdown: graceful
   servlet:
-    encoding:
-      charset: UTF-8
-  undertow:
+    context-path: /api
+  tomcat:
     threads:
-      # 设置IO线程数，来执行非阻塞任务，负责多个连接数
-      io: 16
-      # 工作线程数
-      worker: 512
-    # 每块buffer的空间大小
-    buffer-size: 2048
-    # 分配堆外内存
-    direct-buffers: true
+      # 工作线程池的最大线程数
+      max: 500
+      # 工作线程池的最小备用线程数
+      min-spare: 50
+    # 最大连接数
+    max-connections: 10000
+    # 当所有工作线程都在忙时，允许等待处理的最大连接数
+    accept-count: 200
+    # URI编码
+    uri-encoding: UTF-8
+    # 连接超时时间
+    connection-timeout: 60s
 spring:
   application:
     name: ${SERVICE_ID:laokou-admin}
@@ -88,8 +91,8 @@ spring:
       datasource:
         master:
           type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: @DATASOURCE-DRIVER-CLASS-NAME@
-          url: jdbc:@DATASOURCE-PLATFORM@://@DATASOURCE-HOST@:@DATASOURCE-PORT@/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false
+          driver-class-name: @DS-DRIVER@
+          url: jdbc:@DS-PLATFORM@://@DS-HOST@:@DS-PORT@/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false
           username: ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)
           password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -103,8 +106,8 @@ spring:
             is-read-only: false
         domain:
           type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: @DATASOURCE-DRIVER-CLASS-NAME@
-          url: jdbc:@DATASOURCE-PLATFORM@://@DATASOURCE-HOST@:@DATASOURCE-PORT@/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false
+          driver-class-name: @DS-DRIVER@
+          url: jdbc:@DS-PLATFORM@://@DS-HOST@:@DS-PORT@/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false
           username: ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)
           password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
           # https://blog.csdn.net/u014644574/article/details/123680515

@@ -33,9 +33,9 @@
 
 package org.laokou.common.security.config;
 
+import org.jspecify.annotations.Nullable;
 import org.laokou.common.security.config.entity.OAuth2RegisteredClient;
 import org.laokou.common.security.config.repository.OAuth2RegisteredClientRepository;
-import org.springframework.lang.Nullable;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.util.Assert;

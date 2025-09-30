@@ -13,6 +13,12 @@
     <dependency>
       <groupId>cn.idev.excel</groupId>
       <artifactId>fastexcel</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.commons</groupId>
+          <artifactId>commons-collections4</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
