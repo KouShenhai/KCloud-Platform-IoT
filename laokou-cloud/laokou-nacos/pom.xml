@@ -39,7 +39,7 @@
     <!--jasypt版本-->
     <jasypt.version>3.0.5</jasypt.version>
     <!--liquibase版本-->
-    <liquibase.version>4.33.0</liquibase.version>
+    <liquibase.version>5.0.0</liquibase.version>
   </properties>
 
   <dependencies>
