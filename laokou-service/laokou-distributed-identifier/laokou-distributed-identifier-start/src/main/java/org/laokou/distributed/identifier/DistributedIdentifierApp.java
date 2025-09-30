@@ -44,7 +44,6 @@ public class DistributedIdentifierApp {
 
 	// @formatter:off
 	public static void main(String[] args) throws UnknownHostException {
-		// undertow虚拟线程 => EmbeddedWebServerFactoryCustomizerAutoConfiguration#virtualThreadsUndertowDeploymentInfoCustomizer
 		StopWatch stopWatch = new StopWatch("DistributedIdentifier应用程序");
 		stopWatch.start();
 		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "9094")));

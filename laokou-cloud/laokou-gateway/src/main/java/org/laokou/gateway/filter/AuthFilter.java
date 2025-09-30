@@ -20,7 +20,6 @@ package org.laokou.gateway.filter;
 import com.google.common.net.HttpHeaders;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.config.OAuth2ResourceServerProperties;
 import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.core.util.SpringUtils;
 import org.laokou.common.i18n.common.exception.StatusCode;
@@ -28,6 +27,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.reactor.util.ReactiveRequestUtils;
 import org.laokou.common.reactor.util.ReactiveResponseUtils;
+import org.laokou.gateway.config.RequestMatcherProperties;
 import org.laokou.gateway.util.ReactiveI18nUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -54,7 +54,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 
 	private final Map<String, Set<String>> uriMap = new ConcurrentHashMap<>(1024);
 
-	private final OAuth2ResourceServerProperties oAuth2ResourceServerProperties;
+	private final RequestMatcherProperties requestMatcherProperties;
 
 	private final SpringUtils springUtils;
 
@@ -92,7 +92,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 
 	@Override
 	public void afterPropertiesSet() {
-		uriMap.putAll(MapUtils.toUriMap(oAuth2ResourceServerProperties.getRequestMatcher().getIgnorePatterns(), springUtils.getServiceId()));
+		uriMap.putAll(MapUtils.toUriMap(requestMatcherProperties.getIgnorePatterns(), springUtils.getServiceId()));
 	}
 	// @formatter:on
 

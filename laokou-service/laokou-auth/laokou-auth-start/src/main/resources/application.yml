@@ -41,10 +41,18 @@ server:
     context-path: /api
   tomcat:
     threads:
+      # 工作线程池的最大线程数
       max: 500
+      # 工作线程池的最小备用线程数
       min-spare: 50
+    # 最大连接数
     max-connections: 10000
+    # 当所有工作线程都在忙时，允许等待处理的最大连接数
     accept-count: 200
+    # URI编码
+    uri-encoding: UTF-8
+    # 连接超时时间
+    connection-timeout: 60s
 spring:
   application:
     name: ${SERVICE_ID:laokou-auth}
@@ -84,10 +92,10 @@ spring:
               client-authentication-methods:
                 - client_secret_basic
               authorization-grant-types:
-                - test
                 - username_password
                 - mail
                 - mobile
+                - test
                 - refresh_token
                 - client_credentials
                 - urn:ietf:params:oauth:grant-type:device_code
@@ -144,7 +152,6 @@ spring:
               - /error=laokou-auth
               - /v3/captchas/{uuid}=laokou-auth
               - /v3/secrets=laokou-auth
-              - /graceful-shutdown=laokou-auth
               - /doc.html=laokou-auth
               - /webjars/**=laokou-auth
             POST:

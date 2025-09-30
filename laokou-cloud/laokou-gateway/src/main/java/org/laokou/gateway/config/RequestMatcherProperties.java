@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.core.config;
+package org.laokou.gateway.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -29,27 +29,14 @@ import java.util.Set;
 /**
  * @author laokou
  * 格式 -> 路径=服务名（多个服务用逗号,隔开）
- * 举例 -> /actuator/**=laokou-admin,laokou-gateway
+ * 举例 -> /actuator/**=laokou-admin
  */
 // @formatter:on
 @Data
 @Component
-@ConfigurationProperties(prefix = "spring.security.oauth2.resource-server")
-public class OAuth2ResourceServerProperties {
+@ConfigurationProperties(prefix = "request-matcher")
+public class RequestMatcherProperties {
 
-	private boolean enabled = true;
-
-	private RequestMatcher requestMatcher = new RequestMatcher();
-
-	private String authorizationUrl;
-
-	private String tokenUrl;
-
-	@Data
-	public static class RequestMatcher {
-
-		private Map<String, Set<String>> ignorePatterns = new HashMap<>(0);
-
-	}
+	private Map<String, Set<String>> ignorePatterns = new HashMap<>(0);
 
 }

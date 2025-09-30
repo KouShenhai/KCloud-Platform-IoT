@@ -33,13 +33,14 @@
 
 package org.laokou.common.security.config.convertor;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.WritingConverter;
-import org.springframework.data.redis.serializer.Jackson3JsonRedisSerializer;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import tools.jackson.databind.ObjectMapper;
-import tools.jackson.databind.json.JsonMapper;
+import org.springframework.security.jackson2.SecurityJackson2Modules;
+
 import java.util.HashSet;
 
 /**
@@ -50,15 +51,14 @@ import java.util.HashSet;
 public final class UsernamePasswordAuthenticationTokenToBytesConverter
 		implements Converter<UsernamePasswordAuthenticationToken, byte[]> {
 
-	private final Jackson3JsonRedisSerializer<UsernamePasswordAuthenticationToken> serializer;
+	private final Jackson2JsonRedisSerializer<UsernamePasswordAuthenticationToken> serializer;
 
 	public UsernamePasswordAuthenticationTokenToBytesConverter() {
-		ObjectMapper objectMapper = JsonMapper.builder()
-			.addModule(SecurityJackson3Modules.getModules(BytesToUsernamePasswordAuthenticationTokenConverter.class.getClassLoader()))
-			.addMixIn(HashSet.class, HashSetMixin.class)
-			.build();
-
-		this.serializer = new Jackson3JsonRedisSerializer<>(objectMapper, UsernamePasswordAuthenticationToken.class);
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.registerModules(SecurityJackson2Modules
+			.getModules(BytesToUsernamePasswordAuthenticationTokenConverter.class.getClassLoader()));
+		objectMapper.addMixIn(HashSet.class, HashSetMixin.class);
+		this.serializer = new Jackson2JsonRedisSerializer<>(objectMapper, UsernamePasswordAuthenticationToken.class);
 	}
 
 	@Override

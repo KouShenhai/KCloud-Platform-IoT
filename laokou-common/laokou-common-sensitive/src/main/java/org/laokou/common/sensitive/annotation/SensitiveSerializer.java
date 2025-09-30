@@ -17,7 +17,7 @@
 
 package org.laokou.common.sensitive.annotation;
 
-import tools.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.JsonGenerator;
 import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;

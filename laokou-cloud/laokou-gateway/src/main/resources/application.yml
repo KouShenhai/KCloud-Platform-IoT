@@ -71,25 +71,6 @@ spring:
     oauth2:
       resource-server:
         enabled: true
-        request-matcher:
-          ignore-patterns:
-            GET:
-              - /**/v3/api-docs/**=laokou-gateway
-              - /swagger-ui.html=laokou-gateway
-              - /swagger-ui/**=laokou-gateway
-              - /actuator/**=laokou-gateway
-              - /favicon.ico=laokou-gateway
-              - /v3/captchas/{uuid}=laokou-gateway
-              - /v3/secrets=laokou-gateway
-              - /doc.html=laokou-gateway
-              - /webjars/**=laokou-gateway
-              - /ws=laokou-gateway
-            POST:
-              - /v3/captchas/send/mail=laokou-gateway
-              - /v3/captchas/send/mobile=laokou-gateway
-              - /oauth2/token=laokou-gateway
-            DELETE:
-              - /v3/tokens=laokou-gateway
   data:
     redis:
       client-type: lettuce
@@ -247,3 +228,22 @@ knife4j:
         context-path: /iot
         order: 2
 
+request-matcher:
+  ignore-patterns:
+    GET:
+      - /**/v3/api-docs/**=laokou-gateway
+      - /swagger-ui.html=laokou-gateway
+      - /swagger-ui/**=laokou-gateway
+      - /actuator/**=laokou-gateway
+      - /favicon.ico=laokou-gateway
+      - /api/v1/captchas/{uuid}=laokou-gateway
+      - /api/v1/secrets=laokou-gateway
+      - /doc.html=laokou-gateway
+      - /webjars/**=laokou-gateway
+      - /ws=laokou-gateway
+    POST:
+      - /api/v1/captchas/send/mail=laokou-gateway
+      - /api/v1/captchas/send/mobile=laokou-gateway
+      - /api/v1/oauth2/token=laokou-gateway
+    DELETE:
+      - /api/v1/tokens=laokou-gateway

@@ -5,11 +5,11 @@
   <parent>
     <artifactId>laokou-common</artifactId>
     <groupId>org.laokou</groupId>
-    <version>4.0.0-SNAPSHOT</version>
+    <version>3.5.4-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>laokou-common-log4j2</artifactId>
-  <version>4.0.0-SNAPSHOT</version>
+  <version>3.5.4-SNAPSHOT</version>
 
   <dependencies>
     <dependency>
@@ -30,7 +30,7 @@
         <artifactId>transmittable-thread-local</artifactId>
     </dependency>
     <dependency>
-      <groupId>tools.jackson.core</groupId>
+      <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
     </dependency>
     <dependency>

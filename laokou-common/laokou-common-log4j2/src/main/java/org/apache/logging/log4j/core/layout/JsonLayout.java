@@ -355,10 +355,11 @@ public final class JsonLayout extends AbstractJacksonLayout {
 	private Map<String, String> resolveAdditionalFields(final LogEvent logEvent) {
 		Map<String, String> additionalFieldsMap = new LinkedHashMap<>(this.additionalFields.length);
 		StrSubstitutor strSubstitutor = this.configuration.getStrSubstitutor();
-		for(ResolvableKeyValuePair pair : this.additionalFields) {
+		for (ResolvableKeyValuePair pair : this.additionalFields) {
 			if (pair.valueNeedsLookup) {
 				additionalFieldsMap.put(pair.key, strSubstitutor.replace(logEvent, pair.value));
-			} else {
+			}
+			else {
 				additionalFieldsMap.put(pair.key, pair.value);
 			}
 		}

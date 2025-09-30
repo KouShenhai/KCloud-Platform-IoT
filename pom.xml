@@ -22,7 +22,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.laokou</groupId>
   <artifactId>KCloud-Platform-IoT</artifactId>
-  <version>4.0.0-SNAPSHOT</version>
+  <version>3.5.4-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
     <module>laokou-common</module>
@@ -56,7 +56,7 @@
   </licenses>
   <properties>
     <!--项目版本-->
-    <project.version>4.0.0-SNAPSHOT</project.version>
+    <project.version>3.5.4-SNAPSHOT</project.version>
     <!--JDK版本-->
     <java.version>25</java.version>
     <!--项目编码-->
@@ -98,19 +98,19 @@
     <!--spring-asciidoctor-backends版本-->
     <spring-asciidoctor-backends.version>0.0.7</spring-asciidoctor-backends.version>
     <!--spring-boot版本-->
-    <spring-boot.version>4.0.0-M3</spring-boot.version>
+    <spring-boot.version>3.5.6</spring-boot.version>
     <!--spring-cloud版本-->
-    <spring-cloud.version>2025.1.0-M2</spring-cloud.version>
+    <spring-cloud.version>2025.0.0</spring-cloud.version>
     <!--cloud-alibaba版本-->
     <spring-cloud-alibaba.version>2025.0.0.0-preview</spring-cloud-alibaba.version>
     <!--spring-framework版本-->
-    <spring-framework.version>7.0.0-M9</spring-framework.version>
+    <spring-framework.version>6.2.1</spring-framework.version>
     <!--spring-data版本-->
-    <spring-data.version>2025.1.0-M6</spring-data.version>
+    <spring-data.version>2025.0.4</spring-data.version>
     <!--spring-security版本-->
-    <spring-security.version>7.0.0-M3</spring-security.version>
+    <spring-security.version>6.5.5</spring-security.version>
     <!--spring-ai版本-->
-    <spring-ai.version>1.1.0-M2</spring-ai.version>
+    <spring-ai.version>1.0.2</spring-ai.version>
     <!--spring-ai-alibaba版本-->
     <spring-ai-alibaba.version>1.0.0.4</spring-ai-alibaba.version>
     <!--dubbo版本-->
@@ -134,7 +134,7 @@
     <!--grpc版本-->
     <grpc.version>1.75.0</grpc.version>
     <!--jackson版本-->
-    <jackson.version>3.0.0-rc10</jackson.version>
+    <jackson.version>2.20.0</jackson.version>
     <!--lombok版本-->
     <lombok.version>1.18.42</lombok.version>
     <!--postgresql版本-->
@@ -171,8 +171,6 @@
     <ip2region.version>3.1.0</ip2region.version>
     <!--spring-kafka版本-->
     <spring-kafka.version>3.3.10</spring-kafka.version>
-    <!--swagger-annotations-jakarta版本-->
-    <swagger-annotations-jakarta.version>2.2.38</swagger-annotations-jakarta.version>
     <!--disruptor版本-->
     <disruptor.version>4.0.0</disruptor.version>
     <!--transmittable-thread-local版本-->
@@ -189,18 +187,12 @@
     <browscap-java.version>1.5.1</browscap-java.version>
     <!--liquibase-core版本-->
     <liquibase-core.version>4.33.0</liquibase-core.version>
-    <!--proto-google-common-protos版本-->
-    <proto-google-common-protos.version>2.61.2</proto-google-common-protos.version>
-    <!--checker-qual版本-->
-    <checker-qual.version>3.51.0</checker-qual.version>
     <!--snail-job版本-->
     <snail-job.version>1.8.0-jdk8</snail-job.version>
     <!--archunit-junit5版本-->
     <archunit-junit5.version>1.4.1</archunit-junit5.version>
     <!--caffeine版本-->
     <caffeine.version>3.2.2</caffeine.version>
-    <!--jsqlparser版本-->
-    <jsqlparser.version>5.3</jsqlparser.version>
     <!--objenesis版本-->
     <objenesis.version>3.4</objenesis.version>
     <!--influxdb-client-java版本-->
@@ -430,7 +422,7 @@
 
       <!-- =============================== 定义 Jackson 版本 =============================== -->
       <dependency>
-        <groupId>tools.jackson</groupId>
+        <groupId>com.fasterxml.jackson</groupId>
         <artifactId>jackson-bom</artifactId>
         <version>${jackson.version}</version>
         <type>pom</type>
@@ -530,11 +522,6 @@
         <version>${objenesis.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.github.jsqlparser</groupId>
-        <artifactId>jsqlparser</artifactId>
-        <version>${jsqlparser.version}</version>
-      </dependency>
-      <dependency>
         <groupId>com.github.ben-manes.caffeine</groupId>
         <artifactId>caffeine</artifactId>
         <version>${caffeine.version}</version>
@@ -563,11 +550,6 @@
         <groupId>com.aizuda</groupId>
         <artifactId>snail-job-client-job-core</artifactId>
         <version>${snail-job.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.checkerframework</groupId>
-        <artifactId>checker-qual</artifactId>
-        <version>${checker-qual.version}</version>
       </dependency>
       <dependency>
         <groupId>org.liquibase</groupId>
@@ -623,11 +605,6 @@
         <groupId>cn.idev.excel</groupId>
         <artifactId>fastexcel</artifactId>
         <version>${fastexcel.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.swagger.core.v3</groupId>
-        <artifactId>swagger-annotations-jakarta</artifactId>
-        <version>${swagger-annotations-jakarta.version}</version>
       </dependency>
       <dependency>
         <groupId>org.springframework.kafka</groupId>
@@ -855,8 +832,8 @@
         <configuration>
           <!--备份版本-->
           <generateBackupPoms>true</generateBackupPoms>
-          <newVersion>4.0.0</newVersion>
-          <oldVersion>4.0.0-SNAPSHOT</oldVersion>
+          <newVersion>3.5.4</newVersion>
+          <oldVersion>3.5.4-SNAPSHOT</oldVersion>
         </configuration>
       </plugin>
       <plugin>

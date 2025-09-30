@@ -16,18 +16,21 @@ server:
   forward-headers-strategy: native
   shutdown: graceful
   servlet:
-    encoding:
-      charset: UTF-8
-  undertow:
+    context-path: /api
+  tomcat:
     threads:
-      # 设置IO线程数，来执行非阻塞任务，负责多个连接数
-      io: 16
-      # 工作线程数
-      worker: 512
-    # 每块buffer的空间大小
-    buffer-size: 2048
-    # 分配堆外内存
-    direct-buffers: true
+      # 工作线程池的最大线程数
+      max: 500
+      # 工作线程池的最小备用线程数
+      min-spare: 50
+    # 最大连接数
+    max-connections: 10000
+    # 当所有工作线程都在忙时，允许等待处理的最大连接数
+    accept-count: 200
+    # URI编码
+    uri-encoding: UTF-8
+    # 连接超时时间
+    connection-timeout: 60s
 spring:
   application:
     name: ${SERVICE_ID:laokou-distributed-identifier}

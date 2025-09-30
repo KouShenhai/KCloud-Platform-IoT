@@ -6,20 +6,32 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-common</artifactId>
-    <version>4.0.0-SNAPSHOT</version>
+    <version>3.5.4-SNAPSHOT</version>
   </parent>
 
   <artifactId>laokou-common-pulsar</artifactId>
-  <version>4.0.0-SNAPSHOT</version>
+  <version>3.5.4-SNAPSHOT</version>
 
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-pulsar-reactive</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>com.google.errorprone</groupId>
+          <artifactId>error_prone_annotations</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-pulsar</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>com.google.errorprone</groupId>
+          <artifactId>error_prone_annotations</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>

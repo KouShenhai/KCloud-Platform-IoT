@@ -4,11 +4,11 @@
   <parent>
     <artifactId>laokou-common</artifactId>
     <groupId>org.laokou</groupId>
-    <version>4.0.0-SNAPSHOT</version>
+    <version>3.5.4-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>laokou-common-cors</artifactId>
-  <version>4.0.0-SNAPSHOT</version>
+  <version>3.5.4-SNAPSHOT</version>
 
   <dependencies>
     <dependency>
@@ -19,6 +19,11 @@
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-core</artifactId>
       <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 

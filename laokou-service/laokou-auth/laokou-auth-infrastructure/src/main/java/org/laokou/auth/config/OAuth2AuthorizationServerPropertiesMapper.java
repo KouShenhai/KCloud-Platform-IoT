@@ -20,8 +20,9 @@ package org.laokou.auth.config;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.properties.PropertyMapper;
-import org.springframework.boot.web.server.autoconfigure.ServerProperties;
+import org.springframework.boot.web.server.Ssl;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.jose.jws.JwsAlgorithm;
@@ -38,10 +39,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.function.Supplier;
 
 /**
  * Maps {@link OAuth2AuthorizationServerProperties } to Authorization Server types.
- * {@link org.springframework.boot.security.oauth2.server.authorization.autoconfigure.servlet.OAuth2AuthorizationServerProperties}
  *
  * @author Steve Riesenberg
  * @author laokou
@@ -63,17 +64,18 @@ final class OAuth2AuthorizationServerPropertiesMapper {
 		AuthorizationServerSettings.Builder builder = AuthorizationServerSettings.builder();
 		map.from(this.properties::getIssuer).to(builder::issuer);
 		map.from(this.properties::isMultipleIssuersAllowed).to(builder::multipleIssuersAllowed);
-		map.from(endpoint::getAuthorizationUri).to(builder::authorizationEndpoint);
-		map.from(endpoint::getDeviceAuthorizationUri).to(builder::deviceAuthorizationEndpoint);
-		map.from(endpoint::getDeviceVerificationUri).to(builder::deviceVerificationEndpoint);
-		map.from(endpoint::getTokenUri).to(builder::tokenEndpoint);
-		map.from(endpoint::getJwkSetUri).to(builder::jwkSetEndpoint);
-		map.from(endpoint::getTokenRevocationUri).to(builder::tokenRevocationEndpoint);
-		map.from(endpoint::getTokenIntrospectionUri).to(builder::tokenIntrospectionEndpoint);
-		map.from(endpoint::getPushedAuthorizationRequestUri).to(builder::pushedAuthorizationRequestEndpoint);
-		map.from(oidc::getLogoutUri).to(builder::oidcLogoutEndpoint);
-		map.from(oidc::getClientRegistrationUri).to(builder::oidcClientRegistrationEndpoint);
-		map.from(oidc::getUserInfoUri).to(builder::oidcUserInfoEndpoint);
+		map.from(mergeApiPath(endpoint::getAuthorizationUri)).to(builder::authorizationEndpoint);
+		map.from(mergeApiPath(endpoint::getDeviceAuthorizationUri)).to(builder::deviceAuthorizationEndpoint);
+		map.from(mergeApiPath(endpoint::getDeviceVerificationUri)).to(builder::deviceVerificationEndpoint);
+		map.from(mergeApiPath(endpoint::getTokenUri)).to(builder::tokenEndpoint);
+		map.from(mergeApiPath(endpoint::getJwkSetUri)).to(builder::jwkSetEndpoint);
+		map.from(mergeApiPath(endpoint::getTokenRevocationUri)).to(builder::tokenRevocationEndpoint);
+		map.from(mergeApiPath(endpoint::getTokenIntrospectionUri)).to(builder::tokenIntrospectionEndpoint);
+		map.from(mergeApiPath(endpoint::getPushedAuthorizationRequestUri))
+			.to(builder::pushedAuthorizationRequestEndpoint);
+		map.from(mergeApiPath(oidc::getLogoutUri)).to(builder::oidcLogoutEndpoint);
+		map.from(mergeApiPath(oidc::getClientRegistrationUri)).to(builder::oidcClientRegistrationEndpoint);
+		map.from(mergeApiPath(oidc::getUserInfoUri)).to(builder::oidcUserInfoEndpoint);
 		return builder.build();
 	}
 
@@ -138,8 +140,11 @@ final class OAuth2AuthorizationServerPropertiesMapper {
 		map.from(token::getIdTokenSignatureAlgorithm)
 			.as(this::signatureAlgorithm)
 			.to(builder::idTokenSignatureAlgorithm);
-		return serverProperties.getSsl().isEnabled() ? builder.x509CertificateBoundAccessTokens(true).build()
-				: builder.build();
+		Ssl ssl = serverProperties.getSsl();
+		if (ObjectUtils.isNull(ssl)) {
+			return builder.build();
+		}
+		return ssl.isEnabled() ? builder.x509CertificateBoundAccessTokens(true).build() : builder.build();
 	}
 
 	private JwsAlgorithm jwsAlgorithm(String signingAlgorithm) {
@@ -153,6 +158,10 @@ final class OAuth2AuthorizationServerPropertiesMapper {
 
 	private SignatureAlgorithm signatureAlgorithm(String signatureAlgorithm) {
 		return SignatureAlgorithm.from(signatureAlgorithm.toUpperCase(Locale.ROOT));
+	}
+
+	private String mergeApiPath(Supplier<String> supplier) {
+		return serverProperties.getServlet().getContextPath() + supplier.get();
 	}
 
 }

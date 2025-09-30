@@ -18,7 +18,7 @@
 package org.laokou.auth.config;
 
 import lombok.Data;
-import org.laokou.common.core.config.OAuth2ResourceServerProperties;
+import org.laokou.common.security.config.OAuth2ResourceServerProperties;
 import org.laokou.common.core.util.SpringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
