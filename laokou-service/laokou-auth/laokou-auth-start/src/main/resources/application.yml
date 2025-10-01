@@ -37,7 +37,8 @@ server:
   forward-headers-strategy: native
   shutdown: graceful
   port: ${SERVER_PORT:1111}
-
+  servlet:
+    context-path: /api
   tomcat:
     threads:
       # 工作线程池的最大线程数
@@ -145,19 +146,17 @@ spring:
           ignore-patterns:
             GET:
               - /v3/api-docs/**=laokou-auth
-              - /swagger-ui.html=laokou-auth
-              - /swagger-ui/**=laokou-auth
               - /actuator/**=laokou-auth
               - /error=laokou-auth
-              - /api/v1/captchas/{uuid}=laokou-auth
-              - /api/v1/secrets=laokou-auth
+              - /v1/captchas/{uuid}=laokou-auth
+              - /v1/secrets=laokou-auth
               - /doc.html=laokou-auth
               - /webjars/**=laokou-auth
             POST:
-              - /api/v1/captchas/send/mail=laokou-auth
-              - /api/v1/captchas/send/mobile=laokou-auth
+              - /v1/captchas/send/mail=laokou-auth
+              - /v1/captchas/send/mobile=laokou-auth
             DELETE:
-              - /api/v1/tokens=laokou-auth
+              - /v1/tokens=laokou-auth
   datasource:
     dynamic:
       # 默认false,建议线上关闭

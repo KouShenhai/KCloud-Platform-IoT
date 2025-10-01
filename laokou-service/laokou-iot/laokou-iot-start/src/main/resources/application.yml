@@ -62,10 +62,7 @@ spring:
           ignore-patterns:
             GET:
               - /v3/api-docs/**=laokou-iot
-              - /swagger-ui.html=laokou-iot
-              - /swagger-ui/**=laokou-iot
               - /actuator/**=laokou-iot
-              - /error=laokou-iot
               - /doc.html=laokou-iot
               - /webjars/**=laokou-iot
   datasource:

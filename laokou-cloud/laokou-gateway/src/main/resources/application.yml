@@ -208,27 +208,25 @@ knife4j:
     strategy: manual
     routes:
       - name: 认证服务
-        url: /auth/v3/api-docs?group=default
+        url: /auth/api/v3/api-docs?group=default
         service-name: laokou-auth
-        context-path: /auth
+        context-path: /auth/api
         order: 1
       - name: 管理服务
-        url: /admin/v3/api-docs?group=default
+        url: /admin/api/v3/api-docs?group=default
         service-name: laokou-admin
-        context-path: /admin
+        context-path: /admin/api
         order: 2
       - name: IoT服务
-        url: /iot/v3/api-docs?group=default
+        url: /iot/api/v3/api-docs?group=default
         service-name: laokou-iot
-        context-path: /iot
+        context-path: /iot/api
         order: 2
 
 request-matcher:
   ignore-patterns:
     GET:
       - /**/v3/api-docs/**=laokou-gateway
-      - /swagger-ui.html=laokou-gateway
-      - /swagger-ui/**=laokou-gateway
       - /actuator/**=laokou-gateway
       - /favicon.ico=laokou-gateway
       - /api/v1/captchas/{uuid}=laokou-gateway

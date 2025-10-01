@@ -76,10 +76,7 @@ spring:
           ignore-patterns:
             GET:
               - /v3/api-docs/**=laokou-admin
-              - /swagger-ui.html=laokou-admin
-              - /swagger-ui/**=laokou-admin
               - /actuator/**=laokou-admin
-              - /error=laokou-admin
               - /doc.html=laokou-admin
               - /webjars/**=laokou-admin
   datasource:

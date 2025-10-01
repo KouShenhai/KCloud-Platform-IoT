@@ -27,7 +27,6 @@ import org.laokou.common.ratelimiter.annotation.RateLimiter;
 import org.laokou.common.ratelimiter.aop.Type;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -36,7 +35,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "安全配置", description = "安全配置")
-@RequestMapping("/api")
 public class SecretsController {
 
 	private final SecretsServiceI secretsServiceI;
