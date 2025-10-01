@@ -110,7 +110,7 @@
     <!--spring-security版本-->
     <spring-security.version>6.5.5</spring-security.version>
     <!--spring-ai版本-->
-    <spring-ai.version>1.0.2</spring-ai.version>
+    <spring-ai.version>1.0.3</spring-ai.version>
     <!--spring-ai-alibaba版本-->
     <spring-ai-alibaba.version>1.0.0.4</spring-ai-alibaba.version>
     <!--dubbo版本-->
