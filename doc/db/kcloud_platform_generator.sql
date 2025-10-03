@@ -82,11 +82,10 @@ CREATE TABLE "public"."generator_info" (
 	"author" varchar(50)  NOT NULL,
 	"comment" varchar(50)  NOT NULL,
 	"package_name" varchar(50)  NOT NULL,
-	"path" varchar(200)  NOT NULL,
-	"api_version" varchar(10) NOT NULL,
-	"table_prefix" varchar(50)  NOT NULL,
 	"module_name" varchar(50)  NOT NULL,
-	"service_id" varchar(50)  NOT NULL
+	"path" varchar(200)  NOT NULL,
+	"service_id" varchar(50)  NOT NULL,
+	"group_id" int8 NOT NULL
 )
 ;
 COMMENT ON COLUMN "public"."generator_info"."id" IS 'ID';
@@ -101,13 +100,12 @@ COMMENT ON COLUMN "public"."generator_info"."ds_name" IS '数据源名称';
 COMMENT ON COLUMN "public"."generator_info"."db_name" IS '数据库名称';
 COMMENT ON COLUMN "public"."generator_info"."table_name" IS '数据库表名称';
 COMMENT ON COLUMN "public"."generator_info"."author" IS '作者';
-COMMENT ON COLUMN "public"."generator_info"."comment" IS '表描述';
+COMMENT ON COLUMN "public"."generator_info"."comment" IS '描述';
 COMMENT ON COLUMN "public"."generator_info"."package_name" IS '包名';
-COMMENT ON COLUMN "public"."generator_info"."path" IS '生成路径';
-COMMENT ON COLUMN "public"."generator_info"."api_version" IS 'API版本号';
-COMMENT ON COLUMN "public"."generator_info"."table_prefix" IS '数据库表前缀';
 COMMENT ON COLUMN "public"."generator_info"."module_name" IS '模块名称';
+COMMENT ON COLUMN "public"."generator_info"."path" IS '生成路径';
 COMMENT ON COLUMN "public"."generator_info"."service_id" IS '服务ID';
+COMMENT ON COLUMN "public"."generator_info"."group_id" IS '组ID';
 COMMENT ON TABLE "public"."generator_info" IS '信息';
 
 ALTER TABLE "public"."generator_info" ADD CONSTRAINT "generator_info_pkey" PRIMARY KEY ("id");
