@@ -28,7 +28,6 @@ import co.elastic.clients.elasticsearch.core.search.HighlightField;
 import co.elastic.clients.elasticsearch.core.search.Hit;
 import co.elastic.clients.elasticsearch.core.search.HitsMetadata;
 import co.elastic.clients.util.NamedValue;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.elasticsearch.entity.Search;
 import org.laokou.common.i18n.dto.Page;
@@ -47,12 +46,8 @@ import java.util.concurrent.CompletableFuture;
  * @author laokou
  */
 @Slf4j
-@RequiredArgsConstructor
-public final class ElasticsearchSearchTemplate {
-
-	private final ElasticsearchClient elasticsearchClient;
-
-	private final ElasticsearchAsyncClient elasticsearchAsyncClient;
+public record ElasticsearchSearchTemplate(ElasticsearchClient elasticsearchClient,
+		ElasticsearchAsyncClient elasticsearchAsyncClient) {
 
 	public <S> Page<S> search(List<String> names, Search search, Class<S> clazz) throws IOException {
 		SearchRequest searchRequest = getSearchRequest(names, search);
@@ -108,7 +103,7 @@ public final class ElasticsearchSearchTemplate {
 		return builder.build();
 	}
 
-	private co.elastic.clients.elasticsearch.core.search.Highlight getHighlight(Search.Highlight highlight) {
+	private Highlight getHighlight(Search.Highlight highlight) {
 		return Highlight.of(h -> h.preTags(highlight.getPreTags())
 			.postTags(highlight.getPostTags())
 			// 多个字段高亮，需要设置false

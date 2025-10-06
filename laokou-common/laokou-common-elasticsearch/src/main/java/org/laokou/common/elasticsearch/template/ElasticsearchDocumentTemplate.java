@@ -25,7 +25,6 @@ import co.elastic.clients.elasticsearch.core.DeleteResponse;
 import co.elastic.clients.elasticsearch.core.GetResponse;
 import co.elastic.clients.elasticsearch.core.IndexResponse;
 import co.elastic.clients.elasticsearch.core.bulk.BulkOperation;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -37,12 +36,8 @@ import java.util.concurrent.Executor;
  * @author laokou
  */
 @Slf4j
-@RequiredArgsConstructor
-public final class ElasticsearchDocumentTemplate {
-
-	private final ElasticsearchClient elasticsearchClient;
-
-	private final ElasticsearchAsyncClient elasticsearchAsyncClient;
+public record ElasticsearchDocumentTemplate(ElasticsearchClient elasticsearchClient,
+		ElasticsearchAsyncClient elasticsearchAsyncClient) {
 
 	public <T> void createDocument(String indexName, String id, T obj) throws IOException {
 		IndexResponse response = elasticsearchClient

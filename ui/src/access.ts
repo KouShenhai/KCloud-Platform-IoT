@@ -66,9 +66,11 @@ export default (initialState: any) => {
 export function setToken(
 	access_token: string,
 	refresh_token: string,
+	expire_time: number
 ): void {
 	localStorage.setItem('access_token', access_token);
 	localStorage.setItem('refresh_token', refresh_token);
+	localStorage.setItem('expire_time', `${expire_time}`);
 }
 
 export function getAccessToken() {
@@ -79,7 +81,12 @@ export function getRefreshToken() {
 	return localStorage.getItem('refresh_token');
 }
 
+export function getExpireTime() {
+	return parseInt(String(localStorage.getItem('expire_time')));
+}
+
 export function clearToken() {
 	localStorage.removeItem('access_token');
 	localStorage.removeItem('refresh_token');
+	localStorage.removeItem('expire_time');
 }

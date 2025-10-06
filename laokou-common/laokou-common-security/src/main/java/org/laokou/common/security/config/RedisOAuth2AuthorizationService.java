@@ -95,10 +95,10 @@ public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationServi
 		OAuth2AuthorizationGrantAuthorization authorizationGrantAuthorization = null;
 		if (tokenType == null) {
 			authorizationGrantAuthorization = this.authorizationGrantAuthorizationRepository
-				.findByStateOrAuthorizationCode_TokenValue(token, token);
+				.findByAccessToken_TokenValueOrRefreshToken_TokenValue(token, token);
 			if (authorizationGrantAuthorization == null) {
 				authorizationGrantAuthorization = this.authorizationGrantAuthorizationRepository
-					.findByAccessToken_TokenValueOrRefreshToken_TokenValue(token, token);
+					.findByStateOrAuthorizationCode_TokenValue(token, token);
 			}
 			if (authorizationGrantAuthorization == null) {
 				authorizationGrantAuthorization = this.authorizationGrantAuthorizationRepository

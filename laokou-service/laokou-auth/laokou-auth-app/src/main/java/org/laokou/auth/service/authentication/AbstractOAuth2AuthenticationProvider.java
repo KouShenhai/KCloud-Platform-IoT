@@ -39,9 +39,6 @@ import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.OAuth2ErrorCodes;
 import org.springframework.security.oauth2.core.OAuth2RefreshToken;
 import org.springframework.security.oauth2.core.OAuth2Token;
-import org.springframework.security.oauth2.core.oidc.OidcIdToken;
-import org.springframework.security.oauth2.core.oidc.OidcScopes;
-import org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames;
 import org.springframework.security.oauth2.jwt.DPoPProofContext;
 import org.springframework.security.oauth2.jwt.DPoPProofJwtDecoderFactory;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -64,8 +61,6 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.security.Principal;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Optional;
@@ -79,8 +74,6 @@ import java.util.Set;
 @Slf4j
 @RequiredArgsConstructor
 abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationProvider {
-
-	private static final OAuth2TokenType ID_TOKEN_TOKEN_TYPE = new OAuth2TokenType(OidcParameterNames.ID_TOKEN);
 
 	private final JwtDecoderFactory<DPoPProofContext> dPoPProofVerifierFactory = new DPoPProofJwtDecoderFactory();
 
@@ -143,7 +136,7 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 	 */
 	protected Authentication authentication(Authentication authentication, Authentication principal)
 			throws JsonProcessingException {
-		// 查看 OAuth2AuthorizationCodeAuthenticationProvider#authenticate(Authentication)
+		// 查看 OAuth2DeviceCodeAuthenticationProvider#authenticate(Authentication)
 		AbstractOAuth2AuthenticationToken abstractOAuth2Authentication = (AbstractOAuth2AuthenticationToken) authentication;
 		OAuth2ClientAuthenticationToken clientPrincipal = getAuthenticatedClientElseThrowInvalidClient(
 				abstractOAuth2Authentication);
@@ -187,8 +180,8 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 
 		// ----- Refresh token -----
 		OAuth2RefreshToken refreshToken = null;
-		if (registeredClient.getAuthorizationGrantTypes().contains(AuthorizationGrantType.REFRESH_TOKEN)
-				&& !clientPrincipal.getClientAuthenticationMethod().equals(ClientAuthenticationMethod.NONE)) {
+		if (registeredClient.getAuthorizationGrantTypes().contains(AuthorizationGrantType.REFRESH_TOKEN) && !ObjectUtils
+			.equals(clientPrincipal.getClientAuthenticationMethod(), ClientAuthenticationMethod.NONE)) {
 			tokenContext = tokenContextBuilder.tokenType(OAuth2TokenType.REFRESH_TOKEN).build();
 			OAuth2Token generatedRefreshToken = Optional.ofNullable(tokenGenerator.generate(tokenContext))
 				.orElseThrow(() -> OAuth2ExceptionHandler.getException(OAuth2Constants.GENERATE_REFRESH_TOKEN_FAIL));
@@ -196,38 +189,11 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 			authorizationBuilder.refreshToken(refreshToken);
 		}
 
-		// ----- ID token -----
-		OidcIdToken idToken;
-		if (authorizedScopes.contains(OidcScopes.OPENID)) {
-			tokenContext = tokenContextBuilder.tokenType(ID_TOKEN_TOKEN_TYPE)
-				.authorization(authorizationBuilder.build())
-				.build();
-			OAuth2Token generatedIdToken = Optional.ofNullable(this.tokenGenerator.generate(tokenContext))
-				.orElseThrow(() -> OAuth2ExceptionHandler.getException(OAuth2Constants.GENERATE_ID_TOKEN_FAIL));
-			// 生成id_token
-			idToken = new OidcIdToken(generatedIdToken.getTokenValue(), generatedIdToken.getIssuedAt(),
-					generatedIdToken.getExpiresAt(), ((Jwt) generatedIdToken).getClaims());
-			authorizationBuilder.token(idToken,
-					(metadata) -> metadata.put(OAuth2Authorization.Token.CLAIMS_METADATA_NAME, idToken.getClaims()));
-		}
-		else {
-			idToken = null;
-		}
-
 		// 存储认证信息
 		authorizationBuilder.attribute(Principal.class.getName(), principal);
 		authorizationService.save(authorizationBuilder.build());
 
-		Map<String, Object> additionalParameters;
-		if (ObjectUtils.isNotNull(idToken)) {
-			additionalParameters = new HashMap<>(1);
-			additionalParameters.put(OidcParameterNames.ID_TOKEN, idToken.getTokenValue());
-		}
-		else {
-			additionalParameters = Collections.emptyMap();
-		}
-		return new OAuth2AccessTokenAuthenticationToken(registeredClient, clientPrincipal, accessToken, refreshToken,
-				additionalParameters);
+		return new OAuth2AccessTokenAuthenticationToken(registeredClient, clientPrincipal, accessToken, refreshToken);
 	}
 
 	/**

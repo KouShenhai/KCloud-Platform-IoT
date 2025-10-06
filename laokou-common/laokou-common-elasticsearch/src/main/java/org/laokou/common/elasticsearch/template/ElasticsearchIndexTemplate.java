@@ -29,7 +29,6 @@ import co.elastic.clients.elasticsearch.indices.GetIndexResponse;
 import co.elastic.clients.elasticsearch.indices.IndexSettings;
 import co.elastic.clients.elasticsearch.indices.IndexSettingsAnalysis;
 import co.elastic.clients.transport.endpoints.BooleanResponse;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.elasticsearch.annotation.Analysis;
 import org.laokou.common.elasticsearch.annotation.Analyzer;
@@ -58,12 +57,8 @@ import java.util.stream.Collectors;
  * @author laokou
  */
 @Slf4j
-@RequiredArgsConstructor
-public final class ElasticsearchIndexTemplate {
-
-	private final ElasticsearchClient elasticsearchClient;
-
-	private final ElasticsearchAsyncClient elasticsearchAsyncClient;
+public record ElasticsearchIndexTemplate(ElasticsearchClient elasticsearchClient,
+		ElasticsearchAsyncClient elasticsearchAsyncClient) {
 
 	public <TDocument> void createIndex(String name, String alias, Class<TDocument> clazz) throws IOException {
 		// 判断索引是否存在

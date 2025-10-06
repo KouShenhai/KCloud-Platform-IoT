@@ -71,7 +71,7 @@ class CommonTest {
 	}
 
 	private String getOAuthApiUrl() {
-		return getSchema(disabledSsl()) + "auth:1111/oauth2/token";
+		return getSchema(disabledSsl()) + "auth:1111/api/v1/oauth2/token";
 	}
 
 	private String getSchema(boolean disabled) {

@@ -6,14 +6,17 @@ import {Dropdown, message, theme} from "antd";
 import {history} from "@umijs/max";
 import {HomeOutlined, LogoutOutlined, RobotOutlined, SettingOutlined} from "@ant-design/icons";
 import {ReactElement, ReactNode, ReactPortal} from "react";
-import { logout, refresh } from '@/services/auth/auth';
-import { clearToken, getAccessToken, getRefreshToken, setToken } from '@/access';
+import {logout, refresh} from '@/services/auth/auth';
+import {getAccessToken, getExpireTime, getRefreshToken, setToken} from '@/access';
 import React from "react";
 import {RunTimeLayoutConfig} from "@@/plugin-layout/types";
 import {getUserProfile} from "@/services/admin/user";
 import {listUserTreeMenu} from "@/services/admin/menu";
 import {ProBreadcrumb} from "@ant-design/pro-layout";
-import axios from 'axios';
+
+let refreshTokenFlag = false
+
+let refreshTimeoutRef: any = null;
 
 const getIcon = (icon: string) => {
 	switch (icon) {
@@ -37,6 +40,55 @@ const getRouters = (menus: any[]) => {
 	}
 	return routers
 }
+
+const refreshToken =  async (refreshToken: string | null) => {
+	if (refreshToken && !refreshTokenFlag) {
+		// console.log('开始刷新令牌')
+		refreshTokenFlag = true;
+		// 刷新令牌
+		refresh({refresh_token: refreshToken, grant_type: 'refresh_token'}).then((res) => {
+			if (res.code === 'OK') {
+				// console.log('刷新令牌成功')
+				// 存储令牌
+				setToken(res.data?.access_token, res.data?.refresh_token, res.data?.expires_in * 1000 + new Date().getTime());
+			}
+		}).finally(() => {
+			refreshTokenFlag = false
+			// console.log('刷新令牌结束')
+		});
+	}
+}
+
+const calculateRefreshTime = (expireTime: number) => {
+	const nowTime = Date.now();
+	const timeUntilExpiry = expireTime - nowTime;
+
+	// 如果token已过期，立即刷新
+	if (timeUntilExpiry <= 0) {
+		return 0;
+	}
+
+	// 在token过期前1分钟刷新
+	const refreshBuffer = 60 * 1000; // 1分钟
+	const refreshTime = timeUntilExpiry - refreshBuffer;
+
+	// 如果已经过了刷新时间，立即刷新
+	return Math.max(0, refreshTime);
+}
+
+const scheduleTokenRefresh = async () => {
+	if (refreshTimeoutRef) {
+		clearTimeout(refreshTimeoutRef);
+	}
+
+	const refreshTime = calculateRefreshTime(getExpireTime());
+
+	refreshTimeoutRef = setTimeout(() => {
+		refreshToken(getRefreshToken())
+	}, refreshTime);
+}
+
+scheduleTokenRefresh().then()
 
 export async function getInitialState(): Promise<{
 	id: bigint;
@@ -89,10 +141,9 @@ export const layout: RunTimeLayoutConfig  = ({ initialState }: any) => {
 									label: '注销',
 									onClick: async () => {
 										// @ts-ignore
-										logout({token: getAccessToken()}).then(() => {
-											clearToken()
+										logout({token: getAccessToken()}).finally(() => {
+											history.push('/login')
 										})
-										history.push('/login')
 									},
 								},
 							],
@@ -144,8 +195,6 @@ export const layout: RunTimeLayoutConfig  = ({ initialState }: any) => {
 	};
 };
 
-let isRefreshToken = false;
-
 export const request: {
 	responseInterceptors: ((response: any) => any)[];
 	requestInterceptors: (((config: any) => any) | ((error: any) => any))[];
@@ -186,7 +235,7 @@ export const request: {
 		async (config: any) => {
 			const headers = config.headers ? config.headers : [];
 			const accessToken = getAccessToken()
-			if (accessToken) {
+			if (!config.url.includes('/oauth2/token') && accessToken) {
 				headers['Authorization'] = `Bearer ${accessToken}`
 			}
 			return config;
@@ -209,29 +258,9 @@ export const request: {
 				response.data = {code: 'OK', msg: '请求成功', data: data};
 			} else if (status === 200 && data.code !== 'OK') {
 				if (data.code === "Unauthorized") {
-					const refreshToken = getRefreshToken();
-					if (refreshToken && !isRefreshToken) {
-						isRefreshToken = true;
-						// 清空令牌
-						clearToken()
-						// 刷新令牌
-						refresh({refresh_token: refreshToken, grant_type: 'refresh_token'}).then((res) => {
-							if (res.code === 'OK') {
-								// 存储令牌
-								setToken(res.data?.access_token, res.data?.refresh_token)
-								// 续签提醒
-								message.warning("令牌续期成功，请刷新页面或重新请求");
-								// 重新请求
-								return axios.request(response.config)
-							}
-						}).catch(() => {
-							history.push('/login')
-						}).finally(() => isRefreshToken = false);
-					} else if (!refreshToken && !isRefreshToken) {
-						history.push('/login')
-					}
+					history.push('/login');
 				} else {
-					message.error(data.msg).then();
+					message.error(data.msg).then()
 				}
 			}
 			return response;
