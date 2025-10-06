@@ -88,7 +88,7 @@
     <!--spring-javaformat-maven-plugin版本-->
     <spring-javaformat-maven-plugin.version>0.0.47</spring-javaformat-maven-plugin.version>
     <!--maven-archetype-plugin版本-->
-    <maven-archetype-plugin.version>3.4.0</maven-archetype-plugin.version>
+    <maven-archetype-plugin.version>3.4.1</maven-archetype-plugin.version>
     <!--jacoco-maven-plugin版本-->
     <jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>
     <!--checkstyle版本-->
