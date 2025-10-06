@@ -168,12 +168,11 @@ export default () => {
 				if (res.code === 'OK') {
 					// 提示框【登录成功】
 					message.success(`${timeFix()}，欢迎回来`).then();
-					// 清空令牌
-					clearToken()
 					// 登录成功，存储令牌
-					setToken(res.data?.access_token, res.data?.refresh_token)
-					// 跳转路由
+					setToken(res.data?.access_token, res.data?.refresh_token, res.data?.expires_in * 1000 + new Date().getTime())
+					// 获取跳转地址
 					const urlParams = new URL(window.location.href).searchParams;
+					// 跳转路由
 					history.push(urlParams.get('redirect') || '/');
 					// 1.5秒后刷新页面
 					setTimeout(() => {

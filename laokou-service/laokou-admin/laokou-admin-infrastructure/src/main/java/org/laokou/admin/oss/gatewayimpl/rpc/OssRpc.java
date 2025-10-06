@@ -38,7 +38,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Component
 public class OssRpc {
 
-	@DubboReference(group = "iot-oss", version = "v3", interfaceClass = OssServiceI.class,
+	@DubboReference(group = "iot-oss", version = "v1", interfaceClass = OssServiceI.class,
 			mock = "org.laokou.admin.oss.gatewayimpl.rpc.OssMock", loadbalance = "adaptive", retries = 3)
 	private OssServiceI ossServiceI;
 

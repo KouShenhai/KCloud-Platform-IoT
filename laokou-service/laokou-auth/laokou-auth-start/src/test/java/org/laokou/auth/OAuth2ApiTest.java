@@ -78,7 +78,7 @@ class OAuth2ApiTest {
 
 	private static final String MOBILE = "18888888888";
 
-	private static final String TENANT_CODE = "laokou";
+	private static final String TENANT_CODE = "laokouyun";
 
 	private static final String DEVICE_CODE = "device_code";
 
@@ -462,12 +462,13 @@ class OAuth2ApiTest {
 	}
 
 	private String getOAuthApiUrl() {
-		return getSchema(disabledSsl()) + "auth" + StringConstants.RISK + serverProperties.getPort() + "/oauth2/token";
+		return getSchema(disabledSsl()) + "auth" + StringConstants.RISK + serverProperties.getPort()
+				+ "/api/v1/oauth2/token";
 	}
 
 	private String getDeviceCodeApiUrl() {
 		return getSchema(disabledSsl()) + "auth" + StringConstants.RISK + serverProperties.getPort()
-				+ "/oauth2/device_authorization";
+				+ "/api/v1/oauth2/device_authorization";
 	}
 
 	private String getCaptchaApiUrlV3() {

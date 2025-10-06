@@ -311,8 +311,8 @@ class OAuth2AuthorizationServerConfig {
 			keyPairGenerator.initialize(2048);
 			return keyPairGenerator.generateKeyPair();
 		}
-		catch (Exception var2) {
-			throw new IllegalStateException(var2);
+		catch (Exception ex) {
+			throw new IllegalStateException(ex);
 		}
 	}
 

@@ -99,7 +99,6 @@ public class OAuth2ResourceServerConfig {
 					.preload(true)
 					.maxAgeInSeconds(31536000)))
 			.requestCache(AbstractHttpConfigurer::disable)
-			.sessionManagement(AbstractHttpConfigurer::disable)
 			.securityContext(AbstractHttpConfigurer::disable)
 			.csrf(AbstractHttpConfigurer::disable)
 			.cors(AbstractHttpConfigurer::disable)

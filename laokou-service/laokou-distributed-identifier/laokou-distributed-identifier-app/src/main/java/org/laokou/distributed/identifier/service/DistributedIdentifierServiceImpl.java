@@ -36,7 +36,7 @@ import java.util.List;
  * @author laokou
  */
 @Service
-@DubboService(token = "3f7c5e45d6a7", group = "iot-distributed-identifier", version = "v3", timeout = 10000)
+@DubboService(token = "3f7c5e45d6a7", group = "iot-distributed-identifier", version = "v1", timeout = 10000)
 @RequiredArgsConstructor
 public class DistributedIdentifierServiceImpl
 		extends DubboDistributedIdentifierServiceITriple.DistributedIdentifierServiceIImplBase {
