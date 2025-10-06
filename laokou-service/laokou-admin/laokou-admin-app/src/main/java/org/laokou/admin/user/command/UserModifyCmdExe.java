@@ -44,6 +44,8 @@ public class UserModifyCmdExe {
 	@CommandLog
 	public void executeVoid(UserModifyCmd cmd) throws Exception {
 		UserE userE = UserConvertor.toEntity(cmd.getCo(), false);
+		// 校验用户参数
+		userE.checkUserParam();
 		transactionalUtils.executeInTransaction(() -> userDomainService.updateUser(userE));
 	}
 

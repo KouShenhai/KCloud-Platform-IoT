@@ -46,8 +46,9 @@ public class ProductCategorySaveCmdExe {
 	public void executeVoid(ProductCategorySaveCmd cmd) {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.IOT);
-			// 校验参数
 			ProductCategoryE productCategoryE = ProductCategoryConvertor.toEntity(cmd.getCo(), true);
+			// 校验参数
+			productCategoryE.checkProductCategoryParam();
 			transactionalUtils
 				.executeInTransaction(() -> productCategoryDomainService.createProductCategory(productCategoryE));
 		}

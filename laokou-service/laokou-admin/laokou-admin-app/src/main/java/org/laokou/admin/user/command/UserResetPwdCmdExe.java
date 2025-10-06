@@ -42,6 +42,8 @@ public class UserResetPwdCmdExe {
 	@CommandLog
 	public void executeVoid(UserResetPwdCmd cmd) throws Exception {
 		UserE userE = UserConvertor.toEntity(cmd.getId(), cmd.getPassword());
+		// 校验用户参数
+		userE.checkUserParam();
 		transactionalUtils.executeInTransaction(() -> userDomainService.updateUser(userE));
 	}
 

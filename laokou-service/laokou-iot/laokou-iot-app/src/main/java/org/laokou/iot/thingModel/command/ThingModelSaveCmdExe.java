@@ -46,8 +46,9 @@ public class ThingModelSaveCmdExe {
 	public void executeVoid(ThingModelSaveCmd cmd) throws Exception {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.IOT);
-			// 校验参数
 			ThingModelE thingModelE = ThingModelConvertor.toEntity(cmd.getCo(), true);
+			// 校验参数
+			thingModelE.checkThingModelParam();
 			transactionalUtils.executeInTransaction(() -> thingModelDomainService.createThingModel(thingModelE));
 		}
 		finally {

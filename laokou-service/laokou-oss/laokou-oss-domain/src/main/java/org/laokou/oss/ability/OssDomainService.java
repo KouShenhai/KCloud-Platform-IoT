@@ -42,10 +42,6 @@ public class OssDomainService {
 	}
 
 	public void uploadOss(OssA ossA) {
-		// 校验文件大小
-		ossA.checkSize();
-		// 校验扩展名
-		ossA.checkExt();
 		// 获取OSS信息
 		ossA.getOssInfo(() -> ossLogGateway.getOssInfoByMd5(ossA.getMd5()), () -> ossGateway.uploadOssAndGetInfo(ossA));
 	}

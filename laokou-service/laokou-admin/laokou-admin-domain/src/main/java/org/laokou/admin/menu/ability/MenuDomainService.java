@@ -34,12 +34,10 @@ public class MenuDomainService {
 	private final MenuGateway menuGateway;
 
 	public void createMenu(MenuE menuE) {
-		menuE.checkMenuParam();
 		menuGateway.createMenu(menuE);
 	}
 
 	public void updateMenu(MenuE menuE) {
-		menuE.checkMenuParam();
 		menuGateway.updateMenu(menuE);
 	}
 

@@ -47,6 +47,8 @@ public class ProductCategoryModifyCmdExe {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.IOT);
 			ProductCategoryE productCategoryE = ProductCategoryConvertor.toEntity(cmd.getCo(), false);
+			// 校验参数
+			productCategoryE.checkProductCategoryParam();
 			transactionalUtils
 				.executeInTransaction(() -> productCategoryDomainService.updateProductCategory(productCategoryE));
 		}

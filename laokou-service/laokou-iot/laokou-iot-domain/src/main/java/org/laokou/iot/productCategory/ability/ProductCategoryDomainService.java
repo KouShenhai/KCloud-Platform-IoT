@@ -35,12 +35,10 @@ public class ProductCategoryDomainService {
 	private final ProductCategoryGateway productCategoryGateway;
 
 	public void createProductCategory(ProductCategoryE productCategoryE) {
-		productCategoryE.checkProductCategoryParam();
 		productCategoryGateway.createProductCategory(productCategoryE);
 	}
 
 	public void updateProductCategory(ProductCategoryE productCategoryE) {
-		productCategoryE.checkProductCategoryParam();
 		productCategoryGateway.updateProductCategory(productCategoryE);
 	}
 

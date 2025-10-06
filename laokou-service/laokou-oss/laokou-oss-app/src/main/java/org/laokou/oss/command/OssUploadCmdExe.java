@@ -44,6 +44,10 @@ public class OssUploadCmdExe {
 		OssA ossA = OssConvertor.toEntity(cmd.getFileType(), cmd.getSize(), cmd.getExtName(), cmd.getBuffer(),
 				cmd.getContentType(), cmd.getName());
 		try {
+			// 校验文件大小
+			ossA.checkSize();
+			// 校验扩展名
+			ossA.checkExt();
 			// 上传文件
 			ossDomainService.uploadOss(ossA);
 			return Result.ok(OssConvertor.toClientObject(ossA));

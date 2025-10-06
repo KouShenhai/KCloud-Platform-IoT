@@ -73,7 +73,7 @@ public class ThingModelsController {
 	@PreAuthorize("hasAuthority('iot:thing-model:modify')")
 	@OperateLog(module = "物模型管理", operation = "修改物模型")
 	@Operation(summary = "修改物模型", description = "修改物模型")
-	public void modifyThingModel(@RequestBody ThingModelModifyCmd cmd) {
+	public void modifyThingModel(@RequestBody ThingModelModifyCmd cmd) throws Exception {
 		thingModelsServiceI.modifyThingModel(cmd);
 	}
 

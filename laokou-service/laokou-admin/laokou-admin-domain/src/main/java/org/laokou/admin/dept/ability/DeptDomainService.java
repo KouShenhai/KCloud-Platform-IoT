@@ -34,12 +34,10 @@ public class DeptDomainService {
 	private final DeptGateway deptGateway;
 
 	public void createDept(DeptE deptE) {
-		deptE.checkDeptParam();
 		deptGateway.createDept(deptE);
 	}
 
 	public void updateDept(DeptE deptE) {
-		deptE.checkDeptParam();
 		deptGateway.updateDept(deptE);
 	}
 

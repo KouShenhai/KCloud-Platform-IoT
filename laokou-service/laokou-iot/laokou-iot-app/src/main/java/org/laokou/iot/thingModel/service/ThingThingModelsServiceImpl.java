@@ -68,7 +68,7 @@ public class ThingThingModelsServiceImpl implements ThingModelsServiceI {
 	}
 
 	@Override
-	public void modifyThingModel(ThingModelModifyCmd cmd) {
+	public void modifyThingModel(ThingModelModifyCmd cmd) throws Exception {
 		thingModelModifyCmdExe.executeVoid(cmd);
 	}
 

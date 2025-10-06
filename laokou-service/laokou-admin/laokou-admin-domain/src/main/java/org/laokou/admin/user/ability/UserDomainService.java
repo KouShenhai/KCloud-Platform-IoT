@@ -46,8 +46,6 @@ public class UserDomainService {
 	private final UserDeptGateway userDeptGateway;
 
 	public void createUser(UserE userE) throws Exception {
-		// 校验用户参数
-		userE.checkUserParam();
 		// 用户名加密
 		userE.encryptUsername();
 		// 邮箱加密
@@ -58,8 +56,6 @@ public class UserDomainService {
 	}
 
 	public void updateUser(UserE userE) throws Exception {
-		// 校验用户参数
-		userE.checkUserParam();
 		// 邮箱加密
 		userE.encryptMail();
 		// 手机号加密
@@ -68,8 +64,6 @@ public class UserDomainService {
 	}
 
 	public void updateAuthorityUser(UserE userE) throws Exception {
-		// 校验用户参数
-		userE.checkUserParam();
 		List<Callable<Boolean>> futures = new ArrayList<>(2);
 		futures.add(() -> {
 			userRoleGateway.updateUserRole(userE);

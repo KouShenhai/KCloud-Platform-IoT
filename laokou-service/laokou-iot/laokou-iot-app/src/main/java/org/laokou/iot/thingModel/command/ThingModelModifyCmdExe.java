@@ -43,15 +43,13 @@ public class ThingModelModifyCmdExe {
 	private final TransactionalUtils transactionalUtils;
 
 	@CommandLog
-	public void executeVoid(ThingModelModifyCmd cmd) {
+	public void executeVoid(ThingModelModifyCmd cmd) throws Exception {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.IOT);
-			// 校验参数
 			ThingModelE thingModelE = ThingModelConvertor.toEntity(cmd.getCo(), false);
+			// 校验参数
+			thingModelE.checkThingModelParam();
 			transactionalUtils.executeInTransaction(() -> thingModelDomainService.updateThingModel(thingModelE));
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

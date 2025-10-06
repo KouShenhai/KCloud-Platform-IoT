@@ -42,6 +42,7 @@ public class RoleSaveCmdExe {
 	@CommandLog
 	public void executeVoid(RoleSaveCmd cmd) {
 		RoleE roleE = RoleConvertor.toEntity(cmd.getCo(), true);
+		roleE.checkRoleParam();
 		transactionalUtils.executeInTransaction(() -> roleDomainService.createRole(roleE));
 	}
 

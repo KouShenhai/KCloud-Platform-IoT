@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.user.ability.UserDomainService;
 import org.laokou.admin.user.dto.UserRemoveCmd;
 import org.laokou.common.domain.annotation.CommandLog;
+import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.stereotype.Component;
 
 /**
@@ -34,9 +35,11 @@ public class UserRemoveCmdExe {
 
 	private final UserDomainService userDomainService;
 
+	private final TransactionalUtils transactionalUtils;
+
 	@CommandLog
 	public void executeVoid(UserRemoveCmd cmd) throws InterruptedException {
-		userDomainService.deleteUser(cmd.getIds());
+		transactionalUtils.executeInTransaction(() -> userDomainService.deleteUser(cmd.getIds()));
 	}
 
 }

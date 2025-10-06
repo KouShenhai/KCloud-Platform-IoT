@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.role.ability.RoleDomainService;
 import org.laokou.admin.role.dto.RoleRemoveCmd;
 import org.laokou.common.domain.annotation.CommandLog;
+import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.stereotype.Component;
 
 /**
@@ -34,9 +35,11 @@ public class RoleRemoveCmdExe {
 
 	private final RoleDomainService roleDomainService;
 
+	private final TransactionalUtils transactionalUtils;
+
 	@CommandLog
 	public void executeVoid(RoleRemoveCmd cmd) throws InterruptedException {
-		roleDomainService.deleteRole(cmd.getIds());
+		transactionalUtils.executeInTransaction(() -> roleDomainService.deleteRole(cmd.getIds()));
 	}
 
 }

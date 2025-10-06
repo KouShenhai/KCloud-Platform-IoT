@@ -42,6 +42,7 @@ public class RoleModifyCmdExe {
 	@CommandLog
 	public void executeVoid(RoleModifyCmd cmd) {
 		RoleE roleE = RoleConvertor.toEntity(cmd.getCo(), false);
+		roleE.checkRoleParam();
 		transactionalUtils.executeInTransaction(() -> roleDomainService.updateRole(roleE));
 	}
 

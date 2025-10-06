@@ -42,6 +42,8 @@ public class DeptModifyCmdExe {
 	@CommandLog
 	public void executeVoid(DeptModifyCmd cmd) {
 		DeptE deptE = DeptConvertor.toEntity(cmd.getCo(), false);
+		// 校验参数
+		deptE.checkDeptParam();
 		transactionalUtils.executeInTransaction(() -> deptDomainService.updateDept(deptE));
 	}
 

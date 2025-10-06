@@ -41,8 +41,9 @@ public class MenuModifyCmdExe {
 
 	@CommandLog
 	public void executeVoid(MenuModifyCmd cmd) {
-		// 校验参数
 		MenuE menuE = MenuConvertor.toEntity(cmd.getCo(), false);
+		// 校验参数
+		menuE.checkMenuParam();
 		transactionalUtils.executeInTransaction(() -> menuDomainService.updateMenu(menuE));
 	}
 

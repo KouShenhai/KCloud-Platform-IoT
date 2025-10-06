@@ -46,7 +46,7 @@ public interface ThingModelsServiceI {
 	 * 修改物模型.
 	 * @param cmd 修改命令
 	 */
-	void modifyThingModel(ThingModelModifyCmd cmd);
+	void modifyThingModel(ThingModelModifyCmd cmd) throws Exception;
 
 	/**
 	 * 删除物模型.

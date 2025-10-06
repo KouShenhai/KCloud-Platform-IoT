@@ -37,6 +37,8 @@ public class UserModifyAuthorityCmdExe {
 	@CommandLog
 	public void executeVoid(UserModifyAuthorityCmd cmd) throws Exception {
 		UserE userE = UserConvertor.toEntity(cmd.getCo());
+		// 校验用户参数
+		userE.checkUserParam();
 		userDomainService.updateAuthorityUser(userE);
 	}
 
