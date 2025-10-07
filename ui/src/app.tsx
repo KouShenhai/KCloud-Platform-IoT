@@ -7,7 +7,7 @@ import {history} from "@umijs/max";
 import {HomeOutlined, LogoutOutlined, RobotOutlined, SettingOutlined} from "@ant-design/icons";
 import {ReactElement, ReactNode, ReactPortal} from "react";
 import {logout, refresh} from '@/services/auth/auth';
-import {getAccessToken, getExpireTime, getRefreshToken, setToken} from '@/access';
+import {clearToken, getAccessToken, getExpireTime, getRefreshToken, setToken} from '@/access';
 import React from "react";
 import {RunTimeLayoutConfig} from "@@/plugin-layout/types";
 import {getUserProfile} from "@/services/admin/user";
@@ -49,6 +49,8 @@ const refreshToken =  async (refreshToken: string | null) => {
 		refresh({refresh_token: refreshToken, grant_type: 'refresh_token'}).then((res) => {
 			if (res.code === 'OK') {
 				// console.log('刷新令牌成功')
+				// 清除令牌
+				clearToken()
 				// 存储令牌
 				setToken(res.data?.access_token, res.data?.refresh_token, res.data?.expires_in * 1000 + new Date().getTime());
 			}
@@ -83,12 +85,12 @@ const scheduleTokenRefresh = async () => {
 
 	const refreshTime = calculateRefreshTime(getExpireTime());
 
-	refreshTimeoutRef = setTimeout(() => {
-		refreshToken(getRefreshToken())
+	refreshTimeoutRef = setTimeout(async () => {
+		refreshToken(getRefreshToken()).then()
 	}, refreshTime);
 }
 
-scheduleTokenRefresh().then()
+scheduleTokenRefresh().catch(console.log);
 
 export async function getInitialState(): Promise<{
 	id: bigint;
@@ -140,6 +142,9 @@ export const layout: RunTimeLayoutConfig  = ({ initialState }: any) => {
 									icon: <LogoutOutlined/>,
 									label: '注销',
 									onClick: async () => {
+										if (refreshTimeoutRef) {
+											clearTimeout(refreshTimeoutRef);
+										}
 										// @ts-ignore
 										logout({token: getAccessToken()}).finally(() => {
 											history.push('/login')
