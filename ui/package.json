@@ -33,7 +33,7 @@
     "uuid": "^13.0.0"
   },
   "devDependencies": {
-    "@types/react": "^18.3.19",
+    "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@umijs/lint": "^4.4.6",
     "husky": "^9.1.7",
