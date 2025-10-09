@@ -53,6 +53,8 @@ const refreshToken =  async (refreshToken: string | null) => {
 				clearToken()
 				// 存储令牌
 				setToken(res.data?.access_token, res.data?.refresh_token, res.data?.expires_in * 1000 + new Date().getTime());
+				// 定时刷新令牌
+				scheduleRefreshToken().catch(console.log)
 			}
 		}).finally(() => {
 			refreshTokenFlag = false
@@ -78,7 +80,7 @@ const calculateRefreshTime = (expireTime: number) => {
 	return Math.max(0, refreshTime);
 }
 
-const scheduleTokenRefresh = async () => {
+const scheduleRefreshToken = async () => {
 	if (refreshTimeoutRef) {
 		clearTimeout(refreshTimeoutRef);
 	}
@@ -90,7 +92,7 @@ const scheduleTokenRefresh = async () => {
 	}, refreshTime);
 }
 
-scheduleTokenRefresh().catch(console.log);
+scheduleRefreshToken().catch(console.log);
 
 export async function getInitialState(): Promise<{
 	id: bigint;
