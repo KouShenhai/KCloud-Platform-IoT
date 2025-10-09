@@ -49,7 +49,7 @@ importers:
         version: 5.27.4(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       antd-img-crop:
         specifier: ^4.24.0
-        version: 4.25.0(antd@5.27.4(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 4.26.0(antd@5.27.4(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       axios:
         specifier: ^1.12.0
         version: 1.12.2
@@ -1725,6 +1725,9 @@ packages:
   '@types/minimist@1.2.5':
     resolution: {integrity: sha512-hov8bUuiLiyFPGyFPE1lwWhmzYbirOXQNNo40+y3zow8aFVTeyn3VWL0VFFfdNddA8S4Vf0Tc062rzyNr7Paag==}
 
+  '@types/node@18.19.130':
+    resolution: {integrity: sha512-GRaXQx6jGfL8sKfaIDD6OupbIHBr9jv7Jnaml9tB7l4v068PAOXqfcujMMo5PhbIs6ggR1XODELqahT2R8v0fg==}
+
   '@types/node@24.5.2':
     resolution: {integrity: sha512-FYxk1I7wPv3K2XBaoyH2cTnocQEu8AOZ60hPbsyukMPLv5/5qr7V1i8PLHdl6Zf87I+xZXFvPCXYjiTFq+YSDQ==}
 
@@ -2336,8 +2339,8 @@ packages:
     peerDependencies:
       dayjs: '*'
 
-  antd-img-crop@4.25.0:
-    resolution: {integrity: sha512-2bFno50sfEnIl0ttGjOCC32z82yvz/wb4+UMfd9akKQrcNnbuadlfzL9f5n37Vuqb5l9Tdw4U4V+3sMY9EWW7g==}
+  antd-img-crop@4.26.0:
+    resolution: {integrity: sha512-2ojNWHEba6++JbTpGfLeRD5jrfpQ+7NBCqeD5vXGtFVHYaGvOKy1Dr7LdV/C4zbTAFpc7ow2cmto+6xUDfsA8g==}
     peerDependencies:
       antd: '>=4.0.0'
       react: '>=16.8.0'
@@ -2506,8 +2509,8 @@ packages:
   base64-js@1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
 
-  baseline-browser-mapping@2.8.12:
-    resolution: {integrity: sha512-vAPMQdnyKCBtkmQA6FMCBvU9qFIppS3nzyXnEM+Lo2IAhG4Mpjv9cCxMudhgV3YdNNJv6TNqXy97dfRVL2LmaQ==}
+  baseline-browser-mapping@2.8.15:
+    resolution: {integrity: sha512-qsJ8/X+UypqxHXN75M7dF88jNK37dLBRW7LeUzCPz+TNs37G8cfWy9nWzS+LS//g600zrt2le9KuXt0rWfDz5Q==}
     hasBin: true
 
   baseline-browser-mapping@2.8.5:
@@ -2660,8 +2663,8 @@ packages:
   caniuse-lite@1.0.30001745:
     resolution: {integrity: sha512-ywt6i8FzvdgrrrGbr1jZVObnVv6adj+0if2/omv9cmR2oiZs30zL4DIyaptKcbOrBdOIc74QTMoJvSE2QHh5UQ==}
 
-  caniuse-lite@1.0.30001748:
-    resolution: {integrity: sha512-5P5UgAr0+aBmNiplks08JLw+AW/XG/SurlgZLgB1dDLfAw7EfRGxIwzPHxdSCGY/BTKDqIVyJL87cCN6s0ZR0w==}
+  caniuse-lite@1.0.30001749:
+    resolution: {integrity: sha512-0rw2fJOmLfnzCRbkm8EyHL8SvI2Apu5UbnQuTsJ0ClgrH8hcwFooJ1s5R0EP8o8aVrFu8++ae29Kt9/gZAZp/Q==}
 
   cfb@1.2.2:
     resolution: {integrity: sha512-KfdUZsSOw19/ObEWasvBP/Ac4reZvAGauZhs6S/gqNhXhI7cKwvlH7ulj+dOEYnca4bm4SGo8C1bTAQvnTjgQA==}
@@ -3304,8 +3307,8 @@ packages:
   electron-to-chromium@1.5.221:
     resolution: {integrity: sha512-/1hFJ39wkW01ogqSyYoA4goOXOtMRy6B+yvA1u42nnsEGtHzIzmk93aPISumVQeblj47JUHLC9coCjUxb1EvtQ==}
 
-  electron-to-chromium@1.5.231:
-    resolution: {integrity: sha512-cyl6vqZGkEBnz/PmvFHn/u9G/hbo+FF2CNAOXriG87QOeLsUdifCZ9UbHNscE9wGdrC8XstNMli0CbQnZQ+fkA==}
+  electron-to-chromium@1.5.233:
+    resolution: {integrity: sha512-iUdTQSf7EFXsDdQsp8MwJz5SVk4APEFqXU/S47OtQ0YLqacSwPXdZ5vRlMX3neb07Cy2vgioNuRnWUXFwuslkg==}
 
   elliptic@6.6.1:
     resolution: {integrity: sha512-RaddvvMatK2LJHqFJ+YA4WysVN5Ita9E35botqIYspQ4TkRAlCicdzKOjlyv/1Za5RyTNn7di//eEV0uTAfe3g==}
@@ -4571,6 +4574,10 @@ packages:
 
   loader-runner@4.3.0:
     resolution: {integrity: sha512-3R/1M+yS3j5ou80Me59j7F9IMs4PXs3VqRrm0TU3AbKPxlmpoY1TNscJV/oGJXo8qCatFGTfDbY6W6ipGOYXfg==}
+    engines: {node: '>=6.11.5'}
+
+  loader-runner@4.3.1:
+    resolution: {integrity: sha512-IWqP2SCPhyVFTBtRcgMHdzlf9ul25NwaFx4wCEH/KjAXuuHY4yNjvPXsBokp8jCB936PyWRaPKUNh8NvylLp2Q==}
     engines: {node: '>=6.11.5'}
 
   loader-utils@2.0.4:
@@ -6039,8 +6046,8 @@ packages:
     peerDependencies:
       react: ^18.3.1
 
-  react-easy-crop@5.4.2:
-    resolution: {integrity: sha512-V+GQUTkNWD8gK0mbZQfwTvcDxyCB4GS0cM36is8dAcvnsHY7DMEDP2D5IqHju55TOiCHwElJPVOYDgiu8BEiHQ==}
+  react-easy-crop@5.5.3:
+    resolution: {integrity: sha512-iKwFTnAsq+IVuyF6N0Q3zjRx9DG1NMySkwWxVfM/xAOeHYH1vhvM+V2kFiq5HOIQGWouITjfltCx54mbDpMpmA==}
     peerDependencies:
       react: '>=16.4.0'
       react-dom: '>=16.4.0'
@@ -7016,6 +7023,9 @@ packages:
     resolution: {integrity: sha512-nWJ91DjeOkej/TA8pXQ3myruKpKEYgqvpw9lz4OPHj/NWFNluYrjbz9j01CJ8yKQd2g4jFoOkINCTW2I5LEEyw==}
     engines: {node: '>= 0.4'}
 
+  undici-types@5.26.5:
+    resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
+
   undici-types@7.12.0:
     resolution: {integrity: sha512-goOacqME2GYyOZZfb5Lgtu+1IDmAlAEu5xnD3+xTzS10hT0vzpf0SPjkXwAw9Jm+4n/mQGDP3LO8CPbYROeBfQ==}
 
@@ -7190,6 +7200,16 @@ packages:
 
   webpack@5.102.0:
     resolution: {integrity: sha512-hUtqAR3ZLVEYDEABdBioQCIqSoguHbFn1K7WlPPWSuXmx0031BD73PSE35jKyftdSh4YLDoQNgK4pqBt5Q82MA==}
+    engines: {node: '>=10.13.0'}
+    hasBin: true
+    peerDependencies:
+      webpack-cli: '*'
+    peerDependenciesMeta:
+      webpack-cli:
+        optional: true
+
+  webpack@5.102.1:
+    resolution: {integrity: sha512-7h/weGm9d/ywQ6qzJ+Xy+r9n/3qgp/thalBbpOi5i223dPXKi04IBtqPN9nTd+jBc7QKfvDbaBnFipYp4sJAUQ==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     peerDependencies:
@@ -9541,7 +9561,7 @@ snapshots:
 
   '@types/history@5.0.0':
     dependencies:
-      history: 5.3.0
+      history: 4.10.1
 
   '@types/hoist-non-react-statics@3.3.7(@types/react@19.2.2)':
     dependencies:
@@ -9573,6 +9593,10 @@ snapshots:
 
   '@types/minimist@1.2.5': {}
 
+  '@types/node@18.19.130':
+    dependencies:
+      undici-types: 5.26.5
+
   '@types/node@24.5.2':
     dependencies:
       undici-types: 7.12.0
@@ -9580,6 +9604,7 @@ snapshots:
   '@types/node@24.7.0':
     dependencies:
       undici-types: 7.14.0
+    optional: true
 
   '@types/normalize-package-data@2.4.4': {}
 
@@ -9600,7 +9625,7 @@ snapshots:
       '@types/history': 4.7.11
       '@types/react': 19.2.2
       '@types/react-router': 5.1.20
-      redux: 4.2.1
+      redux: 3.7.2
 
   '@types/react-router@5.1.20':
     dependencies:
@@ -9623,9 +9648,9 @@ snapshots:
 
   '@types/webpack@5.28.5':
     dependencies:
-      '@types/node': 24.7.0
+      '@types/node': 18.19.130
       tapable: 2.3.0
-      webpack: 5.102.0
+      webpack: 5.102.1
     transitivePeerDependencies:
       - '@swc/core'
       - esbuild
@@ -10401,7 +10426,7 @@ snapshots:
       find-up: 4.1.0
       less: 4.4.2
       less-loader: 12.3.0(less@4.4.2)(webpack@5.102.0)
-      loader-runner: 4.3.0
+      loader-runner: 4.3.1
       nanoid: 3.3.11
       picocolors: 1.1.1
       postcss: 8.4.31
@@ -10607,12 +10632,12 @@ snapshots:
     dependencies:
       dayjs: 1.11.18
 
-  antd-img-crop@4.25.0(antd@5.27.4(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  antd-img-crop@4.26.0(antd@5.27.4(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       antd: 5.27.4(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
-      react-easy-crop: 5.4.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-easy-crop: 5.5.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       tslib: 2.8.1
 
   antd@4.24.16(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
@@ -10944,7 +10969,7 @@ snapshots:
 
   base64-js@1.5.1: {}
 
-  baseline-browser-mapping@2.8.12: {}
+  baseline-browser-mapping@2.8.15: {}
 
   baseline-browser-mapping@2.8.5: {}
 
@@ -11052,9 +11077,9 @@ snapshots:
 
   browserslist@4.26.3:
     dependencies:
-      baseline-browser-mapping: 2.8.12
-      caniuse-lite: 1.0.30001748
-      electron-to-chromium: 1.5.231
+      baseline-browser-mapping: 2.8.15
+      caniuse-lite: 1.0.30001749
+      electron-to-chromium: 1.5.233
       node-releases: 2.0.23
       update-browserslist-db: 1.1.3(browserslist@4.26.3)
 
@@ -11130,7 +11155,7 @@ snapshots:
 
   caniuse-lite@1.0.30001745: {}
 
-  caniuse-lite@1.0.30001748: {}
+  caniuse-lite@1.0.30001749: {}
 
   cfb@1.2.2:
     dependencies:
@@ -11801,7 +11826,7 @@ snapshots:
 
   electron-to-chromium@1.5.221: {}
 
-  electron-to-chromium@1.5.231: {}
+  electron-to-chromium@1.5.233: {}
 
   elliptic@6.6.1:
     dependencies:
@@ -13118,7 +13143,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 24.7.0
+      '@types/node': 18.19.130
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
@@ -13329,6 +13354,8 @@ snapshots:
       wrap-ansi: 9.0.2
 
   loader-runner@4.3.0: {}
+
+  loader-runner@4.3.1: {}
 
   loader-utils@2.0.4:
     dependencies:
@@ -15028,7 +15055,7 @@ snapshots:
       react: 18.3.1
       scheduler: 0.23.2
 
-  react-easy-crop@5.4.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  react-easy-crop@5.5.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       normalize-wheel: 1.0.1
       react: 18.3.1
@@ -15279,7 +15306,7 @@ snapshots:
       adjust-sourcemap-loader: 4.0.0
       convert-source-map: 1.9.0
       loader-utils: 2.0.4
-      postcss: 8.5.6
+      postcss: 8.4.31
       source-map: 0.6.1
 
   resolve@1.22.10:
@@ -15997,6 +16024,15 @@ snapshots:
       terser: 5.44.0
       webpack: 5.102.0
 
+  terser-webpack-plugin@5.3.14(webpack@5.102.1):
+    dependencies:
+      '@jridgewell/trace-mapping': 0.3.31
+      jest-worker: 27.5.1
+      schema-utils: 4.3.3
+      serialize-javascript: 6.0.2
+      terser: 5.44.0
+      webpack: 5.102.1
+
   terser@5.44.0:
     dependencies:
       '@jridgewell/source-map': 0.3.11
@@ -16201,9 +16237,12 @@ snapshots:
       has-symbols: 1.1.0
       which-boxed-primitive: 1.1.1
 
+  undici-types@5.26.5: {}
+
   undici-types@7.12.0: {}
 
-  undici-types@7.14.0: {}
+  undici-types@7.14.0:
+    optional: true
 
   unfetch@5.0.0: {}
 
@@ -16364,12 +16403,44 @@ snapshots:
       glob-to-regexp: 0.4.1
       graceful-fs: 4.2.11
       json-parse-even-better-errors: 2.3.1
-      loader-runner: 4.3.0
+      loader-runner: 4.3.1
       mime-types: 2.1.35
       neo-async: 2.6.2
       schema-utils: 4.3.3
       tapable: 2.3.0
       terser-webpack-plugin: 5.3.14(webpack@5.102.0)
+      watchpack: 2.4.4
+      webpack-sources: 3.3.3
+    transitivePeerDependencies:
+      - '@swc/core'
+      - esbuild
+      - uglify-js
+
+  webpack@5.102.1:
+    dependencies:
+      '@types/eslint-scope': 3.7.7
+      '@types/estree': 1.0.8
+      '@types/json-schema': 7.0.15
+      '@webassemblyjs/ast': 1.14.1
+      '@webassemblyjs/wasm-edit': 1.14.1
+      '@webassemblyjs/wasm-parser': 1.14.1
+      acorn: 8.15.0
+      acorn-import-phases: 1.0.4(acorn@8.15.0)
+      browserslist: 4.26.3
+      chrome-trace-event: 1.0.4
+      enhanced-resolve: 5.18.3
+      es-module-lexer: 1.7.0
+      eslint-scope: 5.1.1
+      events: 3.3.0
+      glob-to-regexp: 0.4.1
+      graceful-fs: 4.2.11
+      json-parse-even-better-errors: 2.3.1
+      loader-runner: 4.3.1
+      mime-types: 2.1.35
+      neo-async: 2.6.2
+      schema-utils: 4.3.3
+      tapable: 2.3.0
+      terser-webpack-plugin: 5.3.14(webpack@5.102.1)
       watchpack: 2.4.4
       webpack-sources: 3.3.3
     transitivePeerDependencies:
