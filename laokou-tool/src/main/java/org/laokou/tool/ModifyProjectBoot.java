@@ -42,7 +42,7 @@ import java.util.List;
 final class ModifyProjectBoot {
 
 	private static final List<String> MODULES = List.of("laokou-cloud", "laokou-common", "laokou-service",
-			"laokou-cola", "laokou-tool", "laokou-test", "laokou-sample", "checkstyle");
+			"laokou-tool", "checkstyle");
 
 	private static final String MODIFY_POM_FILE_SUFFIX = "pom.xml";
 
@@ -137,7 +137,7 @@ final class ModifyProjectBoot {
 		int index = path.lastIndexOf(File.separator);
 		String dir = path.substring(0, index);
 		String fileName = path.substring(index + 1);
-		FileUtils.create(dir, fileName);
+		FileUtils.createDirAndFile(Path.of(dir, fileName));
 	}
 
 	private static String getNewPath(String path) {
@@ -147,12 +147,12 @@ final class ModifyProjectBoot {
 	}
 
 	private static byte[] getJavaFileAsByte(String path) throws IOException {
-		String str = FileUtils.getStr(path);
+		String str = FileUtils.getStr(Path.of(path));
 		return str.replaceAll("org.laokou", NEW_PACKAGE_NAME).getBytes(StandardCharsets.UTF_8);
 	}
 
 	private static byte[] getPomFileAsByte(String path) throws IOException {
-		String str = FileUtils.getStr(path);
+		String str = FileUtils.getStr(Path.of(path));
 		return str.replaceAll("org.laokou", NEW_GROUP_ID)
 			.replaceAll("laokou-", NEW_MODULE_NAME + "-")
 			.replace("KCloud-Platform-IoT", NEW_PROJECT_NAME)
@@ -160,7 +160,7 @@ final class ModifyProjectBoot {
 	}
 
 	private static byte[] getXmlFileAsByte(String path) throws IOException {
-		String str = FileUtils.getStr(path);
+		String str = FileUtils.getStr(Path.of(path));
 		return str.replaceAll("org.laokou", NEW_PACKAGE_NAME).getBytes(StandardCharsets.UTF_8);
 	}
 

@@ -19,7 +19,6 @@ package org.laokou.auth.service.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.ability.DomainService;
 import org.laokou.auth.convertor.LoginLogConvertor;
 import org.laokou.auth.convertor.UserConvertor;
@@ -29,8 +28,6 @@ import org.laokou.auth.model.MqEnum;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.common.exception.GlobalException;
-import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.context.util.UserDetails;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Component;
@@ -40,7 +37,6 @@ import org.springframework.stereotype.Component;
  *
  * @author laokou
  */
-@Slf4j
 @RequiredArgsConstructor
 @Component("authenticationProcessor")
 final class OAuth2AuthenticationProcessor {
@@ -70,15 +66,9 @@ final class OAuth2AuthenticationProcessor {
 			}
 			throw e;
 		}
-		catch (Exception e) {
-			log.error("未知错误，错误信息：{}", e.getMessage(), e);
-			throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
-		}
 		finally {
 			// 发布领域事件
-			if (ObjectUtils.isNotNull(evt)) {
-				kafkaDomainEventPublisher.publish(MqEnum.LOGIN_LOG.getTopic(), evt);
-			}
+			kafkaDomainEventPublisher.publish(MqEnum.LOGIN_LOG.getTopic(), evt);
 		}
 	}
 

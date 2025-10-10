@@ -93,7 +93,7 @@ public class GeneratorDomainService {
 				// 写入文件
 				String directory = SOURCE_PATH + generatorA.getModuleName() + StringConstants.SLASH
 						+ item.getFileDirectory(generatorA);
-				Path path = FileUtils.create(directory, item.getFileName(generatorA));
+				Path path = FileUtils.createDirAndFile(Path.of(directory, item.getFileName(generatorA)));
 				FileUtils.write(path, content.getBytes(StandardCharsets.UTF_8));
 				return true;
 			}).toList();

@@ -60,7 +60,8 @@ final class ErrorInfoPrinter {
 		// 临时文件路径
 		String tempPath = projectPath + StringConstants.SLASH + "temp";
 		// 创建临时文件
-		Path path = FileUtils.create(tempPath, jsonName);
+		Path _path = Path.of(tempPath, jsonName);
+		Path path = FileUtils.createDirAndFile(_path);
 		FileUtils.write(path, FileUtils.getBytes(Path.of(jsonPath)));
 		// 替换字符【从后往前】
 		File file = path.toFile();
@@ -79,7 +80,7 @@ final class ErrorInfoPrinter {
 		// 写入文件【堆栈信息】
 		FileUtils.write(Path.of(tempPath, tempName), sb.toString().getBytes(StandardCharsets.UTF_8));
 		// 删除临时文件
-		FileUtils.delete(tempPath, jsonName);
+		FileUtils.delete(_path);
 	}
 	// @formatter:on
 

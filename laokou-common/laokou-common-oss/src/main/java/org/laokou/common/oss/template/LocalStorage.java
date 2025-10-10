@@ -24,7 +24,6 @@ import org.laokou.common.oss.model.FileInfo;
 import org.laokou.common.oss.model.Local;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.security.NoSuchAlgorithmException;
 
 /**
  * @author laokou
@@ -40,7 +39,7 @@ public final class LocalStorage extends AbstractStorage<Path> {
 
 	@Override
 	protected Path getObj() throws IOException {
-		return FileUtils.create(this.local.getPath() + this.local.getDirectory(), fileInfo.name());
+		return FileUtils.createDirAndFile(Path.of(this.local.getPath() + this.local.getDirectory(), fileInfo.name()));
 	}
 
 	@Override
@@ -48,7 +47,7 @@ public final class LocalStorage extends AbstractStorage<Path> {
 	}
 
 	@Override
-	protected void upload(Path path) throws NoSuchAlgorithmException {
+	protected void upload(Path path) {
 		FileUtils.write(path, fileInfo.inputStream(), fileInfo.size());
 	}
 
