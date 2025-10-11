@@ -135,14 +135,16 @@
     <grpc.version>1.76.0</grpc.version>
     <!--jackson版本-->
     <jackson.version>2.20.0</jackson.version>
+    <!--okhttp版本-->
+    <okhttp.version>4.12.0</okhttp.version>
+    <!--redisson版本-->
+    <redisson.version>3.52.0</redisson.version>
     <!--lombok版本-->
     <lombok.version>1.18.42</lombok.version>
     <!--postgresql版本-->
     <postgresql.version>42.7.8</postgresql.version>
     <!--admin版本-->
     <spring-boot-admin.version>3.5.5</spring-boot-admin.version>
-    <!--redisson版本-->
-    <redisson.version>3.52.0</redisson.version>
     <!--jsoup版本-->
     <jsoup.version>1.21.2</jsoup.version>
     <!--jasypt版本-->
@@ -197,8 +199,6 @@
     <objenesis.version>3.4</objenesis.version>
     <!--influxdb-client-java版本-->
     <influxdb-client-java.version>7.3.0</influxdb-client-java.version>
-    <!--okhttp3版本-->
-    <okhttp3.version>4.12.0</okhttp3.version>
     <!--reactor-core版本-->
     <reactor-core.version>3.7.11</reactor-core.version>
     <!--opencsv版本-->
@@ -438,6 +438,24 @@
       </dependency>
       <!-- =============================== 定义 Jackson 版本 =============================== -->
 
+      <!-- =============================== 定义 OkHttp 版本 =============================== -->
+      <dependency>
+        <groupId>com.squareup.okhttp3</groupId>
+        <artifactId>okhttp-bom</artifactId>
+        <version>${okhttp.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- =============================== 定义 OkHttp 版本 =============================== -->
+
+      <!-- =============================== 定义 Redisson 版本 =============================== -->
+      <dependency>
+        <groupId>org.redisson</groupId>
+        <artifactId>redisson</artifactId>
+        <version>${redisson.version}</version>
+      </dependency>
+      <!-- =============================== 定义 Redisson 版本 =============================== -->
+
       <!-- =============================== Fastjson =============================== -->
       <dependency>
         <groupId>com.alibaba</groupId>
@@ -445,14 +463,6 @@
         <version>${fastjson.version}</version>
       </dependency>
       <!-- =============================== Fastjson =============================== -->
-
-      <!-- =============================== Redis =============================== -->
-      <dependency>
-        <groupId>org.redisson</groupId>
-        <artifactId>redisson</artifactId>
-        <version>${redisson.version}</version>
-      </dependency>
-      <!-- =============================== Redis =============================== -->
 
       <dependency>
         <groupId>com.google.code.gson</groupId>
@@ -519,11 +529,6 @@
         <groupId>io.projectreactor</groupId>
         <artifactId>reactor-core</artifactId>
         <version>${reactor-core.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.squareup.okhttp3</groupId>
-        <artifactId>okhttp</artifactId>
-        <version>${okhttp3.version}</version>
       </dependency>
       <dependency>
         <groupId>com.influxdb</groupId>

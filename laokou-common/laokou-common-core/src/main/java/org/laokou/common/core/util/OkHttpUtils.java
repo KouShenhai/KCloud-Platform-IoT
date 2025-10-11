@@ -68,8 +68,8 @@ public final class OkHttpUtils {
 			ResponseBody body = response.body();
 			return ObjectUtils.isNotNull(body) ? body.string() : StringConstants.EMPTY;
 		}
-		catch (IOException e) {
-			log.error("调用失败，错误信息：{}", e.getMessage());
+		catch (IOException ex) {
+			log.error("调用失败，错误信息：{}", ex.getMessage(), ex);
 		}
 		return StringConstants.EMPTY;
 	}

@@ -47,7 +47,6 @@ import java.nio.file.LinkOption;
 import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
-import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -56,7 +55,6 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 /**
@@ -229,27 +227,6 @@ public final class FileUtils {
 				else {
 					write(entryPath, zipFile.getInputStream(entry), entry.getSize());
 				}
-			}
-		}
-		catch (IOException e) {
-			log.error("ZIP解压失败，错误信息：{}", e.getMessage(), e);
-			throw new SystemException("S_File_UnZipFailed", e.getMessage(), e);
-		}
-	}
-
-	public static void unzip(InputStream inputStream, Path targetPath) {
-		try (ZipInputStream zipInputStream = new ZipInputStream(inputStream)) {
-			ZipEntry entry = zipInputStream.getNextEntry();
-			while (entry != null) {
-				Path entryPath = targetPath.resolve(entry.getName());
-				if (entry.isDirectory()) {
-					createDirectories(entryPath);
-				}
-				else {
-					copy(zipInputStream, entryPath, StandardCopyOption.REPLACE_EXISTING);
-				}
-				zipInputStream.closeEntry();
-				entry = zipInputStream.getNextEntry();
 			}
 		}
 		catch (IOException e) {

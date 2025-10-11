@@ -138,18 +138,12 @@ class FileUtilsTest {
 
 		// 执行解压操作
 		Path destDir = Path.of(testPath, "unzip");
-		Path destDir2 = Path.of(testPath, "unzip2");
 		Assertions.assertThatNoException().isThrownBy(() -> {
 			if (FileUtils.notExists(destDir)) {
 				FileUtils.createDirectories(destDir);
 			}
-			if (FileUtils.notExists(destDir2)) {
-				FileUtils.createDirectories(destDir2);
-			}
 		});
 		Assertions.assertThatNoException().isThrownBy(() -> FileUtils.unzip(multiZip, destDir));
-		Assertions.assertThatNoException()
-			.isThrownBy(() -> FileUtils.unzip(FileUtils.newInputStream(multiZip), destDir2));
 
 		Assertions.assertThat(FileUtils.exists(multiZip)).isTrue();
 		try (BufferedReader reader = Files.newBufferedReader(srcFile1)) {
@@ -166,14 +160,12 @@ class FileUtilsTest {
 		Assertions.assertThat(FileUtils.deleteIfExists(Path.of(destDir.toString(), "upload", "file1.txt"))).isTrue();
 		Assertions.assertThat(FileUtils.deleteIfExists(Path.of(destDir.toString(), "upload", "file2.log"))).isTrue();
 		Assertions.assertThatNoException().isThrownBy(() -> FileUtils.delete(destDir));
-		Assertions.assertThatNoException().isThrownBy(() -> FileUtils.delete(destDir2));
 		Assertions.assertThatNoException().isThrownBy(() -> FileUtils.delete(multiZip));
 		Assertions.assertThatNoException().isThrownBy(() -> FileUtils.delete(Path.of(testPath, "zip")));
 		Assertions.assertThatNoException().isThrownBy(() -> FileUtils.delete(Path.of(testPath, "unzip")));
 		Assertions.assertThatNoException().isThrownBy(() -> FileUtils.delete(Path.of(testPath, "upload")));
 		Assertions.assertThat(FileUtils.notExists(multiZip)).isTrue();
 		Assertions.assertThat(FileUtils.notExists(destDir)).isTrue();
-		Assertions.assertThat(FileUtils.notExists(destDir2)).isTrue();
 		Assertions.assertThat(FileUtils.notExists(Path.of(testPath, "upload"))).isTrue();
 		Assertions.assertThat(FileUtils.notExists(Path.of(testPath, "zip"))).isTrue();
 		Assertions.assertThat(FileUtils.notExists(Path.of(testPath, "unzip"))).isTrue();
