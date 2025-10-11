@@ -59,6 +59,6 @@ public enum FileFormatEnum {
 		return EnumParser.parse(FileFormatEnum.class, FileFormatEnum::getCode, code);
 	}
 
-	public abstract List<String> getExtNames();
+	abstract List<String> getExtNames();
 
 }

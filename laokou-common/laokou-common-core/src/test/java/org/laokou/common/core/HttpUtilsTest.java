@@ -25,12 +25,12 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.HttpUtils;
+import org.laokou.common.core.util.MapUtils;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
 
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
 
 /**
  * @author laokou
@@ -51,7 +51,7 @@ class HttpUtilsTest {
 	void test_http() throws NoSuchAlgorithmException, KeyManagementException {
 		wireMockServer.stubFor(WireMock.post("/test").willReturn(WireMock.ok("hello wiremock")));
 		String resultJson = HttpUtils.doFormDataPost("http://localhost:" + wireMockServer.port() + "/test",
-				new HashMap<>(0), new HashMap<>(0));
+				MapUtils.newHashMap(0), MapUtils.newHashMap(0));
 		Assertions.assertThat(resultJson).isEqualTo("hello wiremock");
 		Assertions.assertThat(HttpUtils.getHttpClient()).isNotNull();
 	}

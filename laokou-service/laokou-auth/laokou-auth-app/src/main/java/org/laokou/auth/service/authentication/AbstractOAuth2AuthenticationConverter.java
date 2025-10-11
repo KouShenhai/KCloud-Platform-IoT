@@ -30,7 +30,6 @@ import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.security.web.authentication.AuthenticationConverter;
 import org.springframework.util.MultiValueMap;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -72,10 +71,10 @@ abstract class AbstractOAuth2AuthenticationConverter implements AuthenticationCo
 		}
 		// 获取上下文认证信息
 		Authentication clientPrincipal = SecurityContextHolder.getContext().getAuthentication();
-		Map<String, Object> additionalParameters = new HashMap<>(MapUtils.initialCapacity(parameters.size()));
-		parameters.forEach((key, value) -> {
+		Map<String, Object> additionalParameters = MapUtils.newHashMap(parameters.size());
+		parameters.forEach((key, val) -> {
 			if (!key.equals(OAuth2ParameterNames.GRANT_TYPE) && !key.equals(OAuth2ParameterNames.CLIENT_ID)) {
-				additionalParameters.put(key, value.getFirst());
+				additionalParameters.put(key, val.getFirst());
 			}
 		});
 		return convert(clientPrincipal, additionalParameters);

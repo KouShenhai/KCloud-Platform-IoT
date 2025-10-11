@@ -31,7 +31,6 @@ import org.springframework.http.MediaType;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -96,7 +95,7 @@ public final class XssRequestWrapper extends HttpServletRequestWrapper {
 	@Override
 	public Map<String, String[]> getParameterMap() {
 		Map<String, String[]> parameterMap = super.getParameterMap();
-		Map<String, String[]> newParameterMap = new LinkedHashMap<>(MapUtils.initialCapacity(parameterMap.size()));
+		Map<String, String[]> newParameterMap = MapUtils.newLinkedHashMap(parameterMap.size());
 		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
 			String key = entry.getKey();
 			String[] values = entry.getValue();

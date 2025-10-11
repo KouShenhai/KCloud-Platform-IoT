@@ -108,8 +108,8 @@ public final class OssConvertor {
 			return StoragePolicyEnum.getByCode(ossDO.getType())
 				.getOss(ossDO.getId(), ossDO.getName(), ossDO.getParam());
 		}
-		catch (JsonProcessingException e) {
-			throw new RuntimeException(e);
+		catch (JsonProcessingException ex) {
+			throw new RuntimeException(ex);
 		}
 	}
 

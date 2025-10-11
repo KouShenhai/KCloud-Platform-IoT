@@ -38,6 +38,7 @@ import java.net.URLConnection;
 import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.CopyOption;
 import java.nio.file.FileVisitResult;
@@ -216,7 +217,11 @@ public final class FileUtils {
 	}
 
 	public static void unzip(Path sourcePath, Path targetPath) {
-		try (ZipFile zipFile = new ZipFile(sourcePath.toFile(), StandardCharsets.UTF_8)) {
+		unzip(sourcePath, targetPath, StandardCharsets.UTF_8);
+	}
+
+	public static void unzip(Path sourcePath, Path targetPath, Charset charset) {
+		try (ZipFile zipFile = new ZipFile(sourcePath.toFile(), charset)) {
 			Enumeration<? extends ZipEntry> entries = zipFile.entries();
 			while (entries.hasMoreElements()) {
 				ZipEntry entry = entries.nextElement();

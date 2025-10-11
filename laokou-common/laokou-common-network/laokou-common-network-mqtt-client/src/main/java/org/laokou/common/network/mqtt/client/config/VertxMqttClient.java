@@ -151,7 +151,7 @@ public final class VertxMqttClient {
 				vertx.setTimer(springMqttClientProperties.getReconnectInterval(),
 						handler -> virtualThreadExecutor.execute(this::open));
 			}
-			catch (Exception e) {
+			catch (Exception ex) {
 				Thread.currentThread().interrupt();
 				reconnect();
 			}

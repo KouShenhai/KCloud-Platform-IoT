@@ -34,7 +34,7 @@ public enum TrustedPostgresqlFunctionEnum {
 	 */
 	NOW("NOW()", "CURRENT_TIMESTAMP(3)");
 
-	private static final Map<String, TrustedPostgresqlFunctionEnum> LOOKUP_MAP = new HashMap<>();
+	private static final Map<String, TrustedPostgresqlFunctionEnum> LOOKUP_MAP = HashMap.newHashMap(1);
 
 	static {
 		for (TrustedPostgresqlFunctionEnum entry : TrustedPostgresqlFunctionEnum.values()) {

@@ -240,7 +240,7 @@ public class UserDetails implements org.springframework.security.core.userdetail
 			try {
 				return AESUtils.decrypt(this.username);
 			}
-			catch (Exception e) {
+			catch (Exception ex) {
 				throw new BizException(USERNAME_AES_DECRYPT_FAIL);
 			}
 		}

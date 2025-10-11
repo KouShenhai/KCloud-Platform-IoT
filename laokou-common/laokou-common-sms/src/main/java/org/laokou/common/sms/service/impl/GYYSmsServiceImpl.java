@@ -32,7 +32,6 @@ import org.laokou.common.sms.config.SmsProperties;
 import org.laokou.common.sms.entity.SendStatusEnum;
 import org.laokou.common.sms.entity.SmsResult;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -41,7 +40,7 @@ import java.util.Map;
 @Slf4j
 public class GYYSmsServiceImpl extends AbstractSmsServiceImpl {
 
-	private static final Map<String, String> TEMPLATES = new HashMap<>(MapUtils.initialCapacity(15));
+	private static final Map<String, String> TEMPLATES = MapUtils.newHashMap(15);
 
 	private static final String PARAMS_TEMPLATE = "**code**:${captcha},**minute**:${minute}";
 

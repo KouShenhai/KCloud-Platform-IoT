@@ -24,11 +24,10 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.core.util.OkHttpUtils;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
-
-import java.util.HashMap;
 
 /**
  * @author laokou
@@ -49,7 +48,7 @@ class OkHttpUtilsTest {
 	void test_okHttp() {
 		wireMockServer.stubFor(WireMock.post("/test").willReturn(WireMock.ok("hello wiremock")));
 		String resultJson = OkHttpUtils.doFormDataPost("http://localhost:" + wireMockServer.port() + "/test",
-				new HashMap<>(0), new HashMap<>(0));
+				MapUtils.newHashMap(0), MapUtils.newHashMap(0));
 		Assertions.assertThat(resultJson).isEqualTo("hello wiremock");
 	}
 

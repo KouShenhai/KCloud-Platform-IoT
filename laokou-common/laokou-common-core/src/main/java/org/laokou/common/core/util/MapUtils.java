@@ -29,7 +29,9 @@ import org.yaml.snakeyaml.util.UriEncoder;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -46,11 +48,14 @@ public final class MapUtils {
 	}
 
 	/**
-	 * 根据负载因子【0.75】计算初始化容量.
-	 * @param size 容量
+	 * @param numMappings 映射数量
 	 */
-	public static int initialCapacity(int size) {
-		return Math.ceilDiv(size * 100, 75);
+	public static <K, V> HashMap<K, V> newHashMap(int numMappings) {
+		return HashMap.newHashMap(numMappings);
+	}
+
+	public static <K, V> LinkedHashMap<K, V> newLinkedHashMap(int numMappings) {
+		return LinkedHashMap.newLinkedHashMap(numMappings);
 	}
 
 	/**

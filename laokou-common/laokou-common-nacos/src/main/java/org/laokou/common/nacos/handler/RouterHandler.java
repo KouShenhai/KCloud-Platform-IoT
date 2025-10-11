@@ -20,6 +20,7 @@ package org.laokou.common.nacos.handler;
 import io.micrometer.common.lang.NonNullApi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.i18n.util.ResourceUtils;
 import org.laokou.common.core.util.SpringUtils;
 import org.laokou.common.core.util.TemplateUtils;
@@ -30,7 +31,6 @@ import org.springframework.util.Assert;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -50,7 +50,7 @@ public class RouterHandler implements ApplicationListener<ApplicationReadyEvent>
 		try {
 			String serviceId = springUtils.getServiceId();
 			Assert.isTrue(StringUtils.isNotEmpty(serviceId), "ServiceID is empty");
-			Map<String, Object> map = new HashMap<>(2);
+			Map<String, Object> map = MapUtils.newHashMap(2);
 			String abbr = serviceId.substring(7);
 			map.put("serviceId", serviceId);
 			map.put("abbr", abbr);

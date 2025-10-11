@@ -44,6 +44,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.laokou.common.core.util.CollectionUtils;
+import org.laokou.common.core.util.MapUtils;
 import org.springdoc.core.customizers.GlobalOpenApiCustomizer;
 import org.springdoc.core.properties.SpringDocConfigProperties;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -51,7 +52,6 @@ import org.springframework.context.annotation.ClassPathScanningCandidateComponen
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -83,7 +83,7 @@ public class Knife4jOpenApiCustomizer implements GlobalOpenApiCustomizer {
 					knife4jProperties.getDocuments());
 			// 解析初始化
 			openApiExtensionResolver.start();
-			Map<String, Object> objectMap = new HashMap<>();
+			Map<String, Object> objectMap = MapUtils.newHashMap(2);
 			objectMap.put(GlobalConstants.EXTENSION_OPEN_SETTING_NAME, setting);
 			objectMap.put(GlobalConstants.EXTENSION_OPEN_MARKDOWN_NAME, openApiExtensionResolver.getMarkdownFiles());
 			openApi.addExtension(GlobalConstants.EXTENSION_OPEN_API_NAME, objectMap);
@@ -117,7 +117,7 @@ public class Knife4jOpenApiCustomizer implements GlobalOpenApiCustomizer {
 			.collect(Collectors.toSet());
 		if (!org.springframework.util.CollectionUtils.isEmpty(classes)) {
 			// ApiSupport oder值存入tagSortMap<Tag.name,ApiSupport.order>
-			Map<String, Integer> tagOrderMap = new HashMap<>();
+			Map<String, Integer> tagOrderMap = MapUtils.newHashMap(classes.size());
 			classes.forEach(clazz -> {
 				Tag tag = getTag(clazz);
 				if (Objects.nonNull(tag)) {

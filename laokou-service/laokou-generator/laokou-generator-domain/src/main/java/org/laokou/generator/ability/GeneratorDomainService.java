@@ -99,10 +99,10 @@ public class GeneratorDomainService {
 			}).toList();
 			virtualTaskExecutor.invokeAll(list);
 		}
-		catch (InterruptedException e) {
+		catch (InterruptedException ex) {
 			Thread.currentThread().interrupt();
-			log.error("未知错误，错误信息：{}", e.getMessage(), e);
-			throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
+			log.error("未知错误，错误信息：{}", ex.getMessage(), ex);
+			throw new SystemException("S_UnKnow_Error", ex.getMessage(), ex);
 		}
 	}
 

@@ -19,6 +19,7 @@ package org.laokou.auth.config;
 
 import lombok.Data;
 import org.laokou.common.core.util.CollectionUtils;
+import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.i18n.util.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -27,7 +28,6 @@ import org.springframework.security.oauth2.server.authorization.settings.Configu
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -48,7 +48,7 @@ final class OAuth2AuthorizationServerProperties implements InitializingBean {
 	/**
 	 * Registered clients of the Authorization Server.
 	 */
-	private final Map<String, Client> client = new HashMap<>(0);
+	private final Map<String, Client> client = MapUtils.newHashMap(0);
 
 	/**
 	 * Authorization Server endpoints.

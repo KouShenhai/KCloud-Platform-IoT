@@ -19,6 +19,7 @@ package org.laokou.common.redis.util;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringUtils;
 import org.redisson.api.RAtomicLong;
@@ -37,7 +38,6 @@ import org.springframework.util.Assert;
 
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -323,7 +323,7 @@ public class RedisUtils {
 		Set<String> set = commandStats.stringPropertyNames();
 		List<Map<String, String>> pieList = new ArrayList<>(set.size());
 		set.forEach(key -> {
-			Map<String, String> data = new HashMap<>(2);
+			Map<String, String> data = MapUtils.newHashMap(2);
 			String property = commandStats.getProperty(key);
 			data.put("name", StringUtils.removeStart(key, "cmdstat_"));
 			data.put("value", StringUtils.substringBetween(property, "calls=", ",usec"));
@@ -337,7 +337,7 @@ public class RedisUtils {
 				redisTemplate.isExposeConnection());
 		Assert.isTrue(ObjectUtils.isNotNull(properties), "properties is null");
 		final Set<String> set = properties.stringPropertyNames();
-		Map<String, String> dataMap = new HashMap<>(set.size());
+		Map<String, String> dataMap = MapUtils.newHashMap(set.size());
 		set.forEach(key -> dataMap.put(key, properties.getProperty(key)));
 		return dataMap;
 	}

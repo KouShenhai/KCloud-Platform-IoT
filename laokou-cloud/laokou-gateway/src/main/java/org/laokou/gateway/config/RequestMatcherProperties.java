@@ -18,10 +18,10 @@
 package org.laokou.gateway.config;
 
 import lombok.Data;
+import org.laokou.common.core.util.MapUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -37,6 +37,6 @@ import java.util.Set;
 @ConfigurationProperties(prefix = "request-matcher")
 public class RequestMatcherProperties {
 
-	private Map<String, Set<String>> ignorePatterns = new HashMap<>(0);
+	private Map<String, Set<String>> ignorePatterns = MapUtils.newHashMap(0);
 
 }

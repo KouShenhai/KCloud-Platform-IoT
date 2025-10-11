@@ -35,6 +35,7 @@ package com.alibaba.cloud.nacos.loadbalancer;
 
 import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import com.alibaba.cloud.nacos.util.InetIPv6Utils;
+import org.laokou.common.core.util.MapUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -53,7 +54,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -83,7 +83,8 @@ public class NacosLoadBalancerClientConfiguration {
 			InetIPv6Utils inetIPv6Utils, List<ServiceInstanceFilter> serviceInstanceFilters,
 			List<LoadBalancerAlgorithm> loadBalancerAlgorithms) {
 		String serviceId = environment.getProperty(LoadBalancerClientFactory.PROPERTY_NAME);
-		Map<String, LoadBalancerAlgorithm> loadBalancerAlgorithmMap = new HashMap<>();
+		Map<String, LoadBalancerAlgorithm> loadBalancerAlgorithmMap = MapUtils
+			.newHashMap(loadBalancerAlgorithms.size());
 		loadBalancerAlgorithms.forEach(loadBalancerAlgorithm -> {
 			if (!loadBalancerAlgorithmMap.containsKey(loadBalancerAlgorithm.getServiceId())) {
 				loadBalancerAlgorithmMap.put(loadBalancerAlgorithm.getServiceId(), loadBalancerAlgorithm);

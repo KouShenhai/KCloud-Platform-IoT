@@ -45,7 +45,6 @@ class MapUtilsTest {
 		Assertions.assertThat(set.contains("/test")).isTrue();
 		Assertions.assertThat(set.contains("/test2")).isTrue();
 		Assertions.assertThat(set.contains("/test3")).isFalse();
-		Assertions.assertThat(MapUtils.initialCapacity(75)).isEqualTo(100);
 		Assertions.assertThat(MapUtils.isEmpty(map)).isFalse();
 		Assertions.assertThat(MapUtils.isNotEmpty(map)).isTrue();
 		map = MapUtils.toUriMap(Map.of("POST", Set.of("/test3=laokou-common-i18n")), "laokou-common-core",

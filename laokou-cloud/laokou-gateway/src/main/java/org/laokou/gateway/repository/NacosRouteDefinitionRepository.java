@@ -191,8 +191,8 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 			String routes = StringUtils.isEmpty(str) ? configService.getConfig(dataId, group, 5000) : str;
 			return JacksonUtils.toList(routes, RouteDefinition.class);
 		}
-		catch (Exception e) {
-			log.error("动态路由【API网关】不存在，错误信息：{}", e.getMessage(), e);
+		catch (Exception ex) {
+			log.error("动态路由【API网关】不存在，错误信息：{}", ex.getMessage(), ex);
 			throw new SystemException(GatewayConstants.ROUTER_NOT_EXIST);
 		}
 	}

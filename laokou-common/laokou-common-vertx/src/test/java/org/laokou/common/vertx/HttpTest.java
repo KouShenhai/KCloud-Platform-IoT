@@ -76,7 +76,7 @@ class HttpTest {
 
 	@Test
 	void test_http() throws InterruptedException {
-		Map<String, String> map = new HashMap<>();
+		Map<String, String> map = HashMap.newHashMap(3);
 		map.put("name", "laokou");
 		map.put("age", "18");
 		map.put("address", "北京上海深圳杭州");

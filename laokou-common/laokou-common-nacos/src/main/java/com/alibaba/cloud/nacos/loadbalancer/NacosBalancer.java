@@ -37,9 +37,9 @@ import com.alibaba.cloud.commons.lang.StringUtils;
 import com.alibaba.cloud.nacos.NacosServiceInstance;
 import com.alibaba.nacos.api.naming.pojo.Instance;
 import com.alibaba.nacos.client.naming.core.Balancer;
+import org.laokou.common.core.util.MapUtils;
 import org.springframework.cloud.client.ServiceInstance;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -70,7 +70,7 @@ public class NacosBalancer extends Balancer {
 	 * @return the chosen instance
 	 */
 	public static ServiceInstance getHostByRandomWeight3(List<ServiceInstance> serviceInstances) {
-		Map<Instance, ServiceInstance> instanceMap = new HashMap<>();
+		Map<Instance, ServiceInstance> instanceMap = MapUtils.newHashMap(serviceInstances.size());
 		List<Instance> nacosInstance = serviceInstances.stream().map(serviceInstance -> {
 			Map<String, String> metadata = serviceInstance.getMetadata();
 
