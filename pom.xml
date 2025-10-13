@@ -136,7 +136,7 @@
     <!--jackson版本-->
     <jackson.version>2.20.0</jackson.version>
     <!--okhttp版本-->
-    <okhttp.version>4.12.0</okhttp.version>
+    <okhttp.version>5.2.1</okhttp.version>
     <!--redisson版本-->
     <redisson.version>3.52.0</redisson.version>
     <!--lombok版本-->
