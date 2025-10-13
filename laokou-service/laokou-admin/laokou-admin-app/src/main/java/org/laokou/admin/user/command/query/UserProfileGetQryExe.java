@@ -19,7 +19,6 @@ package org.laokou.admin.user.command.query;
 
 import org.laokou.admin.user.convertor.UserConvertor;
 import org.laokou.admin.user.dto.clientobject.UserProfileCO;
-import org.laokou.common.context.util.UserUtils;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
@@ -36,7 +35,7 @@ public class UserProfileGetQryExe {
 	 * @return 用户信息
 	 */
 	public Result<UserProfileCO> execute() {
-		return Result.ok(UserConvertor.toClientObject(UserUtils.user()));
+		return Result.ok(UserConvertor.toClientObject());
 	}
 
 }

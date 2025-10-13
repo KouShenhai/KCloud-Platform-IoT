@@ -136,34 +136,34 @@ public class UserDetails implements org.springframework.security.core.userdetail
 			return false;
 		}
 		UserDetails that = (UserDetails) o;
-		if (!id.equals(that.id)) {
+		if (!ObjectUtils.equals(id, that.id)) {
 			return false;
 		}
-		if (!username.equals(that.username)) {
+		if (!ObjectUtils.equals(username, that.username)) {
 			return false;
 		}
-		if (!avatar.equals(that.avatar)) {
+		if (!ObjectUtils.equals(avatar, that.avatar)) {
 			return false;
 		}
-		if (!superAdmin.equals(that.superAdmin)) {
+		if (!ObjectUtils.equals(superAdmin, that.superAdmin)) {
 			return false;
 		}
-		if (!status.equals(that.status)) {
+		if (!ObjectUtils.equals(status, that.status)) {
 			return false;
 		}
-		if (!deptPaths.equals(that.deptPaths)) {
+		if (!ObjectUtils.equals(deptPaths, that.deptPaths)) {
 			return false;
 		}
-		if (!permissions.equals(that.permissions)) {
+		if (!ObjectUtils.equals(permissions, that.permissions)) {
 			return false;
 		}
-		if (!tenantId.equals(that.tenantId)) {
+		if (!ObjectUtils.equals(tenantId, that.tenantId)) {
 			return false;
 		}
-		if (!mobile.equals(that.mobile)) {
+		if (!ObjectUtils.equals(mobile, that.mobile)) {
 			return false;
 		}
-		return mail.equals(that.mail);
+		return ObjectUtils.equals(mail, that.mail);
 	}
 
 	@Override

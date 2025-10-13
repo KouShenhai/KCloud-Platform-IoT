@@ -40,6 +40,7 @@ jobs:
             ./laokou-common/laokou-common-core/target/site/jacoco/jacoco.xml,
             ./laokou-common/laokou-common-trace/target/site/jacoco/jacoco.xml,
             ./laokou-common/laokou-common-algorithm/target/site/jacoco/jacoco.xml,
+            ./laokou-common/laokou-common-context/target/site/jacoco/jacoco.xml,
             ./laokou-common/laokou-common-crypto/target/site/jacoco/jacoco.xml,
             ./laokou-common/laokou-common-i18n/target/site/jacoco/jacoco.xml,
             ./laokou-common/laokou-common-xss/target/site/jacoco/jacoco.xml,

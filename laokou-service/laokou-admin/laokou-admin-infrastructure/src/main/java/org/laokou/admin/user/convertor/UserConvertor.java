@@ -25,6 +25,7 @@ import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDeptDO;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserRoleDO;
 import org.laokou.admin.user.model.UserE;
 import org.laokou.admin.user.model.UserOperateTypeEnum;
+import org.laokou.common.context.util.UserUtils;
 import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.context.util.UserDetails;
@@ -121,7 +122,8 @@ public final class UserConvertor {
 		return userDO;
 	}
 
-	public static UserProfileCO toClientObject(UserDetails userDetails) {
+	public static UserProfileCO toClientObject() {
+		UserDetails userDetails = UserUtils.user();
 		UserProfileCO userProfileCO = new UserProfileCO();
 		userProfileCO.setId(userDetails.getId());
 		userProfileCO.setUsername(userDetails.getUsername());
