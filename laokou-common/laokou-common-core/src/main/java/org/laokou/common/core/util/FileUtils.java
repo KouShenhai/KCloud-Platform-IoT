@@ -49,6 +49,7 @@ import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileAttribute;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -188,6 +189,14 @@ public final class FileUtils {
 		return Files.exists(path);
 	}
 
+	public static Path createTempFile(Path dir, String prefix, String suffix, FileAttribute<?>[] attrs) throws IOException {
+		return Files.createTempFile(dir, prefix, suffix, attrs);
+	}
+
+	public static Path createTempDirectory(Path dir, String prefix, FileAttribute<?>... attrs) throws IOException {
+		return Files.createTempDirectory(dir, prefix, attrs);
+	}
+
 	public static void delete(Path directory) throws IOException {
 		if (exists(directory)) {
 			walkFileTree(directory, new SimpleFileVisitor<>() {
@@ -254,6 +263,46 @@ public final class FileUtils {
 		replaceFromEnd(sourceDir, oldChar, newChar, false);
 	}
 
+	/**
+	 * zip压缩包.
+	 * @param sourcePath 源路径
+	 * @param out 输出流
+	 */
+	public static void zip(Path sourcePath, OutputStream out) throws IOException {
+		try (ZipOutputStream zos = new ZipOutputStream(out)) {
+			walkFileTree(sourcePath, new SimpleFileVisitor<>() {
+				@NotNull
+				@Override
+				public FileVisitResult visitFile(@NotNull Path filePath, @NotNull BasicFileAttributes attrs)
+					throws IOException {
+					// 对于每个文件，创建一个 ZipEntry 并写入
+					Path targetPath = sourcePath.relativize(filePath);
+					zos.putNextEntry(new ZipEntry(sourcePath.getFileName() + StringConstants.SLASH + targetPath));
+					copy(filePath, zos);
+					zos.closeEntry();
+					return FileVisitResult.CONTINUE;
+				}
+
+				@NotNull
+				@Override
+				public FileVisitResult preVisitDirectory(@NotNull Path dirPath, @NotNull BasicFileAttributes attrs)
+					throws IOException {
+					// 对于每个目录，创建一个 ZipEntry（目录也需要在 ZIP 中存在）
+					Path targetPath = sourcePath.relativize(dirPath);
+					zos.putNextEntry(new ZipEntry(sourcePath.getFileName() + StringConstants.SLASH + targetPath));
+					zos.closeEntry();
+					return FileVisitResult.CONTINUE;
+				}
+
+				@NotNull
+				@Override
+				public FileVisitResult visitFileFailed(@NotNull Path file, @NotNull IOException exc) {
+					return FileVisitResult.CONTINUE;
+				}
+			});
+		}
+	}
+
 	private static void replaceFromEnd(String sourceDir, char oldChar, char newChar, boolean stopAfterFirst) {
 		try (RandomAccessFile raf = new RandomAccessFile(sourceDir, "rw")) {
 			for (long pos = raf.length() - 1; pos >= 0; pos--) {
@@ -290,46 +339,6 @@ public final class FileUtils {
 		catch (Exception e) {
 			log.error("分片写入失败，错误信息：{}", e.getMessage(), e);
 			throw new SystemException("S_File_ChunkWriteFailed", e.getMessage(), e);
-		}
-	}
-
-	/**
-	 * zip压缩包.
-	 * @param sourcePath 源路径
-	 * @param out 输出流
-	 */
-	private static void zip(Path sourcePath, OutputStream out) throws IOException {
-		try (ZipOutputStream zos = new ZipOutputStream(out)) {
-			walkFileTree(sourcePath, new SimpleFileVisitor<>() {
-				@NotNull
-				@Override
-				public FileVisitResult visitFile(@NotNull Path filePath, @NotNull BasicFileAttributes attrs)
-						throws IOException {
-					// 对于每个文件，创建一个 ZipEntry 并写入
-					Path targetPath = sourcePath.relativize(filePath);
-					zos.putNextEntry(new ZipEntry(sourcePath.getFileName() + StringConstants.SLASH + targetPath));
-					copy(filePath, zos);
-					zos.closeEntry();
-					return FileVisitResult.CONTINUE;
-				}
-
-				@NotNull
-				@Override
-				public FileVisitResult preVisitDirectory(@NotNull Path dirPath, @NotNull BasicFileAttributes attrs)
-						throws IOException {
-					// 对于每个目录，创建一个 ZipEntry（目录也需要在 ZIP 中存在）
-					Path targetPath = sourcePath.relativize(dirPath);
-					zos.putNextEntry(new ZipEntry(sourcePath.getFileName() + StringConstants.SLASH + targetPath));
-					zos.closeEntry();
-					return FileVisitResult.CONTINUE;
-				}
-
-				@NotNull
-				@Override
-				public FileVisitResult visitFileFailed(@NotNull Path file, @NotNull IOException exc) {
-					return FileVisitResult.CONTINUE;
-				}
-			});
 		}
 	}
 
