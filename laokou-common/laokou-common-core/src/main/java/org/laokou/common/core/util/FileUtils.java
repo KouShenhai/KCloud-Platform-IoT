@@ -40,7 +40,6 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.CopyOption;
 import java.nio.file.FileVisitResult;
 import java.nio.file.FileVisitor;
 import java.nio.file.Files;
@@ -82,10 +81,6 @@ public final class FileUtils {
 		return Files.newBufferedReader(path);
 	}
 
-	public static boolean deleteIfExists(Path path) throws IOException {
-		return Files.deleteIfExists(path);
-	}
-
 	public static boolean notExists(Path path, LinkOption... options) {
 		return Files.notExists(path, options);
 	}
@@ -122,8 +117,8 @@ public final class FileUtils {
 		return Files.readAllBytes(path);
 	}
 
-	public static String getStr(Path path) throws IOException {
-		return Files.readString(path, StandardCharsets.UTF_8);
+	public static String readString(Path path) throws IOException {
+		return Files.readString(path);
 	}
 
 	public static void walkFileTree(Path path, FileVisitor<? super Path> visitor) throws IOException {
@@ -177,24 +172,25 @@ public final class FileUtils {
 		return fileName.substring(fileName.lastIndexOf(StringConstants.DOT));
 	}
 
-	public static void copy(Path source, OutputStream out) throws IOException {
-		Files.copy(source, out);
-	}
-
-	public static void copy(InputStream in, Path target, CopyOption... options) throws IOException {
-		Files.copy(in, target, options);
-	}
-
 	public static boolean exists(Path path) {
 		return Files.exists(path);
 	}
 
-	public static Path createTempFile(Path dir, String prefix, String suffix, FileAttribute<?>[] attrs) throws IOException {
+	public static Path createTempFile(Path dir, String prefix, String suffix, FileAttribute<?>[] attrs)
+			throws IOException {
 		return Files.createTempFile(dir, prefix, suffix, attrs);
+	}
+
+	public static Path createTempFile(Path dir, String prefix, String suffix) throws IOException {
+		return Files.createTempFile(dir, prefix, suffix);
 	}
 
 	public static Path createTempDirectory(Path dir, String prefix, FileAttribute<?>... attrs) throws IOException {
 		return Files.createTempDirectory(dir, prefix, attrs);
+	}
+
+	public static Path createTempDirectory(Path dir, String prefix) throws IOException {
+		return Files.createTempDirectory(dir, prefix);
 	}
 
 	public static void delete(Path directory) throws IOException {
@@ -205,15 +201,13 @@ public final class FileUtils {
 				@Override
 				public FileVisitResult visitFile(@NotNull Path filePath, @NotNull BasicFileAttributes attrs)
 						throws IOException {
-					Files.delete(filePath);
-					return FileVisitResult.CONTINUE;
+					return deleteIfExists(filePath) ? FileVisitResult.CONTINUE : FileVisitResult.SKIP_SUBTREE;
 				}
 
 				@NotNull
 				@Override
 				public FileVisitResult postVisitDirectory(@NotNull Path dirPath, IOException exc) throws IOException {
-					Files.delete(dirPath);
-					return FileVisitResult.CONTINUE;
+					return deleteIfExists(dirPath) ? FileVisitResult.CONTINUE : FileVisitResult.SKIP_SUBTREE;
 				}
 
 				@NotNull
@@ -274,7 +268,7 @@ public final class FileUtils {
 				@NotNull
 				@Override
 				public FileVisitResult visitFile(@NotNull Path filePath, @NotNull BasicFileAttributes attrs)
-					throws IOException {
+						throws IOException {
 					// 对于每个文件，创建一个 ZipEntry 并写入
 					Path targetPath = sourcePath.relativize(filePath);
 					zos.putNextEntry(new ZipEntry(sourcePath.getFileName() + StringConstants.SLASH + targetPath));
@@ -286,7 +280,7 @@ public final class FileUtils {
 				@NotNull
 				@Override
 				public FileVisitResult preVisitDirectory(@NotNull Path dirPath, @NotNull BasicFileAttributes attrs)
-					throws IOException {
+						throws IOException {
 					// 对于每个目录，创建一个 ZipEntry（目录也需要在 ZIP 中存在）
 					Path targetPath = sourcePath.relativize(dirPath);
 					zos.putNextEntry(new ZipEntry(sourcePath.getFileName() + StringConstants.SLASH + targetPath));
@@ -303,9 +297,14 @@ public final class FileUtils {
 		}
 	}
 
+	public static boolean deleteIfExists(Path path) throws IOException {
+		return Files.deleteIfExists(path);
+	}
+
 	private static void replaceFromEnd(String sourceDir, char oldChar, char newChar, boolean stopAfterFirst) {
 		try (RandomAccessFile raf = new RandomAccessFile(sourceDir, "rw")) {
 			for (long pos = raf.length() - 1; pos >= 0; pos--) {
+				raf.seek(pos);
 				if ((char) raf.read() == oldChar) {
 					raf.seek(pos);
 					raf.write(newChar);
@@ -346,6 +345,10 @@ public final class FileUtils {
 		URI uri = URI.create(url);
 		URLConnection connection = uri.toURL().openConnection();
 		return connection.getInputStream();
+	}
+
+	private static void copy(Path source, OutputStream out) throws IOException {
+		Files.copy(source, out);
 	}
 
 	@Data

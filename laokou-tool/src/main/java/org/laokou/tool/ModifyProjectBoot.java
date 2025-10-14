@@ -147,12 +147,12 @@ final class ModifyProjectBoot {
 	}
 
 	private static byte[] getJavaFileAsByte(String path) throws IOException {
-		String str = FileUtils.getStr(Path.of(path));
+		String str = FileUtils.readString(Path.of(path));
 		return str.replaceAll("org.laokou", NEW_PACKAGE_NAME).getBytes(StandardCharsets.UTF_8);
 	}
 
 	private static byte[] getPomFileAsByte(String path) throws IOException {
-		String str = FileUtils.getStr(Path.of(path));
+		String str = FileUtils.readString(Path.of(path));
 		return str.replaceAll("org.laokou", NEW_GROUP_ID)
 			.replaceAll("laokou-", NEW_MODULE_NAME + "-")
 			.replace("KCloud-Platform-IoT", NEW_PROJECT_NAME)
@@ -160,7 +160,7 @@ final class ModifyProjectBoot {
 	}
 
 	private static byte[] getXmlFileAsByte(String path) throws IOException {
-		String str = FileUtils.getStr(Path.of(path));
+		String str = FileUtils.readString(Path.of(path));
 		return str.replaceAll("org.laokou", NEW_PACKAGE_NAME).getBytes(StandardCharsets.UTF_8);
 	}
 
