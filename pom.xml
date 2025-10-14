@@ -228,7 +228,7 @@
     <!--spring-security-oauth2-authorization-server版本-->
     <spring-security-oauth2-authorization-server.version>1.5.2</spring-security-oauth2-authorization-server.version>
     <!--swagger-annotations-jakarta版本-->
-    <swagger-annotations-jakarta.version>2.2.38</swagger-annotations-jakarta.version>
+    <swagger-annotations-jakarta.version>2.2.39</swagger-annotations-jakarta.version>
     <!--jsqlparser版本-->
     <jsqlparser.version>5.2</jsqlparser.version>
     <!--gson版本-->
