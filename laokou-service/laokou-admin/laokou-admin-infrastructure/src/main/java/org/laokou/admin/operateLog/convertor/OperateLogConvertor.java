@@ -23,7 +23,8 @@ import org.laokou.admin.operateLog.dto.excel.OperateLogExcel;
 import org.laokou.admin.operateLog.factory.OperateLogDomainFactory;
 import org.laokou.admin.operateLog.model.OperateLogE;
 import org.laokou.common.excel.util.ExcelUtils;
-import org.laokou.common.i18n.util.DateUtils;
+import org.laokou.common.i18n.common.constant.DateConstants;
+import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.log.mapper.OperateLogDO;
 import org.springframework.util.Assert;
 
@@ -141,8 +142,8 @@ public final class OperateLogConvertor implements ExcelUtils.ExcelConvertor<Oper
 		operateLogExcel.setStatus(status.getDesc());
 		operateLogExcel.setErrorMessage(operateLogDO.getErrorMessage());
 		operateLogExcel.setCostTime(operateLogDO.getCostTime());
-		operateLogExcel
-			.setCreateTime(DateUtils.format(operateLogDO.getCreateTime(), DateUtils.YYYY_B_MM_B_DD_HH_R_MM_R_SS));
+		operateLogExcel.setCreateTime(
+				InstantUtils.format(operateLogDO.getCreateTime(), DateConstants.YYYY_B_MM_B_DD_HH_R_MM_R_SS));
 		return operateLogExcel;
 	}
 

@@ -18,7 +18,7 @@
 package org.laokou.common.excel;
 
 import org.laokou.common.excel.util.ExcelUtils;
-import org.laokou.common.i18n.util.DateUtils;
+import org.laokou.common.i18n.util.InstantUtils;
 
 import java.util.List;
 
@@ -44,8 +44,8 @@ final class TestUserConvertor implements ExcelUtils.ExcelConvertor<TestUserDO, T
 		testUserDO.setName(testUserExcel.getName());
 		testUserDO.setCreator(1L);
 		testUserDO.setEditor(1L);
-		testUserDO.setCreateTime(DateUtils.nowInstant());
-		testUserDO.setUpdateTime(DateUtils.nowInstant());
+		testUserDO.setCreateTime(InstantUtils.now());
+		testUserDO.setUpdateTime(InstantUtils.now());
 		testUserDO.setVersion(0);
 		testUserDO.setTenantId(0L);
 		testUserDO.setDelFlag(0);

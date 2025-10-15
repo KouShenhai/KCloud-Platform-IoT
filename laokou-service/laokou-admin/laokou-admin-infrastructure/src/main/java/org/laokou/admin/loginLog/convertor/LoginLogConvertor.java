@@ -25,7 +25,8 @@ import org.laokou.admin.loginLog.model.LoginLogE;
 import org.laokou.admin.loginLog.model.LoginStatusEnum;
 import org.laokou.admin.loginLog.model.LoginTypeEnum;
 import org.laokou.common.excel.util.ExcelUtils;
-import org.laokou.common.i18n.util.DateUtils;
+import org.laokou.common.i18n.common.constant.DateConstants;
+import org.laokou.common.i18n.util.InstantUtils;
 import org.springframework.util.Assert;
 
 import java.util.List;
@@ -119,7 +120,7 @@ public final class LoginLogConvertor implements ExcelUtils.ExcelConvertor<LoginL
 		loginLogExcel.setType(type.getDesc());
 		loginLogExcel.setErrorMessage(loginLogDO.getErrorMessage());
 		loginLogExcel
-			.setCreateTime(DateUtils.format(loginLogDO.getCreateTime(), DateUtils.YYYY_B_MM_B_DD_HH_R_MM_R_SS));
+			.setCreateTime(InstantUtils.format(loginLogDO.getCreateTime(), DateConstants.YYYY_B_MM_B_DD_HH_R_MM_R_SS));
 		return loginLogExcel;
 	}
 

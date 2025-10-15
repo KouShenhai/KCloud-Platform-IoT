@@ -28,7 +28,8 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.config.CustomInstantDeserializer;
 import org.laokou.common.core.config.CustomInstantSerializer;
-import org.laokou.common.i18n.util.DateUtils;
+import org.laokou.common.i18n.common.constant.DateConstants;
+import org.laokou.common.i18n.util.InstantUtils;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.Ordered;
@@ -61,9 +62,9 @@ public class HttpMessageConverterAutoConfig {
 		// 反序列化时，属性不存在的兼容处理
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		// 时区
-		TimeZone timeZone = TimeZone.getTimeZone(DateUtils.DEFAULT_TIMEZONE);
-		DateTimeFormatter dateTimeFormatter = DateUtils.getDateTimeFormatter(DateUtils.YYYY_B_MM_B_DD_HH_R_MM_R_SS);
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DateUtils.YYYY_B_MM_B_DD_HH_R_MM_R_SS);
+		TimeZone timeZone = TimeZone.getTimeZone(DateConstants.DEFAULT_TIMEZONE);
+		DateTimeFormatter dateTimeFormatter = InstantUtils.getDateTimeFormatter(DateConstants.YYYY_B_MM_B_DD_HH_R_MM_R_SS);
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DateConstants.YYYY_B_MM_B_DD_HH_R_MM_R_SS);
 		simpleDateFormat.setTimeZone(timeZone);
 		mapper.setDateFormat(simpleDateFormat);
 		mapper.setTimeZone(timeZone);
