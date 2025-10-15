@@ -118,7 +118,7 @@
     <!--springdoc-openapi版本-->
     <springdoc-openapi.version>2.8.13</springdoc-openapi.version>
     <!--testcontainers版本-->
-    <testcontainers.version>1.21.3</testcontainers.version>
+    <testcontainers.version>2.0.0</testcontainers.version>
     <!--vertx版本-->
     <vertx.version>5.0.4</vertx.version>
     <!--mybatis-plus版本 -->
