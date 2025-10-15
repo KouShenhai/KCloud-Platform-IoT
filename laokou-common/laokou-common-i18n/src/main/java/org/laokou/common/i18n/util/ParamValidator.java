@@ -33,15 +33,15 @@ public final class ParamValidator {
 	}
 
 	public static void validate(Validate... validates) {
-		String validateString = StringUtils.collectionToDelimitedString(validates(validates), StringConstants.DROP);
-		if (StringUtils.isNotEmpty(validateString)) {
+		String validateString = StringExtUtils.collectionToDelimitedString(validates(validates), StringConstants.DROP);
+		if (StringExtUtils.isNotEmpty(validateString)) {
 			throw new ParamException("P_System_ValidateFailed", validateString);
 		}
 	}
 
 	public static Set<String> validates(Validate... validates) {
 		return Stream.of(validates)
-			.filter(item -> StringUtils.isNotEmpty(item.value))
+			.filter(item -> StringExtUtils.isNotEmpty(item.value))
 			.map(item -> item.value)
 			.collect(Collectors.toSet());
 	}

@@ -21,10 +21,10 @@ import io.micrometer.common.lang.NonNullApi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.MapUtils;
-import org.laokou.common.i18n.util.ResourceUtils;
+import org.laokou.common.i18n.util.ResourceExtUtils;
 import org.laokou.common.core.util.SpringUtils;
 import org.laokou.common.core.util.TemplateUtils;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.util.Assert;
@@ -49,7 +49,7 @@ public class RouterHandler implements ApplicationListener<ApplicationReadyEvent>
 	public void onApplicationEvent(ApplicationReadyEvent event) {
 		try {
 			String serviceId = springUtils.getServiceId();
-			Assert.isTrue(StringUtils.isNotEmpty(serviceId), "ServiceID is empty");
+			Assert.isTrue(StringExtUtils.isNotEmpty(serviceId), "ServiceID is empty");
 			Map<String, Object> map = MapUtils.newHashMap(2);
 			String abbr = serviceId.substring(7);
 			map.put("serviceId", serviceId);
@@ -71,7 +71,7 @@ public class RouterHandler implements ApplicationListener<ApplicationReadyEvent>
 	 * @return 路由配置
 	 */
 	private String getRouter(Map<String, Object> dataMap) throws IOException {
-		String template = ResourceUtils.getResource("templates/router_template.json")
+		String template = ResourceExtUtils.getResource("templates/router_template.json")
 			.getContentAsString(StandardCharsets.UTF_8)
 			.trim();
 		return TemplateUtils.getContent(template, dataMap);

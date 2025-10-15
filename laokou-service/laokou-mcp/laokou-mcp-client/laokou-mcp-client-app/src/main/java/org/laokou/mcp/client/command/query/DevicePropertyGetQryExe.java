@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.core.util.CollectionUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.mcp.client.dto.DevicePropertyGetQry;
 import org.springframework.stereotype.Component;
 
@@ -49,9 +49,9 @@ public class DevicePropertyGetQryExe {
 				return textContent.text();
 			}
 			return StringConstants.EMPTY;
-		}).filter(StringUtils::hasText).toList();
+		}).filter(StringExtUtils::hasText).toList();
 		if (CollectionUtils.isNotEmpty(list)) {
-			return Result.ok(StringUtils.collectionToDelimitedString(list, StringConstants.DROP));
+			return Result.ok(StringExtUtils.collectionToDelimitedString(list, StringConstants.DROP));
 		}
 		return Result.ok(StringConstants.EMPTY);
 	}

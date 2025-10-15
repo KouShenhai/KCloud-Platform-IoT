@@ -39,7 +39,7 @@ import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.common.i18n.util.ValidatorUtils;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
 import org.laokou.common.mybatisplus.mapper.CrudMapper;
@@ -86,7 +86,7 @@ public final class ExcelUtils {
 			Class<?>... groups) {
 		ExcelReaderBuilder builder = FastExcel.read(inputStream, excel,
 				new DataListener<>(clazz, consumer, mybatisUtils, convert, validator, groups));
-		if (StringUtils.isNotEmpty(sheetName)) {
+		if (StringExtUtils.isNotEmpty(sheetName)) {
 			builder.sheet(sheetName).doRead();
 		}
 		else {
@@ -232,7 +232,7 @@ public final class ExcelUtils {
 			}
 			if (CollectionUtils.isNotEmpty(validates)) {
 				ERRORS.add(getTemplate(currentRowNum,
-						StringUtils.collectionToDelimitedString(validates, StringConstants.DROP)));
+						StringExtUtils.collectionToDelimitedString(validates, StringConstants.DROP)));
 			}
 			else {
 				CACHED_DATA_LIST.add(convertor.toDataObject(excel));

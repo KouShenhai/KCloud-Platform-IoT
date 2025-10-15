@@ -24,7 +24,7 @@ import org.laokou.admin.menu.model.MenuE;
 import org.laokou.admin.menu.model.MenuTypeEnum;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.ParamValidator;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 
 /**
  * @author laokou
@@ -38,7 +38,7 @@ final class MenuParamValidator {
 		Integer type = menuE.getType();
 		String permission = menuE.getPermission();
 		if (MenuTypeEnum.BUTTON.getCode() == type) {
-			if (StringUtils.isEmpty(permission)) {
+			if (StringExtUtils.isEmpty(permission)) {
 				return ParamValidator.invalidate("菜单权限标识不能为空");
 			}
 			if (isSave && menuMapper
@@ -74,7 +74,7 @@ final class MenuParamValidator {
 		Integer type = menuE.getType();
 		String path = menuE.getPath();
 		if (MenuTypeEnum.MENU.getCode() == type) {
-			if (StringUtils.isEmpty(path)) {
+			if (StringExtUtils.isEmpty(path)) {
 				return ParamValidator.invalidate("菜单路径不能为空");
 			}
 			if (isSave && menuMapper.selectCount(Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getPath, path)) > 0) {
@@ -120,7 +120,7 @@ final class MenuParamValidator {
 	public static ParamValidator.Validate validateName(MenuE menuE, MenuMapper menuMapper, boolean isSave) {
 		String name = menuE.getName();
 		Integer type = menuE.getType();
-		if (StringUtils.isEmpty(name)) {
+		if (StringExtUtils.isEmpty(name)) {
 			return ParamValidator.invalidate("菜单名称不能为空");
 		}
 		if (MenuTypeEnum.MENU.getCode() == type) {

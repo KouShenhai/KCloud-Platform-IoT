@@ -19,7 +19,7 @@ package org.laokou.admin.loginLog.dto;
 
 import lombok.Data;
 import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 
 /**
  * 分页查询登录日志命令.
@@ -46,31 +46,31 @@ public class LoginLogPageQry extends PageQuery {
 	private String errorMessage;
 
 	public void setUsername(String username) {
-		this.username = StringUtils.like(StringUtils.trim(username));
+		this.username = StringExtUtils.like(StringExtUtils.trim(username));
 	}
 
 	public void setIp(String ip) {
-		this.ip = StringUtils.like(StringUtils.trim(ip));
+		this.ip = StringExtUtils.like(StringExtUtils.trim(ip));
 	}
 
 	public void setAddress(String address) {
-		this.address = StringUtils.like(StringUtils.trim(address));
+		this.address = StringExtUtils.like(StringExtUtils.trim(address));
 	}
 
 	public void setBrowser(String browser) {
-		this.browser = StringUtils.like(StringUtils.trim(browser));
+		this.browser = StringExtUtils.like(StringExtUtils.trim(browser));
 	}
 
 	public void setOs(String os) {
-		this.os = StringUtils.like(StringUtils.trim(os));
+		this.os = StringExtUtils.like(StringExtUtils.trim(os));
 	}
 
 	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = StringUtils.like(StringUtils.trim(errorMessage));
+		this.errorMessage = StringExtUtils.like(StringExtUtils.trim(errorMessage));
 	}
 
 	public void setType(String type) {
-		this.type = StringUtils.trim(type);
+		this.type = StringExtUtils.trim(type);
 	}
 
 }

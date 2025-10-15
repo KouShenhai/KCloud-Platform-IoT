@@ -23,7 +23,7 @@ import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.gatewayimpl.database.dataobject.NoticeLogDO;
 import org.laokou.auth.model.NoticeLogE;
 import org.laokou.common.i18n.util.InstantUtils;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.common.mail.dto.MailResult;
 import org.laokou.common.sms.entity.SmsResult;
 
@@ -40,7 +40,7 @@ public final class NoticeLogConvertor {
 		noticeLogCO.setCode(result.getCode());
 		noticeLogCO.setName(result.getName());
 		noticeLogCO.setStatus(result.getStatus());
-		noticeLogCO.setErrorMessage(StringUtils.truncate(result.getErrorMessage(), 2000));
+		noticeLogCO.setErrorMessage(StringExtUtils.truncate(result.getErrorMessage(), 2000));
 		noticeLogCO.setParam(result.getParam());
 		noticeLogCO.setTenantId(evt.getTenantId());
 		noticeLogCO.setId(evt.getId());
@@ -55,7 +55,7 @@ public final class NoticeLogConvertor {
 		noticeLogCO.setCode(result.getCode());
 		noticeLogCO.setName(result.getName());
 		noticeLogCO.setStatus(result.getStatus());
-		noticeLogCO.setErrorMessage(StringUtils.truncate(result.getErrorMessage(), 2000));
+		noticeLogCO.setErrorMessage(StringExtUtils.truncate(result.getErrorMessage(), 2000));
 		noticeLogCO.setParam(result.getParam());
 		noticeLogCO.setTenantId(evt.getTenantId());
 		noticeLogCO.setId(evt.getId());

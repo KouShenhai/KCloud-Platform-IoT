@@ -20,7 +20,7 @@ package org.laokou.generator.gatewayimpl;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.common.constant.StringConstants;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.generator.gateway.TableGateway;
 import org.laokou.generator.gatewayimpl.database.TableColumnMapper;
 import org.laokou.generator.gatewayimpl.database.TableMapper;
@@ -76,15 +76,15 @@ public class TableGatewayImpl implements TableGateway {
 	}
 
 	private TableColumnV convert(TableColumnDO columnDO) {
-		String fieldName = StringUtils.convertUnder(columnDO.getName());
+		String fieldName = StringExtUtils.convertUnder(columnDO.getName());
 		String fieldType = DataType.valueOf(columnDO.getDataType().toUpperCase()).getValue();
 		return new TableColumnV(columnDO.getComment(), fieldName, fieldType, columnDO.getName());
 	}
 
 	private TableV convert(String name, String comment, String tablePrefix, List<TableColumnV> columns) {
 		String newName = name.replace(tablePrefix, StringConstants.EMPTY);
-		String className = StringUtils.convertUnder(StringConstants.UNDER.concat(newName));
-		String instanceName = StringUtils.convertUnder(newName);
+		String className = StringExtUtils.convertUnder(StringConstants.UNDER.concat(newName));
+		String instanceName = StringExtUtils.convertUnder(newName);
 		return new TableV(name, comment, columns, className, instanceName);
 	}
 

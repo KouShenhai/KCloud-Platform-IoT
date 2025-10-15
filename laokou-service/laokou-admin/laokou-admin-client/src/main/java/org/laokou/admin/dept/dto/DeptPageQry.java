@@ -19,7 +19,7 @@ package org.laokou.admin.dept.dto;
 
 import lombok.Data;
 import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 
 /**
  * 分页查询部门命令.
@@ -32,7 +32,7 @@ public class DeptPageQry extends PageQuery {
 	private String name;
 
 	public void setName(String name) {
-		this.name = StringUtils.like(StringUtils.trim(name));
+		this.name = StringExtUtils.like(StringExtUtils.trim(name));
 	}
 
 }

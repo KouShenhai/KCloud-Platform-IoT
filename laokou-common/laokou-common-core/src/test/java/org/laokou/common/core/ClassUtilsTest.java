@@ -19,7 +19,7 @@ package org.laokou.common.core;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.core.util.ClassUtils;
+import org.laokou.common.core.util.ClassExtUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
@@ -34,20 +34,20 @@ class ClassUtilsTest {
 	@Test
 	void test_parseClass_ValidClassName() throws ClassNotFoundException {
 		// 测试解析有效的类名
-		Assertions.assertThat(ClassUtils.parseClass("java.lang.String")).isEqualTo(String.class);
+		Assertions.assertThat(ClassExtUtils.parseClass("java.lang.String")).isEqualTo(String.class);
 	}
 
 	@Test
 	void test_parseClass_InvalidClassName() {
 		// 测试解析无效的类名
-		Assertions.assertThat(Assertions.catchException(() -> ClassUtils.parseClass("invalid.class.name")))
+		Assertions.assertThat(Assertions.catchException(() -> ClassExtUtils.parseClass("invalid.class.name")))
 			.isInstanceOf(ClassNotFoundException.class);
 	}
 
 	@Test
 	void test_parseClass_NullClassName() {
 		// 测试解析null类名
-		Assertions.assertThat(Assertions.catchException(() -> ClassUtils.parseClass(null)))
+		Assertions.assertThat(Assertions.catchException(() -> ClassExtUtils.parseClass(null)))
 			.isInstanceOf(NullPointerException.class);
 	}
 
@@ -55,14 +55,15 @@ class ClassUtilsTest {
 	void test_scanAnnotatedClasses_ValidPackage() {
 		// 测试扫描有效包中的注解类
 		// 由于测试包中可能没有@Component注解的类，所以这里只验证返回的Set不为null
-		Set<Class<?>> classes = ClassUtils.scanAnnotatedClasses("org.laokou.common.core.util", Component.class);
+		Set<Class<?>> classes = ClassExtUtils.scanAnnotatedClasses("org.laokou.common.core.util", Component.class);
 		Assertions.assertThat(classes).isNotNull();
 	}
 
 	@Test
 	void test_scanAnnotatedClasses_NullPackage() {
 		// 测试扫描null包名
-		Assertions.assertThat(Assertions.catchException(() -> ClassUtils.scanAnnotatedClasses(null, Component.class)))
+		Assertions
+			.assertThat(Assertions.catchException(() -> ClassExtUtils.scanAnnotatedClasses(null, Component.class)))
 			.isInstanceOf(IllegalArgumentException.class);
 	}
 

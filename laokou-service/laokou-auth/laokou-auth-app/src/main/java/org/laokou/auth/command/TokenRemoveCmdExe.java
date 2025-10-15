@@ -23,7 +23,7 @@ import org.laokou.common.data.cache.constant.NameConstants;
 import org.laokou.common.data.cache.model.OperateTypeEnum;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.CacheManager;
 import org.springframework.scheduling.annotation.Async;
@@ -61,7 +61,7 @@ public class TokenRemoveCmdExe {
 	@CommandLog
 	public void executeVoid(TokenRemoveCmd cmd) {
 		String token = cmd.getToken();
-		if (StringUtils.isEmpty(token)) {
+		if (StringExtUtils.isEmpty(token)) {
 			return;
 		}
 		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);

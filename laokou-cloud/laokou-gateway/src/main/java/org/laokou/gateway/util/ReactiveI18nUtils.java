@@ -19,7 +19,7 @@ package org.laokou.gateway.util;
 
 import org.laokou.common.core.filter.I18nRequestContextFilter;
 import org.laokou.common.i18n.util.LocaleUtils;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.common.reactor.util.ReactiveRequestUtils;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
@@ -44,7 +44,7 @@ public class ReactiveI18nUtils {
 	public static void set(ServerWebExchange exchange) {
 		ServerHttpRequest request = exchange.getRequest();
 		String language = ReactiveRequestUtils.getParamValue(request, I18nRequestContextFilter.LANG);
-		language = StringUtils.isNotEmpty(language) ? language
+		language = StringExtUtils.isNotEmpty(language) ? language
 				: ReactiveRequestUtils.getParamValue(request, HttpHeaders.ACCEPT_LANGUAGE);
 		LocaleContextHolder.setLocale(LocaleUtils.toLocale(language), true);
 	}

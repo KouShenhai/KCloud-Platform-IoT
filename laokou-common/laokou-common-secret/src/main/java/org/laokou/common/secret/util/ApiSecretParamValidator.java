@@ -20,7 +20,7 @@ package org.laokou.common.secret.util;
 import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.ParamValidator;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 
 import java.util.Map;
 
@@ -36,7 +36,7 @@ public final class ApiSecretParamValidator {
 	}
 
 	public static ParamValidator.Validate validateAppKey(String appKey) {
-		if (StringUtils.isEmpty(appKey)) {
+		if (StringExtUtils.isEmpty(appKey)) {
 			return ParamValidator.invalidate("appKey不为空");
 		}
 		return ObjectUtils.equals(SecretUtils.APP_KEY, appKey) ? ParamValidator.validate()
@@ -44,7 +44,7 @@ public final class ApiSecretParamValidator {
 	}
 
 	public static ParamValidator.Validate validateAppSecret(String appSecret) {
-		if (StringUtils.isEmpty(appSecret)) {
+		if (StringExtUtils.isEmpty(appSecret)) {
 			return ParamValidator.invalidate("appSecret不为空");
 		}
 		return ObjectUtils.equals(SecretUtils.APP_SECRET, appSecret) ? ParamValidator.validate()
@@ -52,11 +52,11 @@ public final class ApiSecretParamValidator {
 	}
 
 	public static ParamValidator.Validate validateNonce(String nonce) {
-		return StringUtils.isEmpty(nonce) ? ParamValidator.invalidate("nonce不为空") : ParamValidator.validate();
+		return StringExtUtils.isEmpty(nonce) ? ParamValidator.invalidate("nonce不为空") : ParamValidator.validate();
 	}
 
 	public static ParamValidator.Validate validateTimestamp(String timestamp) {
-		if (StringUtils.isEmpty(timestamp)) {
+		if (StringExtUtils.isEmpty(timestamp)) {
 			return ParamValidator.invalidate("timestamp不为空");
 		}
 		long ts = Long.parseLong(timestamp);
@@ -72,7 +72,7 @@ public final class ApiSecretParamValidator {
 
 	public static ParamValidator.Validate validateSign(String appKey, String appSecret, String sign, String nonce,
 			String timestamp, Map<String, String> map) {
-		if (StringUtils.isEmpty(sign)) {
+		if (StringExtUtils.isEmpty(sign)) {
 			return ParamValidator.invalidate("sign不能为空");
 		}
 		String params = MapUtils.parseParamterString(map, false);

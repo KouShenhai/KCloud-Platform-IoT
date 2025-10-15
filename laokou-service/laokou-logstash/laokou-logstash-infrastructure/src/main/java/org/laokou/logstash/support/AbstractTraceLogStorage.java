@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.constant.DateConstants;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.InstantUtils;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.logstash.gatewayimpl.database.dataobject.TraceLogIndex;
 
 @Slf4j
@@ -40,7 +40,7 @@ public abstract class AbstractTraceLogStorage implements TraceLogStorage {
 			TraceLogIndex traceLogIndex = (TraceLogIndex) obj;
 			String traceId = traceLogIndex.getTraceId();
 			String spanId = traceLogIndex.getSpanId();
-			if (StringUtils.isNotEmpty(spanId) && StringUtils.isNotEmpty(traceId)) {
+			if (StringExtUtils.isNotEmpty(spanId) && StringExtUtils.isNotEmpty(traceId)) {
 				return traceLogIndex;
 			}
 		}

@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.FileUtils;
 import org.laokou.common.core.util.UUIDGenerator;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.util.ResourceUtils;
+import org.laokou.common.i18n.util.ResourceExtUtils;
 import org.laokou.oss.command.OssUploadCmdExe;
 import org.laokou.oss.dto.OssUploadCmd;
 import org.laokou.oss.dto.clientobject.OssUploadCO;
@@ -42,7 +42,7 @@ class OssTest {
 
 	@Test
 	void test_ossUpload() throws Exception {
-		byte[] bytes = ResourceUtils.getResource("classpath:1.jpg").getInputStream().readAllBytes();
+		byte[] bytes = ResourceExtUtils.getResource("classpath:1.jpg").getInputStream().readAllBytes();
 		Result<OssUploadCO> result = ossUploadCmdExe.execute(new OssUploadCmd("image", bytes,
 				UUIDGenerator.generateUUID() + ".jpg", ".jpg", "image/jpeg", bytes.length));
 		Assertions.assertThat(FileUtils.getBytesByUrl(result.getData().getUrl())).isEqualTo(bytes);

@@ -24,7 +24,7 @@ import jakarta.servlet.http.HttpServletRequestWrapper;
 import org.laokou.common.core.util.ArrayUtils;
 import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.core.util.RequestUtils;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.common.xss.util.XssUtils;
 import org.springframework.http.MediaType;
 
@@ -59,7 +59,7 @@ public final class XssRequestWrapper extends HttpServletRequestWrapper {
 		// 请求为空直接返回
 		byte[] requestBody = RequestUtils.getRequestBody(request);
 		String json = new String(requestBody, StandardCharsets.UTF_8);
-		if (StringUtils.isEmpty(json)) {
+		if (StringExtUtils.isEmpty(json)) {
 			return super.getInputStream();
 		}
 		// xss过滤
@@ -69,7 +69,7 @@ public final class XssRequestWrapper extends HttpServletRequestWrapper {
 	@Override
 	public String getParameter(String name) {
 		String parameterValue = super.getParameter(name);
-		if (StringUtils.isNotEmpty(parameterValue)) {
+		if (StringExtUtils.isNotEmpty(parameterValue)) {
 			parameterValue = XssUtils.clearHtml(parameterValue);
 		}
 		return parameterValue;
@@ -111,7 +111,7 @@ public final class XssRequestWrapper extends HttpServletRequestWrapper {
 	@Override
 	public String getHeader(String name) {
 		String value = super.getHeader(XssUtils.clearHtml(name));
-		if (StringUtils.isNotEmpty(value)) {
+		if (StringExtUtils.isNotEmpty(value)) {
 			value = XssUtils.clearHtml(value);
 		}
 		return value;
@@ -119,7 +119,7 @@ public final class XssRequestWrapper extends HttpServletRequestWrapper {
 
 	private boolean checkJson() {
 		String header = super.getHeader(HttpHeaders.CONTENT_TYPE);
-		return StringUtils.startWith(header, MediaType.APPLICATION_JSON_VALUE);
+		return StringExtUtils.startWith(header, MediaType.APPLICATION_JSON_VALUE);
 	}
 
 }

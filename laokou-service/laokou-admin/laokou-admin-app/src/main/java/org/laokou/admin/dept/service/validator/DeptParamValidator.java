@@ -20,7 +20,7 @@ package org.laokou.admin.dept.service.validator;
 import org.laokou.admin.dept.model.DeptE;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.ParamValidator;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 
 /**
  * @author laokou
@@ -59,7 +59,7 @@ final class DeptParamValidator {
 
 	public static ParamValidator.Validate validateName(DeptE deptE) {
 		String name = deptE.getName();
-		if (StringUtils.isEmpty(name)) {
+		if (StringExtUtils.isEmpty(name)) {
 			return ParamValidator.invalidate("部门名称不能为空");
 		}
 		return ParamValidator.validate();

@@ -21,7 +21,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 
 /**
  * IP工具类.
@@ -74,7 +74,7 @@ public final class IpUtils {
 		if (conditionNull(ip)) {
 			ip = request.getRemoteAddr();
 		}
-		return ObjectUtils.equals(LOCAL_IPV6, ip) || StringUtils.isEmpty(ip) ? LOCAL_IPV4
+		return ObjectUtils.equals(LOCAL_IPV6, ip) || StringExtUtils.isEmpty(ip) ? LOCAL_IPV4
 				: ip.split(StringConstants.COMMA)[0];
 	}
 
@@ -177,7 +177,7 @@ public final class IpUtils {
 	 * @return 判断结果
 	 */
 	private static boolean conditionNull(String ip) {
-		return StringUtils.isEmpty(ip) || UNKNOWN_IP.equalsIgnoreCase(ip);
+		return StringExtUtils.isEmpty(ip) || UNKNOWN_IP.equalsIgnoreCase(ip);
 	}
 
 	/**

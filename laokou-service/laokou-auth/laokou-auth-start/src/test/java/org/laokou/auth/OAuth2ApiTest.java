@@ -34,7 +34,7 @@ import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.common.idempotent.aop.IdempotentAop;
 import org.laokou.common.redis.util.RedisUtils;
 import org.laokou.common.security.config.OAuth2OpaqueTokenIntrospector;
@@ -283,7 +283,7 @@ class OAuth2ApiTest {
 			Assertions.assertThat(json).isNotBlank();
 			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asText();
-			Assert.isTrue(StringUtils.isNotEmpty(accessToken), "access token is empty");
+			Assert.isTrue(StringExtUtils.isNotEmpty(accessToken), "access token is empty");
 			return Map.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken);
 		}
 		catch (Exception e) {
@@ -301,7 +301,7 @@ class OAuth2ApiTest {
 			log.info("客户端认证模式，返回信息：{}", json);
 			Assertions.assertThat(json).isNotBlank();
 			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
-			Assert.isTrue(StringUtils.isNotEmpty(accessToken), "access token is empty");
+			Assert.isTrue(StringExtUtils.isNotEmpty(accessToken), "access token is empty");
 			return Map.of(ACCESS_TOKEN, accessToken);
 		}
 		catch (Exception e) {
@@ -321,7 +321,7 @@ class OAuth2ApiTest {
 			Assertions.assertThat(json).isNotBlank();
 			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asText();
-			Assert.isTrue(StringUtils.isNotEmpty(accessToken), "access token is empty");
+			Assert.isTrue(StringExtUtils.isNotEmpty(accessToken), "access token is empty");
 			return Map.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken);
 		}
 		catch (Exception e) {
@@ -348,7 +348,7 @@ class OAuth2ApiTest {
 			Assertions.assertThat(json).isNotBlank();
 			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asText();
-			Assert.isTrue(StringUtils.isNotEmpty(accessToken), "access token is empty");
+			Assert.isTrue(StringExtUtils.isNotEmpty(accessToken), "access token is empty");
 			return Map.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken);
 		}
 		catch (Exception e) {
@@ -369,7 +369,7 @@ class OAuth2ApiTest {
 			Assertions.assertThat(json).isNotBlank();
 			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asText();
-			Assert.isTrue(StringUtils.isNotEmpty(accessToken), "access token is empty");
+			Assert.isTrue(StringExtUtils.isNotEmpty(accessToken), "access token is empty");
 			return Map.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken);
 		}
 		catch (Exception e) {
@@ -390,7 +390,7 @@ class OAuth2ApiTest {
 			Assertions.assertThat(json).isNotBlank();
 			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asText();
-			Assert.isTrue(StringUtils.isNotEmpty(accessToken), "access token is empty");
+			Assert.isTrue(StringExtUtils.isNotEmpty(accessToken), "access token is empty");
 			return Map.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken);
 		}
 		catch (Exception e) {
@@ -411,7 +411,7 @@ class OAuth2ApiTest {
 			Assertions.assertThat(json).isNotBlank();
 			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
 			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asText();
-			Assert.isTrue(StringUtils.isNotEmpty(accessToken), "access token is empty");
+			Assert.isTrue(StringExtUtils.isNotEmpty(accessToken), "access token is empty");
 			return Map.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken);
 		}
 		catch (Exception e) {
@@ -437,7 +437,7 @@ class OAuth2ApiTest {
 	private String getCaptcha(String key) {
 		restClient.get().uri(URI.create(getCaptchaApiUrlV3())).retrieve().toBodilessEntity();
 		String captcha = redisUtils.get(key).toString();
-		Assert.isTrue(StringUtils.isNotEmpty(captcha), "captcha is empty");
+		Assert.isTrue(StringExtUtils.isNotEmpty(captcha), "captcha is empty");
 		return captcha;
 	}
 

@@ -20,7 +20,7 @@ package org.laokou.iot.thingModel.model;
 import lombok.Data;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.ParamValidator;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -39,7 +39,7 @@ public class BooleanType implements Serializable {
 	private String falseText;
 
 	public ParamValidator.Validate checkValue() {
-		if (StringUtils.isEmpty(trueText) || StringUtils.isEmpty(falseText)) {
+		if (StringExtUtils.isEmpty(trueText) || StringExtUtils.isEmpty(falseText)) {
 			return ParamValidator.invalidate("1对应文本和0对应文本不能为空");
 		}
 		if (ObjectUtils.equals(trueText, falseText)) {

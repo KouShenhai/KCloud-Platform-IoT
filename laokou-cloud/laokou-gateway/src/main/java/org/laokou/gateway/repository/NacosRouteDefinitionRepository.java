@@ -31,7 +31,7 @@ import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.gateway.constant.GatewayConstants;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
 import org.springframework.cloud.gateway.route.RouteDefinition;
@@ -188,7 +188,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	 */
 	private Collection<RouteDefinition> getRoutes(String str) {
 		try {
-			String routes = StringUtils.isEmpty(str) ? configService.getConfig(dataId, group, 5000) : str;
+			String routes = StringExtUtils.isEmpty(str) ? configService.getConfig(dataId, group, 5000) : str;
 			return JacksonUtils.toList(routes, RouteDefinition.class);
 		}
 		catch (Exception ex) {

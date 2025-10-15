@@ -58,7 +58,7 @@ import org.laokou.common.core.util.CollectionUtils;
 import org.laokou.common.core.util.RegexUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.DefaultResponse;
@@ -191,7 +191,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 			// 服务灰度路由
 			if (isGrayRouter(headers)) {
 				String version = RegexUtils.getRegexValue(path, "/(v\\d+)/");
-				if (StringUtils.isNotEmpty(version)) {
+				if (StringExtUtils.isNotEmpty(version)) {
 					serviceInstances = serviceInstances.stream()
 						.filter(item -> item.getMetadata().getOrDefault("version", "v1").equals(version))
 						.toList();

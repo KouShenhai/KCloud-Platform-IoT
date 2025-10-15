@@ -21,7 +21,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.MultiValueMapAdapter;
@@ -113,7 +113,7 @@ public final class MapUtils {
 	 * @return map参数对象
 	 */
 	public static MultiValueMap<String, String> getParameterMap(String params, String separator) {
-		if (StringUtils.isNotEmpty(params)) {
+		if (StringExtUtils.isNotEmpty(params)) {
 			String[] strings = params.split(separator);
 			MultiValueMap<String, String> parameterMap = new LinkedMultiValueMap<>(strings.length * 2);
 			for (String string : strings) {

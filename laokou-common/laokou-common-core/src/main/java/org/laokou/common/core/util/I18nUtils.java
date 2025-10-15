@@ -20,7 +20,7 @@ package org.laokou.common.core.util;
 import jakarta.servlet.http.HttpServletRequest;
 import org.laokou.common.core.filter.I18nRequestContextFilter;
 import org.laokou.common.i18n.util.LocaleUtils;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 
@@ -38,7 +38,7 @@ public final class I18nUtils {
 	 */
 	public static void set(HttpServletRequest request) {
 		String language = request.getHeader(I18nRequestContextFilter.LANG);
-		language = StringUtils.isNotEmpty(language) ? language : request.getHeader(HttpHeaders.ACCEPT_LANGUAGE);
+		language = StringExtUtils.isNotEmpty(language) ? language : request.getHeader(HttpHeaders.ACCEPT_LANGUAGE);
 		LocaleContextHolder.setLocale(LocaleUtils.toLocale(language), true);
 	}
 

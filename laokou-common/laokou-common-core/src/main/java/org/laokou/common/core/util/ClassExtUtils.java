@@ -21,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
+import org.springframework.util.ClassUtils;
 
 import java.lang.annotation.Annotation;
 import java.util.Set;
@@ -30,9 +31,9 @@ import java.util.stream.Collectors;
  * @author laokou
  */
 @Slf4j
-public final class ClassUtils extends org.springframework.util.ClassUtils {
+public final class ClassExtUtils extends ClassUtils {
 
-	private ClassUtils() {
+	private ClassExtUtils() {
 	}
 
 	public static Class<?> parseClass(String className) throws ClassNotFoundException {

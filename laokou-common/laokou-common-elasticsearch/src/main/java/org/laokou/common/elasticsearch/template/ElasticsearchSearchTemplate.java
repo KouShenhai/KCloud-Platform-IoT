@@ -32,7 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.elasticsearch.entity.Search;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.springframework.util.ReflectionUtils;
 
 import java.io.IOException;
@@ -131,7 +131,7 @@ public record ElasticsearchSearchTemplate(ElasticsearchClient elasticsearchClien
 				Field field = clazz.getDeclaredField(entry.getKey());
 				field.setAccessible(true);
 				ReflectionUtils.setField(field, source,
-						StringUtils.collectionToDelimitedString(entry.getValue(), "..."));
+						StringExtUtils.collectionToDelimitedString(entry.getValue(), "..."));
 			}
 			catch (NoSuchFieldException ex) {
 				throw new IllegalArgumentException(ex);

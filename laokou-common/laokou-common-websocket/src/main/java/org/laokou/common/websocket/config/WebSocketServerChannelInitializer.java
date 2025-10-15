@@ -25,7 +25,7 @@ import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.SslHandler;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.i18n.util.ResourceUtils;
+import org.laokou.common.i18n.util.ResourceExtUtils;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 
 import java.io.InputStream;
@@ -68,9 +68,9 @@ public final class WebSocketServerChannelInitializer extends AbstractWebSocketSe
 		if (serverProperties.getSsl().isEnabled()) {
 			// @formatter:off
 		// 生成证书 => openssl pkcs12 -in scg-keystore.p12 -clcerts -nokeys -out certificate.crt
-		InputStream keyCertChainIn = ResourceUtils.getResource(springWebSocketServerProperties.getKeyCertChainPath()).getInputStream();
+		InputStream keyCertChainIn = ResourceExtUtils.getResource(springWebSocketServerProperties.getKeyCertChainPath()).getInputStream();
 		// 生成私钥 => openssl pkcs12 -in scg-keystore.p12 -nocerts -out private.key
-		InputStream keyCertPrivateKeyIn = ResourceUtils.getResource(springWebSocketServerProperties.getKeyCertPrivateKeyPath()).getInputStream();
+		InputStream keyCertPrivateKeyIn = ResourceExtUtils.getResource(springWebSocketServerProperties.getKeyCertPrivateKeyPath()).getInputStream();
 		return SslContextBuilder.forServer(keyCertChainIn, keyCertPrivateKeyIn, springWebSocketServerProperties.getKeyCertPrivateKeyPassword())
 			// 忽略SSL验证
 			.trustManager(InsecureTrustManagerFactory.INSTANCE)

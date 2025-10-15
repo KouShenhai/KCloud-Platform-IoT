@@ -28,7 +28,7 @@ import org.laokou.common.excel.util.ExcelUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.util.InstantUtils;
-import org.laokou.common.i18n.util.ResourceUtils;
+import org.laokou.common.i18n.util.ResourceExtUtils;
 import org.laokou.common.mybatisplus.util.MybatisUtils;
 import org.laokou.common.testcontainers.util.DockerImageNames;
 import org.mybatis.spring.annotation.MapperScan;
@@ -100,19 +100,19 @@ class ExcelTest {
 		Assertions.assertThat(list.stream().map(TestUserDO::getName).toList().contains("老寇")).isTrue();
 		Assertions.assertThatNoException()
 			.isThrownBy(() -> ExcelUtils.doImport(StringConstants.EMPTY, TestUserExcel.class,
-					TestUserConvertor.INSTANCE, ResourceUtils.getResource("classpath:test3.xlsx").getInputStream(),
+					TestUserConvertor.INSTANCE, ResourceExtUtils.getResource("classpath:test3.xlsx").getInputStream(),
 					TestUserMapper.class, TestUserMapper::insert, mybatisUtils));
 		Assertions.assertThatNoException()
 			.isThrownBy(() -> ExcelUtils.doImport("test", TestUserExcel.class, TestUserConvertor.INSTANCE,
-					ResourceUtils.getResource("classpath:test2.xlsx").getInputStream(), TestUserMapper.class,
+					ResourceExtUtils.getResource("classpath:test2.xlsx").getInputStream(), TestUserMapper.class,
 					TestUserMapper::insert, mybatisUtils));
 		Assertions.assertThatNoException()
 			.isThrownBy(() -> ExcelUtils.doImport("test2", TestUserExcel.class, TestUserConvertor.INSTANCE,
-					ResourceUtils.getResource("classpath:test2.xlsx").getInputStream(), TestUserMapper.class,
+					ResourceExtUtils.getResource("classpath:test2.xlsx").getInputStream(), TestUserMapper.class,
 					TestUserMapper::insert, mybatisUtils));
 		Assertions.assertThatNoException()
 			.isThrownBy(() -> ExcelUtils.doImport("test3", TestUserExcel.class, TestUserConvertor.INSTANCE,
-					ResourceUtils.getResource("classpath:test2.xlsx").getInputStream(), TestUserMapper.class,
+					ResourceExtUtils.getResource("classpath:test2.xlsx").getInputStream(), TestUserMapper.class,
 					TestUserMapper::insert, mybatisUtils));
 		long count = testUserMapper.selectObjectCount(new PageQuery());
 		Assertions.assertThat(count).isEqualTo(7);

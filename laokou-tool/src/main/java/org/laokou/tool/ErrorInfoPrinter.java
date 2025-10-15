@@ -21,7 +21,7 @@ import org.laokou.common.core.util.FileUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -71,7 +71,7 @@ final class ErrorInfoPrinter {
 		StringBuilder sb = new StringBuilder();
 		for (TraceLog traceLog : list) {
 			if (ObjectUtils.equals(traceLog.getLevel(), ERROR)
-				&& StringUtils.isNotEmpty(traceLog.getStacktrace())) {
+				&& StringExtUtils.isNotEmpty(traceLog.getStacktrace())) {
 				sb.append(traceLog.getStacktrace());
 			}
 		}

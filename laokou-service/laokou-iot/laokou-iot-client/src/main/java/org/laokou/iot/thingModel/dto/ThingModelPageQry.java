@@ -19,7 +19,7 @@ package org.laokou.iot.thingModel.dto;
 
 import lombok.Data;
 import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 
 /**
  *
@@ -56,15 +56,15 @@ public class ThingModelPageQry extends PageQuery {
 	private String type;
 
 	public void setCode(String code) {
-		this.code = StringUtils.like(StringUtils.trim(code));
+		this.code = StringExtUtils.like(StringExtUtils.trim(code));
 	}
 
 	public void setName(String name) {
-		this.name = StringUtils.like(StringUtils.trim(name));
+		this.name = StringExtUtils.like(StringExtUtils.trim(name));
 	}
 
 	public void setType(String type) {
-		this.type = StringUtils.trim(type);
+		this.type = StringExtUtils.trim(type);
 	}
 
 }

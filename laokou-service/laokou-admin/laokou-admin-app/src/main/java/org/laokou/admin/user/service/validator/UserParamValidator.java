@@ -26,7 +26,7 @@ import org.laokou.common.core.util.RegexUtils;
 import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.ParamValidator;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
@@ -51,7 +51,7 @@ final class UserParamValidator {
 	public static ParamValidator.Validate validatePassword(UserE userE, PasswordEncoder passwordEncoder,
 			UserMapper userMapper) {
 		String password = userE.getPassword();
-		if (StringUtils.isEmpty(password)) {
+		if (StringExtUtils.isEmpty(password)) {
 			return ParamValidator.invalidate("用户密码不能为空");
 		}
 		if (password.length() < 6 || password.length() > 30) {
@@ -72,7 +72,7 @@ final class UserParamValidator {
 		String username = userE.getUsername();
 		Long id = userE.getId();
 		String encryptUsername = AESUtils.encrypt(username);
-		if (StringUtils.isEmpty(username)) {
+		if (StringExtUtils.isEmpty(username)) {
 			return ParamValidator.invalidate("用户名不能为空");
 		}
 		if (username.length() > 30) {
@@ -96,7 +96,7 @@ final class UserParamValidator {
 	public static ParamValidator.Validate validateMail(UserE userE, UserMapper userMapper, boolean isSave)
 			throws Exception {
 		String mail = userE.getMail();
-		if (StringUtils.isNotEmpty(mail)) {
+		if (StringExtUtils.isNotEmpty(mail)) {
 			if (!RegexUtils.mailRegex(mail)) {
 				return ParamValidator.invalidate("用户邮箱错误");
 			}
@@ -120,7 +120,7 @@ final class UserParamValidator {
 	public static ParamValidator.Validate validateMobile(UserE userE, UserMapper userMapper, boolean isSave)
 			throws Exception {
 		String mobile = userE.getMobile();
-		if (StringUtils.isNotEmpty(mobile)) {
+		if (StringExtUtils.isNotEmpty(mobile)) {
 			if (!RegexUtils.mobileRegex(mobile)) {
 				return ParamValidator.invalidate("用户手机号错误");
 			}

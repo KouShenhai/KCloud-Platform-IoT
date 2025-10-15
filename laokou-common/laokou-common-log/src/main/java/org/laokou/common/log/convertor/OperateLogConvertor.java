@@ -19,7 +19,7 @@ package org.laokou.common.log.convertor;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.laokou.common.context.util.UserUtils;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.common.log.factory.DomainFactory;
 import org.laokou.common.log.mapper.OperateLogDO;
 import org.laokou.common.log.handler.event.OperateEvent;
@@ -73,7 +73,7 @@ public final class OperateLogConvertor {
 	}
 
 	private static String truncate(String str) {
-		if (!StringUtils.isNotEmpty(str)) {
+		if (!StringExtUtils.isNotEmpty(str)) {
 			return null;
 		}
 		return str.length() > 2000 ? str.substring(0, 2000) : str;

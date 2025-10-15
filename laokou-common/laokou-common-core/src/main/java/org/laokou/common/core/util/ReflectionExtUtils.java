@@ -17,12 +17,14 @@
 
 package org.laokou.common.core.util;
 
+import org.springframework.util.ReflectionUtils;
+
 /**
  * @author laokou
  */
-public final class ReflectionUtils extends org.springframework.util.ReflectionUtils {
+public final class ReflectionExtUtils extends ReflectionUtils {
 
-	private ReflectionUtils() {
+	private ReflectionExtUtils() {
 	}
 
 }

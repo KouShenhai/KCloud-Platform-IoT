@@ -18,7 +18,7 @@
 package org.laokou.common.sensitive.util;
 
 import org.laokou.common.i18n.common.constant.StringConstants;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 
 /**
  * @author laokou
@@ -29,7 +29,7 @@ public final class SensitiveUtils {
 	}
 
 	public static String formatMail(String mail) {
-		if (StringUtils.isEmpty(mail)) {
+		if (StringExtUtils.isEmpty(mail)) {
 			return StringConstants.EMPTY;
 		}
 		return mail.replaceAll("(^\\w)[^@]*(@.*$)", "$1****$2");
@@ -40,10 +40,10 @@ public final class SensitiveUtils {
 	}
 
 	public static String formatStr(String str, String overlay, int start, int end) {
-		if (StringUtils.isEmpty(str)) {
+		if (StringExtUtils.isEmpty(str)) {
 			return StringConstants.EMPTY;
 		}
-		if (StringUtils.isEmpty(overlay)) {
+		if (StringExtUtils.isEmpty(overlay)) {
 			overlay = StringConstants.EMPTY;
 		}
 		int len = str.length();

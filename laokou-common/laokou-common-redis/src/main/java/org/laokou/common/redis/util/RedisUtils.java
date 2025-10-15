@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.redisson.api.RAtomicLong;
 import org.redisson.api.RList;
 import org.redisson.api.RLock;
@@ -325,8 +325,8 @@ public class RedisUtils {
 		set.forEach(key -> {
 			Map<String, String> data = MapUtils.newHashMap(2);
 			String property = commandStats.getProperty(key);
-			data.put("name", StringUtils.removeStart(key, "cmdstat_"));
-			data.put("value", StringUtils.substringBetween(property, "calls=", ",usec"));
+			data.put("name", StringExtUtils.removeStart(key, "cmdstat_"));
+			data.put("value", StringExtUtils.substringBetween(property, "calls=", ",usec"));
 			pieList.add(data);
 		});
 		return pieList;

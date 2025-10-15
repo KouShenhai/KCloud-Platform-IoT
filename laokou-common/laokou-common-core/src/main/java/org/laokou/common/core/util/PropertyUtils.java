@@ -17,7 +17,7 @@
 
 package org.laokou.common.core.util;
 
-import org.laokou.common.i18n.util.ResourceUtils;
+import org.laokou.common.i18n.util.ResourceExtUtils;
 import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.boot.env.YamlPropertySourceLoader;
 import org.springframework.core.env.PropertySource;
@@ -49,7 +49,7 @@ public final class PropertyUtils {
 	public static <T> T bindOrCreate(String bindName, Class<T> clazz, String location, String format)
 			throws IOException {
 		StandardEnvironment environment = new StandardEnvironment();
-		Resource resource = ResourceUtils.getResource(location);
+		Resource resource = ResourceExtUtils.getResource(location);
 		List<PropertySource<?>> propertySourceList = new YamlPropertySourceLoader().load(format, resource);
 		propertySourceList.forEach(propertySource -> environment.getPropertySources().addLast(propertySource));
 		return Binder.get(environment).bindOrCreate(bindName, clazz);

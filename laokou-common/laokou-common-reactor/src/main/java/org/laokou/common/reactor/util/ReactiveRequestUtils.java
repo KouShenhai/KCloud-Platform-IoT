@@ -18,7 +18,7 @@
 package org.laokou.common.reactor.util;
 
 import org.laokou.common.core.util.CollectionUtils;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.util.AntPathMatcher;
@@ -45,10 +45,10 @@ public class ReactiveRequestUtils {
 		// 从header中获取
 		String paramValue = request.getHeaders().getFirst(paramName);
 		// 从参数中获取
-		if (StringUtils.isEmpty(paramValue)) {
+		if (StringExtUtils.isEmpty(paramValue)) {
 			paramValue = request.getQueryParams().getFirst(paramName);
 		}
-		return StringUtils.isEmpty(paramValue) ? "" : paramValue.trim();
+		return StringExtUtils.isEmpty(paramValue) ? "" : paramValue.trim();
 	}
 
 	/**

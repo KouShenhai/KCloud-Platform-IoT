@@ -19,7 +19,7 @@ package org.laokou.admin.menu.dto.clientobject;
 
 import lombok.Data;
 import org.laokou.common.i18n.dto.ClientObject;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 
 import java.time.Instant;
 
@@ -82,19 +82,19 @@ public class MenuCO extends ClientObject {
 	private Instant createTime;
 
 	public void setName(String name) {
-		this.name = StringUtils.trim(name);
+		this.name = StringExtUtils.trim(name);
 	}
 
 	public void setIcon(String icon) {
-		this.icon = StringUtils.trim(icon);
+		this.icon = StringExtUtils.trim(icon);
 	}
 
 	public void setPath(String path) {
-		this.path = StringUtils.trim(path);
+		this.path = StringExtUtils.trim(path);
 	}
 
 	public void setPermission(String permission) {
-		this.permission = StringUtils.trim(permission);
+		this.permission = StringExtUtils.trim(permission);
 	}
 
 }

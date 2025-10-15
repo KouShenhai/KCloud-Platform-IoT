@@ -26,7 +26,7 @@ import lombok.Setter;
 import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
@@ -236,7 +236,7 @@ public class UserDetails implements org.springframework.security.core.userdetail
 	}
 
 	private String getDecryptUsername() {
-		if (StringUtils.isNotEmpty(this.username)) {
+		if (StringExtUtils.isNotEmpty(this.username)) {
 			try {
 				return AESUtils.decrypt(this.username);
 			}
@@ -248,7 +248,7 @@ public class UserDetails implements org.springframework.security.core.userdetail
 	}
 
 	private String getDecryptMail() {
-		if (StringUtils.isNotEmpty(this.mail)) {
+		if (StringExtUtils.isNotEmpty(this.mail)) {
 			try {
 				return AESUtils.decrypt(this.mail);
 			}
@@ -260,7 +260,7 @@ public class UserDetails implements org.springframework.security.core.userdetail
 	}
 
 	private String getDecryptMobile() {
-		if (StringUtils.isNotEmpty(this.mobile)) {
+		if (StringExtUtils.isNotEmpty(this.mobile)) {
 			try {
 				return AESUtils.decrypt(this.mobile);
 			}

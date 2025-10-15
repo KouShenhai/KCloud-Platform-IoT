@@ -23,7 +23,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.safety.Safelist;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.ParamException;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.springframework.web.util.HtmlUtils;
 
 import java.util.regex.Pattern;
@@ -45,7 +45,7 @@ public class XssUtils extends HtmlUtils {
 			Pattern.compile("onload(.*?)=", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL) };
 
 	public static String clearHtml(String str) {
-		if (StringUtils.isNotEmpty(str)) {
+		if (StringExtUtils.isNotEmpty(str)) {
 			for (Pattern pattern : SCRIPT_PATTERNS) {
 				str = pattern.matcher(str).replaceAll(StringConstants.EMPTY);
 			}

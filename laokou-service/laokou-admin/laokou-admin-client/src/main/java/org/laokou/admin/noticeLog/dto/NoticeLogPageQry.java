@@ -19,7 +19,7 @@ package org.laokou.admin.noticeLog.dto;
 
 import lombok.Data;
 import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 
 /**
  * 分页查询通知日志命令.
@@ -38,15 +38,15 @@ public class NoticeLogPageQry extends PageQuery {
 	private String errorMessage;
 
 	public void setCode(String code) {
-		this.code = StringUtils.like(StringUtils.trim(code));
+		this.code = StringExtUtils.like(StringExtUtils.trim(code));
 	}
 
 	public void setName(String name) {
-		this.name = StringUtils.like(StringUtils.trim(name));
+		this.name = StringExtUtils.like(StringExtUtils.trim(name));
 	}
 
 	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = StringUtils.like(StringUtils.trim(errorMessage));
+		this.errorMessage = StringExtUtils.like(StringExtUtils.trim(errorMessage));
 	}
 
 }

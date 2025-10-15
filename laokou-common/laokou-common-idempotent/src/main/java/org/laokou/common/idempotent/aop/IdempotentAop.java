@@ -25,7 +25,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.common.idempotent.util.IdempotentUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.laokou.common.redis.util.RedisUtils;
@@ -49,7 +49,7 @@ public class IdempotentAop {
 	@Around("@annotation(org.laokou.common.idempotent.annotation.Idempotent)")
 	public Object doAround(ProceedingJoinPoint point) throws Throwable {
 		String requestId = getRequestId();
-		if (StringUtils.isEmpty(requestId)) {
+		if (StringExtUtils.isEmpty(requestId)) {
 			throw new SystemException("S_Idempotent_RequestIDIsNull", "请求ID不能为空");
 		}
 		String apiIdempotentKey = RedisKeyUtils.getApiIdempotentKey(requestId);
@@ -76,7 +76,7 @@ public class IdempotentAop {
 	private String getRequestId() {
 		HttpServletRequest request = RequestUtils.getHttpServletRequest();
 		String requestId = request.getHeader(REQUEST_ID);
-		if (StringUtils.isEmpty(requestId)) {
+		if (StringExtUtils.isEmpty(requestId)) {
 			return request.getParameter(REQUEST_ID);
 		}
 		return requestId;

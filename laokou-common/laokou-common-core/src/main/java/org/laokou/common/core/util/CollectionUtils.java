@@ -20,7 +20,7 @@ package org.laokou.common.core.util;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import org.laokou.common.i18n.common.constant.StringConstants;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -74,7 +74,7 @@ public final class CollectionUtils {
 	 * @return 集合
 	 */
 	public static List<String> toList(String str, String on) {
-		if (StringUtils.isEmpty(str)) {
+		if (StringExtUtils.isEmpty(str)) {
 			return new ArrayList<>(0);
 		}
 		return Splitter.on(on).trimResults().splitToList(str);

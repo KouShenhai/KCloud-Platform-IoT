@@ -28,7 +28,7 @@ import io.vertx.mqtt.messages.codes.MqttAuthenticateReasonCode;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.CollectionUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.common.network.mqtt.client.handler.MqttMessageHandler;
 import org.laokou.common.network.mqtt.client.handler.MqttMessage;
 import org.laokou.common.network.mqtt.client.util.VertxMqttUtils;
@@ -257,7 +257,7 @@ public final class VertxMqttClient {
 
 	private void checkTopicAndQos(Map<String, Integer> topics) {
 		topics.forEach((topic, qos) -> {
-			if (StringUtils.isEmpty(topic) || ObjectUtils.isNull(qos)) {
+			if (StringExtUtils.isEmpty(topic) || ObjectUtils.isNull(qos)) {
 				throw new IllegalArgumentException("【Vertx-MQTT-Client】 => Topic and QoS cannot be null");
 			}
 		});

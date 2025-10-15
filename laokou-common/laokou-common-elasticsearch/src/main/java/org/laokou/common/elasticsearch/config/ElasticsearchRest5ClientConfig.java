@@ -46,7 +46,7 @@ import org.laokou.common.core.util.Base64Utils;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.SslUtils;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -137,7 +137,7 @@ class ElasticsearchRest5ClientConfig {
 		@Override
 		public void customize(Rest5ClientBuilder restClientBuilder) {
 			String pathPrefix = springElasticsearchProperties.getPathPrefix();
-			if (StringUtils.isNotEmpty(pathPrefix)) {
+			if (StringExtUtils.isNotEmpty(pathPrefix)) {
 				restClientBuilder.setPathPrefix(pathPrefix);
 			}
 			Header[] headers = getHeaders();
@@ -153,7 +153,7 @@ class ElasticsearchRest5ClientConfig {
 			// 为此，请设置一个HttpClientConfigCallback禁用身份验证缓存的参数。
 			httpClientBuilder.disableAuthCaching();
 			String proxy = springElasticsearchProperties.getProxy();
-			if (StringUtils.isNotEmpty(proxy)) {
+			if (StringExtUtils.isNotEmpty(proxy)) {
 				try {
 					HttpRoutePlanner proxyRoutePlanner = new DefaultProxyRoutePlanner(HttpHost.create(proxy));
 					httpClientBuilder.setRoutePlanner(proxyRoutePlanner);
@@ -208,7 +208,7 @@ class ElasticsearchRest5ClientConfig {
 
 		private SslBundle getSslBundle() {
 			ElasticsearchProperties.Restclient.Ssl ssl = springElasticsearchProperties.getRestclient().getSsl();
-			if (StringUtils.hasLength(ssl.getBundle())) {
+			if (StringExtUtils.hasLength(ssl.getBundle())) {
 				Assert.notNull(this.sslBundles, "SSL bundle name has been set but no SSL bundles found in context");
 				return this.sslBundles.getBundle(ssl.getBundle());
 			}
@@ -219,7 +219,7 @@ class ElasticsearchRest5ClientConfig {
 			List<Header> headers = new ArrayList<>(1);
 			String username = springElasticsearchProperties.getUsername();
 			String password = springElasticsearchProperties.getPassword();
-			if (StringUtils.isNotEmpty(username) && StringUtils.isNotEmpty(password)) {
+			if (StringExtUtils.isNotEmpty(username) && StringExtUtils.isNotEmpty(password)) {
 				headers.add(new BasicHeader(HttpHeaders.AUTHORIZATION,
 						StandardAuthScheme.BASIC + StringConstants.SPACE + encodeBasicAuth(username, password)));
 			}

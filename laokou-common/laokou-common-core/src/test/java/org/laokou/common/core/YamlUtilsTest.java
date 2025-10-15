@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.YamlUtils;
-import org.laokou.common.i18n.util.ResourceUtils;
+import org.laokou.common.i18n.util.ResourceExtUtils;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestConstructor;
@@ -53,7 +53,7 @@ class YamlUtilsTest {
 		YamlTest yamlTest2 = YamlUtils.load(str, YamlTest.class);
 		Assertions.assertThat(yamlTest2.getName()).isEqualTo("laokou");
 		Assertions.assertThat(yamlTest2).isEqualTo(yamlTest);
-		YamlTest yamlTest1 = YamlUtils.load(ResourceUtils.getResource("test.yaml").getInputStream(), YamlTest.class);
+		YamlTest yamlTest1 = YamlUtils.load(ResourceExtUtils.getResource("test.yaml").getInputStream(), YamlTest.class);
 		Assertions.assertThat(yamlTest1.getName()).isEqualTo("laokou");
 		Assertions.assertThat(yamlTest1).isEqualTo(yamlTest);
 	}

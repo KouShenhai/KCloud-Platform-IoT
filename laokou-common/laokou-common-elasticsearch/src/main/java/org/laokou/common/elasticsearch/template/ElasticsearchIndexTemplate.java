@@ -41,7 +41,7 @@ import org.laokou.common.elasticsearch.annotation.SubField;
 import org.laokou.common.elasticsearch.annotation.Type;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.JacksonUtils;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -92,11 +92,11 @@ public record ElasticsearchIndexTemplate(ElasticsearchClient elasticsearchClient
 	public void deleteIndex(List<String> names) throws IOException {
 		if (!exist(names)) {
 			log.debug("index name: 【{}】 -> Sync index delete failed, index already exists",
-					StringUtils.collectionToDelimitedString(names, StringConstants.DROP));
+					StringExtUtils.collectionToDelimitedString(names, StringConstants.DROP));
 			return;
 		}
 		DeleteIndexResponse deleteIndexResponse = elasticsearchClient.indices().delete(fn -> fn.index(names));
-		printLog(StringUtils.collectionToDelimitedString(names, StringConstants.DROP),
+		printLog(StringExtUtils.collectionToDelimitedString(names, StringConstants.DROP),
 				deleteIndexResponse.acknowledged() ? "Sync index delete succeeded" : "Sync index delete failed");
 	}
 
@@ -104,7 +104,7 @@ public record ElasticsearchIndexTemplate(ElasticsearchClient elasticsearchClient
 		return asyncExist(names, executor).thenApplyAsync(resp -> {
 			if (!resp) {
 				log.debug("index name: 【{}】 -> Async index delete failed, index already exists",
-						StringUtils.collectionToDelimitedString(names, StringConstants.DROP));
+						StringExtUtils.collectionToDelimitedString(names, StringConstants.DROP));
 				return Boolean.FALSE;
 			}
 			return Boolean.TRUE;
@@ -113,7 +113,7 @@ public record ElasticsearchIndexTemplate(ElasticsearchClient elasticsearchClient
 				elasticsearchAsyncClient.indices()
 					.delete(fn -> fn.index(names))
 					.thenAcceptAsync(response -> printLog(
-							StringUtils.collectionToDelimitedString(names, StringConstants.DROP),
+							StringExtUtils.collectionToDelimitedString(names, StringConstants.DROP),
 							response.acknowledged() ? "Async index delete succeeded" : "Async index delete failed"));
 			}
 		});
@@ -133,7 +133,7 @@ public record ElasticsearchIndexTemplate(ElasticsearchClient elasticsearchClient
 		}
 		catch (Exception ex) {
 			log.error("index name: 【{}】 -> Failed to determine if the index exists, error message: {}",
-					StringUtils.collectionToDelimitedString(names, StringConstants.DROP), ex.getMessage(), ex);
+					StringExtUtils.collectionToDelimitedString(names, StringConstants.DROP), ex.getMessage(), ex);
 			return false;
 		}
 	}
@@ -162,7 +162,7 @@ public record ElasticsearchIndexTemplate(ElasticsearchClient elasticsearchClient
 		boolean annotationPresent = clazz.isAnnotationPresent(Index.class);
 		if (annotationPresent) {
 			Index index = clazz.getAnnotation(Index.class);
-			alias = StringUtils.isNotEmpty(alias) ? alias : name;
+			alias = StringExtUtils.isNotEmpty(alias) ? alias : name;
 			return new Document(name, alias, getMappings(clazz), getSetting(index), getAnalysis(index));
 		}
 		throw new IllegalArgumentException("Entity class not configured with @Index annotation");
@@ -249,7 +249,7 @@ public record ElasticsearchIndexTemplate(ElasticsearchClient elasticsearchClient
 
 	private Document.Mapping getMapping(Field item, org.laokou.common.elasticsearch.annotation.Field field) {
 		String value = field.value();
-		value = StringUtils.isEmpty(value) ? item.getName() : value;
+		value = StringExtUtils.isEmpty(value) ? item.getName() : value;
 		Type type = field.type();
 		String searchAnalyzer = field.searchAnalyzer();
 		String analyzer = field.analyzer();

@@ -28,7 +28,7 @@ import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
 import org.laokou.common.i18n.common.constant.StringConstants;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.springframework.util.Assert;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.context.request.RequestAttributes;
@@ -116,10 +116,10 @@ public final class RequestUtils {
 	public static String getParamValue(HttpServletRequest request, String paramName) {
 		String paramValue = request.getHeader(paramName);
 		// 从参数中获取
-		if (StringUtils.isEmpty(paramValue)) {
+		if (StringExtUtils.isEmpty(paramValue)) {
 			paramValue = request.getParameter(paramName);
 		}
-		return StringUtils.isEmpty(paramValue) ? StringConstants.EMPTY : paramValue.trim();
+		return StringExtUtils.isEmpty(paramValue) ? StringConstants.EMPTY : paramValue.trim();
 	}
 
 	/**

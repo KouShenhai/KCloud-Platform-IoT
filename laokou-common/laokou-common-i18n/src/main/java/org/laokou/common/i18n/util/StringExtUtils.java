@@ -18,6 +18,7 @@
 package org.laokou.common.i18n.util;
 
 import org.laokou.common.i18n.common.constant.StringConstants;
+import org.springframework.util.StringUtils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,11 +28,11 @@ import java.util.regex.Pattern;
  *
  * @author laokou
  */
-public final class StringUtils extends org.springframework.util.StringUtils {
+public final class StringExtUtils extends StringUtils {
 
 	private static final Pattern LINE_PATTERN = Pattern.compile("_(\\w)");
 
-	private StringUtils() {
+	private StringExtUtils() {
 	}
 
 	public static boolean isNotEmpty(String str) {
@@ -134,7 +135,7 @@ public final class StringUtils extends org.springframework.util.StringUtils {
 	}
 
 	public static String truncate(String str, int maxLength) {
-		if (!StringUtils.isNotEmpty(str)) {
+		if (!StringExtUtils.isNotEmpty(str)) {
 			return null;
 		}
 		return str.length() > maxLength ? str.substring(0, maxLength) : str;

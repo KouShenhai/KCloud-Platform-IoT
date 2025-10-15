@@ -35,7 +35,7 @@ public final class LocaleUtils {
 
 	public static Locale toLocale(String language) {
 		try {
-			if (StringUtils.isEmpty(language)) {
+			if (StringExtUtils.isEmpty(language)) {
 				return LocaleContextHolder.getLocale();
 			}
 			String[] str = getLanguage(language).split(StringConstants.ROD);

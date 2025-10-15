@@ -19,8 +19,8 @@ package org.laokou.common.crypto.util;
 
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.util.ResourceUtils;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.ResourceExtUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -62,10 +62,10 @@ public final class RSAUtils {
 
 	static {
 		try {
-			PUBLIC_KEY = ResourceUtils.getResource("/conf/publicKey.scr")
+			PUBLIC_KEY = ResourceExtUtils.getResource("/conf/publicKey.scr")
 				.getContentAsString(StandardCharsets.UTF_8)
 				.trim();
-			PRIVATE_KEY = ResourceUtils.getResource("/conf/privateKey.scr")
+			PRIVATE_KEY = ResourceExtUtils.getResource("/conf/privateKey.scr")
 				.getContentAsString(StandardCharsets.UTF_8)
 				.trim();
 		}
@@ -85,9 +85,9 @@ public final class RSAUtils {
 	 * @return 解密后的字符串
 	 */
 	public static String decryptByPrivateKey(String str, String key) {
-		if (StringUtils.isNotEmpty(str)) {
+		if (StringExtUtils.isNotEmpty(str)) {
 			try {
-				byte[] privateKey = StringUtils.isNotEmpty(key) ? decryptBase64(key) : decryptBase64(PRIVATE_KEY);
+				byte[] privateKey = StringExtUtils.isNotEmpty(key) ? decryptBase64(key) : decryptBase64(PRIVATE_KEY);
 				byte[] bytes = decryptByPrivateKey(decryptBase64(str), privateKey);
 				return new String(bytes, StandardCharsets.UTF_8);
 			}
@@ -115,9 +115,9 @@ public final class RSAUtils {
 	 * @return 加密后的字符串
 	 */
 	public static String encryptByPublicKey(String str, String key) {
-		if (StringUtils.isNotEmpty(str)) {
+		if (StringExtUtils.isNotEmpty(str)) {
 			try {
-				byte[] publicKey = StringUtils.isNotEmpty(key) ? decryptBase64(key) : decryptBase64(PUBLIC_KEY);
+				byte[] publicKey = StringExtUtils.isNotEmpty(key) ? decryptBase64(key) : decryptBase64(PUBLIC_KEY);
 				byte[] bytes = encryptByPublicKey(str.getBytes(StandardCharsets.UTF_8), publicKey);
 				return encryptBase64(bytes);
 			}

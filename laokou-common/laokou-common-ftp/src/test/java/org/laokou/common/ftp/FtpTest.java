@@ -24,7 +24,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.ftp.config.FtpProperties;
 import org.laokou.common.ftp.template.FtpTemplate;
-import org.laokou.common.i18n.util.ResourceUtils;
+import org.laokou.common.i18n.util.ResourceExtUtils;
 import org.laokou.common.testcontainers.container.FtpContainer;
 import org.laokou.common.testcontainers.util.DockerImageNames;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -73,7 +73,7 @@ class FtpTest {
 	@Test
 	void test_ftp() throws IOException {
 		Assertions.assertThat(ftpTemplate.upload(ftpProperties.getDirectory(), "测试中文文本.txt",
-				ResourceUtils.getResource("测试中文文本.txt").getInputStream()))
+				ResourceExtUtils.getResource("测试中文文本.txt").getInputStream()))
 			.isTrue();
 		InputStream inputStream = ftpTemplate.download(ftpProperties.getDirectory(), "测试中文文本.txt");
 		Assertions.assertThat(inputStream).isNotNull();

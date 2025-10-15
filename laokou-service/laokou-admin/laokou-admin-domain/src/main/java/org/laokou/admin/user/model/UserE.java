@@ -25,7 +25,7 @@ import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.dto.IdGenerator;
 import org.laokou.common.i18n.dto.IdGeneratorBatch;
 import org.laokou.common.i18n.dto.Identifier;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -206,17 +206,17 @@ public class UserE extends Identifier {
 	}
 
 	public void encryptUsername() throws Exception {
-		this.usernamePhrase = StringUtils.isEmpty(username) ? StringConstants.EMPTY : encryptStr(username);
+		this.usernamePhrase = StringExtUtils.isEmpty(username) ? StringConstants.EMPTY : encryptStr(username);
 		this.username = AESUtils.encrypt(username);
 	}
 
 	public void encryptMail() throws Exception {
-		this.mailPhrase = StringUtils.isEmpty(mail) ? StringConstants.EMPTY : encryptStr(mail);
+		this.mailPhrase = StringExtUtils.isEmpty(mail) ? StringConstants.EMPTY : encryptStr(mail);
 		this.mail = AESUtils.encrypt(mail);
 	}
 
 	public void encryptMobile() throws Exception {
-		this.mobilePhrase = StringUtils.isEmpty(mobile) ? StringConstants.EMPTY : encryptMobile(mobile);
+		this.mobilePhrase = StringExtUtils.isEmpty(mobile) ? StringConstants.EMPTY : encryptMobile(mobile);
 		this.mobile = AESUtils.encrypt(mobile);
 	}
 
@@ -225,7 +225,7 @@ public class UserE extends Identifier {
 		list.add(AESUtils.encrypt(str.substring(0, 3)));
 		list.add(AESUtils.encrypt(str.substring(3, 7)));
 		list.add(AESUtils.encrypt(str.substring(7)));
-		return StringUtils.collectionToDelimitedString(list, "~");
+		return StringExtUtils.collectionToDelimitedString(list, "~");
 	}
 
 	private String encryptStr(String str) throws Exception {
@@ -233,7 +233,7 @@ public class UserE extends Identifier {
 		for (int i = 0; i <= str.length() - 4; i++) {
 			list.add(AESUtils.encrypt(str.substring(i, i + 4)));
 		}
-		return StringUtils.collectionToDelimitedString(list, "~");
+		return StringExtUtils.collectionToDelimitedString(list, "~");
 	}
 
 	private String encodedPassword(String pwd) {

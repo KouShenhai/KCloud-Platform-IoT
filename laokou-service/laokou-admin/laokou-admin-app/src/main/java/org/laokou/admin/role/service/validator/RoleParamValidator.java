@@ -24,7 +24,7 @@ import org.laokou.admin.role.model.RoleE;
 import org.laokou.common.core.util.CollectionUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.ParamValidator;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.common.mybatisplus.annotation.DataScope;
 
 import java.util.List;
@@ -58,7 +58,7 @@ final class RoleParamValidator {
 
 	public static ParamValidator.Validate validateDataScope(RoleE roleE) {
 		String dataScope = roleE.getDataScope();
-		if (StringUtils.isEmpty(dataScope)) {
+		if (StringExtUtils.isEmpty(dataScope)) {
 			return ParamValidator.invalidate("角色数据范围不能为空");
 		}
 		return ParamValidator.validate();
@@ -83,7 +83,7 @@ final class RoleParamValidator {
 	public static ParamValidator.Validate validateName(RoleE roleE, RoleMapper roleMapper, boolean isSave) {
 		Long id = roleE.getId();
 		String name = roleE.getName();
-		if (StringUtils.isEmpty(name)) {
+		if (StringExtUtils.isEmpty(name)) {
 			return ParamValidator.invalidate("角色名称不能为空");
 		}
 		if (isSave && roleMapper.selectCount(Wrappers.lambdaQuery(RoleDO.class).eq(RoleDO::getName, name)) > 0) {

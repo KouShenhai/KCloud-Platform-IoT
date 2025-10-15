@@ -32,7 +32,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.common.mybatisplus.util.SqlUtils;
 
 import java.util.Map;
@@ -53,7 +53,7 @@ public class DataFilterInterceptor implements InnerInterceptor {
 					// 获取aop拼接的sql
 					PageQuery pageQuery = (PageQuery) obj;
 					String sqlFilter = pageQuery.getSqlFilter();
-					if (StringUtils.isEmpty(sqlFilter)) {
+					if (StringExtUtils.isEmpty(sqlFilter)) {
 						return;
 					}
 					// 获取select查询语句

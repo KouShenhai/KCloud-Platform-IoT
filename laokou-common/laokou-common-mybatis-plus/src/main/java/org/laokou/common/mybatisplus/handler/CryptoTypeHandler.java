@@ -22,7 +22,7 @@ import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
 import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.springframework.stereotype.Component;
 
 import java.sql.CallableStatement;
@@ -41,7 +41,7 @@ public class CryptoTypeHandler implements TypeHandler<String> {
 	public void setParameter(PreparedStatement preparedStatement, int parameterIndex, String content,
 			JdbcType jdbcType) {
 		try {
-			if (StringUtils.isNotEmpty(content)) {
+			if (StringExtUtils.isNotEmpty(content)) {
 				content = AESUtils.encrypt(content);
 			}
 			preparedStatement.setString(parameterIndex, content);
@@ -56,7 +56,7 @@ public class CryptoTypeHandler implements TypeHandler<String> {
 	public String getResult(ResultSet resultSet, String columnName) {
 		try {
 			String data = resultSet.getString(columnName);
-			if (StringUtils.isEmpty(data)) {
+			if (StringExtUtils.isEmpty(data)) {
 				return StringConstants.EMPTY;
 			}
 			return AESUtils.decrypt(data.trim());
@@ -71,7 +71,7 @@ public class CryptoTypeHandler implements TypeHandler<String> {
 	public String getResult(ResultSet resultSet, int columnIndex) {
 		try {
 			String data = resultSet.getString(columnIndex);
-			if (StringUtils.isEmpty(data)) {
+			if (StringExtUtils.isEmpty(data)) {
 				return StringConstants.EMPTY;
 			}
 			return AESUtils.decrypt(data.trim());
@@ -86,7 +86,7 @@ public class CryptoTypeHandler implements TypeHandler<String> {
 	public String getResult(CallableStatement callableStatement, int columnIndex) throws SQLException {
 		try {
 			String data = callableStatement.getString(columnIndex);
-			if (StringUtils.isEmpty(data)) {
+			if (StringExtUtils.isEmpty(data)) {
 				return StringConstants.EMPTY;
 			}
 			return AESUtils.decrypt(data.trim());

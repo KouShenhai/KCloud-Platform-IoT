@@ -20,20 +20,21 @@ package org.laokou.common.i18n.util;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
+import org.springframework.util.ResourceUtils;
 
 /**
  * 资源解析工具类.
  *
  * @author laokou
  */
-public final class ResourceUtils extends org.springframework.util.ResourceUtils {
+public final class ResourceExtUtils extends ResourceUtils {
 
 	/**
 	 * 资源解析器.
 	 */
 	private static final ResourcePatternResolver RESOLVER = new PathMatchingResourcePatternResolver();
 
-	private ResourceUtils() {
+	private ResourceExtUtils() {
 	}
 
 	/**

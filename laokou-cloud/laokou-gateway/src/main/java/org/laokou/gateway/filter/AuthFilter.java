@@ -24,7 +24,7 @@ import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.core.util.SpringUtils;
 import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.common.reactor.util.ReactiveRequestUtils;
 import org.laokou.common.reactor.util.ReactiveResponseUtils;
 import org.laokou.gateway.config.RequestMatcherProperties;
@@ -74,7 +74,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 			}
 			// 获取token
 			String token = ReactiveRequestUtils.getParamValue(request, HttpHeaders.AUTHORIZATION);
-			if (StringUtils.isEmpty(token)) {
+			if (StringExtUtils.isEmpty(token)) {
 				return ReactiveResponseUtils.responseOk(exchange, Result.fail(StatusCode.UNAUTHORIZED));
 			}
 			// 增加令牌

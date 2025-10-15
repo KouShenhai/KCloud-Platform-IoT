@@ -28,7 +28,7 @@ import org.laokou.common.core.util.SpringExpressionUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.common.lock.Lock;
 import org.laokou.common.lock.RedissonLock;
 import org.laokou.common.lock.Type;
@@ -57,7 +57,7 @@ public class LockAop {
 		String[] parameterNames = methodSignature.getParameterNames();
 		String name = lock4j.name();
 		String key = lock4j.key();
-		if (StringUtils.isNotEmpty(key) && key.contains("#")) {
+		if (StringExtUtils.isNotEmpty(key) && key.contains("#")) {
 			key = name + StringConstants.UNDER
 					+ SpringExpressionUtils.parse(key, parameterNames, joinPoint.getArgs(), String.class);
 		}

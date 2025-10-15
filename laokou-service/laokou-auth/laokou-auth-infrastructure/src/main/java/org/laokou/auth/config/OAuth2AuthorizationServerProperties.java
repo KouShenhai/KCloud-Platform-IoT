@@ -20,7 +20,7 @@ package org.laokou.auth.config;
 import lombok.Data;
 import org.laokou.common.core.util.CollectionUtils;
 import org.laokou.common.core.util.MapUtils;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
@@ -89,7 +89,7 @@ final class OAuth2AuthorizationServerProperties implements InitializingBean {
 	 * @param client 客户端
 	 */
 	private void validateClient(Client client) {
-		if (StringUtils.isEmpty(client.getRegistration().getClientId())) {
+		if (StringExtUtils.isEmpty(client.getRegistration().getClientId())) {
 			throw new IllegalStateException("Client id must not be empty.");
 		}
 		if (CollectionUtils.isEmpty(client.getRegistration().getClientAuthenticationMethods())) {

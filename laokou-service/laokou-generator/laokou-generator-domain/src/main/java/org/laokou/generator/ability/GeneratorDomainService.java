@@ -24,7 +24,7 @@ import org.laokou.common.core.util.TemplateUtils;
 import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.util.ResourceUtils;
+import org.laokou.common.i18n.util.ResourceExtUtils;
 import org.laokou.generator.gateway.TableGateway;
 import org.laokou.generator.model.GeneratorA;
 import org.laokou.generator.model.TableV;
@@ -107,7 +107,7 @@ public class GeneratorDomainService {
 	}
 
 	private String getContent(Map<String, Object> map, String templatePath) throws IOException {
-		String template = ResourceUtils.getResource(templatePath).getContentAsString(StandardCharsets.UTF_8).trim();
+		String template = ResourceExtUtils.getResource(templatePath).getContentAsString(StandardCharsets.UTF_8).trim();
 		return TemplateUtils.getContent(template, map);
 	}
 

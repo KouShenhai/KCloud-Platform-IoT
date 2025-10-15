@@ -32,7 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.context.util.UserDetails;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.common.security.config.OAuth2OpaqueTokenIntrospector;
 import org.laokou.common.websocket.model.WebSocketMessageCO;
 import org.laokou.common.websocket.model.WebSocketTypeEnum;
@@ -124,7 +124,7 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 			throws JsonProcessingException, InterruptedException {
 		Channel channel = ctx.channel();
 		String str = frame.text();
-		if (StringUtils.isEmpty(str)) {
+		if (StringExtUtils.isEmpty(str)) {
 			return;
 		}
 		try {

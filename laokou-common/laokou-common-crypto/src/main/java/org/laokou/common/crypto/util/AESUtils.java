@@ -18,8 +18,8 @@
 package org.laokou.common.crypto.util;
 
 import org.laokou.common.i18n.common.constant.StringConstants;
-import org.laokou.common.i18n.util.ResourceUtils;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.ResourceExtUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.springframework.util.Assert;
 
 import javax.crypto.Cipher;
@@ -51,11 +51,11 @@ public final class AESUtils {
 
 	static {
 		try {
-			String key = ResourceUtils.getResource("conf/secretKey.b256")
+			String key = ResourceExtUtils.getResource("conf/secretKey.b256")
 				.getContentAsString(StandardCharsets.UTF_8)
 				.trim();
 			Assert.isTrue(key.length() == 32, "密钥长度必须32位");
-			String iv = ResourceUtils.getResource("conf/secretIV.b12")
+			String iv = ResourceExtUtils.getResource("conf/secretIV.b12")
 				.getContentAsString(StandardCharsets.UTF_8)
 				.trim();
 			SECRET_KEY = new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), AES);
@@ -82,7 +82,7 @@ public final class AESUtils {
 	}
 
 	public static String encrypt(String plainText, SecretKey key, byte[] iv) throws Exception {
-		if (StringUtils.isEmpty(plainText)) {
+		if (StringExtUtils.isEmpty(plainText)) {
 			return StringConstants.EMPTY;
 		}
 		Cipher cipher = Cipher.getInstance(AES_GCM_NO_PADDING);
@@ -100,7 +100,7 @@ public final class AESUtils {
 	}
 
 	public static String decrypt(String encryptedText, SecretKey key, byte[] iv) throws Exception {
-		if (StringUtils.isEmpty(encryptedText)) {
+		if (StringExtUtils.isEmpty(encryptedText)) {
 			return StringConstants.EMPTY;
 		}
 		byte[] decoded = Base64.getDecoder().decode(encryptedText);

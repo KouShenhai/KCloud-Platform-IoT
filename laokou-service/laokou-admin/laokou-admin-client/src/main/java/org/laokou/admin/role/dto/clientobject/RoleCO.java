@@ -19,7 +19,7 @@ package org.laokou.admin.role.dto.clientobject;
 
 import lombok.Data;
 import org.laokou.common.i18n.dto.ClientObject;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 
 import java.time.Instant;
 import java.util.List;
@@ -68,7 +68,7 @@ public class RoleCO extends ClientObject {
 	private List<String> deptIds;
 
 	public void setName(String name) {
-		this.name = StringUtils.trim(name);
+		this.name = StringExtUtils.trim(name);
 	}
 
 }

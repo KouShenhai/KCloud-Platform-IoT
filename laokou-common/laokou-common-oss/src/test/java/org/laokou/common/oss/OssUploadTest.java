@@ -22,7 +22,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.i18n.util.ResourceUtils;
+import org.laokou.common.i18n.util.ResourceExtUtils;
 import org.laokou.common.oss.config.StorageAutoConfig;
 import org.laokou.common.oss.model.FileInfo;
 import org.laokou.common.oss.model.MinIO;
@@ -66,7 +66,7 @@ class OssUploadTest {
 
 	@BeforeEach
 	void setUp() throws IOException {
-		Resource resource = ResourceUtils.getResource("1.txt");
+		Resource resource = ResourceExtUtils.getResource("1.txt");
 		InputStream inputStream = resource.getInputStream();
 		File file = resource.getFile();
 		long length = file.length();

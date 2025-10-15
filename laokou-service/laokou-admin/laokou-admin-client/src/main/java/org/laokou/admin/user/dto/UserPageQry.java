@@ -20,7 +20,7 @@ package org.laokou.admin.user.dto;
 import lombok.Data;
 import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.i18n.util.StringUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 
 /**
  * 分页查询用户命令.
@@ -41,15 +41,15 @@ public class UserPageQry extends PageQuery {
 	private Integer superAdmin;
 
 	public void setUsername(String username) throws Exception {
-		this.username = StringUtils.like(AESUtils.encrypt(StringUtils.trim(username)));
+		this.username = StringExtUtils.like(AESUtils.encrypt(StringExtUtils.trim(username)));
 	}
 
 	public void setMobile(String mobile) throws Exception {
-		this.mobile = StringUtils.like(AESUtils.encrypt(StringUtils.trim(mobile)));
+		this.mobile = StringExtUtils.like(AESUtils.encrypt(StringExtUtils.trim(mobile)));
 	}
 
 	public void setMail(String mail) throws Exception {
-		this.mail = StringUtils.like(AESUtils.encrypt(StringUtils.trim(mail)));
+		this.mail = StringExtUtils.like(AESUtils.encrypt(StringExtUtils.trim(mail)));
 	}
 
 }

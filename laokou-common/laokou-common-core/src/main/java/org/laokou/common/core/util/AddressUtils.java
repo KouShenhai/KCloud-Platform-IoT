@@ -19,7 +19,7 @@ package org.laokou.common.core.util;
 
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.i18n.util.ResourceUtils;
+import org.laokou.common.i18n.util.ResourceExtUtils;
 import org.lionsoul.ip2region.xdb.LongByteArray;
 import org.lionsoul.ip2region.xdb.Searcher;
 import org.lionsoul.ip2region.xdb.Version;
@@ -51,7 +51,7 @@ public final class AddressUtils {
 	private static final Searcher SEARCHER;
 
 	static {
-		try (InputStream inputStream = ResourceUtils.getResource("ip2region_v4.xdb").getInputStream()) {
+		try (InputStream inputStream = ResourceExtUtils.getResource("ip2region_v4.xdb").getInputStream()) {
 			SEARCHER = Searcher.newWithBuffer(Version.IPv4, new LongByteArray(inputStream.readAllBytes()));
 		}
 		catch (IOException e) {
