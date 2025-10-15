@@ -22,8 +22,9 @@ import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.locks.InterProcessMutex;
 import org.apache.curator.utils.ZKPaths;
 import org.apache.zookeeper.KeeperException;
-import org.laokou.common.i18n.util.DateUtils;
+import org.laokou.common.i18n.util.InstantUtils;
 import org.springframework.util.Assert;
+
 import java.time.Instant;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -102,7 +103,7 @@ public class ZookeeperSnowflakeGenerator implements SnowflakeGenerator {
 	 */
 	@Override
 	public Instant getInstant(long id) {
-		return DateUtils.getInstantOfTimestamp(getTimestamp(id));
+		return InstantUtils.getInstantOfTimestamp(getTimestamp(id));
 	}
 
 	@Override

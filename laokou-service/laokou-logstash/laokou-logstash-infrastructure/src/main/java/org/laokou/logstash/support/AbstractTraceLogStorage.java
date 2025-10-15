@@ -19,8 +19,9 @@ package org.laokou.logstash.support;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.common.constant.DateConstants;
 import org.laokou.common.i18n.common.constant.StringConstants;
-import org.laokou.common.i18n.util.DateUtils;
+import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.logstash.gatewayimpl.database.dataobject.TraceLogIndex;
 
@@ -31,7 +32,7 @@ public abstract class AbstractTraceLogStorage implements TraceLogStorage {
 	protected static final String TRACE_INDEX = "trace_log";
 
 	protected String getIndexName() {
-		return TRACE_INDEX + StringConstants.UNDER + DateUtils.format(DateUtils.nowDate(), DateUtils.YYYYMMDD);
+		return TRACE_INDEX + StringConstants.UNDER + InstantUtils.format(InstantUtils.now(), DateConstants.YYYYMMDD);
 	}
 
 	protected TraceLogIndex getTraceLogIndex(Object obj) {

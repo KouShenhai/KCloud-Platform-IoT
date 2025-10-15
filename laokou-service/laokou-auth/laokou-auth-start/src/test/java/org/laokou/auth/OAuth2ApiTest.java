@@ -31,7 +31,7 @@ import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.core.util.UUIDGenerator;
 import org.laokou.common.crypto.util.RSAUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
-import org.laokou.common.i18n.util.DateUtils;
+import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.laokou.common.i18n.util.StringUtils;
@@ -142,7 +142,7 @@ class OAuth2ApiTest {
 	@Test
 	void test_setInstant() {
 		String key = "test:instant";
-		redisUtils.set(key, DateUtils.nowInstant());
+		redisUtils.set(key, InstantUtils.now());
 		log.info("获取Instant值：{}", redisUtils.get(key));
 		redisUtils.del(key);
 	}

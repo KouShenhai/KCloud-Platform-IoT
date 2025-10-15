@@ -19,25 +19,19 @@ package org.laokou.common.i18n;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.i18n.util.DateUtils;
+import org.laokou.common.i18n.util.RedisKeyUtils;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-
-/**
- * @author laokou
- */
-class DateUtilsTest {
+class RedisKeyUtilsTest {
 
 	@Test
-	void test_date() {
-		String str = "2024-09-24 11:33:33";
-		LocalDateTime localDateTime = DateUtils.parseTime(str, DateUtils.YYYY_B_MM_B_DD_HH_R_MM_R_SS);
-		Assertions.assertThat(DateUtils.format(localDateTime, DateUtils.YYYY_B_MM_B_DD_HH_R_MM_R_SS)).isEqualTo(str);
-		str = "2024-09-24 13:59:00";
-		Instant instant = DateUtils.parsInstant(str, DateUtils.YYYY_B_MM_B_DD_HH_R_MM_R_SS);
-		long between = DateUtils.betweenSeconds(DateUtils.nowInstant(), instant);
-		Assertions.assertThat(between < 0).isTrue();
+	void test() {
+		Assertions.assertThat(RedisKeyUtils.getMobileAuthCaptchaKey("test")).isEqualTo("auth:mobile:captcha:test");
+		Assertions.assertThat(RedisKeyUtils.getMailAuthCaptchaKey("test")).isEqualTo("auth:mail:captcha:test");
+		Assertions.assertThat(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey("test"))
+			.isEqualTo("auth:username-password:captcha:test");
+		Assertions.assertThat(RedisKeyUtils.getApiIdempotentKey("test")).isEqualTo("api:idempotent:test");
+		Assertions.assertThat(RedisKeyUtils.getRouteDefinitionHashKey()).isEqualTo("route:definition");
+		Assertions.assertThat(RedisKeyUtils.getBloomFilterKey()).isEqualTo("bloom:filter");
 	}
 
 }

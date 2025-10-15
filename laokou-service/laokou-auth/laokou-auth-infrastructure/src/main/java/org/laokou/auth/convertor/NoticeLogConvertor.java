@@ -22,7 +22,7 @@ import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.gatewayimpl.database.dataobject.NoticeLogDO;
 import org.laokou.auth.model.NoticeLogE;
-import org.laokou.common.i18n.util.DateUtils;
+import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.mail.dto.MailResult;
 import org.laokou.common.sms.entity.SmsResult;
@@ -44,7 +44,7 @@ public final class NoticeLogConvertor {
 		noticeLogCO.setParam(result.getParam());
 		noticeLogCO.setTenantId(evt.getTenantId());
 		noticeLogCO.setId(evt.getId());
-		noticeLogCO.setInstant(DateUtils.nowInstant());
+		noticeLogCO.setInstant(InstantUtils.now());
 		noticeLogCO.setUuid(evt.getUuid());
 		noticeLogCO.setCaptcha(result.getCaptcha());
 		return noticeLogCO;
@@ -59,7 +59,7 @@ public final class NoticeLogConvertor {
 		noticeLogCO.setParam(result.getParam());
 		noticeLogCO.setTenantId(evt.getTenantId());
 		noticeLogCO.setId(evt.getId());
-		noticeLogCO.setInstant(DateUtils.nowInstant());
+		noticeLogCO.setInstant(InstantUtils.now());
 		noticeLogCO.setUuid(evt.getUuid());
 		noticeLogCO.setCaptcha(result.getCaptcha());
 		return noticeLogCO;

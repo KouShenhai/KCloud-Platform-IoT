@@ -15,24 +15,36 @@
  *
  */
 
-package org.laokou.common.i18n.dto;
+package org.laokou.common.i18n.common.constant;
 
-import lombok.Getter;
-import org.laokou.common.i18n.util.InstantUtils;
+public final class DateConstants {
 
-import java.time.Instant;
-
-/**
- * 聚合根.
- *
- * @author laokou
- */
-public abstract class AggregateRoot extends Identifier {
+	private DateConstants() {
+	}
 
 	/**
-	 * 创建时间.
+	 * yyyy-MM-dd HH:mm:ss.
 	 */
-	@Getter
-	protected final Instant createTime = InstantUtils.now();
+	public static final String YYYY_B_MM_B_DD_HH_R_MM_R_SS = "yyyy-MM-dd HH:mm:ss";
+
+	/**
+	 * yyyyMMddHHmmss.
+	 */
+	public static final String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
+
+	/**
+	 * yyyyMMdd.
+	 */
+	public static final String YYYYMMDD = "yyyyMMdd";
+
+	/**
+	 * GMT+8.
+	 */
+	public static final String DEFAULT_TIMEZONE = "GMT+8";
+
+	/**
+	 * yyyy-MM-dd HH:mm:ss.SSS.
+	 */
+	public static final String YYYY_B_MM_B_DD_HH_R_MM_R_SS_D_SSS = "yyyy-MM-dd HH:mm:ss.SSS";
 
 }

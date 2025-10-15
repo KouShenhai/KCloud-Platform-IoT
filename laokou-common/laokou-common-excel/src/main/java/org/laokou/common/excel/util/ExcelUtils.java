@@ -31,12 +31,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.CollectionUtils;
 import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.excel.validator.ExcelValidator;
+import org.laokou.common.i18n.common.constant.DateConstants;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.i18n.util.DateUtils;
+import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringUtils;
 import org.laokou.common.i18n.util.ValidatorUtils;
@@ -165,7 +166,8 @@ public final class ExcelUtils {
 	}
 
 	private static void setHeader(String fileName, HttpServletResponse response) {
-		fileName = fileName + "_导出全部_" + DateUtils.format(DateUtils.now(), DateUtils.YYYYMMDDHHMMSS) + ".xlsx";
+		fileName = fileName + "_导出全部_" + InstantUtils.format(InstantUtils.now(), DateConstants.YYYYMMDDHHMMSS)
+				+ ".xlsx";
 		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		response.setContentType("application/vnd.ms-excel;charset=UTF-8");
 		response.setHeader("Content-disposition",

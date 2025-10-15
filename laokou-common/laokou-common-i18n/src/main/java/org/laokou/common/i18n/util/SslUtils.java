@@ -51,7 +51,7 @@ public final class SslUtils {
 
 	public static void ignoreSSLTrust() throws NoSuchAlgorithmException, KeyManagementException {
 		HttpsURLConnection.setDefaultSSLSocketFactory(sslContext().getSocketFactory());
-		HttpsURLConnection.setDefaultHostnameVerifier((hostname, sslSession) -> true);
+		HttpsURLConnection.setDefaultHostnameVerifier((_, _) -> true);
 	}
 
 	public static class DisableValidationTrustManager implements X509TrustManager {
