@@ -22,6 +22,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.FileUtils;
 import org.laokou.common.core.util.SystemUtils;
+import org.laokou.common.i18n.util.SslUtils;
 import org.springframework.boot.system.SystemProperties;
 
 import java.io.BufferedReader;
@@ -33,6 +34,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.FileAttribute;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 class FileUtilsTest {
@@ -45,7 +48,8 @@ class FileUtilsTest {
 	}
 
 	@Test
-	void test_baseApi() throws IOException {
+	void test_baseApi() throws IOException, NoSuchAlgorithmException, KeyManagementException {
+		SslUtils.ignoreSSLTrust();
 		Assertions.assertThat(FileUtils.getFileExt("test.png")).isEqualTo(".png");
 		Assertions.assertThat(FileUtils.getBytesByUrl(
 				"https://i11.hoopchina.com.cn/hupuapp/bbs/0/0/thread_0_20190620145828_s_64509_o_w_387_h_600_20991.png"))
