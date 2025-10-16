@@ -80,7 +80,7 @@
     <!--maven-checkstyle-plugin版本-->
     <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
     <!--spotbugs-maven-plugin版本-->
-    <spotbugs-maven-plugin.version>4.9.5.0</spotbugs-maven-plugin.version>
+    <spotbugs-maven-plugin.version>4.9.7.0</spotbugs-maven-plugin.version>
     <!--native-maven-plugin版本-->
     <native-maven-plugin.version>0.11.1</native-maven-plugin.version>
     <!--versions-maven-plugin版本-->
@@ -236,7 +236,7 @@
     <!--gson版本-->
     <gson.version>2.13.2</gson.version>
     <!--spotbugs版本-->
-    <spotbugs.version>4.9.5</spotbugs.version>
+    <spotbugs.version>4.9.7</spotbugs.version>
     <!--docker主机-->
     <docker.host>tcp://127.0.0.1:2375</docker.host>
     <!--docker仓库-->
@@ -897,7 +897,7 @@
         <version>${maven-checkstyle-plugin.version}</version>
         <configuration>
           <!-- 配置文件路径 -->
-          <configLocation>checkstyle/checkstyle.xml</configLocation>
+          <configLocation>${maven.multiModuleProjectDirectory}/checkstyle/checkstyle.xml</configLocation>
           <!-- true表示在命令行或控制台输出检查结果，否则结果不会直接在控制台显示 -->
           <consoleOutput>true</consoleOutput>
           <!-- true表示检查到错误，则整个构建过程失败 -->
