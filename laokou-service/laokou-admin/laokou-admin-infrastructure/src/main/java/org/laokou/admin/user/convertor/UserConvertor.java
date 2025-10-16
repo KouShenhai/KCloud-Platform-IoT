@@ -28,7 +28,7 @@ import org.laokou.admin.user.model.UserOperateTypeEnum;
 import org.laokou.common.context.util.UserUtils;
 import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
-import org.laokou.common.context.util.UserDetails;
+import org.laokou.common.context.util.UserExtDetails;
 import org.laokou.common.sensitive.util.SensitiveUtils;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -123,12 +123,12 @@ public final class UserConvertor {
 	}
 
 	public static UserProfileCO toClientObject() {
-		UserDetails userDetails = UserUtils.user();
+		UserExtDetails userExtDetails = UserUtils.user();
 		UserProfileCO userProfileCO = new UserProfileCO();
-		userProfileCO.setId(userDetails.getId());
-		userProfileCO.setUsername(userDetails.getUsername());
-		userProfileCO.setAvatar(userDetails.getAvatar());
-		userProfileCO.setPermissions(userDetails.getPermissions());
+		userProfileCO.setId(userExtDetails.getId());
+		userProfileCO.setUsername(userExtDetails.getUsername());
+		userProfileCO.setAvatar(userExtDetails.getAvatar());
+		userProfileCO.setPermissions(userExtDetails.getPermissions());
 		return userProfileCO;
 	}
 

@@ -47,7 +47,7 @@ public final class ServerUtils {
 	}
 
 	@Data
-	public static class Server {
+	public final static class Server {
 
 		private final Sys sys;
 
@@ -77,7 +77,7 @@ public final class ServerUtils {
 	}
 
 	@Data
-	public static class Disk {
+	public final static class Disk {
 
 		/**
 		 * 磁盘路径.
@@ -131,32 +131,32 @@ public final class ServerUtils {
 	}
 
 	@Data
-	public static class Sys {
+	public final static class Sys {
 
 		/**
 		 * 服务器名称.
 		 */
-		private String serverName;
+		private final String serverName;
 
 		/**
 		 * 服务器IP.
 		 */
-		private String serverIp;
+		private final String serverIp;
 
 		/**
 		 * 项目路径.
 		 */
-		private String projectDir;
+		private final String projectDir;
 
 		/**
 		 * 系统名称.
 		 */
-		private String osName;
+		private final String osName;
 
 		/**
 		 * 系统架构.
 		 */
-		private String osArch;
+		private final String osArch;
 
 		public Sys(Properties properties) throws UnknownHostException {
 			this.serverName = InetAddress.getLocalHost().getHostName();
@@ -169,22 +169,22 @@ public final class ServerUtils {
 	}
 
 	@Data
-	public static class Memory {
+	public final static class Memory {
 
 		/**
 		 * 内存总量.
 		 */
-		private String total;
+		private final String total;
 
 		/**
 		 * 已用内存.
 		 */
-		private String used;
+		private final String used;
 
 		/**
 		 * 剩余内存.
 		 */
-		private String free;
+		private final String free;
 
 		public Memory(GlobalMemory globalMemory) {
 			long totalMemory = globalMemory.getTotal();
@@ -198,32 +198,32 @@ public final class ServerUtils {
 	}
 
 	@Data
-	public static class Jvm {
+	public final static class Jvm {
 
 		/**
 		 * JVM总使用内存(M).
 		 */
-		private String totalUsedMemory;
+		private final String totalUsedMemory;
 
 		/**
 		 * JVM最大可用内存总数(M).
 		 */
-		private String maxMemory;
+		private final String maxMemory;
 
 		/**
 		 * JVM空闲内存(M).
 		 */
-		private String freeMemory;
+		private final String freeMemory;
 
 		/**
 		 * JDK版本.
 		 */
-		private String version;
+		private final String version;
 
 		/**
 		 * JDK路径.
 		 */
-		private String path;
+		private final String path;
 
 		public Jvm(Properties properties) {
 			totalUsedMemory = BigDecimalUtils.divide(Runtime.getRuntime().totalMemory(), SIZE_1M, 2) + "M";
@@ -236,32 +236,32 @@ public final class ServerUtils {
 	}
 
 	@Data
-	public static class Cpu {
+	public final static class Cpu {
 
 		/**
 		 * CPU核心数.
 		 */
-		private int coreNum;
+		private final int coreNum;
 
 		/**
 		 * CPU系统使用率.
 		 */
-		private String sysUsedRate;
+		private final String sysUsedRate;
 
 		/**
 		 * CPU用户使用率.
 		 */
-		private String userUsedRate;
+		private final String userUsedRate;
 
 		/**
 		 * CPU等待率.
 		 */
-		private String waitRate;
+		private final String waitRate;
 
 		/**
 		 * CPU空闲率.
 		 */
-		private String freeRate;
+		private final String freeRate;
 
 		public Cpu(CentralProcessor centralProcessor) {
 			long[] prevTicks = centralProcessor.getSystemCpuLoadTicks();

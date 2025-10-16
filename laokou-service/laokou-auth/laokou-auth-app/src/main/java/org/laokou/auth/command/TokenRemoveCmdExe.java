@@ -18,7 +18,7 @@
 package org.laokou.auth.command;
 
 import org.laokou.auth.dto.TokenRemoveCmd;
-import org.laokou.common.context.util.UserDetails;
+import org.laokou.common.context.util.UserExtDetails;
 import org.laokou.common.data.cache.constant.NameConstants;
 import org.laokou.common.data.cache.model.OperateTypeEnum;
 import org.laokou.common.domain.annotation.CommandLog;
@@ -76,8 +76,8 @@ public class TokenRemoveCmdExe {
 	private void evictCache(OAuth2Authorization authorization) {
 		Object obj = authorization.getAttribute(Principal.class.getName());
 		if (ObjectUtils.isNotNull(obj)) {
-			UserDetails userDetails = (UserDetails) ((UsernamePasswordAuthenticationToken) obj).getPrincipal();
-			OperateTypeEnum.getCache(redissonCacheManager, NameConstants.USER_MENU).evict(userDetails.getId());
+			UserExtDetails userExtDetails = (UserExtDetails) ((UsernamePasswordAuthenticationToken) obj).getPrincipal();
+			OperateTypeEnum.getCache(redissonCacheManager, NameConstants.USER_MENU).evict(userExtDetails.getId());
 		}
 	}
 

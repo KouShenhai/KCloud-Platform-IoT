@@ -1115,6 +1115,33 @@
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
         <version>${spotbugs-maven-plugin.version}</version>
+        <configuration>
+          <!-- 扫描文件目录 -->
+          <classFilesDirectory>${project.build.directory}/classes</classFilesDirectory>
+          <!-- 输出报告格式 -->
+          <outputFormat>html</outputFormat>
+          <!-- 输出报告路径 -->
+          <outputDirectory>${project.build.directory}/spotbugs</outputDirectory>
+          <xmlOutput>true</xmlOutput>
+          <htmlOutput>true</htmlOutput>
+          <!-- 发现任何BUG构建失败 -->
+          <failOnError>false</failOnError>
+          <!-- 最小报告的错误优先级，可选值：low, medium, high -->
+          <threshold>low</threshold>
+          <!-- 启用实验性探测器，可选值：min, default, max -->
+          <effort>max</effort>
+          <!-- 排除的探测器 -->
+          <excludeFilterFile>${maven.multiModuleProjectDirectory}/spotbugs/spotbugs-exclude.xml</excludeFilterFile>
+        </configuration>
+        <executions>
+          <execution>
+            <id>spotbugs</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
         <dependencies>
           <dependency>
             <groupId>com.github.spotbugs</groupId>

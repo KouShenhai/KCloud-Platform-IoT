@@ -25,10 +25,10 @@ import org.laokou.auth.convertor.UserConvertor;
 import org.laokou.auth.dto.domainevent.LoginEvent;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.MqEnum;
+import org.laokou.common.context.util.UserExtDetails;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.common.exception.GlobalException;
-import org.laokou.common.context.util.UserDetails;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Component;
 
@@ -54,10 +54,10 @@ final class OAuth2AuthenticationProcessor {
 			// 记录日志【登录成功】
 			evt = LoginLogConvertor.toDomainEvent(request, authA, null);
 			// 登录成功，转换成用户对象【业务】
-			UserDetails userDetails = UserConvertor.toUserDetails(authA);
+			UserExtDetails userExtDetails = UserConvertor.toUserDetails(authA);
 			// 认证成功，转换成认证对象【系统】
-			return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getUsername(),
-					userDetails.getAuthorities());
+			return new UsernamePasswordAuthenticationToken(userExtDetails, userExtDetails.getUsername(),
+					userExtDetails.getAuthorities());
 		}
 		catch (GlobalException e) {
 			// 记录日志【业务异常】

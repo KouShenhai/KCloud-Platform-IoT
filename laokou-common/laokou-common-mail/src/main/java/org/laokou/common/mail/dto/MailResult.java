@@ -30,7 +30,7 @@ public class MailResult implements Serializable {
 	/**
 	 * 编码.
 	 */
-	private final String code = "send_mail_captcha";
+	private final String code;
 
 	/**
 	 * 名称.
@@ -58,6 +58,7 @@ public class MailResult implements Serializable {
 	private final String captcha;
 
 	public MailResult(String name, int status, String errorMessage, String param, String captcha) {
+		this.code = "send_mail_captcha";
 		this.name = name;
 		this.status = status;
 		this.errorMessage = errorMessage;

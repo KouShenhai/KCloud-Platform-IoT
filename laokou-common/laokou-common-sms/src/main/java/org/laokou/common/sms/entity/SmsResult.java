@@ -30,7 +30,7 @@ public class SmsResult implements Serializable {
 	/**
 	 * 编码.
 	 */
-	private final String code = "send_mobile_captcha";
+	private final String code;
 
 	/**
 	 * 名称.
@@ -58,6 +58,7 @@ public class SmsResult implements Serializable {
 	private final String captcha;
 
 	public SmsResult(String name, int status, String errorMessage, String param, String captcha) {
+		code = "send_mobile_captcha";
 		this.name = name;
 		this.status = status;
 		this.errorMessage = errorMessage;

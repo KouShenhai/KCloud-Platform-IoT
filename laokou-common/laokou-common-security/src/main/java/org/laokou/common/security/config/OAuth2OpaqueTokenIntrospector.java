@@ -20,7 +20,7 @@ package org.laokou.common.security.config;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.Nullable;
-import org.laokou.common.context.util.UserDetails;
+import org.laokou.common.context.util.UserExtDetails;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -61,9 +61,9 @@ public class OAuth2OpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 		if (accessToken.isActive()) {
             Object obj = authorization.getAttribute(Principal.class.getName());
             if (obj instanceof UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken) {
-				UserDetails userDetails = (UserDetails) usernamePasswordAuthenticationToken.getPrincipal();
+				UserExtDetails userExtDetails = (UserExtDetails) usernamePasswordAuthenticationToken.getPrincipal();
                 // 解密
-                return decryptInfo(userDetails);
+                return decryptInfo(userExtDetails);
             }
 		} else {
 			oAuth2AuthorizationService.remove(authorization);
@@ -74,14 +74,14 @@ public class OAuth2OpaqueTokenIntrospector implements OpaqueTokenIntrospector {
 
 	/**
 	 * 解密字段.
-	 * @param userDetails 用户信息
+	 * @param userExtDetails 用户信息
 	 * @return UserDetail
 	 */
-	public static UserDetails decryptInfo(@Nullable UserDetails userDetails) {
+	public static UserExtDetails decryptInfo(@Nullable UserExtDetails userExtDetails) {
 		try {
 			// 解密
-			assert userDetails != null;
-			return userDetails.getDecryptInfo();
+			assert userExtDetails != null;
+			return userExtDetails.getDecryptInfo();
 		}
 		catch (GlobalException e) {
 			throw OAuth2ExceptionHandler.getOAuth2AuthenticationException(e.getCode(), e.getMsg(),

@@ -21,7 +21,7 @@ import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.UserE;
-import org.laokou.common.context.util.UserDetails;
+import org.laokou.common.context.util.UserExtDetails;
 
 /**
  * @author laokou
@@ -31,20 +31,20 @@ public final class UserConvertor {
 	private UserConvertor() {
 	}
 
-	public static UserDetails toUserDetails(AuthA auth) {
-		UserDetails userDetails = new UserDetails();
+	public static UserExtDetails toUserDetails(AuthA auth) {
+		UserExtDetails userExtDetails = new UserExtDetails();
 		UserE user = auth.getUser();
-		userDetails.setId(user.getId());
-		userDetails.setUsername(user.getUsername());
-		userDetails.setAvatar(auth.getAvatar());
-		userDetails.setSuperAdmin(user.isSuperAdministrator());
-		userDetails.setStatus(user.getStatus());
-		userDetails.setMail(user.getMail());
-		userDetails.setMobile(user.getMobile());
-		userDetails.setDeptPaths(auth.getDeptPaths());
-		userDetails.setPermissions(auth.getPermissions());
-		userDetails.setTenantId(user.getTenantId());
-		return userDetails;
+		userExtDetails.setId(user.getId());
+		userExtDetails.setUsername(user.getUsername());
+		userExtDetails.setAvatar(auth.getAvatar());
+		userExtDetails.setSuperAdmin(user.isSuperAdministrator());
+		userExtDetails.setStatus(user.getStatus());
+		userExtDetails.setMail(user.getMail());
+		userExtDetails.setMobile(user.getMobile());
+		userExtDetails.setDeptPaths(auth.getDeptPaths());
+		userExtDetails.setPermissions(auth.getPermissions());
+		userExtDetails.setTenantId(user.getTenantId());
+		return userExtDetails;
 	}
 
 	public static UserE toEntity(UserDO userDO) {

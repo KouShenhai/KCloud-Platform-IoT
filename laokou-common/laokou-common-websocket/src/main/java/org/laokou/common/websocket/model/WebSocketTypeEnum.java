@@ -21,7 +21,7 @@ import io.netty.channel.Channel;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.util.EnumParser;
-import org.laokou.common.context.util.UserDetails;
+import org.laokou.common.context.util.UserExtDetails;
 import org.laokou.common.websocket.config.WebSocketSessionHeartBeatManager;
 import org.laokou.common.websocket.config.WebSocketSessionManager;
 
@@ -34,17 +34,17 @@ public enum WebSocketTypeEnum {
 
 	MESSAGE("message", "消息") {
 		@Override
-		public void handle(UserDetails userDetails, WebSocketMessageCO co, Channel channel) {
+		public void handle(UserExtDetails userExtDetails, WebSocketMessageCO co, Channel channel) {
 			log.info("【WebSocket-Server】 => 接收到消息，通道ID：{}，用户ID：{}，消息：{}", channel.id().asLongText(),
-					userDetails.getId(), co.getPayload());
+					userExtDetails.getId(), co.getPayload());
 		}
 	},
 
 	CONNECT("connect", "建立连接") {
 		@Override
-		public void handle(UserDetails userDetails, WebSocketMessageCO co, Channel channel)
+		public void handle(UserExtDetails userExtDetails, WebSocketMessageCO co, Channel channel)
 				throws InterruptedException {
-			Long clientId = userDetails.getId();
+			Long clientId = userExtDetails.getId();
 			log.info("【WebSocket-Server】 => 已建立连接，通道ID：{}，用户ID：{}", channel.id().asLongText(), clientId);
 			WebSocketSessionManager.add(clientId, channel);
 		}
@@ -52,13 +52,13 @@ public enum WebSocketTypeEnum {
 
 	PING("ping", "发送心跳") {
 		@Override
-		public void handle(UserDetails userDetails, WebSocketMessageCO co, Channel channel) {
+		public void handle(UserExtDetails userExtDetails, WebSocketMessageCO co, Channel channel) {
 		}
 	},
 
 	PONG("pong", "心跳应答") {
 		@Override
-		public void handle(UserDetails userDetails, WebSocketMessageCO co, Channel channel) {
+		public void handle(UserExtDetails userExtDetails, WebSocketMessageCO co, Channel channel) {
 			String channelId = channel.id().asLongText();
 			log.info("【WebSocket-Server】 => 接收{}心跳{}", channelId, co.getPayload());
 			if (WebSocketSessionHeartBeatManager.get(channelId) > 0) {
@@ -80,7 +80,7 @@ public enum WebSocketTypeEnum {
 		return EnumParser.parse(WebSocketTypeEnum.class, WebSocketTypeEnum::getCode, code);
 	}
 
-	public abstract void handle(UserDetails userDetails, WebSocketMessageCO co, Channel channel)
+	public abstract void handle(UserExtDetails userExtDetails, WebSocketMessageCO co, Channel channel)
 			throws InterruptedException;
 
 }

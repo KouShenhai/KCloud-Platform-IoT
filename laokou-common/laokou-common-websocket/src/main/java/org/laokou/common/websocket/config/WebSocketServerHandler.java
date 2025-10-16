@@ -29,7 +29,7 @@ import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.util.ReferenceCountUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.context.util.UserDetails;
+import org.laokou.common.context.util.UserExtDetails;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
@@ -130,9 +130,9 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 		try {
 			WebSocketMessageCO co = JacksonUtils.toBean(str, WebSocketMessageCO.class);
 			OAuth2AuthenticatedPrincipal principal = oAuth2OpaqueTokenIntrospector.introspect(co.getToken());
-			UserDetails userDetails = (UserDetails) principal;
+			UserExtDetails userExtDetails = (UserExtDetails) principal;
 			log.info("【WebSocket-Server】 => 令牌校验成功，用户名：{}", principal.getName());
-			WebSocketTypeEnum.getByCode(co.getType()).handle(userDetails, co, channel);
+			WebSocketTypeEnum.getByCode(co.getType()).handle(userExtDetails, co, channel);
 		}
 		catch (JsonParseException e) {
 			log.error("【WebSocket-Server】 => JSON格式转换失败，错误信息：{}", e.getMessage(), e);

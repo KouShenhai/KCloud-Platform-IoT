@@ -29,6 +29,7 @@ import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 
 import java.io.Serial;
@@ -50,8 +51,7 @@ import java.util.stream.Collectors;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
 		isGetterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserDetails implements org.springframework.security.core.userdetails.UserDetails,
-		OAuth2AuthenticatedPrincipal, Serializable {
+public class UserExtDetails implements UserDetails, OAuth2AuthenticatedPrincipal, Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 3319752558160144611L;
@@ -135,7 +135,7 @@ public class UserDetails implements org.springframework.security.core.userdetail
 		if (ObjectUtils.isNull(o) || getClass() != o.getClass()) {
 			return false;
 		}
-		UserDetails that = (UserDetails) o;
+		UserExtDetails that = (UserExtDetails) o;
 		if (!ObjectUtils.equals(id, that.id)) {
 			return false;
 		}
@@ -228,7 +228,7 @@ public class UserDetails implements org.springframework.security.core.userdetail
 	}
 
 	@JsonIgnore
-	public UserDetails getDecryptInfo() {
+	public UserExtDetails getDecryptInfo() {
 		this.mail = this.getDecryptMail();
 		this.mobile = this.getDecryptMobile();
 		this.username = this.getDecryptUsername();

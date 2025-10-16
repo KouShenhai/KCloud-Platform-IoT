@@ -69,14 +69,6 @@ public final class AESUtils {
 	private AESUtils() {
 	}
 
-	public static SecretKey getSecretKey() {
-		return SECRET_KEY;
-	}
-
-	public static SecretKey getSecretKey(String key) {
-		return new SecretKeySpec(key.getBytes(StandardCharsets.UTF_8), AES);
-	}
-
 	public static String encrypt(String plainText) throws Exception {
 		return encrypt(plainText, SECRET_KEY, SECRET_IV);
 	}

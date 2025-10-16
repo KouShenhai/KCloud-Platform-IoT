@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+
+  <!-- 排除某个特定 bug 模式的所有实例 -->
+  <Match>
+    <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE,ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD,DM_DEFAULT_ENCODING" />
+  </Match>
+
+</FindBugsFilter>

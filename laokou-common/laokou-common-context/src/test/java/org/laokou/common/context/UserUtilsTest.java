@@ -19,7 +19,7 @@ package org.laokou.common.context;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.context.util.UserDetails;
+import org.laokou.common.context.util.UserExtDetails;
 import org.laokou.common.context.util.UserUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -33,7 +33,7 @@ class UserUtilsTest {
 
 	@Test
 	void test() {
-		Assertions.assertThat(UserUtils.user()).isNotNull().isEqualTo(new UserDetails());
+		Assertions.assertThat(UserUtils.user()).isNotNull().isEqualTo(new UserExtDetails());
 		Assertions.assertThat(UserUtils.getUserId()).isNull();
 		Assertions.assertThat(UserUtils.getUserName()).isNull();
 		Assertions.assertThat(UserUtils.getDeptPaths()).isNull();
@@ -41,7 +41,7 @@ class UserUtilsTest {
 		Assertions.assertThat(UserUtils.isSuperAdmin()).isNull();
 		Assertions.assertThat(UserUtils.user().getPermissions()).isNull();
 		SecurityContextHolder.getContext().setAuthentication(new TestAuthentication());
-		Assertions.assertThat(UserUtils.user()).isNotNull().isNotEqualTo(new UserDetails());
+		Assertions.assertThat(UserUtils.user()).isNotNull().isNotEqualTo(new UserExtDetails());
 		Assertions.assertThat(UserUtils.getUserId()).isNotNull().isEqualTo(1L);
 		Assertions.assertThat(UserUtils.getUserName()).isNotNull().isEqualTo("admin");
 		Assertions.assertThat(UserUtils.getDeptPaths()).isNotNull().containsAll(Set.of("1,2"));
@@ -69,18 +69,18 @@ class UserUtilsTest {
 
 		@Override
 		public Object getPrincipal() {
-			UserDetails userDetails = new UserDetails();
-			userDetails.setId(1L);
-			userDetails.setUsername("admin");
-			userDetails.setAvatar("https://youke1.picui.cn/s1/2025/07/20/687ca202b2c53.jpg");
-			userDetails.setSuperAdmin(true);
-			userDetails.setStatus(0);
-			userDetails.setMail("2413176044@qq.com");
-			userDetails.setMobile("13574411111");
-			userDetails.setDeptPaths(Set.of("1,2"));
-			userDetails.setPermissions(Set.of("test:save"));
-			userDetails.setTenantId(0L);
-			return userDetails;
+			UserExtDetails userExtDetails = new UserExtDetails();
+			userExtDetails.setId(1L);
+			userExtDetails.setUsername("admin");
+			userExtDetails.setAvatar("https://youke1.picui.cn/s1/2025/07/20/687ca202b2c53.jpg");
+			userExtDetails.setSuperAdmin(true);
+			userExtDetails.setStatus(0);
+			userExtDetails.setMail("2413176044@qq.com");
+			userExtDetails.setMobile("13574411111");
+			userExtDetails.setDeptPaths(Set.of("1,2"));
+			userExtDetails.setPermissions(Set.of("test:save"));
+			userExtDetails.setTenantId(0L);
+			return userExtDetails;
 		}
 
 		@Override

@@ -50,6 +50,7 @@
 
 package com.alibaba.cloud.nacos.loadbalancer;
 
+import com.alibaba.cloud.commons.lang.StringUtils;
 import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import com.alibaba.cloud.nacos.util.InetIPv6Utils;
 import jakarta.annotation.PostConstruct;
@@ -92,7 +93,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	 * Storage local valid IPv6 address, it's a flag whether local machine support IPv6
 	 * address stack.
 	 */
-	public static String ipv6;
+	static String ipv6;
 
 	private final String serviceId;
 
@@ -138,7 +139,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	 * @return 服务实例列表
 	 */
 	private List<ServiceInstance> filterInstanceByIpType(List<ServiceInstance> instances) {
-		if (com.alibaba.cloud.commons.lang.StringUtils.isNotEmpty(ipv6)) {
+		if (StringUtils.isNotEmpty(ipv6)) {
 			List<ServiceInstance> ipv6InstanceList = new ArrayList<>();
 			for (ServiceInstance instance : instances) {
 				if (RegexUtils.ipv4Regex(instance.getHost())) {

@@ -31,13 +31,13 @@ public final class UserUtils {
 	private UserUtils() {
 	}
 
-	public static UserDetails user() {
+	public static UserExtDetails user() {
 		return Optional.ofNullable(getAuthentication()).map(authentication -> {
-			if (authentication.getPrincipal() instanceof UserDetails userDetails) {
-				return userDetails;
+			if (authentication.getPrincipal() instanceof UserExtDetails userExtDetails) {
+				return userExtDetails;
 			}
-			return new UserDetails();
-		}).orElse(new UserDetails());
+			return new UserExtDetails();
+		}).orElse(new UserExtDetails());
 	}
 
 	/**
