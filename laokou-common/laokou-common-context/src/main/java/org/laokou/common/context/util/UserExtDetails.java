@@ -118,11 +118,6 @@ public class UserExtDetails implements UserDetails, OAuth2AuthenticatedPrincipal
 	private Long tenantId;
 
 	/**
-	 * 部门PATHS.
-	 */
-	private Set<String> deptPaths;
-
-	/**
 	 * 菜单权限标识集合.
 	 */
 	private Set<String> permissions;
@@ -151,9 +146,6 @@ public class UserExtDetails implements UserDetails, OAuth2AuthenticatedPrincipal
 		if (!ObjectUtils.equals(status, that.status)) {
 			return false;
 		}
-		if (!ObjectUtils.equals(deptPaths, that.deptPaths)) {
-			return false;
-		}
 		if (!ObjectUtils.equals(permissions, that.permissions)) {
 			return false;
 		}
@@ -173,7 +165,6 @@ public class UserExtDetails implements UserDetails, OAuth2AuthenticatedPrincipal
 		result = 31 * result + avatar.hashCode();
 		result = 31 * result + superAdmin.hashCode();
 		result = 31 * result + status.hashCode();
-		result = 31 * result + deptPaths.hashCode();
 		result = 31 * result + permissions.hashCode();
 		result = 31 * result + tenantId.hashCode();
 		result = 31 * result + mail.hashCode();

@@ -42,11 +42,6 @@ public class DeptDO extends BaseDO {
 	private String name;
 
 	/**
-	 * 部门节点.
-	 */
-	private String path;
-
-	/**
 	 * 部门排序.
 	 */
 	private Integer sort;

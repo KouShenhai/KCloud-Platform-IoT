@@ -43,7 +43,7 @@ public class DeptPageQryExe {
 	public Result<Page<DeptCO>> execute(DeptPageQry qry) {
 		List<DeptDO> list = deptMapper.selectObjectPage(qry);
 		long total = deptMapper.selectObjectCount(qry);
-		return Result.ok(Page.create(list.stream().map(DeptConvertor::toClientObject).toList(), total));
+		return Result.ok(Page.create(DeptConvertor.toClientObjectList(list), total));
 	}
 
 }

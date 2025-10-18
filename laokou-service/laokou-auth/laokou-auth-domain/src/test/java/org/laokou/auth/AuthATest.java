@@ -45,8 +45,6 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.util.DigestUtils;
 
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -281,20 +279,6 @@ class AuthATest {
 		Assertions.assertThatNoException()
 			.isThrownBy(() -> auth.getMenuPermissions(menuGateway.getMenuPermissions(user)));
 		Assertions.assertThatNoException().isThrownBy(auth::checkMenuPermissions);
-	}
-
-	@Test
-	void test_checkDeptPaths() {
-		// 创建用户【用户名密码】
-		AuthA auth = getAuth("admin", "123", GrantTypeEnum.USERNAME_PASSWORD, "1", "1234");
-		Assertions.assertThatNoException().isThrownBy(auth::createUserByUsernamePassword);
-		UserE user = auth.getUser();
-		Assertions.assertThat(user).isNotNull();
-		// 构造部门
-		Mockito.when(deptGateway.getDeptPaths(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
-		// 校验部门路径集合
-		Assertions.assertThatNoException().isThrownBy(() -> auth.getDeptPaths(deptGateway.getDeptPaths(user)));
-		Assertions.assertThatNoException().isThrownBy(auth::checkDeptPaths);
 	}
 
 	private AuthA getAuth(String username, String password, GrantTypeEnum grantTypeEnum, String uuid, String captcha) {

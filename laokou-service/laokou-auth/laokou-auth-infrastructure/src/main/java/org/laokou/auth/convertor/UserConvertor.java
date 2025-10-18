@@ -41,7 +41,6 @@ public final class UserConvertor {
 		userExtDetails.setStatus(user.getStatus());
 		userExtDetails.setMail(user.getMail());
 		userExtDetails.setMobile(user.getMobile());
-		userExtDetails.setDeptPaths(auth.getDeptPaths());
 		userExtDetails.setPermissions(auth.getPermissions());
 		userExtDetails.setTenantId(user.getTenantId());
 		return userExtDetails;

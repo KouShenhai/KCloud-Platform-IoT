@@ -92,10 +92,6 @@ public class DomainService {
 		authA.getMenuPermissions(menuGateway.getMenuPermissions(authA.getUser()));
 		// 校验菜单权限标识集合
 		authA.checkMenuPermissions();
-		// 获取部门路径集合
-		authA.getDeptPaths(deptGateway.getDeptPaths(authA.getUser()));
-		// 校验部门路径集合
-		authA.checkDeptPaths();
 		// 获取用户头像
 		authA.getUserAvatar(ossLogGateway.getOssUrl(authA.getUser().getAvatar()));
 	}

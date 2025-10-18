@@ -18,12 +18,9 @@
 package org.laokou.auth.gatewayimpl.database;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import org.laokou.auth.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  * 部门.
@@ -33,18 +30,5 @@ import java.util.List;
 @Mapper
 @Repository
 public interface DeptMapper extends CrudMapper<Long, Integer, DeptDO> {
-
-	/**
-	 * 查看部门PATHS.
-	 * @return 部门PATHS
-	 */
-	List<String> selectDeptPaths();
-
-	/**
-	 * 根据用户ID查看部门PATHS.
-	 * @param userId 用户ID
-	 * @return 部门PATHS
-	 */
-	List<String> selectDeptPathsByUserId(@Param("userId") Long userId);
 
 }

@@ -18,7 +18,6 @@
 package org.laokou.admin.dept.gatewayimpl.database;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.dept.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.springframework.stereotype.Repository;
@@ -31,10 +30,5 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface DeptMapper extends CrudMapper<Long, Integer, DeptDO> {
-
-	String selectDeptParentPathById(@Param("id") Long id);
-
-	void updateDeptChildrenPath(@Param("oldPath") String oldPath, @Param("oldPrefix") String oldPrefix,
-			@Param("newPrefix") String newPrefix);
 
 }

@@ -21,7 +21,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * @author laokou
@@ -54,14 +53,6 @@ public final class UserUtils {
 	 */
 	public static String getUserName() {
 		return user().getUsername();
-	}
-
-	/**
-	 * 部门PATHS.
-	 * @return Long
-	 */
-	public static Set<String> getDeptPaths() {
-		return user().getDeptPaths();
 	}
 
 	/**

@@ -40,49 +40,19 @@ public class DeptGatewayImpl implements DeptGateway {
 
 	@Override
 	public void createDept(DeptE deptE) {
-		DeptDO deptDO = DeptConvertor.toDataObject(deptE);
-		// 校验父级路径
-		checkDeptParentPath(deptE, deptDO.getId());
-		deptDO.setPath(deptE.getPath());
-		deptMapper.insert(deptDO);
+		deptMapper.insert(DeptConvertor.toDataObject(deptE));
 	}
 
 	@Override
 	public void updateDept(DeptE deptE) {
-		Long id = deptE.getId();
-		DeptDO deptDO = getDeptDO(deptE, id);
-		// 获取旧路径
-		deptE.getOldPath(deptDO.getPath());
-		// 校验旧路径
-		deptE.checkOldPath();
-		// 校验父级路径
-		checkDeptParentPath(deptE, id);
-		deptDO.setPath(deptE.getPath());
+		DeptDO deptDO = DeptConvertor.toDataObject(deptE);
+		deptDO.setVersion(deptMapper.selectVersion(deptE.getId()));
 		deptMapper.updateById(deptDO);
-		deptMapper.updateDeptChildrenPath(deptE.getOldPath(), deptE.getOldPrefix(), deptE.getNewPrefix());
 	}
 
 	@Override
 	public void deleteDept(Long[] ids) {
 		deptMapper.deleteByIds(Arrays.asList(ids));
-	}
-
-	private DeptDO getDeptDO(DeptE deptE, Long id) {
-		DeptDO deptDO = deptMapper.selectById(id);
-		deptDO.setPid(deptE.getPid());
-		deptDO.setName(deptE.getName());
-		deptDO.setSort(deptE.getSort());
-		return deptDO;
-	}
-
-	/**
-	 * 校验父级路径.
-	 */
-	private void checkDeptParentPath(DeptE deptE, Long id) {
-		// 获取父级路径
-		deptE.getParentPath(deptMapper.selectDeptParentPathById(deptE.getPid()));
-		// 校验父级路径
-		deptE.checkParentPath(id);
 	}
 
 }

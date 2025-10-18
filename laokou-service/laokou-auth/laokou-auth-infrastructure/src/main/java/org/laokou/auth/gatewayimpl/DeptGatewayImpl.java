@@ -21,10 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.gateway.DeptGateway;
 import org.laokou.auth.gatewayimpl.database.DeptMapper;
-import org.laokou.auth.model.UserE;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * 部门.
@@ -37,18 +34,5 @@ import java.util.List;
 public class DeptGatewayImpl implements DeptGateway {
 
 	private final DeptMapper deptMapper;
-
-	/**
-	 * 查看部门路径集合.
-	 * @param user 用户对象
-	 * @return 部门路径集合
-	 */
-	@Override
-	public List<String> getDeptPaths(UserE user) {
-		if (user.isSuperAdministrator()) {
-			return deptMapper.selectDeptPaths();
-		}
-		return deptMapper.selectDeptPathsByUserId(user.getId());
-	}
 
 }

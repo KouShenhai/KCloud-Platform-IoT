@@ -77,7 +77,7 @@ public class MybatisPlusAutoConfig {
 	public MybatisPlusInterceptor mybatisPlusInterceptor(MybatisPlusExtProperties mybatisPlusExtProperties) {
 		MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
 		// 数据权限插件
-		interceptor.addInnerInterceptor(new DataFilterInterceptor());
+		// interceptor.addInnerInterceptor(new DataFilterInterceptor());
 		// 多租户插件
 		if (mybatisPlusExtProperties.getTenant().isEnabled()) {
 			interceptor.addInnerInterceptor(new TenantLineInnerInterceptor(

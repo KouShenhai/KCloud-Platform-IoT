@@ -36,7 +36,6 @@ class UserUtilsTest {
 		Assertions.assertThat(UserUtils.user()).isNotNull().isEqualTo(new UserExtDetails());
 		Assertions.assertThat(UserUtils.getUserId()).isNull();
 		Assertions.assertThat(UserUtils.getUserName()).isNull();
-		Assertions.assertThat(UserUtils.getDeptPaths()).isNull();
 		Assertions.assertThat(UserUtils.getTenantId()).isNull();
 		Assertions.assertThat(UserUtils.isSuperAdmin()).isNull();
 		Assertions.assertThat(UserUtils.user().getPermissions()).isNull();
@@ -44,7 +43,6 @@ class UserUtilsTest {
 		Assertions.assertThat(UserUtils.user()).isNotNull().isNotEqualTo(new UserExtDetails());
 		Assertions.assertThat(UserUtils.getUserId()).isNotNull().isEqualTo(1L);
 		Assertions.assertThat(UserUtils.getUserName()).isNotNull().isEqualTo("admin");
-		Assertions.assertThat(UserUtils.getDeptPaths()).isNotNull().containsAll(Set.of("1,2"));
 		Assertions.assertThat(UserUtils.getTenantId()).isNotNull().isEqualTo(0L);
 		Assertions.assertThat(UserUtils.isSuperAdmin()).isNotNull().isTrue();
 		Assertions.assertThat(UserUtils.user().getPermissions()).isNotNull().isEqualTo(Set.of("test:save"));
@@ -77,7 +75,6 @@ class UserUtilsTest {
 			userExtDetails.setStatus(0);
 			userExtDetails.setMail("2413176044@qq.com");
 			userExtDetails.setMobile("13574411111");
-			userExtDetails.setDeptPaths(Set.of("1,2"));
 			userExtDetails.setPermissions(Set.of("test:save"));
 			userExtDetails.setTenantId(0L);
 			return userExtDetails;

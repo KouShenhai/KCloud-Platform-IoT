@@ -41,7 +41,6 @@ public class DeptConvertor {
 		}
 		deptDO.setPid(deptE.getPid());
 		deptDO.setName(deptE.getName());
-		deptDO.setPath(deptE.getPath());
 		deptDO.setSort(deptE.getSort());
 		return deptDO;
 	}
@@ -51,13 +50,12 @@ public class DeptConvertor {
 		deptCO.setId(deptDO.getId());
 		deptCO.setPid(deptDO.getPid());
 		deptCO.setName(deptDO.getName());
-		deptCO.setPath(deptDO.getPath());
 		deptCO.setSort(deptDO.getSort());
 		deptCO.setCreateTime(deptDO.getCreateTime());
 		return deptCO;
 	}
 
-	public static List<DeptCO> toClientObjects(List<DeptDO> list) {
+	public static List<DeptCO> toClientObjectList(List<DeptDO> list) {
 		return list.stream().map(DeptConvertor::toClientObject).toList();
 	}
 
@@ -66,26 +64,24 @@ public class DeptConvertor {
 		deptE.setId(deptCO.getId());
 		deptE.setPid(deptCO.getPid());
 		deptE.setName(deptCO.getName());
-		deptE.setPath(deptCO.getPath());
 		deptE.setSort(deptCO.getSort());
 		deptE.setDeptOperateTypeEnum(isInsert ? DeptOperateTypeEnum.SAVE : DeptOperateTypeEnum.MODIFY);
 		return deptE;
 	}
 
-	public static DeptTreeCO toClientObj(DeptDO deptDO) {
+	public static DeptTreeCO toClientObject0(DeptDO deptDO) {
 		DeptTreeCO co = new DeptTreeCO();
 		co.setId(deptDO.getId());
 		co.setName(deptDO.getName());
 		co.setPid(deptDO.getPid());
-		co.setPath(deptDO.getPath());
 		co.setSort(deptDO.getSort());
 		co.setCreateTime(deptDO.getCreateTime());
 		return co;
 
 	}
 
-	public static List<DeptTreeCO> toClientObjs(List<DeptDO> list) {
-		return list.stream().map(DeptConvertor::toClientObj).toList();
+	public static List<DeptTreeCO> toClientObjectList0(List<DeptDO> list) {
+		return list.stream().map(DeptConvertor::toClientObject0).toList();
 	}
 
 }

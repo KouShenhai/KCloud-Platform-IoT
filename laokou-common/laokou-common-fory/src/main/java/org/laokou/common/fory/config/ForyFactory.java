@@ -36,13 +36,12 @@ public final class ForyFactory {
 		// Disable it will have better performance if no duplicate reference.
 		.withRefTracking(false)
 		// compress int for smaller size
-		// .withIntCompressed(true)
+		.withIntCompressed(true)
 		// compress long for smaller size
-		// .withLongCompressed(true)
-		.withCompatibleMode(CompatibleMode.SCHEMA_CONSISTENT)
+		.withLongCompressed(true)
 		// enable type forward/backward compatibility
 		// disable it for small size and better performance.
-		// .withCompatibleMode(CompatibleMode.COMPATIBLE)
+		.withCompatibleMode(CompatibleMode.COMPATIBLE)
 		// enable async multi-threaded compilation.
 		.withAsyncCompilation(true)
 		.requireClassRegistration(true)

@@ -51,8 +51,6 @@ import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 import org.springframework.util.DigestUtils;
 
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -138,12 +136,9 @@ class DomainServiceTest {
 		Mockito.doReturn(true).when(passwordValidator).validatePassword("123", "202cb962ac59075b964b07152d234b70");
 		// 构造菜单
 		Mockito.when(menuGateway.getMenuPermissions(user)).thenReturn(Set.of("sys:user:page"));
-		// 构造部门
-		Mockito.when(deptGateway.getDeptPaths(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
 		// 用户名密码登录
 		Assertions.assertThatNoException().isThrownBy(() -> domainService.auth(auth));
 		// 校验调用次数
-		Mockito.verify(deptGateway, Mockito.times(1)).getDeptPaths(user);
 		Mockito.verify(menuGateway, Mockito.times(1)).getMenuPermissions(user);
 		Mockito.verify(passwordValidator, Mockito.times(1)).validatePassword("123", "202cb962ac59075b964b07152d234b70");
 		Mockito.verify(captchaValidator, Mockito.times(1))
@@ -169,12 +164,9 @@ class DomainServiceTest {
 		Mockito.when(userGateway.getUserProfile(user)).thenReturn(user);
 		// 构造菜单
 		Mockito.when(menuGateway.getMenuPermissions(user)).thenReturn(Set.of("sys:user:page"));
-		// 构造部门
-		Mockito.when(deptGateway.getDeptPaths(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
 		// 邮箱登录
 		Assertions.assertThatNoException().isThrownBy(() -> domainService.auth(auth));
 		// 校验调用次数
-		Mockito.verify(deptGateway, Mockito.times(1)).getDeptPaths(user);
 		Mockito.verify(menuGateway, Mockito.times(1)).getMenuPermissions(user);
 		Mockito.verify(userGateway, Mockito.times(1)).getUserProfile(user);
 		Mockito.verify(captchaValidator, Mockito.times(1))
@@ -199,12 +191,9 @@ class DomainServiceTest {
 		Mockito.when(userGateway.getUserProfile(user)).thenReturn(user);
 		// 构造菜单
 		Mockito.when(menuGateway.getMenuPermissions(user)).thenReturn(Set.of("sys:user:page"));
-		// 构造部门
-		Mockito.when(deptGateway.getDeptPaths(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
 		// 手机号登录
 		Assertions.assertThatNoException().isThrownBy(() -> domainService.auth(auth));
 		// 校验调用次数
-		Mockito.verify(deptGateway, Mockito.times(1)).getDeptPaths(user);
 		Mockito.verify(menuGateway, Mockito.times(1)).getMenuPermissions(user);
 		Mockito.verify(userGateway, Mockito.times(1)).getUserProfile(user);
 		Mockito.verify(tenantGateway, Mockito.times(1)).getTenantId("laokou");
@@ -228,12 +217,9 @@ class DomainServiceTest {
 		Mockito.doReturn(true).when(passwordValidator).validatePassword("123", "202cb962ac59075b964b07152d234b70");
 		// 构造菜单
 		Mockito.when(menuGateway.getMenuPermissions(user)).thenReturn(Set.of("sys:user:page"));
-		// 构造部门
-		Mockito.when(deptGateway.getDeptPaths(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
 		// 授权码登录
 		Assertions.assertThatNoException().isThrownBy(() -> domainService.auth(auth));
 		// 校验调用次数
-		Mockito.verify(deptGateway, Mockito.times(1)).getDeptPaths(user);
 		Mockito.verify(menuGateway, Mockito.times(1)).getMenuPermissions(user);
 		Mockito.verify(passwordValidator, Mockito.times(1)).validatePassword("123", "202cb962ac59075b964b07152d234b70");
 		Mockito.verify(userGateway, Mockito.times(1)).getUserProfile(user);
@@ -257,12 +243,9 @@ class DomainServiceTest {
 		Mockito.doReturn(true).when(passwordValidator).validatePassword("123", "202cb962ac59075b964b07152d234b70");
 		// 构造菜单
 		Mockito.when(menuGateway.getMenuPermissions(user)).thenReturn(Set.of("sys:user:page"));
-		// 构造部门
-		Mockito.when(deptGateway.getDeptPaths(user)).thenReturn(new ArrayList<>(List.of("0", "0,1")));
 		// 测试登录
 		Assertions.assertThatNoException().isThrownBy(() -> domainService.auth(auth));
 		// 校验调用次数
-		Mockito.verify(deptGateway, Mockito.times(1)).getDeptPaths(user);
 		Mockito.verify(menuGateway, Mockito.times(1)).getMenuPermissions(user);
 		Mockito.verify(passwordValidator, Mockito.times(1)).validatePassword("123", "202cb962ac59075b964b07152d234b70");
 		Mockito.verify(userGateway, Mockito.times(1)).getUserProfile(user);

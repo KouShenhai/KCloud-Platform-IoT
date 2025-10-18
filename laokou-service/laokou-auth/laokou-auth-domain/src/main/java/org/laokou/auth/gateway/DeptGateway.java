@@ -17,22 +17,11 @@
 
 package org.laokou.auth.gateway;
 
-import org.laokou.auth.model.UserE;
-
-import java.util.List;
-
 /**
  * 部门.
  *
  * @author laokou
  */
 public interface DeptGateway {
-
-	/**
-	 * 查询部门路径集合.
-	 * @param user 用户对象
-	 * @return 部门路径集合
-	 */
-	List<String> getDeptPaths(UserE user);
 
 }

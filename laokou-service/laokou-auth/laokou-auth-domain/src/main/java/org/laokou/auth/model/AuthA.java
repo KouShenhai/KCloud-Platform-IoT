@@ -32,10 +32,6 @@ import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.util.CollectionUtils;
-
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
@@ -101,12 +97,6 @@ public class AuthA extends AggregateRoot {
 	 */
 	@Getter
 	private Set<String> permissions;
-
-	/**
-	 * 部门路径.
-	 */
-	@Getter
-	private Set<String> deptPaths;
 
 	/**
 	 * 头像.
@@ -197,10 +187,6 @@ public class AuthA extends AggregateRoot {
 		this.permissions = permissions;
 	}
 
-	public void getDeptPaths(List<String> deptPaths) {
-		this.deptPaths = getPaths(deptPaths);
-	}
-
 	public void checkAuthParam() {
 		switch (grantTypeEnum) {
 			case MOBILE -> this.mobileAuthParamValidator.validateAuth(this);
@@ -255,12 +241,6 @@ public class AuthA extends AggregateRoot {
 		}
 	}
 
-	public void checkDeptPaths() {
-		if (CollectionUtils.isEmpty(this.deptPaths)) {
-			throw new BizException(StatusCode.FORBIDDEN);
-		}
-	}
-
 	public String getLoginName() {
 		if (List.of(GrantTypeEnum.USERNAME_PASSWORD, GrantTypeEnum.AUTHORIZATION_CODE, GrantTypeEnum.TEST)
 			.contains(grantTypeEnum)) {
@@ -281,29 +261,6 @@ public class AuthA extends AggregateRoot {
 	private boolean isUsePassword() {
 		return List.of(GrantTypeEnum.USERNAME_PASSWORD, GrantTypeEnum.AUTHORIZATION_CODE, GrantTypeEnum.TEST)
 			.contains(grantTypeEnum);
-	}
-
-	private Set<String> getPaths(List<String> list) {
-		if (CollectionUtils.isEmpty(list)) {
-			return Collections.emptySet();
-		}
-		// 字符串长度排序
-		list.sort(Comparator.comparingInt(String::length));
-		Set<String> paths = new HashSet<>(list.size());
-		paths.add(list.getFirst());
-		for (String path : list.subList(1, list.size())) {
-			int find = paths.size();
-			for (String p : paths) {
-				if (path.contains(p)) {
-					break;
-				}
-				find--;
-			}
-			if (find == 0) {
-				paths.add(path);
-			}
-		}
-		return paths;
 	}
 
 	private String getCaptchaCacheKey() {
