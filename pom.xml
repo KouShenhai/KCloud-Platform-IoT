@@ -236,7 +236,7 @@
     <!--gson版本-->
     <gson.version>2.13.2</gson.version>
     <!--spotbugs版本-->
-    <spotbugs.version>4.9.7</spotbugs.version>
+    <spotbugs.version>4.9.8</spotbugs.version>
     <!--docker主机-->
     <docker.host>tcp://127.0.0.1:2375</docker.host>
     <!--docker仓库-->
