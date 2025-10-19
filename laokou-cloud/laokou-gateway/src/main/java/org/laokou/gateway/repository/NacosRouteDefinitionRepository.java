@@ -73,7 +73,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 		ForyFactory.INSTANCE.register(org.springframework.cloud.gateway.handler.predicate.PredicateDefinition.class);
 	}
 
-	private final String dataId = "router.json";
+	private final String dataId;
 
 	private final String group;
 
@@ -85,6 +85,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 
 	public NacosRouteDefinitionRepository(NacosConfigManager nacosConfigManager,
 			ReactiveRedisTemplate<String, Object> reactiveRedisTemplate, ExecutorService virtualThreadExecutor) {
+		this.dataId = "router.json";
 		this.group = nacosConfigManager.getNacosConfigProperties().getGroup();
 		this.configService = nacosConfigManager.getConfigService();
 		this.reactiveHashOperations = reactiveRedisTemplate.opsForHash();

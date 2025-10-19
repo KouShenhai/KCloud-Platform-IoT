@@ -24,6 +24,8 @@ import io.netty.channel.EventLoopGroup;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.util.ObjectUtils;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 /**
  * @author laokou
  */
@@ -53,7 +55,7 @@ public abstract class AbstractServer implements Server {
 	/**
 	 * 运行标记.
 	 */
-	private boolean running = false;
+	private final AtomicBoolean running = new AtomicBoolean(false);
 
 	protected AbstractServer(String ip, int port, ChannelHandler channelHandler, int bossCorePoolSize,
 			int workerCorePoolSize) {
@@ -74,9 +76,9 @@ public abstract class AbstractServer implements Server {
 	 * 启动(Bean单例存在资源竞争).
 	 */
 	@Override
-	public final synchronized void start() {
-		if (running) {
-			log.error("已启动监听，端口：{}", port);
+	public final void start() {
+		if (running.get()) {
+			log.error("已启动监听，端口：{}，运行状态【true已启动，false已停止】：{}", port, running.get());
 			return;
 		}
 		// -Dnetty.server.parentgroup.size=2 -Dnetty.server.childgroup.size=32
@@ -87,11 +89,7 @@ public abstract class AbstractServer implements Server {
 			// awaitUninterruptibly -> 等待任务结束，任务不可中断
 			ChannelFuture channelFuture = bind(serverBootstrap, port);
 			// 监听端口关闭
-			channelFuture.channel().closeFuture().addListener(future -> {
-				if (running) {
-					stop();
-				}
-			});
+			channelFuture.channel().closeFuture().addListener(_ -> stop());
 		}
 		catch (Exception e) {
 			log.error("启动失败，端口：{}，错误信息：{}", port, e.getMessage());
@@ -102,17 +100,17 @@ public abstract class AbstractServer implements Server {
 	 * 关闭(Bean单例存在资源竞争).
 	 */
 	@Override
-	public final synchronized void stop() {
-		// 修改状态
-		running = false;
-		// 释放资源
-		if (ObjectUtils.isNotNull(boss)) {
-			boss.shutdownGracefully();
+	public final void stop() {
+		if (running.compareAndExchange(true, false)) {
+			// 释放资源
+			if (ObjectUtils.isNotNull(boss)) {
+				boss.shutdownGracefully();
+			}
+			if (ObjectUtils.isNotNull(worker)) {
+				worker.shutdownGracefully();
+			}
+			log.info("优雅关闭，释放资源，运行状态【true已启动，false已停止】：{}", running.get());
 		}
-		if (ObjectUtils.isNotNull(worker)) {
-			worker.shutdownGracefully();
-		}
-		log.info("优雅关闭，释放资源");
 	}
 
 	/**
@@ -127,8 +125,7 @@ public abstract class AbstractServer implements Server {
 				bind(bootstrap, port + 1);
 			}
 			else {
-				log.info("启动成功，端口{}已绑定", port);
-				running = true;
+				log.info("启动成功，端口{}已绑定，运行状态【true已启动，false已停止】：{}", port, running.compareAndExchange(false, true));
 			}
 		});
 	}

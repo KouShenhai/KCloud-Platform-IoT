@@ -18,12 +18,13 @@
 package org.laokou.common.log4j2.config;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
-import lombok.Data;
 import org.apache.logging.log4j.spi.DefaultThreadContextMap;
 import org.apache.logging.log4j.spi.ThreadContextMap;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -31,7 +32,6 @@ import java.util.Optional;
  * @author laokou
  * @see DefaultThreadContextMap
  */
-@Data
 public class TtlThreadContextMap implements ThreadContextMap {
 
 	public static final TtlThreadContextMap INSTANCE = new TtlThreadContextMap();
@@ -40,23 +40,26 @@ public class TtlThreadContextMap implements ThreadContextMap {
 
 	@Override
 	public void put(final String key, final String value) {
-		Optional.ofNullable(LOCAL_MAP.get()).ifPresent(map -> {
-			map.put(key, value);
-			LOCAL_MAP.set(Collections.unmodifiableMap(map));
-		});
+		Map<String, String> map = LOCAL_MAP.get();
+		map = map == null ? new HashMap<>() : new HashMap<>(map);
+		map.put(key, value);
+		LOCAL_MAP.set(Collections.unmodifiableMap(map));
 	}
 
 	@Override
 	public String get(final String key) {
-		return Optional.ofNullable(LOCAL_MAP.get()).orElseGet(HashMap::new).get(key);
+		final Map<String, String> map = LOCAL_MAP.get();
+		return map == null ? null : map.get(key);
 	}
 
 	@Override
 	public void remove(final String key) {
-		Optional.ofNullable(LOCAL_MAP.get()).ifPresent(map -> {
-			map.remove(key);
-			LOCAL_MAP.set(Collections.unmodifiableMap(map));
-		});
+		Map<String, String> map = LOCAL_MAP.get();
+		if (map != null) {
+			final Map<String, String> copy = new HashMap<>(map);
+			copy.remove(key);
+			LOCAL_MAP.set(Collections.unmodifiableMap(copy));
+		}
 	}
 
 	@Override
@@ -81,7 +84,27 @@ public class TtlThreadContextMap implements ThreadContextMap {
 
 	@Override
 	public boolean isEmpty() {
-		return Optional.ofNullable(LOCAL_MAP.get()).orElseGet(HashMap::new).isEmpty();
+		Map<String, String> map = LOCAL_MAP.get();
+		return map == null || map.isEmpty();
+	}
+
+	@Override
+	public String toString() {
+		Map<String, String> map = LOCAL_MAP.get();
+		return map == null ? "{}" : map.toString();
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (o == null || getClass() != o.getClass())
+			return false;
+		TtlThreadContextMap that = (TtlThreadContextMap) o;
+		return Objects.equals(LOCAL_MAP, that.LOCAL_MAP);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(LOCAL_MAP);
 	}
 
 }

@@ -20,45 +20,23 @@ package org.laokou.logstash.dto.clientobject;
 import lombok.Data;
 import org.laokou.common.i18n.dto.ClientObject;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @author laokou
  */
 @Data
-public class LokiPushDTO extends ClientObject {
+public final class LokiPushDTO extends ClientObject {
 
-	private List<Stream> streams;
+	private final List<Stream> streams;
 
-	@Data
-	public static class Label {
-
-		private String id;
-
-		private String serviceId;
-
-		private String profile;
-
-		private String traceId;
-
-		private String spanId;
-
-		private String address;
-
-		private String level;
-
-		private String threadName;
-
-		private String packageName;
+	public record Label(String serviceId, String profile, String traceId, String spanId, String address, String level,
+			String threadName, String packageName) implements Serializable {
 
 	}
 
-	@Data
-	public static class Stream {
-
-		private Label stream;
-
-		private List<List<String>> values;
+	public record Stream(Label stream, List<List<String>> values) implements Serializable {
 
 	}
 

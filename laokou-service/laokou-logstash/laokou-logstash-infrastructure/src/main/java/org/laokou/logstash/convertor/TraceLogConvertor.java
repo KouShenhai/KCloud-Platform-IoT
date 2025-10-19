@@ -35,10 +35,7 @@ public final class TraceLogConvertor {
 	}
 
 	public static LokiPushDTO toDTO(List<TraceLogIndex> list) {
-		LokiPushDTO lokiPushDTO = new LokiPushDTO();
-		List<LokiPushDTO.Stream> streams = list.stream().map(TraceLogConvertor::toDTO).toList();
-		lokiPushDTO.setStreams(streams);
-		return lokiPushDTO;
+		return new LokiPushDTO(list.stream().map(TraceLogConvertor::toDTO).toList());
 	}
 
 	private static LokiPushDTO.Stream toDTO(TraceLogIndex traceLogIndex) {
@@ -46,24 +43,15 @@ public final class TraceLogConvertor {
 				DateConstants.YYYY_B_MM_B_DD_HH_R_MM_R_SS_D_SSS);
 		// 毫秒转纳秒
 		String lokiTimestamp = String.valueOf(instant.toEpochMilli() * 1000000);
-		LokiPushDTO.Label label = new LokiPushDTO.Label();
-		label.setServiceId(traceLogIndex.getServiceId());
-		label.setProfile(traceLogIndex.getProfile());
-		label.setTraceId(traceLogIndex.getTraceId());
-		label.setSpanId(traceLogIndex.getSpanId());
-		label.setAddress(traceLogIndex.getAddress());
-		label.setLevel(traceLogIndex.getLevel());
-		label.setThreadName(traceLogIndex.getThreadName());
-		label.setPackageName(traceLogIndex.getPackageName());
-		LokiPushDTO.Stream stream = new LokiPushDTO.Stream();
+		LokiPushDTO.Label label = new LokiPushDTO.Label(traceLogIndex.getServiceId(), traceLogIndex.getProfile(),
+				traceLogIndex.getTraceId(), traceLogIndex.getSpanId(), traceLogIndex.getAddress(),
+				traceLogIndex.getLevel(), traceLogIndex.getThreadName(), traceLogIndex.getPackageName());
 		List<List<String>> values = new ArrayList<>(2);
 		List<String> message = List.of(lokiTimestamp, traceLogIndex.getMessage());
 		List<String> stacktrace = List.of(lokiTimestamp, traceLogIndex.getStacktrace());
 		values.add(message);
 		values.add(stacktrace);
-		stream.setStream(label);
-		stream.setValues(values);
-		return stream;
+		return new LokiPushDTO.Stream(label, values);
 	}
 
 }

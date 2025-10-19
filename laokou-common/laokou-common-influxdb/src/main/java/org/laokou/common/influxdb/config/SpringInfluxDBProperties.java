@@ -30,7 +30,7 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "spring.influx-db")
 public class SpringInfluxDBProperties {
 
-	public Type type = Type.TOKEN;
+	private Type type = Type.TOKEN;
 
 	@NotNull
 	private String url;
@@ -45,7 +45,7 @@ public class SpringInfluxDBProperties {
 
 	private String bucket;
 
-	public enum Type {
+	enum Type {
 
 		TOKEN, USERNAME_PASSWORD
 

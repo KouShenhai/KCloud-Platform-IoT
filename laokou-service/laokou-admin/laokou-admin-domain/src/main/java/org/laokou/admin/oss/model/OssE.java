@@ -20,7 +20,6 @@ package org.laokou.admin.oss.model;
 import lombok.Getter;
 import lombok.Setter;
 import org.laokou.common.i18n.annotation.Entity;
-import org.laokou.common.i18n.dto.IdGenerator;
 import org.laokou.common.i18n.dto.Identifier;
 
 /**
@@ -66,25 +65,26 @@ public class OssE extends Identifier {
 	@Getter
 	private OssOperateTypeEnum ossOperateTypeEnum;
 
-	private final IdGenerator idGenerator;
+	//
+	// private final IdGenerator idGenerator;
+	//
+	// public OssE(IdGenerator idGenerator) {
+	// this.idGenerator = idGenerator;
+	// }
 
-	public OssE(IdGenerator idGenerator) {
-		this.idGenerator = idGenerator;
-	}
-
-	public Long getPrimaryKey() {
-		return idGenerator.getId();
-	}
-
-	public void checkOssParam() {
-		switch (ossOperateTypeEnum) {
-			case SAVE -> {
-			}
-			case MODIFY -> {
-			}
-			default -> {
-			}
-		}
-	}
+	// public Long getPrimaryKey() {
+	// return idGenerator.getId();
+	// }
+	//
+	// public void checkOssParam() {
+	// switch (ossOperateTypeEnum) {
+	// case SAVE -> {
+	// }
+	// case MODIFY -> {
+	// }
+	// default -> {
+	// }
+	// }
+	// }
 
 }
