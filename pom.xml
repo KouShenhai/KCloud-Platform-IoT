@@ -182,7 +182,7 @@
     <!--mockito版本-->
     <mockito.version>5.20.0</mockito.version>
     <!--knife4j版本-->
-    <knife4j.version>4.4.0</knife4j.version>
+    <knife4j.version>4.5.0</knife4j.version>
     <!--taos-jdbcdriver版本-->
     <taos-jdbcdriver.version>3.7.6</taos-jdbcdriver.version>
     <!--fory-core版本-->
