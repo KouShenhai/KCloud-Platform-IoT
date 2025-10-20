@@ -339,8 +339,10 @@ springdoc:
     path: /v3/api-docs
   group-configs:
     - group: 'default'
-      paths-to-match: '/**'
-      packages-to-scan: org.laokou.auth.web
+      paths-to-match:
+       - '/**'
+      packages-to-scan:
+       - "org.laokou.auth.web"
 
 # mybatis-plus
 mybatis-plus:
