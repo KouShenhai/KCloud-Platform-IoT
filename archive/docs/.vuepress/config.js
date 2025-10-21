@@ -195,7 +195,8 @@ module.exports = {
 					},
 					{
 						text: '修行', items: [
-							{text: '修身/养生/情感', link: '/pages/623578/'}
+							{text: '修身/养生/情感', link: '/pages/623578/'},
+							{text: '老实人_直男脱单【老寇总结】', link: '/pages/d2fd30/'}
 						]
 					},
 					{
