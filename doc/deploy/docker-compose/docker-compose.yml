@@ -328,7 +328,7 @@ services:
     networks:
       - iot_network
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:9.1.5
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/elasticsearch9:9.1.5
     container_name: elasticsearch
     # 保持容器在没有守护程序的情况下运行
     tty: true
@@ -337,8 +337,7 @@ services:
     ports:
       - "9200:9200"
       - "9300:9300"
-    volumes:
-      - ./elasticsearch9/plugins:/usr/share/elasticsearch/plugins
+#    volumes:
 #      - ./elasticsearch9/data:/usr/share/elasticsearch/data
 #      - ./elasticsearch9/logs:/usr/share/elasticsearch/logs
     environment:
