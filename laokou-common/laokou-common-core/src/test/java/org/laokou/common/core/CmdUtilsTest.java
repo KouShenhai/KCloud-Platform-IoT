@@ -30,7 +30,8 @@ class CmdUtilsTest {
 
 	@Test
 	void test() throws IOException, InterruptedException {
-		Assertions.assertThat(CmdUtils.executeCmd("echo", "hello world!")).isEqualTo("hello world!");
+		Assertions.assertThat(CmdUtils.execute("echo", "hello world!").getFirst()).isEqualTo("hello world!");
+		Assertions.assertThatNoException().isThrownBy(() -> CmdUtils.executeVoid("top"));
 	}
 
 }

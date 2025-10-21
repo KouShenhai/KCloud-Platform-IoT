@@ -19,10 +19,12 @@ package org.laokou.common.core.util;
 
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.ObjectUtils;
-
+import org.laokou.common.i18n.util.StringExtUtils;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -33,8 +35,8 @@ public final class CmdUtils {
 	private CmdUtils() {
 	}
 
-	public static String executeCmd(String... command) throws IOException, InterruptedException {
-		StringBuilder output = new StringBuilder();
+	public static List<String> execute(String... command) throws IOException, InterruptedException {
+		List<String> output = new ArrayList<>();
 		Process process = null;
 		try {
 			ProcessBuilder processBuilder = new ProcessBuilder(command);
@@ -43,7 +45,7 @@ public final class CmdUtils {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 			String line;
 			while ((line = reader.readLine()) != null) {
-				output.append(line).append("\n");
+				output.add(line);
 			}
 			boolean finished = process.waitFor(15, TimeUnit.SECONDS);
 			if (!finished) {
@@ -52,15 +54,22 @@ public final class CmdUtils {
 			}
 			int exitValue = process.exitValue();
 			if (exitValue != 0) {
-				throw new SystemException("S_Cmd_ExecuteFailed", output.toString());
+				throw new SystemException("S_Cmd_ExecuteFailed",
+						StringExtUtils.collectionToDelimitedString(output, "\n"));
 			}
-			return output.toString();
+			return output;
 		}
 		finally {
 			if (ObjectUtils.isNotNull(process)) {
 				process.destroy();
 			}
 		}
+	}
+
+	public static void executeVoid(String... command) throws IOException, InterruptedException {
+		ProcessBuilder processBuilder = new ProcessBuilder(command);
+		Process process = processBuilder.start();
+		process.waitFor();
 	}
 
 }
