@@ -118,7 +118,7 @@
     <!--dubbo版本-->
     <dubbo.version>3.3.5</dubbo.version>
     <!--springdoc-openapi版本-->
-    <springdoc-openapi.version>2.8.7</springdoc-openapi.version>
+    <springdoc-openapi.version>2.8.13</springdoc-openapi.version>
     <!--testcontainers版本-->
     <testcontainers.version>2.0.1</testcontainers.version>
     <!--vertx版本-->
@@ -182,7 +182,7 @@
     <!--mockito版本-->
     <mockito.version>5.20.0</mockito.version>
     <!--knife4j版本-->
-    <knife4j.version>4.4.0</knife4j.version>
+    <knife4j.version>4.5.0</knife4j.version>
     <!--taos-jdbcdriver版本-->
     <taos-jdbcdriver.version>3.7.6</taos-jdbcdriver.version>
     <!--fory-core版本-->
