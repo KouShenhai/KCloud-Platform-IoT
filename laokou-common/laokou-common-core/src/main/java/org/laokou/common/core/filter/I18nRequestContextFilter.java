@@ -39,8 +39,6 @@ import java.io.IOException;
 @NonNullApi
 public final class I18nRequestContextFilter extends OrderedRequestContextFilter {
 
-	public static final String LANG = "lang";
-
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
