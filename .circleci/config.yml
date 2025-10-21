@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: cimg/openjdk:25.0.0
+      - image: cimg/openjdk:25.0
     environment:
       JVM_OPTS: -Xmx2048m
     steps:
