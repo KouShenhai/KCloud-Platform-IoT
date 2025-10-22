@@ -49,6 +49,13 @@ public abstract class GlobalException extends RuntimeException implements Serial
 		this.data = null;
 	}
 
+	protected GlobalException(String code, Throwable throwable) {
+		super(MessageUtils.getMessage(code), throwable);
+		this.code = code;
+		this.msg = super.getMessage();
+		this.data = null;
+	}
+
 	protected GlobalException(String code, String msg) {
 		super(msg);
 		this.code = code;

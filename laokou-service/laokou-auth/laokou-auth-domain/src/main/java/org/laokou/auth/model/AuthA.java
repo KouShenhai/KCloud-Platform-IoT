@@ -84,7 +84,7 @@ public class AuthA extends AggregateRoot {
 	 */
 	@Setter
 	@Getter
-	private CaptchaV captcha;
+	private transient CaptchaV captcha;
 
 	/**
 	 * 用户实体.

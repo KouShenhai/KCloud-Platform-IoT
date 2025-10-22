@@ -57,27 +57,27 @@ public class RedisUtils {
 	/**
 	 * 24小时过期，单位：秒.
 	 */
-	public final static long DEFAULT_EXPIRE = 60 * 60 * 24;
+	public static final long DEFAULT_EXPIRE = 60 * 60 * 24;
 
 	/**
 	 * 1小时过期，单位：秒.
 	 */
-	public final static long ONE_HOUR_EXPIRE = 60 * 60;
+	public static final long ONE_HOUR_EXPIRE = 60 * 60;
 
 	/**
 	 * 6小时过期，单位：秒.
 	 */
-	public final static long SIX_HOUR_EXPIRE = 60 * 60 * 6;
+	public static final long SIX_HOUR_EXPIRE = 60 * 60 * 6;
 
 	/**
 	 * 5分钟过期，单位：秒.
 	 */
-	public final static long FIVE_MINUTE_EXPIRE = 5 * 60;
+	public static final long FIVE_MINUTE_EXPIRE = 5 * 60;
 
 	/**
 	 * 永不过期.
 	 */
-	public final static long NOT_EXPIRE = -1L;
+	public static final long NOT_EXPIRE = -1L;
 
 	private final RedisTemplate<String, Object> redisTemplate;
 

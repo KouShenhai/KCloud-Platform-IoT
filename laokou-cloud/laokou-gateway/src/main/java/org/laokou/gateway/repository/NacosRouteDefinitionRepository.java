@@ -37,7 +37,6 @@ import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionRepository;
 import org.springframework.context.ApplicationEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.data.redis.core.ReactiveHashOperations;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.stereotype.Repository;
@@ -47,7 +46,6 @@ import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
 import javax.annotation.PostConstruct;
-import java.time.Duration;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.Executor;
@@ -211,23 +209,13 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	@Setter
 	public static class UnsubscribeEvent extends ApplicationEvent {
 
-		private final Disposable disposable;
+		private final transient Disposable disposable;
 
 		public UnsubscribeEvent(Object source, Disposable disposable) {
 			super(source);
 			this.disposable = disposable;
 		}
 
-	}
-
-	@EventListener
-	public void onUnsubscribeEvent(UnsubscribeEvent evt) throws InterruptedException {
-		Thread.sleep(Duration.ofSeconds(15));
-		Disposable disposable = evt.getDisposable();
-		if (!disposable.isDisposed()) {
-			// 取消订阅
-			disposable.dispose();
-		}
 	}
 
 }

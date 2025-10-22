@@ -40,8 +40,8 @@ class MapUtilsTest {
 				"laokou-common-core");
 		Set<String> set = map.get("POST");
 		Assertions.assertThat(map).isNotNull();
-		Assertions.assertThat(map.size()).isEqualTo(1);
-		Assertions.assertThat(set.size()).isEqualTo(2);
+		Assertions.assertThat(map).hasSize(1);
+		Assertions.assertThat(set).hasSize(2);
 		Assertions.assertThat(set.contains("/test")).isTrue();
 		Assertions.assertThat(set.contains("/test2")).isTrue();
 		Assertions.assertThat(set.contains("/test3")).isFalse();
@@ -50,10 +50,10 @@ class MapUtilsTest {
 		map = MapUtils.toUriMap(Map.of("POST", Set.of("/test3=laokou-common-i18n")), "laokou-common-core",
 				StringConstants.EQUAL);
 		Assertions.assertThat(map).isNotNull();
-		Assertions.assertThat(map.size()).isEqualTo(1);
-		Assertions.assertThat(map.get("POST").size()).isEqualTo(0);
+		Assertions.assertThat(map).hasSize(1);
+		Assertions.assertThat(map.get("POST")).hasSize(0);
 		Map<String, String> paramMap = MapUtils.getParameterMap("a=1&b=2", StringConstants.AND).asSingleValueMap();
-		Assertions.assertThat(paramMap.size()).isEqualTo(2);
+		Assertions.assertThat(paramMap).hasSize(2);
 		Assertions.assertThat(paramMap.get("a")).isEqualTo("1");
 		Assertions.assertThat(paramMap.get("b")).isEqualTo("2");
 		Assertions.assertThat(MapUtils.parseParamterString(paramMap)).isEqualTo("a=1&b=2");
@@ -64,8 +64,8 @@ class MapUtilsTest {
 			.isEqualTo("a=%E5%93%88%E5%93%88%E5%93%88&b=%E5%98%BB%E5%98%BB");
 		Assertions.assertThat(MapUtils.parseParamterString(m, false)).isEqualTo("a=哈哈哈&b=嘻嘻");
 		MultiValueMap<String, String> multiValueMap = MapUtils.getParameterMap(Map.of("a", new String[] { "1", "2" }));
-		Assertions.assertThat(multiValueMap.size()).isEqualTo(1);
-		Assertions.assertThat(multiValueMap.get("a").size()).isEqualTo(2);
+		Assertions.assertThat(multiValueMap).hasSize(1);
+		Assertions.assertThat(multiValueMap.get("a")).hasSize(2);
 		Assertions.assertThat(multiValueMap.getFirst("a")).isEqualTo("1");
 		Assertions.assertThat(multiValueMap.get("a").get(1)).isEqualTo("2");
 	}

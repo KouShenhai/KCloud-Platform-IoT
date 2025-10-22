@@ -74,12 +74,13 @@ class JacksonUtilsTest {
 		Assertions.assertThat(JacksonUtils.toList(tempFilePath.toFile(), TestUser.class)).isEqualTo(list);
 
 		Map<String, Object> map = JacksonUtils.toMap(str, String.class, Object.class);
-		Assertions.assertThat(map.get("id")).isEqualTo(1);
-		Assertions.assertThat(map.get("name")).isEqualTo("laokou");
+		Assertions.assertThat(map).containsEntry("id", 1);
+		Assertions.assertThat(map).containsEntry("name", "laokou");
 
 		Assertions.assertThat(JacksonUtils.toValue(map, TestUser.class)).isEqualTo(testUser);
 
-		Assertions.assertThat(JacksonUtils.toMap(testUser, String.class, Object.class) instanceof Map).isTrue();
+		Assertions.assertThat((Map<String, Object>) JacksonUtils.toMap(testUser, String.class, Object.class))
+			.isInstanceOf(Map.class);
 		Assertions.assertThat(JacksonUtils.readTree(str).get("name").textValue()).isEqualTo("laokou");
 	}
 

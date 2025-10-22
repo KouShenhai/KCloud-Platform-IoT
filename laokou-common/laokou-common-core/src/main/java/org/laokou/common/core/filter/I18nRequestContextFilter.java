@@ -22,7 +22,6 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.Setter;
 import org.laokou.common.core.util.I18nUtils;
 import org.springframework.boot.web.servlet.filter.OrderedRequestContextFilter;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -35,7 +34,6 @@ import java.io.IOException;
  *
  * @author laokou
  */
-@Setter
 @NonNullApi
 public final class I18nRequestContextFilter extends OrderedRequestContextFilter {
 

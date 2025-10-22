@@ -28,6 +28,10 @@ public final class BizException extends GlobalException {
 		super(code);
 	}
 
+	public BizException(String code, Throwable throwable) {
+		super(code, throwable);
+	}
+
 	public BizException(String code, String msg) {
 		super(code, msg);
 	}

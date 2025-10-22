@@ -47,7 +47,7 @@ public final class ServerUtils {
 	}
 
 	@Data
-	public final static class Server {
+	public static final class Server {
 
 		private final Sys sys;
 
@@ -77,7 +77,7 @@ public final class ServerUtils {
 	}
 
 	@Data
-	public final static class Disk {
+	public static final class Disk {
 
 		/**
 		 * 磁盘路径.
@@ -131,7 +131,7 @@ public final class ServerUtils {
 	}
 
 	@Data
-	public final static class Sys {
+	public static final class Sys {
 
 		/**
 		 * 服务器名称.
@@ -169,7 +169,7 @@ public final class ServerUtils {
 	}
 
 	@Data
-	public final static class Memory {
+	public static final class Memory {
 
 		/**
 		 * 内存总量.
@@ -198,7 +198,7 @@ public final class ServerUtils {
 	}
 
 	@Data
-	public final static class Jvm {
+	public static final class Jvm {
 
 		/**
 		 * JVM总使用内存(M).
@@ -236,7 +236,7 @@ public final class ServerUtils {
 	}
 
 	@Data
-	public final static class Cpu {
+	public static final class Cpu {
 
 		/**
 		 * CPU核心数.

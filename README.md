@@ -40,7 +40,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 <a href="https://spring.io/projects/spring-boot" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Boot&message=3.5.6&color=green" alt="Spring Boot"/></a>
 <a href="https://spring.io/projects/spring-cloud" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Cloud&message=2025.0.0&color=green" alt="Spring Cloud"/></a>
 <a href="https://github.com/alibaba/spring-cloud-alibaba" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Cloud%20Alibaba&message=2025.0.0.0&color=orange" alt="Spring Cloud Alibaba"/></a>
-<a href="https://spring.io/projects/spring-authorization-server" target="_blank"><img src="https://img.shields.io/static/v1?label=OAuth%202.1&message=1.5.2&color=blue" alt="OAuth 2.1"/></a>
+<a href="https://spring.io/projects/spring-authorization-server" target="_blank"><img src="https://img.shields.io/static/v1?label=OAuth%202.1&message=1.5.3&color=blue" alt="OAuth 2.1"/></a>
 
 <a href="https://www.graalvm.org/downloads" target="_blank"><img src="https://img.shields.io/badge/GraalVM-25.0.0-blue.svg" alt="GraalVM"/></a>
 <a href="https://maven.apache.org/" target="_blank"><img src="https://img.shields.io/badge/Maven-3.9.11-blue" alt="Maven"/></a>
@@ -145,7 +145,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 |        Spring Cloud         |  2025.0.0   |
 |    Spring Cloud Alibaba     | 2025.0.0.0  |
 |      Spring Boot Admin      |    3.5.5    |
-| Spring Authorization Server |    1.5.2    |
+| Spring Authorization Server |    1.5.3    |
 |        Mybatis Plus         |   3.5.14    |
 |            Nacos            |    3.0.0    |
 |            Dubbo            |    3.3.5    |

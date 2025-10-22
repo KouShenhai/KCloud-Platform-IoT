@@ -232,7 +232,7 @@ public class UserExtDetails implements UserDetails, OAuth2AuthenticatedPrincipal
 				return AESUtils.decrypt(this.username);
 			}
 			catch (Exception ex) {
-				throw new BizException(USERNAME_AES_DECRYPT_FAIL);
+				throw new BizException(USERNAME_AES_DECRYPT_FAIL, ex);
 			}
 		}
 		return this.username;
@@ -243,8 +243,8 @@ public class UserExtDetails implements UserDetails, OAuth2AuthenticatedPrincipal
 			try {
 				return AESUtils.decrypt(this.mail);
 			}
-			catch (Exception e) {
-				throw new BizException(MAIL_AES_DECRYPT_FAIL);
+			catch (Exception ex) {
+				throw new BizException(MAIL_AES_DECRYPT_FAIL, ex);
 			}
 		}
 		return this.mail;
@@ -255,8 +255,8 @@ public class UserExtDetails implements UserDetails, OAuth2AuthenticatedPrincipal
 			try {
 				return AESUtils.decrypt(this.mobile);
 			}
-			catch (Exception e) {
-				throw new BizException(MOBILE_AES_DECRYPT_FAIL);
+			catch (Exception ex) {
+				throw new BizException(MOBILE_AES_DECRYPT_FAIL, ex);
 			}
 		}
 		return this.mobile;

@@ -45,9 +45,9 @@ public final class AESUtils {
 
 	private static final int GCM_IV_LENGTH = 12;
 
-	private final static SecretKey SECRET_KEY;
+	private static final SecretKey SECRET_KEY;
 
-	private final static byte[] SECRET_IV;
+	private static final byte[] SECRET_IV;
 
 	static {
 		try {

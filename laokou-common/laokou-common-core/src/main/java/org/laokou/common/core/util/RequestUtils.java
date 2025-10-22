@@ -160,7 +160,7 @@ public final class RequestUtils {
 		};
 	}
 
-	public final static class RequestWrapper extends HttpServletRequestWrapper {
+	public static final class RequestWrapper extends HttpServletRequestWrapper {
 
 		private final byte[] requestBody;
 
