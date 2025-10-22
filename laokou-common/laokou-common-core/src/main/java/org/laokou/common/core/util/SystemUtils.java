@@ -17,6 +17,8 @@
 
 package org.laokou.common.core.util;
 
+import java.nio.file.Path;
+
 /**
  * 系统工具类.
  *
@@ -31,7 +33,14 @@ public final class SystemUtils {
 	 * 判断是否是Window系统.
 	 */
 	public static boolean isWindows() {
-		return System.getProperty("os.name").toLowerCase().contains("windows");
+		return System.getProperty("os.name").equalsIgnoreCase("windows");
+	}
+
+	public static boolean isArchLinux() {
+		if (System.getProperty("os.name").equalsIgnoreCase("linux")) {
+			return FileUtils.exists(Path.of("/etc/arch-release"));
+		}
+		return false;
 	}
 
 }
