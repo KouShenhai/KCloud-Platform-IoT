@@ -81,8 +81,22 @@ public final class JacksonUtils {
 	 * @param <T> 类型
 	 * @return Bean
 	 */
-	public static <T> T toBean(byte[] arr, Class<T> clazz) throws IOException {
-		return MAPPER.readValue(arr, javaType(clazz));
+	public static <T> T toBean(byte[] arr, Class<T> clazz) {
+		try {
+			return MAPPER.readValue(arr, javaType(clazz));
+		}
+		catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static <T> T toBean(byte[] arr, int offset, int len, Class<T> clazz) {
+		try {
+			return MAPPER.readValue(arr, offset, len, javaType(clazz));
+		}
+		catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	/**

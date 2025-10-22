@@ -21,7 +21,8 @@ import org.apache.fory.ThreadSafeFory;
 import org.apache.fory.config.CompatibleMode;
 import org.apache.fory.config.ForyBuilder;
 import org.apache.fory.config.Language;
-
+import org.laokou.common.core.util.SerializeUtils;
+import org.laokou.common.core.util.SystemUtils;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -51,10 +52,6 @@ public final class ForyFactory {
 		fory.register(clazz);
 	}
 
-	public <T> void register(Class<T> clazz, String typeName) {
-		fory.register(clazz, typeName);
-	}
-
 	public byte[] serialize(Object object) {
 		if (object == null) {
 			return new byte[0];
@@ -62,18 +59,21 @@ public final class ForyFactory {
 		if (object instanceof String str) {
 			return str.getBytes(StandardCharsets.UTF_8);
 		}
+		// https://github.com/apache/fory/issues/2785
+		// 解决Arch Linux内存操作不对齐问题
+		if (SystemUtils.isArchLinux()) {
+			return SerializeUtils.serialize(object);
+		}
 		return fory.serialize(object);
 	}
 
 	public Object deserialize(byte[] bytes) {
-		return fory.deserialize(bytes, Object.class);
-	}
-
-	public <T> T deserialize(byte[] bytes, Class<T> clazz) {
-		if (bytes == null) {
-			return null;
+		// https://github.com/apache/fory/issues/2785
+		// 解决Arch Linux内存操作不对齐问题
+		if (SystemUtils.isArchLinux()) {
+			return SerializeUtils.deserialize(bytes);
 		}
-		return fory.deserialize(bytes, clazz);
+		return fory.deserialize(bytes);
 	}
 
 }

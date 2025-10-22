@@ -21,6 +21,18 @@
       <groupId>org.apache.fory</groupId>
       <artifactId>fory-extensions</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-core</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-test</artifactId>
+      <scope>test</scope>
+      <optional>true</optional>
+      <version>${project.version}</version>
+    </dependency>
   </dependencies>
 
 </project>

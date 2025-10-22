@@ -17,24 +17,37 @@
 
 package org.laokou.common.core;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.core.util.SystemUtils;
+import org.laokou.common.core.util.SerializeUtils;
+
+import java.io.Serializable;
 
 /**
  * @author laokou
  */
-class SystemUtilsTest {
+class SerializeUtilsTest {
 
 	@Test
-	void test_windows() {
-		if (SystemUtils.isWindows()) {
-			Assertions.assertThat(SystemUtils.isWindows()).isTrue();
-		}
-		else {
-			Assertions.assertThat(SystemUtils.isWindows()).isFalse();
-			Assertions.assertThat(SystemUtils.isArchLinux()).isFalse();
-		}
+	void test() {
+		User user = new User(1L, "laokou");
+		Assertions.assertThat(SerializeUtils.deserialize(SerializeUtils.serialize(user)))
+			.isInstanceOf(User.class)
+			.isEqualTo(user);
+	}
+
+	@Data
+	@NoArgsConstructor
+	@AllArgsConstructor
+	private static class User implements Serializable {
+
+		private Long id;
+
+		private String name;
+
 	}
 
 }

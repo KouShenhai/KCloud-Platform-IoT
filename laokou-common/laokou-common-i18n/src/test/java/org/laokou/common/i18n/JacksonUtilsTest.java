@@ -52,6 +52,8 @@ class JacksonUtilsTest {
 		String str = JacksonUtils.toJsonStr(testUser, true);
 		Assertions.assertThat(JacksonUtils.toBean(str, TestUser.class)).isEqualTo(testUser);
 		Assertions.assertThat(JacksonUtils.toBean(str.getBytes(), TestUser.class)).isEqualTo(testUser);
+		Assertions.assertThat(JacksonUtils.toBean(str.getBytes(), 0, str.getBytes().length, TestUser.class))
+			.isEqualTo(testUser);
 		Assertions.assertThat(JacksonUtils.toBean(new ByteArrayInputStream(str.getBytes()), TestUser.class))
 			.isEqualTo(testUser);
 		Assertions.assertThat(new String(JacksonUtils.toBytes(testUser))).isEqualTo("{\"id\":1,\"name\":\"laokou\"}");
