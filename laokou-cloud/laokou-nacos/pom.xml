@@ -29,7 +29,7 @@
 
   <properties>
     <!--pig-nacos版本-->
-    <pig-nacos.version>3.1.0.OEM</pig-nacos.version>
+    <pig-nacos.version>3.1.0</pig-nacos.version>
     <!--postgresql版本-->
     <postgresql.version>42.7.8</postgresql.version>
     <!--client-java版本-->
@@ -46,6 +46,7 @@
     <dependency>
       <groupId>io.github.pig-mesh.nacos</groupId>
       <artifactId>nacos-console</artifactId>
+      <version>${pig-nacos.version}</version>
       <exclusions>
         <exclusion>
           <groupId>com.google.errorprone</groupId>
@@ -60,6 +61,7 @@
     <dependency>
       <groupId>io.github.pig-mesh.nacos</groupId>
       <artifactId>nacos-server</artifactId>
+      <version>${pig-nacos.version}</version>
     </dependency>
     <dependency>
       <groupId>io.kubernetes</groupId>
@@ -87,18 +89,6 @@
       <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
   </dependencies>
-
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>io.github.pig-mesh.nacos</groupId>
-        <artifactId>nacos-all</artifactId>
-        <version>${pig-nacos.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
 
   <build>
     <finalName>${project.artifactId}</finalName>
