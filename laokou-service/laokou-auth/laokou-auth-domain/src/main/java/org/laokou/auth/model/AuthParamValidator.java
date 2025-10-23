@@ -17,11 +17,13 @@
 
 package org.laokou.auth.model;
 
+import java.io.Serializable;
+
 /**
  * @author laokou
  */
 @FunctionalInterface
-public interface AuthParamValidator {
+public interface AuthParamValidator extends Serializable {
 
 	void validateAuth(AuthA auth);
 

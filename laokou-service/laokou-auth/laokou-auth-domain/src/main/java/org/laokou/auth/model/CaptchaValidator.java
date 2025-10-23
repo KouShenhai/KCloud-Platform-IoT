@@ -17,11 +17,13 @@
 
 package org.laokou.auth.model;
 
+import java.io.Serializable;
+
 /**
  * @author laokou
  */
 @FunctionalInterface
-public interface CaptchaValidator {
+public interface CaptchaValidator extends Serializable {
 
 	Boolean validateCaptcha(String uuid, String code);
 

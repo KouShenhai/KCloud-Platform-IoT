@@ -36,7 +36,7 @@ public final class I18nUtils {
 	 * @param request 请求对象
 	 */
 	public static void set(HttpServletRequest request) {
-		String language = request.getHeader("lang");
+		String language = request.getHeader("Language");
 		language = StringExtUtils.isNotEmpty(language) ? language : request.getHeader(HttpHeaders.ACCEPT_LANGUAGE);
 		LocaleContextHolder.setLocale(LocaleUtils.toLocale(language), true);
 	}

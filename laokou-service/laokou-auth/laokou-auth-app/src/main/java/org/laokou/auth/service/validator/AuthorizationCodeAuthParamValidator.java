@@ -22,11 +22,16 @@ import org.laokou.auth.model.AuthParamValidator;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.springframework.stereotype.Component;
 
+import java.io.Serial;
+
 /**
  * @author laokou
  */
 @Component("authorizationCodeAuthParamValidator")
 public class AuthorizationCodeAuthParamValidator implements AuthParamValidator {
+
+	@Serial
+	private static final long serialVersionUID = 3319752558160144613L;
 
 	@Override
 	public void validateAuth(AuthA auth) {

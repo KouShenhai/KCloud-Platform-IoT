@@ -17,11 +17,13 @@
 
 package org.laokou.auth.model;
 
+import java.io.Serializable;
+
 /**
  * @author laokou
  */
 @FunctionalInterface
-public interface PasswordValidator {
+public interface PasswordValidator extends Serializable {
 
 	boolean validatePassword(CharSequence rawPassword, String encodedPassword);
 

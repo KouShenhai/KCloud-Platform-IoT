@@ -44,7 +44,7 @@ public final class DockerImageNames {
 	}
 
 	public static DockerImageName nacos() {
-		return nacos("v3.0.3");
+		return nacos("v3.1.0");
 	}
 
 	public static DockerImageName ftp(String tag) {

@@ -17,9 +17,14 @@
 
 package org.laokou.generator.model;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * @author laokou
  */
-public record TableE(String table, String tablePrefix, String sourceName) {
+public record TableE(String table, String tablePrefix, String sourceName) implements Serializable {
+	@Serial
+	private static final long serialVersionUID = 3319752558160144610L;
 
 }

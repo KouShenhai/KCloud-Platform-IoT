@@ -17,11 +17,16 @@
 
 package org.laokou.generator.model;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @author laokou
  */
-public record TableV(String name, String comment, List<TableColumnV> fields, String className, String instanceName) {
+public record TableV(String name, String comment, List<TableColumnV> fields, String className,
+		String instanceName) implements Serializable {
+	@Serial
+	private static final long serialVersionUID = 3319752558160144610L;
 
 }

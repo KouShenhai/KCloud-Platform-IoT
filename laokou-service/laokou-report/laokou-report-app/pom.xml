@@ -14,7 +14,7 @@
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-report-client</artifactId>
+      <artifactId>laokou-report-infrastructure</artifactId>
       <version>${project.version}</version>
     </dependency>
   </dependencies>

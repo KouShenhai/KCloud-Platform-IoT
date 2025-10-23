@@ -38,7 +38,7 @@ public final class LocaleUtils {
 			if (StringExtUtils.isEmpty(language)) {
 				return LocaleContextHolder.getLocale();
 			}
-			String[] str = getLanguage(language).split(StringConstants.ROD);
+			String[] str = filterLanguage(language).split(StringConstants.ROD);
 			// 语言 国家
 			return Locale.of(str[0], str[1]);
 		}
@@ -47,7 +47,7 @@ public final class LocaleUtils {
 		}
 	}
 
-	private static String getLanguage(String language) {
+	private static String filterLanguage(String language) {
 		return Arrays.stream(language.split(StringConstants.COMMA))
 			.filter(i -> i.contains(StringConstants.ROD))
 			.findFirst()

@@ -1125,7 +1125,7 @@
           <xmlOutput>true</xmlOutput>
           <htmlOutput>true</htmlOutput>
           <!-- 发现任何BUG构建失败 -->
-          <failOnError>false</failOnError>
+          <failOnError>true</failOnError>
           <!-- 最小报告的错误优先级，可选值：low, medium, high -->
           <threshold>low</threshold>
           <!-- 启用实验性探测器，可选值：min, default, max -->

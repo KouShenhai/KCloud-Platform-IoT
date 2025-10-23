@@ -242,7 +242,7 @@ export const request: {
 		async (config: any) => {
 			const headers = config.headers ? config.headers : [];
 			const accessToken = getAccessToken()
-			if (!config.url.includes('/oauth2/token') && accessToken) {
+			if (!headers['Skip-Token'] && accessToken) {
 				headers['Authorization'] = `Bearer ${accessToken}`
 			}
 			return config;

@@ -32,6 +32,8 @@ import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.util.CollectionUtils;
+
+import java.io.Serial;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
@@ -43,6 +45,9 @@ import java.util.function.Supplier;
  */
 @Entity
 public class AuthA extends AggregateRoot {
+
+	@Serial
+	private static final long serialVersionUID = 3319752558160144699L;
 
 	/**
 	 * 用户名.

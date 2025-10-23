@@ -45,7 +45,7 @@ class NamingUtilsTest {
 
 	private NamingService namingService;
 
-	static final NacosContainer nacos = new NacosContainer(DockerImageNames.nacos("v3.0.3"), 18848, 18080, 19848);
+	static final NacosContainer nacos = new NacosContainer(DockerImageNames.nacos("v3.1.0"), 18848, 18080, 19848);
 
 	@BeforeAll
 	static void beforeAll() {

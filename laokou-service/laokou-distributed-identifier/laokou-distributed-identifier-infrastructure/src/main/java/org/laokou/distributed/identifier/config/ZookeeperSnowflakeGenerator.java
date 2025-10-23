@@ -36,24 +36,32 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class ZookeeperSnowflakeGenerator implements SnowflakeGenerator {
 
-	private final String machinePath = "/snowflake/machines";
-
-	private final CuratorFramework curatorFramework;
+	private static final String machinePath = "/snowflake/machines";
 
 	/**
 	 * 序列标识占用的位数.
 	 */
-	private final long sequenceBit = 13;
+	private static final long sequenceBit = 13;
 
 	/**
 	 * 机器标识占用的位数.
 	 */
-	private final long machineBit = 5;
+	private static final long machineBit = 5;
 
 	/**
 	 * 数据标识占用的位数.
 	 */
-	private final long datacenterBit = 5;
+	private static final long datacenterBit = 5;
+
+	/**
+	 * 并发控制.
+	 */
+	private long sequence = 0L;
+
+	/**
+	 * 上一次生产ID时间戳.
+	 */
+	private long lastTimeStamp = -1L;
 
 	/**
 	 * 数据标识ID.
@@ -71,14 +79,9 @@ public class ZookeeperSnowflakeGenerator implements SnowflakeGenerator {
 	private final long startTimestamp;
 
 	/**
-	 * 并发控制.
+	 * Zookeeper操作工具.
 	 */
-	private long sequence = 0L;
-
-	/**
-	 * 上一次生产ID时间戳.
-	 */
-	private long lastTimeStamp = -1L;
+	private final CuratorFramework curatorFramework;
 
 	/**
 	 * 根据指定的数据中心ID和机器标志ID生成指定的序列号.

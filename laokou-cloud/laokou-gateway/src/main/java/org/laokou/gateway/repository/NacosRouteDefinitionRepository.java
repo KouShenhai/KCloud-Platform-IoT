@@ -46,6 +46,7 @@ import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
 import javax.annotation.PostConstruct;
+import java.io.Serial;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.Executor;
@@ -208,6 +209,9 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	@Getter
 	@Setter
 	public static class UnsubscribeEvent extends ApplicationEvent {
+
+		@Serial
+		private static final long serialVersionUID = 3319752558160144610L;
 
 		private final transient Disposable disposable;
 

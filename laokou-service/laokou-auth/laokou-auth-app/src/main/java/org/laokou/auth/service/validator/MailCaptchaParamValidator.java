@@ -22,11 +22,16 @@ import org.laokou.auth.model.CaptchaParamValidator;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.springframework.stereotype.Component;
 
+import java.io.Serial;
+
 /**
  * @author laokou
  */
 @Component("mailCaptchaParamValidator")
 public class MailCaptchaParamValidator implements CaptchaParamValidator {
+
+	@Serial
+	private static final long serialVersionUID = 3319752558160144615L;
 
 	@Override
 	public void validateCaptcha(CaptchaE captcha) {
