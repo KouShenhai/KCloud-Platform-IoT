@@ -122,7 +122,7 @@
     <!--testcontainers版本-->
     <testcontainers.version>2.0.1</testcontainers.version>
     <!--vertx版本-->
-    <vertx.version>5.0.4</vertx.version>
+    <vertx.version>5.0.5</vertx.version>
     <!--mybatis-plus版本 -->
     <mybatis-plus.version>3.5.14</mybatis-plus.version>
     <!--protobuf版本-->
