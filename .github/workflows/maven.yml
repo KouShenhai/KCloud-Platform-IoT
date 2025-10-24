@@ -27,8 +27,8 @@ jobs:
           wget https://downloads.apache.org/maven/mvnd/${MVND_VERSION}/maven-mvnd-${MVND_VERSION}-linux-amd64.zip
           unzip maven-mvnd-${MVND_VERSION}-linux-amd64.zip
           echo "${PWD}/maven-mvnd-${MVND_VERSION}-linux-amd64/bin" >> $GITHUB_PATH
-      - name: Test with Maven Mvnd
-        run: mvnd clean test -P dev
+      - name: Build with Maven Mvnd
+        run: mvnd clean install -P dev
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5.5.1
         env:
@@ -56,8 +56,6 @@ jobs:
             ./laokou-common/laokou-common-ftp/target/site/jacoco/jacoco.xml,
             ./laokou-service/laokou-auth/laokou-auth-domain/target/site/jacoco/jacoco.xml
           token: ${{ secrets.CODECOV_TOKEN }}
-      - name: Build with Maven Mvnd
-        run: mvnd clean install -P dev -DskipTests -B
       - name: Build the Docker image
         run: |
           # 登录阿里云镜像仓库
