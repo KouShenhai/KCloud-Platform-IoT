@@ -70,7 +70,7 @@
     <!--maven-compiler-plugin版本-->
     <maven-compiler-plugin.version>3.14.1</maven-compiler-plugin.version>
     <!--spring-boot-maven-plugin版本-->
-    <spring-boot-maven-plugin.version>3.5.6</spring-boot-maven-plugin.version>
+    <spring-boot-maven-plugin.version>3.5.7</spring-boot-maven-plugin.version>
     <!--maven-surefire-plugin版本-->
     <maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
     <!--maven-enforcer-plugin版本-->
@@ -100,7 +100,7 @@
     <!--spring-asciidoctor-backends版本-->
     <spring-asciidoctor-backends.version>0.0.7</spring-asciidoctor-backends.version>
     <!--spring-boot版本-->
-    <spring-boot.version>3.5.6</spring-boot.version>
+    <spring-boot.version>3.5.7</spring-boot.version>
     <!--spring-cloud版本-->
     <spring-cloud.version>2025.0.0</spring-cloud.version>
     <!--cloud-alibaba版本-->
