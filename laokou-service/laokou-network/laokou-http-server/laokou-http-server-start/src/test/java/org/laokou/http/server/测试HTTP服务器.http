@@ -1,9 +1,0 @@
-POST http://127.0.0.1:3000/1/2/up/property/report
-Content-Type: application/json
-
-{
-    "id": "1",
-    "properties": {
-        "test": "123"
-    }
-}

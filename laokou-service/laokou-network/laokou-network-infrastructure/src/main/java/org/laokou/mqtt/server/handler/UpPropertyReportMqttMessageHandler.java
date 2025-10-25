@@ -15,56 +15,44 @@
  *
  */
 
-package org.laokou.common.network.mqtt.client;
+package org.laokou.mqtt.server.handler;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.pulsar.client.api.MessageId;
-import org.jetbrains.annotations.NotNull;
 import org.laokou.common.network.mqtt.client.handler.MqttMessage;
 import org.laokou.common.network.mqtt.client.handler.MqttMessageHandler;
 import org.laokou.common.network.mqtt.client.util.VertxMqttUtils;
-import org.springframework.dao.DuplicateKeyException;
+import org.laokou.common.pulsar.config.ForySchema;
+import org.laokou.common.vertx.model.MqttMessageEnum;
+import org.laokou.common.vertx.model.PropertyMessage;
+import org.springframework.pulsar.core.PulsarTemplate;
 import org.springframework.stereotype.Component;
-import java.nio.charset.StandardCharsets;
+
 import java.util.concurrent.CompletableFuture;
 
 /**
+ * 属性上报【上行】处理器.
+ *
  * @author laokou
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
-class DefaultMqttMessageHandler implements MqttMessageHandler {
+public class UpPropertyReportMqttMessageHandler implements MqttMessageHandler {
+
+	private final PulsarTemplate<Object> pulsarTemplate;
 
 	@Override
 	public boolean isSubscribe(String topic) {
-		return VertxMqttUtils.matchTopic("/test-topic-1/#", topic);
+		return VertxMqttUtils.matchTopic(MqttMessageEnum.UP_PROPERTY_REPORT.getTopic(), topic);
 	}
 
 	@Override
 	public CompletableFuture<MessageId> handle(MqttMessage mqttMessage) {
-		try {
-			log.info("【Vertx-MQTT-Client】 => 接收到MQTT消息，topic: {}, message: {}", mqttMessage.getTopic(),
-					mqttMessage.getPayload().toString(StandardCharsets.UTF_8));
-		}
-		catch (DuplicateKeyException e) {
-			// 忽略重复键异常
-		}
-		catch (Exception e) {
-			log.error("【Vertx-MQTT-Client】 => MQTT消息处理失败，Topic：{}，错误信息：{}", mqttMessage.getTopic(), e.getMessage(), e);
-		}
-		return CompletableFuture.completedFuture(new MessageId() {
-			@Override
-			public byte[] toByteArray() {
-				return new byte[0];
-			}
-
-			@Override
-			public int compareTo(@NotNull MessageId o) {
-				return 0;
-			}
-		});
+		MqttMessageEnum upPropertyReport = MqttMessageEnum.UP_PROPERTY_REPORT;
+		String topic = org.laokou.common.pulsar.util.TopicUtils.getTopic("laokouyun", "mqtt",
+				upPropertyReport.getMqTopic());
+		return pulsarTemplate.sendAsync(topic, new PropertyMessage(mqttMessage.getTopic(),
+				mqttMessage.getPayload().toString(), upPropertyReport.getCode()), ForySchema.INSTANCE);
 	}
 
 }

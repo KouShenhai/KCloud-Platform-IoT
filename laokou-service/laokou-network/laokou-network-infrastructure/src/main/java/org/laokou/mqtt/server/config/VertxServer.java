@@ -15,19 +15,15 @@
  *
  */
 
-package org.laokou.common.network.mqtt.client.handler;
-
-import org.apache.pulsar.client.api.MessageId;
-
-import java.util.concurrent.CompletableFuture;
+package org.laokou.mqtt.server.config;
 
 /**
  * @author laokou
  */
-public interface MqttMessageHandler {
+public interface VertxServer {
 
-	boolean isSubscribe(String topic);
+	void deploy();
 
-	CompletableFuture<MessageId> handle(MqttMessage mqttMessage);
+	void undeploy();
 
 }

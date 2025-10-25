@@ -15,19 +15,16 @@
  *
  */
 
-package org.laokou.common.network.mqtt.client.handler;
+package org.laokou.mqtt.server.config;
 
-import org.apache.pulsar.client.api.MessageId;
-
-import java.util.concurrent.CompletableFuture;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author laokou
  */
-public interface MqttMessageHandler {
+public final class VertxServerManager {
 
-	boolean isSubscribe(String topic);
-
-	CompletableFuture<MessageId> handle(MqttMessage mqttMessage);
+	private final Map<Long, VertxServer> vertxServerMap = new ConcurrentHashMap<>(8196);
 
 }

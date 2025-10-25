@@ -5,21 +5,19 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.laokou</groupId>
-    <artifactId>laokou-service</artifactId>
+    <artifactId>laokou-network</artifactId>
     <version>3.5.4-SNAPSHOT</version>
   </parent>
 
-  <artifactId>laokou-network</artifactId>
+  <artifactId>laokou-network-adapter</artifactId>
   <version>3.5.4-SNAPSHOT</version>
-  <packaging>pom</packaging>
 
-  <modules>
-    <module>laokou-network-client</module>
-    <module>laokou-network-app</module>
-    <module>laokou-network-start</module>
-    <module>laokou-network-infrastructure</module>
-    <module>laokou-network-domain</module>
-    <module>laokou-network-adapter</module>
-  </modules>
+  <dependencies>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-network-app</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
 
 </project>
