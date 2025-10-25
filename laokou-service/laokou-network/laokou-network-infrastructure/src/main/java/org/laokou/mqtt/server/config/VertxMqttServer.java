@@ -27,7 +27,6 @@ import io.vertx.mqtt.MqttAuth;
 import io.vertx.mqtt.MqttEndpoint;
 import io.vertx.mqtt.MqttServer;
 import io.vertx.mqtt.MqttServerOptions;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.network.mqtt.client.handler.MqttMessage;
@@ -88,10 +87,10 @@ final class VertxMqttServer extends AbstractVerticle implements VertxServer {
 	}
 
 	public void publish(PublishDTO dto) {
-		String clientId = dto.getClientId();
-		String topic = dto.getTopic();
-		Buffer payload = dto.getPayload();
-		int qos = dto.getQos();
+		String clientId = dto.clientId();
+		String topic = dto.topic();
+		Buffer payload = dto.payload();
+		int qos = dto.qos();
 		boolean isDup = dto.isDup();
 		boolean isRetain = dto.isRetain();
 		if (endpoints.containsKey(clientId)) {
@@ -249,20 +248,8 @@ final class VertxMqttServer extends AbstractVerticle implements VertxServer {
 	}
 	// @formatter:on
 
-	@Data
-	static class PublishDTO implements Serializable {
-
-		private String clientId;
-
-		private String topic;
-
-		private Buffer payload;
-
-		private int qos;
-
-		private boolean isDup = false;
-
-		private boolean isRetain = false;
+	record PublishDTO(String clientId, String topic, Buffer payload, int qos, boolean isDup,
+			boolean isRetain) implements Serializable {
 
 	}
 
