@@ -226,7 +226,7 @@
     <!--mongodb版本-->
     <mongodb.version>4.5.4</mongodb.version>
     <!--fastjson版本-->
-    <fastjson.version>2.0.59</fastjson.version>
+    <fastjson.version>2.0.60</fastjson.version>
     <!--spring-security-oauth2-authorization-server版本-->
     <spring-security-oauth2-authorization-server.version>1.5.3</spring-security-oauth2-authorization-server.version>
     <!--swagger-annotations-jakarta版本-->
