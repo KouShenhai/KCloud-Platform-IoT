@@ -45,7 +45,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 final class VertxMqttServer extends AbstractVerticle implements VertxServer {
 
-	private final Map<String, MqttEndpoint> endpoints = new ConcurrentHashMap<>(8192);
+	private final Map<String, MqttEndpoint> endpoints = new ConcurrentHashMap<>(100000);
 
 	private final List<MqttMessageHandler> mqttMessageHandlers;
 
