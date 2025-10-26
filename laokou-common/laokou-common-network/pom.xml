@@ -6,12 +6,12 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-common</artifactId>
-    <version>3.5.4-SNAPSHOT</version>
+    <version>3.5.4</version>
   </parent>
 
   <artifactId>laokou-common-network</artifactId>
   <packaging>pom</packaging>
-  <version>3.5.4-SNAPSHOT</version>
+  <version>3.5.4</version>
 
   <modules>
     <module>laokou-common-network-mqtt-client</module>

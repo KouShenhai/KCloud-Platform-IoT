@@ -6,11 +6,11 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-cola</artifactId>
-    <version>3.5.4-SNAPSHOT</version>
+    <version>3.5.4</version>
   </parent>
 
   <artifactId>laokou-cola-infrastructure</artifactId>
-  <version>3.5.4-SNAPSHOT</version>
+  <version>3.5.4</version>
 
   <dependencies>
     <dependency>
