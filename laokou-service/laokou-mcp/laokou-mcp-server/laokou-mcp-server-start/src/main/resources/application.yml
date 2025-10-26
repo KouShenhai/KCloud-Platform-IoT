@@ -28,7 +28,7 @@ spring:
     mcp:
       server:
         name: ${spring.application.name}
-        version: 3.5.4
+        version: 4.0.0
         type: async
         instructions: "IoT intelligent assistant, providing tools, resources, and services for IoT developers."
         sse-endpoint: /sse

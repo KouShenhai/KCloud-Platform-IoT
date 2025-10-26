@@ -57,7 +57,7 @@ spring:
       client:
         enabled: true
         name: ${spring.application.name}
-        version: 3.5.4
+        version: 4.0.0
         initialized: true
         request-timeout: 60s
         type: sync

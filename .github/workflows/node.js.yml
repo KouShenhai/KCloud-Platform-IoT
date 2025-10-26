@@ -50,9 +50,9 @@ jobs:
           # ========== 构建UI ==========
           cd ui
           # 使用Dockerfile构建镜像
-          docker build . --file Dockerfile --tag registry.cn-shenzhen.aliyuncs.com/koushenhai/ui:3.5.4.2
+          docker build . --file Dockerfile --tag registry.cn-shenzhen.aliyuncs.com/koushenhai/ui:4.0.0
           # 推送镜像到镜像仓库
-          docker push registry.cn-shenzhen.aliyuncs.com/koushenhai/ui:3.5.4.2
+          docker push registry.cn-shenzhen.aliyuncs.com/koushenhai/ui:4.0.0
       - name: Use Node.js 18.x
         uses: actions/setup-node@v6.0.0
         with:
