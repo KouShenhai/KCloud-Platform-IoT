@@ -23,6 +23,7 @@ import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.pulsar.annotation.EnablePulsar;
 import org.springframework.util.StopWatch;
 import reactor.core.publisher.Hooks;
@@ -35,6 +36,7 @@ import java.net.UnknownHostException;
 @Slf4j
 @EnablePulsar
 @RequiredArgsConstructor
+@EnableDiscoveryClient
 @EnableConfigurationProperties
 @SpringBootApplication(scanBasePackages = "org.laokou")
 public class MqttServerApp {
