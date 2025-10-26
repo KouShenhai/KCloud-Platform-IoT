@@ -26,7 +26,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.pulsar.annotation.EnablePulsar;
 import org.springframework.util.StopWatch;
-import reactor.core.publisher.Hooks;
+
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -42,17 +42,12 @@ import java.net.UnknownHostException;
 public class MqttServerApp {
 
 	public static void main(String[] args) throws UnknownHostException {
-		StopWatch stopWatch = new StopWatch("MqttServer应用程序");
+		StopWatch stopWatch = new StopWatch("Network应用程序");
 		stopWatch.start();
 		String host = InetAddress.getLocalHost().getHostAddress();
 		System.setProperty("address", String.format("%s:%s", host, System.getProperty("server.port", "9995")));
 		System.setProperty("host", host);
-		// 启用虚拟线程支持
-		System.setProperty("reactor.schedulers.defaultBoundedElasticOnVirtualThreads", "true");
-		// 开启reactor的上下文传递
-		// https://spring.io/blog/2023/03/30/context-propagation-with-project-reactor-3-unified-bridging-between-reactive
-		Hooks.enableAutomaticContextPropagation();
-		new SpringApplicationBuilder(MqttServerApp.class).web(WebApplicationType.REACTIVE).run(args);
+		new SpringApplicationBuilder(MqttServerApp.class).web(WebApplicationType.SERVLET).run(args);
 		stopWatch.stop();
 		log.info("{}", stopWatch.prettyPrint());
 	}
