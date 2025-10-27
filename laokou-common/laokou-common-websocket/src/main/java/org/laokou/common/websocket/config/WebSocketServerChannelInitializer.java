@@ -26,7 +26,7 @@ import io.netty.handler.ssl.SslHandler;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.ResourceExtUtils;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
+import org.springframework.boot.web.server.autoconfigure.ServerProperties;
 
 import java.io.InputStream;
 

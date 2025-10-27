@@ -17,48 +17,37 @@
 
 package org.laokou.common.crypto.annotation;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.BeanProperty;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.ser.ContextualSerializer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.util.ObjectUtils;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.SerializationContext;
+import tools.jackson.databind.ValueSerializer;
 
 /**
  * @author laokou
  */
 @Slf4j
 @RequiredArgsConstructor
-public class CryptoSerializer extends JsonSerializer<String> implements ContextualSerializer {
+public class CryptoSerializer extends ValueSerializer<String> {
 
 	private final CipherType cipherType;
 
 	private final boolean isEncrypt;
 
 	@Override
-	public void serialize(String str, JsonGenerator generator, SerializerProvider provider) {
+	public void serialize(String value, tools.jackson.core.JsonGenerator generator, SerializationContext context)
+			throws JacksonException {
 		try {
 			if (isEncrypt) {
-				generator.writeString(cipherType.encrypt(str));
+				generator.writeString(cipherType.encrypt(value));
 			}
 			else {
-				generator.writeString(cipherType.decrypt(str));
+				generator.writeString(cipherType.decrypt(value));
 			}
 		}
 		catch (Exception e) {
 			log.error("加密/解密失败，错误信息：{}", e.getMessage(), e);
 		}
-	}
-
-	@Override
-	public JsonSerializer<?> createContextual(SerializerProvider provider, BeanProperty beanProperty) {
-		Cipher cipher = beanProperty.getAnnotation(Cipher.class);
-		if (ObjectUtils.isNotNull(cipher)) {
-			return new CryptoSerializer(cipher.type(), cipher.isEncrypt());
-		}
-		throw new RuntimeException();
 	}
 
 }

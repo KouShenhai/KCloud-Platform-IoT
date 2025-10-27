@@ -22,8 +22,9 @@ import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import com.alibaba.cloud.nacos.NacosServiceManager;
 import io.netty.channel.ChannelHandler;
 import org.laokou.common.security.config.OAuth2OpaqueTokenIntrospector;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
+import org.springframework.boot.web.server.autoconfigure.ServerProperties;
 import org.springframework.context.annotation.Bean;
+
 import java.util.concurrent.ExecutorService;
 
 // @formatter:off

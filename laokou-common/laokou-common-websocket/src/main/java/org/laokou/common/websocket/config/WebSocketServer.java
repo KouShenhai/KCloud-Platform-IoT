@@ -22,8 +22,9 @@ import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelOption;
+import io.netty.channel.MultiThreadIoEventLoopGroup;
 import io.netty.channel.ServerChannel;
-import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.nio.NioIoHandler;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -58,9 +59,9 @@ public final class WebSocketServer extends AbstractServer {
 	@Override
 	protected AbstractBootstrap<ServerBootstrap, ServerChannel> init() {
 		// boss负责监听端口
-		boss = new NioEventLoopGroup(bossCorePoolSize, virtualThreadExecutor);
+		boss = new MultiThreadIoEventLoopGroup(bossCorePoolSize, virtualThreadExecutor, NioIoHandler.newFactory());
 		// work负责线程读写
-		worker = new NioEventLoopGroup(workerCorePoolSize, virtualThreadExecutor);
+		worker = new MultiThreadIoEventLoopGroup(workerCorePoolSize, virtualThreadExecutor, NioIoHandler.newFactory());
 		// 配置引导
 		ServerBootstrap serverBootstrap = new ServerBootstrap();
 		// 绑定线程组

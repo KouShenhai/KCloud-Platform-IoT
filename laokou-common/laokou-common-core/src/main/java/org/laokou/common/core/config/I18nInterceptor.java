@@ -17,17 +17,15 @@
 
 package org.laokou.common.core.config;
 
-import io.micrometer.common.lang.NonNullApi;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.jspecify.annotations.Nullable;
 import org.laokou.common.core.util.I18nUtils;
-import org.springframework.lang.Nullable;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
 
 /**
  * @author laokou
  */
-@NonNullApi
 public class I18nInterceptor implements AsyncHandlerInterceptor {
 
 	@Override

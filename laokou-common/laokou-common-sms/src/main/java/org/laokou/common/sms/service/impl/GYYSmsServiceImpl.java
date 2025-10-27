@@ -18,7 +18,6 @@
 package org.laokou.common.sms.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.net.HttpHeaders;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.HttpUtils;
@@ -31,6 +30,7 @@ import org.laokou.common.sensitive.util.SensitiveUtils;
 import org.laokou.common.sms.config.SmsProperties;
 import org.laokou.common.sms.entity.SendStatusEnum;
 import org.laokou.common.sms.entity.SmsResult;
+import tools.jackson.databind.JsonNode;
 
 import java.util.Map;
 

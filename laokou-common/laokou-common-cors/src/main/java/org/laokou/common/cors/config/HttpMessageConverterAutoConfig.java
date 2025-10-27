@@ -17,14 +17,6 @@
 
 package org.laokou.common.cors.config;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fasterxml.jackson.datatype.jsr310.deser.InstantDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.InstantSerializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.config.CustomInstantDeserializer;
 import org.laokou.common.core.config.CustomInstantSerializer;
@@ -35,7 +27,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.converter.json.JacksonJsonHttpMessageConverter;
+import tools.jackson.databind.DeserializationFeature;
+import tools.jackson.databind.ext.javatime.deser.LocalDateTimeDeserializer;
+import tools.jackson.databind.json.JsonMapper;
+import tools.jackson.databind.module.SimpleModule;
+import tools.jackson.databind.ser.std.ToStringSerializer;
+import tools.jackson.datatype.jsr310.JavaTimeModule;
+import tools.jackson.datatype.jsr310.deser.InstantDeserializer;
+import tools.jackson.datatype.jsr310.ser.InstantSerializer;
+import tools.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -56,33 +57,34 @@ public class HttpMessageConverterAutoConfig {
 	// @formatter:off
 	@Bean("jackson2HttpMessageConverter")
 	@Order(Ordered.LOWEST_PRECEDENCE - 10000)
-	public MappingJackson2HttpMessageConverter jackson2HttpMessageConverter() {
-		MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-		ObjectMapper mapper = new ObjectMapper();
-		// 反序列化时，属性不存在的兼容处理
-		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+	public JacksonJsonHttpMessageConverter jacksonJsonHttpMessageConverter() {
 		// 时区
 		TimeZone timeZone = TimeZone.getTimeZone(DateConstants.DEFAULT_TIMEZONE);
 		DateTimeFormatter dateTimeFormatter = InstantUtils.getDateTimeFormatter(DateConstants.YYYY_B_MM_B_DD_HH_R_MM_R_SS);
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DateConstants.YYYY_B_MM_B_DD_HH_R_MM_R_SS);
 		simpleDateFormat.setTimeZone(timeZone);
-		mapper.setDateFormat(simpleDateFormat);
-		mapper.setTimeZone(timeZone);
 		// Long类型转String类型
-		JavaTimeModule javaTimeModule = new JavaTimeModule();
-		javaTimeModule.addSerializer(Long.class, ToStringSerializer.instance);
-		javaTimeModule.addSerializer(Long.TYPE, ToStringSerializer.instance);
+		SimpleModule simpleModule = new SimpleModule();
+		simpleModule.addSerializer(Long.class, ToStringSerializer.instance);
+		simpleModule.addSerializer(Long.TYPE, ToStringSerializer.instance);
 		// LocalDateTime
-		javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(dateTimeFormatter));
-		javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(dateTimeFormatter));
+		simpleModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(dateTimeFormatter));
+		simpleModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(dateTimeFormatter));
 		// Instant
-		javaTimeModule.addSerializer(Instant.class, new CustomInstantSerializer(InstantSerializer.INSTANCE, false,false, dateTimeFormatter));
-		javaTimeModule.addDeserializer(Instant.class, new CustomInstantDeserializer(InstantDeserializer.INSTANT, dateTimeFormatter));
-		converter.setSupportedMediaTypes(Collections.singletonList(MediaType.APPLICATION_JSON));
-		mapper.registerModule(javaTimeModule);
-		converter.setObjectMapper(mapper);
+		simpleModule.addSerializer(Instant.class, new CustomInstantSerializer(InstantSerializer.INSTANCE, dateTimeFormatter, false,false));
+		simpleModule.addDeserializer(Instant.class, new CustomInstantDeserializer(InstantDeserializer.INSTANT, dateTimeFormatter));
+		JsonMapper jsonMapper = JsonMapper.builder()
+			// 反序列化时，属性不存在的兼容处理
+			.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+			.defaultDateFormat(simpleDateFormat)
+			.defaultTimeZone(timeZone)
+			.addModule(simpleModule)
+			.addModule(new JavaTimeModule())
+			.build();
 		log.info("{} => jackson配置加载完毕", Thread.currentThread().getName());
-		return converter;
+		JacksonJsonHttpMessageConverter jacksonJsonHttpMessageConverter = new JacksonJsonHttpMessageConverter(jsonMapper);
+		jacksonJsonHttpMessageConverter.setSupportedMediaTypes(Collections.singletonList(MediaType.APPLICATION_JSON));
+		return jacksonJsonHttpMessageConverter;
 	}
 	// @formatter:on
 

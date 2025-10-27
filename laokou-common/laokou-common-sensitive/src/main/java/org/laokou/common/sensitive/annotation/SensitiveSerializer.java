@@ -17,15 +17,10 @@
 
 package org.laokou.common.sensitive.annotation;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.BeanProperty;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.core.annotation.AbstractContextualSerializer;
-import org.laokou.common.i18n.util.ObjectUtils;
-
-import java.io.IOException;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.SerializationContext;
 
 /**
  * @author laokou
@@ -36,17 +31,9 @@ public class SensitiveSerializer extends AbstractContextualSerializer {
 	private final SensitiveType sensitiveType;
 
 	@Override
-	public void serialize(String str, JsonGenerator generator, SerializerProvider provider) throws IOException {
-		generator.writeString(sensitiveType.format(str));
-	}
-
-	@Override
-	public JsonSerializer<?> createContextual(SerializerProvider provider, BeanProperty beanProperty) {
-		Sensitive sensitive = beanProperty.getAnnotation(Sensitive.class);
-		if (ObjectUtils.isNotNull(sensitive)) {
-			return new SensitiveSerializer(sensitive.type());
-		}
-		throw new RuntimeException();
+	public void serialize(String value, tools.jackson.core.JsonGenerator generator, SerializationContext context)
+			throws JacksonException {
+		generator.writeString(sensitiveType.format(value));
 	}
 
 }

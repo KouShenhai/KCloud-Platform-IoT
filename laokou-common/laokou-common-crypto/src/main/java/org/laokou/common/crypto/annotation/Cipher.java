@@ -18,7 +18,7 @@
 package org.laokou.common.crypto.annotation;
 
 import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import tools.jackson.databind.annotation.JsonSerialize;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

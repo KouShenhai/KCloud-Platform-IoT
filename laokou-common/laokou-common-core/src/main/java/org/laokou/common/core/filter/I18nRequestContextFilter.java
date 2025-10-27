@@ -17,13 +17,12 @@
 
 package org.laokou.common.core.filter;
 
-import io.micrometer.common.lang.NonNullApi;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.laokou.common.core.util.I18nUtils;
-import org.springframework.boot.web.servlet.filter.OrderedRequestContextFilter;
+import org.springframework.boot.servlet.filter.OrderedRequestContextFilter;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -34,7 +33,6 @@ import java.io.IOException;
  *
  * @author laokou
  */
-@NonNullApi
 public final class I18nRequestContextFilter extends OrderedRequestContextFilter {
 
 	@Override

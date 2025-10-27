@@ -17,12 +17,11 @@
 
 package org.laokou.common.core.annotation;
 
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.ser.ContextualSerializer;
+import tools.jackson.databind.ValueSerializer;
 
 /**
  * @author laokou
  */
-public abstract class AbstractContextualSerializer extends JsonSerializer<String> implements ContextualSerializer {
+public abstract class AbstractContextualSerializer extends ValueSerializer<String> {
 
 }

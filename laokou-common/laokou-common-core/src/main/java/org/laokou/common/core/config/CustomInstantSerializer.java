@@ -17,7 +17,8 @@
 
 package org.laokou.common.core.config;
 
-import com.fasterxml.jackson.datatype.jsr310.ser.InstantSerializer;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import tools.jackson.datatype.jsr310.ser.InstantSerializer;
 
 import java.time.format.DateTimeFormatter;
 
@@ -26,9 +27,9 @@ import java.time.format.DateTimeFormatter;
  */
 public final class CustomInstantSerializer extends InstantSerializer {
 
-	public CustomInstantSerializer(InstantSerializer base, Boolean useTimestamp, Boolean useNanoseconds,
-			DateTimeFormatter formatter) {
-		super(base, useTimestamp, useNanoseconds, formatter);
+	public CustomInstantSerializer(InstantSerializer base, DateTimeFormatter formatter, Boolean useTimestamp,
+			Boolean useNanoseconds) {
+		super(base, formatter, useTimestamp, useNanoseconds, JsonFormat.Shape.ANY);
 	}
 
 }

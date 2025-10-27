@@ -17,6 +17,7 @@
 
 package org.laokou.common.redis.config;
 
+import org.jetbrains.annotations.NotNull;
 import org.laokou.common.fory.config.ForyFactory;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.SerializationException;
@@ -29,6 +30,7 @@ import java.nio.charset.StandardCharsets;
  */
 public final class ForyRedisSerializer implements RedisSerializer<Object> {
 
+	@NotNull
 	@Override
 	public byte[] serialize(Object obj) throws SerializationException {
 		return ForyFactory.INSTANCE.serialize(obj);

@@ -17,7 +17,6 @@
 
 package org.laokou.iot.thingModel.model;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.Getter;
 import org.laokou.common.i18n.util.EnumParser;
 import org.laokou.common.i18n.util.JacksonUtils;
@@ -31,25 +30,25 @@ public enum DataTypeEnum {
 
 	INTEGER("integer", "整数型") {
 		@Override
-		public ParamValidator.Validate validate(String specs) throws JsonProcessingException {
+		public ParamValidator.Validate validate(String specs) {
 			return JacksonUtils.toBean(specs, IntegerType.class).checkValue();
 		}
 	},
 	DECIMAL("decimal", "小数型") {
 		@Override
-		public ParamValidator.Validate validate(String specs) throws JsonProcessingException {
+		public ParamValidator.Validate validate(String specs) {
 			return JacksonUtils.toBean(specs, DecimalType.class).checkValue();
 		}
 	},
 	STRING("string", "字符串型") {
 		@Override
-		public ParamValidator.Validate validate(String specs) throws JsonProcessingException {
+		public ParamValidator.Validate validate(String specs) {
 			return JacksonUtils.toBean(specs, StringType.class).checkValue();
 		}
 	},
 	BOOLEAN("boolean", "布尔型") {
 		@Override
-		public ParamValidator.Validate validate(String specs) throws JsonProcessingException {
+		public ParamValidator.Validate validate(String specs) {
 			return JacksonUtils.toBean(specs, BooleanType.class).checkValue();
 		}
 	};
@@ -63,7 +62,7 @@ public enum DataTypeEnum {
 		this.desc = desc;
 	}
 
-	public abstract ParamValidator.Validate validate(String specs) throws JsonProcessingException;
+	public abstract ParamValidator.Validate validate(String specs);
 
 	public static DataTypeEnum getByCode(String code) {
 		return EnumParser.parse(DataTypeEnum.class, DataTypeEnum::getCode, code);
