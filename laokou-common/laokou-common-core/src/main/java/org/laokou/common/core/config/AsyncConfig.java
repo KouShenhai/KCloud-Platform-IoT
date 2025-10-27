@@ -18,10 +18,11 @@
 package org.laokou.common.core.config;
 
 import lombok.RequiredArgsConstructor;
+import org.jspecify.annotations.Nullable;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.lang.Nullable;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
+
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 

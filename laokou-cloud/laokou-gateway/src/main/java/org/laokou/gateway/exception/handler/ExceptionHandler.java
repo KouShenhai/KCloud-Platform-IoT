@@ -18,13 +18,14 @@
 package org.laokou.gateway.exception.handler;
 
 import com.alibaba.csp.sentinel.slots.block.BlockException;
-import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.Nullable;
 import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.reactor.util.ReactiveResponseUtils;
 import org.laokou.gateway.util.ReactiveI18nUtils;
-import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
+import org.springframework.boot.webflux.error.ErrorWebExceptionHandler;
 import org.springframework.cloud.gateway.support.NotFoundException;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpStatus;
@@ -40,7 +41,6 @@ import reactor.core.publisher.Mono;
  */
 @Component
 @Slf4j
-@NonNullApi
 public class ExceptionHandler implements ErrorWebExceptionHandler, Ordered {
 
 	/**
@@ -49,8 +49,9 @@ public class ExceptionHandler implements ErrorWebExceptionHandler, Ordered {
 	 * @param e 异常
 	 * @return 响应结果
 	 */
+	@NotNull
 	@Override
-	public Mono<Void> handle(ServerWebExchange exchange, Throwable e) {
+	public Mono<Void> handle(@Nullable ServerWebExchange exchange, @Nullable Throwable e) {
 		try {
 			// 国际化
 			ReactiveI18nUtils.set(exchange);

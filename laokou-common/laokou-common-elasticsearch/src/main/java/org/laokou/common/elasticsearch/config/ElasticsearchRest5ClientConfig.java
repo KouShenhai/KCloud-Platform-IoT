@@ -24,7 +24,6 @@ import co.elastic.clients.transport.rest5_client.Rest5ClientTransport;
 import co.elastic.clients.transport.rest5_client.low_level.RequestOptions;
 import co.elastic.clients.transport.rest5_client.low_level.Rest5Client;
 import co.elastic.clients.transport.rest5_client.low_level.Rest5ClientBuilder;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.net.HttpHeaders;
 import lombok.RequiredArgsConstructor;
 import org.apache.hc.client5.http.auth.StandardAuthScheme;
@@ -50,7 +49,6 @@ import org.laokou.common.i18n.util.StringExtUtils;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchProperties;
 import org.springframework.boot.context.properties.PropertyMapper;
 import org.springframework.boot.ssl.SslBundle;
 import org.springframework.boot.ssl.SslBundles;
@@ -59,6 +57,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.util.Assert;
+import tools.jackson.databind.ObjectMapper;
 
 import javax.net.ssl.SSLContext;
 import java.net.URISyntaxException;
@@ -207,7 +206,7 @@ class ElasticsearchRest5ClientConfig {
 		}
 
 		private SslBundle getSslBundle() {
-			ElasticsearchProperties.Restclient.Ssl ssl = springElasticsearchProperties.getRestclient().getSsl();
+			SpringElasticsearchProperties.RestClient.Ssl ssl = springElasticsearchProperties.getRestClient().getSsl();
 			if (StringExtUtils.hasLength(ssl.getBundle())) {
 				Assert.notNull(this.sslBundles, "SSL bundle name has been set but no SSL bundles found in context");
 				return this.sslBundles.getBundle(ssl.getBundle());

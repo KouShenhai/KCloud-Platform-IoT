@@ -17,8 +17,6 @@
 
 package org.laokou.common.websocket.config;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -120,8 +118,7 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 		}
 	}
 
-	private void read(ChannelHandlerContext ctx, TextWebSocketFrame frame)
-			throws JsonProcessingException, InterruptedException {
+	private void read(ChannelHandlerContext ctx, TextWebSocketFrame frame) throws InterruptedException {
 		Channel channel = ctx.channel();
 		String str = frame.text();
 		if (StringExtUtils.isEmpty(str)) {
@@ -133,10 +130,6 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 			UserExtDetails userExtDetails = (UserExtDetails) principal;
 			log.info("【WebSocket-Server】 => 令牌校验成功，用户名：{}", principal.getName());
 			WebSocketTypeEnum.getByCode(co.getType()).handle(userExtDetails, co, channel);
-		}
-		catch (JsonParseException e) {
-			log.error("【WebSocket-Server】 => JSON格式转换失败，错误信息：{}", e.getMessage(), e);
-			ctx.close();
 		}
 		catch (OAuth2AuthenticationException ex) {
 			OAuth2Error error = ex.getError();

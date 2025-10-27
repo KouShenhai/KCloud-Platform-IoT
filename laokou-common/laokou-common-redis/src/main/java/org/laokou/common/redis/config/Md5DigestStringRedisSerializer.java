@@ -17,7 +17,8 @@
 
 package org.laokou.common.redis.config;
 
-import io.micrometer.common.lang.Nullable;
+import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.Nullable;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.util.Assert;
 import org.springframework.util.DigestUtils;
@@ -34,7 +35,7 @@ public class Md5DigestStringRedisSerializer extends StringRedisSerializer {
 		super(charset);
 	}
 
-	@Nullable
+	@NotNull
 	@Override
 	public byte[] serialize(@Nullable String key) {
 		Assert.notNull(key, "Cannot serialize null");

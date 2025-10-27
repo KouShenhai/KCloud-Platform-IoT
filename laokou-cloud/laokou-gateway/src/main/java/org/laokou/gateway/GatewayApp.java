@@ -20,13 +20,12 @@ package org.laokou.gateway;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.laokou.common.i18n.util.SslUtils;
 import org.laokou.gateway.repository.NacosRouteDefinitionRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.data.redis.RedisReactiveAutoConfiguration;
-import org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -52,8 +51,7 @@ import java.util.concurrent.ExecutorService;
 @EnableConfigurationProperties
 @RequiredArgsConstructor
 @EnableAspectJAutoProxy
-@SpringBootApplication(scanBasePackages = "org.laokou",
-		exclude = { RedisReactiveAutoConfiguration.class, ReactiveUserDetailsServiceAutoConfiguration.class })
+@SpringBootApplication(scanBasePackages = "org.laokou")
 public class GatewayApp implements CommandLineRunner {
 
 	private final NacosRouteDefinitionRepository nacosRouteDefinitionRepository;
@@ -82,7 +80,7 @@ public class GatewayApp implements CommandLineRunner {
 	}
 
 	@Override
-	public void run(String... args) {
+	public void run(@NotNull String... args) {
 		// 执行同步路由任务
 		virtualThreadExecutor.execute(() -> nacosRouteDefinitionRepository.syncRouter()
 			.subscribeOn(Schedulers.boundedElastic())

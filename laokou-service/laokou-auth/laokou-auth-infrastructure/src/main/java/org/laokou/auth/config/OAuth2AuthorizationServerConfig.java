@@ -40,7 +40,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAuth2AuthorizationServerJwtAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -51,6 +50,8 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
+import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.OAuth2Token;
@@ -61,8 +62,6 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsentService;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
-import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
-import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.oauth2.server.authorization.token.DelegatingOAuth2TokenGenerator;
 import org.springframework.security.oauth2.server.authorization.token.JwtGenerator;
@@ -85,7 +84,7 @@ import java.util.UUID;
 
 // @formatter:off
 /**
- * 认证服务器配置. 自动装配JWKSource {@link OAuth2AuthorizationServerJwtAutoConfiguration}.
+ * 认证服务器配置. 自动装配JWKSource.
  *
  * @author laokou
  */
@@ -104,12 +103,6 @@ class OAuth2AuthorizationServerConfig {
 		ForyFactory.INSTANCE.register(org.springframework.security.core.authority.SimpleGrantedAuthority.class);
 	}
 
-	private static void applyDefaultSecurity(HttpSecurity http) throws Exception {
-        OAuth2AuthorizationServerConfigurer authorizationServerConfigurer = OAuth2AuthorizationServerConfigurer.authorizationServer();
-        http.securityMatcher(authorizationServerConfigurer.getEndpointsMatcher())
-                .with(authorizationServerConfigurer, Customizer.withDefaults())
-                .authorizeHttpRequests((authorize) -> authorize.anyRequest().authenticated());
-	}
 	// @formatter:on
 
 	// @formatter:off
@@ -127,7 +120,6 @@ class OAuth2AuthorizationServerConfig {
 	 * @param testAuthenticationConverter 测试认证Converter
 	 * @param usernamePasswordAuthenticationConverter 用户名密码认证Converter
 	 * @return 认证过滤器
-	 * @throws Exception 异常
 	 */
 	@Bean
 	@Order(Ordered.HIGHEST_PRECEDENCE)
@@ -142,9 +134,8 @@ class OAuth2AuthorizationServerConfig {
 			@Qualifier("mobileAuthenticationConverter") AuthenticationConverter mobileAuthenticationConverter,
 			AuthorizationServerSettings authorizationServerSettings,
 			OAuth2AuthorizationService authorizationService)
-			throws Exception {
+			{
 		// https://docs.spring.io/spring-authorization-server/docs/current/reference/html/configuration-model.html
-		OAuth2AuthorizationServerConfig.applyDefaultSecurity(http);
 		http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
 			// https://docs.spring.io/spring-authorization-server/docs/current/reference/html/protocol-endpoints.html#oauth2-token-endpoint
 			.tokenEndpoint((tokenEndpoint) -> tokenEndpoint
@@ -212,7 +203,7 @@ class OAuth2AuthorizationServerConfig {
 	JWKSource<SecurityContext> jwkSource() {
 		RSAKey rsaKey = getRsaKey();
 		JWKSet jwkSet = new JWKSet(rsaKey);
-		return (jwkSelector, securityContext) -> jwkSelector.select(jwkSet);
+		return (jwkSelector, _) -> jwkSelector.select(jwkSet);
 	}
 
 	/**

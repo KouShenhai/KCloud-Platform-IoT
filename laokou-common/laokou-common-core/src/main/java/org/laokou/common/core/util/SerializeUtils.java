@@ -17,7 +17,7 @@
 
 package org.laokou.common.core.util;
 
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -38,8 +38,7 @@ public final class SerializeUtils {
 	 * @param object the object to serialize
 	 * @return an array of bytes representing the object in a portable fashion
 	 */
-	@Nullable
-	public static byte[] serialize(@Nullable Object object) {
+	@Nullable public static byte[] serialize(@Nullable Object object) {
 		if (object == null) {
 			return null;
 		}
@@ -59,8 +58,7 @@ public final class SerializeUtils {
 	 * @param bytes a serialized object
 	 * @return the result of deserializing the bytes
 	 */
-	@Nullable
-	public static Object deserialize(@Nullable byte[] bytes) {
+	@Nullable public static Object deserialize(@Nullable byte[] bytes) {
 		if (bytes == null) {
 			return null;
 		}

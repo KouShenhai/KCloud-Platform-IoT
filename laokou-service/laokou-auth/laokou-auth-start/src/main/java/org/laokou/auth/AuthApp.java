@@ -26,8 +26,6 @@ import org.laokou.common.nacos.annotation.EnableRouter;
 import org.laokou.common.security.config.TransmittableThreadLocalSecurityContextHolderStrategy;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAuth2AuthorizationServerAutoConfiguration;
-import org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAuth2AuthorizationServerJwtAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -55,8 +53,7 @@ import java.security.NoSuchAlgorithmException;
 @EnableEncryptableProperties
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy
-@SpringBootApplication(scanBasePackages = "org.laokou", exclude = { OAuth2AuthorizationServerAutoConfiguration.class,
-		OAuth2AuthorizationServerJwtAutoConfiguration.class })
+@SpringBootApplication(scanBasePackages = "org.laokou")
 public class AuthApp {
 
 	// @formatter:off

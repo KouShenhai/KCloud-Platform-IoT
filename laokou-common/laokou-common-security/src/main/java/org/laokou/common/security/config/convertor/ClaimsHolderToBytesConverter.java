@@ -33,14 +33,15 @@
 
 package org.laokou.common.security.config.convertor;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jetbrains.annotations.NotNull;
 import org.laokou.common.security.config.entity.OAuth2AuthorizationGrantAuthorization;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.WritingConverter;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
-import org.springframework.security.jackson2.SecurityJackson2Modules;
-import org.springframework.security.oauth2.server.authorization.jackson2.OAuth2AuthorizationServerJackson2Module;
+import org.springframework.data.redis.serializer.JacksonJsonRedisSerializer;
+import org.springframework.security.jackson.SecurityJacksonModules;
+import org.springframework.security.oauth2.server.authorization.jackson.OAuth2AuthorizationServerJacksonModule;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 
 /**
  * @author spring-authorization-server
@@ -50,15 +51,15 @@ import org.springframework.security.oauth2.server.authorization.jackson2.OAuth2A
 public final class ClaimsHolderToBytesConverter
 		implements Converter<OAuth2AuthorizationGrantAuthorization.ClaimsHolder, byte[]> {
 
-	private final Jackson2JsonRedisSerializer<OAuth2AuthorizationGrantAuthorization.ClaimsHolder> serializer;
+	private final JacksonJsonRedisSerializer<OAuth2AuthorizationGrantAuthorization.ClaimsHolder> serializer;
 
 	public ClaimsHolderToBytesConverter() {
-		ObjectMapper objectMapper = new ObjectMapper();
-		objectMapper
-			.registerModules(SecurityJackson2Modules.getModules(ClaimsHolderToBytesConverter.class.getClassLoader()));
-		objectMapper.registerModules(new OAuth2AuthorizationServerJackson2Module());
-		objectMapper.addMixIn(OAuth2AuthorizationGrantAuthorization.ClaimsHolder.class, ClaimsHolderMixin.class);
-		this.serializer = new Jackson2JsonRedisSerializer<>(objectMapper,
+		ObjectMapper objectMapper = JsonMapper.builder()
+			.addModules(SecurityJacksonModules.getModules(ClaimsHolderToBytesConverter.class.getClassLoader()))
+			.addModule(new OAuth2AuthorizationServerJacksonModule())
+			.addMixIn(OAuth2AuthorizationGrantAuthorization.ClaimsHolder.class, ClaimsHolderMixin.class)
+			.build();
+		this.serializer = new JacksonJsonRedisSerializer<>(objectMapper,
 				OAuth2AuthorizationGrantAuthorization.ClaimsHolder.class);
 	}
 

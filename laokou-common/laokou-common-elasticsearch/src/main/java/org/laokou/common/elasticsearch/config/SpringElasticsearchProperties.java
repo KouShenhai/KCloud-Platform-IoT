@@ -18,7 +18,7 @@
 package org.laokou.common.elasticsearch.config;
 
 import lombok.Data;
-import org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchProperties;
+import org.jspecify.annotations.Nullable;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -57,7 +57,7 @@ public class SpringElasticsearchProperties {
 
 	private String clientVersion = "9.2.0";
 
-	private final ElasticsearchProperties.Restclient restclient = new ElasticsearchProperties.Restclient();
+	private final RestClient restClient = new RestClient();
 
 	public record Node(String hostname, int port, ProtocolEnum protocol) {
 	}
@@ -75,6 +75,45 @@ public class SpringElasticsearchProperties {
 
 	private Node createNode(URI uri) {
 		return new Node(uri.getHost(), uri.getPort(), ProtocolEnum.forScheme(uri.getScheme()));
+	}
+
+	@Data
+	public static class RestClient {
+
+		private final Sniffer sniffer = new Sniffer();
+
+		private final Ssl ssl = new Ssl();
+
+		@Data
+		public static class Sniffer {
+
+			/**
+			 * Whether the sniffer is enabled.
+			 */
+			private boolean enabled = true;
+
+			/**
+			 * Interval between consecutive ordinary sniff executions.
+			 */
+			private Duration interval = Duration.ofMinutes(5);
+
+			/**
+			 * Delay of a sniff execution scheduled after a failure.
+			 */
+			private Duration delayAfterFailure = Duration.ofMinutes(1);
+
+		}
+
+		@Data
+		public static class Ssl {
+
+			/**
+			 * SSL bundle name.
+			 */
+			private @Nullable String bundle;
+
+		}
+
 	}
 
 }

@@ -18,14 +18,15 @@
 package org.laokou.common.i18n.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.type.CollectionType;
-import com.fasterxml.jackson.databind.type.MapType;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import tools.jackson.databind.DeserializationFeature;
+import tools.jackson.databind.JavaType;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.SerializationFeature;
+import tools.jackson.databind.json.JsonMapper;
+import tools.jackson.databind.type.CollectionType;
+import tools.jackson.databind.type.MapType;
+import tools.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.io.File;
 import java.io.IOException;
@@ -55,12 +56,13 @@ public final class JacksonUtils {
 	}
 
 	private static ObjectMapper getMapper() {
-		return new ObjectMapper()
+		return JsonMapper.builder()
+			.addModule(new JavaTimeModule())
 			// 没有的属性不报错
 			.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 			.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
 			.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT)
-			.registerModule(new JavaTimeModule());
+			.build();
 	}
 
 	/**
@@ -70,7 +72,7 @@ public final class JacksonUtils {
 	 * @param <T> 类型
 	 * @return Bean
 	 */
-	public static <T> T toBean(String json, Class<T> clazz) throws JsonProcessingException {
+	public static <T> T toBean(String json, Class<T> clazz) {
 		return MAPPER.readValue(json, javaType(clazz));
 	}
 
@@ -82,21 +84,11 @@ public final class JacksonUtils {
 	 * @return Bean
 	 */
 	public static <T> T toBean(byte[] arr, Class<T> clazz) {
-		try {
-			return MAPPER.readValue(arr, javaType(clazz));
-		}
-		catch (IOException e) {
-			throw new RuntimeException(e);
-		}
+		return MAPPER.readValue(arr, javaType(clazz));
 	}
 
 	public static <T> T toBean(byte[] arr, int offset, int len, Class<T> clazz) {
-		try {
-			return MAPPER.readValue(arr, offset, len, javaType(clazz));
-		}
-		catch (IOException e) {
-			throw new RuntimeException(e);
-		}
+		return MAPPER.readValue(arr, offset, len, javaType(clazz));
 	}
 
 	/**
@@ -106,7 +98,7 @@ public final class JacksonUtils {
 	 * @param <T> 泛型
 	 * @return Bean
 	 */
-	public static <T> T toBean(InputStream inputStream, Class<T> clazz) throws IOException {
+	public static <T> T toBean(InputStream inputStream, Class<T> clazz) {
 		return MAPPER.readValue(inputStream, javaType(clazz));
 	}
 
@@ -126,27 +118,17 @@ public final class JacksonUtils {
 	 * @return json字符串
 	 */
 	public static String toJsonStr(Object obj, boolean isFormat) {
-		try {
-			if (obj instanceof String str) {
-				return str;
-			}
-			if (isFormat) {
-				return MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
-			}
-			return MAPPER.writeValueAsString(obj);
+		if (obj instanceof String str) {
+			return str;
 		}
-		catch (JsonProcessingException e) {
-			throw new RuntimeException(e);
+		if (isFormat) {
+			return MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
 		}
+		return MAPPER.writeValueAsString(obj);
 	}
 
 	public static byte[] toBytes(Object obj) {
-		try {
-			return MAPPER.writeValueAsBytes(obj);
-		}
-		catch (JsonProcessingException e) {
-			throw new RuntimeException(e);
-		}
+		return MAPPER.writeValueAsBytes(obj);
 	}
 
 	/**
@@ -173,8 +155,7 @@ public final class JacksonUtils {
 	 * @param <V> 值泛型
 	 * @return map
 	 */
-	public static <K, V> Map<K, V> toMap(String json, Class<K> keyClass, Class<V> valueClass)
-			throws JsonProcessingException {
+	public static <K, V> Map<K, V> toMap(String json, Class<K> keyClass, Class<V> valueClass) {
 		return MAPPER.readValue(json, mapType(keyClass, valueClass));
 	}
 
@@ -208,7 +189,7 @@ public final class JacksonUtils {
 	 * @param json json字符串
 	 * @return 树节点
 	 */
-	public static JsonNode readTree(String json) throws JsonProcessingException {
+	public static JsonNode readTree(String json) {
 		return MAPPER.readTree(json);
 	}
 

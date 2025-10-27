@@ -28,7 +28,6 @@ import org.laokou.common.security.config.TransmittableThreadLocalSecurityContext
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -58,7 +57,7 @@ import java.security.NoSuchAlgorithmException;
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy
 @MapperScan(basePackages = "org.laokou.admin.**.gatewayimpl.database")
-@SpringBootApplication(exclude = { SecurityFilterAutoConfiguration.class }, scanBasePackages = "org.laokou")
+@SpringBootApplication(scanBasePackages = "org.laokou")
 public class AdminApp {
 
 	// @formatter:off

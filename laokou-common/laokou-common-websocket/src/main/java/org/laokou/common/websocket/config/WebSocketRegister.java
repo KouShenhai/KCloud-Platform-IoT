@@ -20,7 +20,6 @@ package org.laokou.common.websocket.config;
 import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import com.alibaba.nacos.api.exception.NacosException;
 import com.alibaba.nacos.api.naming.NamingService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -30,14 +29,9 @@ import org.springframework.context.ApplicationListener;
  * @author laokou
  */
 @Slf4j
-@RequiredArgsConstructor
-public class WebSocketRegister implements ApplicationListener<ApplicationReadyEvent> {
-
-	private final NacosDiscoveryProperties nacosDiscoveryProperties;
-
-	private final SpringWebSocketServerProperties springWebSocketServerProperties;
-
-	private final NamingService namingService;
+public record WebSocketRegister(NacosDiscoveryProperties nacosDiscoveryProperties,
+		SpringWebSocketServerProperties springWebSocketServerProperties,
+		NamingService namingService) implements ApplicationListener<ApplicationReadyEvent> {
 
 	@Override
 	public void onApplicationEvent(@NotNull ApplicationReadyEvent event) {
