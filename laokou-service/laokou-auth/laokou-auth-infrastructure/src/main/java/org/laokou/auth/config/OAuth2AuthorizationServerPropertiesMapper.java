@@ -20,9 +20,9 @@ package org.laokou.auth.config;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.properties.PropertyMapper;
 import org.springframework.boot.web.server.Ssl;
+import org.springframework.boot.web.server.autoconfigure.ServerProperties;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.jose.jws.JwsAlgorithm;
@@ -57,7 +57,7 @@ final class OAuth2AuthorizationServerPropertiesMapper {
 	private final ServerProperties serverProperties;
 
 	AuthorizationServerSettings asAuthorizationServerSettings() {
-		PropertyMapper map = PropertyMapper.get().alwaysApplyingWhenNonNull();
+		PropertyMapper map = PropertyMapper.get();
 		OAuth2AuthorizationServerProperties.Endpoint endpoint = this.properties.getEndpoint();
 		OAuth2AuthorizationServerProperties.OidcEndpoint oidc = endpoint.getOidc();
 		AuthorizationServerSettings.Builder builder = AuthorizationServerSettings.builder();
@@ -88,7 +88,7 @@ final class OAuth2AuthorizationServerPropertiesMapper {
 	private RegisteredClient getRegisteredClient(String registrationId,
 			OAuth2AuthorizationServerProperties.Client client) {
 		OAuth2AuthorizationServerProperties.Registration registration = client.getRegistration();
-		PropertyMapper map = PropertyMapper.get().alwaysApplyingWhenNonNull();
+		PropertyMapper map = PropertyMapper.get();
 		RegisteredClient.Builder builder = RegisteredClient.withId(registrationId);
 		// 注册
 		// Base64编码

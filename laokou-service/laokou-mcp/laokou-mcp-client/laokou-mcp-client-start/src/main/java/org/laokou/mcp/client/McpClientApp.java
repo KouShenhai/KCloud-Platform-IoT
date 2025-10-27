@@ -24,7 +24,6 @@ import org.laokou.common.core.annotation.EnableWarmUp;
 import org.laokou.common.security.annotation.EnableSecurity;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -42,7 +41,7 @@ import java.net.UnknownHostException;
 @EnableScheduling
 @EnableEncryptableProperties
 @EnableAspectJAutoProxy
-@SpringBootApplication(exclude = { SecurityFilterAutoConfiguration.class }, scanBasePackages = "org.laokou")
+@SpringBootApplication(scanBasePackages = "org.laokou")
 @RequiredArgsConstructor
 public class McpClientApp {
 

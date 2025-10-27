@@ -24,7 +24,6 @@ import org.laokou.common.core.annotation.EnableWarmUp;
 import org.laokou.common.i18n.util.SslUtils;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -48,7 +47,7 @@ import java.security.NoSuchAlgorithmException;
 @EnableAspectJAutoProxy
 @EnableEncryptableProperties
 @EnableConfigurationProperties
-@SpringBootApplication(exclude = { SecurityFilterAutoConfiguration.class }, scanBasePackages = "org.laokou")
+@SpringBootApplication(scanBasePackages = "org.laokou")
 public class OssApp {
 
 	// @formatter:off

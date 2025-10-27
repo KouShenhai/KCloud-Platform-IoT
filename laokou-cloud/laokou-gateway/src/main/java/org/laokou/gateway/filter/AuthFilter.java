@@ -20,6 +20,8 @@ package org.laokou.gateway.filter;
 import com.google.common.net.HttpHeaders;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.Nullable;
 import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.core.util.SpringUtils;
 import org.laokou.common.i18n.common.exception.StatusCode;
@@ -59,8 +61,8 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	private final SpringUtils springUtils;
 
 	// @formatter:off
-	@Override
-	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+	@NotNull@Override
+	public Mono<Void> filter(@Nullable ServerWebExchange exchange,@Nullable GatewayFilterChain chain) {
 		try {
 			// 国际化
 			ReactiveI18nUtils.set(exchange);
@@ -70,6 +72,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 			String requestURL = ReactiveRequestUtils.getRequestURL(request);
 			// 请求放行，无需验证权限
 			if (ReactiveRequestUtils.pathMatcher(ReactiveRequestUtils.getMethodName(request), requestURL, uriMap)) {
+				assert chain != null;
 				return chain.filter(exchange.mutate().request(request.mutate().build()).build());
 			}
 			// 获取token
@@ -78,6 +81,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 				return ReactiveResponseUtils.responseOk(exchange, Result.fail(StatusCode.UNAUTHORIZED));
 			}
 			// 增加令牌
+			assert chain != null;
 			return chain.filter(exchange.mutate().request(request.mutate().header(HttpHeaders.AUTHORIZATION, token).build()).build());
 		}
 		finally {

@@ -27,7 +27,6 @@ import org.laokou.common.websocket.annotation.EnableWebSocketServer;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -58,7 +57,7 @@ import java.security.NoSuchAlgorithmException;
 @EnableAspectJAutoProxy
 @EnableConfigurationProperties
 @MapperScan(basePackages = "org.laokou.iot.**.gatewayimpl.database")
-@SpringBootApplication(exclude = { SecurityFilterAutoConfiguration.class }, scanBasePackages = "org.laokou")
+@SpringBootApplication(scanBasePackages = "org.laokou")
 public class IotApp {
 
 	// @formatter:off

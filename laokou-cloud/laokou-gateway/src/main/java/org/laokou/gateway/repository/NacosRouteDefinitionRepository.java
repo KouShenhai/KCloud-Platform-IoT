@@ -21,10 +21,10 @@ import com.alibaba.cloud.nacos.NacosConfigManager;
 import com.alibaba.nacos.api.config.ConfigService;
 import com.alibaba.nacos.api.config.listener.Listener;
 import com.alibaba.nacos.api.exception.NacosException;
-import io.micrometer.common.lang.NonNullApi;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.laokou.common.core.util.SpringContextUtils;
 import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.i18n.common.constant.StringConstants;
@@ -62,7 +62,6 @@ import java.util.concurrent.Executors;
  */
 // @formatter:on
 @Slf4j
-@NonNullApi
 @Repository
 public class NacosRouteDefinitionRepository implements RouteDefinitionRepository {
 
@@ -125,6 +124,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	 * {@link org.springframework.cloud.gateway.config.GatewayAutoConfiguration
 	 * @return 定义的路由规则
 	 */
+	@NotNull
 	@Override
 	public Flux<RouteDefinition> getRouteDefinitions() {
 		return reactiveHashOperations.entries(RedisKeyUtils.getRouteDefinitionHashKey())
@@ -137,13 +137,15 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	}
 	// @formatter:on
 
+	@NotNull
 	@Override
-	public Mono<Void> save(Mono<RouteDefinition> route) {
+	public Mono<Void> save(@NotNull Mono<RouteDefinition> route) {
 		return Mono.empty();
 	}
 
+	@NotNull
 	@Override
-	public Mono<Void> delete(Mono<String> routeId) {
+	public Mono<Void> delete(@NotNull Mono<String> routeId) {
 		return Mono.empty();
 	}
 

@@ -33,9 +33,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * OAuth 2.0 Authorization Server properties.
- * {@link org.springframework.boot.autoconfigure.security.oauth2.server.servlet.OAuth2AuthorizationServerProperties}
- * {@link ConfigurationSettingNames}
+ * OAuth 2.0 Authorization Server properties. {@link ConfigurationSettingNames}
  *
  * @author Steve Riesenberg
  * @author laokou

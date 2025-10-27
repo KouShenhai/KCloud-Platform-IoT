@@ -25,7 +25,7 @@ import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.mail.dto.MailResult;
 import org.laokou.common.mail.dto.SendStatus;
 import org.laokou.common.sensitive.util.SensitiveUtils;
-import org.springframework.boot.autoconfigure.mail.MailProperties;
+import org.springframework.boot.mail.autoconfigure.MailProperties;
 
 import java.util.Map;
 

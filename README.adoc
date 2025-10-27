@@ -159,7 +159,7 @@ image::doc/image/老寇IoT云平台业务架构图.png[架构图,align=center]
 |Spring Authorization Server |1.5.3
 |Mybatis Plus                |3.5.14
 |Nacos                       |3.1.0
-|Dubbo                       |3.3.6
+|Dubbo                       |3.3.5
 |Redis                       |8.0.1
 |Elasticsearch               |9.2.0
 |Netty                       |4.2.7.Final

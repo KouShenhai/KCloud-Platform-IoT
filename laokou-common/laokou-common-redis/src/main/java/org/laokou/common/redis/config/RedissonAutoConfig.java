@@ -27,8 +27,8 @@ import org.redisson.config.Config;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.data.redis.autoconfigure.DataRedisProperties;
 import org.springframework.context.annotation.Bean;
 
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ import java.util.List;
  */
 @AutoConfiguration
 @ConditionalOnClass(Redisson.class)
-@EnableConfigurationProperties(RedisProperties.class)
+@EnableConfigurationProperties(DataRedisProperties.class)
 public class RedissonAutoConfig {
 
 	/**
@@ -67,12 +67,15 @@ public class RedissonAutoConfig {
 	 */
 	@Bean(destroyMethod = "shutdown")
 	@ConditionalOnMissingBean(RedissonClient.class)
-	public RedissonClient redisClient(RedisProperties properties) {
+	public RedissonClient redisClient(DataRedisProperties properties) {
 		Config config = new Config();
+		assert properties.getTimeout() != null;
 		int timeout = (int) properties.getTimeout().toMillis();
+		assert properties.getConnectTimeout() != null;
 		int connectTimeout = (int) properties.getConnectTimeout().toMillis();
 		boolean isSsl = properties.getSsl().isEnabled();
 		if (ObjectUtils.isNotNull(properties.getSentinel())) {
+			assert properties.getSentinel().getNodes() != null;
 			config.useSentinelServers()
 				.setMasterName(properties.getSentinel().getMaster())
 				.addSentinelAddress(convertNodes(isSsl, properties.getSentinel().getNodes()))
@@ -82,6 +85,7 @@ public class RedissonAutoConfig {
 				.setPassword(properties.getPassword());
 		}
 		else if (ObjectUtils.isNotNull(properties.getCluster())) {
+			assert properties.getCluster().getNodes() != null;
 			config.useClusterServers()
 				.addNodeAddress(convertNodes(isSsl, properties.getCluster().getNodes()))
 				.setPassword(properties.getPassword())
