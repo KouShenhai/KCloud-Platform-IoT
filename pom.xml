@@ -110,7 +110,7 @@
     <!--spring-data版本-->
     <spring-data.version>2025.0.5</spring-data.version>
     <!--spring-security版本-->
-    <spring-security.version>7.0.0-RC1</spring-security.version>
+    <spring-security.version>7.0.0-SNAPSHOT</spring-security.version>
     <!--spring-ai版本-->
     <spring-ai.version>1.0.3</spring-ai.version>
     <!--spring-ai-alibaba版本-->
