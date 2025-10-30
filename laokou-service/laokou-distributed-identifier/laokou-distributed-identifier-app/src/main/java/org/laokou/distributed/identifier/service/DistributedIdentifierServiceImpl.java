@@ -18,52 +18,19 @@
 package org.laokou.distributed.identifier.service;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.dubbo.config.annotation.DubboService;
-import org.laokou.common.i18n.dto.Result;
-import org.laokou.distributed.identifier.api.DistributedIdentifierBatchCmd;
-import org.laokou.distributed.identifier.api.DistributedIdentifierBatchResult;
-import org.laokou.distributed.identifier.api.DistributedIdentifierCmd;
-import org.laokou.distributed.identifier.api.DistributedIdentifierResult;
-import org.laokou.distributed.identifier.api.DubboDistributedIdentifierServiceITriple;
 import org.laokou.distributed.identifier.command.DistributedIdentifierGenerateBatchCmdExe;
 import org.laokou.distributed.identifier.command.DistributedIdentifierGenerateCmdExe;
-import org.laokou.distributed.identifier.dto.DistributedIdentifierGenerateBatchCmd;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @author laokou
  */
 @Service
-@DubboService(token = "3f7c5e45d6a7", group = "iot-distributed-identifier", version = "v1", timeout = 10000)
 @RequiredArgsConstructor
-public class DistributedIdentifierServiceImpl
-		extends DubboDistributedIdentifierServiceITriple.DistributedIdentifierServiceIImplBase {
+public class DistributedIdentifierServiceImpl {
 
 	private final DistributedIdentifierGenerateCmdExe distributedIdentifierGenerateCmdExe;
 
 	private final DistributedIdentifierGenerateBatchCmdExe distributedIdentifierGenerateBatchCmdExe;
-
-	@Override
-	public DistributedIdentifierResult generateSnowflake(DistributedIdentifierCmd cmd) {
-		Result<Long> result = distributedIdentifierGenerateCmdExe.execute();
-		return DistributedIdentifierResult.newBuilder()
-			.setCode(result.getCode())
-			.setMsg(result.getMsg())
-			.setData(result.getData())
-			.build();
-	}
-
-	@Override
-	public DistributedIdentifierBatchResult generateSnowflakeBatch(DistributedIdentifierBatchCmd cmd) {
-		Result<List<Long>> result = distributedIdentifierGenerateBatchCmdExe
-			.execute(new DistributedIdentifierGenerateBatchCmd(cmd.getNum()));
-		return DistributedIdentifierBatchResult.newBuilder()
-			.setCode(result.getCode())
-			.setMsg(result.getMsg())
-			.addAllData(result.getData())
-			.build();
-	}
 
 }

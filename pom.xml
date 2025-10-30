@@ -115,8 +115,6 @@
     <spring-ai.version>1.0.3</spring-ai.version>
     <!--spring-ai-alibaba版本-->
     <spring-ai-alibaba.version>1.0.0.4</spring-ai-alibaba.version>
-    <!--dubbo版本-->
-    <dubbo.version>3.3.5</dubbo.version>
     <!--springdoc-openapi版本-->
     <springdoc-openapi.version>3.0.0-M1</springdoc-openapi.version>
     <!--testcontainers版本-->
@@ -329,16 +327,6 @@
         <scope>import</scope>
       </dependency>
       <!-- =============================== 定义 Spring Ai Alibaba 版本 =============================== -->
-
-      <!-- =============================== 定义 Dubbo 版本 =============================== -->
-      <dependency>
-        <groupId>org.apache.dubbo</groupId>
-        <artifactId>dubbo-bom</artifactId>
-        <version>${dubbo.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <!-- =============================== 定义 Dubbo 版本 =============================== -->
 
       <!-- =============================== 定义 Springdoc Openapi 版本 =============================== -->
       <dependency>

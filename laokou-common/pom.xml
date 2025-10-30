@@ -79,7 +79,6 @@
     <module>laokou-common-coap</module>
     <module>laokou-common-fory</module>
     <module>laokou-common-plugin</module>
-    <module>laokou-common-dubbo</module>
     <module>laokou-common-context</module>
     <module>laokou-common-starrocks</module>
     <module>laokou-common-modbus4j</module>

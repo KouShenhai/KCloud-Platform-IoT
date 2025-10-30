@@ -148,7 +148,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 | Spring Authorization Server |    1.5.3    |
 |        Mybatis Plus         |   3.5.14    |
 |            Nacos            |    3.1.0    |
-|            Dubbo            |    3.3.5    |
+|            gRpc             |   1.76.0    |
 |            Redis            |    8.0.1    |
 |        Elasticsearch        |    9.2.0    |
 |            Netty            | 4.2.7.Final |

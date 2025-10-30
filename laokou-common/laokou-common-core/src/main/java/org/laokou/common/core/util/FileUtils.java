@@ -193,9 +193,9 @@ public final class FileUtils {
 		return Files.createTempDirectory(dir, prefix);
 	}
 
-	public static void delete(Path directory) throws IOException {
-		if (exists(directory)) {
-			walkFileTree(directory, new SimpleFileVisitor<>() {
+	public static void delete(Path path) throws IOException {
+		if (exists(path)) {
+			walkFileTree(path, new SimpleFileVisitor<>() {
 
 				@NotNull
 				@Override

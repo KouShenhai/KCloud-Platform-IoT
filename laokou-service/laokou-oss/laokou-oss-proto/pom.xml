@@ -12,31 +12,8 @@
   <artifactId>laokou-oss-proto</artifactId>
   <version>4.0.0-SNAPSHOT</version>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-dubbo</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-  </dependencies>
-
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.apache.dubbo</groupId>
-        <artifactId>dubbo-maven-plugin</artifactId>
-        <version>${dubbo.version}</version>
-        <configuration>
-          <outputDir>src/main/java</outputDir>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>compile</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
       <plugin>
         <groupId>io.spring.javaformat</groupId>
         <artifactId>spring-javaformat-maven-plugin</artifactId>
