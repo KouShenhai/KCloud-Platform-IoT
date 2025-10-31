@@ -212,7 +212,7 @@
     <!--commons-net版本-->
     <commons-net.version>3.12.0</commons-net.version>
     <!--jSerialComm版本-->
-    <jSerialComm.version>2.11.2</jSerialComm.version>
+    <jSerialComm.version>2.11.3</jSerialComm.version>
     <!--californium版本-->
     <californium.version>4.0.0-M6</californium.version>
     <!--jsoup版本-->
