@@ -76,7 +76,7 @@
     <!--maven-enforcer-plugin版本-->
     <maven-enforcer-plugin.version>3.6.2</maven-enforcer-plugin.version>
     <!--docker-maven-plugin版本-->
-    <docker-maven-plugin.version>0.46.0</docker-maven-plugin.version>
+    <docker-maven-plugin.version>0.47.0</docker-maven-plugin.version>
     <!--maven-checkstyle-plugin版本-->
     <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
     <!--spotbugs-maven-plugin版本-->
