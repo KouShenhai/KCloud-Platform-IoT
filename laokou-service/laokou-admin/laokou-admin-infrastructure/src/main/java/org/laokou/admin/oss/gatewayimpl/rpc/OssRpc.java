@@ -16,19 +16,7 @@
  */
 
 package org.laokou.admin.oss.gatewayimpl.rpc;
-
-import org.apache.dubbo.config.annotation.DubboReference;
-import org.apache.dubbo.rpc.RpcContext;
-import org.apache.dubbo.rpc.RpcContextAttachment;
-import org.laokou.admin.oss.convertor.OssConvertor;
-import org.laokou.common.context.util.UserUtils;
-import org.laokou.common.i18n.common.exception.BizException;
-import org.laokou.common.i18n.common.exception.StatusCode;
-import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.mybatisplus.mapper.BaseDO;
-import org.laokou.oss.api.OssServiceI;
 import org.laokou.oss.api.OssUploadCO;
-import org.laokou.oss.api.OssUploadResult;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,19 +26,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Component
 public class OssRpc {
 
-	@DubboReference(group = "iot-oss", version = "v1", interfaceClass = OssServiceI.class,
-			mock = "org.laokou.admin.oss.gatewayimpl.rpc.OssMock", loadbalance = "adaptive", retries = 3)
-	private OssServiceI ossServiceI;
-
 	public OssUploadCO uploadOss(MultipartFile file, String fileType) throws Exception {
-		RpcContextAttachment serverAttachment = RpcContext.getServerAttachment();
-		serverAttachment.setAttachment(BaseDO.TENANT_ID, UserUtils.getTenantId());
-		serverAttachment.setAttachment(BaseDO.CREATOR, UserUtils.getUserId());
-		OssUploadResult result = ossServiceI.uploadOss(OssConvertor.toAssembler(file, fileType));
-		if (ObjectUtils.equals(StatusCode.OK, result.getCode())) {
-			return result.getData();
-		}
-		throw new BizException(result.getCode(), result.getMsg());
+		return null;
 	}
 
 }

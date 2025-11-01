@@ -18,34 +18,16 @@
 package org.laokou.oss.service;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.dubbo.config.annotation.DubboService;
-import org.laokou.common.i18n.dto.Result;
-import org.laokou.oss.api.DubboOssServiceITriple;
-import org.laokou.oss.api.OssUploadCmd;
-import org.laokou.oss.api.OssUploadResult;
 import org.laokou.oss.command.OssUploadCmdExe;
-import org.laokou.oss.convertor.OssConvertor;
-import org.laokou.oss.dto.clientobject.OssUploadCO;
 import org.springframework.stereotype.Service;
 
 /**
  * @author laokou
  */
 @Service
-@DubboService(token = "0e02b2c3d479", group = "iot-oss", version = "v1", timeout = 10000)
 @RequiredArgsConstructor
-public class OssServiceImpl extends DubboOssServiceITriple.OssServiceIImplBase {
+public class OssServiceImpl {
 
 	private final OssUploadCmdExe ossUploadCmdExe;
-
-	@Override
-	public OssUploadResult uploadOss(OssUploadCmd cmd) {
-		Result<OssUploadCO> result = ossUploadCmdExe.execute(OssConvertor.toAssembler(cmd));
-		return OssUploadResult.newBuilder()
-			.setCode(result.getCode())
-			.setMsg(result.getMsg())
-			.setData(OssConvertor.toClientObject(result.getData()))
-			.build();
-	}
 
 }

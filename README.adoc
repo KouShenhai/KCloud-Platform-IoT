@@ -159,7 +159,7 @@ image::doc/image/老寇IoT云平台业务架构图.png[架构图,align=center]
 |Spring Authorization Server |1.5.3
 |Mybatis Plus                |3.5.14
 |Nacos                       |3.1.0
-|Dubbo                       |3.3.5
+|gRpc                        |1.76.0
 |Redis                       |8.0.1
 |Elasticsearch               |9.2.0
 |Netty                       |4.2.7.Final
@@ -179,7 +179,7 @@ image::doc/image/老寇IoT云平台业务架构图.png[架构图,align=center]
 - 配置中心&服务注册&发现：Nacos
 - API网关：Spring Cloud Gateway
 - 认证授权：Spring Security OAuth2 Authorization Server
-- 远程调用：Dubbo
+- 远程调用：gRpc
 - 客户端请求：OkHttp & HttpClient & WebClient & RestClient
 - 负载均衡：Spring Cloud Loadbalancer
 - 服务熔断&降级&限流：Sentinel
@@ -197,7 +197,7 @@ image::doc/image/老寇IoT云平台业务架构图.png[架构图,align=center]
 - 网络通讯：Netty
 - 持续集成&交付：Jenkins
 - 持久层框架：Mybatis Plus
-- 序列化&反序列化：Jackson & Fory
+- 序列化&反序列化：Jackson & Fory & Protobuf
 - 数据库：Postgresql
 - 时序数据库：TimescaleDB & TDengine & InfluxDB
 - 数据库迁移：Liquibase
