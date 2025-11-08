@@ -15,7 +15,7 @@
 #  */
 services:
   mongodb:
-    image: mongo:8.0.15
+    image: mongo:8.2.1
     container_name: mongodb
     # 保持容器在没有守护程序的情况下运行
     tty: true
@@ -89,7 +89,7 @@ services:
     networks:
       - iot_network
   promtail:
-    image: grafana/promtail:3.5.7
+    image: grafana/promtail:3.5.8
     container_name: promtail
     # 保持容器在没有守护程序的情况下运行
     tty: true
@@ -264,7 +264,7 @@ services:
     networks:
       - iot_network
   redis:
-    image: redis:8.2.2
+    image: redis:8.2.3
     container_name: redis
     # 保持容器在没有守护程序的情况下运行
     tty: true
