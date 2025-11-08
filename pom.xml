@@ -196,7 +196,7 @@
     <!--archunit-junit5版本-->
     <archunit-junit5.version>1.4.1</archunit-junit5.version>
     <!--caffeine版本-->
-    <caffeine.version>3.2.2</caffeine.version>
+    <caffeine.version>3.2.3</caffeine.version>
     <!--objenesis版本-->
     <objenesis.version>3.4</objenesis.version>
     <!--influxdb-client-java版本-->
