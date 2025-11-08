@@ -196,7 +196,7 @@
     <!--archunit-junit5版本-->
     <archunit-junit5.version>1.4.1</archunit-junit5.version>
     <!--caffeine版本-->
-    <caffeine.version>3.2.2</caffeine.version>
+    <caffeine.version>3.2.3</caffeine.version>
     <!--objenesis版本-->
     <objenesis.version>3.4</objenesis.version>
     <!--influxdb-client-java版本-->
@@ -208,7 +208,7 @@
     <!--curator版本-->
     <curator.version>5.9.0</curator.version>
     <!--wiremock版本-->
-    <wiremock.version>4.0.0-beta.15</wiremock.version>
+    <wiremock.version>4.0.0-beta.16</wiremock.version>
     <!--commons-net版本-->
     <commons-net.version>3.12.0</commons-net.version>
     <!--jSerialComm版本-->
