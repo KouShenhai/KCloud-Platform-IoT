@@ -37,10 +37,10 @@ image:https://gitee.com/laokouyun/KCloud-Platform-IoT/badge/fork.svg?theme=dark[
 image:https://gitcode.com/qq_39893313/KCloud-Platform-IoT/star/badge.svg?theme=dark[GitCode star,link=https://gitcode.com/qq_39893313/KCloud-Platform-IoT]
 
 image:https://img.shields.io/static/v1?label=Spring%20Framework&message=7.0.0&color=green[Spring Framework,link=https://spring.io/projects/spring-framework]
+image:https://img.shields.io/static/v1?label=Spring%20Security&message=7.0.0&color=blue[Spring Security,link=https://spring.io/projects/spring-security]
 image:https://img.shields.io/static/v1?label=Spring%20Boot&message=4.0.0&color=green[Spring Boot,link=https://spring.io/projects/spring-boot]
 image:https://img.shields.io/static/v1?label=Spring%20Cloud&message=2025.1.0&color=green[Spring Cloud,link=https://spring.io/projects/spring-cloud]
 image:https://img.shields.io/static/v1?label=Spring%20Cloud%20Alibaba&message=2025.0.0.0&color=orange[Spring Cloud Alibaba,link=https://github.com/alibaba/spring-cloud-alibaba]
-image:https://img.shields.io/static/v1?label=OAuth%202.1&message=7.0.0&color=blue[OAuth 2.1,link=https://spring.io/projects/spring-authorization-server]
 
 image:https://img.shields.io/badge/GraalVM-25.0.0-blue.svg[GraalVM,link=https://www.graalvm.org/downloads]
 image:https://img.shields.io/badge/Maven-3.9.11-blue[Maven,link=https://maven.apache.org/]
@@ -153,10 +153,10 @@ image::doc/image/老寇IoT云平台业务架构图.png[架构图,align=center]
 |组件                         |版本
 
 |Spring Boot                 |4.0.0
+|Spring Security             |7.0.0
 |Spring Cloud                |2025.1.0
 |Spring Cloud Alibaba        |2025.0.0.0
-|Spring Boot Admin           |3.5.5
-|Spring Authorization Server |7.0.0
+|Spring Boot Admin           |3.5.6
 |Mybatis Plus                |3.5.14
 |Nacos                       |3.1.0
 |gRPC                        |1.76.0
@@ -178,7 +178,7 @@ image::doc/image/老寇IoT云平台业务架构图.png[架构图,align=center]
 
 - 配置中心&服务注册&发现：Nacos
 - API网关：Spring Cloud Gateway
-- 认证授权：Spring Security OAuth2 Authorization Server
+- 认证授权：Spring Security
 - 远程调用：gRPC
 - 客户端请求：OkHttp & HttpClient & WebClient & RestClient
 - 负载均衡：Spring Cloud Loadbalancer
