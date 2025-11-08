@@ -17,9 +17,6 @@
 
 package org.laokou.auth.gatewayimpl.rpc;
 
-import org.laokou.common.i18n.common.exception.BizException;
-import org.laokou.common.i18n.common.exception.StatusCode;
-import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.stereotype.Component;
 
 /**

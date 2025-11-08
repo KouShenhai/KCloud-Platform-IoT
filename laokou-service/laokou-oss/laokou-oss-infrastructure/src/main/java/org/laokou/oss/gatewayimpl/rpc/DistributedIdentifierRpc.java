@@ -16,6 +16,7 @@
  */
 
 package org.laokou.oss.gatewayimpl.rpc;
+
 import org.springframework.stereotype.Component;
 
 /**

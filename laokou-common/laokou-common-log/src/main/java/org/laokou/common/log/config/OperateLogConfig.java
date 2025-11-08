@@ -38,8 +38,8 @@ public class OperateLogConfig {
 	}
 
 	@Bean
-	IdGenerator distributedIdentifierGenerator(DistributedIdentifierRpc distributedIdentifierRpc) {
-		return distributedIdentifierRpc::getId;
+	IdGenerator distributedIdentifierGenerator() {
+		return System::currentTimeMillis;
 	}
 
 	@Bean

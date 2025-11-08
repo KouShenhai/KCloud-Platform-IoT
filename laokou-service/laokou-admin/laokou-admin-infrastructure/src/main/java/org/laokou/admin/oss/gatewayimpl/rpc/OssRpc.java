@@ -16,18 +16,13 @@
  */
 
 package org.laokou.admin.oss.gatewayimpl.rpc;
-import org.laokou.oss.api.OssUploadCO;
+
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author laokou
  */
 @Component
 public class OssRpc {
-
-	public OssUploadCO uploadOss(MultipartFile file, String fileType) throws Exception {
-		return null;
-	}
 
 }

@@ -75,7 +75,7 @@ public final class ThreadUtils {
 
 	public static ScheduledExecutorService newScheduledThreadPool(int coreSize) {
 		return Executors.newScheduledThreadPool(coreSize,
-				new ThreadFactoryBuilder().setNameFormat("laokou-scheduled-").build());
+				new ThreadFactoryBuilder().setNameFormat("iot-scheduled-").build());
 	}
 
 }

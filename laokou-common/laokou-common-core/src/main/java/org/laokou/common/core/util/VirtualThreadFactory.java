@@ -17,7 +17,7 @@
 
 package org.laokou.common.core.util;
 
-import org.springframework.lang.NonNull;
+import org.jspecify.annotations.NonNull;
 
 import java.util.concurrent.ThreadFactory;
 
@@ -34,7 +34,7 @@ final class VirtualThreadFactory implements ThreadFactory {
 	public Thread newThread(@NonNull Runnable r) {
 		Thread thread = new Thread(r);
 		return Thread.ofVirtual()
-			.name("laokou-virtual-" + thread.getName())
+			.name("iot-virtual-" + thread.getName())
 			.inheritInheritableThreadLocals(true)
 			.unstarted(r);
 	}

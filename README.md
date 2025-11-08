@@ -36,11 +36,11 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 
 <a href="https://gitcode.com/qq_39893313/KCloud-Platform-IoT" target="_blank"><img src="https://gitcode.com/qq_39893313/KCloud-Platform-IoT/star/badge.svg?theme=dark" alt="GitCode star"/></a>
 
-<a href="https://spring.io/projects/spring-framework" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Framework&message=6.2.12&color=green" alt="Spring Framework"/></a>
+<a href="https://spring.io/projects/spring-framework" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Framework&message=7.0.0&color=green" alt="Spring Framework"/></a>
 <a href="https://spring.io/projects/spring-boot" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Boot&message=4.0.0&color=green" alt="Spring Boot"/></a>
 <a href="https://spring.io/projects/spring-cloud" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Cloud&message=2025.1.0&color=green" alt="Spring Cloud"/></a>
 <a href="https://github.com/alibaba/spring-cloud-alibaba" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Cloud%20Alibaba&message=2025.0.0.0&color=orange" alt="Spring Cloud Alibaba"/></a>
-<a href="https://spring.io/projects/spring-authorization-server" target="_blank"><img src="https://img.shields.io/static/v1?label=OAuth%202.1&message=1.5.3&color=blue" alt="OAuth 2.1"/></a>
+<a href="https://spring.io/projects/spring-authorization-server" target="_blank"><img src="https://img.shields.io/static/v1?label=OAuth%202.1&message=7.0.0&color=blue" alt="OAuth 2.1"/></a>
 
 <a href="https://www.graalvm.org/downloads" target="_blank"><img src="https://img.shields.io/badge/GraalVM-25.0.0-blue.svg" alt="GraalVM"/></a>
 <a href="https://maven.apache.org/" target="_blank"><img src="https://img.shields.io/badge/Maven-3.9.11-blue" alt="Maven"/></a>
@@ -145,10 +145,10 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 |        Spring Cloud         |  2025.1.0   |
 |    Spring Cloud Alibaba     | 2025.0.0.0  |
 |      Spring Boot Admin      |    3.5.5    |
-| Spring Authorization Server |    1.5.3    |
+| Spring Authorization Server |    7.0.0    |
 |        Mybatis Plus         |   3.5.14    |
 |            Nacos            |    3.1.0    |
-|            gRpc             |   1.76.0    |
+|            gRPC             |   1.76.0    |
 |            Redis            |    8.0.1    |
 |        Elasticsearch        |    9.2.0    |
 |            Netty            | 4.2.7.Final |
@@ -159,7 +159,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 |         TimescaleDB         |     17      |
 |          TDengine           |   3.3.5.0   |
 |          Liquibase          |   4.30.0    |
-|          Snail Job          |    1.6.0    |
+|          Snail Job          |    1.8.0    |
 |          Sentinel           |    1.8.9    |
 
 #### 🍺 相关技术
@@ -167,7 +167,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 - 配置中心&服务注册&发现：Nacos
 - API网关：Spring Cloud Gateway
 - 认证授权：Spring Security OAuth2 Authorization Server
-- 远程调用：Dubbo
+- 远程调用：gRPC
 - 客户端请求：OkHttp & HttpClient & WebClient & RestClient
 - 负载均衡：Spring Cloud Loadbalancer
 - 服务熔断&降级&限流：Sentinel

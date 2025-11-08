@@ -18,12 +18,9 @@
 package org.laokou.oss.convertor;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.mybatisplus.mapper.BaseDO;
 import org.laokou.common.oss.model.BaseOss;
 import org.laokou.common.oss.model.FileInfo;
 import org.laokou.common.oss.model.StoragePolicyEnum;
-import org.laokou.oss.dto.OssUploadCmd;
 import org.laokou.oss.dto.clientobject.OssUploadCO;
 import org.laokou.oss.dto.domainevent.OssUploadEvent;
 import org.laokou.oss.factory.OssDomainFactory;

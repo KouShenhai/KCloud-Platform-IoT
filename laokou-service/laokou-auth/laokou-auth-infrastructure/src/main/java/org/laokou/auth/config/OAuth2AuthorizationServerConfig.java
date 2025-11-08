@@ -23,7 +23,6 @@ import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.admin.NewTopic;
-import org.laokou.auth.gatewayimpl.rpc.DistributedIdentifierRpc;
 import org.laokou.auth.model.CaptchaValidator;
 import org.laokou.auth.model.MqEnum;
 import org.laokou.auth.model.PasswordValidator;
@@ -223,8 +222,8 @@ class OAuth2AuthorizationServerConfig {
 	 * @return 分布式ID生成器
 	 */
 	@Bean
-	IdGenerator distributedIdentifierGenerator(DistributedIdentifierRpc distributedIdentifierRpc) {
-		return distributedIdentifierRpc::getId;
+	IdGenerator distributedIdentifierGenerator() {
+		return System::currentTimeMillis;
 	}
 
 	/**

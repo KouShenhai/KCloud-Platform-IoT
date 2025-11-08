@@ -16,6 +16,7 @@
  */
 
 package org.laokou.common.log.rpc;
+
 import org.springframework.stereotype.Component;
 
 import java.util.List;
