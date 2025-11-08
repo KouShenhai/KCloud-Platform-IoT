@@ -18,13 +18,9 @@
 package org.laokou.oss.convertor;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.apache.dubbo.rpc.RpcContext;
-import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.mybatisplus.mapper.BaseDO;
 import org.laokou.common.oss.model.BaseOss;
 import org.laokou.common.oss.model.FileInfo;
 import org.laokou.common.oss.model.StoragePolicyEnum;
-import org.laokou.oss.dto.OssUploadCmd;
 import org.laokou.oss.dto.clientobject.OssUploadCO;
 import org.laokou.oss.dto.domainevent.OssUploadEvent;
 import org.laokou.oss.factory.OssDomainFactory;
@@ -59,18 +55,6 @@ public final class OssConvertor {
 		return oss;
 	}
 
-	public static OssUploadCmd toAssembler(org.laokou.oss.api.OssUploadCmd cmd) {
-		return new OssUploadCmd(cmd.getFileType(), cmd.getBuffer().toByteArray(), cmd.getName(), cmd.getExtName(),
-				cmd.getContentType(), cmd.getSize());
-	}
-
-	public static org.laokou.oss.api.OssUploadCO toClientObject(OssUploadCO co) {
-		if (ObjectUtils.isNull(co)) {
-			return org.laokou.oss.api.OssUploadCO.newBuilder().build();
-		}
-		return org.laokou.oss.api.OssUploadCO.newBuilder().setId(co.getId()).setUrl(co.getUrl()).build();
-	}
-
 	public static OssUploadCO toClientObject(OssA ossA) {
 		OssUploadCO ossUploadCO = new OssUploadCO();
 		ossUploadCO.setUrl(ossA.getUrl());
@@ -79,12 +63,10 @@ public final class OssConvertor {
 	}
 
 	public static OssUploadEvent toDomainEvent(OssA ossA) {
-		String creator = RpcContext.getServerAttachment().getAttachment(BaseDO.CREATOR);
-		String tenantId = RpcContext.getServerAttachment().getAttachment(BaseDO.TENANT_ID);
 		FileFormatEnum fileFormatEnum = ossA.getFileFormatEnum();
 		return new OssUploadEvent(ossA.getId(), ossA.getName(), ossA.getMd5(), ossA.getUrl(), ossA.getSize(),
-				ossA.getOssId(), ossA.getContentType(), ossA.getExtName(), ossA.getCreateTime(), Long.valueOf(tenantId),
-				Long.valueOf(creator), fileFormatEnum.getCode());
+				ossA.getOssId(), ossA.getContentType(), ossA.getExtName(), ossA.getCreateTime(), Long.valueOf(0),
+				Long.valueOf(1), fileFormatEnum.getCode());
 	}
 
 	public static FileInfo toFileInfo(byte[] buffer, long size, String contentType, String name, String extName) {

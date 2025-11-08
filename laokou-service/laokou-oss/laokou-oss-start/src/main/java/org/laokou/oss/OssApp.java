@@ -19,7 +19,6 @@ package org.laokou.oss;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.laokou.common.core.annotation.EnableWarmUp;
 import org.laokou.common.i18n.util.SslUtils;
 import org.springframework.boot.WebApplicationType;
@@ -42,7 +41,6 @@ import java.security.NoSuchAlgorithmException;
  */
 @Slf4j
 @EnableWarmUp
-@EnableDubbo
 @EnableScheduling
 @EnableAspectJAutoProxy
 @EnableEncryptableProperties
@@ -51,7 +49,7 @@ import java.security.NoSuchAlgorithmException;
 public class OssApp {
 
 	// @formatter:off
-	public static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
+	static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
 		StopWatch stopWatch = new StopWatch("Oss应用程序");
 		stopWatch.start();
 		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "9091")));

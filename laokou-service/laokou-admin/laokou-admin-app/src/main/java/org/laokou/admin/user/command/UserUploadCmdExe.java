@@ -18,7 +18,6 @@
 package org.laokou.admin.user.command;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.oss.convertor.OssConvertor;
 import org.laokou.admin.oss.dto.clientobject.OssUploadCO;
 import org.laokou.admin.user.dto.UserUploadAvatarCmd;
 import org.laokou.admin.oss.gatewayimpl.rpc.OssRpc;
@@ -37,7 +36,9 @@ public class UserUploadCmdExe {
 
 	@CommandLog
 	public Result<OssUploadCO> execute(UserUploadAvatarCmd cmd) throws Exception {
-		return Result.ok(OssConvertor.toClientObject(ossRpc.uploadOss(cmd.getFile(), "image")));
+		// return Result.ok(OssConvertor.toClientObject(ossRpc.uploadOss(cmd.getFile(),
+		// "image")));
+		return null;
 	}
 
 }

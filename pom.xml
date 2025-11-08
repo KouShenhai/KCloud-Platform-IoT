@@ -108,15 +108,13 @@
     <!--spring-framework版本-->
     <spring-framework.version>7.0.0-RC3</spring-framework.version>
     <!--spring-data版本-->
-    <spring-data.version>2025.0.5</spring-data.version>
+    <spring-data.version>2025.1.0-RC2</spring-data.version>
     <!--spring-security版本-->
     <spring-security.version>7.0.0-RC1</spring-security.version>
     <!--spring-ai版本-->
     <spring-ai.version>1.0.3</spring-ai.version>
     <!--spring-ai-alibaba版本-->
     <spring-ai-alibaba.version>1.0.0.4</spring-ai-alibaba.version>
-    <!--dubbo版本-->
-    <dubbo.version>3.3.5</dubbo.version>
     <!--springdoc-openapi版本-->
     <springdoc-openapi.version>3.0.0-RC1</springdoc-openapi.version>
     <!--testcontainers版本-->
@@ -223,16 +221,10 @@
     <mysql-connector-j.version>9.5.0</mysql-connector-j.version>
     <!--modbus4j版本-->
     <modbus4j.version>v3.1.0</modbus4j.version>
-    <!--mongodb版本-->
-    <mongodb.version>4.5.4</mongodb.version>
-    <!--fastjson版本-->
-    <fastjson.version>2.0.60</fastjson.version>
     <!--swagger-annotations-jakarta版本-->
     <swagger-annotations-jakarta.version>2.2.40</swagger-annotations-jakarta.version>
     <!--jsqlparser版本-->
     <jsqlparser.version>5.2</jsqlparser.version>
-    <!--gson版本-->
-    <gson.version>2.13.2</gson.version>
     <!--spotbugs版本-->
     <spotbugs.version>4.9.8</spotbugs.version>
     <!--docker主机-->
@@ -330,16 +322,6 @@
       </dependency>
       <!-- =============================== 定义 Spring Ai Alibaba 版本 =============================== -->
 
-      <!-- =============================== 定义 Dubbo 版本 =============================== -->
-      <dependency>
-        <groupId>org.apache.dubbo</groupId>
-        <artifactId>dubbo-bom</artifactId>
-        <version>${dubbo.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <!-- =============================== 定义 Dubbo 版本 =============================== -->
-
       <!-- =============================== 定义 Springdoc Openapi 版本 =============================== -->
       <dependency>
         <groupId>org.springdoc</groupId>
@@ -420,7 +402,7 @@
       </dependency>
       <!-- =============================== 定义 Netty 版本 =============================== -->
 
-      <!-- =============================== 定义 GRpc 版本 =============================== -->
+      <!-- =============================== 定义 gRPC 版本 =============================== -->
       <dependency>
         <groupId>io.grpc</groupId>
         <artifactId>grpc-bom</artifactId>
@@ -428,7 +410,7 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-      <!-- =============================== 定义 GRpc 版本 =============================== -->
+      <!-- =============================== 定义 gRPC 版本 =============================== -->
 
       <!-- =============================== 定义 Jackson 版本 =============================== -->
       <dependency>
@@ -457,20 +439,6 @@
         <version>${redisson.version}</version>
       </dependency>
       <!-- =============================== 定义 Redisson 版本 =============================== -->
-
-      <!-- =============================== Fastjson =============================== -->
-      <dependency>
-        <groupId>com.alibaba</groupId>
-        <artifactId>fastjson</artifactId>
-        <version>${fastjson.version}</version>
-      </dependency>
-      <!-- =============================== Fastjson =============================== -->
-
-      <dependency>
-        <groupId>com.google.code.gson</groupId>
-        <artifactId>gson</artifactId>
-        <version>${gson.version}</version>
-      </dependency>
 
       <dependency>
         <groupId>com.github.infiniteautomation</groupId>

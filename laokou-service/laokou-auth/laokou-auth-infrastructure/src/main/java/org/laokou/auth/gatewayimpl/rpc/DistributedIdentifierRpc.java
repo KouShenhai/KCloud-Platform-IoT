@@ -17,13 +17,6 @@
 
 package org.laokou.auth.gatewayimpl.rpc;
 
-import org.apache.dubbo.config.annotation.DubboReference;
-import org.laokou.common.i18n.common.exception.BizException;
-import org.laokou.common.i18n.common.exception.StatusCode;
-import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.distributed.identifier.api.DistributedIdentifierCmd;
-import org.laokou.distributed.identifier.api.DistributedIdentifierResult;
-import org.laokou.distributed.identifier.api.DistributedIdentifierServiceI;
 import org.springframework.stereotype.Component;
 
 /**
@@ -31,19 +24,5 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class DistributedIdentifierRpc {
-
-	@DubboReference(group = "iot-distributed-identifier", version = "v1",
-			interfaceClass = DistributedIdentifierServiceI.class,
-			mock = "org.laokou.auth.gatewayimpl.rpc.DistributedIdentifierMock", loadbalance = "adaptive", retries = 3)
-	private DistributedIdentifierServiceI distributedIdentifierServiceI;
-
-	public Long getId() {
-		DistributedIdentifierResult result = distributedIdentifierServiceI
-			.generateSnowflake(DistributedIdentifierCmd.newBuilder().build());
-		if (ObjectUtils.equals(StatusCode.OK, result.getCode())) {
-			return result.getData();
-		}
-		throw new BizException(result.getCode(), result.getMsg());
-	}
 
 }

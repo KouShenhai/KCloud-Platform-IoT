@@ -50,22 +50,3 @@ spring:
         file-extension: yaml
         group: ${NACOS-GROUP}
         refresh-enabled: true
-
-dubbo:
-  registry:
-    address: nacos://${NACOS-DISCOVERY-ADDRESS}?username=${NACOS-USERNAME}&password=${NACOS-PASSWORD}
-    register-mode: instance
-    parameters:
-      register-consumer-url: true
-      namespace: ${NACOS-NAMESPACE}
-    group: DUBBO_${NACOS-GROUP}
-    check: false
-  protocol:
-    name: tri
-    port: -1
-  application:
-    name: dubbo-${spring.application.name}
-    logger: slf4j
-    qos-port: ${QOS_PORT:1114}
-  consumer:
-    check: false
