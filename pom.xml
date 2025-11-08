@@ -108,7 +108,7 @@
     <!--spring-framework版本-->
     <spring-framework.version>7.0.0-RC3</spring-framework.version>
     <!--spring-data版本-->
-    <spring-data.version>2025.1.0-RC2</spring-data.version>
+    <spring-data.version>2025.1.0-SNAPSHOT</spring-data.version>
     <!--spring-security版本-->
     <spring-security.version>7.0.0-RC1</spring-security.version>
     <!--spring-ai版本-->
