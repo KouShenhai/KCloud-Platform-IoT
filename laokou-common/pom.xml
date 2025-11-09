@@ -84,6 +84,7 @@
     <module>laokou-common-modbus4j</module>
     <module>laokou-common-testcontainers</module>
     <module>laokou-common-mongodb</module>
+    <module>laokou-common-grpc</module>
   </modules>
 
 </project>
