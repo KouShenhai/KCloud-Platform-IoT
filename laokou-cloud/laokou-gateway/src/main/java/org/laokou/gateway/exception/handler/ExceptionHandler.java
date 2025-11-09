@@ -19,8 +19,7 @@ package org.laokou.gateway.exception.handler;
 
 import com.alibaba.csp.sentinel.slots.block.BlockException;
 import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.NotNull;
-import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.reactor.util.ReactiveResponseUtils;
@@ -49,9 +48,9 @@ public class ExceptionHandler implements ErrorWebExceptionHandler, Ordered {
 	 * @param e 异常
 	 * @return 响应结果
 	 */
-	@NotNull
+	@NonNull
 	@Override
-	public Mono<Void> handle(@Nullable ServerWebExchange exchange, @Nullable Throwable e) {
+	public Mono<Void> handle(@NonNull ServerWebExchange exchange, @NonNull Throwable e) {
 		try {
 			// 国际化
 			ReactiveI18nUtils.set(exchange);

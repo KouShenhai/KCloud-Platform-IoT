@@ -46,7 +46,7 @@ import java.security.NoSuchAlgorithmException;
 @EnableEncryptableProperties
 @EnableConfigurationProperties
 @SpringBootApplication(scanBasePackages = "org.laokou")
-public class OssApp {
+class OssApp {
 
 	// @formatter:off
 	static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {

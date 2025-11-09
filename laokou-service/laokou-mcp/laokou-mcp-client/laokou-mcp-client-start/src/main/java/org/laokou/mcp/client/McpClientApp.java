@@ -43,10 +43,10 @@ import java.net.UnknownHostException;
 @EnableAspectJAutoProxy
 @SpringBootApplication(scanBasePackages = "org.laokou")
 @RequiredArgsConstructor
-public class McpClientApp {
+class McpClientApp {
 
 	// @formatter:off
-	public static void main(String[] args) throws UnknownHostException {
+	static void main(String[] args) throws UnknownHostException {
 		StopWatch stopWatch = new StopWatch("Mcp-Client应用程序");
 		stopWatch.start();
 		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "9096")));

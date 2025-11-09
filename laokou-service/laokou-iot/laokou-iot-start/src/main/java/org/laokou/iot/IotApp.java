@@ -56,10 +56,10 @@ import java.security.NoSuchAlgorithmException;
 @EnableConfigurationProperties
 @MapperScan(basePackages = "org.laokou.iot.**.gatewayimpl.database")
 @SpringBootApplication(scanBasePackages = "org.laokou")
-public class IotApp {
+class IotApp {
 
 	// @formatter:off
-	public static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
+	static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
 		StopWatch stopWatch = new StopWatch("IoT应用程序");
 		stopWatch.start();
 		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "10005")));

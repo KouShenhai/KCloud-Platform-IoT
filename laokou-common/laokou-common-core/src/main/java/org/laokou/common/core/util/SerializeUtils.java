@@ -17,8 +17,7 @@
 
 package org.laokou.common.core.util;
 
-import org.jspecify.annotations.Nullable;
-
+import org.jspecify.annotations.NonNull;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -38,10 +37,7 @@ public final class SerializeUtils {
 	 * @param object the object to serialize
 	 * @return an array of bytes representing the object in a portable fashion
 	 */
-	@Nullable public static byte[] serialize(@Nullable Object object) {
-		if (object == null) {
-			return null;
-		}
+	public static byte[] serialize(@NonNull Object object) {
 		ByteArrayOutputStream bos = new ByteArrayOutputStream(1024);
 		try (ObjectOutputStream oos = new ObjectOutputStream(bos)) {
 			oos.writeObject(object);
@@ -58,10 +54,7 @@ public final class SerializeUtils {
 	 * @param bytes a serialized object
 	 * @return the result of deserializing the bytes
 	 */
-	@Nullable public static Object deserialize(@Nullable byte[] bytes) {
-		if (bytes == null) {
-			return null;
-		}
+	public static Object deserialize(byte @NonNull [] bytes) {
 		try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(bytes))) {
 			return ois.readObject();
 		}

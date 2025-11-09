@@ -56,7 +56,7 @@ import java.security.NoSuchAlgorithmException;
 @EnableAspectJAutoProxy
 @MapperScan(basePackages = "org.laokou.admin.**.gatewayimpl.database")
 @SpringBootApplication(scanBasePackages = "org.laokou")
-public class AdminApp {
+class AdminApp {
 
 	// @formatter:off
 	static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {

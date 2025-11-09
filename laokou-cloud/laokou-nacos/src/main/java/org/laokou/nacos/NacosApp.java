@@ -47,7 +47,7 @@ import static com.alibaba.nacos.sys.env.Constants.STANDALONE_MODE_PROPERTY_NAME;
 @Slf4j
 @SpringBootApplication
 @EnableEncryptableProperties
-public class NacosApp {
+class NacosApp {
 
 	static void main(String[] args) {
 		// @formatter:off

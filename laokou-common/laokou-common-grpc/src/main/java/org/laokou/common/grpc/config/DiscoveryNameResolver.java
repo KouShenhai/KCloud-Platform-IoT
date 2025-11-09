@@ -143,10 +143,12 @@ final class DiscoveryNameResolver extends NameResolver {
 	}
 
 	private String getServiceConfig(List<ServiceInstance> newServiceInstanceList) {
-		for (ServiceInstance serviceInstance : newServiceInstanceList) {
-			return serviceInstance.getMetadata().getOrDefault("grpc_service_config", "");
+		if (CollectionExtUtils.isEmpty(newServiceInstanceList)) {
+			return "";
 		}
-		return "";
+		return newServiceInstanceList.stream()
+			.map(item -> item.getMetadata().getOrDefault("grpc_service_config", ""))
+			.collect(Collectors.joining(","));
 	}
 
 	private List<EquivalentAddressGroup> toAddresses(List<ServiceInstance> newServiceInstanceList) {

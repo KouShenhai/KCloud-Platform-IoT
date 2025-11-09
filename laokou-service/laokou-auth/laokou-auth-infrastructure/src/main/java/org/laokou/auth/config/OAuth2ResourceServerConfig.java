@@ -46,12 +46,11 @@ class OAuth2ResourceServerConfig {
 	 * @param oAuth2ResourceServerProperties OAuth2配置文件
 	 * @param springUtils Spring工具类
 	 * @return 认证过滤器
-	 * @throws Exception 异常
 	 */
 	@Bean
 	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http,
 		SpringUtils springUtils,
-		OAuth2ResourceServerProperties oAuth2ResourceServerProperties) throws Exception {
+		OAuth2ResourceServerProperties oAuth2ResourceServerProperties)  {
 		return http
 			.headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer
 				.httpStrictTransportSecurity(hsts -> hsts

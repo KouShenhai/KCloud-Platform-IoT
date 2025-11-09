@@ -52,10 +52,10 @@ import java.security.NoSuchAlgorithmException;
 @EnableAspectJAutoProxy
 @SpringBootApplication(scanBasePackages = "org.laokou")
 @MapperScan(basePackages = "org.laokou.generator.**.gatewayimpl.database")
-public class GeneratorApp {
+class GeneratorApp {
 
 	// @formatter:off
-	public static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
+	static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
 		StopWatch stopWatch = new StopWatch("Generator应用程序");
 		stopWatch.start();
 		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "8086")));
