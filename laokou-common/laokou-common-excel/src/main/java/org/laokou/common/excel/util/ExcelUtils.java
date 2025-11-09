@@ -28,7 +28,7 @@ import com.google.common.collect.Lists;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.util.CollectionUtils;
+import org.laokou.common.core.util.CollectionExtUtils;
 import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.excel.validator.ExcelValidator;
 import org.laokou.common.i18n.common.constant.DateConstants;
@@ -230,7 +230,7 @@ public final class ExcelUtils {
 			else {
 				validates = ValidatorUtils.validate(excel, groups);
 			}
-			if (CollectionUtils.isNotEmpty(validates)) {
+			if (CollectionExtUtils.isNotEmpty(validates)) {
 				ERRORS.add(getTemplate(currentRowNum,
 						StringExtUtils.collectionToDelimitedString(validates, StringConstants.DROP)));
 			}
@@ -248,12 +248,12 @@ public final class ExcelUtils {
 		@Override
 		public void doAfterAllAnalysed(AnalysisContext context) {
 			// log.info("完成数据解析");
-			if (CollectionUtils.isNotEmpty(ERRORS)) {
+			if (CollectionExtUtils.isNotEmpty(ERRORS)) {
 				CACHED_DATA_LIST.clear();
 				throw new BizException("B_Excel_ImportFailed", "Excel导入失败【仅显示前100条】",
 						ERRORS.subList(0, Math.min(ERRORS.size(), 100)));
 			}
-			if (CollectionUtils.isNotEmpty(CACHED_DATA_LIST)) {
+			if (CollectionExtUtils.isNotEmpty(CACHED_DATA_LIST)) {
 				mybatisUtils.batch(CACHED_DATA_LIST, clazz, consumer);
 				// 清除数据
 				CACHED_DATA_LIST.clear();

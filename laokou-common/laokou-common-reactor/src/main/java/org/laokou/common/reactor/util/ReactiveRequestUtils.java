@@ -17,7 +17,7 @@
 
 package org.laokou.common.reactor.util;
 
-import org.laokou.common.core.util.CollectionUtils;
+import org.laokou.common.core.util.CollectionExtUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -97,7 +97,7 @@ public class ReactiveRequestUtils {
 	 */
 	public static boolean pathMatcher(String requestMethod, String requestURL, Map<String, Set<String>> uriMap) {
 		Set<String> urls = uriMap.get(requestMethod);
-		if (CollectionUtils.isEmpty(urls)) {
+		if (CollectionExtUtils.isEmpty(urls)) {
 			return false;
 		}
 		for (String url : urls) {

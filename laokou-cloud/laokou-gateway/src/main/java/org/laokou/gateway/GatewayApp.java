@@ -52,14 +52,14 @@ import java.util.concurrent.ExecutorService;
 @RequiredArgsConstructor
 @EnableAspectJAutoProxy
 @SpringBootApplication(scanBasePackages = "org.laokou")
-public class GatewayApp implements CommandLineRunner {
+class GatewayApp implements CommandLineRunner {
 
 	private final NacosRouteDefinitionRepository nacosRouteDefinitionRepository;
 
 	private final ExecutorService virtualThreadExecutor;
 
 	// @formatter:off
-	public static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
+	static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
 		StopWatch stopWatch = new StopWatch("Gateway应用程序");
 		stopWatch.start();
 		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "5555")));

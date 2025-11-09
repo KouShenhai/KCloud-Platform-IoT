@@ -21,6 +21,7 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.StringExtUtils;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,9 +32,9 @@ import java.util.List;
  *
  * @author laokou
  */
-public final class CollectionUtils {
+public final class CollectionExtUtils extends CollectionUtils {
 
-	private CollectionUtils() {
+	private CollectionExtUtils() {
 	}
 
 	/**
@@ -43,15 +44,6 @@ public final class CollectionUtils {
 	 */
 	public static boolean isNotEmpty(Collection<?> collection) {
 		return !isEmpty(collection);
-	}
-
-	/**
-	 * 判断集合为空.
-	 * @param collection 集合
-	 * @return 判断结果
-	 */
-	public static boolean isEmpty(Collection<?> collection) {
-		return org.springframework.util.CollectionUtils.isEmpty(collection);
 	}
 
 	/**

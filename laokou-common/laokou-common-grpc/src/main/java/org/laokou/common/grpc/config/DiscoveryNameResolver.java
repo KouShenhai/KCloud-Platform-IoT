@@ -22,17 +22,17 @@ import io.grpc.EquivalentAddressGroup;
 import io.grpc.NameResolver;
 import io.grpc.Status;
 import io.grpc.StatusOr;
+import org.laokou.common.core.util.CollectionExtUtils;
 import org.laokou.common.i18n.util.JacksonUtils;
+import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -91,7 +91,7 @@ final class DiscoveryNameResolver extends NameResolver {
 
 	public void refreshFromExternal() {
 		executorService.execute(() -> {
-			if (Objects.nonNull(listener)) {
+			if (ObjectUtils.isNotNull(listener)) {
 				resolve();
 			}
 		});
@@ -109,7 +109,7 @@ final class DiscoveryNameResolver extends NameResolver {
 	private List<ServiceInstance> resolveInternal() {
 		List<ServiceInstance> serviceInstances = serviceInstanceReference.get();
 		List<ServiceInstance> newServiceInstanceList = this.discoveryClient.getInstances(this.serviceName);
-		if (CollectionUtils.isEmpty(newServiceInstanceList)) {
+		if (CollectionExtUtils.isEmpty(newServiceInstanceList)) {
 			listener.onError(Status.UNAVAILABLE.withDescription("No servers found for " + serviceName));
 			return Collections.emptyList();
 		}
@@ -130,12 +130,12 @@ final class DiscoveryNameResolver extends NameResolver {
 		}
 		Set<String> oldSet = serviceInstances.stream().map(this::getAddressStr).collect(Collectors.toSet());
 		Set<String> newSet = newServiceInstanceList.stream().map(this::getAddressStr).collect(Collectors.toSet());
-		return !Objects.equals(oldSet, newSet);
+		return !ObjectUtils.equals(oldSet, newSet);
 	}
 
 	private ConfigOrError resolveServiceConfig(List<ServiceInstance> newServiceInstanceList) {
 		String serviceConfig = getServiceConfig(newServiceInstanceList);
-		if (StringUtils.hasText(serviceConfig)) {
+		if (StringExtUtils.hasText(serviceConfig)) {
 			return serviceConfigParser
 				.parseServiceConfig(JacksonUtils.toMap(serviceConfig, String.class, Object.class));
 		}
@@ -143,10 +143,12 @@ final class DiscoveryNameResolver extends NameResolver {
 	}
 
 	private String getServiceConfig(List<ServiceInstance> newServiceInstanceList) {
-		for (ServiceInstance serviceInstance : newServiceInstanceList) {
-			return serviceInstance.getMetadata().getOrDefault("grpc_service_config", "");
+		if (CollectionExtUtils.isEmpty(newServiceInstanceList)) {
+			return "";
 		}
-		return "";
+		return newServiceInstanceList.stream()
+			.map(item -> item.getMetadata().getOrDefault("grpc_service_config", ""))
+			.collect(Collectors.joining(","));
 	}
 
 	private List<EquivalentAddressGroup> toAddresses(List<ServiceInstance> newServiceInstanceList) {

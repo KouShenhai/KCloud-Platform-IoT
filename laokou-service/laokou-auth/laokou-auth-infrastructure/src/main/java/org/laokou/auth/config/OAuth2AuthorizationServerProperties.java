@@ -18,7 +18,7 @@
 package org.laokou.auth.config;
 
 import lombok.Data;
-import org.laokou.common.core.util.CollectionUtils;
+import org.laokou.common.core.util.CollectionExtUtils;
 import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
 import org.springframework.beans.factory.InitializingBean;
@@ -90,10 +90,10 @@ final class OAuth2AuthorizationServerProperties implements InitializingBean {
 		if (StringExtUtils.isEmpty(client.getRegistration().getClientId())) {
 			throw new IllegalStateException("Client id must not be empty.");
 		}
-		if (CollectionUtils.isEmpty(client.getRegistration().getClientAuthenticationMethods())) {
+		if (CollectionExtUtils.isEmpty(client.getRegistration().getClientAuthenticationMethods())) {
 			throw new IllegalStateException("Client authentication methods must not be empty.");
 		}
-		if (CollectionUtils.isEmpty(client.getRegistration().getAuthorizationGrantTypes())) {
+		if (CollectionExtUtils.isEmpty(client.getRegistration().getAuthorizationGrantTypes())) {
 			throw new IllegalStateException("Authorization grant types must not be empty.");
 		}
 	}

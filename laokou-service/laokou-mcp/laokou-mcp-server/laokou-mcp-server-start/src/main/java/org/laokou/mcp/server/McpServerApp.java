@@ -31,10 +31,10 @@ import java.net.UnknownHostException;
  */
 @Slf4j
 @SpringBootApplication
-public class McpServerApp {
+class McpServerApp {
 
 	// @formatter:off
-	public static void main(String[] args) throws UnknownHostException {
+	static void main(String[] args) throws UnknownHostException {
 		StopWatch stopWatch = new StopWatch("Mcp-Server应用程序");
 		stopWatch.start();
 		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "9095")));

@@ -18,7 +18,7 @@
 package org.laokou.iot.thingModel.model;
 
 import lombok.Data;
-import org.laokou.common.core.util.CollectionUtils;
+import org.laokou.common.core.util.CollectionExtUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.springframework.util.ObjectUtils;
@@ -56,7 +56,7 @@ public class DecimalType implements Serializable {
 				list.add("小数位长度必须为1-4");
 			}
 		}
-		return CollectionUtils.isEmpty(list) ? ParamValidator.validate()
+		return CollectionExtUtils.isEmpty(list) ? ParamValidator.validate()
 				: ParamValidator.invalidate(String.join(StringConstants.DROP, list));
 	}
 

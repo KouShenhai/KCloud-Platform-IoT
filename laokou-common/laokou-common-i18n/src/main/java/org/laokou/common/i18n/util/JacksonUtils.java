@@ -17,7 +17,6 @@
 
 package org.laokou.common.i18n.util;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import tools.jackson.databind.DeserializationFeature;
 import tools.jackson.databind.JavaType;
 import tools.jackson.databind.JsonNode;
@@ -29,7 +28,6 @@ import tools.jackson.databind.type.MapType;
 import tools.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
@@ -138,11 +136,11 @@ public final class JacksonUtils {
 	 * @param <T> 泛型
 	 * @return 对象集合
 	 */
-	public static <T> List<T> toList(String json, Class<T> clazz) throws JsonProcessingException {
+	public static <T> List<T> toList(String json, Class<T> clazz) {
 		return MAPPER.readValue(json, listType(clazz));
 	}
 
-	public static <T> List<T> toList(File file, Class<T> clazz) throws IOException {
+	public static <T> List<T> toList(File file, Class<T> clazz) {
 		return MAPPER.readValue(file, listType(clazz));
 	}
 

@@ -26,7 +26,7 @@ import io.vertx.mqtt.messages.MqttAuthenticationExchangeMessage;
 import io.vertx.mqtt.messages.MqttPublishMessage;
 import io.vertx.mqtt.messages.codes.MqttAuthenticateReasonCode;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.util.CollectionUtils;
+import org.laokou.common.core.util.CollectionExtUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.common.network.mqtt.client.handler.MqttMessageHandler;
@@ -264,7 +264,7 @@ public final class VertxMqttClient {
 	}
 
 	private void checkTopic(List<String> topics) {
-		if (CollectionUtils.isEmpty(topics)) {
+		if (CollectionExtUtils.isEmpty(topics)) {
 			throw new IllegalArgumentException("【Vertx-MQTT-Client】 => Topics list cannot be empty");
 		}
 	}

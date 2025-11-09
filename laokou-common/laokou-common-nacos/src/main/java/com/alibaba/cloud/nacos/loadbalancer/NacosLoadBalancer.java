@@ -55,7 +55,7 @@ import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import com.alibaba.cloud.nacos.util.InetIPv6Utils;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.util.CollectionUtils;
+import org.laokou.common.core.util.CollectionExtUtils;
 import org.laokou.common.core.util.RegexUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -220,7 +220,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 					String cluster = serviceInstance.getMetadata().get("nacos.cluster");
 					return com.alibaba.cloud.commons.lang.StringUtils.equals(cluster, clusterName);
 				}).toList();
-				if (!CollectionUtils.isEmpty(sameClusterInstances)) {
+				if (!CollectionExtUtils.isEmpty(sameClusterInstances)) {
 					instancesToChoose = sameClusterInstances;
 				}
 			}

@@ -91,7 +91,7 @@ public class OAuth2ResourceServerConfig {
 	@ConditionalOnMissingBean(SecurityFilterChain.class)
 	SecurityFilterChain resourceFilterChain(OAuth2OpaqueTokenIntrospector oAuth2OpaqueTokenIntrospector,
                                             SpringUtils springUtils, OAuth2ResourceServerProperties oAuth2ResourceServerProperties, HttpSecurity http)
-			throws Exception {
+			{
 		return http
 			.headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer
 				.httpStrictTransportSecurity(hsts -> hsts

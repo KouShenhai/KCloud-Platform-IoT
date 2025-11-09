@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.laokou.common.core.util.CollectionUtils;
+import org.laokou.common.core.util.CollectionExtUtils;
 import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.mybatisplus.mapper.CrudMapper;
@@ -83,7 +83,7 @@ public class MybatisUtils {
 	 */
 	public <DO, MAPPER extends CrudMapper<?, ?, DO>> void batch(List<DO> dataList, int partitionSize, int batchSize,
 			int timeout, Class<MAPPER> clazz, String ds, BiConsumer<MAPPER, DO> consumer) {
-		if (CollectionUtils.isNotEmpty(dataList)) {
+		if (CollectionExtUtils.isNotEmpty(dataList)) {
 			// 数据分组
 			List<List<DO>> partition = Lists.partition(dataList, partitionSize);
 			AtomicBoolean rollback = new AtomicBoolean(false);

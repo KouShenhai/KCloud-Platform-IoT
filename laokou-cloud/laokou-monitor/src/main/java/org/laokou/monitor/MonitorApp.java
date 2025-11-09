@@ -39,10 +39,10 @@ import java.security.NoSuchAlgorithmException;
 @EnableDiscoveryClient
 @SpringBootApplication
 @EnableEncryptableProperties
-public class MonitorApp {
+class MonitorApp {
 
 	// @formatter:off
-	public static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
+	static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
 		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "5000")));
 		// 配置关闭nacos日志，因为nacos的log4j2导致本项目的日志不输出的问题
 		System.setProperty("nacos.logging.default.config.enabled", "false");

@@ -17,7 +17,7 @@
 
 package org.laokou.gateway.util;
 
-import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 import org.laokou.common.i18n.util.LocaleUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.common.reactor.util.ReactiveRequestUtils;
@@ -41,8 +41,7 @@ public class ReactiveI18nUtils {
 	 * 请求头数据写入本地线程.
 	 * @param exchange 服务网络交换机
 	 */
-	public static void set(@Nullable ServerWebExchange exchange) {
-		assert exchange != null;
+	public static void set(@NonNull ServerWebExchange exchange) {
 		ServerHttpRequest request = exchange.getRequest();
 		String language = ReactiveRequestUtils.getParamValue(request, "lang");
 		language = StringExtUtils.isNotEmpty(language) ? language

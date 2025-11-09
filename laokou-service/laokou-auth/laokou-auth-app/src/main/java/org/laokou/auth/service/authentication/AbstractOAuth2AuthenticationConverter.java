@@ -20,7 +20,7 @@ package org.laokou.auth.service.authentication;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.model.OAuth2Constants;
-import org.laokou.common.core.util.CollectionUtils;
+import org.laokou.common.core.util.CollectionExtUtils;
 import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.i18n.util.MessageUtils;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
@@ -65,7 +65,7 @@ abstract class AbstractOAuth2AuthenticationConverter implements AuthenticationCo
 		MultiValueMap<String, String> parameters = MapUtils.getParameterMap(request.getParameterMap());
 		List<String> scopes = parameters.get(OAuth2ParameterNames.SCOPE);
 		// 判断scopes
-		if (CollectionUtils.isNotEmpty(scopes) && scopes.size() != 1) {
+		if (CollectionExtUtils.isNotEmpty(scopes) && scopes.size() != 1) {
 			throw OAuth2ExceptionHandler.getOAuth2AuthenticationException(OAuth2Constants.INVALID_SCOPE,
 					MessageUtils.getMessage(OAuth2Constants.INVALID_SCOPE), OAuth2ExceptionHandler.ERROR_URL);
 		}

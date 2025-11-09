@@ -66,7 +66,7 @@ public final class ConvertUtils extends BeanUtils {
 	 * @return 目标集合
 	 */
 	public static <T> List<T> sourceToTarget(Collection<?> sourceList, Class<T> target) {
-		if (CollectionUtils.isEmpty(sourceList)) {
+		if (CollectionExtUtils.isEmpty(sourceList)) {
 			return Collections.emptyList();
 		}
 		return sourceList.stream().map(s -> sourceToTarget(s, target)).toList();

@@ -22,7 +22,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
 import org.laokou.common.core.util.AddressUtils;
-import org.laokou.common.core.util.CollectionUtils;
+import org.laokou.common.core.util.CollectionExtUtils;
 import org.laokou.common.core.util.IpUtils;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.constant.StringConstants;
@@ -199,7 +199,7 @@ public class OperateLogA extends AggregateRoot {
 
 	public void decorateRequestParams(Object[] args) {
 		List<Object> params = new ArrayList<>(Arrays.asList(args)).stream().filter(this::filterArgs).toList();
-		if (CollectionUtils.isEmpty(params)) {
+		if (CollectionExtUtils.isEmpty(params)) {
 			this.requestParams = JacksonUtils.EMPTY_JSON;
 		}
 		else {

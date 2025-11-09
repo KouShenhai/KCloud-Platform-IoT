@@ -38,10 +38,10 @@ import java.net.UnknownHostException;
 @EnableAspectJAutoProxy
 @RequiredArgsConstructor
 @SpringBootApplication(scanBasePackages = "org.laokou")
-public class DistributedIdentifierApp {
+class DistributedIdentifierApp {
 
 	// @formatter:off
-	public static void main(String[] args) throws UnknownHostException {
+	static void main(String[] args) throws UnknownHostException {
 		StopWatch stopWatch = new StopWatch("DistributedIdentifier应用程序");
 		stopWatch.start();
 		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "9094")));

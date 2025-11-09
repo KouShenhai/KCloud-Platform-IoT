@@ -39,15 +39,15 @@ import java.net.UnknownHostException;
 @EnableDiscoveryClient
 @EnableConfigurationProperties
 @SpringBootApplication(scanBasePackages = "org.laokou")
-public class MqttServerApp {
+class NetworkApp {
 
-	public static void main(String[] args) throws UnknownHostException {
+	static void main(String[] args) throws UnknownHostException {
 		StopWatch stopWatch = new StopWatch("Network应用程序");
 		stopWatch.start();
 		String host = InetAddress.getLocalHost().getHostAddress();
 		System.setProperty("address", String.format("%s:%s", host, System.getProperty("server.port", "9995")));
 		System.setProperty("host", host);
-		new SpringApplicationBuilder(MqttServerApp.class).web(WebApplicationType.SERVLET).run(args);
+		new SpringApplicationBuilder(NetworkApp.class).web(WebApplicationType.SERVLET).run(args);
 		stopWatch.stop();
 		log.info("{}", stopWatch.prettyPrint());
 	}
