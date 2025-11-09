@@ -19,7 +19,7 @@ package org.laokou.iot.thingModel.service.validator;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.laokou.common.core.util.CollectionUtils;
+import org.laokou.common.core.util.CollectionExtUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.ParamValidator;
@@ -95,7 +95,7 @@ public final class ThingModelParamValidator {
 		if (ObjectUtils.isNull(type)) {
 			return ParamValidator.invalidate("物模型类型不能为空");
 		}
-		boolean isExist = CollectionUtils.containsAll(Arrays.stream(type.split(StringConstants.COMMA)).toList(),
+		boolean isExist = CollectionExtUtils.containsAll(Arrays.stream(type.split(StringConstants.COMMA)).toList(),
 				Arrays.stream(TypeEnum.values()).map(TypeEnum::getCode).toList());
 		if (!isExist) {
 			return ParamValidator.invalidate("物模型类型不存在");
@@ -108,7 +108,7 @@ public final class ThingModelParamValidator {
 		if (ObjectUtils.isNull(category)) {
 			return ParamValidator.invalidate("物模型类别不能为空");
 		}
-		if (!CollectionUtils.contains(Arrays.stream(CategoryEnum.values()).map(CategoryEnum::getCode).toList(),
+		if (!CollectionExtUtils.contains(Arrays.stream(CategoryEnum.values()).map(CategoryEnum::getCode).toList(),
 				category)) {
 			return ParamValidator.invalidate("物模型类别不存在");
 		}

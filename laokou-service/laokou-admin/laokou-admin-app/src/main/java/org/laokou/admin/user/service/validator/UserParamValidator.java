@@ -21,7 +21,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.laokou.admin.user.gatewayimpl.database.UserMapper;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.user.model.UserE;
-import org.laokou.common.core.util.CollectionUtils;
+import org.laokou.common.core.util.CollectionExtUtils;
 import org.laokou.common.core.util.RegexUtils;
 import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -141,7 +141,7 @@ final class UserParamValidator {
 
 	public static ParamValidator.Validate validateRoleIds(UserE userE) {
 		List<String> roleIds = userE.getRoleIds();
-		if (CollectionUtils.isEmpty(roleIds)) {
+		if (CollectionExtUtils.isEmpty(roleIds)) {
 			return ParamValidator.invalidate("用户角色IDS不能为空");
 		}
 		return ParamValidator.validate();
@@ -149,7 +149,7 @@ final class UserParamValidator {
 
 	public static ParamValidator.Validate validateDeptIds(UserE userE) {
 		List<String> deptIds = userE.getDeptIds();
-		if (CollectionUtils.isEmpty(deptIds)) {
+		if (CollectionExtUtils.isEmpty(deptIds)) {
 			return ParamValidator.invalidate("用户部门IDS不能为空");
 		}
 		return ParamValidator.validate();

@@ -20,7 +20,7 @@ package org.laokou.mcp.client.command.query;
 import com.alibaba.cloud.ai.mcp.discovery.client.transport.LoadbalancedMcpSyncClient;
 import io.modelcontextprotocol.spec.McpSchema;
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.core.util.CollectionUtils;
+import org.laokou.common.core.util.CollectionExtUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.util.StringExtUtils;
@@ -50,7 +50,7 @@ public class DevicePropertyGetQryExe {
 			}
 			return StringConstants.EMPTY;
 		}).filter(StringExtUtils::hasText).toList();
-		if (CollectionUtils.isNotEmpty(list)) {
+		if (CollectionExtUtils.isNotEmpty(list)) {
 			return Result.ok(StringExtUtils.collectionToDelimitedString(list, StringConstants.DROP));
 		}
 		return Result.ok(StringConstants.EMPTY);

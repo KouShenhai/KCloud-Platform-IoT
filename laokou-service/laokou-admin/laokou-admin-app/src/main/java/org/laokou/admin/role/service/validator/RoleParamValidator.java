@@ -21,7 +21,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.laokou.admin.role.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.admin.role.model.RoleE;
-import org.laokou.common.core.util.CollectionUtils;
+import org.laokou.common.core.util.CollectionExtUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.laokou.common.i18n.util.StringExtUtils;
@@ -66,7 +66,7 @@ final class RoleParamValidator {
 
 	public static ParamValidator.Validate validateMenuIds(RoleE roleE) {
 		List<String> menuIds = roleE.getMenuIds();
-		if (CollectionUtils.isEmpty(menuIds)) {
+		if (CollectionExtUtils.isEmpty(menuIds)) {
 			return ParamValidator.invalidate("角色菜单IDS不能为空");
 		}
 		return ParamValidator.validate();
@@ -74,7 +74,8 @@ final class RoleParamValidator {
 
 	public static ParamValidator.Validate validateDeptIds(RoleE roleE) {
 		List<String> deptIds = roleE.getDeptIds();
-		if (ObjectUtils.equals(roleE.getDataScope(), DataScope.CUSTOM.getCode()) && CollectionUtils.isEmpty(deptIds)) {
+		if (ObjectUtils.equals(roleE.getDataScope(), DataScope.CUSTOM.getCode())
+				&& CollectionExtUtils.isEmpty(deptIds)) {
 			return ParamValidator.invalidate("角色部门IDS不能为空");
 		}
 		return ParamValidator.validate();
