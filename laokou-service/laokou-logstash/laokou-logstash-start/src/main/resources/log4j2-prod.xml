@@ -46,10 +46,10 @@
     <!-- 控制台输出 -->
     <Console name="console" target="SYSTEM_OUT">
       <!--
-            <JsonLayout complete="false" compact="true" eventEol="true" properties="true" locationInfo="true" includeStacktrace="true" stacktraceAsString="false" objectMessageAsJsonObject="false">
+            <JsonExtLayout complete="false" compact="true" eventEol="true" properties="true" locationInfo="true" includeStacktrace="true" stacktraceAsString="false" objectMessageAsJsonObject="false">
               <KeyValuePair key="serviceId" value="${SERVICE_ID}"/>
               <KeyValuePair key="profile" value="${PROFILE}" />
-            </JsonLayout>
+            </JsonExtLayout>
       -->
       <PatternLayout pattern="${LOG_CONSOLE_PATTERN}"/>
     </Console>
@@ -59,10 +59,10 @@
       <Filters>
         <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
       </Filters>
-      <JsonLayout complete="true" compact="false" eventEol="true" properties="true" locationInfo="true" includeStacktrace="true" stacktraceAsString="false" objectMessageAsJsonObject="false">
+      <JsonExtLayout complete="true" compact="false" eventEol="true" properties="true" locationInfo="true" includeStacktrace="true" stacktraceAsString="false" objectMessageAsJsonObject="false">
         <KeyValuePair key="serviceId" value="${SERVICE_ID}"/>
         <KeyValuePair key="profile" value="${PROFILE}" />
-      </JsonLayout>
+      </JsonExtLayout>
       <Policies>
         <TimeBasedTriggeringPolicy interval="${LOG_INTERVAL}"/>
         <SizeBasedTriggeringPolicy size="${LOG_ROLL_SIZE}"/>

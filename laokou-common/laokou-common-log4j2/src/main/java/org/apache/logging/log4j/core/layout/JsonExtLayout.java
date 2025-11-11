@@ -38,7 +38,6 @@ import lombok.Getter;
 import org.apache.logging.log4j.core.Layout;
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.config.Configuration;
-import org.apache.logging.log4j.core.config.DefaultConfiguration;
 import org.apache.logging.log4j.core.config.Node;
 import org.apache.logging.log4j.core.config.plugins.Plugin;
 import org.apache.logging.log4j.core.config.plugins.PluginBuilderAttribute;
@@ -99,8 +98,8 @@ import java.util.Map;
  * {@code "foo":"bar"} directly into JSON output. Supports Lookup expressions.
  * </p>
  */
-@Plugin(name = "JsonLayout", category = Node.CATEGORY, elementType = Layout.ELEMENT_TYPE, printObject = true)
-public final class JsonLayout extends AbstractJacksonLayout {
+@Plugin(name = "JsonExtLayout", category = Node.CATEGORY, elementType = Layout.ELEMENT_TYPE, printObject = true)
+public final class JsonExtLayout extends AbstractJacksonLayout {
 
 	static final String CONTENT_TYPE = "application/json";
 
@@ -111,15 +110,17 @@ public final class JsonLayout extends AbstractJacksonLayout {
 	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
 
 	public static class Builder<B extends Builder<B>> extends AbstractJacksonLayout.Builder<B>
-			implements org.apache.logging.log4j.core.util.Builder<JsonLayout> {
+			implements org.apache.logging.log4j.core.util.Builder<JsonExtLayout> {
 
 		@Getter
 		@PluginBuilderAttribute
 		private boolean propertiesAsList;
 
+		@Getter
 		@PluginBuilderAttribute
 		private boolean objectMessageAsJsonObject;
 
+		@Getter
 		@PluginElement("AdditionalField")
 		private KeyValuePair[] additionalFields;
 
@@ -128,14 +129,14 @@ public final class JsonLayout extends AbstractJacksonLayout {
 		}
 
 		@Override
-		public JsonLayout build() {
+		public JsonExtLayout build() {
 			final boolean encodeThreadContextAsList = isProperties() && propertiesAsList;
 			final String headerPattern = toStringOrNull(super.getHeader());
 			final String footerPattern = toStringOrNull(super.getFooter());
-			return new JsonLayout(getConfiguration(), isLocationInfo(), isProperties(), encodeThreadContextAsList,
+			return new JsonExtLayout(getConfiguration(), isLocationInfo(), isProperties(), encodeThreadContextAsList,
 					isComplete(), isCompact(), getEventEol(), getEndOfLine(), headerPattern, footerPattern,
 					getCharset(), isIncludeStacktrace(), isStacktraceAsString(), isIncludeNullDelimiter(),
-					isIncludeTimeMillis(), getAdditionalFields(), getObjectMessageAsJsonObject());
+					isIncludeTimeMillis(), getAdditionalFields(), isObjectMessageAsJsonObject());
 		}
 
 		public B setPropertiesAsList(final boolean propertiesAsList) {
@@ -143,18 +144,9 @@ public final class JsonLayout extends AbstractJacksonLayout {
 			return asBuilder();
 		}
 
-		public boolean getObjectMessageAsJsonObject() {
-			return objectMessageAsJsonObject;
-		}
-
 		public B setObjectMessageAsJsonObject(final boolean objectMessageAsJsonObject) {
 			this.objectMessageAsJsonObject = objectMessageAsJsonObject;
 			return asBuilder();
-		}
-
-		@Override
-		public KeyValuePair[] getAdditionalFields() {
-			return additionalFields;
 		}
 
 		@Override
@@ -165,7 +157,7 @@ public final class JsonLayout extends AbstractJacksonLayout {
 
 	}
 
-	private JsonLayout(final Configuration config, final boolean locationInfo, final boolean properties,
+	private JsonExtLayout(final Configuration config, final boolean locationInfo, final boolean properties,
 			final boolean encodeThreadContextAsList, final boolean complete, final boolean compact,
 			final boolean eventEol, final String endOfLine, final String headerPattern, final String footerPattern,
 			final Charset charset, final boolean includeStacktrace, final boolean stacktraceAsString,
@@ -189,60 +181,9 @@ public final class JsonLayout extends AbstractJacksonLayout {
 				includeNullDelimiter, additionalFields);
 	}
 
-	/**
-	 * Creates a JSON Layout.
-	 * @param config The plugin configuration.
-	 * @param locationInfo If "true", includes the location information in the generated
-	 * JSON.
-	 * @param properties If "true", includes the thread context map in the generated JSON.
-	 * @param propertiesAsList If true, the thread context map is included as a list of
-	 * map entry objects, where each entry has a "key" attribute (whose value is the key)
-	 * and a "value" attribute (whose value is the value). Defaults to false, in which
-	 * case the thread context map is included as a simple map of key-value pairs.
-	 * @param complete If "true", includes the JSON header and footer, and comma between
-	 * records.
-	 * @param compact If "true", does not use end-of-lines and indentation, defaults to
-	 * "false".
-	 * @param eventEol If "true", forces an EOL after each log event (even if compact is
-	 * "true"), defaults to "false". This allows one even per line, even in compact mode.
-	 * @param headerPattern The header pattern, defaults to {@code "["} if null.
-	 * @param footerPattern The footer pattern, defaults to {@code "]"} if null.
-	 * @param charset The character set to use, if {@code null}, uses "UTF-8".
-	 * @param includeStacktrace If "true", includes the stacktrace of any Throwable in the
-	 * generated JSON, defaults to "true".
-	 * @return A JSON Layout.
-	 * @deprecated Use {@link #newBuilder()} instead
-	 */
-	@Deprecated
-	public static JsonLayout createLayout(final Configuration config, final boolean locationInfo,
-			final boolean properties, final boolean propertiesAsList, final boolean complete, final boolean compact,
-			final boolean eventEol, final String headerPattern, final String footerPattern, final Charset charset,
-			final boolean includeStacktrace) {
-		final boolean encodeThreadContextAsList = properties && propertiesAsList;
-		return new JsonLayout(config, locationInfo, properties, encodeThreadContextAsList, complete, compact, eventEol,
-				null, headerPattern, footerPattern, charset, includeStacktrace, false, false, false, null, false);
-	}
-
 	@PluginBuilderFactory
 	public static <B extends Builder<B>> B newBuilder() {
 		return new Builder<B>().asBuilder();
-	}
-
-	/**
-	 * Creates a JSON Layout using the default settings. Useful for testing.
-	 * @return A JSON Layout.
-	 */
-	public static JsonLayout createDefaultLayout() {
-		return new JsonLayout(new DefaultConfiguration(), false, false, false, false, false, false, null,
-				DEFAULT_HEADER, DEFAULT_FOOTER, StandardCharsets.UTF_8, true, false, false, false, null, false);
-	}
-
-	private LocalDateTime getLocalDateTimeOfTimestamp(long timestamp) {
-		return LocalDateTime.ofInstant(getInstantOfTimestamp(timestamp), ZoneId.systemDefault());
-	}
-
-	private Instant getInstantOfTimestamp(long timestamp) {
-		return Instant.ofEpochMilli(timestamp);
 	}
 
 	/**
@@ -285,7 +226,7 @@ public final class JsonLayout extends AbstractJacksonLayout {
 	@Override
 	public Map<String, String> getContentFormat() {
 		final Map<String, String> result = HashMap.newHashMap(1);
-		result.put("version", "2.0");
+		result.put("version", "4.0.0");
 		return result;
 	}
 
@@ -364,6 +305,14 @@ public final class JsonLayout extends AbstractJacksonLayout {
 			}
 		}
 		return additionalFieldsMap;
+	}
+
+	private LocalDateTime getLocalDateTimeOfTimestamp(long timestamp) {
+		return LocalDateTime.ofInstant(getInstantOfTimestamp(timestamp), ZoneId.systemDefault());
+	}
+
+	private Instant getInstantOfTimestamp(long timestamp) {
+		return Instant.ofEpochMilli(timestamp);
 	}
 
 }

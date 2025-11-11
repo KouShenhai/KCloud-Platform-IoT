@@ -125,8 +125,6 @@
     <vertx.version>5.0.5</vertx.version>
     <!--mybatis-plus版本 -->
     <mybatis-plus.version>3.5.14</mybatis-plus.version>
-    <!--protobuf版本-->
-    <protobuf.version>3.25.8</protobuf.version>
     <!--nacos版本-->
     <nacos.version>3.1.0</nacos.version>
     <!--opentelemetry版本-->
@@ -139,6 +137,8 @@
     <jackson.version>3.0.2</jackson.version>
     <!--okhttp版本-->
     <okhttp.version>4.12.0</okhttp.version>
+    <!--protobuf版本-->
+    <protobuf.version>3.25.8</protobuf.version>
     <!--redisson版本-->
     <redisson.version>3.52.0</redisson.version>
     <!--lombok版本-->
@@ -374,16 +374,6 @@
       </dependency>
       <!-- =============================== 定义 Mybatis Plus 版本 =============================== -->
 
-      <!-- =============================== 定义 Protobuf 版本 =============================== -->
-      <dependency>
-        <groupId>com.google.protobuf</groupId>
-        <artifactId>protobuf-bom</artifactId>
-        <version>${protobuf.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <!-- =============================== 定义 Protobuf 版本 =============================== -->
-
       <!-- =============================== 定义 Nacos 版本 =============================== -->
       <dependency>
         <groupId>com.alibaba.nacos</groupId>
@@ -443,6 +433,14 @@
         <scope>import</scope>
       </dependency>
       <!-- =============================== 定义 OkHttp 版本 =============================== -->
+
+      <!-- =============================== 定义 Protobuf-Java 版本 =============================== -->
+      <dependency>
+        <groupId>com.google.protobuf</groupId>
+        <artifactId>protobuf-java</artifactId>
+        <version>${protobuf.version}</version>
+      </dependency>
+      <!-- =============================== 定义 Protobuf-Java 版本 =============================== -->
 
       <!-- =============================== 定义 Redisson 版本 =============================== -->
       <dependency>
