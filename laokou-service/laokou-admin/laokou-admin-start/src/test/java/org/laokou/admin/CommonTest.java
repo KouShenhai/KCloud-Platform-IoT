@@ -23,6 +23,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.laokou.common.core.util.OkHttpUtils;
 import org.laokou.common.i18n.util.JacksonUtils;
+import org.laokou.common.i18n.util.ObjectUtils;
+import org.springframework.boot.web.server.Ssl;
 import org.springframework.boot.web.server.autoconfigure.ServerProperties;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -67,7 +69,7 @@ class CommonTest {
 		Map<String, String> headers = Map.of("Authorization",
 				"Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=");
 		String json = OkHttpUtils.doFormDataPost(getOAuthApiUrl(), params, headers);
-		return JacksonUtils.readTree(json).get("access_token").asText();
+		return JacksonUtils.readTree(json).get("access_token").asString();
 	}
 
 	private String getOAuthApiUrl() {
@@ -79,7 +81,11 @@ class CommonTest {
 	}
 
 	private boolean disabledSsl() {
-		return serverProperties.getSsl().isEnabled();
+		Ssl ssl = serverProperties.getSsl();
+		if (ObjectUtils.isNull(ssl)) {
+			return false;
+		}
+		return ssl.isEnabled();
 	}
 
 }

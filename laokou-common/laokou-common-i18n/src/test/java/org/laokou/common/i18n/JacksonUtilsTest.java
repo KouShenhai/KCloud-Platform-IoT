@@ -22,8 +22,6 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.i18n.util.JacksonUtils;
-import org.springframework.boot.system.SystemProperties;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -40,7 +38,7 @@ class JacksonUtilsTest {
 
 	@BeforeEach
 	void setUp() {
-		testPath = Path.of(SystemProperties.get("user.home"), "test", "jackson");
+		testPath = Path.of(System.getProperty("user.home", "d:/test"), "test", "jackson");
 	}
 
 	@Test
@@ -79,9 +77,9 @@ class JacksonUtilsTest {
 
 		Assertions.assertThat(JacksonUtils.toValue(map, TestUser.class)).isEqualTo(testUser);
 
-		Assertions.assertThat((Map<String, Object>) JacksonUtils.toMap(testUser, String.class, Object.class))
-			.isInstanceOf(Map.class);
-		Assertions.assertThat(JacksonUtils.readTree(str).get("name").textValue()).isEqualTo("laokou");
+		map = JacksonUtils.toMap(testUser, String.class, Object.class);
+		Assertions.assertThat(map).isInstanceOf(Map.class);
+		Assertions.assertThat(JacksonUtils.readTree(str).get("name").asString()).isEqualTo("laokou");
 	}
 
 	@Data

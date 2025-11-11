@@ -22,8 +22,8 @@ import de.codecentric.boot.admin.server.domain.entities.InstanceRepository;
 import de.codecentric.boot.admin.server.domain.events.InstanceEvent;
 import de.codecentric.boot.admin.server.domain.events.InstanceStatusChangedEvent;
 import de.codecentric.boot.admin.server.notify.AbstractStatusChangeNotifier;
-import io.micrometer.common.lang.NonNullApi;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
@@ -34,7 +34,6 @@ import reactor.core.publisher.Mono;
  */
 @Slf4j
 @Component
-@NonNullApi
 public class StatusChangeNotifier extends AbstractStatusChangeNotifier {
 
 	public StatusChangeNotifier(InstanceRepository instanceRepository) {
@@ -48,7 +47,8 @@ public class StatusChangeNotifier extends AbstractStatusChangeNotifier {
 	 * @return 消息
 	 */
 	@Override
-	protected Mono<Void> doNotify(InstanceEvent event, Instance instance) {
+	@NonNull
+	protected Mono<Void> doNotify(@NonNull InstanceEvent event, @NonNull Instance instance) {
 		return Mono.fromRunnable(() -> {
 			if (event instanceof InstanceStatusChangedEvent eventStatus) {
 				String status = eventStatus.getStatusInfo().getStatus();
