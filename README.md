@@ -311,6 +311,10 @@ KCloud-Platform-IoT 开源软件遵循 [Apache 2.0 协议](https://www.apache.or
 
 [哔哩哔哩视频-老寇IoT云平台开源三周年](https://www.bilibili.com/video/BV1KPdxYaESL)
 
+### 🎁 荣誉称号
+
+<img src="doc/image/gitcode.jpg" alt="2025年GitCode百大开源项目" />
+
 ### 🐼 鸣谢个人
 
 | 序号 |                                       头像                                       |                       名字                        |
