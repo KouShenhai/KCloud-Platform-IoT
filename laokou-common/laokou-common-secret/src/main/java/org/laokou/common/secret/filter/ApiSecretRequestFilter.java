@@ -44,7 +44,8 @@ public class ApiSecretRequestFilter extends OncePerRequestFilter {
 	}
 
 	@Override
-	protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain chain) {
+	protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
+			@NonNull FilterChain chain) {
 		try {
 			HandlerMethod handlerMethod = RequestUtils.getHandlerMethod(request, handlerMapping);
 			if (handlerMethod != null && handlerMethod.getMethod().isAnnotationPresent(ApiSecret.class)) {

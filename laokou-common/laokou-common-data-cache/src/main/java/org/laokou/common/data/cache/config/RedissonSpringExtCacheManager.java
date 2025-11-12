@@ -201,8 +201,7 @@ public class RedissonSpringExtCacheManager implements CacheManager, ResourceLoad
 	}
 
 	@Override
-	@NonNull
-	public Collection<String> getCacheNames() {
+	@NonNull public Collection<String> getCacheNames() {
 		return Collections.unmodifiableSet(configMap.keySet());
 	}
 
