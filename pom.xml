@@ -82,7 +82,7 @@
     <!--spotbugs-maven-plugin版本-->
     <spotbugs-maven-plugin.version>4.9.8.1</spotbugs-maven-plugin.version>
     <!--native-maven-plugin版本-->
-    <native-maven-plugin.version>0.11.2</native-maven-plugin.version>
+    <native-maven-plugin.version>0.11.3</native-maven-plugin.version>
     <!--versions-maven-plugin版本-->
     <versions-maven-plugin.version>2.19.1</versions-maven-plugin.version>
     <!--asciidoctor-maven-plugin版本-->
@@ -94,7 +94,7 @@
     <!--jacoco-maven-plugin版本-->
     <jacoco-maven-plugin.version>0.8.14</jacoco-maven-plugin.version>
     <!--checkstyle版本-->
-    <checkstyle.version>12.1.1</checkstyle.version>
+    <checkstyle.version>12.1.2</checkstyle.version>
     <!--spring-javaformat-checkstyle版本-->
     <spring-javaformat-checkstyle.version>0.0.47</spring-javaformat-checkstyle.version>
     <!--spring-asciidoctor-backends版本-->
@@ -158,13 +158,13 @@
     <!--oshi版本-->
     <oshi.version>6.9.1</oshi.version>
     <!--elasticsearch版本-->
-    <elasticsearch.version>9.2.0</elasticsearch.version>
+    <elasticsearch.version>9.2.1</elasticsearch.version>
     <!--jakarta.servlet-api版本-->
     <jakarta-servlet-api.version>6.1.0</jakarta-servlet-api.version>
     <!--fastexcel-->
     <fastexcel.version>1.3.0</fastexcel.version>
     <!--s3版本-->
-    <s3.version>2.38.3</s3.version>
+    <s3.version>2.38.4</s3.version>
     <!--dynamic-datasource版本-->
     <dynamic-datasource.version>4.3.1</dynamic-datasource.version>
     <!--httpclient5版本-->
