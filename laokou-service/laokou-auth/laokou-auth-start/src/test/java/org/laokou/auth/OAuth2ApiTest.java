@@ -33,6 +33,7 @@ import org.laokou.common.crypto.util.RSAUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.JacksonUtils;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.common.idempotent.aop.IdempotentAop;
@@ -40,6 +41,7 @@ import org.laokou.common.redis.util.RedisUtils;
 import org.laokou.common.security.config.OAuth2OpaqueTokenIntrospector;
 import org.laokou.common.trace.util.MDCUtils;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.server.Ssl;
 import org.springframework.boot.web.server.autoconfigure.ServerProperties;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -281,8 +283,8 @@ class OAuth2ApiTest {
 			String json = HttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("设备授权码认证模式，返回信息：{}", json);
 			Assertions.assertThat(json).isNotBlank();
-			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
-			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asText();
+			String accessToken = JacksonUtils.readTree(json).get("access_token").asString();
+			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asString();
 			Assert.isTrue(StringExtUtils.isNotEmpty(accessToken), "access token is empty");
 			return Map.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken);
 		}
@@ -300,7 +302,7 @@ class OAuth2ApiTest {
 			String json = HttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("客户端认证模式，返回信息：{}", json);
 			Assertions.assertThat(json).isNotBlank();
-			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
+			String accessToken = JacksonUtils.readTree(json).get("access_token").asString();
 			Assert.isTrue(StringExtUtils.isNotEmpty(accessToken), "access token is empty");
 			return Map.of(ACCESS_TOKEN, accessToken);
 		}
@@ -319,8 +321,8 @@ class OAuth2ApiTest {
 			String json = HttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("授权码认证模式，返回信息：{}", json);
 			Assertions.assertThat(json).isNotBlank();
-			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
-			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asText();
+			String accessToken = JacksonUtils.readTree(json).get("access_token").asString();
+			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asString();
 			Assert.isTrue(StringExtUtils.isNotEmpty(accessToken), "access token is empty");
 			return Map.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken);
 		}
@@ -346,8 +348,8 @@ class OAuth2ApiTest {
 			String json = HttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("手机号认证，返回信息：{}", json);
 			Assertions.assertThat(json).isNotBlank();
-			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
-			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asText();
+			String accessToken = JacksonUtils.readTree(json).get("access_token").asString();
+			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asString();
 			Assert.isTrue(StringExtUtils.isNotEmpty(accessToken), "access token is empty");
 			return Map.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken);
 		}
@@ -367,8 +369,8 @@ class OAuth2ApiTest {
 			String json = HttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("邮箱认证，返回信息：{}", json);
 			Assertions.assertThat(json).isNotBlank();
-			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
-			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asText();
+			String accessToken = JacksonUtils.readTree(json).get("access_token").asString();
+			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asString();
 			Assert.isTrue(StringExtUtils.isNotEmpty(accessToken), "access token is empty");
 			return Map.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken);
 		}
@@ -388,8 +390,8 @@ class OAuth2ApiTest {
 			String json = OkHttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("用户名密码认证模式，返回信息：{}", json);
 			Assertions.assertThat(json).isNotBlank();
-			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
-			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asText();
+			String accessToken = JacksonUtils.readTree(json).get("access_token").asString();
+			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asString();
 			Assert.isTrue(StringExtUtils.isNotEmpty(accessToken), "access token is empty");
 			return Map.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken);
 		}
@@ -409,8 +411,8 @@ class OAuth2ApiTest {
 			String json = OkHttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("测试认证模式，返回信息：{}", json);
 			Assertions.assertThat(json).isNotBlank();
-			String accessToken = JacksonUtils.readTree(json).get("access_token").asText();
-			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asText();
+			String accessToken = JacksonUtils.readTree(json).get("access_token").asString();
+			String refreshToken = JacksonUtils.readTree(json).get("refresh_token").asString();
 			Assert.isTrue(StringExtUtils.isNotEmpty(accessToken), "access token is empty");
 			return Map.of(ACCESS_TOKEN, accessToken, REFRESH_TOKEN, refreshToken);
 		}
@@ -427,7 +429,7 @@ class OAuth2ApiTest {
 			String json = HttpUtils.doFormDataPost(apiUrl, params, headers);
 			log.info("刷新令牌模式，返回信息；{}", json);
 			Assertions.assertThat(json).isNotBlank();
-			return JacksonUtils.readTree(json).get("access_token").asText();
+			return JacksonUtils.readTree(json).get("access_token").asString();
 		}
 		catch (Exception e) {
 			return null;
@@ -449,7 +451,7 @@ class OAuth2ApiTest {
 				.contentType(MediaType.MULTIPART_FORM_DATA)
 				.retrieve()
 				.body(String.class);
-			return JacksonUtils.readTree(json).get(DEVICE_CODE).asText();
+			return JacksonUtils.readTree(json).get(DEVICE_CODE).asString();
 		}
 		catch (Exception e) {
 			return null;
@@ -495,7 +497,11 @@ class OAuth2ApiTest {
 	}
 
 	private boolean disabledSsl() {
-		return serverProperties.getSsl().isEnabled();
+		Ssl ssl = serverProperties.getSsl();
+		if (ObjectUtils.isNull(ssl)) {
+			return false;
+		}
+		return ssl.isEnabled();
 	}
 
 }

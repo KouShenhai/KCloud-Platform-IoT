@@ -96,8 +96,9 @@ public class TtlThreadContextMap implements ThreadContextMap {
 
 	@Override
 	public boolean equals(Object o) {
-		if (o == null || getClass() != o.getClass())
+		if (o == null || getClass() != o.getClass()) {
 			return false;
+		}
 		TtlThreadContextMap that = (TtlThreadContextMap) o;
 		return Objects.equals(LOCAL_MAP, that.LOCAL_MAP);
 	}

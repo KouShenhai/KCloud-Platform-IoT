@@ -37,7 +37,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 <a href="https://gitcode.com/qq_39893313/KCloud-Platform-IoT" target="_blank"><img src="https://gitcode.com/qq_39893313/KCloud-Platform-IoT/star/badge.svg?theme=dark" alt="GitCode star"/></a>
 
 <a href="https://spring.io/projects/spring-framework" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Framework&message=7.0.0&color=green" alt="Spring Framework"/></a>
-<a href="https://spring.io/projects/spring-authorization-server" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Security&message=7.0.0&color=blue" alt="Spring Security"/></a>
+<a href="https://spring.io/projects/spring-authorization-server" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Security&message=7.0.0&color=green" alt="Spring Security"/></a>
 <a href="https://spring.io/projects/spring-boot" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Boot&message=4.0.0&color=green" alt="Spring Boot"/></a>
 <a href="https://spring.io/projects/spring-cloud" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Cloud&message=2025.1.0&color=green" alt="Spring Cloud"/></a>
 <a href="https://github.com/alibaba/spring-cloud-alibaba" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Cloud%20Alibaba&message=2025.0.0.0&color=orange" alt="Spring Cloud Alibaba"/></a>
@@ -150,7 +150,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 |        Nacos         |    3.1.0    |
 |         gRPC         |   1.76.0    |
 |        Redis         |    8.0.1    |
-|    Elasticsearch     |    9.2.0    |
+|    Elasticsearch     |    9.2.1    |
 |        Netty         | 4.2.7.Final |
 |        Kafka         |    4.0.0    |
 |        Pulsar        |    4.0.5    |
@@ -310,6 +310,10 @@ KCloud-Platform-IoT 开源软件遵循 [Apache 2.0 协议](https://www.apache.or
 [抖音视频-老寇IoT云平台开源三周年](https://v.douyin.com/7tquJphUnAI)
 
 [哔哩哔哩视频-老寇IoT云平台开源三周年](https://www.bilibili.com/video/BV1KPdxYaESL)
+
+### 🎁 荣誉称号
+
+<img src="doc/image/gitcode.jpg" alt="2025年GitCode百大开源项目" />
 
 ### 🐼 鸣谢个人
 

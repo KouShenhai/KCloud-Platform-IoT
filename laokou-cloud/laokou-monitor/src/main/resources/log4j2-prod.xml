@@ -46,7 +46,7 @@
     <!-- 控制台输出 -->
     <Console name="console" target="SYSTEM_OUT">
       <!--
-            <JsonLayout complete="false" compact="true" eventEol="true" properties="true" locationInfo="true" includeStacktrace="true" stacktraceAsString="false" objectMessageAsJsonObject="false">
+            <JsonExtLayout complete="false" compact="true" eventEol="true" properties="true" locationInfo="true" includeStacktrace="true" stacktraceAsString="false" objectMessageAsJsonObject="false">
               <KeyValuePair key="serviceId" value="${SERVICE_ID}"/>
               <KeyValuePair key="profile" value="${PROFILE}" />
             </JsonLayout>

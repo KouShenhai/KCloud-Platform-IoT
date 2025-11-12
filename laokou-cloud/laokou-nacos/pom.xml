@@ -28,6 +28,8 @@
   <artifactId>laokou-nacos</artifactId>
 
   <properties>
+    <!--spring-boot版本-->
+    <spring-boot-old.version>3.5.7</spring-boot-old.version>
     <!--pig-nacos版本-->
     <pig-nacos.version>3.1.0</pig-nacos.version>
     <!--postgresql版本-->
@@ -38,8 +40,6 @@
     <lombok.version>1.18.42</lombok.version>
     <!--jasypt版本-->
     <jasypt.version>3.0.5</jasypt.version>
-    <!--liquibase版本-->
-    <liquibase.version>5.0.1</liquibase.version>
   </properties>
 
   <dependencies>
@@ -55,6 +55,10 @@
         <exclusion>
           <groupId>org.apache.commons</groupId>
           <artifactId>commons-collections4</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>com.google.protobuf</groupId>
+          <artifactId>protobuf-java</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -88,7 +92,23 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.google.protobuf</groupId>
+      <artifactId>protobuf-java</artifactId>
+    </dependency>
   </dependencies>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring-boot-old.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <build>
     <finalName>${project.artifactId}</finalName>
@@ -114,7 +134,7 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <version>${spring-boot-maven-plugin.version}</version>
+        <version>${spring-boot-old.version}</version>
         <configuration>
           <finalName>${project.artifactId}</finalName>
           <!-- main方法的地址 只需要修改这个地址-->

@@ -33,8 +33,8 @@
 
 package org.laokou.common.data.cache.config;
 
-import io.micrometer.common.lang.NonNullApi;
 import lombok.Data;
+import org.jspecify.annotations.NonNull;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.redisson.api.RMap;
 import org.redisson.api.RMapCache;
@@ -70,7 +70,6 @@ import java.util.concurrent.ConcurrentMap;
  * @see RedissonSpringCacheManager
  */
 @Data
-@NonNullApi
 @SuppressWarnings("unchecked")
 public class RedissonSpringExtCacheManager implements CacheManager, ResourceLoaderAware, InitializingBean {
 
@@ -202,12 +201,13 @@ public class RedissonSpringExtCacheManager implements CacheManager, ResourceLoad
 	}
 
 	@Override
+	@NonNull
 	public Collection<String> getCacheNames() {
 		return Collections.unmodifiableSet(configMap.keySet());
 	}
 
 	@Override
-	public void setResourceLoader(ResourceLoader resourceLoader) {
+	public void setResourceLoader(@NonNull ResourceLoader resourceLoader) {
 		this.resourceLoader = resourceLoader;
 	}
 

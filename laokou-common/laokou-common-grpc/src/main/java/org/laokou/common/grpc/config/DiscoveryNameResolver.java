@@ -44,7 +44,7 @@ import java.util.stream.Collectors;
  */
 final class DiscoveryNameResolver extends NameResolver {
 
-	private final String serviceName;
+	private final String serviceId;
 
 	private final DiscoveryClient discoveryClient;
 
@@ -58,9 +58,9 @@ final class DiscoveryNameResolver extends NameResolver {
 
 	private Listener2 listener;
 
-	public DiscoveryNameResolver(String serviceName, DiscoveryClient discoveryClient, ExecutorService executorService,
+	public DiscoveryNameResolver(String serviceId, DiscoveryClient discoveryClient, ExecutorService executorService,
 			Args args) {
-		this.serviceName = serviceName;
+		this.serviceId = serviceId;
 		this.discoveryClient = discoveryClient;
 		this.executorService = executorService;
 		this.serviceInstanceReference = new AtomicReference<>(Collections.emptyList());
@@ -70,7 +70,7 @@ final class DiscoveryNameResolver extends NameResolver {
 
 	@Override
 	public String getServiceAuthority() {
-		return serviceName;
+		return serviceId;
 	}
 
 	@Override
@@ -108,9 +108,9 @@ final class DiscoveryNameResolver extends NameResolver {
 
 	private List<ServiceInstance> resolveInternal() {
 		List<ServiceInstance> serviceInstances = serviceInstanceReference.get();
-		List<ServiceInstance> newServiceInstanceList = this.discoveryClient.getInstances(this.serviceName);
+		List<ServiceInstance> newServiceInstanceList = this.discoveryClient.getInstances(this.serviceId);
 		if (CollectionExtUtils.isEmpty(newServiceInstanceList)) {
-			listener.onError(Status.UNAVAILABLE.withDescription("No servers found for " + serviceName));
+			listener.onError(Status.UNAVAILABLE.withDescription("No servers found for " + serviceId));
 			return Collections.emptyList();
 		}
 		if (!isUpdateServiceInstance(serviceInstances, newServiceInstanceList)) {
@@ -167,8 +167,8 @@ final class DiscoveryNameResolver extends NameResolver {
 
 	private Attributes getAttributes(ServiceInstance serviceInstance) {
 		return Attributes.newBuilder()
-			.set(Attributes.Key.create("SERVICE_NAME"), serviceName)
-			.set(Attributes.Key.create("SERVICE_INSTANCE_ID"), serviceInstance.getInstanceId())
+			.set(Attributes.Key.create("serviceId"), serviceId)
+			.set(Attributes.Key.create("instanceId"), serviceInstance.getInstanceId())
 			.build();
 	}
 

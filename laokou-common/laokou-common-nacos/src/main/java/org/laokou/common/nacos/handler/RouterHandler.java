@@ -17,8 +17,6 @@
 
 package org.laokou.common.nacos.handler;
 
-import io.micrometer.common.lang.NonNullApi;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.i18n.util.ResourceExtUtils;
@@ -39,11 +37,7 @@ import java.util.Map;
  * @author laokou
  */
 @Slf4j
-@NonNullApi
-@RequiredArgsConstructor
-public class RouterHandler implements ApplicationListener<ApplicationReadyEvent> {
-
-	private final SpringUtils springUtils;
+public record RouterHandler(SpringUtils springUtils) implements ApplicationListener<ApplicationReadyEvent> {
 
 	@Override
 	public void onApplicationEvent(ApplicationReadyEvent event) {
@@ -56,17 +50,17 @@ public class RouterHandler implements ApplicationListener<ApplicationReadyEvent>
 			map.put("abbr", abbr);
 			String router = getRouter(map);
 			log.info("""
-					\n----------Nacos路由配置开始(请复制到router.json)----------
-					{}
-					----------Nacos路由配置结束(请复制到router.json)----------""", router);
-		}
-		catch (IOException e) {
+				\n----------Nacos路由配置开始(请复制到router.json)----------
+				{}
+				----------Nacos路由配置结束(请复制到router.json)----------""", router);
+		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
 	/**
 	 * 获取模板解析路由配置.
+	 *
 	 * @param dataMap map对象
 	 * @return 路由配置
 	 */
