@@ -193,7 +193,7 @@ public final class JsonExtLayout extends AbstractJacksonLayout {
 	@Override
 	public byte[] getHeader() {
 		if (!this.complete) {
-			return null;
+			return new byte[0];
 		}
 		final StringBuilder buf = new StringBuilder();
 		final String str = serializeToString(getHeaderSerializer());
@@ -211,7 +211,7 @@ public final class JsonExtLayout extends AbstractJacksonLayout {
 	@Override
 	public byte[] getFooter() {
 		if (!this.complete) {
-			return null;
+			return new byte[0];
 		}
 		final StringBuilder buf = new StringBuilder();
 		buf.append(this.eol);
