@@ -50,17 +50,17 @@ public record RouterHandler(SpringUtils springUtils) implements ApplicationListe
 			map.put("abbr", abbr);
 			String router = getRouter(map);
 			log.info("""
-				\n----------Nacos路由配置开始(请复制到router.json)----------
-				{}
-				----------Nacos路由配置结束(请复制到router.json)----------""", router);
-		} catch (IOException e) {
+					\n----------Nacos路由配置开始(请复制到router.json)----------
+					{}
+					----------Nacos路由配置结束(请复制到router.json)----------""", router);
+		}
+		catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
 	/**
 	 * 获取模板解析路由配置.
-	 *
 	 * @param dataMap map对象
 	 * @return 路由配置
 	 */

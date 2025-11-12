@@ -47,8 +47,7 @@ public class StatusChangeNotifier extends AbstractStatusChangeNotifier {
 	 * @return 消息
 	 */
 	@Override
-	@NonNull
-	protected Mono<Void> doNotify(@NonNull InstanceEvent event, @NonNull Instance instance) {
+	@NonNull protected Mono<Void> doNotify(@NonNull InstanceEvent event, @NonNull Instance instance) {
 		return Mono.fromRunnable(() -> {
 			if (event instanceof InstanceStatusChangedEvent eventStatus) {
 				String status = eventStatus.getStatusInfo().getStatus();
