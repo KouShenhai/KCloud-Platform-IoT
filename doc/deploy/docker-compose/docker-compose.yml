@@ -328,7 +328,7 @@ services:
     networks:
       - iot_network
   elasticsearch:
-    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/elasticsearch9:9.2.0
+    image: registry.cn-shenzhen.aliyuncs.com/koushenhai/elasticsearch9:9.2.1
     container_name: elasticsearch
     # 保持容器在没有守护程序的情况下运行
     tty: true

@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.elasticsearch.entity;
+package org.laokou.common.elasticsearch.model;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import lombok.AllArgsConstructor;

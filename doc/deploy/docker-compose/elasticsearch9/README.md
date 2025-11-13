@@ -16,7 +16,7 @@ sudo docker push registry.cn-shenzhen.aliyuncs.com/koushenhai/elasticsearch9:9.2
 
 ```shell
 sudo docker login
-sudo docker build -t elasticsearch920:9.2.1 .
+sudo docker build -t elasticsearch921:9.2.1 .
 sudo docker tag elasticsearch921:9.2.1 koushenhai/elasticsearch9
 sudo docker push koushenhai/elasticsearch9:latest
 ```
