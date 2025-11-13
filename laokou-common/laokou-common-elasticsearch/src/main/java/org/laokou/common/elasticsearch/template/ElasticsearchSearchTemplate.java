@@ -29,7 +29,7 @@ import co.elastic.clients.elasticsearch.core.search.Hit;
 import co.elastic.clients.elasticsearch.core.search.HitsMetadata;
 import co.elastic.clients.util.NamedValue;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.elasticsearch.entity.Search;
+import org.laokou.common.elasticsearch.model.Search;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
