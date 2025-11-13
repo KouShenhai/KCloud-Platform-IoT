@@ -10,14 +10,14 @@ importers:
     dependencies:
       umi:
         specifier: ^4.4.4
-        version: 4.5.3(@babel/core@7.28.4)(@types/node@24.10.0)(@types/react@19.2.3)(@types/webpack@5.28.5)(@utoo/pack@0.0.1-alpha.47(@types/webpack@5.28.5)(webpack@5.102.1))(eslint@8.57.1)(lightningcss@1.22.1)(prettier@3.5.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@3.29.5)(sass@1.54.0)(stylelint@14.16.1)(terser@5.44.1)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.102.1)
+        version: 4.5.3(@babel/core@7.28.4)(@types/node@24.10.0)(@types/react@19.2.4)(@types/webpack@5.28.5)(@utoo/pack@0.0.1-alpha.47(@types/webpack@5.28.5)(webpack@5.102.1))(eslint@8.57.1)(lightningcss@1.22.1)(prettier@3.5.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@3.29.5)(sass@1.54.0)(stylelint@14.16.1)(terser@5.44.1)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.102.1)
     devDependencies:
       '@types/react':
         specifier: ^19.0.0
-        version: 19.2.3
+        version: 19.2.4
       '@types/react-dom':
         specifier: ^19.0.0
-        version: 19.2.3(@types/react@19.2.3)
+        version: 19.2.3(@types/react@19.2.4)
       typescript:
         specifier: ^5.0.3
         version: 5.9.3
@@ -1018,8 +1018,8 @@ packages:
     peerDependencies:
       '@types/react': ^19.2.0
 
-  '@types/react@19.2.3':
-    resolution: {integrity: sha512-k5dJVszUiNr1DSe8Cs+knKR6IrqhqdhpUwzqhkS8ecQTSf3THNtbfIp/umqHMpX2bv+9dkx3fwDv/86LcSfvSg==}
+  '@types/react@19.2.4':
+    resolution: {integrity: sha512-tBFxBp9Nfyy5rsmefN+WXc1JeW/j2BpBHFdLZbEVfs9wn3E3NRFxwV0pJg8M1qQAexFpvz73hJXFofV0ZAu92A==}
 
   '@types/resolve@1.20.6':
     resolution: {integrity: sha512-A4STmOXPhMUtHH+S6ymgE2GiBSMqf4oTvcQZMcHzokuTLVYzXTB8ttjcgxOVaAp2lGwEdzZ0J+cRbbeevQj1UQ==}
@@ -1637,8 +1637,8 @@ packages:
     resolution: {integrity: sha512-zoKGUdu6vb2jd3YOq0nnhEDQVbPcHhco3UImJrv5dSkvxTc2pl2WjOPsjZXDwPDSl5eghIMuY3R6J9NDKF3KcQ==}
     hasBin: true
 
-  baseline-browser-mapping@2.8.26:
-    resolution: {integrity: sha512-73lC1ugzwoaWCLJ1LvOgrR5xsMLTqSKIEoMHVtL9E/HNk0PXtTM76ZIm84856/SF7Nv8mPZxKoBsgpm0tR1u1Q==}
+  baseline-browser-mapping@2.8.27:
+    resolution: {integrity: sha512-2CXFpkjVnY2FT+B6GrSYxzYf65BJWEqz5tIRHCvNsZZ2F3CmsCB37h8SpYgKG7y9C4YAeTipIPWG7EmFmhAeXA==}
     hasBin: true
 
   big-integer@1.6.52:
@@ -3063,6 +3063,10 @@ packages:
 
   js-yaml@4.1.0:
     resolution: {integrity: sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==}
+    hasBin: true
+
+  js-yaml@4.1.1:
+    resolution: {integrity: sha512-qQKT4zQxXl8lLwBtHMWwaTcGfFOZviOJet3Oy/xmGk2gZH677CJM9EvtfdSkgWcATZhj/55JZ0rmy3myCT5lsA==}
     hasBin: true
 
   jsesc@2.5.2:
@@ -5534,7 +5538,7 @@ snapshots:
       globals: 13.24.0
       ignore: 5.3.2
       import-fresh: 3.3.1
-      js-yaml: 4.1.0
+      js-yaml: 4.1.1
       minimatch: 3.1.2
       strip-json-comments: 3.1.1
     transitivePeerDependencies:
@@ -5548,23 +5552,23 @@ snapshots:
     dependencies:
       '@floating-ui/core': 0.6.2
 
-  '@floating-ui/react-dom-interactions@0.3.1(@types/react@19.2.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@floating-ui/react-dom-interactions@0.3.1(@types/react@19.2.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@floating-ui/react-dom': 0.6.3(@types/react@19.2.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@floating-ui/react-dom': 0.6.3(@types/react@19.2.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       aria-hidden: 1.2.6
       point-in-polygon: 1.1.0
-      use-isomorphic-layout-effect: 1.2.1(@types/react@19.2.3)(react@18.3.1)
+      use-isomorphic-layout-effect: 1.2.1(@types/react@19.2.4)(react@18.3.1)
     transitivePeerDependencies:
       - '@types/react'
       - react
       - react-dom
 
-  '@floating-ui/react-dom@0.6.3(@types/react@19.2.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@floating-ui/react-dom@0.6.3(@types/react@19.2.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@floating-ui/dom': 0.4.5
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
-      use-isomorphic-layout-effect: 1.2.1(@types/react@19.2.3)(react@18.3.1)
+      use-isomorphic-layout-effect: 1.2.1(@types/react@19.2.4)(react@18.3.1)
     transitivePeerDependencies:
       - '@types/react'
 
@@ -5987,11 +5991,11 @@ snapshots:
 
   '@types/parse-json@4.0.2': {}
 
-  '@types/react-dom@19.2.3(@types/react@19.2.3)':
+  '@types/react-dom@19.2.3(@types/react@19.2.4)':
     dependencies:
-      '@types/react': 19.2.3
+      '@types/react': 19.2.4
 
-  '@types/react@19.2.3':
+  '@types/react@19.2.4':
     dependencies:
       csstype: 3.1.3
 
@@ -6405,7 +6409,7 @@ snapshots:
     dependencies:
       tsx: 3.12.2
 
-  '@umijs/preset-umi@4.5.3(@types/node@24.10.0)(@types/react@19.2.3)(@types/webpack@5.28.5)(@utoo/pack@0.0.1-alpha.47(@types/webpack@5.28.5)(webpack@5.102.1))(lightningcss@1.22.1)(rollup@3.29.5)(sass@1.54.0)(terser@5.44.1)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.102.1)':
+  '@umijs/preset-umi@4.5.3(@types/node@24.10.0)(@types/react@19.2.4)(@types/webpack@5.28.5)(@utoo/pack@0.0.1-alpha.47(@types/webpack@5.28.5)(webpack@5.102.1))(lightningcss@1.22.1)(rollup@3.29.5)(sass@1.54.0)(terser@5.44.1)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.102.1)':
     dependencies:
       '@iconify/utils': 2.1.1
       '@stagewise/toolbar': 0.6.2
@@ -6431,7 +6435,7 @@ snapshots:
       '@umijs/zod2ts': 4.5.3
       babel-plugin-dynamic-import-node: 2.3.3
       babel-plugin-react-compiler: 0.0.0-experimental-c23de8d-20240515
-      click-to-react-component: 1.1.0(@types/react@19.2.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      click-to-react-component: 1.1.0(@types/react@19.2.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       core-js: 3.34.0
       current-script-polyfill: 1.0.0
       enhanced-resolve: 5.9.3
@@ -6928,7 +6932,7 @@ snapshots:
 
   baseline-browser-mapping@2.8.19: {}
 
-  baseline-browser-mapping@2.8.26: {}
+  baseline-browser-mapping@2.8.27: {}
 
   big-integer@1.6.52: {}
 
@@ -7032,7 +7036,7 @@ snapshots:
 
   browserslist@4.28.0:
     dependencies:
-      baseline-browser-mapping: 2.8.26
+      baseline-browser-mapping: 2.8.27
       caniuse-lite: 1.0.30001754
       electron-to-chromium: 1.5.250
       node-releases: 2.0.27
@@ -7153,9 +7157,9 @@ snapshots:
     dependencies:
       source-map: 0.6.1
 
-  click-to-react-component@1.1.0(@types/react@19.2.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  click-to-react-component@1.1.0(@types/react@19.2.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@floating-ui/react-dom-interactions': 0.3.1(@types/react@19.2.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@floating-ui/react-dom-interactions': 0.3.1(@types/react@19.2.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       htm: 3.1.1
       react: 18.3.1
       react-merge-refs: 1.1.0
@@ -7833,7 +7837,7 @@ snapshots:
       imurmurhash: 0.1.4
       is-glob: 4.0.3
       is-path-inside: 3.0.3
-      js-yaml: 4.1.0
+      js-yaml: 4.1.1
       json-stable-stringify-without-jsonify: 1.0.1
       levn: 0.4.1
       lodash.merge: 4.6.2
@@ -8676,6 +8680,10 @@ snapshots:
       esprima: 4.0.1
 
   js-yaml@4.1.0:
+    dependencies:
+      argparse: 2.0.1
+
+  js-yaml@4.1.1:
     dependencies:
       argparse: 2.0.1
 
@@ -10495,14 +10503,14 @@ snapshots:
 
   typescript@5.9.3: {}
 
-  umi@4.5.3(@babel/core@7.28.4)(@types/node@24.10.0)(@types/react@19.2.3)(@types/webpack@5.28.5)(@utoo/pack@0.0.1-alpha.47(@types/webpack@5.28.5)(webpack@5.102.1))(eslint@8.57.1)(lightningcss@1.22.1)(prettier@3.5.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@3.29.5)(sass@1.54.0)(stylelint@14.16.1)(terser@5.44.1)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.102.1):
+  umi@4.5.3(@babel/core@7.28.4)(@types/node@24.10.0)(@types/react@19.2.4)(@types/webpack@5.28.5)(@utoo/pack@0.0.1-alpha.47(@types/webpack@5.28.5)(webpack@5.102.1))(eslint@8.57.1)(lightningcss@1.22.1)(prettier@3.5.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@3.29.5)(sass@1.54.0)(stylelint@14.16.1)(terser@5.44.1)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.102.1):
     dependencies:
       '@babel/runtime': 7.23.6
       '@umijs/bundler-utils': 4.5.3
       '@umijs/bundler-webpack': 4.5.3(@types/webpack@5.28.5)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.102.1)
       '@umijs/core': 4.5.3
       '@umijs/lint': 4.5.3(eslint@8.57.1)(stylelint@14.16.1)(typescript@5.9.3)
-      '@umijs/preset-umi': 4.5.3(@types/node@24.10.0)(@types/react@19.2.3)(@types/webpack@5.28.5)(@utoo/pack@0.0.1-alpha.47(@types/webpack@5.28.5)(webpack@5.102.1))(lightningcss@1.22.1)(rollup@3.29.5)(sass@1.54.0)(terser@5.44.1)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.102.1)
+      '@umijs/preset-umi': 4.5.3(@types/node@24.10.0)(@types/react@19.2.4)(@types/webpack@5.28.5)(@utoo/pack@0.0.1-alpha.47(@types/webpack@5.28.5)(webpack@5.102.1))(lightningcss@1.22.1)(rollup@3.29.5)(sass@1.54.0)(terser@5.44.1)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.102.1)
       '@umijs/renderer-react': 4.5.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@umijs/server': 4.5.3
       '@umijs/test': 4.5.3(@babel/core@7.28.4)
@@ -10591,11 +10599,11 @@ snapshots:
       punycode: 1.4.1
       qs: 6.14.0
 
-  use-isomorphic-layout-effect@1.2.1(@types/react@19.2.3)(react@18.3.1):
+  use-isomorphic-layout-effect@1.2.1(@types/react@19.2.4)(react@18.3.1):
     dependencies:
       react: 18.3.1
     optionalDependencies:
-      '@types/react': 19.2.3
+      '@types/react': 19.2.4
 
   util-deprecate@1.0.2: {}
 
