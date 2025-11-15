@@ -153,6 +153,7 @@ image::doc/image/老寇IoT云平台业务架构图.png[架构图,align=center]
 |组件                         |版本
 
 |Spring Boot                 |4.0.0
+|Spring Framework            |7.0.0
 |Spring Security             |7.0.0
 |Spring Data                 |2025.1.0
 |Spring Cloud                |2025.1.0

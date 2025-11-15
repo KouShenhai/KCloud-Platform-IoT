@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5.0.0
-      - name: Use Node.js 18.x
+      - name: Use Node.js 24.x
         uses: actions/setup-node@v6.0.0
         with:
           node-version: 24.x
@@ -29,7 +29,7 @@ jobs:
       - name: Build UI
         run: pnpm build
         working-directory: ./ui
-      - name: Use Node.js 18.x
+      - name: Use Node.js 24.x
         uses: actions/setup-node@v6.0.0
         with:
           node-version: 24.x
@@ -53,7 +53,7 @@ jobs:
           docker build . --file Dockerfile --tag registry.cn-shenzhen.aliyuncs.com/koushenhai/ui:4.0.0
           # 推送镜像到镜像仓库
           docker push registry.cn-shenzhen.aliyuncs.com/koushenhai/ui:4.0.0
-      - name: Use Node.js 18.x
+      - name: Use Node.js 24.x
         uses: actions/setup-node@v6.0.0
         with:
           node-version: 24.x
