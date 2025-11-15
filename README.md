@@ -317,6 +317,10 @@ KCloud-Platform-IoT 开源软件遵循 [Apache 2.0 协议](https://www.apache.or
 
 <img src="doc/image/gitcode.jpg" alt="2025年GitCode百大开源项目" />
 
+[抖音视频-GitCode百大开源项目获奖感谢](https://v.douyin.com/fhQd0Bp8f40)
+
+[哔哩哔哩视频-GitCode百大开源项目获奖感谢](https://www.bilibili.com/video/BV1zeCCBcEn5)
+
 ### 🐼 鸣谢个人
 
 | 序号 |                                       头像                                       |                       名字                        |
