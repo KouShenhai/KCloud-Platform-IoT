@@ -330,6 +330,10 @@ https://www.bilibili.com/video/BV1KPdxYaESL[哔哩哔哩视频-老寇IoT云平�
 
 image::doc/image/gitcode.jpg[2025年GitCode百大开源项目]
 
+https://v.douyin.com/fhQd0Bp8f40[抖音视频-GitCode百大开源项目获奖感谢]
+
+https://www.bilibili.com/video/BV1zeCCBcEn5[哔哩哔哩视频-GitCode百大开源项目获奖感谢]
+
 === 🐼 鸣谢个人
 
 [width=100%]
