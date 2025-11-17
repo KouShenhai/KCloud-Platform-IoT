@@ -24,7 +24,7 @@ import org.laokou.auth.api.SecretsServiceI;
 import org.laokou.auth.dto.clientobject.SecretCO;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.ratelimiter.annotation.RateLimiter;
-import org.laokou.common.ratelimiter.aop.Type;
+import org.laokou.common.ratelimiter.aspectj.Type;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -36,7 +36,7 @@ import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
-import org.laokou.common.idempotent.aop.IdempotentAop;
+import org.laokou.common.idempotent.aspectj.IdempotentAspectj;
 import org.laokou.common.redis.util.RedisUtils;
 import org.laokou.common.security.config.OAuth2OpaqueTokenIntrospector;
 import org.laokou.common.trace.util.MDCUtils;
@@ -109,7 +109,7 @@ class OAuth2ApiTest {
 		cmd.setCo(co);
 		restClient.post()
 			.uri(getSendMailCaptchaUrl())
-			.header(IdempotentAop.REQUEST_ID, UUIDGenerator.generateUUID())
+			.header(IdempotentAspectj.REQUEST_ID, UUIDGenerator.generateUUID())
 			.body(cmd)
 			.accept(MediaType.APPLICATION_JSON)
 			.retrieve()
@@ -125,7 +125,7 @@ class OAuth2ApiTest {
 		cmd.setCo(co);
 		restClient.post()
 			.uri(getSendMobileCaptchaUrl())
-			.header(IdempotentAop.REQUEST_ID, UUIDGenerator.generateUUID())
+			.header(IdempotentAspectj.REQUEST_ID, UUIDGenerator.generateUUID())
 			.body(cmd)
 			.accept(MediaType.APPLICATION_JSON)
 			.retrieve()

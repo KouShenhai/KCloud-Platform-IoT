@@ -18,4 +18,4 @@
 /**
  * @author laokou
  */
-package org.laokou.common.idempotent.aop;
+package org.laokou.common.lock.aspectj;

@@ -18,4 +18,4 @@
 /**
  * @author laokou
  */
-package org.laokou.common.secret.aop;
+package org.laokou.common.data.cache.aspectj;

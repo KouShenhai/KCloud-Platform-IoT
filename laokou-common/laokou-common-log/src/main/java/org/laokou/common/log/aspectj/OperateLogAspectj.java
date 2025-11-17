@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.log.aop;
+package org.laokou.common.log.aspectj;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,7 +45,7 @@ import org.springframework.util.StopWatch;
 @Component
 @MapperScan(basePackages = "org.laokou.common.log.mapper")
 @RequiredArgsConstructor
-public class OperateLogAop {
+public class OperateLogAspectj {
 
 	private final SpringUtils springUtils;
 

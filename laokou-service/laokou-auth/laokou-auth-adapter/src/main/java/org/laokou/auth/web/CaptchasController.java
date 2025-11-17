@@ -27,7 +27,7 @@ import org.laokou.auth.model.SendCaptchaTypeEnum;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.ratelimiter.annotation.RateLimiter;
-import org.laokou.common.ratelimiter.aop.Type;
+import org.laokou.common.ratelimiter.aspectj.Type;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

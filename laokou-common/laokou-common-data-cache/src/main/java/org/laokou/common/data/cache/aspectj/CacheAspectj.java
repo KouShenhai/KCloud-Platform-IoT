@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.data.cache.aop;
+package org.laokou.common.data.cache.aspectj;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -36,11 +36,11 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Aspect
 @Component
-public class CacheAop {
+public class CacheAspectj {
 
 	private final CacheManager redissonCacheManager;
 
-	public CacheAop(@Qualifier("redissonCacheManager") CacheManager redissonCacheManager) {
+	public CacheAspectj(@Qualifier("redissonCacheManager") CacheManager redissonCacheManager) {
 		this.redissonCacheManager = redissonCacheManager;
 	}
 

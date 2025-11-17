@@ -144,6 +144,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 |     Spring Boot      |    4.0.0    |
 |   Spring Framework   |    7.0.0    |
 |   Spring Security    |    7.0.0    |
+|     Spring gRPC      |    1.0.0    |
 |     Spring Data      |  2025.1.0   |
 |     Spring Cloud     |  2025.1.0   |
 | Spring Cloud Alibaba | 2025.0.0.0  |
