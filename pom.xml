@@ -112,7 +112,7 @@
     <!--spring-security版本-->
     <spring-security.version>7.0.0-RC3</spring-security.version>
     <!--spring-grpc版本-->
-    <spring-grpc.version>1.0.0-RC1</spring-grpc.version>
+    <spring-grpc.version>1.0.0-SNAPSHOT</spring-grpc.version>
     <!--spring-ai版本-->
     <spring-ai.version>1.1.0</spring-ai.version>
     <!--spring-ai-alibaba版本-->
