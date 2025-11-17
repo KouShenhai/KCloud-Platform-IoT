@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.ratelimiter.aop;
+package org.laokou.common.ratelimiter.aspectj;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.laokou.common.context.util.UserUtils;

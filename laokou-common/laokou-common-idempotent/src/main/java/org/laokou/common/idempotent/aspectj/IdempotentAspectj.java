@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.idempotent.aop;
+package org.laokou.common.idempotent.aspectj;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +40,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class IdempotentAop {
+public class IdempotentAspectj {
 
 	public static final String REQUEST_ID = "request-id";
 

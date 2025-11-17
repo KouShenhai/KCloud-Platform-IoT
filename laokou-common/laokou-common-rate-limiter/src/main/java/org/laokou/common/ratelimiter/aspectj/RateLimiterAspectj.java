@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.ratelimiter.aop;
+package org.laokou.common.ratelimiter.aspectj;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,7 +42,7 @@ import java.time.Duration;
 @Aspect
 @Component
 @RequiredArgsConstructor
-public class RateLimiterAop {
+public class RateLimiterAspectj {
 
 	/**
 	 * 限流Key.

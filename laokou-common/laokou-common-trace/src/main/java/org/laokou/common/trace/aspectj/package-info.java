@@ -18,4 +18,4 @@
 /**
  * @author laokou
  */
-package org.laokou.common.trace.aop;
+package org.laokou.common.trace.aspectj;

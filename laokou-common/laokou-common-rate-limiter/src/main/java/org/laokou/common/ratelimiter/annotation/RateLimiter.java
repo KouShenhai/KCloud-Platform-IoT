@@ -17,7 +17,7 @@
 
 package org.laokou.common.ratelimiter.annotation;
 
-import org.laokou.common.ratelimiter.aop.Type;
+import org.laokou.common.ratelimiter.aspectj.Type;
 import org.redisson.api.RateType;
 
 import java.lang.annotation.Documented;

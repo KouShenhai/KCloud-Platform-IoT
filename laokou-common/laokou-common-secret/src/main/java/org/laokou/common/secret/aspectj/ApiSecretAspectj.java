@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.secret.aop;
+package org.laokou.common.secret.aspectj;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +39,7 @@ import java.util.Map;
 @Slf4j
 @Aspect
 @Component
-public class ApiSecretAop {
+public class ApiSecretAspectj {
 
 	/**
 	 * 随机字符.

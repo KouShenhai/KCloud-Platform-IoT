@@ -15,15 +15,15 @@
  *
  */
 
-package org.laokou.common.domain.aop;
+package org.laokou.common.trace.aspectj;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.laokou.common.domain.annotation.CommandLog;
-import org.laokou.common.i18n.dto.Command;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.trace.util.TraceUtils;
 import org.springframework.stereotype.Component;
 
 /**
@@ -33,20 +33,19 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 @RequiredArgsConstructor
-public class CommandLogAop {
+public class TraceLogAspectj {
 
-	@Around("@annotation(commandLog)")
-	public Object doAround(ProceedingJoinPoint joinPoint, CommandLog commandLog) throws Throwable {
-		Command cmd = (Command) joinPoint.getArgs()[0];
-		try {
-			Object proceed = joinPoint.proceed();
-			log.info("命令【{}】执行成功", cmd.getClass().getName());
-			return proceed;
+	private final TraceUtils traceUtils;
+
+	@Around("@annotation(org.laokou.common.trace.annotation.TraceLog)")
+	public Object doAround(ProceedingJoinPoint point) throws Throwable {
+		Object proceed = point.proceed();
+		if (proceed instanceof Result<?> result) {
+			result.setTraceId(traceUtils.getTraceId());
+			result.setSpanId(traceUtils.getSpanId());
+			return result;
 		}
-		catch (Throwable throwable) {
-			log.error("命令【{}】执行失败", cmd.getClass().getName());
-			throw throwable;
-		}
+		return proceed;
 	}
 
 }

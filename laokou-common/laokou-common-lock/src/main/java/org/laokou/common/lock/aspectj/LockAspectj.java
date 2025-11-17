@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.lock.aop;
+package org.laokou.common.lock.aspectj;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,7 +45,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 @RequiredArgsConstructor
-public class LockAop {
+public class LockAspectj {
 
 	private final RedisUtils redisUtils;
 
