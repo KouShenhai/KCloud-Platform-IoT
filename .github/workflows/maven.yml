@@ -13,7 +13,7 @@ jobs:
       matrix:
         java-version: [25]
     steps:
-      - uses: actions/checkout@v5.0.0
+      - uses: actions/checkout@v5.0.1
       - name: Set up GraalVM JDK 25 for x64
         uses: actions/setup-java@v5.0.0
         with:
