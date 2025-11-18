@@ -200,7 +200,7 @@
     <!--objenesis版本-->
     <objenesis.version>3.4</objenesis.version>
     <!--influxdb-client-java版本-->
-    <influxdb-client-java.version>7.3.0</influxdb-client-java.version>
+    <influxdb-client-java.version>7.4.0</influxdb-client-java.version>
     <!--reactor-core版本-->
     <reactor-core.version>3.8.0</reactor-core.version>
     <!--opencsv版本-->
