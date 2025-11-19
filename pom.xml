@@ -132,7 +132,7 @@
     <!--netty版本-->
     <netty.version>4.2.7.Final</netty.version>
     <!--grpc版本-->
-    <grpc.version>1.76.0</grpc.version>
+    <grpc.version>1.77.0</grpc.version>
     <!--jackson版本-->
     <jackson.version>3.0.2</jackson.version>
     <!--okhttp版本-->
