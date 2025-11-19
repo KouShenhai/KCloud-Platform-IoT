@@ -174,7 +174,7 @@
     <!--ip2region版本-->
     <ip2region.version>3.1.1</ip2region.version>
     <!--spring-kafka版本-->
-    <spring-kafka.version>3.3.11</spring-kafka.version>
+    <spring-kafka.version>4.0.0</spring-kafka.version>
     <!--disruptor版本-->
     <disruptor.version>4.0.0</disruptor.version>
     <!--transmittable-thread-local版本-->
