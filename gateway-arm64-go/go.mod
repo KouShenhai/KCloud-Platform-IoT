@@ -23,7 +23,7 @@ toolchain go1.25.4
 
 require (
 	github.com/DeRuina/timberjack v1.3.9
-	go.uber.org/zap v1.27.0
+	go.uber.org/zap v1.27.1
 	gopkg.in/yaml.v3 v3.0.1
 	gorm.io/driver/sqlite v1.6.0
 	gorm.io/gorm v1.31.1
