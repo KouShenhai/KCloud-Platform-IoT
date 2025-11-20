@@ -25,9 +25,6 @@ server:
   # 开启请求压缩
   compression:
     enabled: true
-  servlet:
-    encoding:
-      charset: UTF-8
   ssl:
     # 开启证书
     enabled: @SSL-ENABLED@
@@ -88,7 +85,7 @@ spring:
           # 初始容量 => 30
           # 最大容量 => 4096
           # 淘汰规则 => 最后一次写操作后经过30s过期
-          spec: initialCapacity=30,expireAfterWrite=30s,maximumSize=4096
+          spc: initialCapacity=30,expireAfterWrite=30s,maximumSize=4096
         # 开启缓存
         enabled: true
       nacos:
@@ -172,26 +169,27 @@ management:
       exposure:
         include: "*"
   endpoint:
-    gateway:
-      access: unrestricted
     health:
       show-details: always
   tracing:
-    enabled: true
+    export:
+      enabled: true
     propagation:
       type: w3c
     # 采样率 => 100%
     sampling:
       probability: 1
-  otlp:
+  logging:
+    export:
+      enabled: true
+  opentelemetry:
     tracing:
-      endpoint: http://otel-collector:4317/v1/traces
-      compression: gzip
-      timeout: 10s
-      transport: grpc
-    metrics:
       export:
-        enabled: false
+        otlp:
+          endpoint: http://otel-collector:4317/v1/traces
+          compression: gzip
+          timeout: 10s
+          transport: grpc
   metrics:
     tags:
       application: ${spring.application.name}
@@ -207,17 +205,17 @@ knife4j:
     # 手动
     strategy: manual
     routes:
-      - name: 认证服务
+      - name: 认证授权服务
         url: /auth/api/v3/api-docs?group=default
         service-name: laokou-auth
         context-path: /auth/api
         order: 1
-      - name: 管理服务
+      - name: 后台管理服务
         url: /admin/api/v3/api-docs?group=default
         service-name: laokou-admin
         context-path: /admin/api
         order: 2
-      - name: IoT服务
+      - name: 物联网服务
         url: /iot/api/v3/api-docs?group=default
         service-name: laokou-iot
         context-path: /iot/api
