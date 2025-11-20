@@ -53,6 +53,9 @@ server:
     uri-encoding: UTF-8
     # 连接超时时间
     connection-timeout: 60s
+    resource:
+      # 静态缓存的最大大小
+      cache-max-size: 100MB
 spring:
   application:
     name: ${SERVICE_ID:laokou-auth}
