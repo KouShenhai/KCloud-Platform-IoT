@@ -15,7 +15,7 @@
 #  */
 services:
   mongodb:
-    image: mongo:8.2.1
+    image: mongo:8.2.2
     container_name: mongodb
     # 保持容器在没有守护程序的情况下运行
     tty: true
