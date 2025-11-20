@@ -36,7 +36,7 @@ image:https://gitee.com/laokouyun/KCloud-Platform-IoT/badge/fork.svg?theme=dark[
 
 image:https://gitcode.com/qq_39893313/KCloud-Platform-IoT/star/badge.svg?theme=dark[GitCode star,link=https://gitcode.com/qq_39893313/KCloud-Platform-IoT]
 
-image:https://img.shields.io/static/v1?label=Spring%20Framework&message=7.0.0&color=green[Spring Framework,link=https://spring.io/projects/spring-framework]
+image:https://img.shields.io/static/v1?label=Spring%20Framework&message=7.0.1&color=green[Spring Framework,link=https://spring.io/projects/spring-framework]
 image:https://img.shields.io/static/v1?label=Spring%20Security&message=7.0.0&color=green[Spring Security,link=https://spring.io/projects/spring-security]
 image:https://img.shields.io/static/v1?label=Spring%20Boot&message=4.0.0&color=green[Spring Boot,link=https://spring.io/projects/spring-boot]
 image:https://img.shields.io/static/v1?label=Spring%20Cloud&message=2025.1.0&color=green[Spring Cloud,link=https://spring.io/projects/spring-cloud]
@@ -153,7 +153,7 @@ image::doc/image/老寇IoT云平台业务架构图.png[架构图,align=center]
 |组件                         |版本
 
 |Spring Boot                 |4.0.0
-|Spring Framework            |7.0.0
+|Spring Framework            |7.0.1
 |Spring Security             |7.0.0
 |Spring gRPC                 |1.0.0
 |Spring Data                 |2025.1.0
