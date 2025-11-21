@@ -118,7 +118,7 @@
     <!--spring-ai-alibaba版本-->
     <spring-ai-alibaba.version>1.0.0.4</spring-ai-alibaba.version>
     <!--springdoc-openapi版本-->
-    <springdoc-openapi.version>3.0.0-RC1</springdoc-openapi.version>
+    <springdoc-openapi.version>3.0.0</springdoc-openapi.version>
     <!--testcontainers版本-->
     <testcontainers.version>2.0.2</testcontainers.version>
     <!--vertx版本-->
