@@ -1,3 +1,9 @@
+# 安装依赖
+
+```shell
+pip install -r requirements.txt
+```
+
 # 代码规范
 
 ## 函数命名
