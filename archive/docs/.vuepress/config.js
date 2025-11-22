@@ -85,8 +85,8 @@ module.exports = {
 					},
 					{
 						text: '常用命令', items: [
-							{text: 'Centos7常用命令', link: '/pages/76bfa2/'},
-							{text: 'Centos7常用命令', link: '/pages/2f475f/'}
+							{text: 'Linux常用命令', link: '/pages/76bfa2/'},
+							{text: 'Docker常用命令', link: '/pages/2f475f/'}
 						]
 					},
 					{
