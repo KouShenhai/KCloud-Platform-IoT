@@ -19,6 +19,7 @@ package org.laokou.common.grpc.config;
 
 import io.grpc.NameResolver;
 import io.grpc.NameResolverProvider;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.client.discovery.event.HeartbeatEvent;
 import org.springframework.context.event.EventListener;
@@ -31,6 +32,7 @@ import java.util.concurrent.ExecutorService;
 /**
  * @author laokou
  */
+@Slf4j
 final class DiscoveryNameResolverProvider extends NameResolverProvider {
 
 	private final DiscoveryClient discoveryClient;
@@ -70,6 +72,7 @@ final class DiscoveryNameResolverProvider extends NameResolverProvider {
 
 	@EventListener(HeartbeatEvent.class)
 	public void onHeartbeatEvent(HeartbeatEvent event) {
+		log.debug("Received HeartbeatEvent, refreshing DiscoveryNameResolvers, event: {}", event.getValue());
 		for (DiscoveryNameResolver discoveryNameResolver : discoveryNameResolvers) {
 			discoveryNameResolver.refreshFromExternal();
 		}

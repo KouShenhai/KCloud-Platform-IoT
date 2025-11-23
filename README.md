@@ -149,7 +149,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 |     Spring Cloud     |  2025.1.0   |
 | Spring Cloud Alibaba | 2025.0.0.0  |
 |  Spring Boot Admin   |    3.5.6    |
-|     Mybatis Plus     |   3.5.14    |
+|     Mybatis Plus     |   3.5.15    |
 |        Nacos         |    3.1.0    |
 |         gRPC         |   1.76.0    |
 |        Redis         |    8.0.1    |

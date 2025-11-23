@@ -124,7 +124,7 @@
     <!--vertx版本-->
     <vertx.version>5.0.5</vertx.version>
     <!--mybatis-plus版本 -->
-    <mybatis-plus.version>3.5.14</mybatis-plus.version>
+    <mybatis-plus.version>3.5.15-SNAPSHOT</mybatis-plus.version>
     <!--nacos版本-->
     <nacos.version>3.1.0</nacos.version>
     <!--opentelemetry版本-->
@@ -694,7 +694,6 @@
         <artifactId>jsqlparser</artifactId>
         <version>${jsqlparser.version}</version>
       </dependency>
-
     </dependencies>
   </dependencyManagement>
 
@@ -725,6 +724,9 @@
       <id>spring-milestones</id>
       <name>Spring Milestones</name>
       <url>https://repo.spring.io/milestone</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
       <snapshots>
         <enabled>false</enabled>
       </snapshots>
@@ -736,10 +738,23 @@
       <releases>
         <enabled>false</enabled>
       </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
     </repository>
     <repository>
       <id>sonatype-nexus-snapshots</id>
       <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>maven-snapshots</id>
+      <url>https://central.sonatype.com/repository/maven-snapshots/</url>
       <releases>
         <enabled>false</enabled>
       </releases>
