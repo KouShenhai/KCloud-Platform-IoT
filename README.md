@@ -151,14 +151,13 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 |  Spring Boot Admin   |    3.5.6    |
 |     Mybatis Plus     |   3.5.15    |
 |        Nacos         |    3.1.0    |
-|         gRPC         |   1.76.0    |
+|         gRPC         |   1.77.0    |
 |        Redis         |    8.0.1    |
 |    Elasticsearch     |    9.2.1    |
 |        Netty         | 4.2.7.Final |
 |        Kafka         |    4.0.0    |
-|        Pulsar        |    4.0.5    |
+|        Pulsar        |    4.1.2    |
 |         EMQX         |    5.4.1    |
-|        Pulsar        |    4.0.5    |
 |     TimescaleDB      |     17      |
 |       TDengine       |   3.3.5.0   |
 |      Liquibase       |   4.30.0    |
