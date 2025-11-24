@@ -227,6 +227,8 @@
     <swagger-annotations-jakarta.version>2.2.40</swagger-annotations-jakarta.version>
     <!--jsqlparser版本-->
     <jsqlparser.version>5.2</jsqlparser.version>
+    <!--commons-io-->
+    <commons-io.version>2.21.0</commons-io.version>
     <!--spotbugs版本-->
     <spotbugs.version>4.9.8</spotbugs.version>
     <!--docker主机-->
@@ -497,7 +499,7 @@
       </dependency>
       <dependency>
         <groupId>org.wiremock</groupId>
-        <artifactId>wiremock</artifactId>
+        <artifactId>wiremock-standalone</artifactId>
         <version>${wiremock.version}</version>
       </dependency>
       <dependency>
@@ -693,6 +695,12 @@
         <groupId>com.github.jsqlparser</groupId>
         <artifactId>jsqlparser</artifactId>
         <version>${jsqlparser.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>commons-io</groupId>
+        <artifactId>commons-io</artifactId>
+        <version>${commons-io.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

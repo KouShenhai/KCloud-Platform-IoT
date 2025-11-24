@@ -20,6 +20,7 @@ package org.laokou.common.core;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.CmdUtils;
+import org.laokou.common.core.util.SystemUtils;
 
 import java.io.IOException;
 
@@ -30,8 +31,15 @@ class CmdUtilsTest {
 
 	@Test
 	void test() throws IOException, InterruptedException {
-		Assertions.assertThat(CmdUtils.execute("echo", "hello world!").getFirst()).isEqualTo("hello world!");
-		Assertions.assertThatNoException().isThrownBy(() -> CmdUtils.executeVoid("top"));
+		if (!SystemUtils.isWindows()) {
+			Assertions.assertThat(CmdUtils.execute("echo", "hello world!").getFirst()).isEqualTo("hello world!");
+			Assertions.assertThatNoException().isThrownBy(() -> CmdUtils.executeVoid("top"));
+		}
+		else {
+			Assertions.assertThat(CmdUtils.execute("cmd", "/c", "echo hello world!").getFirst())
+				.isEqualTo("hello world!");
+			Assertions.assertThatNoException().isThrownBy(() -> CmdUtils.executeVoid("cmd", "/c", "cd", "c:/"));
+		}
 	}
 
 }

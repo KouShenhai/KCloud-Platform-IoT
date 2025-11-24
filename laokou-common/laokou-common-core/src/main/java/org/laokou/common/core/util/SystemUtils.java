@@ -33,7 +33,7 @@ public final class SystemUtils {
 	 * 判断是否是Window系统.
 	 */
 	public static boolean isWindows() {
-		return System.getProperty("os.name").equalsIgnoreCase("windows");
+		return System.getProperty("os.name").contains("Windows");
 	}
 
 	public static boolean isArchLinux() {

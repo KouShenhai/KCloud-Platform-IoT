@@ -17,12 +17,12 @@
 
 package org.laokou.common.csv;
 
-import org.apache.commons.io.FileUtils;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.csv.utils.CsvUtils;
 import org.springframework.boot.system.SystemProperties;
+import wiremock.org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
