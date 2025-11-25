@@ -15,10 +15,11 @@
  *
  */
 
-package org.laokou.auth.service.authentication;
+package org.laokou.auth.config.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.laokou.auth.convertor.AuthConvertor;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.Constants;
@@ -33,12 +34,12 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 import org.springframework.stereotype.Component;
 
 /**
- * 手机号处理器.
+ * 手机号认证Provider.
  *
  * @author laokou
  */
 @Slf4j
-@Component("mobileAuthenticationProvider")
+@Component
 final class OAuth2MobileAuthenticationProvider extends AbstractOAuth2AuthenticationProvider {
 
 	public OAuth2MobileAuthenticationProvider(OAuth2AuthorizationService authorizationService,
@@ -48,7 +49,7 @@ final class OAuth2MobileAuthenticationProvider extends AbstractOAuth2Authenticat
 	}
 
 	@Override
-	public boolean supports(Class<?> authentication) {
+	public boolean supports(@NotNull Class<?> authentication) {
 		return OAuth2MobileAuthenticationToken.class.isAssignableFrom(authentication);
 	}
 

@@ -15,30 +15,7 @@
  *
  */
 
-package org.laokou.auth.service.authentication;
-
-import org.laokou.auth.model.Constants;
-import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Component;
-
-import java.util.Map;
-
 /**
- * 邮箱转换器.
- *
  * @author laokou
  */
-@Component("mailAuthenticationConverter")
-final class OAuth2MailAuthenticationConverter extends AbstractOAuth2AuthenticationConverter {
-
-	@Override
-	String getGrantType() {
-		return Constants.MAIL;
-	}
-
-	@Override
-	Authentication convert(Authentication clientPrincipal, Map<String, Object> additionalParameters) {
-		return new OAuth2MailAuthenticationToken(clientPrincipal, additionalParameters);
-	}
-
-}
+package org.laokou.auth.config.authentication;

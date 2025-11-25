@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.auth.service.authentication;
+package org.laokou.auth.config.authentication;
 
 import org.laokou.auth.model.Constants;
 import org.springframework.security.core.Authentication;
@@ -24,19 +24,19 @@ import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import java.util.Map;
 
 /**
- * 测试令牌.
+ * 手机号令牌.
  *
  * @author laokou
  */
-final class OAuth2TestAuthenticationToken extends AbstractOAuth2AuthenticationToken {
+final class OAuth2MobileAuthenticationToken extends AbstractOAuth2AuthenticationToken {
 
 	/**
-	 * Subclass constructor.
+	 * Sub-class constructor.
 	 * @param clientPrincipal the authenticated client principal
 	 * @param additionalParameters the additional parameters
 	 */
-	OAuth2TestAuthenticationToken(Authentication clientPrincipal, Map<String, Object> additionalParameters) {
-		super(new AuthorizationGrantType(Constants.TEST), clientPrincipal, additionalParameters);
+	OAuth2MobileAuthenticationToken(Authentication clientPrincipal, Map<String, Object> additionalParameters) {
+		super(new AuthorizationGrantType(Constants.MOBILE), clientPrincipal, additionalParameters);
 	}
 
 }

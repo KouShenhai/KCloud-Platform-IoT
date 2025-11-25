@@ -23,7 +23,7 @@ import org.laokou.common.fory.config.ForyFactory;
 /**
  * @author laokou
  */
-public class ForyKafkaDeserializer implements Deserializer<Object> {
+public final class ForyKafkaDeserializer implements Deserializer<Object> {
 
 	@Override
 	public Object deserialize(String s, byte[] bytes) {

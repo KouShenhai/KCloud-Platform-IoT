@@ -49,19 +49,15 @@ import org.springframework.util.Assert;
  * @author spring-authorization-server
  * @author laokou
  */
-public class RedisOAuth2AuthorizationService implements OAuth2AuthorizationService {
+public record RedisOAuth2AuthorizationService(RegisteredClientRepository registeredClientRepository,
+		OAuth2AuthorizationGrantAuthorizationRepository authorizationGrantAuthorizationRepository)
+		implements
+			OAuth2AuthorizationService {
 
-	private final RegisteredClientRepository registeredClientRepository;
-
-	private final OAuth2AuthorizationGrantAuthorizationRepository authorizationGrantAuthorizationRepository;
-
-	public RedisOAuth2AuthorizationService(RegisteredClientRepository registeredClientRepository,
-			OAuth2AuthorizationGrantAuthorizationRepository authorizationGrantAuthorizationRepository) {
+	public RedisOAuth2AuthorizationService {
 		Assert.notNull(registeredClientRepository, "RegisteredClientRepository cannot be null");
 		Assert.notNull(authorizationGrantAuthorizationRepository,
 				"AuthorizationGrantAuthorizationRepository cannot be null");
-		this.registeredClientRepository = registeredClientRepository;
-		this.authorizationGrantAuthorizationRepository = authorizationGrantAuthorizationRepository;
 	}
 
 	@Override

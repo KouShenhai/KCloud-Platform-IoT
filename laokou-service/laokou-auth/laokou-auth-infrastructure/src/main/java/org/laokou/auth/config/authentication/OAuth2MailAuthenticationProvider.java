@@ -15,10 +15,11 @@
  *
  */
 
-package org.laokou.auth.service.authentication;
+package org.laokou.auth.config.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.laokou.auth.convertor.AuthConvertor;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.Constants;
@@ -33,39 +34,39 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 import org.springframework.stereotype.Component;
 
 /**
- * 测试处理器.
+ * 邮箱认证Provider.
  *
  * @author laokou
  */
 @Slf4j
-@Component("testAuthenticationProvider")
-final class OAuth2TestAuthenticationProvider extends AbstractOAuth2AuthenticationProvider {
+@Component
+final class OAuth2MailAuthenticationProvider extends AbstractOAuth2AuthenticationProvider {
 
-	public OAuth2TestAuthenticationProvider(OAuth2AuthorizationService authorizationService,
+	public OAuth2MailAuthenticationProvider(OAuth2AuthorizationService authorizationService,
 			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator,
 			OAuth2AuthenticationProcessor authenticationProcessor) {
 		super(authorizationService, tokenGenerator, authenticationProcessor);
 	}
 
 	@Override
-	public boolean supports(Class<?> authentication) {
-		return OAuth2TestAuthenticationToken.class.isAssignableFrom(authentication);
+	public boolean supports(@NotNull Class<?> authentication) {
+		return OAuth2MailAuthenticationToken.class.isAssignableFrom(authentication);
 	}
 
 	@Override
 	Authentication getPrincipal(HttpServletRequest request) throws Exception {
-		String username = request.getParameter(Constants.USERNAME);
-		String password = request.getParameter(Constants.PASSWORD);
+		String code = request.getParameter(Constants.CODE);
+		String mail = request.getParameter(Constants.MAIL);
 		String tenantCode = request.getParameter(Constants.TENANT_CODE);
-		AuthA authA = AuthConvertor.toEntity(username, password, tenantCode, GrantTypeEnum.TEST, StringConstants.EMPTY,
-				StringConstants.EMPTY);
-		authA.createUserByTest();
+		AuthA authA = AuthConvertor.toEntity(StringConstants.EMPTY, StringConstants.EMPTY, tenantCode,
+				GrantTypeEnum.MAIL, code, mail);
+		authA.createUserByMail();
 		return authentication(authA, request);
 	}
 
 	@Override
 	AuthorizationGrantType getGrantType() {
-		return OAuth2ModelMapper.TEST;
+		return OAuth2ModelMapper.MAIL;
 	}
 
 }

@@ -15,30 +15,28 @@
  *
  */
 
-package org.laokou.auth.service.authentication;
+package org.laokou.auth.config.authentication;
 
 import org.laokou.auth.model.Constants;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
 /**
- * 测试转换器.
+ * 用户名密码Converter.
  *
  * @author laokou
  */
-@Component("testAuthenticationConverter")
-final class OAuth2TestAuthenticationConverter extends AbstractOAuth2AuthenticationConverter {
+public final class OAuth2UsernamePasswordAuthenticationConverter extends AbstractOAuth2AuthenticationConverter {
 
 	@Override
 	String getGrantType() {
-		return Constants.TEST;
+		return Constants.USERNAME_PASSWORD;
 	}
 
 	@Override
 	Authentication convert(Authentication clientPrincipal, Map<String, Object> additionalParameters) {
-		return new OAuth2TestAuthenticationToken(clientPrincipal, additionalParameters);
+		return new OAuth2UsernamePasswordAuthenticationToken(clientPrincipal, additionalParameters);
 	}
 
 }

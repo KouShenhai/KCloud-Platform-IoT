@@ -17,7 +17,6 @@
 
 package org.laokou.common.security.config;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.Nullable;
 import org.laokou.common.context.util.UserExtDetails;
@@ -40,10 +39,8 @@ import java.security.Principal;
  * @author laokou
  */
 @Slf4j
-@RequiredArgsConstructor
-public class OAuth2OpaqueTokenIntrospector implements OpaqueTokenIntrospector {
-
-	private final OAuth2AuthorizationService oAuth2AuthorizationService;
+public record OAuth2OpaqueTokenIntrospector(
+		OAuth2AuthorizationService oAuth2AuthorizationService) implements OpaqueTokenIntrospector {
 
 	// @formatter:off
 	@Override

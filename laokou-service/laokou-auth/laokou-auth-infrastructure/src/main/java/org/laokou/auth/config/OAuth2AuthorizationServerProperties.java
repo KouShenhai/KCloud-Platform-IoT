@@ -18,6 +18,7 @@
 package org.laokou.auth.config;
 
 import lombok.Data;
+import org.jspecify.annotations.Nullable;
 import org.laokou.common.core.util.CollectionExtUtils;
 import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
@@ -61,7 +62,7 @@ final class OAuth2AuthorizationServerProperties implements InitializingBean {
 	/**
 	 * URL of the Authorization Server's Issuer Identifier.
 	 */
-	private String issuer;
+	private @Nullable String issuer;
 
 	/**
 	 * Whether multiple issuers are allowed per host. Using path components in the URL of
@@ -133,7 +134,7 @@ final class OAuth2AuthorizationServerProperties implements InitializingBean {
 		/**
 		 * Authorization Server's JWK Set Endpoint.
 		 */
-		private String jwkSetUri = "/v1/oauth2/jwks";
+		private @Nullable String jwkSetUri = "/v1/oauth2/jwks";
 
 		/**
 		 * Authorization Server's OAuth 2.0 Token Revocation Endpoint.
@@ -214,7 +215,7 @@ final class OAuth2AuthorizationServerProperties implements InitializingBean {
 		 * client at the Token Endpoint for the {@code private_key_jwt} and
 		 * {@code client_secret_jwt} authentication methods.
 		 */
-		private String tokenEndpointAuthenticationSigningAlgorithm;
+		private @Nullable String tokenEndpointAuthenticationSigningAlgorithm;
 
 	}
 
@@ -227,17 +228,17 @@ final class OAuth2AuthorizationServerProperties implements InitializingBean {
 		/**
 		 * Client ID of the registration.
 		 */
-		private String clientId;
+		private @Nullable String clientId;
 
 		/**
 		 * Client secret of the registration. May be left blank for a public client.
 		 */
-		private String clientSecret;
+		private @Nullable String clientSecret;
 
 		/**
 		 * Name of the client.
 		 */
-		private String clientName;
+		private @Nullable String clientName;
 
 		/**
 		 * Client authentication method(s) that the client may use.

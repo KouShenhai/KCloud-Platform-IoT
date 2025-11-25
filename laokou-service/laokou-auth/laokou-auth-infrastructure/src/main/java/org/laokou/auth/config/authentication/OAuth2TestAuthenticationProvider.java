@@ -15,14 +15,16 @@
  *
  */
 
-package org.laokou.auth.service.authentication;
+package org.laokou.auth.config.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.laokou.auth.convertor.AuthConvertor;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.Constants;
 import org.laokou.auth.model.GrantTypeEnum;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.security.config.OAuth2ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
@@ -32,42 +34,39 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 import org.springframework.stereotype.Component;
 
 /**
- * 密码处理器.
+ * 测试认证Provider.
  *
  * @author laokou
  */
 @Slf4j
-@Component("usernamePasswordAuthenticationProvider")
-final class OAuth2UsernamePasswordAuthenticationProvider extends AbstractOAuth2AuthenticationProvider {
+@Component
+final class OAuth2TestAuthenticationProvider extends AbstractOAuth2AuthenticationProvider {
 
-	public OAuth2UsernamePasswordAuthenticationProvider(OAuth2AuthorizationService authorizationService,
+	public OAuth2TestAuthenticationProvider(OAuth2AuthorizationService authorizationService,
 			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator,
 			OAuth2AuthenticationProcessor authenticationProcessor) {
 		super(authorizationService, tokenGenerator, authenticationProcessor);
 	}
 
 	@Override
-	public boolean supports(Class<?> authentication) {
-		return OAuth2UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);
+	public boolean supports(@NotNull Class<?> authentication) {
+		return OAuth2TestAuthenticationToken.class.isAssignableFrom(authentication);
 	}
 
 	@Override
 	Authentication getPrincipal(HttpServletRequest request) throws Exception {
-		String uuid = request.getParameter(Constants.UUID);
-		String captcha = request.getParameter(Constants.CAPTCHA);
 		String username = request.getParameter(Constants.USERNAME);
 		String password = request.getParameter(Constants.PASSWORD);
 		String tenantCode = request.getParameter(Constants.TENANT_CODE);
-		AuthA authA = AuthConvertor.toEntity(username, password, tenantCode, GrantTypeEnum.USERNAME_PASSWORD, uuid,
-				captcha);
-		authA.decryptUsernamePassword();
-		authA.createUserByUsernamePassword();
+		AuthA authA = AuthConvertor.toEntity(username, password, tenantCode, GrantTypeEnum.TEST, StringConstants.EMPTY,
+				StringConstants.EMPTY);
+		authA.createUserByTest();
 		return authentication(authA, request);
 	}
 
 	@Override
 	AuthorizationGrantType getGrantType() {
-		return OAuth2ModelMapper.USERNAME_PASSWORD;
+		return OAuth2ModelMapper.TEST;
 	}
 
 }

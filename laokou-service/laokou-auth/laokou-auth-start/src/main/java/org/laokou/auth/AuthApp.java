@@ -55,7 +55,7 @@ import java.security.NoSuchAlgorithmException;
 class AuthApp {
 
 	// @formatter:off
-	static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
+	void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
 		StopWatch stopWatch = new StopWatch("Auth应用程序");
 		stopWatch.start();
 		// 配置关闭nacos日志，因为nacos的log4j2导致本项目的日志不输出的问题
