@@ -84,7 +84,7 @@
     <!--native-maven-plugin版本-->
     <native-maven-plugin.version>0.11.3</native-maven-plugin.version>
     <!--versions-maven-plugin版本-->
-    <versions-maven-plugin.version>2.20.0</versions-maven-plugin.version>
+    <versions-maven-plugin.version>2.20.1</versions-maven-plugin.version>
     <!--asciidoctor-maven-plugin版本-->
     <asciidoctor-maven-plugin.version>3.2.0</asciidoctor-maven-plugin.version>
     <!--spring-javaformat-maven-plugin版本-->
