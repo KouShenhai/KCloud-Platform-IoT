@@ -102,9 +102,9 @@
     <!--spring-boot版本-->
     <spring-boot.version>4.0.0</spring-boot.version>
     <!--spring-cloud版本-->
-    <spring-cloud.version>2025.1.0-RC1</spring-cloud.version>
+    <spring-cloud.version>2025.1.0</spring-cloud.version>
     <!--cloud-alibaba版本-->
-    <spring-cloud-alibaba.version>2025.0.0.0</spring-cloud-alibaba.version>
+    <spring-cloud-alibaba.version>2025.1.0.0-SNAPSHOT</spring-cloud-alibaba.version>
     <!--spring-framework版本-->
     <spring-framework.version>7.0.1</spring-framework.version>
     <!--spring-data版本-->
@@ -765,6 +765,16 @@
       <url>https://central.sonatype.com/repository/maven-snapshots/</url>
       <releases>
         <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>xuxiaowei-spring-cloud-alibaba-gitlab-maven</id>
+      <url>https://gitlab.xuxiaowei.com.cn/api/v4/projects/430/packages/maven</url>
+      <releases>
+        <enabled>true</enabled>
       </releases>
       <snapshots>
         <enabled>true</enabled>
