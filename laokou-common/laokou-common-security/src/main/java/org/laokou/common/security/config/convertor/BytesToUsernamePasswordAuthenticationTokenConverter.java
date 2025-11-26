@@ -58,7 +58,6 @@ public final class BytesToUsernamePasswordAuthenticationTokenConverter
 
 	public BytesToUsernamePasswordAuthenticationTokenConverter() {
 		ObjectMapper objectMapper = JsonMapper.builder()
-			.findAndAddModules()
 			.configure(MapperFeature.PROPAGATE_TRANSIENT_MARKER, true)
 			.addModules(SecurityJacksonModules
 				.getModules(BytesToUsernamePasswordAuthenticationTokenConverter.class.getClassLoader()))
