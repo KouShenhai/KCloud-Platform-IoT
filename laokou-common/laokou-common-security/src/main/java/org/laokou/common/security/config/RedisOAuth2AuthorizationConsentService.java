@@ -43,13 +43,11 @@ import org.springframework.util.Assert;
  * @author spring-authorization-server
  * @author laokou
  */
-public class RedisOAuth2AuthorizationConsentService implements OAuth2AuthorizationConsentService {
+public record RedisOAuth2AuthorizationConsentService(
+		OAuth2UserConsentRepository userConsentRepository) implements OAuth2AuthorizationConsentService {
 
-	private final OAuth2UserConsentRepository userConsentRepository;
-
-	public RedisOAuth2AuthorizationConsentService(OAuth2UserConsentRepository userConsentRepository) {
+	public RedisOAuth2AuthorizationConsentService {
 		Assert.notNull(userConsentRepository, "UserConsentRepository cannot be null");
-		this.userConsentRepository = userConsentRepository;
 	}
 
 	@Override

@@ -221,11 +221,14 @@ spring:
       # 单次poll()调用返回的记录数
       max-poll-records: 500
       # 键的序列化方式
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
       # 值的序列化方式
-      value-deserializer: org.laokou.common.kafka.config.ForyKafkaDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
       # 单位拉取量
       fetch-min-size: 102400
+      properties:
+        spring.deserializer.key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
+        spring.deserializer.value.delegate.class: org.laokou.common.kafka.config.ForyKafkaDeserializer
     producer:
       # 发生错误后，消息重发的次数。
       retries: 5
@@ -297,21 +300,21 @@ management:
     health:
       show-details: always
   tracing:
-    enabled: true
+    export:
+      enabled: true
     propagation:
       type: w3c
     # 采样率 => 100%
     sampling:
       probability: 1
-  otlp:
+  opentelemetry:
     tracing:
-      endpoint: http://otel-collector:4317/v1/traces
-      compression: gzip
-      timeout: 10s
-      transport: grpc
-    metrics:
       export:
-        enabled: false
+        otlp:
+          endpoint: http://otel-collector:4317/v1/traces
+          compression: gzip
+          timeout: 10s
+          transport: grpc
   metrics:
     tags:
       application: ${spring.application.name}

@@ -40,13 +40,11 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.util.Assert;
 
-public class RedisRegisteredClientRepository implements RegisteredClientRepository {
+public record RedisRegisteredClientRepository(
+		OAuth2RegisteredClientRepository registeredClientRepository) implements RegisteredClientRepository {
 
-	private final OAuth2RegisteredClientRepository registeredClientRepository;
-
-	public RedisRegisteredClientRepository(OAuth2RegisteredClientRepository registeredClientRepository) {
+	public RedisRegisteredClientRepository {
 		Assert.notNull(registeredClientRepository, "RegisteredClientRepository cannot be null");
-		this.registeredClientRepository = registeredClientRepository;
 	}
 
 	@Override

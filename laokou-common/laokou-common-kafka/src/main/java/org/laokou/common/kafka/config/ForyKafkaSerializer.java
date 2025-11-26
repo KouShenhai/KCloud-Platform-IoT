@@ -23,7 +23,7 @@ import org.laokou.common.fory.config.ForyFactory;
 /**
  * @author laokou
  */
-public class ForyKafkaSerializer implements Serializer<Object> {
+public final class ForyKafkaSerializer implements Serializer<Object> {
 
 	@Override
 	public byte[] serialize(String s, Object o) {

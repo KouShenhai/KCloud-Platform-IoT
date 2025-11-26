@@ -15,12 +15,13 @@
  *
  */
 
-package org.laokou.auth.service.authentication;
+package org.laokou.auth.config.authentication;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.OAuth2Constants;
 import org.laokou.common.core.util.RequestUtils;
@@ -88,7 +89,7 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 	 * @param authentication 认证对象
 	 */
 	@Override
-	public Authentication authenticate(Authentication authentication) {
+	public Authentication authenticate(@NonNull Authentication authentication) {
 		HttpServletRequest request = RequestUtils.getHttpServletRequest();
 		try {
 			return authentication(authentication, getPrincipal(request));
@@ -114,7 +115,7 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 	 * @see OAuth2AuthorizationCodeAuthenticationProvider#supports(Class)
 	 * 是否支持认证（provider）.
 	 */
-	abstract public boolean supports(Class<?> authentication);
+	abstract public boolean supports(@NonNull Class<?> authentication);
 
 	/**
 	 * 认证.
@@ -134,7 +135,7 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 	 * @param principal 认证对象
 	 * @return 令牌
 	 */
-	protected Authentication authentication(Authentication authentication, Authentication principal)
+	protected Authentication authentication(Authentication authentication, @NonNull Authentication principal)
 			throws JsonProcessingException {
 		// 查看 OAuth2DeviceCodeAuthenticationProvider#authenticate(Authentication)
 		AbstractOAuth2AuthenticationToken abstractOAuth2Authentication = (AbstractOAuth2AuthenticationToken) authentication;
@@ -148,7 +149,7 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 		// 获取认证范围
 		Set<String> authorizedScopes = new LinkedHashSet<>(registeredClient.getScopes());
 		// 登录名称
-		String loginName = principal.getCredentials().toString();
+		String loginName = Optional.ofNullable(principal.getCredentials()).orElse("").toString();
 		// 认证类型
 		AuthorizationGrantType grantType = getGrantType();
 		// JWT
@@ -207,9 +208,10 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 	}
 
 	private OAuth2ClientAuthenticationToken getAuthenticatedClientElseThrowInvalidClient(
-			Authentication authentication) {
+			@NonNull Authentication authentication) {
 		OAuth2ClientAuthenticationToken clientPrincipal = null;
-		if (OAuth2ClientAuthenticationToken.class.isAssignableFrom(authentication.getPrincipal().getClass())) {
+		if (OAuth2ClientAuthenticationToken.class
+			.isAssignableFrom(Optional.ofNullable(authentication.getPrincipal()).orElse("").getClass())) {
 			clientPrincipal = (OAuth2ClientAuthenticationToken) authentication.getPrincipal();
 		}
 		if (ObjectUtils.isNotNull(clientPrincipal) && clientPrincipal.isAuthenticated()) {

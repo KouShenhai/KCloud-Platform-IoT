@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.auth.service.authentication;
+package org.laokou.auth.config.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -37,8 +37,8 @@ import org.springframework.stereotype.Component;
  *
  * @author laokou
  */
+@Component
 @RequiredArgsConstructor
-@Component("authenticationProcessor")
 final class OAuth2AuthenticationProcessor {
 
 	private final DomainService domainService;

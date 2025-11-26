@@ -15,11 +15,11 @@
  *
  */
 
-package org.laokou.auth.service.authentication;
+package org.laokou.auth.config.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 import org.laokou.auth.convertor.AuthConvertor;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.Constants;
@@ -28,6 +28,7 @@ import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.common.exception.GlobalException;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -39,11 +40,9 @@ import org.springframework.stereotype.Component;
  * @author laokou
  */
 @Slf4j
-@RequiredArgsConstructor
-@Component("userDetailsServiceImpl")
-final class UserDetailsServiceImpl implements UserDetailsService {
-
-	private final OAuth2AuthenticationProcessor authenticationProcessor;
+@Component
+record UserDetailsServiceImpl(
+		@NonNull OAuth2AuthenticationProcessor authenticationProcessor) implements UserDetailsService {
 
 	/**
 	 * 获取用户信息.
@@ -51,8 +50,9 @@ final class UserDetailsServiceImpl implements UserDetailsService {
 	 * @return 用户信息
 	 * @throws UsernameNotFoundException 异常
 	 */
+	@NonNull
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(@NonNull String username) throws UsernameNotFoundException {
 		try {
 			HttpServletRequest request = RequestUtils.getHttpServletRequest();
 			String password = request.getParameter(Constants.PASSWORD);
@@ -60,7 +60,12 @@ final class UserDetailsServiceImpl implements UserDetailsService {
 			AuthA authA = AuthConvertor.toEntity(username, password, tenantCode, GrantTypeEnum.AUTHORIZATION_CODE,
 					StringConstants.EMPTY, StringConstants.EMPTY);
 			authA.createUserByAuthorizationCode();
-			return (UserDetails) authenticationProcessor.authentication(authA, request).getPrincipal();
+			Object principal = ObjectUtils.requireNotNull(authenticationProcessor.authentication(authA, request))
+				.getPrincipal();
+			if (ObjectUtils.isNull(principal)) {
+				throw new BizException("B_OAuth2_UserNotExist", "用户不存在");
+			}
+			return (UserDetails) principal;
 		}
 		catch (GlobalException e) {
 			throw new UsernameNotFoundException(e.getMsg(), e);

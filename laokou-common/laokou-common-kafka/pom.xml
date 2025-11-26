@@ -30,6 +30,10 @@
       <artifactId>laokou-common-fory</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-kafka</artifactId>
+    </dependency>
   </dependencies>
 
 </project>

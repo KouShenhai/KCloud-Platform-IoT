@@ -23,6 +23,10 @@ import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.admin.NewTopic;
+import org.laokou.auth.config.authentication.OAuth2MailAuthenticationConverter;
+import org.laokou.auth.config.authentication.OAuth2MobileAuthenticationConverter;
+import org.laokou.auth.config.authentication.OAuth2TestAuthenticationConverter;
+import org.laokou.auth.config.authentication.OAuth2UsernamePasswordAuthenticationConverter;
 import org.laokou.auth.model.CaptchaValidator;
 import org.laokou.auth.model.MqEnum;
 import org.laokou.auth.model.PasswordValidator;
@@ -35,7 +39,6 @@ import org.laokou.common.security.config.RedisOAuth2AuthorizationConsentService;
 import org.laokou.common.security.config.RedisRegisteredClientRepository;
 import org.laokou.common.security.config.repository.OAuth2RegisteredClientRepository;
 import org.laokou.common.security.config.repository.OAuth2UserConsentRepository;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -50,7 +53,6 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
-import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.OAuth2Token;
@@ -68,7 +70,6 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Acce
 import org.springframework.security.oauth2.server.authorization.token.OAuth2RefreshTokenGenerator;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationConverter;
 import org.springframework.security.web.authentication.DelegatingAuthenticationConverter;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
@@ -76,8 +77,10 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -108,51 +111,34 @@ class OAuth2AuthorizationServerConfig {
 	/**
 	 * OAuth2AuthorizationServer核心配置.
 	 * @param http http配置
-	 * @param usernamePasswordAuthenticationProvider 用户名密码认证Provider
-	 * @param mailAuthenticationProvider 邮箱认证Provider
-	 * @param mobileAuthenticationProvider 手机号认证Provider
-	 * @param testAuthenticationProvider 测试认证Provider
+	 * @param authenticationProviders Provider集合
 	 * @param authorizationServerSettings OAuth2配置
 	 * @param authorizationService 认证配置
-	 * @param mailAuthenticationConverter 邮箱认证Converter
-	 * @param mobileAuthenticationConverter 手机号认证Converter
-	 * @param testAuthenticationConverter 测试认证Converter
-	 * @param usernamePasswordAuthenticationConverter 用户名密码认证Converter
 	 * @return 认证过滤器
 	 */
 	@Bean
 	@Order(Ordered.HIGHEST_PRECEDENCE)
 	SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http,
-			@Qualifier("usernamePasswordAuthenticationProvider") AuthenticationProvider usernamePasswordAuthenticationProvider,
-			@Qualifier("testAuthenticationProvider") AuthenticationProvider testAuthenticationProvider,
-			@Qualifier("mailAuthenticationProvider") AuthenticationProvider mailAuthenticationProvider,
-			@Qualifier("mobileAuthenticationProvider") AuthenticationProvider mobileAuthenticationProvider,
-			@Qualifier("usernamePasswordAuthenticationConverter") AuthenticationConverter usernamePasswordAuthenticationConverter,
-			@Qualifier("testAuthenticationConverter") AuthenticationConverter testAuthenticationConverter,
-			@Qualifier("mailAuthenticationConverter") AuthenticationConverter mailAuthenticationConverter,
-			@Qualifier("mobileAuthenticationConverter") AuthenticationConverter mobileAuthenticationConverter,
+			List<AuthenticationProvider> authenticationProviders,
 			AuthorizationServerSettings authorizationServerSettings,
 			OAuth2AuthorizationService authorizationService)
 			{
-		// https://docs.spring.io/spring-authorization-server/docs/current/reference/html/configuration-model.html
-		http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
-			// https://docs.spring.io/spring-authorization-server/docs/current/reference/html/protocol-endpoints.html#oauth2-token-endpoint
-			.tokenEndpoint((tokenEndpoint) -> tokenEndpoint
-				.accessTokenRequestConverter(new DelegatingAuthenticationConverter(usernamePasswordAuthenticationConverter,
-					testAuthenticationConverter,
-					mobileAuthenticationConverter,
-					mailAuthenticationConverter)
-				)
-				.authenticationProviders(providers -> {
-					providers.add(usernamePasswordAuthenticationProvider);
-					providers.add(testAuthenticationProvider);
-					providers.add(mobileAuthenticationProvider);
-					providers.add(mailAuthenticationProvider);
-				}))
-			.oidc(Customizer.withDefaults())
-			.authorizationService(authorizationService)
-			.authorizationServerSettings(authorizationServerSettings);
-		return http.exceptionHandling(configurer -> configurer.defaultAuthenticationEntryPointFor(new LoginUrlAuthenticationEntryPoint("/login"), createRequestMatcher()))
+		return http.oauth2AuthorizationServer((authorizationServer) -> {
+				http.securityMatcher(authorizationServer.getEndpointsMatcher());
+				authorizationServer.oidc(Customizer.withDefaults())
+					// https://docs.spring.io/spring-authorization-server/docs/current/reference/html/protocol-endpoints.html#oauth2-token-endpoint
+					.tokenEndpoint((tokenEndpoint) -> tokenEndpoint
+						.accessTokenRequestConverter(new DelegatingAuthenticationConverter(
+							new OAuth2UsernamePasswordAuthenticationConverter(),
+							new OAuth2TestAuthenticationConverter(),
+							new OAuth2MobileAuthenticationConverter(),
+							new OAuth2MailAuthenticationConverter())
+						)
+						.authenticationProviders(providers -> providers.addAll(authenticationProviders)))
+					.oidc(Customizer.withDefaults())
+					.authorizationService(authorizationService)
+					.authorizationServerSettings(authorizationServerSettings);
+			}).exceptionHandling(configurer -> configurer.defaultAuthenticationEntryPointFor(new LoginUrlAuthenticationEntryPoint("/login"), createRequestMatcher()))
 			.build();
 	}
 	// @formatter:on
@@ -199,7 +185,7 @@ class OAuth2AuthorizationServerConfig {
 	 * @return jwk来源
 	 */
 	@Bean
-	JWKSource<SecurityContext> jwkSource() {
+	JWKSource<SecurityContext> jwkSource() throws NoSuchAlgorithmException {
 		RSAKey rsaKey = getRsaKey();
 		JWKSet jwkSet = new JWKSet(rsaKey);
 		return (jwkSelector, _) -> jwkSelector.select(jwkSet);
@@ -284,7 +270,7 @@ class OAuth2AuthorizationServerConfig {
 	 * 获取RSA加密Key.
 	 * @return RSA加密Key
 	 */
-	private RSAKey getRsaKey() {
+	private RSAKey getRsaKey() throws NoSuchAlgorithmException {
 		KeyPair keyPair = generateRsaKey();
 		RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
 		RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
@@ -295,15 +281,10 @@ class OAuth2AuthorizationServerConfig {
 	 * 生成RSA加密Key.
 	 * @return 生成结果
 	 */
-	private KeyPair generateRsaKey() {
-		try {
-			KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(RSAUtils.RSA);
-			keyPairGenerator.initialize(2048);
-			return keyPairGenerator.generateKeyPair();
-		}
-		catch (Exception ex) {
-			throw new IllegalStateException(ex);
-		}
+	private KeyPair generateRsaKey() throws NoSuchAlgorithmException {
+		KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(RSAUtils.RSA);
+		keyPairGenerator.initialize(2048);
+		return keyPairGenerator.generateKeyPair();
 	}
 
 	private Boolean validateCaptcha(String key, String code) {

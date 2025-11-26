@@ -15,30 +15,28 @@
  *
  */
 
-package org.laokou.auth.service.authentication;
+package org.laokou.auth.config.authentication;
 
 import org.laokou.auth.model.Constants;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
 /**
- * 手机号转换器.
+ * 测试Converter.
  *
  * @author laokou
  */
-@Component("mobileAuthenticationConverter")
-final class OAuth2MobileAuthenticationConverter extends AbstractOAuth2AuthenticationConverter {
+public final class OAuth2TestAuthenticationConverter extends AbstractOAuth2AuthenticationConverter {
 
 	@Override
 	String getGrantType() {
-		return Constants.MOBILE;
+		return Constants.TEST;
 	}
 
 	@Override
 	Authentication convert(Authentication clientPrincipal, Map<String, Object> additionalParameters) {
-		return new OAuth2MobileAuthenticationToken(clientPrincipal, additionalParameters);
+		return new OAuth2TestAuthenticationToken(clientPrincipal, additionalParameters);
 	}
 
 }
