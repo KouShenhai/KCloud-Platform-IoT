@@ -85,7 +85,7 @@ spring:
           # 初始容量 => 30
           # 最大容量 => 4096
           # 淘汰规则 => 最后一次写操作后经过30s过期
-          spc: initialCapacity=30,expireAfterWrite=30s,maximumSize=4096
+          spec: initialCapacity=30,expireAfterWrite=30s,maximumSize=4096
         # 开启缓存
         enabled: true
       nacos:
