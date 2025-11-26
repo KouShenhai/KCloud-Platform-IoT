@@ -25,6 +25,7 @@ import org.jspecify.annotations.NonNull;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.OAuth2Constants;
 import org.laokou.common.core.util.RequestUtils;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
@@ -66,6 +67,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+
 
 /**
  * 抽象认证处理器.
@@ -149,7 +151,7 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 		// 获取认证范围
 		Set<String> authorizedScopes = new LinkedHashSet<>(registeredClient.getScopes());
 		// 登录名称
-		String loginName = Optional.ofNullable(principal.getCredentials()).map(Object::toString).orElse("");
+		String loginName = Optional.ofNullable(principal.getCredentials()).map(Object::toString).orElse(StringConstants.EMPTY);
 		// 认证类型
 		AuthorizationGrantType grantType = getGrantType();
 		// JWT
