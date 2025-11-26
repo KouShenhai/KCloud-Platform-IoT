@@ -126,7 +126,7 @@
     <!--mybatis-plus版本 -->
     <mybatis-plus.version>3.5.15-SNAPSHOT</mybatis-plus.version>
     <!--nacos版本-->
-    <nacos.version>3.1.1</nacos.version>
+    <nacos.version>3.1.0</nacos.version>
     <!--opentelemetry版本-->
     <opentelemetry.version>1.56.0</opentelemetry.version>
     <!--netty版本-->
