@@ -58,12 +58,12 @@ public final class BytesToUsernamePasswordAuthenticationTokenConverter
 	private final JacksonJsonRedisSerializer<UsernamePasswordAuthenticationToken> serializer;
 
 	public BytesToUsernamePasswordAuthenticationTokenConverter() {
-		BasicPolymorphicTypeValidator ptv = BasicPolymorphicTypeValidator.builder()
-			.allowIfBaseType(UserExtDetails.class)
-			.allowIfSubType("org.laokou.common.context.util")
+		BasicPolymorphicTypeValidator bptv = BasicPolymorphicTypeValidator.builder()
+			.allowIfSubType(UserExtDetails.class)
+			.allowIfSubTypeIsArray()
 			.build();
 		ObjectMapper objectMapper = JsonMapper.builder()
-			.activateDefaultTyping(ptv, DefaultTyping.NON_FINAL)
+			.activateDefaultTypingAsProperty(bptv, DefaultTyping.NON_CONCRETE_AND_ARRAYS, "@class")
 			.addModules(SecurityJacksonModules
 				.getModules(BytesToUsernamePasswordAuthenticationTokenConverter.class.getClassLoader()))
 			.addMixIn(HashSet.class, HashSetMixin.class)
