@@ -210,9 +210,8 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 	private OAuth2ClientAuthenticationToken getAuthenticatedClientElseThrowInvalidClient(
 			@NonNull Authentication authentication) {
 		OAuth2ClientAuthenticationToken clientPrincipal = null;
-		if (OAuth2ClientAuthenticationToken.class
-			.isAssignableFrom(Optional.ofNullable(authentication.getPrincipal()).orElse("").getClass())) {
-			clientPrincipal = (OAuth2ClientAuthenticationToken) authentication.getPrincipal();
+		if (authentication.getPrincipal() instanceof OAuth2ClientAuthenticationToken oAuth2ClientAuthenticationToken) {
+			clientPrincipal = oAuth2ClientAuthenticationToken;
 		}
 		if (ObjectUtils.isNotNull(clientPrincipal) && clientPrincipal.isAuthenticated()) {
 			return clientPrincipal;

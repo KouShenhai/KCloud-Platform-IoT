@@ -127,15 +127,11 @@ class OAuth2AuthorizationServerConfig {
 				http.securityMatcher(authorizationServer.getEndpointsMatcher());
 				authorizationServer.oidc(Customizer.withDefaults())
 					// https://docs.spring.io/spring-authorization-server/docs/current/reference/html/protocol-endpoints.html#oauth2-token-endpoint
-					.tokenEndpoint((tokenEndpoint) -> tokenEndpoint
-						.accessTokenRequestConverter(new DelegatingAuthenticationConverter(
+					.tokenEndpoint((tokenEndpoint) -> tokenEndpoint.accessTokenRequestConverter(new DelegatingAuthenticationConverter(
 							new OAuth2UsernamePasswordAuthenticationConverter(),
 							new OAuth2TestAuthenticationConverter(),
 							new OAuth2MobileAuthenticationConverter(),
-							new OAuth2MailAuthenticationConverter())
-						)
-						.authenticationProviders(providers -> providers.addAll(authenticationProviders)))
-					.oidc(Customizer.withDefaults())
+							new OAuth2MailAuthenticationConverter())).authenticationProviders(providers -> providers.addAll(authenticationProviders)))
 					.authorizationService(authorizationService)
 					.authorizationServerSettings(authorizationServerSettings);
 			}).exceptionHandling(configurer -> configurer.defaultAuthenticationEntryPointFor(new LoginUrlAuthenticationEntryPoint("/login"), createRequestMatcher()))
