@@ -40,10 +40,8 @@ import org.springframework.data.convert.ReadingConverter;
 import org.springframework.data.redis.serializer.JacksonJsonRedisSerializer;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.jackson.SecurityJacksonModules;
-import tools.jackson.databind.DefaultTyping;
 import tools.jackson.databind.ObjectMapper;
 import tools.jackson.databind.json.JsonMapper;
-import tools.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
 
 import java.util.HashSet;
 
@@ -58,15 +56,11 @@ public final class BytesToUsernamePasswordAuthenticationTokenConverter
 	private final JacksonJsonRedisSerializer<UsernamePasswordAuthenticationToken> serializer;
 
 	public BytesToUsernamePasswordAuthenticationTokenConverter() {
-		BasicPolymorphicTypeValidator bptv = BasicPolymorphicTypeValidator.builder()
-			.allowIfSubType(UserExtDetails.class)
-			.allowIfSubTypeIsArray()
-			.build();
 		ObjectMapper objectMapper = JsonMapper.builder()
-			.activateDefaultTypingAsProperty(bptv, DefaultTyping.NON_CONCRETE_AND_ARRAYS, "@class")
 			.addModules(SecurityJacksonModules
 				.getModules(BytesToUsernamePasswordAuthenticationTokenConverter.class.getClassLoader()))
 			.addMixIn(HashSet.class, HashSetMixin.class)
+			.addMixIn(UserExtDetails.class, UserExtDetailsMixin.class)
 			.build();
 		this.serializer = new JacksonJsonRedisSerializer<>(objectMapper, UsernamePasswordAuthenticationToken.class);
 	}

@@ -20,9 +20,9 @@ package org.laokou.common.context.util;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Getter;
 import lombok.Setter;
+import org.jspecify.annotations.NullMarked;
 import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -47,10 +47,9 @@ import java.util.stream.Collectors;
  */
 @Getter
 @Setter
-@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "@class")
+@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
 		isGetterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserExtDetails implements UserDetails, OAuth2AuthenticatedPrincipal, Serializable {
 
 	@Serial
@@ -59,17 +58,17 @@ public class UserExtDetails implements UserDetails, OAuth2AuthenticatedPrincipal
 	/**
 	 * 用户名解密失败.
 	 */
-	private static final String USERNAME_AES_DECRYPT_FAIL = "B_User_UsernameAESDecryptFail";
+	private final String USERNAME_AES_DECRYPT_FAIL = "B_User_UsernameAESDecryptFail";
 
 	/**
 	 * 手机号解密失败.
 	 */
-	private static final String MOBILE_AES_DECRYPT_FAIL = "B_User_MobileAESDecryptFail";
+	private final String MOBILE_AES_DECRYPT_FAIL = "B_User_MobileAESDecryptFail";
 
 	/**
 	 * 邮箱解密失败.
 	 */
-	private static final String MAIL_AES_DECRYPT_FAIL = "B_User_MailAESDecryptFail";
+	private final String MAIL_AES_DECRYPT_FAIL = "B_User_MailAESDecryptFail";
 
 	/**
 	 * 用户ID.
@@ -173,6 +172,7 @@ public class UserExtDetails implements UserDetails, OAuth2AuthenticatedPrincipal
 	}
 
 	@Override
+	@NullMarked
 	@JsonIgnore
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return this.permissions.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toSet());
@@ -213,6 +213,7 @@ public class UserExtDetails implements UserDetails, OAuth2AuthenticatedPrincipal
 	}
 
 	@Override
+	@NullMarked
 	@JsonIgnore
 	public String getName() {
 		return this.username;
