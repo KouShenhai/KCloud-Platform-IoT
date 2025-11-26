@@ -68,7 +68,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-
 /**
  * 抽象认证处理器.
  *
@@ -151,7 +150,9 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 		// 获取认证范围
 		Set<String> authorizedScopes = new LinkedHashSet<>(registeredClient.getScopes());
 		// 登录名称
-		String loginName = Optional.ofNullable(principal.getCredentials()).map(Object::toString).orElse(StringConstants.EMPTY);
+		String loginName = Optional.ofNullable(principal.getCredentials())
+			.map(Object::toString)
+			.orElse(StringConstants.EMPTY);
 		// 认证类型
 		AuthorizationGrantType grantType = getGrantType();
 		// JWT
