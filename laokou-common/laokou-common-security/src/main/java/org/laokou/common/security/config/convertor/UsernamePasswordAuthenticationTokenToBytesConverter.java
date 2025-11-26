@@ -33,16 +33,11 @@
 
 package org.laokou.common.security.config.convertor;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
+import org.laokou.common.redis.config.ForyRedisSerializer;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.WritingConverter;
-import org.springframework.data.redis.serializer.JacksonJsonRedisSerializer;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.jackson.SecurityJacksonModules;
-import tools.jackson.databind.ObjectMapper;
-import tools.jackson.databind.json.JsonMapper;
-
-import java.util.HashSet;
 
 /**
  * @author spring-authorization-server
@@ -52,19 +47,14 @@ import java.util.HashSet;
 public final class UsernamePasswordAuthenticationTokenToBytesConverter
 		implements Converter<UsernamePasswordAuthenticationToken, byte[]> {
 
-	private final JacksonJsonRedisSerializer<UsernamePasswordAuthenticationToken> serializer;
+	private final ForyRedisSerializer serializer;
 
 	public UsernamePasswordAuthenticationTokenToBytesConverter() {
-		ObjectMapper objectMapper = JsonMapper.builder()
-			.addModules(SecurityJacksonModules
-				.getModules(BytesToUsernamePasswordAuthenticationTokenConverter.class.getClassLoader()))
-			.addMixIn(HashSet.class, HashSetMixin.class)
-			.build();
-		this.serializer = new JacksonJsonRedisSerializer<>(objectMapper, UsernamePasswordAuthenticationToken.class);
+		this.serializer = ForyRedisSerializer.foryRedisSerializer();
 	}
 
 	@Override
-	public byte[] convert(@NotNull UsernamePasswordAuthenticationToken value) {
+	public byte[] convert(@NonNull UsernamePasswordAuthenticationToken value) {
 		return this.serializer.serialize(value);
 	}
 

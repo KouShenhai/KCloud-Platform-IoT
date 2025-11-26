@@ -17,7 +17,6 @@
 
 package org.laokou.common.security.config;
 
-import org.laokou.common.context.util.UserExtDetails;
 import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.security.config.convertor.BytesToClaimsHolderConverter;
 import org.laokou.common.security.config.convertor.BytesToOAuth2AuthorizationRequestConverter;
@@ -46,7 +45,11 @@ import java.util.Arrays;
 public class OAuth2AuthorizationConfig {
 
 	static {
-		ForyFactory.INSTANCE.register(UserExtDetails.class);
+		ForyFactory.INSTANCE.register(org.laokou.common.context.util.UserExtDetails.class);
+		ForyFactory.INSTANCE
+			.register(org.springframework.security.authentication.UsernamePasswordAuthenticationToken.class);
+		ForyFactory.INSTANCE.register(
+				org.laokou.common.security.config.entity.OAuth2AuthorizationGrantAuthorization.ClaimsHolder.class);
 	}
 
 	/**

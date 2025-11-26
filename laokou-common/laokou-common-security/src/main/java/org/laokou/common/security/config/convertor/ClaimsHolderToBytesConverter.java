@@ -33,15 +33,10 @@
 
 package org.laokou.common.security.config.convertor;
 
-import org.jetbrains.annotations.NotNull;
+import org.laokou.common.redis.config.ForyRedisSerializer;
 import org.laokou.common.security.config.entity.OAuth2AuthorizationGrantAuthorization;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.WritingConverter;
-import org.springframework.data.redis.serializer.JacksonJsonRedisSerializer;
-import org.springframework.security.jackson.SecurityJacksonModules;
-import org.springframework.security.oauth2.server.authorization.jackson.OAuth2AuthorizationServerJacksonModule;
-import tools.jackson.databind.ObjectMapper;
-import tools.jackson.databind.json.JsonMapper;
 
 /**
  * @author spring-authorization-server
@@ -51,20 +46,14 @@ import tools.jackson.databind.json.JsonMapper;
 public final class ClaimsHolderToBytesConverter
 		implements Converter<OAuth2AuthorizationGrantAuthorization.ClaimsHolder, byte[]> {
 
-	private final JacksonJsonRedisSerializer<OAuth2AuthorizationGrantAuthorization.ClaimsHolder> serializer;
+	private final ForyRedisSerializer serializer;
 
 	public ClaimsHolderToBytesConverter() {
-		ObjectMapper objectMapper = JsonMapper.builder()
-			.addModules(SecurityJacksonModules.getModules(ClaimsHolderToBytesConverter.class.getClassLoader()))
-			.addModule(new OAuth2AuthorizationServerJacksonModule())
-			.addMixIn(OAuth2AuthorizationGrantAuthorization.ClaimsHolder.class, ClaimsHolderMixin.class)
-			.build();
-		this.serializer = new JacksonJsonRedisSerializer<>(objectMapper,
-				OAuth2AuthorizationGrantAuthorization.ClaimsHolder.class);
+		this.serializer = ForyRedisSerializer.foryRedisSerializer();
 	}
 
 	@Override
-	public byte[] convert(@NotNull OAuth2AuthorizationGrantAuthorization.ClaimsHolder value) {
+	public byte[] convert(OAuth2AuthorizationGrantAuthorization.ClaimsHolder value) {
 		return this.serializer.serialize(value);
 	}
 
