@@ -62,17 +62,17 @@ public class UserExtDetails implements UserDetails, OAuth2AuthenticatedPrincipal
 	/**
 	 * 用户名解密失败.
 	 */
-	private final String USERNAME_AES_DECRYPT_FAIL = "B_User_UsernameAESDecryptFail";
+	private static final String USERNAME_AES_DECRYPT_FAIL = "B_User_UsernameAESDecryptFail";
 
 	/**
 	 * 手机号解密失败.
 	 */
-	private final String MOBILE_AES_DECRYPT_FAIL = "B_User_MobileAESDecryptFail";
+	private static final String MOBILE_AES_DECRYPT_FAIL = "B_User_MobileAESDecryptFail";
 
 	/**
 	 * 邮箱解密失败.
 	 */
-	private final String MAIL_AES_DECRYPT_FAIL = "B_User_MailAESDecryptFail";
+	private static final String MAIL_AES_DECRYPT_FAIL = "B_User_MailAESDecryptFail";
 
 	/**
 	 * 用户ID.
