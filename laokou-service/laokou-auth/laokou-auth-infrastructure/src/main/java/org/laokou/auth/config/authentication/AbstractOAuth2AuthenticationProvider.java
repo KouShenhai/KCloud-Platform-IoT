@@ -149,7 +149,7 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 		// 获取认证范围
 		Set<String> authorizedScopes = new LinkedHashSet<>(registeredClient.getScopes());
 		// 登录名称
-		String loginName = Optional.ofNullable(principal.getCredentials()).orElse("").toString();
+		String loginName = Optional.ofNullable(principal.getCredentials()).map(Object::toString).orElse("");
 		// 认证类型
 		AuthorizationGrantType grantType = getGrantType();
 		// JWT
