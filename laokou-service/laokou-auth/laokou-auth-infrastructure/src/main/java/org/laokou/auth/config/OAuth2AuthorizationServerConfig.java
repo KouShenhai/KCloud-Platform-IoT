@@ -295,7 +295,7 @@ class OAuth2AuthorizationServerConfig {
 		return code.equalsIgnoreCase(captcha.toString());
 	}
 
-	private static RequestMatcher createRequestMatcher() {
+	private RequestMatcher createRequestMatcher() {
 		MediaTypeRequestMatcher requestMatcher = new MediaTypeRequestMatcher(MediaType.TEXT_HTML);
 		requestMatcher.setIgnoredMediaTypes(Set.of(MediaType.ALL));
 		return requestMatcher;

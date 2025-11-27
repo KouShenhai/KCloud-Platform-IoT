@@ -32,7 +32,11 @@ import java.io.IOException;
 /**
  * @author laokou
  */
-public class OAuth2ExceptionHandler {
+public final class OAuth2ExceptionHandler {
+
+	private OAuth2ExceptionHandler() {
+
+	}
 
 	public static final String ERROR_URL = "https://datatracker.ietf.org/doc/html/rfc6749#section-5.2";
 
