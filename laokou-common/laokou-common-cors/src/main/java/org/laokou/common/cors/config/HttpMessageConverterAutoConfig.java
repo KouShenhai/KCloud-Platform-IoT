@@ -74,7 +74,6 @@ public class HttpMessageConverterAutoConfig {
 		simpleModule.addSerializer(Instant.class, new CustomInstantSerializer(InstantSerializer.INSTANCE, dateTimeFormatter, false,false));
 		simpleModule.addDeserializer(Instant.class, new CustomInstantDeserializer(InstantDeserializer.INSTANT, dateTimeFormatter));
 		JsonMapper jsonMapper = JsonMapper.builder()
-			.findAndAddModules()
 			// 反序列化时，属性不存在的兼容处理
 			.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 			.defaultDateFormat(simpleDateFormat)
