@@ -45,6 +45,8 @@ public record OAuth2OpaqueTokenIntrospector(
 	// @formatter:off
 	@Override
 	public OAuth2AuthenticatedPrincipal introspect(String token) {
+		// new DefaultOAuth2AuthenticatedPrincipal(claims, Collections.emptyList())
+		// Jwt jwt = this.jwtDecoder.decode(token);
 		// 低命中率且数据庞大放redis稳妥，分布式集群需要通过redis实现数据共享
 		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
 		if (ObjectUtils.isNull(authorization)) {

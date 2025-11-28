@@ -49,13 +49,14 @@ public final class BytesToUsernamePasswordAuthenticationTokenConverter
 	public BytesToUsernamePasswordAuthenticationTokenConverter() {
 	}
 
+	// @formatter:off
 	@Override
 	public UsernamePasswordAuthenticationToken convert(byte[] value) {
-		if (ForyRedisSerializer.foryRedisSerializer()
-			.deserialize(value) instanceof UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken) {
+		if (ForyRedisSerializer.foryRedisSerializer().deserialize(value) instanceof UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken) {
 			return usernamePasswordAuthenticationToken;
 		}
 		return null;
 	}
+	// @formatter:on
 
 }

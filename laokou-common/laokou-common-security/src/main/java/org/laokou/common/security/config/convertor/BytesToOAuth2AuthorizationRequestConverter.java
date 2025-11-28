@@ -47,13 +47,14 @@ public final class BytesToOAuth2AuthorizationRequestConverter implements Convert
 	public BytesToOAuth2AuthorizationRequestConverter() {
 	}
 
+	// @formatter:off
 	@Override
 	public OAuth2AuthorizationRequest convert(byte[] value) {
-		if (ForyRedisSerializer.foryRedisSerializer()
-			.deserialize(value) instanceof OAuth2AuthorizationRequest authorizationRequest) {
+		if (ForyRedisSerializer.foryRedisSerializer().deserialize(value) instanceof OAuth2AuthorizationRequest authorizationRequest) {
 			return authorizationRequest;
 		}
 		return null;
 	}
+	// @formatter:on
 
 }

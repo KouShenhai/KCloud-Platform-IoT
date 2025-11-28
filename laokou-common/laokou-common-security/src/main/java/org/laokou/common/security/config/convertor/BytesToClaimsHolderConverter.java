@@ -49,13 +49,14 @@ public final class BytesToClaimsHolderConverter
 	public BytesToClaimsHolderConverter() {
 	}
 
+	// @formatter:off
 	@Override
 	public OAuth2AuthorizationGrantAuthorization.ClaimsHolder convert(byte[] value) {
-		if (ForyRedisSerializer.foryRedisSerializer()
-			.deserialize(value) instanceof OAuth2AuthorizationGrantAuthorization.ClaimsHolder claimsHolder) {
+		if (ForyRedisSerializer.foryRedisSerializer().deserialize(value) instanceof OAuth2AuthorizationGrantAuthorization.ClaimsHolder claimsHolder) {
 			return claimsHolder;
 		}
 		return null;
 	}
+	// @formatter:on
 
 }

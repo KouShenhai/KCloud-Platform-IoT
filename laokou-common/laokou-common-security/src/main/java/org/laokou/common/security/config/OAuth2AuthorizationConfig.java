@@ -17,6 +17,11 @@
 
 package org.laokou.common.security.config;
 
+import com.nimbusds.jose.jwk.JWKSet;
+import com.nimbusds.jose.jwk.RSAKey;
+import com.nimbusds.jose.jwk.source.JWKSource;
+import com.nimbusds.jose.proc.SecurityContext;
+import org.laokou.common.crypto.util.RSAUtils;
 import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.security.config.convertor.BytesToClaimsHolderConverter;
 import org.laokou.common.security.config.convertor.BytesToOAuth2AuthorizationRequestConverter;
@@ -30,12 +35,22 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.convert.RedisCustomConversions;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
+import org.springframework.security.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtEncoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
 import java.util.Arrays;
+import java.util.UUID;
 
 /**
  * @author laokou
@@ -82,6 +97,58 @@ public class OAuth2AuthorizationConfig {
 	@ConditionalOnMissingBean(PasswordEncoder.class)
 	PasswordEncoder passwordEncoder() {
 		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+	}
+
+	/**
+	 * 获取jwk来源.
+	 * @return jwk来源
+	 */
+	@Bean
+	JWKSource<SecurityContext> jwkSource() throws NoSuchAlgorithmException {
+		RSAKey rsaKey = getRsaKey();
+		JWKSet jwkSet = new JWKSet(rsaKey);
+		return (jwkSelector, _) -> jwkSelector.select(jwkSet);
+	}
+
+	/**
+	 * jwt编码器.
+	 * @param jwkSource jwk来源
+	 * @return jwt编码器
+	 */
+	@Bean
+	JwtEncoder jwtEncoder(JWKSource<SecurityContext> jwkSource) {
+		return new NimbusJwtEncoder(jwkSource);
+	}
+
+	/**
+	 * jwt解码器.
+	 * @param jwkSource jwk来源
+	 * @return jwt解码器
+	 */
+	@Bean
+	JwtDecoder jwtDecoder(JWKSource<SecurityContext> jwkSource) {
+		return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource);
+	}
+
+	/**
+	 * 获取RSA加密Key.
+	 * @return RSA加密Key
+	 */
+	private RSAKey getRsaKey() throws NoSuchAlgorithmException {
+		KeyPair keyPair = generateRsaKey();
+		RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
+		RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
+		return (new RSAKey.Builder(publicKey)).privateKey(privateKey).keyID(UUID.randomUUID().toString()).build();
+	}
+
+	/**
+	 * 生成RSA加密Key.
+	 * @return 生成结果
+	 */
+	private KeyPair generateRsaKey() throws NoSuchAlgorithmException {
+		KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(RSAUtils.RSA);
+		keyPairGenerator.initialize(2048);
+		return keyPairGenerator.generateKeyPair();
 	}
 
 }
