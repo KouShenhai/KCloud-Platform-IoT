@@ -46,15 +46,17 @@ import org.springframework.data.convert.ReadingConverter;
 public final class BytesToClaimsHolderConverter
 		implements Converter<byte[], OAuth2AuthorizationGrantAuthorization.ClaimsHolder> {
 
-	private final ForyRedisSerializer serializer;
-
 	public BytesToClaimsHolderConverter() {
-		this.serializer = ForyRedisSerializer.foryRedisSerializer();
 	}
 
+	// @formatter:off
 	@Override
 	public OAuth2AuthorizationGrantAuthorization.ClaimsHolder convert(byte[] value) {
-		return (OAuth2AuthorizationGrantAuthorization.ClaimsHolder) this.serializer.deserialize(value);
+		if (ForyRedisSerializer.foryRedisSerializer().deserialize(value) instanceof OAuth2AuthorizationGrantAuthorization.ClaimsHolder claimsHolder) {
+			return claimsHolder;
+		}
+		return null;
 	}
+	// @formatter:on
 
 }

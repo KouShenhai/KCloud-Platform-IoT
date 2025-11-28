@@ -46,15 +46,12 @@ import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequ
 @WritingConverter
 public final class OAuth2AuthorizationRequestToBytesConverter implements Converter<OAuth2AuthorizationRequest, byte[]> {
 
-	private final ForyRedisSerializer serializer;
-
 	public OAuth2AuthorizationRequestToBytesConverter() {
-		this.serializer = ForyRedisSerializer.foryRedisSerializer();
 	}
 
 	@Override
 	public byte[] convert(@NonNull OAuth2AuthorizationRequest value) {
-		return this.serializer.serialize(value);
+		return ForyRedisSerializer.foryRedisSerializer().serialize(value);
 	}
 
 }

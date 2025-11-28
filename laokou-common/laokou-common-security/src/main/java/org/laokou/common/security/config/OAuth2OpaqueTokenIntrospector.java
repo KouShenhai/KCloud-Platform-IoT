@@ -18,7 +18,7 @@
 package org.laokou.common.security.config;
 
 import lombok.extern.slf4j.Slf4j;
-import org.jspecify.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 import org.laokou.common.context.util.UserExtDetails;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.common.exception.StatusCode;
@@ -45,6 +45,8 @@ public record OAuth2OpaqueTokenIntrospector(
 	// @formatter:off
 	@Override
 	public OAuth2AuthenticatedPrincipal introspect(String token) {
+		// new DefaultOAuth2AuthenticatedPrincipal(claims, Collections.emptyList())
+		// Jwt jwt = this.jwtDecoder.decode(token);
 		// 低命中率且数据庞大放redis稳妥，分布式集群需要通过redis实现数据共享
 		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
 		if (ObjectUtils.isNull(authorization)) {
@@ -55,16 +57,13 @@ public record OAuth2OpaqueTokenIntrospector(
 		if (ObjectUtils.isNull(accessToken) || ObjectUtils.isNull(refreshToken)) {
 			throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED);
 		}
-		if (accessToken.isActive()) {
-            Object obj = authorization.getAttribute(Principal.class.getName());
-            if (obj instanceof UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken) {
-				UserExtDetails userExtDetails = (UserExtDetails) usernamePasswordAuthenticationToken.getPrincipal();
-                // 解密
-                return decryptInfo(userExtDetails);
-            }
-		} else {
-			oAuth2AuthorizationService.remove(authorization);
+		if (accessToken.isActive()
+			&& authorization.getAttribute(Principal.class.getName()) instanceof UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
+			&& usernamePasswordAuthenticationToken.getPrincipal() instanceof UserExtDetails userExtDetails) {
+			// 解密
+			return decryptInfo(userExtDetails);
 		}
+		oAuth2AuthorizationService.remove(authorization);
 		throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED);
 	}
 	// @formatter:on
@@ -74,10 +73,9 @@ public record OAuth2OpaqueTokenIntrospector(
 	 * @param userExtDetails 用户信息
 	 * @return UserDetail
 	 */
-	public static UserExtDetails decryptInfo(@Nullable UserExtDetails userExtDetails) {
+	public static UserExtDetails decryptInfo(@NonNull UserExtDetails userExtDetails) {
 		try {
 			// 解密
-			assert userExtDetails != null;
 			return userExtDetails.getDecryptInfo();
 		}
 		catch (GlobalException e) {

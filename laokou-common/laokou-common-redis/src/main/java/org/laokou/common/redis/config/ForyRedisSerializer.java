@@ -30,6 +30,8 @@ import java.nio.charset.StandardCharsets;
  */
 public final class ForyRedisSerializer implements RedisSerializer<Object> {
 
+	private static final ForyRedisSerializer INSTANCE = new ForyRedisSerializer();
+
 	@Override
 	public byte @NonNull [] serialize(Object obj) throws SerializationException {
 		return ForyFactory.INSTANCE.serialize(obj);
@@ -46,7 +48,7 @@ public final class ForyRedisSerializer implements RedisSerializer<Object> {
 
 	public static ForyRedisSerializer foryRedisSerializer() {
 		// Json序列化配置
-		return new ForyRedisSerializer();
+		return INSTANCE;
 	}
 
 }

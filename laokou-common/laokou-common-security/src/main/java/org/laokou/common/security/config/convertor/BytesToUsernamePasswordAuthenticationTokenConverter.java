@@ -46,15 +46,17 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 public final class BytesToUsernamePasswordAuthenticationTokenConverter
 		implements Converter<byte[], UsernamePasswordAuthenticationToken> {
 
-	private final ForyRedisSerializer serializer;
-
 	public BytesToUsernamePasswordAuthenticationTokenConverter() {
-		this.serializer = ForyRedisSerializer.foryRedisSerializer();
 	}
 
+	// @formatter:off
 	@Override
 	public UsernamePasswordAuthenticationToken convert(byte[] value) {
-		return (UsernamePasswordAuthenticationToken) this.serializer.deserialize(value);
+		if (ForyRedisSerializer.foryRedisSerializer().deserialize(value) instanceof UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken) {
+			return usernamePasswordAuthenticationToken;
+		}
+		return null;
 	}
+	// @formatter:on
 
 }
