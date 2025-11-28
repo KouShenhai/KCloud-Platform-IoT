@@ -41,5 +41,6 @@
     <module>laokou-network</module>
     <module>laokou-cola</module>
     <module>laokou-mcp</module>
+    <module>laokou-standalone</module>
   </modules>
 </project>

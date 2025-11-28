@@ -30,6 +30,10 @@ import java.nio.charset.StandardCharsets;
  */
 public final class ForyRedisSerializer implements RedisSerializer<Object> {
 
+	private ForyRedisSerializer() {
+
+	}
+
 	private static final ForyRedisSerializer INSTANCE = new ForyRedisSerializer();
 
 	@Override
