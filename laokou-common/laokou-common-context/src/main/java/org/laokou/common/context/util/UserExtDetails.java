@@ -231,7 +231,8 @@ public class UserExtDetails implements UserDetails, OAuth2AuthenticatedPrincipal
 		return this;
 	}
 
-	private String getDecryptUsername() {
+	@JsonIgnore
+	public String getDecryptUsername() {
 		if (StringExtUtils.isNotEmpty(this.username)) {
 			try {
 				return AESUtils.decrypt(this.username);
@@ -243,7 +244,8 @@ public class UserExtDetails implements UserDetails, OAuth2AuthenticatedPrincipal
 		return this.username;
 	}
 
-	private String getDecryptMail() {
+	@JsonIgnore
+	public String getDecryptMail() {
 		if (StringExtUtils.isNotEmpty(this.mail)) {
 			try {
 				return AESUtils.decrypt(this.mail);
@@ -255,7 +257,8 @@ public class UserExtDetails implements UserDetails, OAuth2AuthenticatedPrincipal
 		return this.mail;
 	}
 
-	private String getDecryptMobile() {
+	@JsonIgnore
+	public String getDecryptMobile() {
 		if (StringExtUtils.isNotEmpty(this.mobile)) {
 			try {
 				return AESUtils.decrypt(this.mobile);
