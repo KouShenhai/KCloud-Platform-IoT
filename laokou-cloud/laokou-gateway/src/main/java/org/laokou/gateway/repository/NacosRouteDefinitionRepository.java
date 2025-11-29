@@ -24,7 +24,7 @@ import com.alibaba.nacos.api.exception.NacosException;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.util.SpringContextUtils;
 import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.i18n.common.constant.StringConstants;
@@ -124,7 +124,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	 * {@link org.springframework.cloud.gateway.config.GatewayAutoConfiguration
 	 * @return 定义的路由规则
 	 */
-	@NotNull
+	@NonNull
 	@Override
 	public Flux<RouteDefinition> getRouteDefinitions() {
 		return reactiveHashOperations.entries(RedisKeyUtils.getRouteDefinitionHashKey())
@@ -137,15 +137,15 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	}
 	// @formatter:on
 
-	@NotNull
+	@NonNull
 	@Override
-	public Mono<Void> save(@NotNull Mono<RouteDefinition> route) {
+	public Mono<Void> save(@NonNull Mono<RouteDefinition> route) {
 		return Mono.empty();
 	}
 
-	@NotNull
+	@NonNull
 	@Override
-	public Mono<Void> delete(@NotNull Mono<String> routeId) {
+	public Mono<Void> delete(@NonNull Mono<String> routeId) {
 		return Mono.empty();
 	}
 
@@ -162,7 +162,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	 * @param routes 路由
 	 * @return 同步结果
 	 */
-	private Mono<Void> syncRouter(Collection<RouteDefinition> routes) {
+	private Mono<Void> syncRouter(@NonNull Collection<RouteDefinition> routes) {
 		return reactiveHashOperations.delete(RedisKeyUtils.getRouteDefinitionHashKey())
 			.doOnError(throwable -> log.error("删除路由失败，错误信息：{}", throwable.getMessage(), throwable))
 			.doOnSuccess(_ -> publishRefreshRoutesEvent())

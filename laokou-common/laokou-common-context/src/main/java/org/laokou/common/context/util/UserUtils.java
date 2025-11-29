@@ -30,7 +30,7 @@ public final class UserUtils {
 	private UserUtils() {
 	}
 
-	public static UserExtDetails user() {
+	public static UserExtDetails userDetail() {
 		return Optional.ofNullable(getAuthentication()).map(authentication -> {
 			if (authentication.getPrincipal() instanceof UserExtDetails userExtDetails) {
 				return userExtDetails;
@@ -44,7 +44,7 @@ public final class UserUtils {
 	 * @return Long
 	 */
 	public static Long getUserId() {
-		return user().getId();
+		return userDetail().getId();
 	}
 
 	/**
@@ -52,7 +52,7 @@ public final class UserUtils {
 	 * @return String
 	 */
 	public static String getUserName() {
-		return user().getUsername();
+		return userDetail().getUsername();
 	}
 
 	/**
@@ -60,7 +60,7 @@ public final class UserUtils {
 	 * @return Long
 	 */
 	public static Long getTenantId() {
-		return user().getTenantId();
+		return userDetail().getTenantId();
 	}
 
 	/**
@@ -68,7 +68,7 @@ public final class UserUtils {
 	 * @return Boolean
 	 */
 	public static Boolean isSuperAdmin() {
-		return user().getSuperAdmin();
+		return userDetail().getSuperAdmin();
 	}
 
 	private static Authentication getAuthentication() {

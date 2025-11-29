@@ -26,7 +26,7 @@ import org.laokou.auth.config.authentication.OAuth2UsernamePasswordAuthenticatio
 import org.laokou.auth.model.CaptchaValidator;
 import org.laokou.auth.model.MqEnum;
 import org.laokou.auth.model.PasswordValidator;
-import org.laokou.common.context.util.UserExtDetails;
+import org.laokou.common.context.util.User;
 import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.i18n.dto.IdGenerator;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -67,11 +67,11 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Refr
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationConverter;
 import org.springframework.security.web.authentication.DelegatingAuthenticationConverter;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
+
 import java.util.List;
 import java.util.Set;
 
@@ -103,7 +103,6 @@ class OAuth2AuthorizationServerConfig {
 	 * OAuth2AuthorizationServer核心配置.
 	 * @param http http配置
 	 * @param authenticationProviders Provider集合
-	 * @param delegatingAuthenticationConverter 转换器集合
 	 * @param authorizationServerSettings OAuth2配置
 	 * @param authorizationService 认证配置
 	 * @return 认证过滤器
@@ -112,7 +111,6 @@ class OAuth2AuthorizationServerConfig {
 	@Order(Ordered.HIGHEST_PRECEDENCE)
 	SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http,
 			List<AuthenticationProvider> authenticationProviders,
-			AuthenticationConverter delegatingAuthenticationConverter,
 			AuthorizationServerSettings authorizationServerSettings,
 			OAuth2AuthorizationService authorizationService)
 			{
@@ -120,7 +118,11 @@ class OAuth2AuthorizationServerConfig {
 				http.securityMatcher(authorizationServer.getEndpointsMatcher());
 				authorizationServer.oidc(Customizer.withDefaults())
 					// https://docs.spring.io/spring-authorization-server/docs/current/reference/html/protocol-endpoints.html#oauth2-token-endpoint
-					.tokenEndpoint((tokenEndpoint) -> tokenEndpoint.accessTokenRequestConverter(delegatingAuthenticationConverter)
+					.tokenEndpoint((tokenEndpoint) -> tokenEndpoint.accessTokenRequestConverter(new DelegatingAuthenticationConverter(
+							new OAuth2UsernamePasswordAuthenticationConverter(),
+							new OAuth2TestAuthenticationConverter(),
+							new OAuth2MobileAuthenticationConverter(),
+							new OAuth2MailAuthenticationConverter()))
 						.authenticationProviders(providers -> providers.addAll(authenticationProviders)))
 					.authorizationService(authorizationService)
 					.authorizationServerSettings(authorizationServerSettings);
@@ -146,21 +148,6 @@ class OAuth2AuthorizationServerConfig {
 		return redisRegisteredClientRepository;
 	}
 
-	// @formatter:off
-	@Bean
-	OAuth2TokenCustomizer<JwtEncodingContext> jwtCustomizer() {
-		// https://docs.spring.io/spring-security/reference/servlet/oauth2/authorization-server/core-model-components.html#oauth2AuthorizationServer-oauth2-token-customizer
-		return context -> {
-			if (ObjectUtils.equals(context.getTokenType(), OAuth2TokenType.ACCESS_TOKEN)
-				&& context.getPrincipal().getPrincipal() instanceof UserExtDetails userExtDetails) {
-				JwtClaimsSet.Builder claims = context.getClaims();
-				claims.claim("id", userExtDetails.getId());
-				claims.claim("username", userExtDetails.getUsername());
-			}
-		};
-	}
-	// @formatter:on
-
 	/**
 	 * 构建令牌生成器.
 	 * @param jwtEncoder 加密编码
@@ -168,16 +155,11 @@ class OAuth2AuthorizationServerConfig {
 	 */
 	@Bean
 	OAuth2TokenGenerator<OAuth2Token> tokenGenerator(JwtEncoder jwtEncoder) {
-		JwtGenerator generator = new JwtGenerator(jwtEncoder);
-		return new DelegatingOAuth2TokenGenerator(generator, new OAuth2AccessTokenGenerator(),
-				new OAuth2RefreshTokenGenerator());
-	}
-
-	@Bean
-	AuthenticationConverter delegatingAuthenticationConverter() {
-		return new DelegatingAuthenticationConverter(new OAuth2UsernamePasswordAuthenticationConverter(),
-				new OAuth2TestAuthenticationConverter(), new OAuth2MobileAuthenticationConverter(),
-				new OAuth2MailAuthenticationConverter());
+		JwtGenerator jwtGenerator = new JwtGenerator(jwtEncoder);
+		jwtGenerator.setJwtCustomizer(jwtCustomizer());
+		OAuth2AccessTokenGenerator accessTokenGenerator = new OAuth2AccessTokenGenerator();
+		OAuth2RefreshTokenGenerator refreshTokenGenerator = new OAuth2RefreshTokenGenerator();
+		return new DelegatingOAuth2TokenGenerator(jwtGenerator, accessTokenGenerator, refreshTokenGenerator);
 	}
 
 	/**
@@ -260,5 +242,18 @@ class OAuth2AuthorizationServerConfig {
 		requestMatcher.setIgnoredMediaTypes(Set.of(MediaType.ALL));
 		return requestMatcher;
 	}
+
+	// @formatter:off
+	private OAuth2TokenCustomizer<JwtEncodingContext> jwtCustomizer() {
+		// https://docs.spring.io/spring-security/reference/servlet/oauth2/authorization-server/core-model-components.html#oauth2AuthorizationServer-oauth2-token-customizer
+		return context -> {
+			if (ObjectUtils.equals(context.getTokenType(), OAuth2TokenType.ACCESS_TOKEN)
+				&& context.getPrincipal().getPrincipal() instanceof User user) {
+				JwtClaimsSet.Builder claims = context.getClaims();
+				claims.claim("id", user.id().toString());
+			}
+		};
+	}
+	// @formatter:on
 
 }

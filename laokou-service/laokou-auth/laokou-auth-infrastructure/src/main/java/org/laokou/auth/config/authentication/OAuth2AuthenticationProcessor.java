@@ -19,18 +19,22 @@ package org.laokou.auth.config.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.jspecify.annotations.NonNull;
 import org.laokou.auth.ability.DomainService;
 import org.laokou.auth.convertor.LoginLogConvertor;
 import org.laokou.auth.convertor.UserConvertor;
 import org.laokou.auth.dto.domainevent.LoginEvent;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.MqEnum;
-import org.laokou.common.context.util.UserExtDetails;
+import org.laokou.common.context.util.User;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
+
+import java.util.stream.Collectors;
 
 /**
  * 认证授权处理器.
@@ -45,7 +49,7 @@ final class OAuth2AuthenticationProcessor {
 
 	private final DomainEventPublisher kafkaDomainEventPublisher;
 
-	public UsernamePasswordAuthenticationToken authentication(AuthA authA, HttpServletRequest request)
+	public UsernamePasswordAuthenticationToken authentication(@NonNull AuthA authA, @NonNull HttpServletRequest request)
 			throws Exception {
 		LoginEvent evt = null;
 		try {
@@ -54,10 +58,10 @@ final class OAuth2AuthenticationProcessor {
 			// 记录日志【登录成功】
 			evt = LoginLogConvertor.toDomainEvent(request, authA, null);
 			// 登录成功，转换成用户对象【业务】
-			UserExtDetails userExtDetails = UserConvertor.toUserDetails(authA);
+			User user = UserConvertor.toUser(authA);
 			// 认证成功，转换成认证对象【系统】
-			return new UsernamePasswordAuthenticationToken(userExtDetails, userExtDetails.getUsername(),
-					userExtDetails.getAuthorities());
+			return new UsernamePasswordAuthenticationToken(user, user.username(),
+					user.permissions().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toSet()));
 		}
 		catch (GlobalException e) {
 			// 记录日志【业务异常】

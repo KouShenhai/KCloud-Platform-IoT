@@ -33,19 +33,19 @@ class UserUtilsTest {
 
 	@Test
 	void test() {
-		Assertions.assertThat(UserUtils.user()).isNotNull().isEqualTo(new UserExtDetails());
+		Assertions.assertThat(UserUtils.userDetail()).isNotNull().isEqualTo(new UserExtDetails());
 		Assertions.assertThat(UserUtils.getUserId()).isNull();
 		Assertions.assertThat(UserUtils.getUserName()).isNull();
 		Assertions.assertThat(UserUtils.getTenantId()).isNull();
 		Assertions.assertThat(UserUtils.isSuperAdmin()).isNull();
-		Assertions.assertThat(UserUtils.user().getPermissions()).isNull();
+		Assertions.assertThat(UserUtils.userDetail().getPermissions()).isNull();
 		SecurityContextHolder.getContext().setAuthentication(new TestAuthentication());
-		Assertions.assertThat(UserUtils.user()).isNotNull().isNotEqualTo(new UserExtDetails());
+		Assertions.assertThat(UserUtils.userDetail()).isNotNull().isNotEqualTo(new UserExtDetails());
 		Assertions.assertThat(UserUtils.getUserId()).isNotNull().isEqualTo(1L);
 		Assertions.assertThat(UserUtils.getUserName()).isNotNull().isEqualTo("admin");
 		Assertions.assertThat(UserUtils.getTenantId()).isNotNull().isEqualTo(0L);
 		Assertions.assertThat(UserUtils.isSuperAdmin()).isNotNull().isTrue();
-		Assertions.assertThat(UserUtils.user().getPermissions()).isNotNull().isEqualTo(Set.of("test:save"));
+		Assertions.assertThat(UserUtils.userDetail().getPermissions()).isNotNull().isEqualTo(Set.of("test:save"));
 	}
 
 	static class TestAuthentication implements Authentication {

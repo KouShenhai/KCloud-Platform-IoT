@@ -21,7 +21,7 @@ import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import com.alibaba.nacos.api.exception.NacosException;
 import com.alibaba.nacos.api.naming.NamingService;
 import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 
@@ -34,7 +34,7 @@ public record WebSocketRegister(NacosDiscoveryProperties nacosDiscoveryPropertie
 		NamingService namingService) implements ApplicationListener<ApplicationReadyEvent> {
 
 	@Override
-	public void onApplicationEvent(@NotNull ApplicationReadyEvent event) {
+	public void onApplicationEvent(@NonNull ApplicationReadyEvent event) {
 		try {
 			namingService.registerInstance(springWebSocketServerProperties.getServiceId(),
 					nacosDiscoveryProperties.getGroup(), springWebSocketServerProperties.getIp(),

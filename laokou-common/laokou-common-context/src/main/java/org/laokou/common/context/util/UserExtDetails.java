@@ -17,15 +17,11 @@
 
 package org.laokou.common.context.util;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import lombok.Getter;
-import lombok.Setter;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.NullMarked;
 import org.laokou.common.crypto.util.AESUtils;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
@@ -43,17 +39,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * 用户详细信息. JsonTypeInfo.Id.NAME => 多态子类与抽象类绑定.
- *
  * @author laokou
  */
-@Getter
-@Setter
-@JsonTypeName("UserExtDetails")
-@JsonIgnoreProperties(ignoreUnknown = true)
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
-		isGetterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
 public class UserExtDetails implements UserDetails, OAuth2AuthenticatedPrincipal, Serializable {
 
 	@Serial
@@ -77,53 +64,85 @@ public class UserExtDetails implements UserDetails, OAuth2AuthenticatedPrincipal
 	/**
 	 * 用户ID.
 	 */
-	private Long id;
+	@Getter
+	private final Long id;
 
 	/**
 	 * 用户名.
 	 */
-	private String username;
+	@Getter
+	private final String username;
 
 	/**
 	 * 头像.
 	 */
-	private String avatar;
+	@Getter
+	private final String avatar;
 
 	/**
 	 * 超级管理员标识.
 	 */
-	private Boolean superAdmin;
+	@Getter
+	private final Boolean superAdmin;
 
 	/**
 	 * 用户状态 0启用 1禁用.
 	 */
-	private Integer status;
+	private final Integer status;
 
 	/**
 	 * 邮箱.
 	 */
-	private String mail;
+	private final String mail;
 
 	/**
 	 * 手机号.
 	 */
-	private String mobile;
+	private final String mobile;
 
 	/**
 	 * 密码.
 	 */
-	@JsonIgnore
-	private transient String password;
+	@Getter
+	private final transient String password;
 
 	/**
 	 * 租户ID.
 	 */
-	private Long tenantId;
+	@Getter
+	private final Long tenantId;
 
 	/**
 	 * 菜单权限标识集合.
 	 */
-	private Set<String> permissions;
+	@Getter
+	private final Set<String> permissions;
+
+	public UserExtDetails() {
+		this.id = 1L;
+		this.username = StringConstants.EMPTY;
+		this.avatar = StringConstants.EMPTY;
+		this.superAdmin = false;
+		this.status = 0;
+		this.mail = StringConstants.EMPTY;
+		this.mobile = StringConstants.EMPTY;
+		this.password = StringConstants.EMPTY;
+		this.tenantId = 0L;
+		this.permissions = Collections.emptySet();
+	}
+
+	public UserExtDetails(@NonNull User user) {
+		this.id = user.id();
+		this.username = getDecryptUsername(user.username());
+		this.avatar = user.avatar();
+		this.superAdmin = user.superAdmin();
+		this.status = user.status();
+		this.mail = getDecryptMail(user.mail());
+		this.mobile = getDecryptMobile(user.mobile());
+		this.password = StringConstants.EMPTY;
+		this.tenantId = user.tenantId();
+		this.permissions = user.permissions();
+	}
 
 	@Override
 	public boolean equals(Object o) {
@@ -177,31 +196,26 @@ public class UserExtDetails implements UserDetails, OAuth2AuthenticatedPrincipal
 
 	@Override
 	@NullMarked
-	@JsonIgnore
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return this.permissions.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toSet());
 	}
 
 	@Override
-	@JsonIgnore
 	public boolean isAccountNonExpired() {
 		return true;
 	}
 
 	@Override
-	@JsonIgnore
 	public boolean isAccountNonLocked() {
 		return true;
 	}
 
 	@Override
-	@JsonIgnore
 	public boolean isCredentialsNonExpired() {
 		return true;
 	}
 
 	@Override
-	@JsonIgnore
 	public boolean isEnabled() {
 		return true;
 	}
@@ -211,60 +225,55 @@ public class UserExtDetails implements UserDetails, OAuth2AuthenticatedPrincipal
 	 * @return the OAuth 2.0 token attributes
 	 */
 	@Override
-	@JsonIgnore
 	public Map<String, Object> getAttributes() {
 		return Collections.emptyMap();
 	}
 
 	@Override
 	@NullMarked
-	@JsonIgnore
 	public String getName() {
 		return this.username;
 	}
 
-	@JsonIgnore
 	public UserExtDetails getDecryptInfo() {
-		this.mail = this.getDecryptMail();
-		this.mobile = this.getDecryptMobile();
-		this.username = this.getDecryptUsername();
+
 		return this;
 	}
 
-	private String getDecryptUsername() {
-		if (StringExtUtils.isNotEmpty(this.username)) {
+	public String getDecryptUsername(String username) {
+		if (StringExtUtils.isNotEmpty(username)) {
 			try {
-				return AESUtils.decrypt(this.username);
+				return AESUtils.decrypt(username);
 			}
 			catch (Exception ex) {
 				throw new BizException(USERNAME_AES_DECRYPT_FAIL, ex);
 			}
 		}
-		return this.username;
+		return username;
 	}
 
-	private String getDecryptMail() {
-		if (StringExtUtils.isNotEmpty(this.mail)) {
+	public String getDecryptMail(String mail) {
+		if (StringExtUtils.isNotEmpty(mail)) {
 			try {
-				return AESUtils.decrypt(this.mail);
+				return AESUtils.decrypt(mail);
 			}
 			catch (Exception ex) {
 				throw new BizException(MAIL_AES_DECRYPT_FAIL, ex);
 			}
 		}
-		return this.mail;
+		return mail;
 	}
 
-	private String getDecryptMobile() {
-		if (StringExtUtils.isNotEmpty(this.mobile)) {
+	public String getDecryptMobile(String mobile) {
+		if (StringExtUtils.isNotEmpty(mobile)) {
 			try {
-				return AESUtils.decrypt(this.mobile);
+				return AESUtils.decrypt(mobile);
 			}
 			catch (Exception ex) {
 				throw new BizException(MOBILE_AES_DECRYPT_FAIL, ex);
 			}
 		}
-		return this.mobile;
+		return mobile;
 	}
 
 }

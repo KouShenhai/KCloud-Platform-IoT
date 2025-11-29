@@ -20,7 +20,6 @@ package org.laokou.gateway.filter;
 import com.google.common.net.HttpHeaders;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.core.util.SpringUtils;
@@ -63,7 +62,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	// @formatter:off
 	@NonNull
 	@Override
-	public Mono<Void> filter(@NotNull ServerWebExchange exchange, @NotNull GatewayFilterChain chain) {
+	public Mono<Void> filter(@NonNull ServerWebExchange exchange, @NonNull GatewayFilterChain chain) {
 		try {
 			// 国际化
 			ReactiveI18nUtils.set(exchange);

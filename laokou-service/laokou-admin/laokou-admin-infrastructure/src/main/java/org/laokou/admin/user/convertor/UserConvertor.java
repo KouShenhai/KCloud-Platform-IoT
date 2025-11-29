@@ -123,7 +123,7 @@ public final class UserConvertor {
 	}
 
 	public static UserProfileCO toClientObject() {
-		UserExtDetails userExtDetails = UserUtils.user();
+		UserExtDetails userExtDetails = UserUtils.userDetail();
 		UserProfileCO userProfileCO = new UserProfileCO();
 		userProfileCO.setId(userExtDetails.getId());
 		userProfileCO.setUsername(userExtDetails.getUsername());

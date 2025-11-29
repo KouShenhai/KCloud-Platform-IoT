@@ -20,7 +20,7 @@ package org.laokou.gateway;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 import org.laokou.common.i18n.util.SslUtils;
 import org.laokou.gateway.repository.NacosRouteDefinitionRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -80,7 +80,7 @@ class GatewayApp implements CommandLineRunner {
 	}
 
 	@Override
-	public void run(@NotNull String... args) {
+	public void run(@NonNull String... args) {
 		// 执行同步路由任务
 		virtualThreadExecutor.execute(() -> nacosRouteDefinitionRepository.syncRouter()
 			.subscribeOn(Schedulers.boundedElastic())

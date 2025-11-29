@@ -21,6 +21,7 @@ import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.UserE;
+import org.laokou.common.context.util.User;
 import org.laokou.common.context.util.UserExtDetails;
 
 /**
@@ -31,19 +32,14 @@ public final class UserConvertor {
 	private UserConvertor() {
 	}
 
-	public static UserExtDetails toUserDetails(AuthA auth) {
-		UserExtDetails userExtDetails = new UserExtDetails();
-		UserE user = auth.getUser();
-		userExtDetails.setId(user.getId());
-		userExtDetails.setUsername(user.getUsername());
-		userExtDetails.setAvatar(auth.getAvatar());
-		userExtDetails.setSuperAdmin(user.isSuperAdministrator());
-		userExtDetails.setStatus(user.getStatus());
-		userExtDetails.setMail(user.getMail());
-		userExtDetails.setMobile(user.getMobile());
-		userExtDetails.setPermissions(auth.getPermissions());
-		userExtDetails.setTenantId(user.getTenantId());
-		return userExtDetails;
+	public static UserExtDetails toUserDetails(User user) {
+		return new UserExtDetails(user);
+	}
+
+	public static User toUser(AuthA auth) {
+		UserE userE = auth.getUser();
+		return new User(userE.getId(), userE.getUsername(), auth.getAvatar(), userE.isSuperAdministrator(),
+				userE.getStatus(), userE.getMail(), userE.getMobile(), userE.getTenantId(), auth.getPermissions());
 	}
 
 	public static UserE toEntity(UserDO userDO) {
