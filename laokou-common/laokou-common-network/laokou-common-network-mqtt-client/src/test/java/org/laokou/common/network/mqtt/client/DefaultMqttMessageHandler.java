@@ -20,7 +20,7 @@ package org.laokou.common.network.mqtt.client;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.pulsar.client.api.MessageId;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 import org.laokou.common.network.mqtt.client.handler.MqttMessage;
 import org.laokou.common.network.mqtt.client.handler.MqttMessageHandler;
 import org.laokou.common.network.mqtt.client.util.VertxMqttUtils;
@@ -61,7 +61,7 @@ class DefaultMqttMessageHandler implements MqttMessageHandler {
 			}
 
 			@Override
-			public int compareTo(@NotNull MessageId o) {
+			public int compareTo(@NonNull MessageId o) {
 				return 0;
 			}
 		});

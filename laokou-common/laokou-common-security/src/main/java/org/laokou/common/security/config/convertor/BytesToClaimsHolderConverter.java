@@ -33,10 +33,15 @@
 
 package org.laokou.common.security.config.convertor;
 
-import org.laokou.common.redis.config.ForyRedisSerializer;
+import org.jetbrains.annotations.NotNull;
 import org.laokou.common.security.config.entity.OAuth2AuthorizationGrantAuthorization;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
+import org.springframework.data.redis.serializer.JacksonJsonRedisSerializer;
+import org.springframework.security.jackson.SecurityJacksonModules;
+import org.springframework.security.oauth2.server.authorization.jackson.OAuth2AuthorizationServerJacksonModule;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 
 /**
  * @author spring-authorization-server
@@ -46,17 +51,21 @@ import org.springframework.data.convert.ReadingConverter;
 public final class BytesToClaimsHolderConverter
 		implements Converter<byte[], OAuth2AuthorizationGrantAuthorization.ClaimsHolder> {
 
+	private final JacksonJsonRedisSerializer<OAuth2AuthorizationGrantAuthorization.ClaimsHolder> serializer;
+
 	public BytesToClaimsHolderConverter() {
+		ObjectMapper objectMapper = JsonMapper.builder()
+			.addMixIn(OAuth2AuthorizationGrantAuthorization.ClaimsHolder.class, ClaimsHolderMixin.class)
+			.addModules(SecurityJacksonModules.getModules(BytesToClaimsHolderConverter.class.getClassLoader()))
+			.addModule(new OAuth2AuthorizationServerJacksonModule())
+			.build();
+		this.serializer = new JacksonJsonRedisSerializer<>(objectMapper,
+				OAuth2AuthorizationGrantAuthorization.ClaimsHolder.class);
 	}
 
-	// @formatter:off
 	@Override
-	public OAuth2AuthorizationGrantAuthorization.ClaimsHolder convert(byte[] value) {
-		if (ForyRedisSerializer.foryRedisSerializer().deserialize(value) instanceof OAuth2AuthorizationGrantAuthorization.ClaimsHolder claimsHolder) {
-			return claimsHolder;
-		}
-		return null;
+	public OAuth2AuthorizationGrantAuthorization.ClaimsHolder convert(@NotNull byte[] value) {
+		return this.serializer.deserialize(value);
 	}
-	// @formatter:on
 
 }

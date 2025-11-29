@@ -21,9 +21,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.laokou.auth.convertor.AuthConvertor;
+import org.laokou.auth.convertor.UserConvertor;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.Constants;
 import org.laokou.auth.model.GrantTypeEnum;
+import org.laokou.common.context.util.User;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.BizException;
@@ -60,12 +62,11 @@ record UserDetailsServiceImpl(
 			AuthA authA = AuthConvertor.toEntity(username, password, tenantCode, GrantTypeEnum.AUTHORIZATION_CODE,
 					StringConstants.EMPTY, StringConstants.EMPTY);
 			authA.createUserByAuthorizationCode();
-			Object principal = ObjectUtils.requireNotNull(authenticationProcessor.authentication(authA, request))
-				.getPrincipal();
+			Object principal = authenticationProcessor.authentication(authA, request).getPrincipal();
 			if (ObjectUtils.isNull(principal)) {
 				throw new BizException("B_OAuth2_UserNotExist", "用户不存在");
 			}
-			return (UserDetails) principal;
+			return UserConvertor.toUserDetails((User) principal);
 		}
 		catch (GlobalException e) {
 			throw new UsernameNotFoundException(e.getMsg(), e);

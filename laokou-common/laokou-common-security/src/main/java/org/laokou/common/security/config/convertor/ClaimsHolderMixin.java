@@ -33,36 +33,26 @@
 
 package org.laokou.common.security.config.convertor;
 
-import org.jetbrains.annotations.NotNull;
-import org.springframework.core.convert.converter.Converter;
-import org.springframework.data.convert.WritingConverter;
-import org.springframework.data.redis.serializer.JacksonJsonRedisSerializer;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.jackson.SecurityJacksonModules;
-import tools.jackson.databind.ObjectMapper;
-import tools.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+import java.util.Map;
 
 /**
  * @author spring-authorization-server
  * @author laokou
  */
-@WritingConverter
-public final class UsernamePasswordAuthenticationTokenToBytesConverter
-		implements Converter<UsernamePasswordAuthenticationToken, byte[]> {
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
+		isGetterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
+abstract class ClaimsHolderMixin {
 
-	private final JacksonJsonRedisSerializer<UsernamePasswordAuthenticationToken> serializer;
-
-	public UsernamePasswordAuthenticationTokenToBytesConverter() {
-		ObjectMapper objectMapper = JsonMapper.builder()
-			.addModules(SecurityJacksonModules
-				.getModules(BytesToUsernamePasswordAuthenticationTokenConverter.class.getClassLoader()))
-			.build();
-		this.serializer = new JacksonJsonRedisSerializer<>(objectMapper, UsernamePasswordAuthenticationToken.class);
-	}
-
-	@Override
-	public byte[] convert(@NotNull UsernamePasswordAuthenticationToken value) {
-		return this.serializer.serialize(value);
+	@JsonCreator
+	ClaimsHolderMixin(@JsonProperty("claims") Map<String, Object> claims) {
 	}
 
 }

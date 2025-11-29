@@ -33,11 +33,15 @@
 
 package org.laokou.common.security.config.convertor;
 
-import org.jspecify.annotations.NonNull;
-import org.laokou.common.redis.config.ForyRedisSerializer;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.WritingConverter;
+import org.springframework.data.redis.serializer.JacksonJsonRedisSerializer;
+import org.springframework.security.jackson.SecurityJacksonModules;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
+import org.springframework.security.oauth2.server.authorization.jackson.OAuth2AuthorizationServerJacksonModule;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 
 /**
  * @author spring-authorization-server
@@ -46,12 +50,20 @@ import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequ
 @WritingConverter
 public final class OAuth2AuthorizationRequestToBytesConverter implements Converter<OAuth2AuthorizationRequest, byte[]> {
 
+	private final JacksonJsonRedisSerializer<OAuth2AuthorizationRequest> serializer;
+
 	public OAuth2AuthorizationRequestToBytesConverter() {
+		ObjectMapper objectMapper = JsonMapper.builder()
+			.addModules(SecurityJacksonModules
+				.getModules(OAuth2AuthorizationRequestToBytesConverter.class.getClassLoader()))
+			.addModule(new OAuth2AuthorizationServerJacksonModule())
+			.build();
+		this.serializer = new JacksonJsonRedisSerializer<>(objectMapper, OAuth2AuthorizationRequest.class);
 	}
 
 	@Override
-	public byte[] convert(@NonNull OAuth2AuthorizationRequest value) {
-		return ForyRedisSerializer.foryRedisSerializer().serialize(value);
+	public byte[] convert(@NotNull OAuth2AuthorizationRequest value) {
+		return this.serializer.serialize(value);
 	}
 
 }

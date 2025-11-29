@@ -18,7 +18,7 @@
 package org.laokou.tool;
 
 import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.util.FileUtils;
 import org.laokou.common.core.util.SystemUtils;
 import org.springframework.util.StopWatch;
@@ -73,16 +73,16 @@ final class ModifyProjectBoot {
 	private ModifyProjectBoot() {
 	}
 
-	public static void main(String[] args) throws IOException {
+	static void main() throws IOException {
 		StopWatch stopWatch = new StopWatch("一键修改项目");
 		stopWatch.start();
 		// 修改projectName、packageName、groupId、artifactId
 		String projectPath = System.getProperty("user.dir");
 		FileUtils.walkFileTree(Paths.get(projectPath), new SimpleFileVisitor<>() {
 
-			@NotNull
+			@NonNull
 			@Override
-			public FileVisitResult visitFile(@NotNull Path path, @NotNull BasicFileAttributes attrs)
+			public FileVisitResult visitFile(@NonNull Path path, @NonNull BasicFileAttributes attrs)
 					throws IOException {
 				String filePath = path.toAbsolutePath().toString();
 				String newPath = getNewPath(filePath);
@@ -105,9 +105,9 @@ final class ModifyProjectBoot {
 				return FileVisitResult.CONTINUE;
 			}
 
-			@NotNull
+			@NonNull
 			@Override
-			public FileVisitResult preVisitDirectory(@NotNull Path path, @NotNull BasicFileAttributes attrs) {
+			public FileVisitResult preVisitDirectory(@NonNull Path path, @NonNull BasicFileAttributes attrs) {
 				boolean isExclude = false;
 				String dir = path.toString();
 				for (String module : MODULES) {
@@ -122,9 +122,9 @@ final class ModifyProjectBoot {
 				return FileVisitResult.SKIP_SUBTREE;
 			}
 
-			@NotNull
+			@NonNull
 			@Override
-			public FileVisitResult visitFileFailed(@NotNull Path file, @NotNull IOException exc) {
+			public FileVisitResult visitFileFailed(@NonNull Path file, @NonNull IOException exc) {
 				return FileVisitResult.CONTINUE;
 			}
 

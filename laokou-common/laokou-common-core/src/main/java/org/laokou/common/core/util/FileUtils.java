@@ -21,7 +21,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.SystemException;
 
@@ -197,22 +197,22 @@ public final class FileUtils {
 		if (exists(path)) {
 			walkFileTree(path, new SimpleFileVisitor<>() {
 
-				@NotNull
+				@NonNull
 				@Override
-				public FileVisitResult visitFile(@NotNull Path filePath, @NotNull BasicFileAttributes attrs)
+				public FileVisitResult visitFile(@NonNull Path filePath, @NonNull BasicFileAttributes attrs)
 						throws IOException {
 					return deleteIfExists(filePath) ? FileVisitResult.CONTINUE : FileVisitResult.SKIP_SUBTREE;
 				}
 
-				@NotNull
+				@NonNull
 				@Override
-				public FileVisitResult postVisitDirectory(@NotNull Path dirPath, IOException exc) throws IOException {
+				public FileVisitResult postVisitDirectory(@NonNull Path dirPath, IOException exc) throws IOException {
 					return deleteIfExists(dirPath) ? FileVisitResult.CONTINUE : FileVisitResult.SKIP_SUBTREE;
 				}
 
-				@NotNull
+				@NonNull
 				@Override
-				public FileVisitResult visitFileFailed(@NotNull Path file, @NotNull IOException exc) {
+				public FileVisitResult visitFileFailed(@NonNull Path file, @NonNull IOException exc) {
 					return FileVisitResult.CONTINUE;
 				}
 			});
@@ -265,9 +265,9 @@ public final class FileUtils {
 	public static void zip(Path sourcePath, OutputStream out) throws IOException {
 		try (ZipOutputStream zos = new ZipOutputStream(out)) {
 			walkFileTree(sourcePath, new SimpleFileVisitor<>() {
-				@NotNull
+				@NonNull
 				@Override
-				public FileVisitResult visitFile(@NotNull Path filePath, @NotNull BasicFileAttributes attrs)
+				public FileVisitResult visitFile(@NonNull Path filePath, @NonNull BasicFileAttributes attrs)
 						throws IOException {
 					// 对于每个文件，创建一个 ZipEntry 并写入
 					Path targetPath = sourcePath.relativize(filePath);
@@ -277,9 +277,9 @@ public final class FileUtils {
 					return FileVisitResult.CONTINUE;
 				}
 
-				@NotNull
+				@NonNull
 				@Override
-				public FileVisitResult preVisitDirectory(@NotNull Path dirPath, @NotNull BasicFileAttributes attrs)
+				public FileVisitResult preVisitDirectory(@NonNull Path dirPath, @NonNull BasicFileAttributes attrs)
 						throws IOException {
 					// 对于每个目录，创建一个 ZipEntry（目录也需要在 ZIP 中存在）
 					Path targetPath = sourcePath.relativize(dirPath);
@@ -288,9 +288,9 @@ public final class FileUtils {
 					return FileVisitResult.CONTINUE;
 				}
 
-				@NotNull
+				@NonNull
 				@Override
-				public FileVisitResult visitFileFailed(@NotNull Path file, @NotNull IOException exc) {
+				public FileVisitResult visitFileFailed(@NonNull Path file, @NonNull IOException exc) {
 					return FileVisitResult.CONTINUE;
 				}
 			});

@@ -16,7 +16,7 @@
  */
 
 /*
- * Copyright 2020-2024 the original author or authors.
+ * Copyright 2020-2025 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,10 +33,14 @@
 
 package org.laokou.common.security.config.convertor;
 
-import org.laokou.common.redis.config.ForyRedisSerializer;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
+import org.springframework.data.redis.serializer.JacksonJsonRedisSerializer;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.jackson.SecurityJacksonModules;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 
 /**
  * @author spring-authorization-server
@@ -46,17 +50,19 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 public final class BytesToUsernamePasswordAuthenticationTokenConverter
 		implements Converter<byte[], UsernamePasswordAuthenticationToken> {
 
+	private final JacksonJsonRedisSerializer<UsernamePasswordAuthenticationToken> serializer;
+
 	public BytesToUsernamePasswordAuthenticationTokenConverter() {
+		ObjectMapper objectMapper = JsonMapper.builder()
+			.addModules(SecurityJacksonModules
+				.getModules(BytesToUsernamePasswordAuthenticationTokenConverter.class.getClassLoader()))
+			.build();
+		this.serializer = new JacksonJsonRedisSerializer<>(objectMapper, UsernamePasswordAuthenticationToken.class);
 	}
 
-	// @formatter:off
 	@Override
-	public UsernamePasswordAuthenticationToken convert(byte[] value) {
-		if (ForyRedisSerializer.foryRedisSerializer().deserialize(value) instanceof UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken) {
-			return usernamePasswordAuthenticationToken;
-		}
-		return null;
+	public UsernamePasswordAuthenticationToken convert(@NotNull byte[] value) {
+		return this.serializer.deserialize(value);
 	}
-	// @formatter:on
 
 }

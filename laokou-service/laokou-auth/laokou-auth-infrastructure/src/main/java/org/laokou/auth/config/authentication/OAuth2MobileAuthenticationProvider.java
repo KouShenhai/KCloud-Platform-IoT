@@ -19,7 +19,7 @@ package org.laokou.auth.config.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 import org.laokou.auth.convertor.AuthConvertor;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.Constants;
@@ -49,7 +49,7 @@ final class OAuth2MobileAuthenticationProvider extends AbstractOAuth2Authenticat
 	}
 
 	@Override
-	public boolean supports(@NotNull Class<?> authentication) {
+	public boolean supports(@NonNull Class<?> authentication) {
 		return OAuth2MobileAuthenticationToken.class.isAssignableFrom(authentication);
 	}
 

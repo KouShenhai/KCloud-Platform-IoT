@@ -26,7 +26,7 @@ import org.laokou.auth.config.authentication.OAuth2UsernamePasswordAuthenticatio
 import org.laokou.auth.model.CaptchaValidator;
 import org.laokou.auth.model.MqEnum;
 import org.laokou.auth.model.PasswordValidator;
-import org.laokou.common.context.util.UserExtDetails;
+import org.laokou.common.context.util.User;
 import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.i18n.dto.IdGenerator;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -248,10 +248,9 @@ class OAuth2AuthorizationServerConfig {
 		// https://docs.spring.io/spring-security/reference/servlet/oauth2/authorization-server/core-model-components.html#oauth2AuthorizationServer-oauth2-token-customizer
 		return context -> {
 			if (ObjectUtils.equals(context.getTokenType(), OAuth2TokenType.ACCESS_TOKEN)
-				&& context.getPrincipal().getPrincipal() instanceof UserExtDetails userExtDetails) {
+				&& context.getPrincipal().getPrincipal() instanceof User user) {
 				JwtClaimsSet.Builder claims = context.getClaims();
-				claims.claim("id", userExtDetails.getId());
-				claims.claim("username", userExtDetails.getDecryptUsername());
+				claims.claim("id", user.id().toString());
 			}
 		};
 	}

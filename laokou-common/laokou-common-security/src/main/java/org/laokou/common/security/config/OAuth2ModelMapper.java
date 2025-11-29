@@ -33,8 +33,6 @@
 
 package org.laokou.common.security.config;
 
-import java.security.Principal;
-
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.security.config.entity.OAuth2AuthorizationCodeGrantAuthorization;
 import org.laokou.common.security.config.entity.OAuth2AuthorizationGrantAuthorization;
@@ -67,6 +65,8 @@ import org.springframework.security.oauth2.server.authorization.settings.TokenSe
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+
+import java.security.Principal;
 
 /**
  * @author spring-authorization-server
@@ -217,8 +217,7 @@ public final class OAuth2ModelMapper {
 		OAuth2AuthorizationGrantAuthorization.RefreshToken refreshToken = extractRefreshToken(authorization);
 		return new OAuth2UsernamePasswordGrantAuthorization(authorization.getId(),
 				authorization.getRegisteredClientId(), authorization.getPrincipalName(),
-				authorization.getAuthorizedScopes(), accessToken, refreshToken,
-				authorization.getAttribute(Principal.class.getName()));
+				authorization.getAuthorizedScopes(), accessToken, refreshToken, null);
 	}
 
 	static OAuth2TestGrantAuthorization convertOAuth2TestGrantAuthorization(OAuth2Authorization authorization) {
@@ -475,8 +474,9 @@ public final class OAuth2ModelMapper {
 		builder.id(usernamePasswordGrantAuthorization.getId())
 			.principalName(usernamePasswordGrantAuthorization.getPrincipalName())
 			.authorizationGrantType(USERNAME_PASSWORD)
-			.authorizedScopes(usernamePasswordGrantAuthorization.getAuthorizedScopes())
-			.attribute(Principal.class.getName(), usernamePasswordGrantAuthorization.getPrincipal());
+			.authorizedScopes(usernamePasswordGrantAuthorization.getAuthorizedScopes());
+		// .attribute(Principal.class.getName(),
+		// usernamePasswordGrantAuthorization.getPrincipal());
 		mapAccessToken(usernamePasswordGrantAuthorization.getAccessToken(), builder);
 		mapRefreshToken(usernamePasswordGrantAuthorization.getRefreshToken(), builder);
 	}
@@ -486,8 +486,8 @@ public final class OAuth2ModelMapper {
 		builder.id(testGrantAuthorization.getId())
 			.principalName(testGrantAuthorization.getPrincipalName())
 			.authorizationGrantType(TEST)
-			.authorizedScopes(testGrantAuthorization.getAuthorizedScopes())
-			.attribute(Principal.class.getName(), testGrantAuthorization.getPrincipal());
+			.authorizedScopes(testGrantAuthorization.getAuthorizedScopes());
+		// .attribute(Principal.class.getName(), testGrantAuthorization.getPrincipal());
 		mapAccessToken(testGrantAuthorization.getAccessToken(), builder);
 		mapRefreshToken(testGrantAuthorization.getRefreshToken(), builder);
 	}
@@ -497,8 +497,8 @@ public final class OAuth2ModelMapper {
 		builder.id(mailGrantAuthorization.getId())
 			.principalName(mailGrantAuthorization.getPrincipalName())
 			.authorizationGrantType(MAIL)
-			.authorizedScopes(mailGrantAuthorization.getAuthorizedScopes())
-			.attribute(Principal.class.getName(), mailGrantAuthorization.getPrincipal());
+			.authorizedScopes(mailGrantAuthorization.getAuthorizedScopes());
+		// .attribute(Principal.class.getName(), mailGrantAuthorization.getPrincipal());
 		mapAccessToken(mailGrantAuthorization.getAccessToken(), builder);
 		mapRefreshToken(mailGrantAuthorization.getRefreshToken(), builder);
 	}
@@ -508,8 +508,8 @@ public final class OAuth2ModelMapper {
 		builder.id(mobileGrantAuthorization.getId())
 			.principalName(mobileGrantAuthorization.getPrincipalName())
 			.authorizationGrantType(MOBILE)
-			.authorizedScopes(mobileGrantAuthorization.getAuthorizedScopes())
-			.attribute(Principal.class.getName(), mobileGrantAuthorization.getPrincipal());
+			.authorizedScopes(mobileGrantAuthorization.getAuthorizedScopes());
+		// .attribute(Principal.class.getName(), mobileGrantAuthorization.getPrincipal());
 		mapAccessToken(mobileGrantAuthorization.getAccessToken(), builder);
 		mapRefreshToken(mobileGrantAuthorization.getRefreshToken(), builder);
 	}

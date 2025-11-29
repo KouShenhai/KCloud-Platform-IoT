@@ -34,7 +34,7 @@
 package org.laokou.common.security.config;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolderStrategy;
 import org.springframework.security.core.context.SecurityContextImpl;
@@ -60,19 +60,19 @@ public final class TransmittableThreadLocalSecurityContextHolderStrategy impleme
 		CONTEXT_HOLDER.remove();
 	}
 
-	@NotNull
+	@NonNull
 	@Override
 	public SecurityContext getContext() {
 		return getDeferredContext().get();
 	}
 
 	@Override
-	public void setContext(@NotNull SecurityContext context) {
+	public void setContext(@NonNull SecurityContext context) {
 		Assert.notNull(context, "Only non-null SecurityContext instances are permitted");
 		CONTEXT_HOLDER.set(() -> context);
 	}
 
-	@NotNull
+	@NonNull
 	@Override
 	public Supplier<SecurityContext> getDeferredContext() {
 		Supplier<SecurityContext> result = CONTEXT_HOLDER.get();
@@ -85,7 +85,7 @@ public final class TransmittableThreadLocalSecurityContextHolderStrategy impleme
 	}
 
 	@Override
-	public void setDeferredContext(@NotNull Supplier<SecurityContext> deferredContext) {
+	public void setDeferredContext(@NonNull Supplier<SecurityContext> deferredContext) {
 		Assert.notNull(deferredContext, "Only non-null Supplier instances are permitted");
 		Supplier<SecurityContext> notNullDeferredContext = () -> {
 			SecurityContext result = deferredContext.get();
@@ -95,7 +95,7 @@ public final class TransmittableThreadLocalSecurityContextHolderStrategy impleme
 		CONTEXT_HOLDER.set(notNullDeferredContext);
 	}
 
-	@NotNull
+	@NonNull
 	@Override
 	public SecurityContext createEmptyContext() {
 		return new SecurityContextImpl();
