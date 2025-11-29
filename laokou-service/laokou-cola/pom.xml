@@ -22,39 +22,4 @@
     <module>laokou-cola-domain</module>
   </modules>
 
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-cola-adapter</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-cola-app</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-cola-client</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-cola-domain</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-cola-infrastructure</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.laokou</groupId>
-        <artifactId>laokou-cola-start</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-
 </project>
