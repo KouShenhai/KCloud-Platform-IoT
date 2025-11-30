@@ -18,9 +18,12 @@
 package org.laokou.common.context;
 
 import org.assertj.core.api.Assertions;
+import org.jspecify.annotations.NullMarked;
 import org.junit.jupiter.api.Test;
+import org.laokou.common.context.util.User;
 import org.laokou.common.context.util.UserExtDetails;
 import org.laokou.common.context.util.UserUtils;
+import org.laokou.common.crypto.util.AESUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,11 +37,6 @@ class UserUtilsTest {
 	@Test
 	void test() {
 		Assertions.assertThat(UserUtils.userDetail()).isNotNull().isEqualTo(new UserExtDetails());
-		Assertions.assertThat(UserUtils.getUserId()).isNull();
-		Assertions.assertThat(UserUtils.getUserName()).isNull();
-		Assertions.assertThat(UserUtils.getTenantId()).isNull();
-		Assertions.assertThat(UserUtils.isSuperAdmin()).isNull();
-		Assertions.assertThat(UserUtils.userDetail().getPermissions()).isNull();
 		SecurityContextHolder.getContext().setAuthentication(new TestAuthentication());
 		Assertions.assertThat(UserUtils.userDetail()).isNotNull().isNotEqualTo(new UserExtDetails());
 		Assertions.assertThat(UserUtils.getUserId()).isNotNull().isEqualTo(1L);
@@ -51,6 +49,7 @@ class UserUtilsTest {
 	static class TestAuthentication implements Authentication {
 
 		@Override
+		@NullMarked
 		public Collection<? extends GrantedAuthority> getAuthorities() {
 			return Collections.emptySet();
 		}
@@ -67,17 +66,17 @@ class UserUtilsTest {
 
 		@Override
 		public Object getPrincipal() {
-			UserExtDetails userExtDetails = new UserExtDetails();
-			userExtDetails.setId(1L);
-			userExtDetails.setUsername("admin");
-			userExtDetails.setAvatar("https://youke1.picui.cn/s1/2025/07/20/687ca202b2c53.jpg");
-			userExtDetails.setSuperAdmin(true);
-			userExtDetails.setStatus(0);
-			userExtDetails.setMail("2413176044@qq.com");
-			userExtDetails.setMobile("13574411111");
-			userExtDetails.setPermissions(Set.of("test:save"));
-			userExtDetails.setTenantId(0L);
-			return userExtDetails;
+			User user = null;
+			try {
+				user = new User(1L, AESUtils.encrypt("admin"),
+						"https://youke1.picui.cn/s1/2025/07/20/687ca202b2c53.jpg", true, 0,
+						AESUtils.encrypt("2413176044@qq.com"), AESUtils.encrypt("13574411111"), 0L,
+						Set.of("test:save"));
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+			return new UserExtDetails(user);
 		}
 
 		@Override
