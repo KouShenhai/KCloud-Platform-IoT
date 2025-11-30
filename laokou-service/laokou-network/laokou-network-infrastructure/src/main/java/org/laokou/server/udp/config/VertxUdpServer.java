@@ -17,59 +17,31 @@
 
 package org.laokou.server.udp.config;
 
-import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
 import io.vertx.core.Vertx;
 import io.vertx.core.datagram.DatagramSocket;
 import io.vertx.core.datagram.DatagramSocketOptions;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.server.VertxServer;
+import org.laokou.server.AbstractVertxServer;
 
 /**
  * @author laokou
  */
 @Slf4j
-final class VertxUdpServer extends AbstractVerticle implements VertxServer {
+final class VertxUdpServer extends AbstractVertxServer<DatagramSocket> {
 
 	private final UdpServerProperties udpServerProperties;
 
 	private final DatagramSocketOptions datagramSocketOptions;
 
-	private Future<DatagramSocket> datagramSocketFuture;
-
-	private Future<String> deploymentIdFuture;
-
 	VertxUdpServer(Vertx vertx, UdpServerProperties udpServerProperties) {
-		super.vertx = vertx;
+		super(vertx);
 		this.udpServerProperties = udpServerProperties;
-		datagramSocketOptions = getDatagramSocketOptions(udpServerProperties);
+		this.datagramSocketOptions = getDatagramSocketOptions(udpServerProperties);
 	}
 
 	@Override
-	public void deploy() {
-		// 部署服务
-		deploymentIdFuture = deploy0();
-	}
-
-	@Override
-	public void undeploy() {
-		// 卸载服务
-		deploymentIdFuture = undeploy0();
-	}
-
-	@Override
-	public void start() {
-		// 启动服务
-		datagramSocketFuture = start0();
-	}
-
-	@Override
-	public void stop() {
-		// 停止服务
-		datagramSocketFuture = stop0();
-	}
-
-	private Future<String> deploy0() {
+	public Future<String> deploy0() {
 		return vertx.deployVerticle(this).onComplete(res -> {
 			if (res.succeeded()) {
 				log.info("【Vertx-UDP-Server】 => UDP服务部署成功，端口：{}", udpServerProperties.getPort());
@@ -81,7 +53,8 @@ final class VertxUdpServer extends AbstractVerticle implements VertxServer {
 		});
 	}
 
-	private Future<String> undeploy0() {
+	@Override
+	public Future<String> undeploy0() {
 		return deploymentIdFuture.onSuccess(deploymentId -> vertx.undeploy(deploymentId)).onComplete(res -> {
 			if (res.succeeded()) {
 				log.info("【Vertx-UDP-Server】 => UDP服务卸载成功，端口：{}", udpServerProperties.getPort());
@@ -92,7 +65,8 @@ final class VertxUdpServer extends AbstractVerticle implements VertxServer {
 		});
 	}
 
-	private Future<DatagramSocket> start0() {
+	@Override
+	public Future<DatagramSocket> start0() {
 		return vertx.createDatagramSocket(datagramSocketOptions)
 			.handler(packet -> log.debug("【Vertx-UDP-Server】 => 收到数据包：{}", packet.data()))
 			.listen(udpServerProperties.getPort(), udpServerProperties.getHost())
@@ -107,8 +81,9 @@ final class VertxUdpServer extends AbstractVerticle implements VertxServer {
 			});
 	}
 
-	private Future<DatagramSocket> stop0() {
-		return datagramSocketFuture.onSuccess(DatagramSocket::close).onComplete(result -> {
+	@Override
+	public Future<DatagramSocket> stop0() {
+		return serverFuture.onSuccess(DatagramSocket::close).onComplete(result -> {
 			if (result.succeeded()) {
 				log.info("【Vertx-UDP-Server】 => UDP服务停止成功");
 			}

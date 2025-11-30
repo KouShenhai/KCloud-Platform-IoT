@@ -17,7 +17,6 @@
 
 package org.laokou.server.http.config;
 
-import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServer;
@@ -28,50 +27,23 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.RegexUtils;
 import org.laokou.common.vertx.model.HttpMessageEnum;
 import org.laokou.common.vertx.model.WebsocketMessageEnum;
-import org.laokou.server.VertxServer;
+import org.laokou.server.AbstractVertxServer;
 
 /**
  * @author laokou
  */
 @Slf4j
-final class VertxHttpServer extends AbstractVerticle implements VertxServer {
+final class VertxHttpServer extends AbstractVertxServer<HttpServer> {
 
 	private final HttpServerOptions httpServerOptions;
 
-	private Future<HttpServer> httpServerFuture;
-
-	private Future<String> deploymentIdFuture;
-
 	VertxHttpServer(final Vertx vertx, HttpServerProperties httpServerProperties) {
-		super.vertx = vertx;
+		super(vertx);
 		this.httpServerOptions = getHttpServerOptions(httpServerProperties);
 	}
 
 	@Override
-	public void deploy() {
-		// 部署服务
-		deploymentIdFuture = deploy0();
-	}
-
-	@Override
-	public void undeploy() {
-		// 卸载服务
-		deploymentIdFuture = undeploy0();
-	}
-
-	@Override
-	public void start() {
-		// 启动服务
-		httpServerFuture = start0();
-	}
-
-	@Override
-	public void stop() {
-		// 停止服务
-		httpServerFuture = stop0();
-	}
-
-	private Future<String> deploy0() {
+	public Future<String> deploy0() {
 		return super.vertx.deployVerticle(this).onComplete(res -> {
 			if (res.succeeded()) {
 				log.info("【Vertx-HTTP-Server】 => HTTP服务部署成功，端口：{}", httpServerOptions.getPort());
@@ -83,8 +55,9 @@ final class VertxHttpServer extends AbstractVerticle implements VertxServer {
 		});
 	}
 
-	private Future<String> undeploy0() {
-		return deploymentIdFuture.onSuccess(deploymentId -> super.vertx.undeploy(deploymentId)).onComplete(res -> {
+	@Override
+	public Future<String> undeploy0() {
+		return deploymentIdFuture.onSuccess(deploymentId -> this.vertx.undeploy(deploymentId)).onComplete(res -> {
 			if (res.succeeded()) {
 				log.info("【Vertx-HTTP-Server】 => HTTP服务卸载成功，端口：{}", httpServerOptions.getPort());
 			}
@@ -94,16 +67,17 @@ final class VertxHttpServer extends AbstractVerticle implements VertxServer {
 		});
 	}
 
-	private Future<HttpServer> start0() {
+	@Override
+	public Future<HttpServer> start0() {
 		return super.vertx.createHttpServer(httpServerOptions).webSocketHandler(serverWebSocket -> {
 			if (!RegexUtils.matches(WebsocketMessageEnum.UP_PROPERTY_REPORT.getPath(), serverWebSocket.path())) {
 				serverWebSocket.close();
 				return;
 			}
 			serverWebSocket.textMessageHandler(message -> log.info("【Vertx-WebSocket-Server】 => 收到消息：{}", message))
-				.closeHandler(v -> log.error("【Vertx-WebSocket-Server】 => 断开连接"))
+				.closeHandler(_ -> log.error("【Vertx-WebSocket-Server】 => 断开连接"))
 				.exceptionHandler(err -> log.error("【Vertx-WebSocket-Server】 => 错误信息：{}", err.getMessage(), err))
-				.endHandler(v -> log.error("【Vertx-WebSocket-Server】 => 结束连接"));
+				.endHandler(_ -> log.error("【Vertx-WebSocket-Server】 => 结束连接"));
 		}).requestHandler(getRouter()).listen().onComplete(completionHandler -> {
 			if (completionHandler.succeeded()) {
 				log.info("【Vertx-HTTP-Server】 => HTTP服务启动成功，端口：{}", httpServerOptions.getPort());
@@ -115,8 +89,9 @@ final class VertxHttpServer extends AbstractVerticle implements VertxServer {
 		});
 	}
 
-	private Future<HttpServer> stop0() {
-		return httpServerFuture.onSuccess(HttpServer::close).onComplete(result -> {
+	@Override
+	public Future<HttpServer> stop0() {
+		return serverFuture.onSuccess(HttpServer::close).onComplete(result -> {
 			if (result.succeeded()) {
 				log.info("【Vertx-HTTP-Server】 => HTTP服务停止成功，端口：{}", httpServerOptions.getPort());
 			}

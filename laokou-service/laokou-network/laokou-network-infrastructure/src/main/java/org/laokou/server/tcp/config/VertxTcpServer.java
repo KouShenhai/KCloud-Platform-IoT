@@ -17,56 +17,28 @@
 
 package org.laokou.server.tcp.config;
 
-import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
 import io.vertx.core.Vertx;
 import io.vertx.core.net.NetServer;
 import io.vertx.core.net.NetServerOptions;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.server.VertxServer;
+import org.laokou.server.AbstractVertxServer;
 
 /**
  * @author laokou
  */
 @Slf4j
-final class VertxTcpServer extends AbstractVerticle implements VertxServer {
+final class VertxTcpServer extends AbstractVertxServer<NetServer> {
 
 	private final NetServerOptions netServerOptions;
 
-	private Future<NetServer> netServerFuture;
-
-	private Future<String> deploymentIdFuture;
-
 	VertxTcpServer(Vertx vertx, TcpServerProperties tcpServerProperties) {
-		super.vertx = vertx;
+		super(vertx);
 		this.netServerOptions = getTcpServerOptions(tcpServerProperties);
 	}
 
 	@Override
-	public void deploy() {
-		// 部署服务
-		deploymentIdFuture = deploy0();
-	}
-
-	@Override
-	public void undeploy() {
-		// 卸载服务
-		deploymentIdFuture = undeploy0();
-	}
-
-	@Override
-	public void start() {
-		// 启动服务
-		netServerFuture = start0();
-	}
-
-	@Override
-	public void stop() {
-		// 停止服务
-		netServerFuture = stop0();
-	}
-
-	private Future<String> deploy0() {
+	public Future<String> deploy0() {
 		return vertx.deployVerticle(this).onComplete(res -> {
 			if (res.succeeded()) {
 				log.info("【Vertx-TCP-Server】 => TCP服务部署成功，端口：{}", netServerOptions.getPort());
@@ -78,7 +50,8 @@ final class VertxTcpServer extends AbstractVerticle implements VertxServer {
 		});
 	}
 
-	private Future<String> undeploy0() {
+	@Override
+	public Future<String> undeploy0() {
 		return deploymentIdFuture.onSuccess(deploymentId -> vertx.undeploy(deploymentId)).onComplete(res -> {
 			if (res.succeeded()) {
 				log.info("【Vertx-TCP-Server】 => TCP服务卸载成功，端口：{}", netServerOptions.getPort());
@@ -89,11 +62,12 @@ final class VertxTcpServer extends AbstractVerticle implements VertxServer {
 		});
 	}
 
-	private Future<NetServer> start0() {
+	@Override
+	public Future<NetServer> start0() {
 		return vertx.createNetServer(netServerOptions)
 			.connectHandler(
 					socket -> socket.handler(buffer -> log.debug("【Vertx-TCP-Server】 => 服务端接收数据：{}", buffer.toString()))
-						.closeHandler(close -> log.info("【Vertx-TCP-Server】 => 客户端连接关闭")))
+						.closeHandler(_ -> log.info("【Vertx-TCP-Server】 => 客户端连接关闭")))
 			.listen()
 			.onComplete(result -> {
 				if (result.succeeded()) {
@@ -106,8 +80,9 @@ final class VertxTcpServer extends AbstractVerticle implements VertxServer {
 			});
 	}
 
-	private Future<NetServer> stop0() {
-		return netServerFuture.onSuccess(NetServer::close).onComplete(result -> {
+	@Override
+	public Future<NetServer> stop0() {
+		return serverFuture.onSuccess(NetServer::close).onComplete(result -> {
 			if (result.succeeded()) {
 				log.info("【Vertx-TCP-Server】 => HTTP服务停止成功，端口：{}", netServerOptions.getPort());
 			}
