@@ -17,6 +17,13 @@
 
 package org.laokou.common.context.util;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import org.jspecify.annotations.NullMarked;
+import org.springframework.security.core.AuthenticatedPrincipal;
+
 import java.io.Serializable;
 import java.util.Set;
 
@@ -32,7 +39,18 @@ import java.util.Set;
  * @param permissions 菜单权限标识集合.
  * @author laokou
  */
+@JsonTypeName("User")
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
+		isGetterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
 public record User(Long id, String username, String avatar, Boolean superAdmin, Integer status, String mail,
-		String mobile, Long tenantId, Set<String> permissions) implements Serializable {
+		String mobile, Long tenantId, Set<String> permissions) implements AuthenticatedPrincipal, Serializable {
+
+	@Override
+	@NullMarked
+	public String getName() {
+		return username;
+	}
 
 }

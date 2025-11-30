@@ -23,20 +23,18 @@ import org.laokou.common.core.config.CustomInstantSerializer;
 import org.laokou.common.i18n.common.constant.DateConstants;
 import org.laokou.common.i18n.util.InstantUtils;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.JacksonJsonHttpMessageConverter;
 import tools.jackson.databind.DeserializationFeature;
+import tools.jackson.databind.ext.javatime.deser.InstantDeserializer;
 import tools.jackson.databind.ext.javatime.deser.LocalDateTimeDeserializer;
+import tools.jackson.databind.ext.javatime.ser.InstantSerializer;
+import tools.jackson.databind.ext.javatime.ser.LocalDateTimeSerializer;
 import tools.jackson.databind.json.JsonMapper;
 import tools.jackson.databind.module.SimpleModule;
 import tools.jackson.databind.ser.std.ToStringSerializer;
-import tools.jackson.datatype.jsr310.JavaTimeModule;
-import tools.jackson.datatype.jsr310.deser.InstantDeserializer;
-import tools.jackson.datatype.jsr310.ser.InstantSerializer;
-import tools.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -55,7 +53,7 @@ import java.util.TimeZone;
 public class HttpMessageConverterAutoConfig {
 
 	// @formatter:off
-	@Bean("jackson2HttpMessageConverter")
+	//@Bean("jackson2HttpMessageConverter")
 	@Order(Ordered.LOWEST_PRECEDENCE - 10000)
 	public JacksonJsonHttpMessageConverter jacksonJsonHttpMessageConverter() {
 		// 时区
@@ -74,12 +72,12 @@ public class HttpMessageConverterAutoConfig {
 		simpleModule.addSerializer(Instant.class, new CustomInstantSerializer(InstantSerializer.INSTANCE, dateTimeFormatter, false,false));
 		simpleModule.addDeserializer(Instant.class, new CustomInstantDeserializer(InstantDeserializer.INSTANT, dateTimeFormatter));
 		JsonMapper jsonMapper = JsonMapper.builder()
+			.findAndAddModules()
 			// 反序列化时，属性不存在的兼容处理
 			.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 			.defaultDateFormat(simpleDateFormat)
 			.defaultTimeZone(timeZone)
 			.addModule(simpleModule)
-			.addModule(new JavaTimeModule())
 			.build();
 		log.info("{} => jackson配置加载完毕", Thread.currentThread().getName());
 		JacksonJsonHttpMessageConverter jacksonJsonHttpMessageConverter = new JacksonJsonHttpMessageConverter(jsonMapper);

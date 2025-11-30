@@ -17,7 +17,7 @@
 
 package org.laokou.common.core.config;
 
-import tools.jackson.datatype.jsr310.deser.InstantDeserializer;
+import tools.jackson.databind.ext.javatime.deser.InstantDeserializer;
 
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;

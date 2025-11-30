@@ -47,6 +47,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.test.context.TestConstructor;
 import org.springframework.util.Assert;
@@ -92,11 +93,13 @@ class OAuth2ApiTest {
 
 	private final RedisUtils redisUtils;
 
-	private final OAuth2AuthorizationService oAuth2AuthorizationService;
+	private final OAuth2AuthorizationService authorizationService;
 
 	private final ServerProperties serverProperties;
 
 	private final RestClient restClient;
+
+	private final JwtDecoder jwtDecoder;
 
 	private final PasswordEncoder passwordEncoder;
 
@@ -179,7 +182,8 @@ class OAuth2ApiTest {
 		log.info("刷新token：{}", token);
 		log.info("---------- 模拟认证开始 ----------");
 		Assertions.assertThat(token).isNotBlank();
-		OAuth2OpaqueTokenIntrospector introspector = new OAuth2OpaqueTokenIntrospector(oAuth2AuthorizationService);
+		OAuth2OpaqueTokenIntrospector introspector = new OAuth2OpaqueTokenIntrospector(authorizationService, jwtDecoder,
+				redisUtils);
 		log.info("认证数据：{}", JacksonUtils.toJsonStr(introspector.introspect(token)));
 		log.info("---------- 模拟认证结束 ----------");
 		log.info("---------- 用户名密码认证模式结束 ----------");

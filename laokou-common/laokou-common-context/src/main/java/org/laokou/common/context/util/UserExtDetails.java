@@ -131,6 +131,19 @@ public class UserExtDetails implements UserDetails, OAuth2AuthenticatedPrincipal
 		this.permissions = Collections.emptySet();
 	}
 
+	public UserExtDetails(Long id, Long tenantId) {
+		this.id = id;
+		this.username = StringConstants.EMPTY;
+		this.avatar = StringConstants.EMPTY;
+		this.superAdmin = false;
+		this.status = 0;
+		this.mail = StringConstants.EMPTY;
+		this.mobile = StringConstants.EMPTY;
+		this.password = StringConstants.EMPTY;
+		this.tenantId = tenantId;
+		this.permissions = Collections.emptySet();
+	}
+
 	public UserExtDetails(@NonNull User user) {
 		this.id = user.id();
 		this.username = getDecryptUsername(user.username());

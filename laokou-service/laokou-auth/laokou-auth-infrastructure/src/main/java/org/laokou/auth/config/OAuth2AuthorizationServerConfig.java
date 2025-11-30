@@ -92,8 +92,6 @@ class OAuth2AuthorizationServerConfig {
 	static {
 		ForyFactory.INSTANCE.register(org.laokou.auth.dto.domainevent.LoginEvent.class);
 		ForyFactory.INSTANCE.register(org.laokou.auth.dto.domainevent.SendCaptchaEvent.class);
-		ForyFactory.INSTANCE.register(java.net.URL.class);
-		ForyFactory.INSTANCE.register(org.springframework.security.core.authority.SimpleGrantedAuthority.class);
 	}
 
 	// @formatter:on
@@ -251,6 +249,7 @@ class OAuth2AuthorizationServerConfig {
 				&& context.getPrincipal().getPrincipal() instanceof User user) {
 				JwtClaimsSet.Builder claims = context.getClaims();
 				claims.claim("id", user.id().toString());
+				claims.claim("tenant_id", user.tenantId().toString());
 			}
 		};
 	}

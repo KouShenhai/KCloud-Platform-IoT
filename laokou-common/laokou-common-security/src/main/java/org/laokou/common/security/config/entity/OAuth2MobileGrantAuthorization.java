@@ -35,7 +35,6 @@ package org.laokou.common.security.config.entity;
 
 import lombok.Getter;
 
-import java.security.Principal;
 import java.util.Set;
 
 /**
@@ -45,12 +44,9 @@ import java.util.Set;
 @Getter
 public final class OAuth2MobileGrantAuthorization extends OAuth2AuthorizationGrantAuthorization {
 
-	private final Principal principal;
-
 	public OAuth2MobileGrantAuthorization(String id, String registeredClientId, String principalName,
-			Set<String> authorizedScopes, AccessToken accessToken, RefreshToken refreshToken, Principal principal) {
+			Set<String> authorizedScopes, AccessToken accessToken, RefreshToken refreshToken) {
 		super(id, registeredClientId, principalName, authorizedScopes, accessToken, refreshToken);
-		this.principal = principal;
 	}
 
 }

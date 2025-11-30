@@ -44,13 +44,16 @@ import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 
+import java.io.IOException;
 import java.security.KeyPair;
-import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
-import java.util.UUID;
 
 /**
  * @author laokou
@@ -60,11 +63,7 @@ import java.util.UUID;
 public class OAuth2AuthorizationConfig {
 
 	static {
-		ForyFactory.INSTANCE.register(org.laokou.common.context.util.UserExtDetails.class);
-		ForyFactory.INSTANCE
-			.register(org.springframework.security.authentication.UsernamePasswordAuthenticationToken.class);
-		ForyFactory.INSTANCE.register(
-				org.laokou.common.security.config.entity.OAuth2AuthorizationGrantAuthorization.ClaimsHolder.class);
+		ForyFactory.INSTANCE.register(org.laokou.common.context.util.User.class);
 	}
 
 	/**
@@ -104,7 +103,8 @@ public class OAuth2AuthorizationConfig {
 	 * @return jwk来源
 	 */
 	@Bean
-	JWKSource<SecurityContext> jwkSource() throws NoSuchAlgorithmException {
+	JWKSource<SecurityContext> jwkSource()
+			throws NoSuchAlgorithmException, IOException, InvalidKeySpecException, NoSuchProviderException {
 		RSAKey rsaKey = getRsaKey();
 		JWKSet jwkSet = new JWKSet(rsaKey);
 		return (jwkSelector, _) -> jwkSelector.select(jwkSet);
@@ -134,21 +134,23 @@ public class OAuth2AuthorizationConfig {
 	 * 获取RSA加密Key.
 	 * @return RSA加密Key
 	 */
-	private RSAKey getRsaKey() throws NoSuchAlgorithmException {
-		KeyPair keyPair = generateRsaKey();
+	private RSAKey getRsaKey()
+			throws NoSuchAlgorithmException, IOException, InvalidKeySpecException, NoSuchProviderException {
+		KeyPair keyPair = getKeyPair();
 		RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
 		RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
-		return (new RSAKey.Builder(publicKey)).privateKey(privateKey).keyID(UUID.randomUUID().toString()).build();
+		return new RSAKey.Builder(publicKey).privateKey(privateKey).keyID(RSAUtils.getKey("key.pem")).build();
 	}
 
 	/**
 	 * 生成RSA加密Key.
 	 * @return 生成结果
 	 */
-	private KeyPair generateRsaKey() throws NoSuchAlgorithmException {
-		KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(RSAUtils.RSA);
-		keyPairGenerator.initialize(2048);
-		return keyPairGenerator.generateKeyPair();
+	private KeyPair getKeyPair()
+			throws NoSuchAlgorithmException, NoSuchProviderException, IOException, InvalidKeySpecException {
+		PublicKey publicKey = RSAUtils.getRSAPublicKey(RSAUtils.getKey("public.pem"), RSAUtils.getKeyFactory());
+		PrivateKey privateKey = RSAUtils.getRSAPrivateKey(RSAUtils.getKey("private.pem"), RSAUtils.getKeyFactory());
+		return new KeyPair(publicKey, privateKey);
 	}
 
 }

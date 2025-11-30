@@ -71,4 +71,11 @@ public final class RedisKeyUtils {
 		return "route:definition";
 	}
 
+	/**
+	 * 用户详情Key.
+	 */
+	public static String getUserDetailHashKey() {
+		return "user:detail";
+	}
+
 }

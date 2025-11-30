@@ -18,7 +18,7 @@
 package org.laokou.common.core.config;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import tools.jackson.datatype.jsr310.ser.InstantSerializer;
+import tools.jackson.databind.ext.javatime.ser.InstantSerializer;
 
 import java.time.format.DateTimeFormatter;
 
