@@ -21,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.ResourceExtUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -28,10 +29,10 @@ import javax.crypto.NoSuchPaddingException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
-import java.security.Key;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
+import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
@@ -46,28 +47,14 @@ import java.util.Base64;
 @Slf4j
 public final class RSAUtils {
 
-	/**
-	 * RSA算法.
-	 */
-	public static final String RSA = "RSA";
-
-	/**
-	 * RSA签名提供者.
-	 */
-	private static final String SUN_RSA_SIGN_PROVIDER = "SunRsaSign";
-
 	private static final String PUBLIC_KEY;
 
 	private static final String PRIVATE_KEY;
 
 	static {
 		try {
-			PUBLIC_KEY = ResourceExtUtils.getResource("/conf/publicKey.scr")
-				.getContentAsString(StandardCharsets.UTF_8)
-				.trim();
-			PRIVATE_KEY = ResourceExtUtils.getResource("/conf/privateKey.scr")
-				.getContentAsString(StandardCharsets.UTF_8)
-				.trim();
+			PUBLIC_KEY = getKey("/conf/publicKey.scr");
+			PRIVATE_KEY = getKey("/conf/privateKey.scr");
 		}
 		catch (IOException e) {
 			log.error("读取私钥或密钥失败，错误信息：{}", e.getMessage(), e);
@@ -76,20 +63,37 @@ public final class RSAUtils {
 	}
 
 	private RSAUtils() {
+
+	}
+
+	public static String getKey(String path) throws IOException {
+		return ResourceExtUtils.getResource(path).getContentAsString(StandardCharsets.UTF_8).trim();
+	}
+
+	public static PublicKey getRSAPublicKey(String publicKey, KeyFactory keyFactory) throws InvalidKeySpecException {
+		X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(getPublicKey(publicKey));
+		return keyFactory.generatePublic(x509KeySpec);
+	}
+
+	public static PrivateKey getRSAPrivateKey(String privateKey, KeyFactory keyFactory) throws InvalidKeySpecException {
+		PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(getPrivateKey(privateKey));
+		return keyFactory.generatePrivate(pkcs8KeySpec);
+	}
+
+	public static KeyFactory getKeyFactory() throws NoSuchAlgorithmException, NoSuchProviderException {
+		return KeyFactory.getInstance("RSA", "SunRsaSign");
 	}
 
 	/**
 	 * 根据私钥解密.
 	 * @param str 字符串
-	 * @param key 私钥
+	 * @param privateKey 私钥
 	 * @return 解密后的字符串
 	 */
-	public static String decryptByPrivateKey(String str, String key) {
+	public static String decryptByPrivateKey(String str, String privateKey) {
 		if (StringExtUtils.isNotEmpty(str)) {
 			try {
-				byte[] privateKey = StringExtUtils.isNotEmpty(key) ? decryptBase64(key) : decryptBase64(PRIVATE_KEY);
-				byte[] bytes = decryptByPrivateKey(decryptBase64(str), privateKey);
-				return new String(bytes, StandardCharsets.UTF_8);
+				return new String(decryptByRSAPrivateKey(str, privateKey), StandardCharsets.UTF_8);
 			}
 			catch (Exception e) {
 				log.error("RSA解密失败【私钥】，错误信息：{}", e.getMessage(), e);
@@ -111,15 +115,13 @@ public final class RSAUtils {
 	/**
 	 * 根据公钥加密.
 	 * @param str 字符串
-	 * @param key 公钥
+	 * @param publicKey 公钥
 	 * @return 加密后的字符串
 	 */
-	public static String encryptByPublicKey(String str, String key) {
+	public static String encryptByPublicKey(String str, String publicKey) {
 		if (StringExtUtils.isNotEmpty(str)) {
 			try {
-				byte[] publicKey = StringExtUtils.isNotEmpty(key) ? decryptBase64(key) : decryptBase64(PUBLIC_KEY);
-				byte[] bytes = encryptByPublicKey(str.getBytes(StandardCharsets.UTF_8), publicKey);
-				return encryptBase64(bytes);
+				return encryptBase64(encryptByRSAPublicKey(str, publicKey));
 			}
 			catch (Exception e) {
 				log.error("RSA加密失败【公钥】，错误信息：{}", e.getMessage(), e);
@@ -166,36 +168,42 @@ public final class RSAUtils {
 
 	/**
 	 * 根据公钥加密.
-	 * @param strBytes 字符串
-	 * @param keyBytes 公钥
+	 * @param str 字符串
+	 * @param key 公钥
 	 * @return 加密后的字符串
 	 */
-	private static byte[] encryptByPublicKey(byte[] strBytes, byte[] keyBytes)
+	private static byte[] encryptByRSAPublicKey(String str, String key)
 			throws InvalidKeySpecException, NoSuchPaddingException, NoSuchAlgorithmException, NoSuchProviderException,
 			InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
-		X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(keyBytes);
-		KeyFactory keyFactory = KeyFactory.getInstance(RSA, SUN_RSA_SIGN_PROVIDER);
-		PublicKey publicKey = keyFactory.generatePublic(x509KeySpec);
+		KeyFactory keyFactory = getKeyFactory();
+		PublicKey publicKey = getRSAPublicKey(key, keyFactory);
 		Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
 		cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-		return cipher.doFinal(strBytes);
+		return cipher.doFinal(str.getBytes(StandardCharsets.UTF_8));
 	}
 
 	/**
 	 * 根据私钥解密.
-	 * @param strBytes 字符串
-	 * @param keyBytes 私钥
+	 * @param str 字符串
+	 * @param key 私钥
 	 * @return 解密后的字符串
 	 */
-	private static byte[] decryptByPrivateKey(byte[] strBytes, byte[] keyBytes)
+	private static byte[] decryptByRSAPrivateKey(String str, String key)
 			throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException, NoSuchPaddingException,
 			IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
-		PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
-		KeyFactory keyFactory = KeyFactory.getInstance(RSA, SUN_RSA_SIGN_PROVIDER);
-		Key privateKey = keyFactory.generatePrivate(pkcs8KeySpec);
+		KeyFactory keyFactory = getKeyFactory();
+		PrivateKey privateKey = getRSAPrivateKey(key, keyFactory);
 		Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
 		cipher.init(Cipher.DECRYPT_MODE, privateKey);
-		return cipher.doFinal(strBytes);
+		return cipher.doFinal(decryptBase64(str));
+	}
+
+	private static byte[] getPublicKey(String publicKey) {
+		return StringExtUtils.isNotEmpty(publicKey) ? decryptBase64(publicKey) : decryptBase64(PUBLIC_KEY);
+	}
+
+	private static byte[] getPrivateKey(String privateKey) {
+		return StringExtUtils.isNotEmpty(privateKey) ? decryptBase64(privateKey) : decryptBase64(PRIVATE_KEY);
 	}
 
 }

@@ -21,7 +21,6 @@ import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
-import org.laokou.common.crypto.util.RSAUtils;
 import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.security.config.convertor.BytesToClaimsHolderConverter;
 import org.laokou.common.security.config.convertor.BytesToOAuth2AuthorizationRequestConverter;
@@ -45,7 +44,6 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 
 import java.security.KeyPair;
-import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
@@ -60,11 +58,7 @@ import java.util.UUID;
 public class OAuth2AuthorizationConfig {
 
 	static {
-		ForyFactory.INSTANCE.register(org.laokou.common.context.util.UserExtDetails.class);
-		ForyFactory.INSTANCE
-			.register(org.springframework.security.authentication.UsernamePasswordAuthenticationToken.class);
-		ForyFactory.INSTANCE.register(
-				org.laokou.common.security.config.entity.OAuth2AuthorizationGrantAuthorization.ClaimsHolder.class);
+		ForyFactory.INSTANCE.register(org.laokou.common.context.util.User.class);
 	}
 
 	/**
@@ -135,20 +129,10 @@ public class OAuth2AuthorizationConfig {
 	 * @return RSA加密Key
 	 */
 	private RSAKey getRsaKey() throws NoSuchAlgorithmException {
-		KeyPair keyPair = generateRsaKey();
+		KeyPair keyPair = null;
 		RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
 		RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
 		return (new RSAKey.Builder(publicKey)).privateKey(privateKey).keyID(UUID.randomUUID().toString()).build();
-	}
-
-	/**
-	 * 生成RSA加密Key.
-	 * @return 生成结果
-	 */
-	private KeyPair generateRsaKey() throws NoSuchAlgorithmException {
-		KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(RSAUtils.RSA);
-		keyPairGenerator.initialize(2048);
-		return keyPairGenerator.generateKeyPair();
 	}
 
 }

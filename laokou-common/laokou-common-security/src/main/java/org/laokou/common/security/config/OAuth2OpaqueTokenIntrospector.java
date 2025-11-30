@@ -21,50 +21,34 @@ import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.laokou.common.context.util.UserExtDetails;
 import org.laokou.common.i18n.common.exception.GlobalException;
-import org.laokou.common.i18n.common.exception.StatusCode;
-import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
-import org.springframework.security.oauth2.core.OAuth2RefreshToken;
-import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
-import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
-
-import java.security.Principal;
 
 /**
  * @author laokou
  */
 @Slf4j
-public record OAuth2OpaqueTokenIntrospector(
-		OAuth2AuthorizationService oAuth2AuthorizationService) implements OpaqueTokenIntrospector {
+public record OAuth2OpaqueTokenIntrospector(OAuth2AuthorizationService authorizationService,
+		JwtDecoder jwtDecoder) implements OpaqueTokenIntrospector {
 
 	// @formatter:off
 	@Override
 	public OAuth2AuthenticatedPrincipal introspect(String token) {
-		// new DefaultOAuth2AuthenticatedPrincipal(claims, Collections.emptyList())
-		// Jwt jwt = this.jwtDecoder.decode(token);
-		// 低命中率且数据庞大放redis稳妥，分布式集群需要通过redis实现数据共享
-		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
-		if (ObjectUtils.isNull(authorization)) {
-			throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED);
-		}
-		OAuth2Authorization.Token<OAuth2AccessToken> accessToken = authorization.getAccessToken();
-		OAuth2Authorization.Token<OAuth2RefreshToken> refreshToken = authorization.getRefreshToken();
-		if (ObjectUtils.isNull(accessToken) || ObjectUtils.isNull(refreshToken)) {
-			throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED);
-		}
-		if (accessToken.isActive()
-			&& authorization.getAttribute(Principal.class.getName()) instanceof UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
-			&& usernamePasswordAuthenticationToken.getPrincipal() instanceof UserExtDetails userExtDetails) {
-			// 解密
-			return decryptInfo(userExtDetails);
-		}
-		oAuth2AuthorizationService.remove(authorization);
-		throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED);
+		Jwt jwt = jwtDecoder.decode(token);
+		// Instant expiresAt = jwt.getExpiresAt();
+		String id = jwt.getClaimAsString("id");
+		String tenantId = jwt.getClaimAsString("tenant_id");
+		return new UserExtDetails(Long.valueOf(id), Long.valueOf(tenantId));
+//		OAuth2Authorization authorization = authorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
+//		if (ObjectUtils.isNull(authorization)) {
+//			throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED);
+//		}
+//		authorizationService.remove(authorization);
+//		throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED);
 	}
 	// @formatter:on
 
