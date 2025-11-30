@@ -25,7 +25,6 @@ import tools.jackson.databind.SerializationFeature;
 import tools.jackson.databind.json.JsonMapper;
 import tools.jackson.databind.type.CollectionType;
 import tools.jackson.databind.type.MapType;
-import tools.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.io.File;
 import java.io.InputStream;
@@ -55,7 +54,7 @@ public final class JacksonUtils {
 
 	private static ObjectMapper getMapper() {
 		return JsonMapper.builder()
-			.addModule(new JavaTimeModule())
+			.findAndAddModules()
 			// 没有的属性不报错
 			.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 			.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)

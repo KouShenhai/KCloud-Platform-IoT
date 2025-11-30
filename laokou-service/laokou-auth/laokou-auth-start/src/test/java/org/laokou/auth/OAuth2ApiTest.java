@@ -182,8 +182,8 @@ class OAuth2ApiTest {
 		log.info("刷新token：{}", token);
 		log.info("---------- 模拟认证开始 ----------");
 		Assertions.assertThat(token).isNotBlank();
-		OAuth2OpaqueTokenIntrospector introspector = new OAuth2OpaqueTokenIntrospector(authorizationService,
-				jwtDecoder);
+		OAuth2OpaqueTokenIntrospector introspector = new OAuth2OpaqueTokenIntrospector(authorizationService, jwtDecoder,
+				redisUtils);
 		log.info("认证数据：{}", JacksonUtils.toJsonStr(introspector.introspect(token)));
 		log.info("---------- 模拟认证结束 ----------");
 		log.info("---------- 用户名密码认证模式结束 ----------");

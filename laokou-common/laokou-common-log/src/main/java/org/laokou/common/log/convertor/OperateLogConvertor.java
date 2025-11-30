@@ -17,7 +17,6 @@
 
 package org.laokou.common.log.convertor;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.laokou.common.context.util.UserUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.common.log.factory.DomainFactory;
@@ -44,7 +43,7 @@ public final class OperateLogConvertor {
 				operateLogA.getCreateTime(), UserUtils.getTenantId(), UserUtils.getUserId());
 	}
 
-	public static OperateLogDO toDataObject(OperateEvent operateEvent) throws JsonProcessingException {
+	public static OperateLogDO toDataObject(OperateEvent operateEvent) {
 		OperateLogDO operateLogDO = new OperateLogDO();
 		operateLogDO.setName(operateEvent.getName());
 		operateLogDO.setModuleName(operateEvent.getModuleName());

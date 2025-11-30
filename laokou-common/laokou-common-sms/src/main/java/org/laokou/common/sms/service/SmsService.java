@@ -17,7 +17,6 @@
 
 package org.laokou.common.sms.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.laokou.common.sms.entity.SmsResult;
 
 /**
@@ -25,6 +24,6 @@ import org.laokou.common.sms.entity.SmsResult;
  */
 public interface SmsService {
 
-	SmsResult send(String mobile) throws JsonProcessingException;
+	SmsResult send(String mobile);
 
 }
