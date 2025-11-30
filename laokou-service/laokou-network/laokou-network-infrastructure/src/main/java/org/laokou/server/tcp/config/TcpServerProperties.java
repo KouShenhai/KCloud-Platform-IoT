@@ -15,16 +15,35 @@
  *
  */
 
-package org.laokou.mqtt.server.config;
+package org.laokou.server.tcp.config;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import io.vertx.core.http.ClientAuth;
+import lombok.Data;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author laokou
  */
-public final class VertxServerManager {
+@Data
+public class TcpServerProperties {
 
-	private final Map<Long, VertxServer> vertxServerMap = new ConcurrentHashMap<>(8196);
+	private String host = "0.0.0.0";
+
+	private Integer port = 10100;
+
+	private int acceptBacklog = -1;
+
+	private ClientAuth clientAuth = ClientAuth.NONE;
+
+	private boolean sni = false;
+
+	private boolean useProxyProtocol = false;
+
+	private long proxyProtocolTimeout = 30L;
+
+	private TimeUnit proxyProtocolTimeoutUnit = TimeUnit.SECONDS;
+
+	private boolean registerWriteHandler = false;
 
 }

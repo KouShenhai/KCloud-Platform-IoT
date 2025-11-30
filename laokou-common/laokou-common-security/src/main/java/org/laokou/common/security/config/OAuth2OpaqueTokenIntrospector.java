@@ -18,11 +18,9 @@
 package org.laokou.common.security.config;
 
 import lombok.extern.slf4j.Slf4j;
-import org.jspecify.annotations.NonNull;
 import org.laokou.common.context.util.User;
 import org.laokou.common.context.util.UserExtDetails;
 import org.laokou.common.core.util.RequestUtils;
-import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -61,9 +59,8 @@ public record OAuth2OpaqueTokenIntrospector(OAuth2AuthorizationService authoriza
 		}
 		String jwtType = RequestUtils.getParamValue(RequestUtils.getHttpServletRequest(), "jwt_type");
 		String id = jwt.getClaimAsString("id");
-		String tenantId = jwt.getClaimAsString("tenant_id");
 		if (ObjectUtils.equals(jwtType, "part")) {
-			return new UserExtDetails(Long.valueOf(id), Long.valueOf(tenantId));
+			return new UserExtDetails(Long.valueOf(id), Long.valueOf(jwt.getClaimAsString("tenant_id")));
 		}
 		if (redisUtils.hGet(RedisKeyUtils.getUserDetailHashKey(), id) instanceof User user) {
 			return new UserExtDetails(user);
@@ -71,21 +68,5 @@ public record OAuth2OpaqueTokenIntrospector(OAuth2AuthorizationService authoriza
 		throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED);
 	}
 	// @formatter:on
-
-	/**
-	 * 解密字段.
-	 * @param userExtDetails 用户信息
-	 * @return UserDetail
-	 */
-	public static UserExtDetails decryptInfo(@NonNull UserExtDetails userExtDetails) {
-		try {
-			// 解密
-			return userExtDetails.getDecryptInfo();
-		}
-		catch (GlobalException e) {
-			throw OAuth2ExceptionHandler.getOAuth2AuthenticationException(e.getCode(), e.getMsg(),
-					OAuth2ExceptionHandler.ERROR_URL);
-		}
-	}
 
 }

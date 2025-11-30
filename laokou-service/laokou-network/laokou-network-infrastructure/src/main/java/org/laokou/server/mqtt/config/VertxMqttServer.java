@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.mqtt.server.config;
+package org.laokou.server.mqtt.config;
 
 import io.netty.handler.codec.mqtt.MqttConnectReturnCode;
 import io.netty.handler.codec.mqtt.MqttQoS;
@@ -28,6 +28,8 @@ import io.vertx.mqtt.MqttEndpoint;
 import io.vertx.mqtt.MqttServer;
 import io.vertx.mqtt.MqttServerOptions;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
+import org.laokou.server.VertxServer;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.network.mqtt.client.handler.MqttMessage;
 import org.laokou.common.network.mqtt.client.handler.MqttMessageHandler;
@@ -61,18 +63,8 @@ final class VertxMqttServer extends AbstractVerticle implements VertxServer {
 			final List<MqttMessageHandler> mqttMessageHandlers) {
 		super.vertx = vertx;
 		this.mqttServerProperties = mqttServerProperties;
-		this.mqttServerOptions = getMqttServerOption(mqttServerProperties);
+		this.mqttServerOptions = getMqttServerOptions(mqttServerProperties);
 		this.mqttMessageHandlers = mqttMessageHandlers;
-	}
-
-	@Override
-	public void start() {
-		mqttServerFuture = start0();
-	}
-
-	@Override
-	public void stop() {
-		mqttServerFuture = stop0();
 	}
 
 	@Override
@@ -83,10 +75,23 @@ final class VertxMqttServer extends AbstractVerticle implements VertxServer {
 
 	@Override
 	public void undeploy() {
+		// 卸载服务
 		deploymentIdFuture = undeploy0();
 	}
 
-	public void publish(PublishDTO dto) {
+	@Override
+	public void start() {
+		// 启动服务
+		mqttServerFuture = start0();
+	}
+
+	@Override
+	public void stop() {
+		// 停止服务
+		mqttServerFuture = stop0();
+	}
+
+	public void publish(@NonNull PublishDTO dto) {
 		String clientId = dto.clientId();
 		String topic = dto.topic();
 		Buffer payload = dto.payload();
@@ -99,8 +104,31 @@ final class VertxMqttServer extends AbstractVerticle implements VertxServer {
 		throw new UnsupportedOperationException();
 	}
 
+	private Future<String> deploy0() {
+		return vertx.deployVerticle(this).onComplete(res -> {
+			if (res.succeeded()) {
+				log.info("【Vertx-MQTT-Server】 => MQTT服务部署成功，端口：{}", mqttServerOptions.getPort());
+			}
+			else {
+				Throwable ex = res.cause();
+				log.error("【Vertx-MQTT-Server】 => MQTT服务部署失败，错误信息：{}", ex.getMessage(), ex);
+			}
+		});
+	}
+
+	private Future<String> undeploy0() {
+		return deploymentIdFuture.onSuccess(deploymentId -> vertx.undeploy(deploymentId)).onComplete(res -> {
+			if (res.succeeded()) {
+				log.info("【Vertx-MQTT-Server】 => MQTT服务卸载成功，端口：{}", mqttServerOptions.getPort());
+			}
+			else {
+				log.error("【Vertx-MQTT-Server】 => MQTT服务卸载失败，错误信息：{}", res.cause().getMessage(), res.cause());
+			}
+		});
+	}
+
 	private Future<MqttServer> start0() {
-		return MqttServer.create(vertx, mqttServerOptions)
+		return MqttServer.create(super.vertx, mqttServerOptions)
 		// @formatter:off
 			.exceptionHandler(
 				error -> log.error("【Vertx-MQTT-Server】 => MQTT服务启动失败，错误信息：{}", error.getMessage(), error))
@@ -175,29 +203,6 @@ final class VertxMqttServer extends AbstractVerticle implements VertxServer {
 		});
 	}
 
-	private Future<String> deploy0() {
-		return vertx.deployVerticle(this).onComplete(res -> {
-			if (res.succeeded()) {
-				log.info("【Vertx-MQTT-Server】 => MQTT服务部署成功，端口：{}", mqttServerOptions.getPort());
-			}
-			else {
-				Throwable ex = res.cause();
-				log.error("【Vertx-MQTT-Server】 => MQTT服务部署失败，错误信息：{}", ex.getMessage(), ex);
-			}
-		});
-	}
-
-	private Future<String> undeploy0() {
-		return deploymentIdFuture.onSuccess(deploymentId -> vertx.undeploy(deploymentId)).onComplete(res -> {
-			if (res.succeeded()) {
-				log.info("【Vertx-MQTT-Server】 => MQTT服务卸载成功");
-			}
-			else {
-				log.error("【Vertx-MQTT-Server】 => MQTT服务卸载失败，错误信息：{}", res.cause().getMessage(), res.cause());
-			}
-		});
-	}
-
 	private MqttEndpoint authHandler(MqttEndpoint endpoint) {
 		MqttAuth mqttAuth = endpoint.auth();
 		if (mqttServerProperties.isAuth()) {
@@ -217,7 +222,7 @@ final class VertxMqttServer extends AbstractVerticle implements VertxServer {
 	}
 
 	// @formatter:off
-	private MqttServerOptions getMqttServerOption(MqttServerProperties mqttServerProperties) {
+	private MqttServerOptions getMqttServerOptions(MqttServerProperties mqttServerProperties) {
 		MqttServerOptions mqttServerOptions = new MqttServerOptions();
 		mqttServerOptions.setHost(mqttServerProperties.getHost());
 		mqttServerOptions.setPort(mqttServerProperties.getPort());

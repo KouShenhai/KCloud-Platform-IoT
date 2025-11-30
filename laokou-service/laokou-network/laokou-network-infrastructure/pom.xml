@@ -18,6 +18,10 @@
       <artifactId>vertx-mqtt</artifactId>
     </dependency>
     <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-web</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-core</artifactId>
       <version>${project.version}</version>

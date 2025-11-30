@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.mqtt.server.config;
+package org.laokou.server.mqtt.config;
 
 import lombok.Data;
 

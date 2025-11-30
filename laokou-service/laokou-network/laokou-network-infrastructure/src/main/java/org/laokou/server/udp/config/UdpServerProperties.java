@@ -15,15 +15,26 @@
  *
  */
 
-package org.laokou.mqtt.server.config;
+package org.laokou.server.udp.config;
+
+import lombok.Data;
 
 /**
  * @author laokou
  */
-public interface VertxServer {
+@Data
+public class UdpServerProperties {
 
-	void deploy();
+	private String host = "0.0.0.0";
 
-	void undeploy();
+	private Integer port = 100200;
+
+	private boolean broadcast = false;
+
+	private boolean loopbackModeDisabled = true;
+
+	private String multicastNetworkInterface = null;
+
+	private boolean ipV6 = false;
 
 }
