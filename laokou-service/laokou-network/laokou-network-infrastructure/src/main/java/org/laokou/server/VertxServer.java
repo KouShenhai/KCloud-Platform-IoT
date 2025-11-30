@@ -15,18 +15,15 @@
  *
  */
 
-package org.laokou.common.security.config.convertor;
-
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-
-import java.util.HashSet;
+package org.laokou.server;
 
 /**
  * @author laokou
  */
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY)
-@JsonDeserialize(as = HashSet.class)
-interface HashSetMixin {
+public interface VertxServer {
+
+	void deploy();
+
+	void undeploy();
 
 }

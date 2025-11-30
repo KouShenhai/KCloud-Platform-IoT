@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.mqtt.server.handler;
+package org.laokou.server.mqtt.handler;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.pulsar.client.api.MessageId;
