@@ -19,7 +19,6 @@ package org.laokou.server.mqtt.config;
 
 import io.netty.handler.codec.mqtt.MqttConnectReturnCode;
 import io.netty.handler.codec.mqtt.MqttQoS;
-import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
 import io.vertx.core.Vertx;
 import io.vertx.core.buffer.Buffer;
@@ -29,11 +28,11 @@ import io.vertx.mqtt.MqttServer;
 import io.vertx.mqtt.MqttServerOptions;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
-import org.laokou.server.VertxServer;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.network.mqtt.client.handler.MqttMessage;
 import org.laokou.common.network.mqtt.client.handler.MqttMessageHandler;
 import org.laokou.common.network.mqtt.client.util.VertxMqttUtils;
+import org.laokou.server.AbstractVertxServer;
 
 import java.io.Serializable;
 import java.util.List;
@@ -45,7 +44,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author laokou
  */
 @Slf4j
-final class VertxMqttServer extends AbstractVerticle implements VertxServer {
+final class VertxMqttServer extends AbstractVertxServer<MqttServer> {
 
 	private final Map<String, MqttEndpoint> endpoints = new ConcurrentHashMap<>(100000);
 
@@ -55,40 +54,12 @@ final class VertxMqttServer extends AbstractVerticle implements VertxServer {
 
 	private final MqttServerOptions mqttServerOptions;
 
-	private Future<MqttServer> mqttServerFuture;
-
-	private Future<String> deploymentIdFuture;
-
 	VertxMqttServer(final Vertx vertx, final MqttServerProperties mqttServerProperties,
 			final List<MqttMessageHandler> mqttMessageHandlers) {
-		super.vertx = vertx;
+		super(vertx);
 		this.mqttServerProperties = mqttServerProperties;
 		this.mqttServerOptions = getMqttServerOptions(mqttServerProperties);
 		this.mqttMessageHandlers = mqttMessageHandlers;
-	}
-
-	@Override
-	public void deploy() {
-		// 部署服务
-		deploymentIdFuture = deploy0();
-	}
-
-	@Override
-	public void undeploy() {
-		// 卸载服务
-		deploymentIdFuture = undeploy0();
-	}
-
-	@Override
-	public void start() {
-		// 启动服务
-		mqttServerFuture = start0();
-	}
-
-	@Override
-	public void stop() {
-		// 停止服务
-		mqttServerFuture = stop0();
 	}
 
 	public void publish(@NonNull PublishDTO dto) {
@@ -104,7 +75,8 @@ final class VertxMqttServer extends AbstractVerticle implements VertxServer {
 		throw new UnsupportedOperationException();
 	}
 
-	private Future<String> deploy0() {
+	@Override
+	public Future<String> deploy0() {
 		return vertx.deployVerticle(this).onComplete(res -> {
 			if (res.succeeded()) {
 				log.info("【Vertx-MQTT-Server】 => MQTT服务部署成功，端口：{}", mqttServerOptions.getPort());
@@ -116,7 +88,8 @@ final class VertxMqttServer extends AbstractVerticle implements VertxServer {
 		});
 	}
 
-	private Future<String> undeploy0() {
+	@Override
+	public Future<String> undeploy0() {
 		return deploymentIdFuture.onSuccess(deploymentId -> vertx.undeploy(deploymentId)).onComplete(res -> {
 			if (res.succeeded()) {
 				log.info("【Vertx-MQTT-Server】 => MQTT服务卸载成功，端口：{}", mqttServerOptions.getPort());
@@ -127,7 +100,8 @@ final class VertxMqttServer extends AbstractVerticle implements VertxServer {
 		});
 	}
 
-	private Future<MqttServer> start0() {
+	@Override
+	public Future<MqttServer> start0() {
 		return MqttServer.create(super.vertx, mqttServerOptions)
 		// @formatter:off
 			.exceptionHandler(
@@ -191,8 +165,9 @@ final class VertxMqttServer extends AbstractVerticle implements VertxServer {
 			});
 	}
 
-	private Future<MqttServer> stop0() {
-		return mqttServerFuture.onSuccess(MqttServer::close).onComplete(result -> {
+	@Override
+	public Future<MqttServer> stop0() {
+		return serverFuture.onSuccess(MqttServer::close).onComplete(result -> {
 			if (result.succeeded()) {
 				log.info("【Vertx-MQTT-Server】 => MQTT服务停止成功，端口：{}", mqttServerOptions.getPort());
 			}
