@@ -31,10 +31,7 @@ import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
-
-import java.util.stream.Collectors;
 
 /**
  * 认证授权处理器.
@@ -60,8 +57,7 @@ final class OAuth2AuthenticationProcessor {
 			// 登录成功，转换成用户对象【业务】
 			User user = UserConvertor.toUser(authA);
 			// 认证成功，转换成认证对象【系统】
-			return new UsernamePasswordAuthenticationToken(user, user.username(),
-					user.permissions().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toSet()));
+			return new UsernamePasswordAuthenticationToken(user, user.username(), user.getAuthorities());
 		}
 		catch (GlobalException e) {
 			// 记录日志【业务异常】
