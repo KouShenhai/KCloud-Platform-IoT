@@ -23,6 +23,7 @@ import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.UserE;
 import org.laokou.common.context.util.User;
 import org.laokou.common.context.util.UserExtDetails;
+import org.laokou.common.i18n.util.SpringContextUtils;
 
 /**
  * @author laokou
@@ -33,7 +34,7 @@ public final class UserConvertor {
 	}
 
 	public static UserExtDetails toUserDetails(User user) {
-		return new UserExtDetails(user);
+		return SpringContextUtils.getBeanProvider(UserExtDetails.class).toUserDetail(user);
 	}
 
 	public static User toUser(AuthA auth) {

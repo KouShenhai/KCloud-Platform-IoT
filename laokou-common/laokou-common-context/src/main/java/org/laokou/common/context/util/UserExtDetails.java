@@ -21,6 +21,7 @@ import lombok.Getter;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.NullMarked;
 import org.laokou.common.crypto.util.AESUtils;
+import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -41,7 +42,8 @@ import java.util.stream.Collectors;
 /**
  * @author laokou
  */
-public class UserExtDetails implements UserDetails, OAuth2AuthenticatedPrincipal, Serializable {
+@Entity
+public final class UserExtDetails implements UserDetails, OAuth2AuthenticatedPrincipal, Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 3319752558160144611L;
@@ -65,86 +67,66 @@ public class UserExtDetails implements UserDetails, OAuth2AuthenticatedPrincipal
 	 * 用户ID.
 	 */
 	@Getter
-	private final Long id;
+	private Long id;
 
 	/**
 	 * 用户名.
 	 */
 	@Getter
-	private final String username;
+	private String username;
 
 	/**
 	 * 头像.
 	 */
 	@Getter
-	private final String avatar;
+	private String avatar;
 
 	/**
 	 * 超级管理员标识.
 	 */
 	@Getter
-	private final Boolean superAdmin;
+	private Boolean superAdmin;
 
 	/**
 	 * 用户状态 0启用 1禁用.
 	 */
-	private final Integer status;
+	private Integer status;
 
 	/**
 	 * 邮箱.
 	 */
-	private final String mail;
+	private String mail;
 
 	/**
 	 * 手机号.
 	 */
-	private final String mobile;
+	private String mobile;
 
 	/**
 	 * 密码.
 	 */
 	@Getter
-	private final transient String password;
+	private transient String password;
 
 	/**
 	 * 租户ID.
 	 */
 	@Getter
-	private final Long tenantId;
+	private Long tenantId;
 
 	/**
 	 * 菜单权限标识集合.
 	 */
 	@Getter
-	private final Set<String> permissions;
+	private Set<String> permissions;
 
-	public UserExtDetails() {
-		this.id = 1L;
-		this.username = StringConstants.EMPTY;
-		this.avatar = StringConstants.EMPTY;
-		this.superAdmin = false;
-		this.status = 0;
-		this.mail = StringConstants.EMPTY;
-		this.mobile = StringConstants.EMPTY;
-		this.password = StringConstants.EMPTY;
-		this.tenantId = 0L;
-		this.permissions = Collections.emptySet();
-	}
-
-	public UserExtDetails(Long id, Long tenantId) {
+	public UserExtDetails toUserDetail(Long id, Long tenantId) {
 		this.id = id;
-		this.username = StringConstants.EMPTY;
-		this.avatar = StringConstants.EMPTY;
-		this.superAdmin = false;
-		this.status = 0;
-		this.mail = StringConstants.EMPTY;
-		this.mobile = StringConstants.EMPTY;
-		this.password = StringConstants.EMPTY;
 		this.tenantId = tenantId;
-		this.permissions = Collections.emptySet();
+		return this;
 	}
 
-	public UserExtDetails(@NonNull User user) {
+	public UserExtDetails toUserDetail(@NonNull User user) {
 		this.id = user.id();
 		this.username = getDecryptUsername(user.username());
 		this.avatar = user.avatar();
@@ -155,6 +137,7 @@ public class UserExtDetails implements UserDetails, OAuth2AuthenticatedPrincipal
 		this.password = StringConstants.EMPTY;
 		this.tenantId = user.tenantId();
 		this.permissions = user.permissions();
+		return this;
 	}
 
 	@Override

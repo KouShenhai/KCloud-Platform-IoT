@@ -18,7 +18,7 @@
 package org.laokou.admin.dept.factory;
 
 import org.laokou.admin.dept.model.DeptE;
-import org.laokou.common.core.util.SpringContextUtils;
+import org.laokou.common.i18n.util.SpringContextUtils;
 
 /**
  * @author laokou

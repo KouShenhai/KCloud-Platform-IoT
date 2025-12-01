@@ -18,7 +18,7 @@
 package org.laokou.admin.operateLog.factory;
 
 import org.laokou.admin.operateLog.model.OperateLogE;
-import org.laokou.common.core.util.SpringContextUtils;
+import org.laokou.common.i18n.util.SpringContextUtils;
 
 public final class OperateLogDomainFactory {
 

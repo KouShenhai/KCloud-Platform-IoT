@@ -17,7 +17,7 @@
 
 package org.laokou.iot.productCategory.factory;
 
-import org.laokou.common.core.util.SpringContextUtils;
+import org.laokou.common.i18n.util.SpringContextUtils;
 import org.laokou.iot.productCategory.model.ProductCategoryE;
 
 /**

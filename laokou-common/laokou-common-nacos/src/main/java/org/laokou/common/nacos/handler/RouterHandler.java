@@ -20,7 +20,7 @@ package org.laokou.common.nacos.handler;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.i18n.util.ResourceExtUtils;
-import org.laokou.common.core.util.SpringUtils;
+import org.laokou.common.i18n.util.SpringUtils;
 import org.laokou.common.core.util.TemplateUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
 import org.springframework.boot.context.event.ApplicationReadyEvent;

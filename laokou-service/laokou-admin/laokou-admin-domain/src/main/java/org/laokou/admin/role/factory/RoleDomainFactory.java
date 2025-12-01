@@ -18,7 +18,7 @@
 package org.laokou.admin.role.factory;
 
 import org.laokou.admin.role.model.RoleE;
-import org.laokou.common.core.util.SpringContextUtils;
+import org.laokou.common.i18n.util.SpringContextUtils;
 
 /**
  * @author laokou

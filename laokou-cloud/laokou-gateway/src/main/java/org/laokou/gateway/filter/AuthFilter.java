@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.util.MapUtils;
-import org.laokou.common.core.util.SpringUtils;
+import org.laokou.common.i18n.util.SpringUtils;
 import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.util.StringExtUtils;

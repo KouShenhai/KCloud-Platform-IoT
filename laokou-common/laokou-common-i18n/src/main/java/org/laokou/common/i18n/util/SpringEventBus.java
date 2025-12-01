@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.core.util;
+package org.laokou.common.i18n.util;
 
 import org.springframework.context.ApplicationEvent;
 
