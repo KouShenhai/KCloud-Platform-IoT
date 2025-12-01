@@ -17,7 +17,7 @@
 
 package org.laokou.common.i18n.dto;
 
-import jakarta.validation.constraints.Min;
+import org.hibernate.validator.constraints.Range;
 import lombok.Data;
 
 import java.io.Serial;
@@ -42,19 +42,19 @@ public class PageQuery extends Query {
 	/**
 	 * 页码.
 	 */
-	@Min(1)
+	@Range(min = 1)
 	private Integer pageNum = 1;
 
 	/**
 	 * 条数.
 	 */
-	@Min(1)
+	@Range(min = 1)
 	private Integer pageSize = 10;
 
 	/**
 	 * 索引.
 	 */
-	@Min(0)
+	@Range(min = 0)
 	private Integer pageIndex = 0;
 
 	/**

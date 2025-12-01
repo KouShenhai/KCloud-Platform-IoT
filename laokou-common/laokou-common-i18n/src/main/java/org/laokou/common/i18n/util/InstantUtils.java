@@ -110,10 +110,6 @@ public final class InstantUtils {
 		return ZoneId.systemDefault();
 	}
 
-	private static ZoneOffset getDefaultZoneOffset() {
-		return OffsetDateTime.now().getOffset();
-	}
-
 	private static ZoneOffset getZoneOffset(ZoneId zoneId) {
 		return OffsetDateTime.now(zoneId).getOffset();
 	}

@@ -20,7 +20,9 @@ package org.laokou.common.i18n.util;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
-import jakarta.validation.ValidatorFactory;
+import org.hibernate.validator.HibernateValidator;
+import org.hibernate.validator.HibernateValidatorFactory;
+import org.hibernate.validator.messageinterpolation.ParameterMessageInterpolator;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
@@ -44,7 +46,7 @@ public final class ValidatorUtils {
 	static {
 		VALIDATE_BUNDLE_MESSAGE_SOURCE = new ReloadableResourceBundleMessageSource();
 		VALIDATE_BUNDLE_MESSAGE_SOURCE.setDefaultEncoding(StandardCharsets.UTF_8.name());
-		VALIDATE_BUNDLE_MESSAGE_SOURCE.setBasenames("classpath:i18n/auth_validation");
+		VALIDATE_BUNDLE_MESSAGE_SOURCE.setBasenames("classpath:i18n/auth_validation", "classpath:i18n/test_validation");
 	}
 
 	private ValidatorUtils() {
@@ -63,7 +65,11 @@ public final class ValidatorUtils {
 	 * @param obj 待校验对象
 	 */
 	public static Set<String> validate(Object obj, Class<?>... groups) {
-		try (ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory()) {
+		try (HibernateValidatorFactory validatorFactory = (HibernateValidatorFactory) Validation
+			.byProvider(HibernateValidator.class)
+			.configure()
+			.messageInterpolator(new ParameterMessageInterpolator())
+			.buildValidatorFactory()) {
 			Validator validator = validatorFactory.getValidator();
 			Set<ConstraintViolation<Object>> violationSet = validator.validate(obj, groups);
 			if (!violationSet.isEmpty()) {

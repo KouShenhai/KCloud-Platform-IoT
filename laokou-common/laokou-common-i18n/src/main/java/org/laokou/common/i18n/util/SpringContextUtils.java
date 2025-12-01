@@ -17,8 +17,8 @@
 
 package org.laokou.common.i18n.util;
 
-import io.micrometer.common.lang.NonNullApi;
 import lombok.Getter;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
@@ -38,7 +38,6 @@ import java.util.Map;
  * @author laokou
  */
 @Component
-@NonNullApi
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public final class SpringContextUtils implements ApplicationContextAware, DisposableBean {
 
@@ -171,7 +170,7 @@ public final class SpringContextUtils implements ApplicationContextAware, Dispos
 	}
 
 	@Override
-	public void setApplicationContext(ApplicationContext context) throws BeansException {
+	public void setApplicationContext(@NonNull ApplicationContext context) throws BeansException {
 		SpringContextUtils.applicationContext = context;
 	}
 

@@ -17,7 +17,7 @@
 
 package org.laokou.common.security.config;
 
-import jakarta.validation.constraints.NotNull;
+import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.i18n.util.SpringUtils;
 import org.laokou.common.security.config.repository.OAuth2RegisteredClientRepository;
@@ -63,7 +63,7 @@ public class OAuth2ResourceServerConfig {
 	}
 
 	// @formatter:off
-	@NotNull
+	@NonNull
 	public static Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> customizer(
 		OAuth2ResourceServerProperties oAuth2ResourceServerProperties, SpringUtils springUtils) {
 		Map<String, Set<String>> uriMap = MapUtils.toUriMap(oAuth2ResourceServerProperties.getRequestMatcher().getIgnorePatterns(), springUtils.getServiceId());
