@@ -33,7 +33,7 @@ import java.util.concurrent.ExecutorService;
  * @author laokou
  */
 @Slf4j
-final class DiscoveryNameResolverProvider extends NameResolverProvider {
+public final class DiscoveryNameResolverProvider extends NameResolverProvider {
 
 	private final DiscoveryClient discoveryClient;
 
