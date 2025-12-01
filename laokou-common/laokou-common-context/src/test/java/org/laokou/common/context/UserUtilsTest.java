@@ -80,17 +80,16 @@ class UserUtilsTest {
 
 		@Override
 		public Object getPrincipal() {
-			User user = null;
 			try {
-				user = new User(1L, AESUtils.encrypt("admin"),
+				User user = new User(1L, AESUtils.encrypt("admin"),
 						"https://youke1.picui.cn/s1/2025/07/20/687ca202b2c53.jpg", true, 0,
 						AESUtils.encrypt("2413176044@qq.com"), AESUtils.encrypt("13574411111"), 0L,
 						Set.of("test:save"));
+				return SpringContextUtils.getBeanProvider(UserExtDetails.class).toUserDetail(user);
 			}
 			catch (Exception e) {
 				throw new RuntimeException(e);
 			}
-			return SpringContextUtils.getBeanProvider(UserExtDetails.class).toUserDetail(user);
 		}
 
 		@Override

@@ -120,12 +120,6 @@ public final class UserExtDetails implements UserDetails, OAuth2AuthenticatedPri
 	@Getter
 	private Set<String> permissions;
 
-	public UserExtDetails toUserDetail(Long id, Long tenantId) {
-		this.id = id;
-		this.tenantId = tenantId;
-		return this;
-	}
-
 	public UserExtDetails toUserDetail(@NonNull User user) {
 		this.id = user.id();
 		this.username = getDecryptUsername(user.username());
@@ -229,11 +223,6 @@ public final class UserExtDetails implements UserDetails, OAuth2AuthenticatedPri
 	@NullMarked
 	public String getName() {
 		return this.username;
-	}
-
-	public UserExtDetails getDecryptInfo() {
-
-		return this;
 	}
 
 	public String getDecryptUsername(String username) {

@@ -26,7 +26,6 @@ import org.laokou.auth.config.authentication.OAuth2UsernamePasswordAuthenticatio
 import org.laokou.auth.model.CaptchaValidator;
 import org.laokou.auth.model.MqEnum;
 import org.laokou.auth.model.PasswordValidator;
-import org.laokou.common.context.util.User;
 import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.i18n.dto.IdGenerator;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -51,20 +50,16 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.OAuth2Token;
-import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsentService;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
-import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.oauth2.server.authorization.token.DelegatingOAuth2TokenGenerator;
-import org.springframework.security.oauth2.server.authorization.token.JwtEncodingContext;
 import org.springframework.security.oauth2.server.authorization.token.JwtGenerator;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2AccessTokenGenerator;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2RefreshTokenGenerator;
-import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.DelegatingAuthenticationConverter;
@@ -154,7 +149,6 @@ class OAuth2AuthorizationServerConfig {
 	@Bean
 	OAuth2TokenGenerator<OAuth2Token> tokenGenerator(JwtEncoder jwtEncoder) {
 		JwtGenerator jwtGenerator = new JwtGenerator(jwtEncoder);
-		jwtGenerator.setJwtCustomizer(jwtCustomizer());
 		OAuth2AccessTokenGenerator accessTokenGenerator = new OAuth2AccessTokenGenerator();
 		OAuth2RefreshTokenGenerator refreshTokenGenerator = new OAuth2RefreshTokenGenerator();
 		return new DelegatingOAuth2TokenGenerator(jwtGenerator, accessTokenGenerator, refreshTokenGenerator);
@@ -240,19 +234,5 @@ class OAuth2AuthorizationServerConfig {
 		requestMatcher.setIgnoredMediaTypes(Set.of(MediaType.ALL));
 		return requestMatcher;
 	}
-
-	// @formatter:off
-	private OAuth2TokenCustomizer<JwtEncodingContext> jwtCustomizer() {
-		// https://docs.spring.io/spring-security/reference/servlet/oauth2/authorization-server/core-model-components.html#oauth2AuthorizationServer-oauth2-token-customizer
-		return context -> {
-			if (ObjectUtils.equals(context.getTokenType(), OAuth2TokenType.ACCESS_TOKEN)
-				&& context.getPrincipal().getPrincipal() instanceof User user) {
-				JwtClaimsSet.Builder claims = context.getClaims();
-				claims.claim("id", user.id().toString());
-				claims.claim("tenant_id", user.tenantId().toString());
-			}
-		};
-	}
-	// @formatter:on
 
 }
