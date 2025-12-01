@@ -124,7 +124,7 @@
     <!--vertx版本-->
     <vertx.version>5.0.5</vertx.version>
     <!--mybatis-plus版本 -->
-    <mybatis-plus.version>3.5.15-SNAPSHOT</mybatis-plus.version>
+    <mybatis-plus.version>3.5.15</mybatis-plus.version>
     <!--nacos版本-->
     <nacos.version>3.1.0</nacos.version>
     <!--opentelemetry版本-->
