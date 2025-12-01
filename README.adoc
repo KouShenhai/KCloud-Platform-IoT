@@ -117,10 +117,6 @@ https://opendeep.wiki/KouShenhai/KCloud-Platform-IoT[OpenDeepWiki文档]
 
 https://docs.qq.com/sheet/DUGhCdGVZWmVxT0VJ?tab=BB08J2[开发计划（需要登录）]
 
-=== 💪 版本号
-
-特此说明，与Spring Boot版本保持一致
-
 === 🔎 功能介绍
 
 🚀 登录【用户名密码/邮箱/手机号】
