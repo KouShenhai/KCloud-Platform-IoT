@@ -147,7 +147,7 @@ final class DiscoveryNameResolver extends NameResolver {
 			return "";
 		}
 		return newServiceInstanceList.stream()
-			.map(item -> item.getMetadata().getOrDefault("grpc_service_config", ""))
+			.map(item -> ObjectUtils.requireNotNull(item.getMetadata()).getOrDefault("grpc_service_config", ""))
 			.collect(Collectors.joining(","));
 	}
 
@@ -177,7 +177,8 @@ final class DiscoveryNameResolver extends NameResolver {
 	}
 
 	private int getGrpcPost(ServiceInstance serviceInstance) {
-		return Integer.parseInt(serviceInstance.getMetadata().getOrDefault("grpc_port", "9090"));
+		return Integer
+			.parseInt(ObjectUtils.requireNotNull(serviceInstance.getMetadata()).getOrDefault("grpc_port", "9090"));
 	}
 
 }
