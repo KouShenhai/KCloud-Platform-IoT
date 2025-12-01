@@ -68,11 +68,6 @@ public record RedisUtils(RedisTemplate<String, Object> redisTemplate, RedissonCl
 	public static final long FIVE_MINUTE_EXPIRE = 5 * 60;
 
 	/**
-	 * 1分钟过期，单位：秒.
-	 */
-	public static final long ONE_MINUTE_EXPIRE = 60;
-
-	/**
 	 * 永不过期.
 	 */
 	public static final long NOT_EXPIRE = -1L;

@@ -27,11 +27,10 @@ import org.laokou.auth.model.GrantTypeEnum;
 import org.laokou.common.context.util.User;
 import org.laokou.common.context.util.UserExtDetails;
 import org.laokou.common.core.util.RequestUtils;
-import org.laokou.common.i18n.util.SpringContextUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.common.exception.GlobalException;
-import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.i18n.util.SpringContextUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -64,10 +63,10 @@ record UserDetailsServiceImpl(
 					StringConstants.EMPTY, StringConstants.EMPTY);
 			authA.createUserByAuthorizationCode();
 			Object principal = authenticationProcessor.authentication(authA, request).getPrincipal();
-			if (ObjectUtils.isNull(principal)) {
-				throw new BizException("B_OAuth2_UserNotExist", "用户不存在");
+			if (principal instanceof User user) {
+				SpringContextUtils.getBeanProvider(UserExtDetails.class).toUserDetail(user);
 			}
-			return SpringContextUtils.getBeanProvider(UserExtDetails.class).toUserDetail((User) principal);
+			throw new BizException("B_OAuth2_UserNotExist", "用户不存在");
 		}
 		catch (GlobalException e) {
 			throw new UsernameNotFoundException(e.getMsg(), e);
