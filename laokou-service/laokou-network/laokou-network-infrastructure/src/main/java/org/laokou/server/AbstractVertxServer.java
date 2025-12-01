@@ -30,7 +30,7 @@ public abstract class AbstractVertxServer<T> extends AbstractVerticle implements
 
 	protected Future<String> deploymentIdFuture;
 
-	public AbstractVertxServer(Vertx vertx) {
+	protected AbstractVertxServer(Vertx vertx) {
 		super.vertx = vertx;
 	}
 
