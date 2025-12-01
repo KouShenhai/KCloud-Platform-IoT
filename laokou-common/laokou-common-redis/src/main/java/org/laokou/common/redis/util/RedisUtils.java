@@ -63,14 +63,14 @@ public record RedisUtils(RedisTemplate<String, Object> redisTemplate, RedissonCl
 	public static final long ONE_HOUR_EXPIRE = 60 * 60;
 
 	/**
-	 * 6小时过期，单位：秒.
-	 */
-	public static final long SIX_HOUR_EXPIRE = 60 * 60 * 6;
-
-	/**
 	 * 5分钟过期，单位：秒.
 	 */
 	public static final long FIVE_MINUTE_EXPIRE = 5 * 60;
+
+	/**
+	 * 1分钟过期，单位：秒.
+	 */
+	public static final long ONE_MINUTE_EXPIRE = 60;
 
 	/**
 	 * 永不过期.
@@ -253,6 +253,13 @@ public record RedisUtils(RedisTemplate<String, Object> redisTemplate, RedissonCl
 		return redissonClient.getAtomicLong(key).get();
 	}
 
+	/**
+	 * 添加hash.
+	 * @param key 键
+	 * @param field 键字段.
+	 * @param value 值
+	 * @param expire 过期时间，单位：秒
+	 */
 	public void hSet(String key, String field, Object value, long expire) {
 		RMap<String, Object> map = redissonClient.getMap(key);
 		map.expire(Duration.ofSeconds(expire));

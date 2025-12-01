@@ -59,6 +59,7 @@ import org.springframework.security.oauth2.server.authorization.authentication.O
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.context.AuthorizationServerContextHolder;
 import org.springframework.security.oauth2.server.authorization.settings.OAuth2TokenFormat;
+import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
 import org.springframework.security.oauth2.server.authorization.token.DefaultOAuth2TokenContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
@@ -199,8 +200,10 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 		if (principal.getPrincipal() instanceof User user) {
 			String userDetailHashKey = RedisKeyUtils.getUserDetailHashKey();
 			String field = user.id().toString();
+			TokenSettings tokenSettings = registeredClient.getTokenSettings();
 			redisUtils.hDel(userDetailHashKey, field);
-			redisUtils.hSet(userDetailHashKey, field, user, RedisUtils.SIX_HOUR_EXPIRE);
+			redisUtils.hSet(userDetailHashKey, field, user, tokenSettings.getRefreshTokenTimeToLive().toSeconds()
+					+ tokenSettings.getAccessTokenTimeToLive().toSeconds() + RedisUtils.ONE_MINUTE_EXPIRE);
 		}
 		// 存储认证信息
 		authorizationService.save(authorizationBuilder.build());
