@@ -24,21 +24,35 @@ import org.laokou.common.context.util.User;
 import org.laokou.common.context.util.UserExtDetails;
 import org.laokou.common.context.util.UserUtils;
 import org.laokou.common.crypto.util.AESUtils;
+import org.laokou.common.i18n.util.SpringContextUtils;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@ContextConfiguration(classes = { SpringContextUtils.class, UserExtDetails.class })
 class UserUtilsTest {
 
 	@Test
 	void test() {
-		Assertions.assertThat(UserUtils.userDetail()).isNotNull().isEqualTo(new UserExtDetails());
+		Assertions.assertThat(UserUtils.userDetail())
+			.isNotNull()
+			.isEqualTo(SpringContextUtils.getBeanProvider(UserExtDetails.class));
+		Assertions.assertThat(UserUtils.getUserId()).isNull();
+		Assertions.assertThat(UserUtils.getUserName()).isBlank();
+		Assertions.assertThat(UserUtils.getTenantId()).isNull();
+		Assertions.assertThat(UserUtils.isSuperAdmin()).isNull();
+		Assertions.assertThat(UserUtils.userDetail().getPermissions()).isNull();
 		SecurityContextHolder.getContext().setAuthentication(new TestAuthentication());
-		Assertions.assertThat(UserUtils.userDetail()).isNotNull().isNotEqualTo(new UserExtDetails());
+		Assertions.assertThat(UserUtils.userDetail())
+			.isNotNull()
+			.isNotEqualTo(SpringContextUtils.getBeanProvider(UserExtDetails.class));
 		Assertions.assertThat(UserUtils.getUserId()).isNotNull().isEqualTo(1L);
 		Assertions.assertThat(UserUtils.getUserName()).isNotNull().isEqualTo("admin");
 		Assertions.assertThat(UserUtils.getTenantId()).isNotNull().isEqualTo(0L);
@@ -76,7 +90,7 @@ class UserUtilsTest {
 			catch (Exception e) {
 				throw new RuntimeException(e);
 			}
-			return new UserExtDetails(user);
+			return SpringContextUtils.getBeanProvider(UserExtDetails.class).toUserDetail(user);
 		}
 
 		@Override

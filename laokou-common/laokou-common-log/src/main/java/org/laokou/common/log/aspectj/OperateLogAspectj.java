@@ -23,7 +23,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.laokou.common.core.util.RequestUtils;
-import org.laokou.common.core.util.SpringUtils;
+import org.laokou.common.i18n.util.SpringUtils;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.log.annotation.OperateLog;

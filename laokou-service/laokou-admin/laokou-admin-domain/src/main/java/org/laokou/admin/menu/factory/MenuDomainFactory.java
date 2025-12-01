@@ -18,7 +18,7 @@
 package org.laokou.admin.menu.factory;
 
 import org.laokou.admin.menu.model.MenuE;
-import org.laokou.common.core.util.SpringContextUtils;
+import org.laokou.common.i18n.util.SpringContextUtils;
 
 public final class MenuDomainFactory {
 

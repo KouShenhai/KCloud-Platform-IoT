@@ -15,14 +15,14 @@
  *
  */
 
-package org.laokou.common.core;
+package org.laokou.common.i18n;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.core.util.SpringContextUtils;
+import org.laokou.common.i18n.util.SpringContextUtils;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -62,7 +62,7 @@ class SpringContextUtilsTest {
 		Assertions.assertThat(beanFactory.containsBeanDefinition("testEventListener")).isTrue();
 		Assertions.assertThatNoException().isThrownBy(() -> SpringContextUtils.removeBean("testEventListener"));
 		Assertions.assertThat(beanFactory.containsBeanDefinition("testEventListener")).isFalse();
-		Assertions.assertThat(SpringContextUtils.getServiceId()).isEqualTo("laokou-common-core");
+		Assertions.assertThat(SpringContextUtils.getServiceId()).isEqualTo("laokou-common-i18n");
 		Assertions.assertThatNoException()
 			.isThrownBy(() -> beanFactory.registerBeanDefinition("testEventListener",
 					BeanDefinitionBuilder.genericBeanDefinition(TestEventListener.class).getBeanDefinition()));

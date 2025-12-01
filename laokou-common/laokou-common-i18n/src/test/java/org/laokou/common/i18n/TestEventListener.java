@@ -15,28 +15,26 @@
  *
  */
 
-package org.laokou.common.core.util;
+package org.laokou.common.i18n;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.core.env.Environment;
+import org.assertj.core.api.Assertions;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 /**
- * Spring工具类.
- *
  * @author laokou
  */
 @Component
-@RequiredArgsConstructor
-public class SpringUtils {
+class TestEventListener {
 
-	private final Environment environment;
+	@EventListener
+	public void onLogoutEvent(SpringEventBusTest.LogoutEvent event) {
+		Assertions.assertThat(event.getUsername()).isEqualTo("laokou");
+	}
 
-	/**
-	 * 获取服务ID.
-	 */
-	public String getServiceId() {
-		return environment.getProperty(SpringContextUtils.APPLICATION_NAME, SpringContextUtils.DEFAULT_SERVICE_ID);
+	@EventListener
+	public void onLoginEvent(SpringContextUtilsTest.LoginEvent event) {
+		Assertions.assertThat(event.getUsername()).isEqualTo("laokou");
 	}
 
 }

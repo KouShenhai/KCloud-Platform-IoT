@@ -21,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.context.util.User;
 import org.laokou.common.context.util.UserExtDetails;
 import org.laokou.common.core.util.RequestUtils;
+import org.laokou.common.i18n.util.SpringContextUtils;
 import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -60,10 +61,10 @@ public record OAuth2OpaqueTokenIntrospector(OAuth2AuthorizationService authoriza
 		String jwtType = RequestUtils.getParamValue(RequestUtils.getHttpServletRequest(), "jwt_type");
 		String id = jwt.getClaimAsString("id");
 		if (ObjectUtils.equals(jwtType, "part")) {
-			return new UserExtDetails(Long.valueOf(id), Long.valueOf(jwt.getClaimAsString("tenant_id")));
+			return SpringContextUtils.getBeanProvider(UserExtDetails.class).toUserDetail(Long.valueOf(id), Long.valueOf(jwt.getClaimAsString("tenant_id")));
 		}
 		if (redisUtils.hGet(RedisKeyUtils.getUserDetailHashKey(), id) instanceof User user) {
-			return new UserExtDetails(user);
+			return SpringContextUtils.getBeanProvider(UserExtDetails.class).toUserDetail(user);
 		}
 		throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED);
 	}

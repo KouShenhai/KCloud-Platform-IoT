@@ -15,13 +15,16 @@
  *
  */
 
-package org.laokou.common.core;
+package org.laokou.common.i18n;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.assertj.core.api.Assertions;
+import lombok.Setter;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.core.util.SpringUtils;
+import org.laokou.common.i18n.util.SpringContextUtils;
+import org.laokou.common.i18n.util.SpringEventBus;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationEvent;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestConstructor;
 
@@ -30,16 +33,26 @@ import org.springframework.test.context.TestConstructor;
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @RequiredArgsConstructor
-@ContextConfiguration(classes = { SpringUtils.class })
+@ContextConfiguration(classes = { SpringContextUtils.class, TestEventListener.class })
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-class SpringUtilsTest {
-
-	private final SpringUtils springUtils;
+class SpringEventBusTest {
 
 	@Test
-	void test_getServiceId() {
-		Assertions.assertThat(springUtils).isNotNull();
-		Assertions.assertThat(springUtils.getServiceId()).isNotBlank().isEqualTo("laokou-common-core");
+	void test_publishLogoutEvent() {
+		SpringEventBus.publish(new LogoutEvent(this, "laokou"));
+	}
+
+	@Getter
+	@Setter
+	static class LogoutEvent extends ApplicationEvent {
+
+		private final String username;
+
+		public LogoutEvent(Object source, String username) {
+			super(source);
+			this.username = username;
+		}
+
 	}
 
 }

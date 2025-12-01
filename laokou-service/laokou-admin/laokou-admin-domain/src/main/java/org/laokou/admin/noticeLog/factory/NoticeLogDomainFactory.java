@@ -18,7 +18,7 @@
 package org.laokou.admin.noticeLog.factory;
 
 import org.laokou.admin.noticeLog.model.NoticeLogE;
-import org.laokou.common.core.util.SpringContextUtils;
+import org.laokou.common.i18n.util.SpringContextUtils;
 
 public final class NoticeLogDomainFactory {
 

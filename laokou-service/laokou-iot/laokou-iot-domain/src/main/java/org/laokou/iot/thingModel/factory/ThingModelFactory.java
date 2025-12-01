@@ -17,7 +17,7 @@
 
 package org.laokou.iot.thingModel.factory;
 
-import org.laokou.common.core.util.SpringContextUtils;
+import org.laokou.common.i18n.util.SpringContextUtils;
 import org.laokou.iot.thingModel.model.ThingModelE;
 
 public final class ThingModelFactory {

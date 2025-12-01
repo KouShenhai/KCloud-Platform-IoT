@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: laokou-common-i18n
+  profiles:
+    active: test

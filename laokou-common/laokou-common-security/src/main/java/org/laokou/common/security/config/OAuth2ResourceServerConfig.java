@@ -19,7 +19,7 @@ package org.laokou.common.security.config;
 
 import jakarta.validation.constraints.NotNull;
 import org.laokou.common.core.util.MapUtils;
-import org.laokou.common.core.util.SpringUtils;
+import org.laokou.common.i18n.util.SpringUtils;
 import org.laokou.common.security.config.repository.OAuth2RegisteredClientRepository;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

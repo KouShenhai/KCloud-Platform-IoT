@@ -18,7 +18,7 @@
 package org.laokou.admin.oss.factory;
 
 import org.laokou.admin.oss.model.OssE;
-import org.laokou.common.core.util.SpringContextUtils;
+import org.laokou.common.i18n.util.SpringContextUtils;
 
 /**
  * @author laokou

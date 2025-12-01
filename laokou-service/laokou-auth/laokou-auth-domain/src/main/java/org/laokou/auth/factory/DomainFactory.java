@@ -22,7 +22,7 @@ import org.laokou.auth.model.CaptchaE;
 import org.laokou.auth.model.LoginLogE;
 import org.laokou.auth.model.NoticeLogE;
 import org.laokou.auth.model.UserE;
-import org.laokou.common.core.util.SpringContextUtils;
+import org.laokou.common.i18n.util.SpringContextUtils;
 
 /**
  * @author laokou

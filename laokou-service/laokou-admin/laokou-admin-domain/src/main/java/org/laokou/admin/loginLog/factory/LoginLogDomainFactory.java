@@ -18,7 +18,7 @@
 package org.laokou.admin.loginLog.factory;
 
 import org.laokou.admin.loginLog.model.LoginLogE;
-import org.laokou.common.core.util.SpringContextUtils;
+import org.laokou.common.i18n.util.SpringContextUtils;
 
 public final class LoginLogDomainFactory {
 
