@@ -33,9 +33,9 @@ import java.lang.annotation.Target;
  * @author Frank Zhang
  */
 @Inherited
+@Component
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.TYPE })
-@Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public @interface Entity {
 
