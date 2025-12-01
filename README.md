@@ -108,10 +108,6 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 
 [开发计划（需要登录）](https://docs.qq.com/sheet/DUGhCdGVZWmVxT0VJ?tab=BB08J2)
 
-### 💪 版本号
-
-特此说明，与Spring Boot版本保持一致
-
 ### 🔎 功能介绍
 
 🚀 登录【用户名密码/邮箱/手机号】
