@@ -17,7 +17,6 @@
 
 package org.laokou.common.redis.util;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -51,8 +50,7 @@ import java.util.stream.Collectors;
  * @author laokou
  */
 @Slf4j
-@RequiredArgsConstructor
-public class RedisUtils {
+public record RedisUtils(RedisTemplate<String, Object> redisTemplate, RedissonClient redissonClient) {
 
 	/**
 	 * 24小时过期，单位：秒.
@@ -65,23 +63,19 @@ public class RedisUtils {
 	public static final long ONE_HOUR_EXPIRE = 60 * 60;
 
 	/**
-	 * 6小时过期，单位：秒.
-	 */
-	public static final long SIX_HOUR_EXPIRE = 60 * 60 * 6;
-
-	/**
 	 * 5分钟过期，单位：秒.
 	 */
 	public static final long FIVE_MINUTE_EXPIRE = 5 * 60;
 
 	/**
+	 * 1分钟过期，单位：秒.
+	 */
+	public static final long ONE_MINUTE_EXPIRE = 60;
+
+	/**
 	 * 永不过期.
 	 */
 	public static final long NOT_EXPIRE = -1L;
-
-	private final RedisTemplate<String, Object> redisTemplate;
-
-	private final RedissonClient redissonClient;
 
 	public RLock getLock(String key) {
 		return redissonClient.getLock(key);
@@ -259,6 +253,13 @@ public class RedisUtils {
 		return redissonClient.getAtomicLong(key).get();
 	}
 
+	/**
+	 * 添加hash.
+	 * @param key 键
+	 * @param field 键字段.
+	 * @param value 值
+	 * @param expire 过期时间，单位：秒
+	 */
 	public void hSet(String key, String field, Object value, long expire) {
 		RMap<String, Object> map = redissonClient.getMap(key);
 		map.expire(Duration.ofSeconds(expire));

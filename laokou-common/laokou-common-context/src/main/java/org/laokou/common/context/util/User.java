@@ -22,10 +22,16 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import org.jspecify.annotations.NullMarked;
-import org.springframework.security.core.AuthenticatedPrincipal;
+import org.jspecify.annotations.Nullable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.io.Serializable;
+import java.security.Principal;
+import java.util.Collection;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @param id 用户ID.
@@ -45,12 +51,42 @@ import java.util.Set;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
 		isGetterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
 public record User(Long id, String username, String avatar, Boolean superAdmin, Integer status, String mail,
-		String mobile, Long tenantId, Set<String> permissions) implements AuthenticatedPrincipal, Serializable {
+		String mobile, Long tenantId, Set<String> permissions) implements Authentication, Principal, Serializable {
 
 	@Override
 	@NullMarked
 	public String getName() {
 		return username;
+	}
+
+	@Override
+	@NullMarked
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return this.permissions.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toSet());
+	}
+
+	@Override
+	public @Nullable Object getCredentials() {
+		return null;
+	}
+
+	@Override
+	public @Nullable Object getDetails() {
+		return username;
+	}
+
+	@Override
+	public @Nullable Object getPrincipal() {
+		return username;
+	}
+
+	@Override
+	public boolean isAuthenticated() {
+		return true;
+	}
+
+	@Override
+	public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
 	}
 
 }

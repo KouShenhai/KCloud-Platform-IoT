@@ -18,7 +18,7 @@
 package org.laokou.auth.command;
 
 import org.laokou.auth.dto.TokenRemoveCmd;
-import org.laokou.common.context.util.UserExtDetails;
+import org.laokou.common.context.util.User;
 import org.laokou.common.data.cache.constant.NameConstants;
 import org.laokou.common.data.cache.model.OperateTypeEnum;
 import org.laokou.common.domain.annotation.CommandLog;
@@ -27,7 +27,6 @@ import org.laokou.common.i18n.util.StringExtUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.CacheManager;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
@@ -45,12 +44,12 @@ public class TokenRemoveCmdExe {
 
 	private final CacheManager redissonCacheManager;
 
-	private final OAuth2AuthorizationService oAuth2AuthorizationService;
+	private final OAuth2AuthorizationService authorizationService;
 
 	public TokenRemoveCmdExe(@Qualifier("redissonCacheManager") CacheManager redissonCacheManager,
-			OAuth2AuthorizationService oAuth2AuthorizationService) {
+			OAuth2AuthorizationService authorizationService) {
 		this.redissonCacheManager = redissonCacheManager;
-		this.oAuth2AuthorizationService = oAuth2AuthorizationService;
+		this.authorizationService = authorizationService;
 	}
 
 	/**
@@ -64,20 +63,18 @@ public class TokenRemoveCmdExe {
 		if (StringExtUtils.isEmpty(token)) {
 			return;
 		}
-		OAuth2Authorization authorization = oAuth2AuthorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
+		OAuth2Authorization authorization = authorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
 		if (ObjectUtils.isNotNull(authorization)) {
 			// 移除缓存
 			evictCache(authorization);
 			// 删除token
-			oAuth2AuthorizationService.remove(authorization);
+			authorizationService.remove(authorization);
 		}
 	}
 
 	private void evictCache(OAuth2Authorization authorization) {
-		Object obj = authorization.getAttribute(Principal.class.getName());
-		if (ObjectUtils.isNotNull(obj)) {
-			UserExtDetails userExtDetails = (UserExtDetails) ((UsernamePasswordAuthenticationToken) obj).getPrincipal();
-			OperateTypeEnum.getCache(redissonCacheManager, NameConstants.USER_MENU).evict(userExtDetails.getId());
+		if (authorization.getAttribute(Principal.class.getName()) instanceof User user) {
+			OperateTypeEnum.getCache(redissonCacheManager, NameConstants.USER_MENU).evict(user.id());
 		}
 	}
 

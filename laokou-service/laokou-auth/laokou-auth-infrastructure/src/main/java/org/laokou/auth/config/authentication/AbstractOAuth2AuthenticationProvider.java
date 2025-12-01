@@ -24,13 +24,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.OAuth2Constants;
-import org.laokou.common.context.util.User;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.i18n.util.RedisKeyUtils;
-import org.laokou.common.redis.util.RedisUtils;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -65,6 +62,7 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import java.security.Principal;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Optional;
@@ -86,8 +84,6 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 	private final OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator;
 
 	private final OAuth2AuthenticationProcessor authenticationProcessor;
-
-	private final RedisUtils redisUtils;
 
 	/**
 	 * 认证授权.
@@ -196,13 +192,8 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 			refreshToken = (OAuth2RefreshToken) generatedRefreshToken;
 			authorizationBuilder.refreshToken(refreshToken);
 		}
-		if (principal.getPrincipal() instanceof User user) {
-			String userDetailHashKey = RedisKeyUtils.getUserDetailHashKey();
-			String field = user.id().toString();
-			redisUtils.hDel(userDetailHashKey, field);
-			redisUtils.hSet(userDetailHashKey, field, user);
-		}
 		// 存储认证信息
+		authorizationBuilder.attribute(Principal.class.getName(), principal.getPrincipal());
 		authorizationService.save(authorizationBuilder.build());
 		return new OAuth2AccessTokenAuthenticationToken(registeredClient, clientPrincipal, accessToken, refreshToken);
 	}

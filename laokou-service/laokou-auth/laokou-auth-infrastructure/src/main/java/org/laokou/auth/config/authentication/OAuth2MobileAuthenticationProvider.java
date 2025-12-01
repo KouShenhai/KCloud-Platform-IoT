@@ -25,7 +25,6 @@ import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.Constants;
 import org.laokou.auth.model.GrantTypeEnum;
 import org.laokou.common.i18n.common.constant.StringConstants;
-import org.laokou.common.redis.util.RedisUtils;
 import org.laokou.common.security.config.OAuth2ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
@@ -45,8 +44,8 @@ final class OAuth2MobileAuthenticationProvider extends AbstractOAuth2Authenticat
 
 	public OAuth2MobileAuthenticationProvider(OAuth2AuthorizationService authorizationService,
 			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator,
-			OAuth2AuthenticationProcessor authenticationProcessor, RedisUtils redisUtils) {
-		super(authorizationService, tokenGenerator, authenticationProcessor, redisUtils);
+			OAuth2AuthenticationProcessor authenticationProcessor) {
+		super(authorizationService, tokenGenerator, authenticationProcessor);
 	}
 
 	@Override
