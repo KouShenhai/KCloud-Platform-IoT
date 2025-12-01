@@ -200,7 +200,7 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 			String userDetailHashKey = RedisKeyUtils.getUserDetailHashKey();
 			String field = user.id().toString();
 			redisUtils.hDel(userDetailHashKey, field);
-			redisUtils.hSet(userDetailHashKey, field, user);
+			redisUtils.hSet(userDetailHashKey, field, user, RedisUtils.SIX_HOUR_EXPIRE);
 		}
 		// 存储认证信息
 		authorizationService.save(authorizationBuilder.build());

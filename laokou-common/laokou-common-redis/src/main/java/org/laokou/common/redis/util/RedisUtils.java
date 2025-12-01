@@ -17,7 +17,6 @@
 
 package org.laokou.common.redis.util;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -51,8 +50,7 @@ import java.util.stream.Collectors;
  * @author laokou
  */
 @Slf4j
-@RequiredArgsConstructor
-public class RedisUtils {
+public record RedisUtils(RedisTemplate<String, Object> redisTemplate, RedissonClient redissonClient) {
 
 	/**
 	 * 24小时过期，单位：秒.
@@ -78,10 +76,6 @@ public class RedisUtils {
 	 * 永不过期.
 	 */
 	public static final long NOT_EXPIRE = -1L;
-
-	private final RedisTemplate<String, Object> redisTemplate;
-
-	private final RedissonClient redissonClient;
 
 	public RLock getLock(String key) {
 		return redissonClient.getLock(key);
