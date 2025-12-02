@@ -17,11 +17,28 @@
 
 package org.laokou.common.mybatisplus.support;
 
-public class Custom implements DataScope {
+import lombok.Getter;
 
-	@Override
-	public String getName() {
-		return DataScopeEnum.CUSTOM.getCode();
+@Getter
+public enum DataScopeEnum {
+
+	ALL("all", "全部"),
+
+	CUSTOM("custom", "自定义"),
+
+	DEPT_SELF("dept_self", "仅本部门"),
+
+	DEPT("dept", "部门及以下"),
+
+	SELF("self", "仅本人");
+
+	private final String code;
+
+	private final String desc;
+
+	DataScopeEnum(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
 	}
 
 }

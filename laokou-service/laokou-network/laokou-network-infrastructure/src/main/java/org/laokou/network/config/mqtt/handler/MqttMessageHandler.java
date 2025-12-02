@@ -15,13 +15,20 @@
  *
  */
 
-package org.laokou.common.mybatisplus.support;
+package org.laokou.network.config.mqtt.handler;
 
-public class Custom implements DataScope {
+import org.apache.pulsar.client.api.MessageId;
+import org.laokou.network.model.MqttMessage;
 
-	@Override
-	public String getName() {
-		return DataScopeEnum.CUSTOM.getCode();
-	}
+import java.util.concurrent.CompletableFuture;
+
+/**
+ * @author laokou
+ */
+public interface MqttMessageHandler {
+
+	boolean isSubscribe(String topic);
+
+	CompletableFuture<MessageId> handle(MqttMessage mqttMessage);
 
 }

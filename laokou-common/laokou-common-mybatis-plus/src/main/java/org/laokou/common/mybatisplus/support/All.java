@@ -21,7 +21,7 @@ public class All implements DataScope {
 
 	@Override
 	public String getName() {
-		return org.laokou.common.mybatisplus.annotation.DataScope.ALL.getCode();
+		return DataScopeEnum.ALL.getCode();
 	}
 
 }

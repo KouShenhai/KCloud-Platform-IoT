@@ -72,8 +72,6 @@
     <module>laokou-common-csv</module>
     <module>laokou-common-zookeeper</module>
     <module>laokou-common-ftp</module>
-    <module>laokou-common-network</module>
-    <module>laokou-common-vertx</module>
     <module>laokou-common-websocket</module>
     <module>laokou-common-pulsar</module>
     <module>laokou-common-coap</module>

@@ -15,13 +15,35 @@
  *
  */
 
-package org.laokou.common.mybatisplus.support;
+package org.laokou.network.config.tcp;
 
-public class Custom implements DataScope {
+import io.vertx.core.http.ClientAuth;
+import lombok.Data;
 
-	@Override
-	public String getName() {
-		return DataScopeEnum.CUSTOM.getCode();
-	}
+import java.util.concurrent.TimeUnit;
+
+/**
+ * @author laokou
+ */
+@Data
+public class TcpServerProperties {
+
+	private String host = "0.0.0.0";
+
+	private Integer port = 10100;
+
+	private int acceptBacklog = -1;
+
+	private ClientAuth clientAuth = ClientAuth.NONE;
+
+	private boolean sni = false;
+
+	private boolean useProxyProtocol = false;
+
+	private long proxyProtocolTimeout = 30L;
+
+	private TimeUnit proxyProtocolTimeoutUnit = TimeUnit.SECONDS;
+
+	private boolean registerWriteHandler = false;
 
 }

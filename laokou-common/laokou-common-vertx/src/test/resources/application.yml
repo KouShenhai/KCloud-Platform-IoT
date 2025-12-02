@@ -1,8 +1,0 @@
-server:
-  port: 8099
-
-spring:
-  application:
-    name: laokou-common-vertx
-  profiles:
-    active: test

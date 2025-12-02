@@ -15,13 +15,26 @@
  *
  */
 
-package org.laokou.common.mybatisplus.support;
+package org.laokou.network.config.udp;
 
-public class Custom implements DataScope {
+import lombok.Data;
 
-	@Override
-	public String getName() {
-		return DataScopeEnum.CUSTOM.getCode();
-	}
+/**
+ * @author laokou
+ */
+@Data
+public class UdpServerProperties {
+
+	private String host = "0.0.0.0";
+
+	private Integer port = 100200;
+
+	private boolean broadcast = false;
+
+	private boolean loopbackModeDisabled = true;
+
+	private String multicastNetworkInterface = null;
+
+	private boolean ipV6 = false;
 
 }

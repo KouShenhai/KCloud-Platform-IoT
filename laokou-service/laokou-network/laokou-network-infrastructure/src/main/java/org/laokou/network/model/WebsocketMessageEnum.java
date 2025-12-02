@@ -15,13 +15,32 @@
  *
  */
 
-package org.laokou.common.mybatisplus.support;
+package org.laokou.network.model;
 
-public class Custom implements DataScope {
+import lombok.Getter;
 
-	@Override
-	public String getName() {
-		return DataScopeEnum.CUSTOM.getCode();
+/**
+ * @author laokou
+ */
+@Getter
+public enum WebsocketMessageEnum {
+
+	UP_PROPERTY_REPORT("up_property_report", "属性上报【上行】") {
+		@Override
+		public String getPath() {
+			return "^\\/\\d+\\/\\d+\\/ws$";
+		}
+	};
+
+	private final String code;
+
+	private final String desc;
+
+	WebsocketMessageEnum(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
 	}
+
+	public abstract String getPath();
 
 }
