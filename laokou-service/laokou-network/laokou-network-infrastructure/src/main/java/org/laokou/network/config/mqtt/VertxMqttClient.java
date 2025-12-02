@@ -58,7 +58,7 @@ final class VertxMqttClient extends AbstractVertxService<MqttClient> {
 		this.mqttClientProperties = mqttClientProperties;
 		this.mqttMessageHandlers = mqttMessageHandlers;
 		this.executorService = executorService;
-		mqttClient = init();
+		this.mqttClient = init();
 	}
 
 	@Override
@@ -154,7 +154,7 @@ final class VertxMqttClient extends AbstractVertxService<MqttClient> {
 	}
 
 	private MqttClient init() {
-		return MqttClient.create(vertx, mqttClientOptions).closeHandler(v -> {
+		return MqttClient.create(vertx, mqttClientOptions).closeHandler(_ -> {
 			log.error("【Vertx-MQTT-Client】 => MQTT连接断开，客户端ID：{}", mqttClientOptions.getClientId());
 			restart();
 		}).publishHandler(publishHandler -> {
