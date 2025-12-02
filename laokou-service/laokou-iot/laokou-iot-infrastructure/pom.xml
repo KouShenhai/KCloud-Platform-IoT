@@ -101,6 +101,11 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-webmvc</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-pulsar</artifactId>
+      <version>${project.version}</version>
+    </dependency>
   </dependencies>
 
 </project>
