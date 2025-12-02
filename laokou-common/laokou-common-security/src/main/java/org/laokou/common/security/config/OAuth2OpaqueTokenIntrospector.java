@@ -53,7 +53,7 @@ public record OAuth2OpaqueTokenIntrospector(
 		if (ObjectUtils.isNull(accessToken) || ObjectUtils.isNull(refreshToken)) {
 			throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED);
 		}
-		if (accessToken.isActive() && authorization.getAttribute(Principal.class.getName()) instanceof User user) {
+		if (accessToken.isActive() && refreshToken.isActive() && authorization.getAttribute(Principal.class.getName()) instanceof User user) {
 			return SpringContextUtils.getBeanProvider(UserExtDetails.class).toUserDetail(user);
 		}
 		authorizationService.remove(authorization);

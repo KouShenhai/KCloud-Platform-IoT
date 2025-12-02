@@ -15,13 +15,15 @@
  *
  */
 
-package org.laokou.common.mybatisplus.support;
+package org.laokou.network.config;
 
-public class Custom implements DataScope {
+/**
+ * @author laokou
+ */
+public interface VertxService {
 
-	@Override
-	public String getName() {
-		return DataScopeEnum.CUSTOM.getCode();
-	}
+	void deploy();
+
+	void undeploy();
 
 }

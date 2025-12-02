@@ -15,13 +15,30 @@
  *
  */
 
-package org.laokou.common.mybatisplus.support;
+package org.laokou.network.util;
 
-public class Custom implements DataScope {
+import io.netty.handler.codec.mqtt.MqttQoS;
 
-	@Override
-	public String getName() {
-		return DataScopeEnum.CUSTOM.getCode();
+import java.util.regex.Pattern;
+
+/**
+ * @author laokou
+ */
+public final class VertxMqttUtils {
+
+	private VertxMqttUtils() {
+	}
+
+	public static boolean matchTopic(String subscribeTopic, String publishTopic) {
+		if (subscribeTopic.equals(publishTopic)) {
+			return true;
+		}
+		String regex = subscribeTopic.replace("+", "[^/]+").replace("#", ".+");
+		return Pattern.matches(regex, publishTopic);
+	}
+
+	public static MqttQoS convertQos(int qos) {
+		return MqttQoS.valueOf(qos);
 	}
 
 }

@@ -15,13 +15,23 @@
  *
  */
 
-package org.laokou.common.mybatisplus.support;
+package org.laokou.network.model;
 
-public class Custom implements DataScope {
+import io.vertx.core.buffer.Buffer;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-	@Override
-	public String getName() {
-		return DataScopeEnum.CUSTOM.getCode();
-	}
+/**
+ * @author laokou
+ */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class MqttMessage {
+
+	private Buffer payload;
+
+	private String topic;
 
 }

@@ -43,11 +43,6 @@
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-network-mqtt-client</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
       <artifactId>laokou-network-client</artifactId>
       <version>${project.version}</version>
     </dependency>
@@ -72,6 +67,11 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-nacos</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-pulsar</artifactId>
       <version>${project.version}</version>
     </dependency>
   </dependencies>

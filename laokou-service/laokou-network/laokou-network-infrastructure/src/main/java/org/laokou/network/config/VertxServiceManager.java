@@ -15,13 +15,16 @@
  *
  */
 
-package org.laokou.common.mybatisplus.support;
+package org.laokou.network.config;
 
-public class Custom implements DataScope {
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
-	@Override
-	public String getName() {
-		return DataScopeEnum.CUSTOM.getCode();
-	}
+/**
+ * @author laokou
+ */
+public final class VertxServiceManager {
+
+	private final Map<Long, VertxService> vertxServiceMap = new ConcurrentHashMap<>(8196);
 
 }

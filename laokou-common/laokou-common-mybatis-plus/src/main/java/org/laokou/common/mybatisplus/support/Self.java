@@ -21,7 +21,7 @@ public class Self implements DataScope {
 
 	@Override
 	public String getName() {
-		return org.laokou.common.mybatisplus.annotation.DataScope.SELF.getCode();
+		return DataScopeEnum.SELF.getCode();
 	}
 
 }
