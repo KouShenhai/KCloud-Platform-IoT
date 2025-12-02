@@ -31,7 +31,6 @@ import org.laokou.network.util.VertxMqttUtils;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author laokou
@@ -46,8 +45,6 @@ final class VertxMqttClient extends AbstractVertxService<MqttClient> {
 	private final List<MqttMessageHandler> mqttMessageHandlers;
 
 	private final ExecutorService executorService;
-
-	private final AtomicBoolean close = new AtomicBoolean(false);
 
 	private final MqttClient mqttClient;
 
@@ -105,17 +102,15 @@ final class VertxMqttClient extends AbstractVertxService<MqttClient> {
 
 	@Override
 	public Future<MqttClient> stop0() {
-		if (close.compareAndSet(false, true)) {
-			mqttClient.disconnect().onComplete(disconnectResult -> {
-				if (disconnectResult.succeeded()) {
-					log.info("【Vertx-MQTT-Client】 => MQTT断开连接成功");
-				}
-				else {
-					Throwable ex = disconnectResult.cause();
-					log.error("【Vertx-MQTT-Client】 => MQTT断开连接失败，错误信息：{}", ex.getMessage(), ex);
-				}
-			});
-		}
+		mqttClient.disconnect().onComplete(disconnectResult -> {
+			if (disconnectResult.succeeded()) {
+				log.info("【Vertx-MQTT-Client】 => MQTT断开连接成功");
+			}
+			else {
+				Throwable ex = disconnectResult.cause();
+				log.error("【Vertx-MQTT-Client】 => MQTT断开连接失败，错误信息：{}", ex.getMessage(), ex);
+			}
+		});
 		return null;
 	}
 
@@ -132,9 +127,6 @@ final class VertxMqttClient extends AbstractVertxService<MqttClient> {
 	}
 
 	private void restart() {
-		if (close.get()) {
-			return;
-		}
 		log.debug("【Vertx-MQTT-Client】 => MQTT尝试重连");
 		vertx.setTimer(mqttClientProperties.getReconnectInterval(), _ -> executorService.execute(this::start0));
 	}
