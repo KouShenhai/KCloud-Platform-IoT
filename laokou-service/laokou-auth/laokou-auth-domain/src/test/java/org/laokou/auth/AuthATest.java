@@ -40,7 +40,9 @@ import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.dto.IdGenerator;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.mockito.Mockito;
+import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.util.DigestUtils;
 
@@ -52,7 +54,7 @@ import java.util.Set;
  *
  * @author laokou
  */
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, classes = AuthATest.AuthATestConfig.class)
 class AuthATest {
 
 	@MockitoBean
@@ -290,6 +292,12 @@ class AuthATest {
 		authA.setGrantTypeEnum(grantTypeEnum);
 		authA.setCaptcha(new CaptchaV(uuid, captcha));
 		return authA;
+	}
+
+	@SpringBootConfiguration
+	@ComponentScan(basePackages = "org.laokou")
+	static class AuthATestConfig {
+
 	}
 
 }

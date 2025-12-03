@@ -17,7 +17,6 @@
 
 package org.laokou.common.context.util;
 
-import org.laokou.common.i18n.util.SpringContextUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -36,8 +35,8 @@ public final class UserUtils {
 			if (authentication.getPrincipal() instanceof UserExtDetails userExtDetails) {
 				return userExtDetails;
 			}
-			return SpringContextUtils.getBeanProvider(UserExtDetails.class);
-		}).orElse(SpringContextUtils.getBeanProvider(UserExtDetails.class));
+			return UserConvertor.toUserDetails();
+		}).orElse(UserConvertor.toUserDetails());
 	}
 
 	/**

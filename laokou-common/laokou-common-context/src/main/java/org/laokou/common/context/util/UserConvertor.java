@@ -15,20 +15,35 @@
  *
  */
 
-package org.laokou.auth;
+package org.laokou.common.context.util;
 
-import org.springframework.boot.WebApplicationType;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.laokou.common.i18n.util.SpringContextUtils;
 
 /**
  * @author laokou
  */
-@SpringBootApplication(scanBasePackages = "org.laokou")
-class AppTest {
+public final class UserConvertor {
 
-	public static void main(String[] args) {
-		new SpringApplicationBuilder(AppTest.class).web(WebApplicationType.SERVLET).run(args);
+	static UserExtDetails toUserDetails() {
+		return SpringContextUtils.getBean(UserExtDetails.class);
+	}
+
+	public static UserExtDetails toUserDetails(User user) {
+		return toUserDetails().toBuilder()
+			.id(user.id())
+			.username(user.username())
+			.password(user.password())
+			.avatar(user.avatar())
+			.superAdmin(user.superAdmin())
+			.tenantId(user.tenantId())
+			.permissions(user.permissions())
+			.status(user.status())
+			.mail(user.mail())
+			.mobile(user.mobile())
+			.build()
+			.decryptUsername()
+			.decryptMail()
+			.decryptMobile();
 	}
 
 }

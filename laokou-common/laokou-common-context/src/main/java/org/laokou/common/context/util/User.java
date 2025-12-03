@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import lombok.Builder;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.Authentication;
@@ -28,7 +29,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.io.Serializable;
-import java.security.Principal;
 import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -36,6 +36,7 @@ import java.util.stream.Collectors;
 /**
  * @param id 用户ID.
  * @param username 用户名.
+ * @param password 密码.
  * @param avatar 头像.
  * @param superAdmin 超级管理员标识.
  * @param status 用户状态 0启用 1禁用.
@@ -45,18 +46,19 @@ import java.util.stream.Collectors;
  * @param permissions 菜单权限标识集合.
  * @author laokou
  */
+@Builder
 @JsonTypeName("User")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
 		isGetterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
-public record User(Long id, String username, String avatar, Boolean superAdmin, Integer status, String mail,
-		String mobile, Long tenantId, Set<String> permissions) implements Authentication, Principal, Serializable {
+public record User(Long id, String username, String password, String avatar, Boolean superAdmin, Integer status,
+		String mail, String mobile, Long tenantId, Set<String> permissions) implements Authentication, Serializable {
 
 	@Override
 	@NullMarked
 	public String getName() {
-		return username;
+		return this.username;
 	}
 
 	@Override
@@ -67,17 +69,17 @@ public record User(Long id, String username, String avatar, Boolean superAdmin, 
 
 	@Override
 	public @Nullable Object getCredentials() {
-		return null;
+		return this.username;
 	}
 
 	@Override
 	public @Nullable Object getDetails() {
-		return username;
+		return this.username;
 	}
 
 	@Override
 	public @Nullable Object getPrincipal() {
-		return username;
+		return this.username;
 	}
 
 	@Override

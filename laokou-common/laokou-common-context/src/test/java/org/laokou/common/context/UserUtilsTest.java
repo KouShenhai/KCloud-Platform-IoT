@@ -21,6 +21,7 @@ import org.assertj.core.api.Assertions;
 import org.jspecify.annotations.NullMarked;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.context.util.User;
+import org.laokou.common.context.util.UserConvertor;
 import org.laokou.common.context.util.UserExtDetails;
 import org.laokou.common.context.util.UserUtils;
 import org.laokou.common.crypto.util.AESUtils;
@@ -70,22 +71,32 @@ class UserUtilsTest {
 
 		@Override
 		public Object getCredentials() {
-			return null;
+			try {
+				return AESUtils.encrypt("admin");
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
 		}
 
 		@Override
 		public Object getDetails() {
-			return null;
+			try {
+				return AESUtils.encrypt("admin");
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
 		}
 
 		@Override
 		public Object getPrincipal() {
 			try {
-				User user = new User(1L, AESUtils.encrypt("admin"),
+				User user = new User(1L, AESUtils.encrypt("admin"), "admin123",
 						"https://youke1.picui.cn/s1/2025/07/20/687ca202b2c53.jpg", true, 0,
 						AESUtils.encrypt("2413176044@qq.com"), AESUtils.encrypt("13574411111"), 0L,
 						Set.of("test:save"));
-				return SpringContextUtils.getBeanProvider(UserExtDetails.class).toUserDetail(user);
+				return UserConvertor.toUserDetails(user);
 			}
 			catch (Exception e) {
 				throw new RuntimeException(e);
@@ -104,7 +115,12 @@ class UserUtilsTest {
 
 		@Override
 		public String getName() {
-			return "laokou";
+			try {
+				return AESUtils.encrypt("admin");
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
 		}
 
 	}
