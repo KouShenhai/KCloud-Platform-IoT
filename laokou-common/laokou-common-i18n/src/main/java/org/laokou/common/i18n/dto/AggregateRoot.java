@@ -27,12 +27,17 @@ import java.time.Instant;
  *
  * @author laokou
  */
+@Getter
 public abstract class AggregateRoot extends Identifier {
 
 	/**
 	 * 创建时间.
 	 */
-	@Getter
-	protected final Instant createTime = InstantUtils.now();
+	protected final Instant createTime;
+
+	protected AggregateRoot(Long id) {
+		super(id);
+		this.createTime = InstantUtils.now();
+	}
 
 }

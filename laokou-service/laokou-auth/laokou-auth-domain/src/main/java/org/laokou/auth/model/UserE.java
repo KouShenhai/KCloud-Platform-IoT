@@ -17,11 +17,15 @@
 
 package org.laokou.auth.model;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.annotation.Entity;
-import org.laokou.common.i18n.dto.Identifier;
 import org.laokou.common.i18n.util.ObjectUtils;
+
+import java.io.Serializable;
 
 /**
  * 用户实体.
@@ -29,62 +33,55 @@ import org.laokou.common.i18n.util.ObjectUtils;
  * @author laokou
  */
 @Entity
-public class UserE extends Identifier {
+@Getter
+@Builder(toBuilder = true)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class UserE implements Serializable {
+
+	/**
+	 * ID.
+	 */
+	private Long id;
 
 	/**
 	 * 用户名.
 	 */
-	@Setter
-	@Getter
 	private String username;
 
 	/**
 	 * 用户密码.
 	 */
-	@Setter
-	@Getter
 	private String password;
 
 	/**
 	 * 超级管理员标识 0否 1是.
 	 */
-	@Setter
-	@Getter
 	private Integer superAdmin;
 
 	/**
 	 * 用户头像.
 	 */
-	@Setter
-	@Getter
 	private Long avatar;
 
 	/**
 	 * 用户邮箱.
 	 */
-	@Setter
-	@Getter
 	private String mail;
 
 	/**
 	 * 用户状态 0启用 1禁用.
 	 */
-	@Setter
-	@Getter
 	private Integer status;
 
 	/**
 	 * 用户手机号.
 	 */
-	@Setter
-	@Getter
 	private String mobile;
 
 	/**
 	 * 租户ID.
 	 */
-	@Setter
-	@Getter
 	private Long tenantId;
 
 	public boolean isSuperAdministrator() {

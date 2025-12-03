@@ -48,17 +48,18 @@ public final class UserConvertor {
 	}
 
 	public static UserE toEntity(UserDO userDO) {
-		UserE userE = DomainFactory.getUser();
-		userE.setId(userDO.getId());
-		userE.setUsername(userDO.getUsername());
-		userE.setPassword(userDO.getPassword());
-		userE.setSuperAdmin(userDO.getSuperAdmin());
-		userE.setAvatar(userDO.getAvatar());
-		userE.setMail(userDO.getMail());
-		userE.setStatus(userDO.getStatus());
-		userE.setMobile(userDO.getMobile());
-		userE.setTenantId(userDO.getTenantId());
-		return userE;
+		return DomainFactory.getUser()
+			.toBuilder()
+			.id(userDO.getId())
+			.username(userDO.getUsername())
+			.password(userDO.getPassword())
+			.superAdmin(userDO.getSuperAdmin())
+			.avatar(userDO.getAvatar())
+			.mail(userDO.getMail())
+			.status(userDO.getStatus())
+			.mobile(userDO.getMobile())
+			.tenantId(userDO.getTenantId())
+			.build();
 	}
 
 	public static UserDO toDataObject(UserE userE) {

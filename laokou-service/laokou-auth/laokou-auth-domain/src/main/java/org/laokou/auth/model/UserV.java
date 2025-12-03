@@ -15,27 +15,15 @@
  *
  */
 
-package org.laokou.common.i18n.dto;
-
-import lombok.Getter;
-
-import java.io.Serializable;
+package org.laokou.auth.model;
 
 /**
- * 标识.
+ * 用户值对象.
  *
  * @author laokou
+ * @param username 用户名.
+ * @param mail 邮箱.
+ * @param mobile 手机号.
  */
-@Getter
-public abstract class Identifier implements Serializable {
-
-	/**
-	 * ID.
-	 */
-	protected final Long id;
-
-	protected Identifier(Long id) {
-		this.id = id;
-	}
-
+public record UserV(String username, String mail, String mobile) {
 }

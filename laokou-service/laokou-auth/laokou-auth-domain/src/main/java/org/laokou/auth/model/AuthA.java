@@ -44,6 +44,7 @@ import java.util.function.Supplier;
  * @author laokou
  */
 @Entity
+@Getter
 public class AuthA extends AggregateRoot {
 
 	@Serial
@@ -52,22 +53,16 @@ public class AuthA extends AggregateRoot {
 	/**
 	 * 用户名.
 	 */
-	@Setter
-	@Getter
 	private String username;
 
 	/**
 	 * 用户密码.
 	 */
-	@Setter
-	@Getter
 	private String password;
 
 	/**
 	 * 租户编码.
 	 */
-	@Setter
-	@Getter
 	private String tenantCode;
 
 	// @formatter:off
@@ -80,34 +75,27 @@ public class AuthA extends AggregateRoot {
 	 * test测试
 	 */
 	// @formatter:on
-	@Setter
-	@Getter
 	private GrantTypeEnum grantTypeEnum;
 
 	/**
 	 * 验证码值对象.
 	 */
-	@Setter
-	@Getter
 	private transient CaptchaV captcha;
-
-	/**
-	 * 用户实体.
-	 */
-	@Getter
-	private UserE user = DomainFactory.getUser();
 
 	/**
 	 * 菜单权限标识.
 	 */
-	@Getter
 	private Set<String> permissions;
 
 	/**
 	 * 头像.
 	 */
-	@Getter
 	private String avatar;
+
+	/**
+	 * 用户实体.
+	 */
+	private UserE user;
 
 	/**
 	 * 密码校验器.
@@ -138,7 +126,8 @@ public class AuthA extends AggregateRoot {
                  @Qualifier("mobileAuthParamValidator") AuthParamValidator mobileAuthParamValidator,
                  @Qualifier("testAuthParamValidator") AuthParamValidator testAuthParamValidator,
                  @Qualifier("usernamePasswordAuthParamValidator") AuthParamValidator usernamePasswordAuthParamValidator) {
-		this.id = idGenerator.getId();
+		super(idGenerator.getId());
+		this.user = DomainFactory.getUser();
 		this.passwordValidator = passwordValidator;
 		this.captchaValidator = captchaValidator;
 		this.authorizationCodeAuthParamValidator = authorizationCodeAuthParamValidator;
