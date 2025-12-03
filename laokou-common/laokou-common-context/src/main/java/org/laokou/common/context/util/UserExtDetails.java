@@ -68,6 +68,11 @@ public final class UserExtDetails implements UserDetails, OAuth2AuthenticatedPri
 	private String username;
 
 	/**
+	 * 密码.
+	 */
+	private transient String password;
+
+	/**
 	 * 头像.
 	 */
 	private String avatar;
@@ -91,11 +96,6 @@ public final class UserExtDetails implements UserDetails, OAuth2AuthenticatedPri
 	 * 手机号.
 	 */
 	private String mobile;
-
-	/**
-	 * 密码.
-	 */
-	private transient String password;
 
 	/**
 	 * 租户ID.
