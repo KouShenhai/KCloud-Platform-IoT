@@ -22,8 +22,6 @@ import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.UserE;
 import org.laokou.common.context.util.User;
-import org.laokou.common.context.util.UserExtDetails;
-import org.laokou.common.i18n.util.SpringContextUtils;
 
 /**
  * @author laokou
@@ -33,14 +31,20 @@ public final class UserConvertor {
 	private UserConvertor() {
 	}
 
-	public static UserExtDetails toUserDetails(User user) {
-		return SpringContextUtils.getBeanProvider(UserExtDetails.class).toUserDetail(user);
-	}
-
 	public static User toUser(AuthA auth) {
 		UserE userE = auth.getUser();
-		return new User(userE.getId(), userE.getUsername(), auth.getAvatar(), userE.isSuperAdministrator(),
-				userE.getStatus(), userE.getMail(), userE.getMobile(), userE.getTenantId(), auth.getPermissions());
+		return User.builder()
+			.id(userE.getId())
+			.username(userE.getUsername())
+			.password(userE.getPassword())
+			.avatar(auth.getAvatar())
+			.superAdmin(userE.isSuperAdministrator())
+			.tenantId(userE.getTenantId())
+			.permissions(auth.getPermissions())
+			.status(userE.getStatus())
+			.mail(userE.getMail())
+			.mobile(userE.getMobile())
+			.build();
 	}
 
 	public static UserE toEntity(UserDO userDO) {

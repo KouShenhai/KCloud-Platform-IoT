@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import lombok.Builder;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.Authentication;
@@ -45,13 +46,15 @@ import java.util.stream.Collectors;
  * @param permissions 菜单权限标识集合.
  * @author laokou
  */
+@Builder
 @JsonTypeName("User")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
 		isGetterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
-public record User(Long id, String username, String avatar, Boolean superAdmin, Integer status, String mail,
-		String mobile, Long tenantId, Set<String> permissions) implements Authentication, Principal, Serializable {
+public record User(Long id, String username, String password, String avatar, Boolean superAdmin, Integer status,
+		String mail, String mobile, Long tenantId,
+		Set<String> permissions) implements Authentication, Principal, Serializable {
 
 	@Override
 	@NullMarked
@@ -67,7 +70,7 @@ public record User(Long id, String username, String avatar, Boolean superAdmin, 
 
 	@Override
 	public @Nullable Object getCredentials() {
-		return null;
+		return username;
 	}
 
 	@Override

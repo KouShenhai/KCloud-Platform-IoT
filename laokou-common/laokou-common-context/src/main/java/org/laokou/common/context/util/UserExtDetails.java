@@ -17,14 +17,16 @@
 
 package org.laokou.common.context.util;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import org.jspecify.annotations.NonNull;
+import lombok.NoArgsConstructor;
 import org.jspecify.annotations.NullMarked;
 import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.i18n.annotation.Entity;
-import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.BizException;
-import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -43,48 +45,36 @@ import java.util.stream.Collectors;
  * @author laokou
  */
 @Entity
+@Getter
+@Builder(toBuilder = true)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
 public final class UserExtDetails implements UserDetails, OAuth2AuthenticatedPrincipal, Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 3319752558160144611L;
 
 	/**
-	 * 用户名解密失败.
-	 */
-	private static final String USERNAME_AES_DECRYPT_FAIL = "B_User_UsernameAESDecryptFail";
-
-	/**
-	 * 手机号解密失败.
-	 */
-	private static final String MOBILE_AES_DECRYPT_FAIL = "B_User_MobileAESDecryptFail";
-
-	/**
-	 * 邮箱解密失败.
-	 */
-	private static final String MAIL_AES_DECRYPT_FAIL = "B_User_MailAESDecryptFail";
-
-	/**
 	 * 用户ID.
 	 */
-	@Getter
+	@EqualsAndHashCode.Include
 	private Long id;
 
 	/**
 	 * 用户名.
 	 */
-	@Getter
+	@EqualsAndHashCode.Include
 	private String username;
 
 	/**
 	 * 头像.
 	 */
-	@Getter
 	private String avatar;
 
 	/**
 	 * 超级管理员标识.
 	 */
-	@Getter
 	private Boolean superAdmin;
 
 	/**
@@ -105,84 +95,18 @@ public final class UserExtDetails implements UserDetails, OAuth2AuthenticatedPri
 	/**
 	 * 密码.
 	 */
-	@Getter
 	private transient String password;
 
 	/**
 	 * 租户ID.
 	 */
-	@Getter
+	@EqualsAndHashCode.Include
 	private Long tenantId;
 
 	/**
 	 * 菜单权限标识集合.
 	 */
-	@Getter
 	private Set<String> permissions;
-
-	public UserExtDetails toUserDetail(@NonNull User user) {
-		this.id = user.id();
-		this.username = getDecryptUsername(user.username());
-		this.avatar = user.avatar();
-		this.superAdmin = user.superAdmin();
-		this.status = user.status();
-		this.mail = getDecryptMail(user.mail());
-		this.mobile = getDecryptMobile(user.mobile());
-		this.password = StringConstants.EMPTY;
-		this.tenantId = user.tenantId();
-		this.permissions = user.permissions();
-		return this;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (ObjectUtils.isNull(o) || getClass() != o.getClass()) {
-			return false;
-		}
-		UserExtDetails that = (UserExtDetails) o;
-		if (!ObjectUtils.equals(id, that.id)) {
-			return false;
-		}
-		if (!ObjectUtils.equals(username, that.username)) {
-			return false;
-		}
-		if (!ObjectUtils.equals(avatar, that.avatar)) {
-			return false;
-		}
-		if (!ObjectUtils.equals(superAdmin, that.superAdmin)) {
-			return false;
-		}
-		if (!ObjectUtils.equals(status, that.status)) {
-			return false;
-		}
-		if (!ObjectUtils.equals(permissions, that.permissions)) {
-			return false;
-		}
-		if (!ObjectUtils.equals(tenantId, that.tenantId)) {
-			return false;
-		}
-		if (!ObjectUtils.equals(mobile, that.mobile)) {
-			return false;
-		}
-		return ObjectUtils.equals(mail, that.mail);
-	}
-
-	@Override
-	public int hashCode() {
-		int result = id.hashCode();
-		result = 31 * result + username.hashCode();
-		result = 31 * result + avatar.hashCode();
-		result = 31 * result + superAdmin.hashCode();
-		result = 31 * result + status.hashCode();
-		result = 31 * result + permissions.hashCode();
-		result = 31 * result + tenantId.hashCode();
-		result = 31 * result + mail.hashCode();
-		result = 31 * result + mobile.hashCode();
-		return result;
-	}
 
 	@Override
 	@NullMarked
@@ -225,40 +149,40 @@ public final class UserExtDetails implements UserDetails, OAuth2AuthenticatedPri
 		return this.username;
 	}
 
-	public String getDecryptUsername(String username) {
-		if (StringExtUtils.isNotEmpty(username)) {
+	UserExtDetails decryptUsername() {
+		if (StringExtUtils.isNotEmpty(this.username)) {
 			try {
-				return AESUtils.decrypt(username);
+				this.username = AESUtils.decrypt(this.username);
 			}
 			catch (Exception ex) {
-				throw new BizException(USERNAME_AES_DECRYPT_FAIL, ex);
+				throw new BizException("B_User_UsernameAESDecryptFail", ex);
 			}
 		}
-		return username;
+		return this;
 	}
 
-	public String getDecryptMail(String mail) {
-		if (StringExtUtils.isNotEmpty(mail)) {
+	UserExtDetails decryptMail() {
+		if (StringExtUtils.isNotEmpty(this.mail)) {
 			try {
-				return AESUtils.decrypt(mail);
+				this.mail = AESUtils.decrypt(this.mail);
 			}
 			catch (Exception ex) {
-				throw new BizException(MAIL_AES_DECRYPT_FAIL, ex);
+				throw new BizException("B_User_MailAESDecryptFail", ex);
 			}
 		}
-		return mail;
+		return this;
 	}
 
-	public String getDecryptMobile(String mobile) {
-		if (StringExtUtils.isNotEmpty(mobile)) {
+	UserExtDetails decryptMobile() {
+		if (StringExtUtils.isNotEmpty(this.mobile)) {
 			try {
-				return AESUtils.decrypt(mobile);
+				this.mobile = AESUtils.decrypt(this.mobile);
 			}
 			catch (Exception ex) {
-				throw new BizException(MOBILE_AES_DECRYPT_FAIL, ex);
+				throw new BizException("B_User_MobileAESDecryptFail", ex);
 			}
 		}
-		return mobile;
+		return this;
 	}
 
 }
