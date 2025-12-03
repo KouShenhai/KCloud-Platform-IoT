@@ -29,7 +29,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.io.Serializable;
-import java.security.Principal;
 import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -54,8 +53,7 @@ import java.util.stream.Collectors;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
 		isGetterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
 public record User(Long id, String username, String password, String avatar, Boolean superAdmin, Integer status,
-		String mail, String mobile, Long tenantId,
-		Set<String> permissions) implements Authentication, Principal, Serializable {
+		String mail, String mobile, Long tenantId, Set<String> permissions) implements Authentication, Serializable {
 
 	@Override
 	@NullMarked

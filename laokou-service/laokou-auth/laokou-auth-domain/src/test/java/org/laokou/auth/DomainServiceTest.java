@@ -58,7 +58,7 @@ import java.util.Set;
  *
  * @author laokou
  */
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, classes = AuthATest.AuthATestConfig.class)
 class DomainServiceTest {
 
 	@MockitoBean
