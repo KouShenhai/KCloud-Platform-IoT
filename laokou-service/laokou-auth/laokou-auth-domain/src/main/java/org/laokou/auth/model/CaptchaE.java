@@ -17,7 +17,11 @@
 
 package org.laokou.auth.model;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.exception.BizException;
@@ -30,33 +34,29 @@ import org.springframework.beans.factory.annotation.Qualifier;
  * @author laokou
  */
 @Entity
-public class CaptchaE extends Identifier {
+@Getter
+public class CaptchaE {
 
-	@Setter
-	@Getter
+	private final Long id;
+
 	private String uuid;
 
-	@Setter
-	@Getter
 	private SendCaptchaTypeEnum sendCaptchaTypeEnum;
 
-	@Setter
-	@Getter
 	private String tenantCode;
 
-	@Getter
 	private Long tenantId;
 
 	private final CaptchaParamValidator mailCaptchaParamValidator;
 
 	private final CaptchaParamValidator mobileCaptchaParamValidator;
 
-	public CaptchaE(@Qualifier("mailCaptchaParamValidator") CaptchaParamValidator mailCaptchaParamValidator,
-			@Qualifier("mobileCaptchaParamValidator") CaptchaParamValidator mobileCaptchaParamValidator,
-			IdGenerator idGenerator) {
+	public CaptchaE(IdGenerator idGenerator,
+			@Qualifier("mailCaptchaParamValidator") CaptchaParamValidator mailCaptchaParamValidator,
+			@Qualifier("mobileCaptchaParamValidator") CaptchaParamValidator mobileCaptchaParamValidator) {
+		this.id = idGenerator.getId();
 		this.mailCaptchaParamValidator = mailCaptchaParamValidator;
 		this.mobileCaptchaParamValidator = mobileCaptchaParamValidator;
-		super.id = idGenerator.getId();
 	}
 
 	public void getTenantId(Long tenantId) {

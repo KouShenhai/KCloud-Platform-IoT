@@ -21,6 +21,7 @@ import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.UserE;
+import org.laokou.auth.model.UserV;
 import org.laokou.common.context.util.User;
 
 /**
@@ -32,15 +33,16 @@ public final class UserConvertor {
 	}
 
 	public static User toUser(AuthA auth) {
-		UserE userE = auth.getUser();
+		UserE userE = auth.getUserE();
+		UserV userV = auth.getUserV();
 		return User.builder()
 			.id(userE.getId())
 			.username(userE.getUsername())
 			.password(userE.getPassword())
-			.avatar(auth.getAvatar())
+			.avatar(userV.avatar())
 			.superAdmin(userE.isSuperAdministrator())
 			.tenantId(userE.getTenantId())
-			.permissions(auth.getPermissions())
+			.permissions(userV.permissions())
 			.status(userE.getStatus())
 			.mail(userE.getMail())
 			.mobile(userE.getMobile())
@@ -62,18 +64,12 @@ public final class UserConvertor {
 			.build();
 	}
 
-	public static UserDO toDataObject(UserE userE) {
+	public static UserDO toDataObject(UserV userV) {
 		UserDO userDO = new UserDO();
-		userDO.setId(userE.getId());
-		userDO.setTenantId(userE.getTenantId());
-		userDO.setUsername(userE.getUsername());
-		userDO.setPassword(userE.getPassword());
-		userDO.setSuperAdmin(userE.getSuperAdmin());
-		userDO.setAvatar(userE.getAvatar());
-		userDO.setMail(userE.getMail());
-		userDO.setStatus(userE.getStatus());
-		userDO.setMobile(userE.getMobile());
-		userDO.setTenantId(userE.getTenantId());
+		userDO.setUsername(userV.username());
+		userDO.setMail(userV.mail());
+		userDO.setMobile(userV.mobile());
+		userDO.setTenantId(userV.tenantId());
 		return userDO;
 	}
 

@@ -75,13 +75,13 @@ public class DomainService {
 		// 校验认证参数
 		authA.checkAuthParam();
 		// 获取租户ID
-		authA.getTenantId(() -> tenantGateway.getTenantId(authA.getTenantCode()));
+		authA.getTenantId(() -> tenantGateway.getTenantId(authA.getUserV().tenantCode()));
 		// 校验租户ID
 		authA.checkTenantId();
 		// 校验验证码
 		authA.checkCaptcha();
 		// 获取用户信息
-		authA.getUserInfo(userGateway.getUserProfile(authA.getUser()));
+		authA.getUserInfo(userGateway.getUserProfile(authA.getUserV()));
 		// 校验用户名
 		authA.checkUsername();
 		// 校验密码
@@ -89,11 +89,11 @@ public class DomainService {
 		// 校验用户状态
 		authA.checkUserStatus();
 		// 获取菜单权限标识集合
-		authA.getMenuPermissions(menuGateway.getMenuPermissions(authA.getUser()));
+		authA.getMenuPermissions(menuGateway.getMenuPermissions(authA.getUserE()));
 		// 校验菜单权限标识集合
 		authA.checkMenuPermissions();
 		// 获取用户头像
-		authA.getUserAvatar(ossLogGateway.getOssUrl(authA.getUser().getAvatar()));
+		authA.getUserAvatar(ossLogGateway.getOssUrl(authA.getUserE().getAvatar()));
 	}
 
 }

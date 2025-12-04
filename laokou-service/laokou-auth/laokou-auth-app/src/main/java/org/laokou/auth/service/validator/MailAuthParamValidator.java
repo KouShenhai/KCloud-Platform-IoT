@@ -38,11 +38,11 @@ public class MailAuthParamValidator implements AuthParamValidator {
 
 		ParamValidator.validate(
 				// 校验租户编码
-				OAuth2ParamValidator.validateTenantCode(auth.getTenantCode()),
+				OAuth2ParamValidator.validateTenantCode(auth.getUserV().tenantCode()),
 				// 校验验证码
-				OAuth2ParamValidator.validateCaptcha(auth.getCaptcha().captcha()),
+				OAuth2ParamValidator.validateCaptcha(auth.getCaptchaV().captcha()),
 				// 校验邮箱
-				OAuth2ParamValidator.validateMail(auth.getCaptcha().uuid()));
+				OAuth2ParamValidator.validateMail(auth.getCaptchaV().uuid()));
 	}
 
 }

@@ -21,6 +21,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.laokou.auth.convertor.AuthConvertor;
+import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.Constants;
 import org.laokou.auth.model.GrantTypeEnum;
@@ -55,13 +56,7 @@ final class OAuth2MobileAuthenticationProvider extends AbstractOAuth2Authenticat
 
 	@Override
 	Authentication getPrincipal(HttpServletRequest request) throws Exception {
-		String code = request.getParameter(Constants.CODE);
-		String mobile = request.getParameter(Constants.MOBILE);
-		String tenantCode = request.getParameter(Constants.TENANT_CODE);
-		AuthA authA = AuthConvertor.toEntity(StringConstants.EMPTY, StringConstants.EMPTY, tenantCode,
-				GrantTypeEnum.MOBILE, code, mobile);
-		authA.createUserByMobile();
-		return authentication(authA, request);
+		return authentication(DomainFactory.getAuth().createUserVByMobile(), request);
 	}
 
 	@Override

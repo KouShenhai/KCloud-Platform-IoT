@@ -37,11 +37,11 @@ public class AuthorizationCodeAuthParamValidator implements AuthParamValidator {
 	public void validateAuth(AuthA auth) {
 		ParamValidator.validate(
 				// 校验租户编码
-				OAuth2ParamValidator.validateTenantCode(auth.getTenantCode()),
+				OAuth2ParamValidator.validateTenantCode(auth.getUserV().tenantCode()),
 				// 校验用户名
-				OAuth2ParamValidator.validateUsername(auth.getUsername()),
+				OAuth2ParamValidator.validateUsername(auth.getUserV().username()),
 				// 校验密码
-				OAuth2ParamValidator.validatePassword(auth.getPassword()));
+				OAuth2ParamValidator.validatePassword(auth.getUserV().password()));
 	}
 
 }
