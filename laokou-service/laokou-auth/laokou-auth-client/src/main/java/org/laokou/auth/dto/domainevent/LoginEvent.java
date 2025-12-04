@@ -18,6 +18,7 @@
 package org.laokou.auth.dto.domainevent;
 
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 import org.laokou.common.i18n.dto.DomainEvent;
 
 import java.io.Serial;
@@ -29,6 +30,7 @@ import java.time.Instant;
  * @author laokou
  */
 @Getter
+@SuperBuilder(toBuilder = true)
 public final class LoginEvent extends DomainEvent {
 
 	@Serial
@@ -78,22 +80,5 @@ public final class LoginEvent extends DomainEvent {
 	 * 登录时间.
 	 */
 	private final Instant loginTime;
-
-	public LoginEvent(final Long id, final String username, final String ip, final String address, final String browser,
-			final String os, final Integer status, final String errorMessage, final String type,
-			final Instant loginTime, final Long tenantId, final Long userId) {
-		super.id = id;
-		super.userId = userId;
-		super.tenantId = tenantId;
-		this.username = username;
-		this.ip = ip;
-		this.address = address;
-		this.browser = browser;
-		this.os = os;
-		this.status = status;
-		this.errorMessage = errorMessage;
-		this.type = type;
-		this.loginTime = loginTime;
-	}
 
 }

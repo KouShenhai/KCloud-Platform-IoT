@@ -18,20 +18,16 @@
 package org.laokou.auth.dto.domainevent;
 
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 import org.laokou.common.i18n.dto.DomainEvent;
 
 /**
  * @author laokou
  */
 @Getter
+@SuperBuilder(toBuilder = true)
 public final class SendCaptchaEvent extends DomainEvent {
 
 	private final String uuid;
-
-	public SendCaptchaEvent(final Long id, final String uuid, final Long tenantId) {
-		super.id = id;
-		super.tenantId = tenantId;
-		this.uuid = uuid;
-	}
 
 }

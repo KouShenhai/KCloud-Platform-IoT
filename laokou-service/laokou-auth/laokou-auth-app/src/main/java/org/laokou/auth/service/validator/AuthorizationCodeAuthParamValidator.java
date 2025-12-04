@@ -19,6 +19,7 @@ package org.laokou.auth.service.validator;
 
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.AuthParamValidator;
+import org.laokou.auth.model.UserV;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.springframework.stereotype.Component;
 
@@ -34,14 +35,15 @@ public class AuthorizationCodeAuthParamValidator implements AuthParamValidator {
 	private static final long serialVersionUID = 3319752558160144613L;
 
 	@Override
-	public void validateAuth(AuthA auth) {
+	public void validateAuth(AuthA authA) {
+		UserV userV = authA.getUserV();
 		ParamValidator.validate(
 				// 校验租户编码
-				OAuth2ParamValidator.validateTenantCode(auth.getUserV().tenantCode()),
+				OAuth2ParamValidator.validateTenantCode(userV.tenantCode()),
 				// 校验用户名
-				OAuth2ParamValidator.validateUsername(auth.getUserV().username()),
+				OAuth2ParamValidator.validateUsername(userV.username()),
 				// 校验密码
-				OAuth2ParamValidator.validatePassword(auth.getUserV().password()));
+				OAuth2ParamValidator.validatePassword(userV.password()));
 	}
 
 }

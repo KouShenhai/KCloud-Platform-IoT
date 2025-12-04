@@ -17,8 +17,10 @@
 
 package org.laokou.auth.service.validator;
 
-import org.laokou.auth.model.CaptchaE;
+import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.CaptchaParamValidator;
+import org.laokou.auth.model.CaptchaV;
+import org.laokou.auth.model.UserV;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.springframework.stereotype.Component;
 
@@ -34,12 +36,14 @@ public class MobileCaptchaParamValidator implements CaptchaParamValidator {
 	private static final long serialVersionUID = 3319752558160144617L;
 
 	@Override
-	public void validateCaptcha(CaptchaE captcha) {
+	public void validateCaptcha(AuthA authA) {
+		UserV userV = authA.getUserV();
+		CaptchaV captchaV = authA.getCaptchaV();
 		ParamValidator.validate(
 				// 校验租户编码
-				OAuth2ParamValidator.validateTenantCode(captcha.getTenantCode()),
+				OAuth2ParamValidator.validateTenantCode(userV.tenantCode()),
 				// 校验手机号
-				OAuth2ParamValidator.validateMobile(captcha.getUuid()));
+				OAuth2ParamValidator.validateMobile(captchaV.uuid()));
 	}
 
 }

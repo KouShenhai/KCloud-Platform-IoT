@@ -19,9 +19,11 @@ package org.laokou.auth.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.ability.DomainService;
-import org.laokou.auth.convertor.CaptchaConvertor;
+import org.laokou.auth.convertor.AuthConvertor;
 import org.laokou.auth.dto.CaptchaSendCmd;
-import org.laokou.auth.model.CaptchaE;
+import org.laokou.auth.dto.clientobject.CaptchaCO;
+import org.laokou.auth.factory.DomainFactory;
+import org.laokou.auth.model.AuthA;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.springframework.scheduling.annotation.Async;
@@ -41,11 +43,12 @@ public class CaptchaSendCmdExe {
 	@Async
 	@CommandLog
 	public void executeVoid(CaptchaSendCmd cmd) {
-		CaptchaE captchaE = CaptchaConvertor.toEntity(cmd.getCo());
-		domainService.createSendCaptchaInfo(captchaE);
+		CaptchaCO co = cmd.getCo();
+		AuthA authA = DomainFactory.getAuth().createCaptchaV(co.getUuid(), co.getTag(), co.getTenantCode());
+		domainService.sendCaptcha(authA);
 		// 发布领域事件
-		kafkaDomainEventPublisher.publish(captchaE.getSendCaptchaTypeEnum().getMqTopic(),
-				CaptchaConvertor.toDomainEvent(captchaE));
+		kafkaDomainEventPublisher.publish(authA.getSendCaptchaTypeEnum().getMqTopic(),
+				AuthConvertor.toDomainEvent(authA));
 	}
 
 }

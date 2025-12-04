@@ -25,6 +25,6 @@ import java.io.Serializable;
 @FunctionalInterface
 public interface AuthParamValidator extends Serializable {
 
-	void validateAuth(AuthA auth);
+	void validateAuth(AuthA authA);
 
 }

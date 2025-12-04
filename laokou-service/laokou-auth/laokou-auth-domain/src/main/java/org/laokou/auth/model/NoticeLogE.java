@@ -17,22 +17,29 @@
 
 package org.laokou.auth.model;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.laokou.common.i18n.annotation.Entity;
-import org.laokou.common.i18n.dto.Identifier;
 
 import java.time.Instant;
 
 /**
  * @author laokou
  */
-@Setter
-@Getter
 @Entity
-@NoArgsConstructor
-public class NoticeLogE extends Identifier {
+@Getter
+@Builder(toBuilder = true)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class NoticeLogE {
+
+	/**
+	 * 编号.
+	 */
+	private Long id;
 
 	/**
 	 * 编码.

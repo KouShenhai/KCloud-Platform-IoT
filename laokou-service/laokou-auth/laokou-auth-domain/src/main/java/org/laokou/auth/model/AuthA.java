@@ -63,6 +63,11 @@ public class AuthA extends AggregateRoot {
 	private GrantTypeEnum grantTypeEnum;
 
 	/**
+	 * 发送验证码类型.
+	 */
+	private SendCaptchaTypeEnum sendCaptchaTypeEnum;
+
+	/**
 	 * 用户值对象.
 	 */
 	private transient UserV userV;
@@ -117,6 +122,16 @@ public class AuthA extends AggregateRoot {
 	 */
 	private final AuthParamValidator usernamePasswordAuthParamValidator;
 
+	/**
+	 * 邮箱验证码校验器.
+	 */
+	private final CaptchaParamValidator mailCaptchaParamValidator;
+
+	/**
+	 * 手机验证码校验器.
+	 */
+	private final CaptchaParamValidator mobileCaptchaParamValidator;
+
 	// @formatter:off
 	public AuthA(IdGenerator idGenerator,
 				 HttpRequest httpRequest,
@@ -126,7 +141,9 @@ public class AuthA extends AggregateRoot {
                  @Qualifier("mailAuthParamValidator") AuthParamValidator mailAuthParamValidator,
                  @Qualifier("mobileAuthParamValidator") AuthParamValidator mobileAuthParamValidator,
                  @Qualifier("testAuthParamValidator") AuthParamValidator testAuthParamValidator,
-                 @Qualifier("usernamePasswordAuthParamValidator") AuthParamValidator usernamePasswordAuthParamValidator) {
+                 @Qualifier("usernamePasswordAuthParamValidator") AuthParamValidator usernamePasswordAuthParamValidator,
+				 @Qualifier("mailCaptchaParamValidator") CaptchaParamValidator mailCaptchaParamValidator,
+				 @Qualifier("mobileCaptchaParamValidator") CaptchaParamValidator mobileCaptchaParamValidator) {
 		super(idGenerator.getId());
 		this.parameterMap = httpRequest.getParameterMap();
 		this.userE = DomainFactory.getUser();
@@ -137,6 +154,8 @@ public class AuthA extends AggregateRoot {
 		this.mobileAuthParamValidator = mobileAuthParamValidator;
 		this.testAuthParamValidator = testAuthParamValidator;
 		this.usernamePasswordAuthParamValidator = usernamePasswordAuthParamValidator;
+		this.mailCaptchaParamValidator = mailCaptchaParamValidator;
+		this.mobileCaptchaParamValidator = mobileCaptchaParamValidator;
 	}
 	// @formatter:on
 
@@ -173,6 +192,13 @@ public class AuthA extends AggregateRoot {
 		return this;
 	}
 
+	public AuthA createCaptchaV(String uuid, String tag, String tenantCode) {
+		this.sendCaptchaTypeEnum = SendCaptchaTypeEnum.getByCode(tag);
+		this.captchaV = CaptchaV.builder().uuid(uuid).build();
+		this.userV = UserV.builder().tenantCode(tenantCode).build();
+		return this;
+	}
+
 	public void getTenantId(Supplier<Long> supplier) {
 		if (isDefaultTenant()) {
 			this.userV = this.userV.toBuilder().tenantId(0L).build();
@@ -188,6 +214,15 @@ public class AuthA extends AggregateRoot {
 
 	public void getMenuPermissions(Set<String> permissions) {
 		this.userV = this.userV.toBuilder().permissions(permissions).build();
+	}
+
+	public void checkCaptchaParam() {
+		switch (sendCaptchaTypeEnum) {
+			case SEND_MAIL_CAPTCHA -> this.mailCaptchaParamValidator.validateCaptcha(this);
+			case SEND_MOBILE_CAPTCHA -> this.mobileCaptchaParamValidator.validateCaptcha(this);
+			default -> {
+			}
+		}
 	}
 
 	public void checkAuthParam() {

@@ -20,7 +20,6 @@ package org.laokou.common.i18n.dto;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.io.Serial;
@@ -33,15 +32,16 @@ import java.io.Serializable;
  */
 @Getter
 @SuperBuilder(toBuilder = true)
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class DomainEvent implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 1532877866226749304L;
 
-	protected Long userId;
+	private final Long id;
 
-	protected Long tenantId;
+	protected final Long userId;
+
+	protected final Long tenantId;
 
 }
