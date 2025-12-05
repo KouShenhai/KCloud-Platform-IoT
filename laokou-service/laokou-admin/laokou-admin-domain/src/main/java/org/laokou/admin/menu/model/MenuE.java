@@ -101,7 +101,8 @@ public class MenuE extends Identifier {
 	public MenuE(@Qualifier("saveMenuParamValidator") MenuParamValidator saveMenuParamValidator,
 			@Qualifier("modifyMenuParamValidator") MenuParamValidator modifyMenuParamValidator,
 			IdGenerator idGenerator) {
-		this.saveMenuParamValidator = saveMenuParamValidator;
+        super();
+        this.saveMenuParamValidator = saveMenuParamValidator;
 		this.modifyMenuParamValidator = modifyMenuParamValidator;
 		this.idGenerator = idGenerator;
 	}

@@ -65,7 +65,11 @@ public class OssE extends Identifier {
 	@Getter
 	private OssOperateTypeEnum ossOperateTypeEnum;
 
-	//
+    public OssE() {
+        super();
+    }
+
+    //
 	// private final IdGenerator idGenerator;
 	//
 	// public OssE(IdGenerator idGenerator) {

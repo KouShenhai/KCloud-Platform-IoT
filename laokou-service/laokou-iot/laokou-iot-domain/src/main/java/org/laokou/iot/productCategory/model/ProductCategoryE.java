@@ -75,7 +75,8 @@ public class ProductCategoryE extends Identifier {
 			@Qualifier("saveProductCategoryParamValidator") ProductCategoryParamValidator saveProductCategoryParamValidator,
 			@Qualifier("modifyProductCategoryParamValidator") ProductCategoryParamValidator modifyProductCategoryParamValidator,
 			IdGenerator idGenerator) {
-		this.saveProductCategoryParamValidator = saveProductCategoryParamValidator;
+        super();
+        this.saveProductCategoryParamValidator = saveProductCategoryParamValidator;
 		this.modifyProductCategoryParamValidator = modifyProductCategoryParamValidator;
 		this.idGenerator = idGenerator;
 	}

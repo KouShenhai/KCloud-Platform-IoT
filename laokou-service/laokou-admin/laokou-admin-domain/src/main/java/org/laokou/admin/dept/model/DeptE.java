@@ -87,7 +87,7 @@ public class DeptE extends Identifier {
 	public DeptE(@Qualifier("modifyDeptParamValidator") DeptParamValidator saveDeptParamValidator,
 				 @Qualifier("saveDeptParamValidator") DeptParamValidator modifyDeptParamValidator,
 				 IdGenerator idGenerator) {
-		this.saveDeptParamValidator = saveDeptParamValidator;
+		super();this.saveDeptParamValidator = saveDeptParamValidator;
 		this.modifyDeptParamValidator = modifyDeptParamValidator;
 		this.idGenerator = idGenerator;
 	}

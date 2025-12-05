@@ -145,8 +145,7 @@ public class AuthA extends AggregateRoot {
                  @Qualifier("usernamePasswordAuthParamValidator") AuthParamValidator usernamePasswordAuthParamValidator,
 				 @Qualifier("mailCaptchaParamValidator") CaptchaParamValidator mailCaptchaParamValidator,
 				 @Qualifier("mobileCaptchaParamValidator") CaptchaParamValidator mobileCaptchaParamValidator) {
-		super.id = idGenerator.getId();
-		super.createTime = InstantUtils.now();
+		super(idGenerator.getId(), InstantUtils.now());
 		this.parameterMap = httpRequest.getParameterMap();
 		this.userE = DomainFactory.getUser();
 		this.passwordValidator = passwordValidator;

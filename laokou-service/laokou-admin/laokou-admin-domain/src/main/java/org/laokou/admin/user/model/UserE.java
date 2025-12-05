@@ -169,7 +169,8 @@ public class UserE extends Identifier {
 			@Qualifier("resetUserPwdParamValidator") UserParamValidator resetUserPwdParamValidator,
 			@Qualifier("modifyUserAuthorityParamValidator") UserParamValidator modifyUserAuthorityParamValidator,
 			PasswordEncoder passwordEncoder) {
-		this.idGenerator = idGenerator;
+        super();
+        this.idGenerator = idGenerator;
 		this.saveUserParamValidator = saveUserParamValidator;
 		this.modifyUserParamValidator = modifyUserParamValidator;
 		this.resetUserPwdParamValidator = resetUserPwdParamValidator;

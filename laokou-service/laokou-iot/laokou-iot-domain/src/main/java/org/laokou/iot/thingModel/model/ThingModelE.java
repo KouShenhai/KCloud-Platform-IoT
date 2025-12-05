@@ -102,7 +102,8 @@ public class ThingModelE extends Identifier {
 	public ThingModelE(@Qualifier("saveThingModelParamValidator") ThingModelParamValidator saveThingModelParamValidator,
 			@Qualifier("modifyThingModelParamValidator") ThingModelParamValidator modifyThingModelParamValidator,
 			IdGenerator idGenerator) {
-		this.saveThingModelParamValidator = saveThingModelParamValidator;
+        super();
+        this.saveThingModelParamValidator = saveThingModelParamValidator;
 		this.modifyThingModelParamValidator = modifyThingModelParamValidator;
 		this.idGenerator = idGenerator;
 	}
