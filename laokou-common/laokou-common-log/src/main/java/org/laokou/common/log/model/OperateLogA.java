@@ -28,7 +28,6 @@ import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.dto.AggregateRoot;
-import org.laokou.common.i18n.dto.IdGenerator;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.util.StopWatch;
@@ -143,8 +142,8 @@ public class OperateLogA extends AggregateRoot {
 	@Getter
 	private String stackTrace;
 
-	public OperateLogA(IdGenerator idGenerator) {
-		this.id = idGenerator.getId();
+	protected OperateLogA(Long id) {
+		super(id);
 	}
 
 	public void getProfile(String profile) {

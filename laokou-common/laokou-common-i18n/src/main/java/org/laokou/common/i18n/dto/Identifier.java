@@ -32,10 +32,6 @@ public abstract class Identifier implements Serializable {
 	/**
 	 * ID.
 	 */
-	protected final Long id;
-
-	protected Identifier(Long id) {
-		this.id = id;
-	}
+	protected Long id;
 
 }

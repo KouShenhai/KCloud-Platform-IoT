@@ -18,8 +18,6 @@
 package org.laokou.common.i18n.dto;
 
 import lombok.Getter;
-import org.laokou.common.i18n.util.InstantUtils;
-
 import java.time.Instant;
 
 /**
@@ -33,11 +31,6 @@ public abstract class AggregateRoot extends Identifier {
 	/**
 	 * 创建时间.
 	 */
-	protected final Instant createTime;
-
-	protected AggregateRoot(Long id) {
-		super(id);
-		this.createTime = InstantUtils.now();
-	}
+	protected Instant createTime;
 
 }

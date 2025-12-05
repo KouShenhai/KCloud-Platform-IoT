@@ -17,11 +17,14 @@
 
 package org.laokou.oss.model;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.annotation.Entity;
-import org.laokou.common.i18n.dto.Identifier;
 
+import java.io.Serializable;
 import java.time.Instant;
 
 /**
@@ -30,83 +33,70 @@ import java.time.Instant;
  * @author laokou
  */
 @Entity
-public class OssLogE extends Identifier {
+@Getter
+@Builder(toBuilder = true)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class OssLogE implements Serializable {
+
+	/**
+	 * ID.
+	 */
+	private Long id;
 
 	/**
 	 * 文件名称.
 	 */
-	@Setter
-	@Getter
 	private String name;
 
 	/**
 	 * 文件的MD5标识.
 	 */
-	@Setter
-	@Getter
 	private String md5;
 
 	/**
 	 * 文件的URL.
 	 */
-	@Setter
-	@Getter
 	private String url;
 
 	/**
 	 * 文件大小.
 	 */
-	@Setter
-	@Getter
 	private Long size;
 
 	/**
 	 * OSS存储ID.
 	 */
-	@Setter
-	@Getter
 	private Long ossId;
 
 	/**
 	 * 文件类型.
 	 */
-	@Setter
-	@Getter
 	private String contentType;
 
 	/**
 	 * 类型.
 	 */
-	@Setter
-	@Getter
 	private String type;
 
 	/**
 	 * 文件格式.
 	 */
-	@Setter
-	@Getter
 	private String format;
 
 	/**
 	 * 上传时间.
 	 */
-	@Setter
-	@Getter
 	private Instant uploadTime;
 
 	/**
 	 * 租户ID.
 	 */
-	@Setter
-	@Getter
 	private Long tenantId;
 
 	/**
 	 * 用户ID.
 	 */
-	@Setter
-	@Getter
 	private Long userId;
 
 }

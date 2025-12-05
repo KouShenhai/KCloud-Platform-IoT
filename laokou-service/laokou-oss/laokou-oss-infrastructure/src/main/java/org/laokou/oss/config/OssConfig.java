@@ -30,7 +30,7 @@ import org.springframework.kafka.core.KafkaAdmin;
  * @author laokou
  */
 @Configuration
-public class SystemConfig {
+public class OssConfig {
 
 	static {
 		ForyFactory.INSTANCE.register(org.laokou.oss.dto.domainevent.OssUploadEvent.class);

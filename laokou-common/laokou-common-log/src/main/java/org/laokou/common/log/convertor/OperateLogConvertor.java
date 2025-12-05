@@ -17,7 +17,6 @@
 
 package org.laokou.common.log.convertor;
 
-import org.laokou.common.context.util.UserUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.common.log.factory.DomainFactory;
 import org.laokou.common.log.mapper.OperateLogDO;
@@ -34,13 +33,19 @@ public final class OperateLogConvertor {
 	}
 
 	public static OperateEvent toDomainEvent(OperateLogA operateLogA) {
-		return new OperateEvent(operateLogA.getId(), operateLogA.getName(), operateLogA.getModuleName(),
-				operateLogA.getUri(), operateLogA.getMethodName(), operateLogA.getRequestType(),
-				operateLogA.getRequestParams(), operateLogA.getUserAgent(), operateLogA.getIp(),
-				operateLogA.getAddress(), operateLogA.getStatus(), UserUtils.getUserName(),
-				operateLogA.getErrorMessage(), operateLogA.getCostTime(), operateLogA.getServiceId(),
-				operateLogA.getServiceAddress(), operateLogA.getProfile(), operateLogA.getStackTrace(),
-				operateLogA.getCreateTime(), UserUtils.getTenantId(), UserUtils.getUserId());
+		return null;
+		// return new OperateEvent(operateLogA.getId(), operateLogA.getName(),
+		// operateLogA.getModuleName(),
+		// operateLogA.getUri(), operateLogA.getMethodName(),
+		// operateLogA.getRequestType(),
+		// operateLogA.getRequestParams(), operateLogA.getUserAgent(),
+		// operateLogA.getIp(),
+		// operateLogA.getAddress(), operateLogA.getStatus(), UserUtils.getUserName(),
+		// operateLogA.getErrorMessage(), operateLogA.getCostTime(),
+		// operateLogA.getServiceId(),
+		// operateLogA.getServiceAddress(), operateLogA.getProfile(),
+		// operateLogA.getStackTrace(),
+		// operateLogA.getCreateTime(), UserUtils.getTenantId(), UserUtils.getUserId());
 	}
 
 	public static OperateLogDO toDataObject(OperateEvent operateEvent) {

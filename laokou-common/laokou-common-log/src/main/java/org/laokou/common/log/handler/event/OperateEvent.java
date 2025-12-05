@@ -16,8 +16,8 @@
  */
 
 package org.laokou.common.log.handler.event;
-
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 import org.laokou.common.i18n.dto.DomainEvent;
 
 import java.io.Serial;
@@ -29,74 +29,46 @@ import java.time.Instant;
  * @author laokou
  */
 @Getter
+@SuperBuilder(toBuilder = true)
 public final class OperateEvent extends DomainEvent {
 
 	@Serial
 	private static final long serialVersionUID = -6523521638764501311L;
 
-	private final String name;
+	private String name;
 
-	private final String moduleName;
+	private String moduleName;
 
-	private final String uri;
+	private String uri;
 
-	private final String methodName;
+	private String methodName;
 
-	private final String requestType;
+	private String requestType;
 
-	private final String requestParams;
+	private String requestParams;
 
-	private final String userAgent;
+	private String userAgent;
 
-	private final String ip;
+	private String ip;
 
-	private final String address;
+	private String address;
 
-	private final Integer status;
+	private Integer status;
 
-	private final String operator;
+	private String operator;
 
-	private final String errorMessage;
+	private String errorMessage;
 
-	private final Long costTime;
+	private Long costTime;
 
-	private final String serviceId;
+	private String serviceId;
 
-	private final String serviceAddress;
+	private String serviceAddress;
 
-	private final String profile;
+	private String profile;
 
-	private final String stackTrace;
+	private String stackTrace;
 
-	private final Instant createTime;
-
-	public OperateEvent(final Long id, final String name, final String moduleName, final String uri,
-			final String methodName, final String requestType, final String requestParams, final String userAgent,
-			final String ip, final String address, final Integer status, final String operator,
-			final String errorMessage, final Long costTime, final String serviceId, final String serviceAddress,
-			final String profile, final String stackTrace, final Instant createTime, final Long tenantId,
-			final Long userId) {
-		super.id = id;
-		super.userId = userId;
-		super.tenantId = tenantId;
-		this.name = name;
-		this.moduleName = moduleName;
-		this.uri = uri;
-		this.methodName = methodName;
-		this.requestType = requestType;
-		this.requestParams = requestParams;
-		this.userAgent = userAgent;
-		this.ip = ip;
-		this.address = address;
-		this.status = status;
-		this.operator = operator;
-		this.errorMessage = errorMessage;
-		this.costTime = costTime;
-		this.serviceId = serviceId;
-		this.serviceAddress = serviceAddress;
-		this.profile = profile;
-		this.stackTrace = stackTrace;
-		this.createTime = createTime;
-	}
+	private Instant createTime;
 
 }

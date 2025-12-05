@@ -68,19 +68,7 @@ public class OssLogConvertor {
 	}
 
 	public static OssLogE toEntity(OssLogCO ossLogCO) {
-		OssLogE ossLogE = OssDomainFactory.getOssLog();
-		ossLogE.setName(ossLogCO.getName());
-		ossLogE.setMd5(ossLogCO.getMd5());
-		ossLogE.setUrl(ossLogCO.getUrl());
-		ossLogE.setSize(ossLogCO.getSize());
-		ossLogE.setContentType(ossLogCO.getContentType());
-		ossLogE.setFormat(ossLogCO.getFormat());
-		ossLogE.setOssId(ossLogCO.getOssId());
-		ossLogE.setUserId(ossLogCO.getUserId());
-		ossLogE.setTenantId(ossLogCO.getTenantId());
-		ossLogE.setUploadTime(ossLogCO.getUploadTime());
-		ossLogE.setId(ossLogCO.getId());
-		ossLogE.setType(ossLogCO.getType());
+		OssLogE ossLogE = OssDomainFactory.getOssLog().toBuilder().build();
 		return ossLogE;
 	}
 

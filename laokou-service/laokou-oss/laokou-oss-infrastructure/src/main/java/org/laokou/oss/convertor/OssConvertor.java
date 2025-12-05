@@ -29,7 +29,6 @@ import org.laokou.oss.gatewayimpl.database.dataobject.OssLogDO;
 import org.laokou.oss.model.FileFormatEnum;
 import org.laokou.oss.model.OssA;
 import org.laokou.oss.model.OssUploadV;
-import org.springframework.util.DigestUtils;
 
 import java.io.ByteArrayInputStream;
 import java.util.List;
@@ -45,13 +44,6 @@ public final class OssConvertor {
 	public static OssA toEntity(String fileType, long size, String extName, byte[] buffer, String contentType,
 			String name) {
 		OssA oss = OssDomainFactory.getOss();
-		oss.setSize(size);
-		oss.setExtName(extName);
-		oss.setFileFormatEnum(FileFormatEnum.getByCode(fileType));
-		oss.setContentType(contentType);
-		oss.setName(name);
-		oss.setBuffer(buffer);
-		oss.setMd5(DigestUtils.md5DigestAsHex(buffer));
 		return oss;
 	}
 

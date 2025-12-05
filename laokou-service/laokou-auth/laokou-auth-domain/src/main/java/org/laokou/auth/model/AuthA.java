@@ -27,6 +27,7 @@ import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.dto.IdGenerator;
+import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -133,7 +134,7 @@ public class AuthA extends AggregateRoot {
 	private final CaptchaParamValidator mobileCaptchaParamValidator;
 
 	// @formatter:off
-	public AuthA(IdGenerator idGenerator,
+	private AuthA(IdGenerator idGenerator,
 				 HttpRequest httpRequest,
                  PasswordValidator passwordValidator,
                  CaptchaValidator captchaValidator,
@@ -144,7 +145,8 @@ public class AuthA extends AggregateRoot {
                  @Qualifier("usernamePasswordAuthParamValidator") AuthParamValidator usernamePasswordAuthParamValidator,
 				 @Qualifier("mailCaptchaParamValidator") CaptchaParamValidator mailCaptchaParamValidator,
 				 @Qualifier("mobileCaptchaParamValidator") CaptchaParamValidator mobileCaptchaParamValidator) {
-		super(idGenerator.getId());
+		super.id = idGenerator.getId();
+		super.createTime = InstantUtils.now();
 		this.parameterMap = httpRequest.getParameterMap();
 		this.userE = DomainFactory.getUser();
 		this.passwordValidator = passwordValidator;

@@ -774,10 +774,10 @@
       <id>xuxiaowei-spring-cloud-alibaba-gitlab-maven</id>
       <url>https://gitlab.xuxiaowei.com.cn/api/v4/projects/430/packages/maven</url>
       <releases>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
       </releases>
       <snapshots>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
       </snapshots>
     </repository>
   </repositories>

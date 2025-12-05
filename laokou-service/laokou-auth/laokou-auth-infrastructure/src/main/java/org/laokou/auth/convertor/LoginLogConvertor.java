@@ -46,19 +46,7 @@ public final class LoginLogConvertor {
 	}
 
 	public static LoginLogE toEntity(LoginLogCO co) {
-		LoginLogE loginLogE = DomainFactory.getLoginLog();
-		loginLogE.setId(co.getId());
-		loginLogE.setUsername(co.getUsername());
-		loginLogE.setIp(co.getIp());
-		loginLogE.setAddress(co.getAddress());
-		loginLogE.setBrowser(co.getBrowser());
-		loginLogE.setOs(co.getOs());
-		loginLogE.setStatus(co.getStatus());
-		loginLogE.setErrorMessage(co.getErrorMessage());
-		loginLogE.setType(co.getType());
-		loginLogE.setLoginTime(co.getLoginTime());
-		loginLogE.setTenantId(co.getTenantId());
-		loginLogE.setUserId(co.getUserId());
+		LoginLogE loginLogE = DomainFactory.getLoginLog().toBuilder().build();
 		return loginLogE;
 	}
 
@@ -105,7 +93,7 @@ public final class LoginLogConvertor {
 		String os = capabilities.getPlatform();
 		String browser = capabilities.getBrowser();
 		int status = LoginStatusEnum.OK.getCode();
-		UserE userE = authA.getUser();
+		UserE userE = null;
 		Optional<UserE> optional = Optional.ofNullable(userE);
 		Long userId = optional.map(UserE::getId).orElse(null);
 		Long tenantId = optional.map(UserE::getTenantId).orElse(null);
@@ -114,8 +102,7 @@ public final class LoginLogConvertor {
 			status = LoginStatusEnum.FAIL.getCode();
 			errorMessage = ex.getMsg();
 		}
-		return new LoginEvent(authA.getId(), authA.getLoginName(), ip, address, browser, os, status, errorMessage,
-				authA.getGrantTypeEnum().getCode(), authA.getCreateTime(), tenantId, userId);
+		return null;
 	}
 
 }
