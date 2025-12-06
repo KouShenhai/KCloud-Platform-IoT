@@ -40,7 +40,7 @@ public class OssLogConvertor {
 		ossLogCO.setFormat(evt.getFormat());
 		ossLogCO.setContentType(evt.getContentType());
 		ossLogCO.setOssId(evt.getOssId());
-		ossLogCO.setUserId(evt.getUserId());
+		// ossLogCO.setUserId(evt.getUserId());
 		ossLogCO.setUploadTime(evt.getUploadTime());
 		ossLogCO.setTenantId(evt.getTenantId());
 		ossLogCO.setType(evt.getType());

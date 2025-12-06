@@ -69,7 +69,7 @@ public class NoticeLogE {
 	/**
 	 * 发送时间.
 	 */
-	private Instant instant;
+	private Instant sendTime;
 
 	/**
 	 * 租户ID.

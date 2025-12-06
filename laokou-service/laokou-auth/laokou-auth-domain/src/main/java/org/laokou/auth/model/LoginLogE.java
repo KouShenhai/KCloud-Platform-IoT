@@ -92,8 +92,8 @@ public class LoginLogE {
 	private Long tenantId;
 
 	/**
-	 * 用户ID.
+	 * 创建者.
 	 */
-	private Long userId;
+	private Long creator;
 
 }

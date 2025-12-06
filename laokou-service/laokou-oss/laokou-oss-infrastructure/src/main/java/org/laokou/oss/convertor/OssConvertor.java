@@ -26,7 +26,6 @@ import org.laokou.oss.dto.domainevent.OssUploadEvent;
 import org.laokou.oss.factory.OssDomainFactory;
 import org.laokou.oss.gatewayimpl.database.dataobject.OssDO;
 import org.laokou.oss.gatewayimpl.database.dataobject.OssLogDO;
-import org.laokou.oss.model.FileFormatEnum;
 import org.laokou.oss.model.OssA;
 import org.laokou.oss.model.OssUploadV;
 
@@ -55,10 +54,7 @@ public final class OssConvertor {
 	}
 
 	public static OssUploadEvent toDomainEvent(OssA ossA) {
-		FileFormatEnum fileFormatEnum = ossA.getFileFormatEnum();
-		return new OssUploadEvent(ossA.getId(), ossA.getName(), ossA.getMd5(), ossA.getUrl(), ossA.getSize(),
-				ossA.getOssId(), ossA.getContentType(), ossA.getExtName(), ossA.getCreateTime(), Long.valueOf(0),
-				Long.valueOf(1), fileFormatEnum.getCode());
+		return OssUploadEvent.builder().build();
 	}
 
 	public static FileInfo toFileInfo(byte[] buffer, long size, String contentType, String name, String extName) {

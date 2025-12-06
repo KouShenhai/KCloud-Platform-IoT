@@ -26,7 +26,7 @@ import org.laokou.common.i18n.common.exception.BizException;
  * @author laokou
  */
 @Getter
-enum GrantTypeEnum {
+public enum GrantTypeEnum {
 
 	// @formatter:off
 	USERNAME_PASSWORD(Constants.USERNAME_PASSWORD, "用户名密码登录") {

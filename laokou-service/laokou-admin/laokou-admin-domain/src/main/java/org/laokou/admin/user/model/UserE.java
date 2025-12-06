@@ -18,13 +18,11 @@
 package org.laokou.admin.user.model;
 
 import lombok.Getter;
-import lombok.Setter;
 import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.dto.IdGenerator;
 import org.laokou.common.i18n.dto.IdGeneratorBatch;
-import org.laokou.common.i18n.dto.Identifier;
 import org.laokou.common.i18n.util.StringExtUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -38,115 +36,92 @@ import java.util.List;
  * @author laokou
  */
 @Entity
-public class UserE extends Identifier {
+@Getter
+public class UserE {
+
+	/**
+	 * ID.
+	 */
+	private Long id;
 
 	/**
 	 * 用户密码.
 	 */
-	@Getter
-	@Setter
 	private String password;
 
 	/**
 	 * 超级管理员标识 0否 1是.
 	 */
-	@Getter
-	@Setter
 	private Integer superAdmin;
 
 	/**
 	 * 用户邮箱.
 	 */
-	@Getter
-	@Setter
 	private String mail;
 
 	/**
 	 * 用户手机号.
 	 */
-	@Getter
-	@Setter
 	private String mobile;
 
 	/**
 	 * 用户状态 0启用 1禁用.
 	 */
-	@Getter
-	@Setter
 	private Integer status;
 
 	/**
 	 * 用户头像.
 	 */
-	@Getter
-	@Setter
 	private Long avatar;
 
 	/**
 	 * 用户名短语.
 	 */
-	@Getter
 	private String usernamePhrase;
 
 	/**
 	 * 用户邮箱短语.
 	 */
-	@Getter
 	private String mailPhrase;
 
 	/**
 	 * 用户手机号短语.
 	 */
-	@Getter
 	private String mobilePhrase;
 
 	/**
 	 * 用户名.
 	 */
-	@Getter
-	@Setter
 	private String username;
 
 	/**
 	 * 角色IDS.
 	 */
-	@Getter
-	@Setter
 	private List<String> roleIds;
 
 	/**
 	 * 部门IDS.
 	 */
-	@Getter
-	@Setter
 	private List<String> deptIds;
 
 	/**
 	 * 用户角色IDS.
 	 */
-	@Getter
-	@Setter
 	private List<Long> userRoleIds;
 
 	/**
 	 * 用户部门IDS.
 	 */
-	@Getter
-	@Setter
 	private List<Long> userDeptIds;
 
 	/**
 	 * 用户IDS.
 	 */
-	@Getter
-	@Setter
 	private List<Long> userIds;
 
 	/**
 	 * 用户操作类型.
 	 */
-	@Setter
-	@Getter
 	private UserOperateTypeEnum userOperateTypeEnum;
 
 	private final IdGenerator idGenerator;
@@ -169,8 +144,8 @@ public class UserE extends Identifier {
 			@Qualifier("resetUserPwdParamValidator") UserParamValidator resetUserPwdParamValidator,
 			@Qualifier("modifyUserAuthorityParamValidator") UserParamValidator modifyUserAuthorityParamValidator,
 			PasswordEncoder passwordEncoder) {
-        super();
-        this.idGenerator = idGenerator;
+		;
+		this.idGenerator = idGenerator;
 		this.saveUserParamValidator = saveUserParamValidator;
 		this.modifyUserParamValidator = modifyUserParamValidator;
 		this.resetUserPwdParamValidator = resetUserPwdParamValidator;

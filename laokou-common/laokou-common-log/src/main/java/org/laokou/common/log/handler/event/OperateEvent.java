@@ -16,6 +16,7 @@
  */
 
 package org.laokou.common.log.handler.event;
+
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 import org.laokou.common.i18n.dto.DomainEvent;

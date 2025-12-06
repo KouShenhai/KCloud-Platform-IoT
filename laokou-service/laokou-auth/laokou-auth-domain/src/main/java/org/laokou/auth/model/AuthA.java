@@ -239,7 +239,7 @@ public class AuthA extends AggregateRoot {
 	}
 
 	public void checkTenantId() {
-		if (ObjectUtils.isNull(this.userE.getTenantId())) {
+		if (ObjectUtils.isNull(this.userV.tenantId())) {
 			throw new BizException(OAuth2Constants.TENANT_NOT_EXIST);
 		}
 	}

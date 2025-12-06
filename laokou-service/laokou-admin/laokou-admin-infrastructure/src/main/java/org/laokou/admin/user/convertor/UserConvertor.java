@@ -24,14 +24,13 @@ import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDeptDO;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserRoleDO;
 import org.laokou.admin.user.model.UserE;
-import org.laokou.admin.user.model.UserOperateTypeEnum;
+import org.laokou.common.context.util.UserExtDetails;
 import org.laokou.common.context.util.UserUtils;
 import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
-import org.laokou.common.context.util.UserExtDetails;
 import org.laokou.common.sensitive.util.SensitiveUtils;
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -173,32 +172,33 @@ public final class UserConvertor {
 
 	public static UserE toEntity(UserCO userCO, boolean isInsert) {
 		UserE user = UserDomainFactory.getUser();
-		user.setId(userCO.getId());
-		user.setUsername(userCO.getUsername());
-		user.setSuperAdmin(userCO.getSuperAdmin());
-		user.setMail(userCO.getMail());
-		user.setMobile(userCO.getMobile());
-		user.setStatus(userCO.getStatus());
-		user.setAvatar(userCO.getAvatar());
-		user.setUserOperateTypeEnum(isInsert ? UserOperateTypeEnum.SAVE : UserOperateTypeEnum.MODIFY);
+		// user.setId(userCO.getId());
+		// user.setUsername(userCO.getUsername());
+		// user.setSuperAdmin(userCO.getSuperAdmin());
+		// user.setMail(userCO.getMail());
+		// user.setMobile(userCO.getMobile());
+		// user.setStatus(userCO.getStatus());
+		// user.setAvatar(userCO.getAvatar());
+		// user.setUserOperateTypeEnum(isInsert ? UserOperateTypeEnum.SAVE :
+		// UserOperateTypeEnum.MODIFY);
 		return user;
 	}
 
 	public static UserE toEntity(UserCO userCO) {
 		UserE userE = UserDomainFactory.getUser();
-		userE.setId(userCO.getId());
-		userE.setUserIds(Collections.singletonList(userCO.getId()));
-		userE.setRoleIds(userCO.getRoleIds());
-		userE.setDeptIds(userCO.getDeptIds());
-		userE.setUserOperateTypeEnum(UserOperateTypeEnum.MODIFY_AUTHORITY);
+		// userE.setId(userCO.getId());
+		// userE.setUserIds(Collections.singletonList(userCO.getId()));
+		// userE.setRoleIds(userCO.getRoleIds());
+		// userE.setDeptIds(userCO.getDeptIds());
+		// userE.setUserOperateTypeEnum(UserOperateTypeEnum.MODIFY_AUTHORITY);
 		return userE;
 	}
 
 	public static UserE toEntity(Long id, String password) {
 		UserE userE = UserDomainFactory.getUser();
-		userE.setId(id);
-		userE.setPassword(password);
-		userE.setUserOperateTypeEnum(UserOperateTypeEnum.RESET_PWD);
+		// userE.setId(id);
+		// userE.setPassword(password);
+		// userE.setUserOperateTypeEnum(UserOperateTypeEnum.RESET_PWD);
 		return userE;
 	}
 

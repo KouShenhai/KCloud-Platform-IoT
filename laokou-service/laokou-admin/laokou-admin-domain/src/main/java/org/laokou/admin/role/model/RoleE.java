@@ -19,10 +19,9 @@ package org.laokou.admin.role.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.laokou.common.i18n.dto.IdGenerator;
 import org.laokou.common.i18n.annotation.Entity;
+import org.laokou.common.i18n.dto.IdGenerator;
 import org.laokou.common.i18n.dto.IdGeneratorBatch;
-import org.laokou.common.i18n.dto.Identifier;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.List;
@@ -33,7 +32,11 @@ import java.util.List;
  * @author laokou
  */
 @Entity
-public class RoleE extends Identifier {
+@Getter
+@Setter
+public class RoleE {
+
+	private Long id;
 
 	/**
 	 * 角色名称.
@@ -109,8 +112,8 @@ public class RoleE extends Identifier {
 			@Qualifier("saveRoleParamValidator") RoleParamValidator saveRoleParamValidator,
 			@Qualifier("modifyRoleParamValidator") RoleParamValidator modifyRoleParamValidator,
 			@Qualifier("modifyRoleAuthorityParamValidator") RoleParamValidator modifyRoleAuthorityParamValidator) {
-        super();
-        this.idGenerator = idGenerator;
+		super();
+		this.idGenerator = idGenerator;
 		this.idGeneratorBatch = idGeneratorBatch;
 		this.saveRoleParamValidator = saveRoleParamValidator;
 		this.modifyRoleParamValidator = modifyRoleParamValidator;

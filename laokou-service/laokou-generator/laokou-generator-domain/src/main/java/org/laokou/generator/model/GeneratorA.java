@@ -17,9 +17,9 @@
 
 package org.laokou.generator.model;
 
+import lombok.Builder;
 import lombok.Getter;
 import org.laokou.common.i18n.common.constant.StringConstants;
-import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.util.JacksonUtils;
 
 import java.util.Map;
@@ -28,7 +28,8 @@ import java.util.Map;
  * @author laokou
  */
 @Getter
-public class GeneratorA extends AggregateRoot {
+@Builder
+public class GeneratorA {
 
 	private final String author;
 
@@ -44,14 +45,15 @@ public class GeneratorA extends AggregateRoot {
 
 	private TableV tableV;
 
-	public GeneratorA(String author, String packageName, String moduleName, String version, TableE tableE, App app) {
-		this.author = author;
-		this.packageName = packageName;
-		this.moduleName = moduleName;
-		// this.version = version;
-		this.tableE = tableE;
-		this.app = app;
-	}
+	// public GeneratorA(String author, String packageName, String moduleName, String
+	// version, TableE tableE, App app) {
+	// this.author = author;
+	// this.packageName = packageName;
+	// this.moduleName = moduleName;
+	// // this.version = version;
+	// this.tableE = tableE;
+	// this.app = app;
+	// }
 
 	public String getDomainPackagePath() {
 		return getPackagePath() + StringConstants.SLASH + tableV.instanceName();

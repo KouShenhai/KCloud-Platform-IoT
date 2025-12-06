@@ -28,6 +28,9 @@ import org.laokou.common.i18n.dto.DomainEvent;
 @SuperBuilder(toBuilder = true)
 public final class SendCaptchaEvent extends DomainEvent {
 
+	/**
+	 * 唯一标识.
+	 */
 	private final String uuid;
 
 }

@@ -17,10 +17,11 @@
 
 package org.laokou.common.log.convertor;
 
+import org.laokou.common.context.util.UserUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.common.log.factory.DomainFactory;
-import org.laokou.common.log.mapper.OperateLogDO;
 import org.laokou.common.log.handler.event.OperateEvent;
+import org.laokou.common.log.mapper.OperateLogDO;
 import org.laokou.common.log.model.OperateLogA;
 
 public final class OperateLogConvertor {
@@ -33,19 +34,28 @@ public final class OperateLogConvertor {
 	}
 
 	public static OperateEvent toDomainEvent(OperateLogA operateLogA) {
-		return null;
-		// return new OperateEvent(operateLogA.getId(), operateLogA.getName(),
-		// operateLogA.getModuleName(),
-		// operateLogA.getUri(), operateLogA.getMethodName(),
-		// operateLogA.getRequestType(),
-		// operateLogA.getRequestParams(), operateLogA.getUserAgent(),
-		// operateLogA.getIp(),
-		// operateLogA.getAddress(), operateLogA.getStatus(), UserUtils.getUserName(),
-		// operateLogA.getErrorMessage(), operateLogA.getCostTime(),
-		// operateLogA.getServiceId(),
-		// operateLogA.getServiceAddress(), operateLogA.getProfile(),
-		// operateLogA.getStackTrace(),
-		// operateLogA.getCreateTime(), UserUtils.getTenantId(), UserUtils.getUserId());
+		return OperateEvent.builder()
+			.id(operateLogA.getId())
+			.name(operateLogA.getName())
+			.moduleName(operateLogA.getModuleName())
+			.uri(operateLogA.getUri())
+			.methodName(operateLogA.getMethodName())
+			.requestType(operateLogA.getRequestType())
+			.requestParams(operateLogA.getRequestParams())
+			.userAgent(operateLogA.getUserAgent())
+			.ip(operateLogA.getIp())
+			.address(operateLogA.getAddress())
+			.status(operateLogA.getStatus())
+			.errorMessage(operateLogA.getErrorMessage())
+			.costTime(operateLogA.getCostTime())
+			.serviceId(operateLogA.getServiceId())
+			.serviceAddress(operateLogA.getServiceAddress())
+			.profile(operateLogA.getProfile())
+			.stackTrace(operateLogA.getStackTrace())
+			.createTime(operateLogA.getCreateTime())
+			.tenantId(UserUtils.getTenantId())
+			.creator(UserUtils.getUserId())
+			.build();
 	}
 
 	public static OperateLogDO toDataObject(OperateEvent operateEvent) {
@@ -69,8 +79,8 @@ public final class OperateLogConvertor {
 		operateLogDO.setErrorMessage(truncate(operateEvent.getErrorMessage()));
 		operateLogDO.setId(operateEvent.getId());
 		operateLogDO.setTenantId(operateEvent.getTenantId());
-		operateLogDO.setCreator(operateEvent.getUserId());
-		operateLogDO.setEditor(operateEvent.getUserId());
+		operateLogDO.setCreator(operateEvent.getCreator());
+		operateLogDO.setEditor(operateEvent.getCreator());
 		operateLogDO.setCreateTime(operateEvent.getCreateTime());
 		operateLogDO.setUpdateTime(operateEvent.getCreateTime());
 		return operateLogDO;
