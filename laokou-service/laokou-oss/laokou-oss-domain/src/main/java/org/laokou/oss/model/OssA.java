@@ -18,11 +18,11 @@
 package org.laokou.oss.model;
 
 import lombok.Getter;
-import lombok.Setter;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.dto.IdGenerator;
+import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import java.util.function.Supplier;
 
@@ -30,53 +30,33 @@ import java.util.function.Supplier;
  * @author laokou
  */
 @Entity
+@Getter
 public class OssA extends AggregateRoot {
 
-	@Setter
-	@Getter
 	private FileFormatEnum fileFormatEnum;
 
-	@Setter
-	@Getter
 	private String extName;
 
-	@Setter
-	@Getter
 	private long size;
 
-	@Setter
-	@Getter
 	private byte[] buffer;
 
-	@Setter
-	@Getter
 	private String name;
 
-	@Setter
-	@Getter
 	private String contentType;
 
-	@Getter
 	private String url;
 
-	@Setter
-	@Getter
 	private String md5;
 
-	@Setter
-	@Getter
 	private String fileFormat;
 
-	@Getter
 	private boolean publishEvent = false;
 
-	@Getter
 	private Long ossId;
 
-	private final IdGenerator idGenerator;
-
 	public OssA(IdGenerator idGenerator) {
-		this.idGenerator = idGenerator;
+		super(idGenerator.getId(), InstantUtils.now());
 	}
 
 	public void checkSize() {
@@ -95,14 +75,13 @@ public class OssA extends AggregateRoot {
 		OssUploadV ossUploadV = info1.get();
 		if (ObjectUtils.isNull(ossUploadV)) {
 			ossUploadV = info2.get();
-			this.id = idGenerator.getId();
 			this.url = ossUploadV.url();
 			this.ossId = ossUploadV.id();
 			this.publishEvent = true;
 		}
 		else {
 			this.url = ossUploadV.url();
-			this.id = ossUploadV.id();
+			// this.id = ossUploadV.id();
 		}
 	}
 

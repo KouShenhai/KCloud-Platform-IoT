@@ -17,7 +17,6 @@
 
 package org.laokou.auth.handler;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -85,8 +84,7 @@ public class DomainEventHandler {
 
 	@KafkaListener(topics = MqEnum.MOBILE_CAPTCHA_TOPIC,
 			groupId = "${spring.kafka.consumer.group-id}-" + MqEnum.MOBILE_CAPTCHA_CONSUMER_GROUP)
-	public void handleMobileCaptcha(List<ConsumerRecord<String, Object>> messages, Acknowledgment acknowledgment)
-			throws JsonProcessingException {
+	public void handleMobileCaptcha(List<ConsumerRecord<String, Object>> messages, Acknowledgment acknowledgment) {
 		try {
 			for (ConsumerRecord<String, Object> record : messages) {
 				SendCaptchaEvent evt = (SendCaptchaEvent) record.value();

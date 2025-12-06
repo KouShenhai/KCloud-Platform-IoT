@@ -17,10 +17,8 @@
 
 package org.laokou.auth.convertor;
 
-import org.laokou.auth.factory.DomainFactory;
+import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
 import org.laokou.auth.model.AuthA;
-import org.laokou.auth.model.CaptchaV;
-import org.laokou.auth.model.GrantTypeEnum;
 
 /**
  * @author laokou
@@ -30,15 +28,12 @@ public final class AuthConvertor {
 	private AuthConvertor() {
 	}
 
-	public static AuthA toEntity(String username, String password, String tenantCode, GrantTypeEnum grantTypeEnum,
-			String uuid, String captcha) {
-		AuthA authA = DomainFactory.getAuth();
-		authA.setUsername(username);
-		authA.setPassword(password);
-		authA.setTenantCode(tenantCode);
-		authA.setGrantTypeEnum(grantTypeEnum);
-		authA.setCaptcha(new CaptchaV(uuid, captcha));
-		return authA;
+	public static SendCaptchaEvent toDomainEvent(AuthA authA) {
+		return SendCaptchaEvent.builder()
+			.id(authA.getId())
+			.uuid(authA.getCaptchaV().uuid())
+			.tenantId(authA.getUserV().tenantId())
+			.build();
 	}
 
 }

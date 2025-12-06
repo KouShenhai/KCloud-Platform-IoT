@@ -17,14 +17,14 @@
 
 package org.laokou.auth.model;
 
-import java.io.Serializable;
+import java.util.Map;
 
 /**
  * @author laokou
  */
 @FunctionalInterface
-public interface AuthParamValidator extends Serializable {
+public interface HttpRequest {
 
-	void validateAuth(AuthA authA);
+	Map<String, String[]> getParameterMap();
 
 }

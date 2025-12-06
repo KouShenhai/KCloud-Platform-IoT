@@ -27,7 +27,6 @@ import org.laokou.generator.gatewayimpl.database.TableMapper;
 import org.laokou.generator.gatewayimpl.database.dataobject.TableColumnDO;
 import org.laokou.generator.gatewayimpl.database.dataobject.TableDO;
 import org.laokou.generator.model.App;
-import org.laokou.generator.model.GeneratorA;
 import org.laokou.generator.model.TableE;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestConstructor;
@@ -167,7 +166,8 @@ class TableTest {
 			String packageName, Set<String> tableNames, App app) {
 		tableNames.stream().map(item -> CompletableFuture.runAsync(() -> {
 			TableE tableE = new TableE(item, tablePrefix, sourceName);
-			GeneratorA generatorA = new GeneratorA(author, packageName, moduleName, version, tableE, app);
+			// GeneratorA generatorA = new GeneratorA(author, packageName, moduleName,
+			// version, tableE, app);
 			// 已注释代码生成【跑CI已注释】
 			// 已注释代码生成【跑CI已注释】
 			// 已注释代码生成【跑CI已注释】

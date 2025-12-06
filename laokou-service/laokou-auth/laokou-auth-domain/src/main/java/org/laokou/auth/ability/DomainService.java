@@ -19,16 +19,11 @@ package org.laokou.auth.ability;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.gateway.DeptGateway;
-import org.laokou.auth.gateway.LoginLogGateway;
 import org.laokou.auth.gateway.MenuGateway;
-import org.laokou.auth.gateway.NoticeLogGateway;
 import org.laokou.auth.gateway.OssLogGateway;
 import org.laokou.auth.gateway.TenantGateway;
 import org.laokou.auth.gateway.UserGateway;
 import org.laokou.auth.model.AuthA;
-import org.laokou.auth.model.CaptchaE;
-import org.laokou.auth.model.LoginLogE;
-import org.laokou.auth.model.NoticeLogE;
 import org.springframework.stereotype.Component;
 
 /**
@@ -46,42 +41,28 @@ public class DomainService {
 
 	private final TenantGateway tenantGateway;
 
-	private final LoginLogGateway loginLogGateway;
-
-	private final NoticeLogGateway noticeLogGateway;
-
 	private final OssLogGateway ossLogGateway;
 
-	public void createLoginLog(LoginLogE loginLogE) {
-		// 保存登录日志
-		loginLogGateway.createLoginLog(loginLogE);
-	}
-
-	public void createSendCaptchaInfo(CaptchaE captchaE) {
+	public void sendCaptcha(AuthA authA) {
 		// 校验验证码参数
-		captchaE.checkCaptchaParam();
+		authA.checkCaptchaParam();
 		// 获取租户ID
-		captchaE.getTenantId(tenantGateway.getTenantId(captchaE.getTenantCode()));
+		authA.getTenantId(() -> tenantGateway.getTenantId(authA.getUserV().tenantCode()));
 		// 校验租户ID
-		captchaE.checkTenantId();
-	}
-
-	public void createNoticeLog(NoticeLogE noticeLog) {
-		// 保存通知日志
-		noticeLogGateway.createNoticeLog(noticeLog);
+		authA.checkTenantId();
 	}
 
 	public void auth(AuthA authA) {
 		// 校验认证参数
 		authA.checkAuthParam();
 		// 获取租户ID
-		authA.getTenantId(() -> tenantGateway.getTenantId(authA.getTenantCode()));
+		authA.getTenantId(() -> tenantGateway.getTenantId(authA.getUserV().tenantCode()));
 		// 校验租户ID
 		authA.checkTenantId();
 		// 校验验证码
 		authA.checkCaptcha();
 		// 获取用户信息
-		authA.getUserInfo(userGateway.getUserProfile(authA.getUser()));
+		authA.getUserInfo(userGateway.getUserProfile(authA.getUserV()));
 		// 校验用户名
 		authA.checkUsername();
 		// 校验密码
@@ -89,11 +70,11 @@ public class DomainService {
 		// 校验用户状态
 		authA.checkUserStatus();
 		// 获取菜单权限标识集合
-		authA.getMenuPermissions(menuGateway.getMenuPermissions(authA.getUser()));
+		authA.getMenuPermissions(menuGateway.getMenuPermissions(authA.getUserE()));
 		// 校验菜单权限标识集合
 		authA.checkMenuPermissions();
 		// 获取用户头像
-		authA.getUserAvatar(ossLogGateway.getOssUrl(authA.getUser().getAvatar()));
+		authA.getUserAvatar(ossLogGateway.getOssUrl(authA.getUserE().getAvatar()));
 	}
 
 }

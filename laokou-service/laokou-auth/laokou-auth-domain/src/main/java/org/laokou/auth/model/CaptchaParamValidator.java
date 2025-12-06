@@ -25,6 +25,6 @@ import java.io.Serializable;
 @FunctionalInterface
 public interface CaptchaParamValidator extends Serializable {
 
-	void validateCaptcha(CaptchaE captcha);
+	void validateCaptcha(AuthA authA);
 
 }

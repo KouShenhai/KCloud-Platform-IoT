@@ -61,7 +61,7 @@ public class NoticeLogCO extends ClientObject {
 	/**
 	 * 时间.
 	 */
-	private Instant instant;
+	private Instant sendTime;
 
 	/**
 	 * 租户ID.

@@ -21,7 +21,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.dto.IdGenerator;
-import org.laokou.common.i18n.dto.Identifier;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
@@ -31,7 +30,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
  * @author laokou
  */
 @Entity
-public class ProductCategoryE extends Identifier {
+@Setter
+@Getter
+public class ProductCategoryE {
+
+	private Long id;
 
 	/**
 	 * 产品类别名称.
@@ -75,6 +78,7 @@ public class ProductCategoryE extends Identifier {
 			@Qualifier("saveProductCategoryParamValidator") ProductCategoryParamValidator saveProductCategoryParamValidator,
 			@Qualifier("modifyProductCategoryParamValidator") ProductCategoryParamValidator modifyProductCategoryParamValidator,
 			IdGenerator idGenerator) {
+		super();
 		this.saveProductCategoryParamValidator = saveProductCategoryParamValidator;
 		this.modifyProductCategoryParamValidator = modifyProductCategoryParamValidator;
 		this.idGenerator = idGenerator;

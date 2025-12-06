@@ -17,6 +17,7 @@
 
 package org.laokou.auth.config;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.laokou.auth.config.authentication.OAuth2MailAuthenticationConverter;
@@ -24,6 +25,7 @@ import org.laokou.auth.config.authentication.OAuth2MobileAuthenticationConverter
 import org.laokou.auth.config.authentication.OAuth2TestAuthenticationConverter;
 import org.laokou.auth.config.authentication.OAuth2UsernamePasswordAuthenticationConverter;
 import org.laokou.auth.model.CaptchaValidator;
+import org.laokou.auth.model.HttpRequest;
 import org.laokou.auth.model.MqEnum;
 import org.laokou.auth.model.PasswordValidator;
 import org.laokou.common.fory.config.ForyFactory;
@@ -208,6 +210,11 @@ class OAuth2AuthorizationServerConfig {
 	@Bean
 	CaptchaValidator captchaValidator() {
 		return this::validateCaptcha;
+	}
+
+	@Bean
+	HttpRequest httpRequest(HttpServletRequest request) {
+		return request::getParameterMap;
 	}
 
 	@Bean("authNewTopics")

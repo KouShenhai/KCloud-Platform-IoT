@@ -18,7 +18,6 @@
 package org.laokou.auth.factory;
 
 import org.laokou.auth.model.AuthA;
-import org.laokou.auth.model.CaptchaE;
 import org.laokou.auth.model.LoginLogE;
 import org.laokou.auth.model.NoticeLogE;
 import org.laokou.auth.model.UserE;
@@ -42,10 +41,6 @@ public final class DomainFactory {
 
 	public static LoginLogE getLoginLog() {
 		return SpringContextUtils.getBeanProvider(LoginLogE.class);
-	}
-
-	public static CaptchaE getCaptcha() {
-		return SpringContextUtils.getBeanProvider(CaptchaE.class);
 	}
 
 	public static NoticeLogE getNoticeLog() {

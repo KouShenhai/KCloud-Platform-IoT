@@ -18,7 +18,6 @@
 package org.laokou.auth.model;
 
 import lombok.Getter;
-import lombok.Setter;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.crypto.util.RSAUtils;
@@ -28,6 +27,7 @@ import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.dto.IdGenerator;
+import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -35,6 +35,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.io.Serial;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Supplier;
 
@@ -44,31 +45,11 @@ import java.util.function.Supplier;
  * @author laokou
  */
 @Entity
+@Getter
 public class AuthA extends AggregateRoot {
 
 	@Serial
 	private static final long serialVersionUID = 3319752558160144699L;
-
-	/**
-	 * 用户名.
-	 */
-	@Setter
-	@Getter
-	private String username;
-
-	/**
-	 * 用户密码.
-	 */
-	@Setter
-	@Getter
-	private String password;
-
-	/**
-	 * 租户编码.
-	 */
-	@Setter
-	@Getter
-	private String tenantCode;
 
 	// @formatter:off
 	/**
@@ -80,34 +61,32 @@ public class AuthA extends AggregateRoot {
 	 * test测试
 	 */
 	// @formatter:on
-	@Setter
-	@Getter
 	private GrantTypeEnum grantTypeEnum;
+
+	/**
+	 * 发送验证码类型.
+	 */
+	private SendCaptchaTypeEnum sendCaptchaTypeEnum;
+
+	/**
+	 * 用户值对象.
+	 */
+	private transient UserV userV;
 
 	/**
 	 * 验证码值对象.
 	 */
-	@Setter
-	@Getter
-	private transient CaptchaV captcha;
+	private transient CaptchaV captchaV;
 
 	/**
 	 * 用户实体.
 	 */
-	@Getter
-	private UserE user = DomainFactory.getUser();
+	private UserE userE;
 
 	/**
-	 * 菜单权限标识.
+	 * 请求值Map映射.
 	 */
-	@Getter
-	private Set<String> permissions;
-
-	/**
-	 * 头像.
-	 */
-	@Getter
-	private String avatar;
+	private final Map<String, String[]> parameterMap;
 
 	/**
 	 * 密码校验器.
@@ -119,26 +98,56 @@ public class AuthA extends AggregateRoot {
 	 */
 	private final CaptchaValidator captchaValidator;
 
+	/**
+	 * 授权码登录校验器.
+	 */
 	private final AuthParamValidator authorizationCodeAuthParamValidator;
 
+	/**
+	 * 邮箱登录校验器.
+	 */
 	private final AuthParamValidator mailAuthParamValidator;
 
+	/**
+	 * 手机号登录校验器.
+	 */
 	private final AuthParamValidator mobileAuthParamValidator;
 
+	/**
+	 * 测试登录校验器.
+	 */
 	private final AuthParamValidator testAuthParamValidator;
 
+	/**
+	 * 用户名密码登录校验器.
+	 */
 	private final AuthParamValidator usernamePasswordAuthParamValidator;
 
+	/**
+	 * 邮箱验证码校验器.
+	 */
+	private final CaptchaParamValidator mailCaptchaParamValidator;
+
+	/**
+	 * 手机验证码校验器.
+	 */
+	private final CaptchaParamValidator mobileCaptchaParamValidator;
+
 	// @formatter:off
-	public AuthA(IdGenerator idGenerator,
+	private AuthA(IdGenerator idGenerator,
+				 HttpRequest httpRequest,
                  PasswordValidator passwordValidator,
                  CaptchaValidator captchaValidator,
                  @Qualifier("authorizationCodeAuthParamValidator") AuthParamValidator authorizationCodeAuthParamValidator,
                  @Qualifier("mailAuthParamValidator") AuthParamValidator mailAuthParamValidator,
                  @Qualifier("mobileAuthParamValidator") AuthParamValidator mobileAuthParamValidator,
                  @Qualifier("testAuthParamValidator") AuthParamValidator testAuthParamValidator,
-                 @Qualifier("usernamePasswordAuthParamValidator") AuthParamValidator usernamePasswordAuthParamValidator) {
-		this.id = idGenerator.getId();
+                 @Qualifier("usernamePasswordAuthParamValidator") AuthParamValidator usernamePasswordAuthParamValidator,
+				 @Qualifier("mailCaptchaParamValidator") CaptchaParamValidator mailCaptchaParamValidator,
+				 @Qualifier("mobileCaptchaParamValidator") CaptchaParamValidator mobileCaptchaParamValidator) {
+		super(idGenerator.getId(), InstantUtils.now());
+		this.parameterMap = httpRequest.getParameterMap();
+		this.userE = DomainFactory.getUser();
 		this.passwordValidator = passwordValidator;
 		this.captchaValidator = captchaValidator;
 		this.authorizationCodeAuthParamValidator = authorizationCodeAuthParamValidator;
@@ -146,50 +155,75 @@ public class AuthA extends AggregateRoot {
 		this.mobileAuthParamValidator = mobileAuthParamValidator;
 		this.testAuthParamValidator = testAuthParamValidator;
 		this.usernamePasswordAuthParamValidator = usernamePasswordAuthParamValidator;
+		this.mailCaptchaParamValidator = mailCaptchaParamValidator;
+		this.mobileCaptchaParamValidator = mobileCaptchaParamValidator;
 	}
-
 	// @formatter:on
 
-	public void decryptUsernamePassword() {
-		username = RSAUtils.decryptByPrivateKey(username);
-		password = RSAUtils.decryptByPrivateKey(password);
+	public AuthA createUserVByUsernamePassword() throws Exception {
+		this.grantTypeEnum = GrantTypeEnum.USERNAME_PASSWORD;
+		this.captchaV = getCaptchaVByUsernamePassword();
+		this.userV = getUserVByUsernamePassword();
+		return this;
 	}
 
-	public void createUserByUsernamePassword() throws Exception {
-		fillUserValue(this.username, StringConstants.EMPTY, StringConstants.EMPTY);
+	public AuthA createUserVByMobile() throws Exception {
+		this.grantTypeEnum = GrantTypeEnum.MOBILE;
+		this.captchaV = getCaptchaVByMobile();
+		this.userV = getUserVByMobile();
+		return this;
 	}
 
-	public void createUserByMobile() throws Exception {
-		fillUserValue(StringConstants.EMPTY, StringConstants.EMPTY, this.captcha.uuid());
+	public AuthA createUserVByMail() throws Exception {
+		this.grantTypeEnum = GrantTypeEnum.MAIL;
+		this.captchaV = getCaptchaVByMail();
+		this.userV = getUserVByMail();
+		return this;
 	}
 
-	public void createUserByMail() throws Exception {
-		fillUserValue(StringConstants.EMPTY, this.captcha.uuid(), StringConstants.EMPTY);
+	public AuthA createUserVByAuthorizationCode() throws Exception {
+		this.grantTypeEnum = GrantTypeEnum.AUTHORIZATION_CODE;
+		this.userV = getUserVByAuthorizationCode();
+		return this;
 	}
 
-	public void createUserByAuthorizationCode() throws Exception {
-		fillUserValue(this.username, StringConstants.EMPTY, StringConstants.EMPTY);
+	public AuthA createUserVByTest() throws Exception {
+		this.grantTypeEnum = GrantTypeEnum.TEST;
+		this.userV = getUserVByTest();
+		return this;
 	}
 
-	public void createUserByTest() throws Exception {
-		fillUserValue(this.username, StringConstants.EMPTY, StringConstants.EMPTY);
+	public AuthA createCaptchaV(String uuid, String tag, String tenantCode) {
+		this.sendCaptchaTypeEnum = SendCaptchaTypeEnum.getByCode(tag);
+		this.captchaV = CaptchaV.builder().uuid(uuid).build();
+		this.userV = UserV.builder().tenantCode(tenantCode).build();
+		return this;
 	}
 
 	public void getTenantId(Supplier<Long> supplier) {
 		if (isDefaultTenant()) {
-			this.user.setTenantId(0L);
+			this.userV = this.userV.toBuilder().tenantId(0L).build();
 		}
 		else {
-			this.user.setTenantId(supplier.get());
+			this.userV = this.userV.toBuilder().tenantId(supplier.get()).build();
 		}
 	}
 
-	public void getUserInfo(UserE user) {
-		this.user = user;
+	public void getUserInfo(UserE userE) {
+		this.userE = userE;
 	}
 
 	public void getMenuPermissions(Set<String> permissions) {
-		this.permissions = permissions;
+		this.userV = this.userV.toBuilder().permissions(permissions).build();
+	}
+
+	public void checkCaptchaParam() {
+		switch (sendCaptchaTypeEnum) {
+			case SEND_MAIL_CAPTCHA -> this.mailCaptchaParamValidator.validateCaptcha(this);
+			case SEND_MOBILE_CAPTCHA -> this.mobileCaptchaParamValidator.validateCaptcha(this);
+			default -> {
+			}
+		}
 	}
 
 	public void checkAuthParam() {
@@ -205,14 +239,14 @@ public class AuthA extends AggregateRoot {
 	}
 
 	public void checkTenantId() {
-		if (ObjectUtils.isNull(this.user.getTenantId())) {
+		if (ObjectUtils.isNull(this.userV.tenantId())) {
 			throw new BizException(OAuth2Constants.TENANT_NOT_EXIST);
 		}
 	}
 
 	public void checkCaptcha() {
 		if (isUseCaptcha()) {
-			Boolean validate = this.captchaValidator.validateCaptcha(getCaptchaCacheKey(), captcha.captcha());
+			Boolean validate = this.captchaValidator.validateCaptcha(getCaptchaCacheKey(), this.captchaV.captcha());
 			if (ObjectUtils.isNull(validate)) {
 				throw new BizException(OAuth2Constants.CAPTCHA_EXPIRED);
 			}
@@ -223,25 +257,26 @@ public class AuthA extends AggregateRoot {
 	}
 
 	public void checkUsername() {
-		if (ObjectUtils.isNull(this.user)) {
+		if (ObjectUtils.isNull(this.userE)) {
 			this.grantTypeEnum.checkUsernameNotExist();
 		}
 	}
 
 	public void checkPassword() {
-		if (isUsePassword() && !this.passwordValidator.validatePassword(this.password, user.getPassword())) {
+		if (isUsePassword()
+				&& !this.passwordValidator.validatePassword(this.userV.password(), this.userE.getPassword())) {
 			throw new BizException(OAuth2Constants.USERNAME_PASSWORD_ERROR);
 		}
 	}
 
 	public void checkUserStatus() {
-		if (ObjectUtils.equals(UserStatusEnum.DISABLE.getCode(), this.user.getStatus())) {
+		if (ObjectUtils.equals(UserStatusEnum.DISABLE.getCode(), this.userE.getStatus())) {
 			throw new BizException(OAuth2Constants.USER_DISABLED);
 		}
 	}
 
 	public void checkMenuPermissions() {
-		if (CollectionUtils.isEmpty(this.permissions)) {
+		if (CollectionUtils.isEmpty(this.userV.permissions())) {
 			throw new BizException(StatusCode.FORBIDDEN);
 		}
 	}
@@ -249,13 +284,13 @@ public class AuthA extends AggregateRoot {
 	public String getLoginName() {
 		if (List.of(GrantTypeEnum.USERNAME_PASSWORD, GrantTypeEnum.AUTHORIZATION_CODE, GrantTypeEnum.TEST)
 			.contains(grantTypeEnum)) {
-			return this.username;
+			return this.userV.username();
 		}
-		return this.captcha.uuid();
+		return this.captchaV.uuid();
 	}
 
 	public void getUserAvatar(String avatar) {
-		this.avatar = avatar;
+		this.userV = this.userV.toBuilder().avatar(avatar).build();
 	}
 
 	private boolean isUseCaptcha() {
@@ -270,21 +305,87 @@ public class AuthA extends AggregateRoot {
 
 	private String getCaptchaCacheKey() {
 		return switch (grantTypeEnum) {
-			case MOBILE -> RedisKeyUtils.getMobileAuthCaptchaKey(captcha.uuid());
-			case MAIL -> RedisKeyUtils.getMailAuthCaptchaKey(captcha.uuid());
-			case USERNAME_PASSWORD -> RedisKeyUtils.getUsernamePasswordAuthCaptchaKey(captcha.uuid());
+			case MOBILE -> RedisKeyUtils.getMobileAuthCaptchaKey(this.captchaV.uuid());
+			case MAIL -> RedisKeyUtils.getMailAuthCaptchaKey(this.captchaV.uuid());
+			case USERNAME_PASSWORD -> RedisKeyUtils.getUsernamePasswordAuthCaptchaKey(this.captchaV.uuid());
 			case AUTHORIZATION_CODE, TEST -> StringConstants.EMPTY;
 		};
 	}
 
 	private boolean isDefaultTenant() {
-		return ObjectUtils.equals(Constants.DEFAULT_TENANT, tenantCode);
+		return ObjectUtils.equals(Constants.DEFAULT_TENANT, this.userV.tenantCode());
 	}
 
-	private void fillUserValue(String username, String mail, String mobile) throws Exception {
-		this.user.setUsername(AESUtils.encrypt(username));
-		this.user.setMail(AESUtils.encrypt(mail));
-		this.user.setMobile(AESUtils.encrypt(mobile));
+	private String getParameterValue(String key) {
+		return parameterMap.getOrDefault(key, new String[] { StringConstants.EMPTY })[0];
+	}
+
+	private CaptchaV getCaptchaVByUsernamePassword() {
+		String uuid = getParameterValue(Constants.UUID);
+		String captcha = getParameterValue(Constants.CAPTCHA);
+		return CaptchaV.builder().uuid(uuid).captcha(captcha).build();
+	}
+
+	private CaptchaV getCaptchaVByMobile() {
+		String mobile = getParameterValue(Constants.MOBILE);
+		String code = getParameterValue(Constants.CODE);
+		return CaptchaV.builder().uuid(mobile).captcha(code).build();
+	}
+
+	private CaptchaV getCaptchaVByMail() {
+		String mail = getParameterValue(Constants.MAIL);
+		String code = getParameterValue(Constants.CODE);
+		return CaptchaV.builder().uuid(mail).captcha(code).build();
+	}
+
+	private UserV getUserVByUsernamePassword() throws Exception {
+		String username = RSAUtils.decryptByPrivateKey(getParameterValue(Constants.USERNAME));
+		String password = RSAUtils.decryptByPrivateKey(getParameterValue(Constants.PASSWORD));
+		String tenantCode = getParameterValue(Constants.TENANT_CODE);
+		return UserV.builder()
+			.username(AESUtils.encrypt(username))
+			.password(password)
+			.tenantCode(tenantCode)
+			.mail(StringConstants.EMPTY)
+			.mobile(StringConstants.EMPTY)
+			.build();
+	}
+
+	private UserV getUserVByTest() throws Exception {
+		return getUserVByAuthorizationCode();
+	}
+
+	private UserV getUserVByAuthorizationCode() throws Exception {
+		String username = getParameterValue(Constants.USERNAME);
+		String password = getParameterValue(Constants.PASSWORD);
+		String tenantCode = getParameterValue(Constants.TENANT_CODE);
+		return UserV.builder()
+			.username(AESUtils.encrypt(username))
+			.password(password)
+			.tenantCode(tenantCode)
+			.mail(StringConstants.EMPTY)
+			.mobile(StringConstants.EMPTY)
+			.build();
+	}
+
+	private UserV getUserVByMobile() throws Exception {
+		String tenantCode = getParameterValue(Constants.TENANT_CODE);
+		return UserV.builder()
+			.username(StringConstants.EMPTY)
+			.tenantCode(tenantCode)
+			.mail(StringConstants.EMPTY)
+			.mobile(AESUtils.encrypt(this.captchaV.uuid()))
+			.build();
+	}
+
+	private UserV getUserVByMail() throws Exception {
+		String tenantCode = getParameterValue(Constants.TENANT_CODE);
+		return UserV.builder()
+			.username(StringConstants.EMPTY)
+			.tenantCode(tenantCode)
+			.mail(AESUtils.encrypt(this.captchaV.uuid()))
+			.mobile(StringConstants.EMPTY)
+			.build();
 	}
 
 }

@@ -24,6 +24,7 @@ import org.laokou.auth.gateway.UserGateway;
 import org.laokou.auth.gatewayimpl.database.UserMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.auth.model.UserE;
+import org.laokou.auth.model.UserV;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.stereotype.Component;
 
@@ -41,12 +42,12 @@ public class UserGatewayImpl implements UserGateway {
 
 	/**
 	 * 查看用户信息.
-	 * @param user 用户对象
+	 * @param userV 用户值对象
 	 * @return 用户信息
 	 */
 	@Override
-	public UserE getUserProfile(UserE user) {
-		UserDO userDO = userMapper.selectUser(UserConvertor.toDataObject(user));
+	public UserE getUserProfile(UserV userV) {
+		UserDO userDO = userMapper.selectUser(UserConvertor.toDataObject(userV));
 		return ObjectUtils.isNotNull(userDO) ? UserConvertor.toEntity(userDO) : null;
 	}
 

@@ -17,24 +17,31 @@
 
 package org.laokou.common.i18n.dto;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.experimental.SuperBuilder;
+
 import java.io.Serial;
+import java.io.Serializable;
 
 /**
  * 领域事件.
  *
  * @author laokou
  */
-@Setter
 @Getter
-public abstract class DomainEvent extends Identifier {
+@SuperBuilder(toBuilder = true)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+public abstract class DomainEvent implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 1532877866226749304L;
 
-	protected Long userId;
+	protected final Long id;
 
-	protected Long tenantId;
+	protected final Long creator;
+
+	protected final Long tenantId;
 
 }

@@ -20,7 +20,6 @@ package org.laokou.admin.oss.model;
 import lombok.Getter;
 import lombok.Setter;
 import org.laokou.common.i18n.annotation.Entity;
-import org.laokou.common.i18n.dto.Identifier;
 
 /**
  * OSS领域对象【实体】.
@@ -28,7 +27,11 @@ import org.laokou.common.i18n.dto.Identifier;
  * @author laokou
  */
 @Entity
-public class OssE extends Identifier {
+@Getter
+@Setter
+public class OssE {
+
+	private Long id;
 
 	/**
 	 * OSS的名称.
@@ -64,6 +67,10 @@ public class OssE extends Identifier {
 	@Setter
 	@Getter
 	private OssOperateTypeEnum ossOperateTypeEnum;
+
+	public OssE() {
+		super();
+	}
 
 	//
 	// private final IdGenerator idGenerator;

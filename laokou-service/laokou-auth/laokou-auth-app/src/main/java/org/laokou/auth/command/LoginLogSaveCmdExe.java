@@ -19,9 +19,9 @@ package org.laokou.auth.command;
 
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
-import org.laokou.auth.ability.DomainService;
 import org.laokou.auth.convertor.LoginLogConvertor;
 import org.laokou.auth.dto.LoginLogSaveCmd;
+import org.laokou.auth.gateway.LoginLogGateway;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.laokou.common.tenant.constant.DSConstants;
@@ -35,7 +35,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class LoginLogSaveCmdExe {
 
-	private final DomainService domainService;
+	private final LoginLogGateway loginLogGateway;
 
 	private final TransactionalUtils transactionalUtils;
 
@@ -45,7 +45,7 @@ public class LoginLogSaveCmdExe {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);
 			transactionalUtils
-				.executeInTransaction(() -> domainService.createLoginLog(LoginLogConvertor.toEntity(cmd.getCo())));
+				.executeInTransaction(() -> loginLogGateway.createLoginLog(LoginLogConvertor.toEntity(cmd.getCo())));
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

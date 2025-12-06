@@ -17,14 +17,24 @@
 
 package org.laokou.auth.model;
 
-import java.io.Serializable;
+import lombok.Builder;
+
+import java.util.Set;
 
 /**
+ * 用户值对象.
+ *
  * @author laokou
+ * @param username 用户名.
+ * @param mail 邮箱.
+ * @param mobile 手机号.
+ * @param tenantId 租户ID.
+ * @param password 密码.
+ * @param avatar 头像.
+ * @param permissions 权限标识集合.
+ * @param tenantCode 租户编码.
  */
-@FunctionalInterface
-public interface AuthParamValidator extends Serializable {
-
-	void validateAuth(AuthA authA);
-
+@Builder(toBuilder = true)
+public record UserV(String username, String password, String avatar, String mail, String mobile, String tenantCode,
+		Long tenantId, Set<String> permissions) {
 }

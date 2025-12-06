@@ -19,10 +19,10 @@ package org.laokou.auth.command;
 
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
-import org.laokou.auth.ability.DomainService;
 import org.laokou.auth.convertor.NoticeLogConvertor;
 import org.laokou.auth.dto.NoticeLogSaveCmd;
 import org.laokou.auth.dto.clientobject.NoticeLogCO;
+import org.laokou.auth.gateway.NoticeLogGateway;
 import org.laokou.auth.model.SendCaptchaStatusEnum;
 import org.laokou.auth.model.SendCaptchaTypeEnum;
 import org.laokou.common.domain.annotation.CommandLog;
@@ -39,7 +39,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class NoticeLogSaveCmdExe {
 
-	private final DomainService domainService;
+	private final NoticeLogGateway noticeLogGateway;
 
 	private final RedisUtils redisUtils;
 
@@ -52,12 +52,12 @@ public class NoticeLogSaveCmdExe {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);
 			transactionalUtils
-				.executeInTransaction(() -> domainService.createNoticeLog(NoticeLogConvertor.toEntity(co)));
+				.executeInTransaction(() -> noticeLogGateway.createNoticeLog(NoticeLogConvertor.toEntity(co)));
+			// 保存验证码【发送成功】
+			saveCaptchaCache(co);
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();
-			// 保存验证码【发送成功】
-			saveCaptchaCache(co);
 		}
 	}
 

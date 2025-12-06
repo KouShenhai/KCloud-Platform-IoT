@@ -17,20 +17,29 @@
 
 package org.laokou.auth.model;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.annotation.Entity;
-import org.laokou.common.i18n.dto.Identifier;
 
 import java.time.Instant;
 
 /**
  * @author laokou
  */
-@Setter
-@Getter
 @Entity
-public class LoginLogE extends Identifier {
+@Getter
+@Builder(toBuilder = true)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class LoginLogE {
+
+	/**
+	 * 编号.
+	 */
+	private Long id;
 
 	/**
 	 * 登录的用户名.
@@ -83,8 +92,8 @@ public class LoginLogE extends Identifier {
 	private Long tenantId;
 
 	/**
-	 * 用户ID.
+	 * 创建者.
 	 */
-	private Long userId;
+	private Long creator;
 
 }

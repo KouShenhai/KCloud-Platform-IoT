@@ -20,11 +20,7 @@ package org.laokou.auth.config.authentication;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
-import org.laokou.auth.convertor.AuthConvertor;
-import org.laokou.auth.model.AuthA;
-import org.laokou.auth.model.Constants;
-import org.laokou.auth.model.GrantTypeEnum;
-import org.laokou.common.i18n.common.constant.StringConstants;
+import org.laokou.auth.factory.DomainFactory;
 import org.laokou.common.security.config.OAuth2ModelMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
@@ -55,13 +51,7 @@ final class OAuth2MailAuthenticationProvider extends AbstractOAuth2Authenticatio
 
 	@Override
 	Authentication getPrincipal(HttpServletRequest request) throws Exception {
-		String code = request.getParameter(Constants.CODE);
-		String mail = request.getParameter(Constants.MAIL);
-		String tenantCode = request.getParameter(Constants.TENANT_CODE);
-		AuthA authA = AuthConvertor.toEntity(StringConstants.EMPTY, StringConstants.EMPTY, tenantCode,
-				GrantTypeEnum.MAIL, code, mail);
-		authA.createUserByMail();
-		return authentication(authA, request);
+		return authentication(DomainFactory.getAuth().createUserVByMail(), request);
 	}
 
 	@Override

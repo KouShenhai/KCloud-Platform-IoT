@@ -17,17 +17,12 @@
 
 package org.laokou.auth.config.authentication;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
-import org.laokou.auth.convertor.AuthConvertor;
-import org.laokou.auth.model.AuthA;
-import org.laokou.auth.model.Constants;
-import org.laokou.auth.model.GrantTypeEnum;
+import org.laokou.auth.factory.DomainFactory;
 import org.laokou.common.context.util.User;
 import org.laokou.common.context.util.UserConvertor;
 import org.laokou.common.core.util.RequestUtils;
-import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -55,13 +50,10 @@ record UserDetailsServiceImpl(
 	@Override
 	public UserDetails loadUserByUsername(@NonNull String username) throws UsernameNotFoundException {
 		try {
-			HttpServletRequest request = RequestUtils.getHttpServletRequest();
-			String password = request.getParameter(Constants.PASSWORD);
-			String tenantCode = request.getParameter(Constants.TENANT_CODE);
-			AuthA authA = AuthConvertor.toEntity(username, password, tenantCode, GrantTypeEnum.AUTHORIZATION_CODE,
-					StringConstants.EMPTY, StringConstants.EMPTY);
-			authA.createUserByAuthorizationCode();
-			Object principal = authenticationProcessor.authentication(authA, request).getPrincipal();
+			Object principal = authenticationProcessor
+				.authentication(DomainFactory.getAuth().createUserVByAuthorizationCode(),
+						RequestUtils.getHttpServletRequest())
+				.getPrincipal();
 			if (principal instanceof User user) {
 				return UserConvertor.toUserDetails(user);
 			}

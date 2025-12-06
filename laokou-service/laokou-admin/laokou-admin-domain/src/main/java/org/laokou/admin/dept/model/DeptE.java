@@ -19,10 +19,9 @@ package org.laokou.admin.dept.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.laokou.common.i18n.dto.IdGenerator;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.exception.BizException;
-import org.laokou.common.i18n.dto.Identifier;
+import org.laokou.common.i18n.dto.IdGenerator;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -32,7 +31,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
  * @author laokou
  */
 @Entity
-public class DeptE extends Identifier {
+@Getter
+@Setter
+public class DeptE {
+
+	private Long id;
 
 	/**
 	 * 部门父节点ID.
@@ -87,7 +90,7 @@ public class DeptE extends Identifier {
 	public DeptE(@Qualifier("modifyDeptParamValidator") DeptParamValidator saveDeptParamValidator,
 				 @Qualifier("saveDeptParamValidator") DeptParamValidator modifyDeptParamValidator,
 				 IdGenerator idGenerator) {
-		this.saveDeptParamValidator = saveDeptParamValidator;
+		super();this.saveDeptParamValidator = saveDeptParamValidator;
 		this.modifyDeptParamValidator = modifyDeptParamValidator;
 		this.idGenerator = idGenerator;
 	}

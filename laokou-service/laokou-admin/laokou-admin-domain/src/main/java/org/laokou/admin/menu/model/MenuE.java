@@ -19,9 +19,8 @@ package org.laokou.admin.menu.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.laokou.common.i18n.dto.IdGenerator;
 import org.laokou.common.i18n.annotation.Entity;
-import org.laokou.common.i18n.dto.Identifier;
+import org.laokou.common.i18n.dto.IdGenerator;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
@@ -30,7 +29,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
  * @author laokou
  */
 @Entity
-public class MenuE extends Identifier {
+@Getter
+@Setter
+public class MenuE {
+
+	private Long id;
 
 	/**
 	 * 菜单父节点ID.
@@ -101,6 +104,7 @@ public class MenuE extends Identifier {
 	public MenuE(@Qualifier("saveMenuParamValidator") MenuParamValidator saveMenuParamValidator,
 			@Qualifier("modifyMenuParamValidator") MenuParamValidator modifyMenuParamValidator,
 			IdGenerator idGenerator) {
+		super();
 		this.saveMenuParamValidator = saveMenuParamValidator;
 		this.modifyMenuParamValidator = modifyMenuParamValidator;
 		this.idGenerator = idGenerator;

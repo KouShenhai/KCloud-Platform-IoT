@@ -17,6 +17,8 @@
 
 package org.laokou.auth.model;
 
+import lombok.Builder;
+
 /**
  * 验证码值对象.
  *
@@ -24,6 +26,7 @@ package org.laokou.auth.model;
  * @param captcha 验证码
  * @author laokou
  */
+@Builder(toBuilder = true)
 public record CaptchaV(String uuid, String captcha) {
 
 }

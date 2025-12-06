@@ -18,6 +18,7 @@
 package org.laokou.oss.dto.domainevent;
 
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 import org.laokou.common.i18n.dto.DomainEvent;
 
 import java.time.Instant;
@@ -26,6 +27,7 @@ import java.time.Instant;
  * @author laokou
  */
 @Getter
+@SuperBuilder(toBuilder = true)
 public class OssUploadEvent extends DomainEvent {
 
 	/**
@@ -73,21 +75,23 @@ public class OssUploadEvent extends DomainEvent {
 	 */
 	private final Instant uploadTime;
 
-	public OssUploadEvent(final Long id, final String name, final String md5, final String url, final Long size,
-			final Long ossId, final String contentType, final String format, final Instant uploadTime,
-			final Long tenantId, final Long userId, String type) {
-		this.type = type;
-		this.id = id;
-		this.name = name;
-		this.md5 = md5;
-		this.url = url;
-		this.size = size;
-		this.ossId = ossId;
-		this.contentType = contentType;
-		this.format = format;
-		this.uploadTime = uploadTime;
-		this.tenantId = tenantId;
-		this.userId = userId;
-	}
+	// public OssUploadEvent(final Long id, final String name, final String md5, final
+	// String url, final Long size,
+	// final Long ossId, final String contentType, final String format, final Instant
+	// uploadTime,
+	// final Long tenantId, final Long userId, String type) {
+	// this.type = type;
+	// this.id = id;
+	// this.name = name;
+	// this.md5 = md5;
+	// this.url = url;
+	// this.size = size;
+	// this.ossId = ossId;
+	// this.contentType = contentType;
+	// this.format = format;
+	// this.uploadTime = uploadTime;
+	// this.tenantId = tenantId;
+	// this.userId = userId;
+	// }
 
 }

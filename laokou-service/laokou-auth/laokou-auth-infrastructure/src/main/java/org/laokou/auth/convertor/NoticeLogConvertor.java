@@ -44,7 +44,7 @@ public final class NoticeLogConvertor {
 		noticeLogCO.setParam(result.getParam());
 		noticeLogCO.setTenantId(evt.getTenantId());
 		noticeLogCO.setId(evt.getId());
-		noticeLogCO.setInstant(InstantUtils.now());
+		noticeLogCO.setSendTime(InstantUtils.now());
 		noticeLogCO.setUuid(evt.getUuid());
 		noticeLogCO.setCaptcha(result.getCaptcha());
 		return noticeLogCO;
@@ -59,25 +59,26 @@ public final class NoticeLogConvertor {
 		noticeLogCO.setParam(result.getParam());
 		noticeLogCO.setTenantId(evt.getTenantId());
 		noticeLogCO.setId(evt.getId());
-		noticeLogCO.setInstant(InstantUtils.now());
+		noticeLogCO.setSendTime(InstantUtils.now());
 		noticeLogCO.setUuid(evt.getUuid());
 		noticeLogCO.setCaptcha(result.getCaptcha());
 		return noticeLogCO;
 	}
 
 	public static NoticeLogE toEntity(NoticeLogCO noticeLogCO) {
-		NoticeLogE noticeLogE = DomainFactory.getNoticeLog();
-		noticeLogE.setId(noticeLogCO.getId());
-		noticeLogE.setCode(noticeLogCO.getCode());
-		noticeLogE.setName(noticeLogCO.getName());
-		noticeLogE.setStatus(noticeLogCO.getStatus());
-		noticeLogE.setErrorMessage(noticeLogCO.getErrorMessage());
-		noticeLogE.setParam(noticeLogCO.getParam());
-		noticeLogE.setTenantId(noticeLogCO.getTenantId());
-		noticeLogE.setInstant(noticeLogCO.getInstant());
-		noticeLogE.setUuid(noticeLogCO.getUuid());
-		noticeLogE.setCaptcha(noticeLogCO.getCaptcha());
-		return noticeLogE;
+		return DomainFactory.getNoticeLog()
+			.toBuilder()
+			.id(noticeLogCO.getId())
+			.code(noticeLogCO.getCode())
+			.name(noticeLogCO.getName())
+			.status(noticeLogCO.getStatus())
+			.errorMessage(noticeLogCO.getErrorMessage())
+			.tenantId(noticeLogCO.getTenantId())
+			.param(noticeLogCO.getParam())
+			.sendTime(noticeLogCO.getSendTime())
+			.uuid(noticeLogCO.getUuid())
+			.captcha(noticeLogCO.getCaptcha())
+			.build();
 	}
 
 	public static NoticeLogDO toDataObject(NoticeLogE noticeLogE) {
@@ -89,8 +90,8 @@ public final class NoticeLogConvertor {
 		noticeLogDO.setErrorMessage(noticeLogE.getErrorMessage());
 		noticeLogDO.setParam(noticeLogE.getParam());
 		noticeLogDO.setTenantId(noticeLogE.getTenantId());
-		noticeLogDO.setCreateTime(noticeLogE.getInstant());
-		noticeLogDO.setUpdateTime(noticeLogE.getInstant());
+		noticeLogDO.setCreateTime(noticeLogE.getSendTime());
+		noticeLogDO.setUpdateTime(noticeLogE.getSendTime());
 		return noticeLogDO;
 	}
 

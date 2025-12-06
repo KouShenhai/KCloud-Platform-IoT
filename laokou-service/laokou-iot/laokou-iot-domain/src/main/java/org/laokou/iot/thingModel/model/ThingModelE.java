@@ -21,7 +21,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.dto.IdGenerator;
-import org.laokou.common.i18n.dto.Identifier;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
@@ -31,7 +30,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
  * @author laokou
  */
 @Entity
-public class ThingModelE extends Identifier {
+@Setter
+@Getter
+public class ThingModelE {
+
+	private Long id;
 
 	/**
 	 * 物模型名称.
@@ -102,6 +105,7 @@ public class ThingModelE extends Identifier {
 	public ThingModelE(@Qualifier("saveThingModelParamValidator") ThingModelParamValidator saveThingModelParamValidator,
 			@Qualifier("modifyThingModelParamValidator") ThingModelParamValidator modifyThingModelParamValidator,
 			IdGenerator idGenerator) {
+		super();
 		this.saveThingModelParamValidator = saveThingModelParamValidator;
 		this.modifyThingModelParamValidator = modifyThingModelParamValidator;
 		this.idGenerator = idGenerator;

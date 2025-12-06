@@ -46,20 +46,21 @@ public final class LoginLogConvertor {
 	}
 
 	public static LoginLogE toEntity(LoginLogCO co) {
-		LoginLogE loginLogE = DomainFactory.getLoginLog();
-		loginLogE.setId(co.getId());
-		loginLogE.setUsername(co.getUsername());
-		loginLogE.setIp(co.getIp());
-		loginLogE.setAddress(co.getAddress());
-		loginLogE.setBrowser(co.getBrowser());
-		loginLogE.setOs(co.getOs());
-		loginLogE.setStatus(co.getStatus());
-		loginLogE.setErrorMessage(co.getErrorMessage());
-		loginLogE.setType(co.getType());
-		loginLogE.setLoginTime(co.getLoginTime());
-		loginLogE.setTenantId(co.getTenantId());
-		loginLogE.setUserId(co.getUserId());
-		return loginLogE;
+		return DomainFactory.getLoginLog()
+			.toBuilder()
+			.id(co.getId())
+			.username(co.getUsername())
+			.ip(co.getIp())
+			.address(co.getAddress())
+			.browser(co.getBrowser())
+			.os(co.getOs())
+			.status(co.getStatus())
+			.errorMessage(co.getErrorMessage())
+			.type(co.getType())
+			.loginTime(co.getLoginTime())
+			.tenantId(co.getTenantId())
+			.creator(co.getCreator())
+			.build();
 	}
 
 	public static LoginLogDO toDataObject(LoginLogE loginLogE) {
@@ -76,8 +77,8 @@ public final class LoginLogConvertor {
 		loginLogDO.setCreateTime(loginLogE.getLoginTime());
 		loginLogDO.setUpdateTime(loginLogE.getLoginTime());
 		loginLogDO.setTenantId(loginLogE.getTenantId());
-		loginLogDO.setCreator(loginLogE.getUserId());
-		loginLogDO.setEditor(loginLogE.getUserId());
+		loginLogDO.setCreator(loginLogE.getCreator());
+		loginLogDO.setEditor(loginLogE.getCreator());
 		return loginLogDO;
 	}
 
@@ -94,28 +95,37 @@ public final class LoginLogConvertor {
 		loginLogCO.setType(loginEvent.getType());
 		loginLogCO.setLoginTime(loginEvent.getLoginTime());
 		loginLogCO.setTenantId(loginEvent.getTenantId());
-		loginLogCO.setUserId(loginEvent.getUserId());
+		loginLogCO.setCreator(loginEvent.getCreator());
 		return loginLogCO;
 	}
 
 	public static LoginEvent toDomainEvent(HttpServletRequest request, AuthA authA, BizException ex) throws Exception {
 		Capabilities capabilities = RequestUtils.getCapabilities(request);
 		String ip = IpUtils.getIpAddr(request);
-		String address = AddressUtils.getRealAddress(ip);
-		String os = capabilities.getPlatform();
-		String browser = capabilities.getBrowser();
 		int status = LoginStatusEnum.OK.getCode();
-		UserE userE = authA.getUser();
+		UserE userE = authA.getUserE();
 		Optional<UserE> optional = Optional.ofNullable(userE);
-		Long userId = optional.map(UserE::getId).orElse(null);
+		Long creator = optional.map(UserE::getId).orElse(null);
 		Long tenantId = optional.map(UserE::getTenantId).orElse(null);
 		String errorMessage = StringConstants.EMPTY;
 		if (ObjectUtils.isNotNull(ex)) {
 			status = LoginStatusEnum.FAIL.getCode();
 			errorMessage = ex.getMsg();
 		}
-		return new LoginEvent(authA.getId(), authA.getLoginName(), ip, address, browser, os, status, errorMessage,
-				authA.getGrantTypeEnum().getCode(), authA.getCreateTime(), tenantId, userId);
+		return LoginEvent.builder()
+			.id(authA.getId())
+			.username(authA.getLoginName())
+			.ip(ip)
+			.address(AddressUtils.getRealAddress(ip))
+			.browser(capabilities.getBrowser())
+			.os(capabilities.getPlatform())
+			.status(status)
+			.errorMessage(errorMessage)
+			.type(authA.getGrantTypeEnum().getCode())
+			.loginTime(authA.getCreateTime())
+			.tenantId(tenantId)
+			.creator(creator)
+			.build();
 	}
 
 }

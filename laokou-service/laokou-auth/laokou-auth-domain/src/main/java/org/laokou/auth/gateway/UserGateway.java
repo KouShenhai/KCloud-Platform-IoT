@@ -18,6 +18,7 @@
 package org.laokou.auth.gateway;
 
 import org.laokou.auth.model.UserE;
+import org.laokou.auth.model.UserV;
 
 /**
  * 用户.
@@ -28,9 +29,9 @@ public interface UserGateway {
 
 	/**
 	 * 查看用户信息.
-	 * @param user 用户对象
+	 * @param userV 用户值对象
 	 * @return 用户信息
 	 */
-	UserE getUserProfile(UserE user);
+	UserE getUserProfile(UserV userV);
 
 }
