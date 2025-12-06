@@ -164,7 +164,7 @@
     <!--fastexcel-->
     <fastexcel.version>1.3.0</fastexcel.version>
     <!--s3版本-->
-    <s3.version>2.40.1</s3.version>
+    <s3.version>2.40.3</s3.version>
     <!--dynamic-datasource版本-->
     <dynamic-datasource.version>4.3.1</dynamic-datasource.version>
     <!--httpclient5版本-->
