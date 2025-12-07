@@ -683,7 +683,7 @@ services:
     networks:
       - iot_network
   starrocks-be:
-    image: starrocks/be-ubuntu:4.0.1
+    image: starrocks/be-ubuntu:4.0.2
     hostname: starrocks-be
     container_name: starrocks-be
     # 保持容器在没有守护程序的情况下运行
