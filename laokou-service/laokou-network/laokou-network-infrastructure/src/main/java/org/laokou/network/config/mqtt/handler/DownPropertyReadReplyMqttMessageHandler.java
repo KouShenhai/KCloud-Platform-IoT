@@ -19,6 +19,7 @@ package org.laokou.network.config.mqtt.handler;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.pulsar.client.api.MessageId;
+import org.laokou.common.pulsar.util.TopicUtils;
 import org.laokou.network.model.MqttMessage;
 import org.laokou.network.model.MqttMessageEnum;
 import org.laokou.network.model.PropertyMessage;
@@ -47,8 +48,7 @@ public class DownPropertyReadReplyMqttMessageHandler implements MqttMessageHandl
 	@Override
 	public CompletableFuture<MessageId> handle(MqttMessage mqttMessage) {
 		MqttMessageEnum upPropertyReadReply = MqttMessageEnum.UP_PROPERTY_READ_REPLY;
-		String topic = org.laokou.common.pulsar.util.TopicUtils.getTopic("laokouyun", "mqtt",
-				upPropertyReadReply.getMqTopic());
+		String topic = TopicUtils.getTopic("laokouyun", "mqtt", upPropertyReadReply.getMqTopic());
 		return pulsarTemplate.sendAsync(topic, new PropertyMessage(mqttMessage.getTopic(),
 				upPropertyReadReply.getCode(), mqttMessage.getPayload().toString()));
 	}
