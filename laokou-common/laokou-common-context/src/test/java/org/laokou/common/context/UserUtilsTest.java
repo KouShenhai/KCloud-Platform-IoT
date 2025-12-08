@@ -20,6 +20,7 @@ package org.laokou.common.context;
 import org.assertj.core.api.Assertions;
 import org.jspecify.annotations.NullMarked;
 import org.junit.jupiter.api.Test;
+import org.laokou.common.context.util.DomainFactory;
 import org.laokou.common.context.util.User;
 import org.laokou.common.context.util.UserConvertor;
 import org.laokou.common.context.util.UserExtDetails;
@@ -42,18 +43,14 @@ class UserUtilsTest {
 
 	@Test
 	void test() {
-		Assertions.assertThat(UserUtils.userDetail())
-			.isNotNull()
-			.isEqualTo(SpringContextUtils.getBeanProvider(UserExtDetails.class));
+		Assertions.assertThat(UserUtils.userDetail()).isNotNull().isEqualTo(DomainFactory.getUserDetails());
 		Assertions.assertThat(UserUtils.getUserId()).isNull();
 		Assertions.assertThat(UserUtils.getUserName()).isBlank();
 		Assertions.assertThat(UserUtils.getTenantId()).isNull();
 		Assertions.assertThat(UserUtils.isSuperAdmin()).isNull();
 		Assertions.assertThat(UserUtils.userDetail().getPermissions()).isNull();
 		SecurityContextHolder.getContext().setAuthentication(new TestAuthentication());
-		Assertions.assertThat(UserUtils.userDetail())
-			.isNotNull()
-			.isNotEqualTo(SpringContextUtils.getBeanProvider(UserExtDetails.class));
+		Assertions.assertThat(UserUtils.userDetail()).isNotNull().isNotEqualTo(DomainFactory.getUserDetails());
 		Assertions.assertThat(UserUtils.getUserId()).isNotNull().isEqualTo(1L);
 		Assertions.assertThat(UserUtils.getUserName()).isNotNull().isEqualTo("admin");
 		Assertions.assertThat(UserUtils.getTenantId()).isNotNull().isEqualTo(0L);
