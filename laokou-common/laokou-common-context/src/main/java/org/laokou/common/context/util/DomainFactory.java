@@ -17,28 +17,18 @@
 
 package org.laokou.common.context.util;
 
+import org.laokou.common.i18n.util.SpringContextUtils;
+
 /**
  * @author laokou
  */
-public final class UserConvertor {
+public final class DomainFactory {
 
-	public static UserExtDetails toUserDetails(User user) {
-		return DomainFactory.getUserDetails()
-			.toBuilder()
-			.id(user.id())
-			.username(user.username())
-			.password(user.password())
-			.avatar(user.avatar())
-			.superAdmin(user.superAdmin())
-			.tenantId(user.tenantId())
-			.permissions(user.permissions())
-			.status(user.status())
-			.mail(user.mail())
-			.mobile(user.mobile())
-			.build()
-			.decryptUsername()
-			.decryptMail()
-			.decryptMobile();
+	private DomainFactory() {
+	}
+
+	public static UserExtDetails getUserDetails() {
+		return SpringContextUtils.getBeanProvider(UserExtDetails.class);
 	}
 
 }

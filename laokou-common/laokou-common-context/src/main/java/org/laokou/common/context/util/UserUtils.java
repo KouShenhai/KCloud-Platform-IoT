@@ -35,8 +35,8 @@ public final class UserUtils {
 			if (authentication.getPrincipal() instanceof UserExtDetails userExtDetails) {
 				return userExtDetails;
 			}
-			return UserConvertor.toUserDetails();
-		}).orElse(UserConvertor.toUserDetails());
+			return DomainFactory.getUserDetails();
+		}).orElse(DomainFactory.getUserDetails());
 	}
 
 	/**
