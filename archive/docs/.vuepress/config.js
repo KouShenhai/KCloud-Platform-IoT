@@ -80,7 +80,8 @@ module.exports = {
 							{text: 'Docker安装Postgresql 16.1', link: '/pages/d715cb/'},
 							{text: 'Ubuntu20.04安装Docker', link: '/pages/fade19/'},
 							{text: 'Ubuntu20.04忘记密码或指纹错误', link: '/pages/d0b936/'},
-							{text: 'Linux搭建Go开发环境', link: '/pages/b580fb/'}
+							{text: 'Linux搭建Go开发环境', link: '/pages/b580fb/'},
+							{text: 'Ubuntu20.04去掉SSH登录提示', link: '/pages/b71995/'}
 						]
 					},
 					{
