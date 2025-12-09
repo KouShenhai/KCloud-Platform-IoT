@@ -37,7 +37,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author laokou
  */
 @Slf4j
-final class VertxMqttClient extends AbstractVertxService<MqttClient> {
+final class VertxMqttClient extends AbstractVertxService<Void> {
 
 	private final MqttClientProperties mqttClientProperties;
 
@@ -88,7 +88,7 @@ final class VertxMqttClient extends AbstractVertxService<MqttClient> {
 	}
 
 	@Override
-	public Future<MqttClient> start0() {
+	public Future<Void> start0() {
 		mqttClient.connect(mqttClientProperties.getPort(), mqttClientProperties.getHost()).onComplete(connectResult -> {
 			if (connectResult.succeeded()) {
 				log.info("【Vertx-MQTT-Client】 => MQTT连接成功，主机：{}，端口：{}，客户端ID：{}", mqttClientProperties.getHost(),
@@ -101,11 +101,11 @@ final class VertxMqttClient extends AbstractVertxService<MqttClient> {
 						mqttClientProperties.getClientId(), ex);
 			}
 		});
-		return null;
+		return Future.succeededFuture();
 	}
 
 	@Override
-	public Future<MqttClient> stop0() {
+	public Future<Void> stop0() {
 		if (disconnect.compareAndSet(false, true)) {
 			mqttClient.disconnect().onComplete(disconnectResult -> {
 				if (disconnectResult.succeeded()) {
@@ -117,7 +117,7 @@ final class VertxMqttClient extends AbstractVertxService<MqttClient> {
 				}
 			});
 		}
-		return null;
+		return Future.succeededFuture();
 	}
 
 	/**

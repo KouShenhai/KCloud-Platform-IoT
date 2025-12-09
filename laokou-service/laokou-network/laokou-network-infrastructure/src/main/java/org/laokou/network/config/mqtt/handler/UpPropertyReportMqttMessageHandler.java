@@ -19,11 +19,12 @@ package org.laokou.network.config.mqtt.handler;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.pulsar.client.api.MessageId;
-import org.laokou.network.model.MqttMessage;
-import org.laokou.network.util.VertxMqttUtils;
 import org.laokou.common.pulsar.config.ForySchema;
+import org.laokou.common.pulsar.util.TopicUtils;
+import org.laokou.network.model.MqttMessage;
 import org.laokou.network.model.MqttMessageEnum;
 import org.laokou.network.model.PropertyMessage;
+import org.laokou.network.util.VertxMqttUtils;
 import org.springframework.pulsar.core.PulsarTemplate;
 import org.springframework.stereotype.Component;
 
@@ -48,8 +49,7 @@ public class UpPropertyReportMqttMessageHandler implements MqttMessageHandler {
 	@Override
 	public CompletableFuture<MessageId> handle(MqttMessage mqttMessage) {
 		MqttMessageEnum upPropertyReport = MqttMessageEnum.UP_PROPERTY_REPORT;
-		String topic = org.laokou.common.pulsar.util.TopicUtils.getTopic("laokouyun", "mqtt",
-				upPropertyReport.getMqTopic());
+		String topic = TopicUtils.getTopic("laokouyun", "mqtt", upPropertyReport.getMqTopic());
 		return pulsarTemplate.sendAsync(topic, new PropertyMessage(mqttMessage.getTopic(), upPropertyReport.getCode(),
 				mqttMessage.getPayload().toString()), ForySchema.INSTANCE);
 	}
