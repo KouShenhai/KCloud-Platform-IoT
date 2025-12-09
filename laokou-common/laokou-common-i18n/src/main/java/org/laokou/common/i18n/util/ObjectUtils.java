@@ -54,4 +54,11 @@ public final class ObjectUtils {
 		return obj;
 	}
 
+	public static String getStringValue(Object obj) {
+		if (obj instanceof String str) {
+			return str;
+		}
+		return null;
+	}
+
 }

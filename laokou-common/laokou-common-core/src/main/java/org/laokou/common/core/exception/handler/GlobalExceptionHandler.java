@@ -21,6 +21,7 @@ import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.common.exception.ParamException;
+import org.laokou.common.i18n.common.exception.PluginException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -43,8 +44,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
 	/**
-	 * 异常处理并响应.
-	 * @param ex 异常
+	 * 系统异常.
+	 * @param ex 系统异常
 	 * @return 响应结果
 	 */
 	@ExceptionHandler(SystemException.class)
@@ -54,8 +55,19 @@ public class GlobalExceptionHandler {
 	}
 
 	/**
-	 * 异常处理并响应.
-	 * @param ex 异常
+	 * 插件异常.
+	 * @param ex 插件异常
+	 * @return 响应结果
+	 */
+	@ExceptionHandler(PluginException.class)
+	public Result<?> handle(PluginException ex) {
+		// log.error("插件异常，错误码：{}，错误信息：{}", ex.getCode(), ex.getMsg(), ex.getData(), ex);
+		return Result.fail(ex.getCode(), ex.getMsg(), ex.getData());
+	}
+
+	/**
+	 * 业务异常.
+	 * @param ex 业务异常
 	 * @return 响应结果
 	 */
 	@ExceptionHandler(BizException.class)
@@ -65,8 +77,8 @@ public class GlobalExceptionHandler {
 	}
 
 	/**
-	 * 异常处理并响应.
-	 * @param ex 异常
+	 * 参数异常.
+	 * @param ex 参数异常
 	 * @return 响应结果
 	 */
 	@ExceptionHandler(ParamException.class)
@@ -76,13 +88,13 @@ public class GlobalExceptionHandler {
 	}
 
 	/**
-	 * 异常处理并响应.
-	 * @param ex 异常
+	 * 参数校验异常.
+	 * @param ex 参数校验异常
 	 * @return 响应结果
 	 */
 	@ExceptionHandler({ MethodArgumentNotValidException.class, ValidationException.class })
 	public Result<?> handle(Exception ex) {
-		// log.error("参数校验失败，错误信息：{}", ex.getMsg(), ex);
+		// log.error("参数校验异常，错误信息：{}", ex.getMsg(), ex);
 		if (ex instanceof MethodArgumentNotValidException mane) {
 			FieldError fieldError = mane.getFieldError();
 			if (ObjectUtils.isNotNull(fieldError)) {

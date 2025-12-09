@@ -17,12 +17,28 @@
 
 package org.laokou.common.plugin.util;
 
+import org.laokou.common.plugin.PluginMetadata;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.jar.JarFile;
+
 /**
  * @author laokou
  */
 public final class PluginUtils {
 
 	private PluginUtils() {
+	}
+
+	public static PluginMetadata loadPluginMetadata(File jarFile) {
+		try (JarFile jar = new JarFile(jarFile)) {
+
+		}
+		catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		return null;
 	}
 
 }

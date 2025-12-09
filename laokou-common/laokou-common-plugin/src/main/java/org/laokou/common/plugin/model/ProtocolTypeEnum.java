@@ -15,30 +15,27 @@
  *
  */
 
-package org.laokou.common.plugin.codec.mqtt;
+package org.laokou.common.plugin.model;
 
-import io.vertx.core.buffer.Buffer;
-import org.laokou.common.plugin.codec.CodecPlugin;
-import org.laokou.common.plugin.model.ProtocolTypeEnum;
+import lombok.Getter;
 
 /**
  * @author laokou
  */
-public class MqttCodec extends CodecPlugin<MqttMessage> {
+@Getter
+public enum ProtocolTypeEnum {
 
-	@Override
-	public MqttMessage decode(Buffer buffer) {
-		return null;
-	}
+	TCP("tcp", "TCP协议"),
 
-	@Override
-	public Buffer encode(MqttMessage message) {
-		return null;
-	}
+	MQTT("mqtt", "MQTT协议");
 
-	@Override
-	public ProtocolTypeEnum getProtocolType() {
-		return ProtocolTypeEnum.MQTT;
+	private final String code;
+
+	private final String desc;
+
+	ProtocolTypeEnum(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
 	}
 
 }

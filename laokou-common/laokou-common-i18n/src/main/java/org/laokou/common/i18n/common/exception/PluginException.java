@@ -15,30 +15,29 @@
  *
  */
 
-package org.laokou.common.plugin.codec.mqtt;
-
-import io.vertx.core.buffer.Buffer;
-import org.laokou.common.plugin.codec.CodecPlugin;
-import org.laokou.common.plugin.model.ProtocolTypeEnum;
+package org.laokou.common.i18n.common.exception;
 
 /**
+ * 插件异常.
+ *
  * @author laokou
  */
-public class MqttCodec extends CodecPlugin<MqttMessage> {
+public class PluginException extends GlobalException {
 
-	@Override
-	public MqttMessage decode(Buffer buffer) {
-		return null;
+	public PluginException(String code) {
+		super(code);
 	}
 
-	@Override
-	public Buffer encode(MqttMessage message) {
-		return null;
+	public PluginException(String code, String msg) {
+		super(code, msg);
 	}
 
-	@Override
-	public ProtocolTypeEnum getProtocolType() {
-		return ProtocolTypeEnum.MQTT;
+	public PluginException(String code, String msg, Throwable throwable) {
+		super(code, msg, throwable);
+	}
+
+	public PluginException(String code, String msg, Object data) {
+		super(code, msg, data);
 	}
 
 }

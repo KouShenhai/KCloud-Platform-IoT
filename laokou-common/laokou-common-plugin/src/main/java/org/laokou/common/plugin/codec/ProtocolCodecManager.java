@@ -20,7 +20,7 @@ package org.laokou.common.plugin.codec;
 import io.vertx.core.buffer.Buffer;
 import org.laokou.common.plugin.codec.mqtt.MqttCodec;
 import org.laokou.common.plugin.codec.tcp.TcpCodec;
-import org.laokou.common.plugin.model.ProtocolType;
+import org.laokou.common.plugin.model.ProtocolTypeEnum;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,11 +31,11 @@ import java.util.Map;
 public final class ProtocolCodecManager {
 
 	private ProtocolCodecManager() {
-		PROTOCOL_CODEC_MAP.put(ProtocolType.MQTT, new MqttCodec());
-		PROTOCOL_CODEC_MAP.put(ProtocolType.TCP, new TcpCodec());
+		PROTOCOL_CODEC_MAP.put(ProtocolTypeEnum.MQTT, new MqttCodec());
+		PROTOCOL_CODEC_MAP.put(ProtocolTypeEnum.TCP, new TcpCodec());
 	}
 
-	private static final Map<ProtocolType, ProtocolCodec<?>> PROTOCOL_CODEC_MAP = HashMap.newHashMap(2);
+	private static final Map<ProtocolTypeEnum, ProtocolCodec<?>> PROTOCOL_CODEC_MAP = HashMap.newHashMap(2);
 
 	/**
 	 * 解码字节流.
@@ -43,7 +43,7 @@ public final class ProtocolCodecManager {
 	 * @param buffer 字节缓冲区
 	 * @return 消息对象
 	 */
-	public static Object decode(ProtocolType type, Buffer buffer) {
+	public static Object decode(ProtocolTypeEnum type, Buffer buffer) {
 		ProtocolCodec<?> codec = getCodec(type);
 		if (codec == null) {
 			throw new IllegalArgumentException("No codec found for protocol: " + type);
@@ -57,7 +57,7 @@ public final class ProtocolCodecManager {
 	 * @param message 消息对象
 	 * @return 字节缓冲区
 	 */
-	public static <T> Buffer encode(ProtocolType type, T message) {
+	public static <T> Buffer encode(ProtocolTypeEnum type, T message) {
 		ProtocolCodec<T> codec = getCodec(type);
 		if (codec == null) {
 			throw new IllegalArgumentException("No codec found for protocol: " + type);
@@ -71,7 +71,7 @@ public final class ProtocolCodecManager {
 	 * @return 编解码器
 	 */
 	@SuppressWarnings("unchecked")
-	private static <T> ProtocolCodec<T> getCodec(ProtocolType type) {
+	private static <T> ProtocolCodec<T> getCodec(ProtocolTypeEnum type) {
 		return (ProtocolCodec<T>) PROTOCOL_CODEC_MAP.get(type);
 	}
 

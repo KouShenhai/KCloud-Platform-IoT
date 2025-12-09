@@ -17,9 +17,8 @@
 
 package org.laokou.common.core.handler;
 
-import io.micrometer.common.lang.NonNullApi;
-import io.micrometer.common.lang.Nullable;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.dto.Result;
@@ -38,20 +37,21 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
  * @author laokou
  */
 @Slf4j
-@NonNullApi
 @RestControllerAdvice
 @ConditionalOnClass(ResponseBodyAdvice.class)
 public class ResponseBodyHandler implements ResponseBodyAdvice<Object> {
 
 	@Override
-	public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
+	public boolean supports(@NonNull MethodParameter returnType,
+			@NonNull Class<? extends HttpMessageConverter<?>> converterType) {
 		return true;
 	}
 
 	@Override
-	public Object beforeBodyWrite(@Nullable Object body, MethodParameter returnType, MediaType selectedContentType,
-			Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request,
-			ServerHttpResponse response) {
+	public Object beforeBodyWrite(Object body, @NonNull MethodParameter returnType,
+			@NonNull MediaType selectedContentType,
+			@NonNull Class<? extends HttpMessageConverter<?>> selectedConverterType, @NonNull ServerHttpRequest request,
+			@NonNull ServerHttpResponse response) {
 		// log.info("拦截响应信息：{}", JacksonUtil.toJsonStr(body));
 		if (body instanceof Result<?> result) {
 			return result;

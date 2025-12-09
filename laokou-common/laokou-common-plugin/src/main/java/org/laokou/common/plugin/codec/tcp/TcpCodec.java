@@ -19,7 +19,7 @@ package org.laokou.common.plugin.codec.tcp;
 
 import io.vertx.core.buffer.Buffer;
 import org.laokou.common.plugin.codec.CodecPlugin;
-import org.laokou.common.plugin.model.ProtocolType;
+import org.laokou.common.plugin.model.ProtocolTypeEnum;
 
 /**
  * @author laokou
@@ -37,8 +37,8 @@ public class TcpCodec extends CodecPlugin<TcpMessage> {
 	}
 
 	@Override
-	public ProtocolType getProtocolType() {
-		return ProtocolType.TCP;
+	public ProtocolTypeEnum getProtocolType() {
+		return ProtocolTypeEnum.TCP;
 	}
 
 }

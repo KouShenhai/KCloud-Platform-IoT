@@ -15,30 +15,43 @@
  *
  */
 
-package org.laokou.common.plugin.codec.mqtt;
+package org.laokou.common.plugin;
 
-import io.vertx.core.buffer.Buffer;
-import org.laokou.common.plugin.codec.CodecPlugin;
-import org.laokou.common.plugin.model.ProtocolTypeEnum;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-/**
- * @author laokou
- */
-public class MqttCodec extends CodecPlugin<MqttMessage> {
+@Getter
+@Builder(toBuilder = true)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class PluginMetadata {
 
-	@Override
-	public MqttMessage decode(Buffer buffer) {
-		return null;
-	}
+	/**
+	 * 插件ID。
+	 */
+	private String id;
 
-	@Override
-	public Buffer encode(MqttMessage message) {
-		return null;
-	}
+	/**
+	 * 插件名称.
+	 */
+	private String name;
 
-	@Override
-	public ProtocolTypeEnum getProtocolType() {
-		return ProtocolTypeEnum.MQTT;
-	}
+	/**
+	 * 插件作者.
+	 */
+	private String author;
+
+	/**
+	 * 插件备注.
+	 */
+	private String remark;
+
+	/**
+	 * 主类名称.
+	 */
+	private String mainClass;
 
 }

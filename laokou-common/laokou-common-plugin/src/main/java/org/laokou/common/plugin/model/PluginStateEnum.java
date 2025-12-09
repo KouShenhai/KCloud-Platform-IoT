@@ -20,20 +20,30 @@ package org.laokou.common.plugin.model;
 import lombok.Getter;
 
 /**
+ * 插件状态.
+ *
  * @author laokou
  */
 @Getter
-public enum ProtocolType {
+public enum PluginStateEnum {
 
-	TCP("tcp", "TCP协议"),
+	INIT("init", "初始化状态"),
 
-	MQTT("mqtt", "MQTT协议");
+	LOADED("loaded", "已加载状态（插件已加载但未启动）"),
+
+	STARTED("started", "已启动状态（插件正在运行）"),
+
+	STOPPED("stopped", "已停止状态（插件已停止但未销毁）"),
+
+	DESTROYED("destroyed", "已销毁状态（插件已完全卸载）"),
+
+	ERROR("error", "错误状态（插件出现异常）");
 
 	private final String code;
 
 	private final String desc;
 
-	ProtocolType(String code, String desc) {
+	PluginStateEnum(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}
