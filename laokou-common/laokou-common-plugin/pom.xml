@@ -13,10 +13,14 @@
   <version>4.0.0-SNAPSHOT</version>
 
   <dependencies>
-    <!-- Vert.x Core (包含 Buffer 和基础工具) -->
     <dependency>
       <groupId>io.vertx</groupId>
       <artifactId>vertx-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-i18n</artifactId>
+      <version>${project.version}</version>
     </dependency>
   </dependencies>
 

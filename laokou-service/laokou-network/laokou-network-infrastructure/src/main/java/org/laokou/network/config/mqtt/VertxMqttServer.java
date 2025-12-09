@@ -26,13 +26,14 @@ import io.vertx.mqtt.MqttAuth;
 import io.vertx.mqtt.MqttEndpoint;
 import io.vertx.mqtt.MqttServer;
 import io.vertx.mqtt.MqttServerOptions;
+import io.vertx.mqtt.messages.MqttSubscribeMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.network.model.MqttMessage;
-import org.laokou.network.config.mqtt.handler.MqttMessageHandler;
-import org.laokou.network.util.VertxMqttUtils;
 import org.laokou.network.config.AbstractVertxService;
+import org.laokou.network.config.mqtt.handler.MqttMessageHandler;
+import org.laokou.network.model.MqttMessage;
+import org.laokou.network.util.VertxMqttUtils;
 
 import java.io.Serializable;
 import java.util.List;
@@ -111,7 +112,7 @@ final class VertxMqttServer extends AbstractVertxService<MqttServer> {
 						log.info("【Vertx-MQTT-Server】 => MQTT客户端断开连接");
 					})
 					// 【Vertx-MQTT-Server】 => MQTT客户端订阅主题
-					// .subscribeHandler(MqttSubscribeMessage::topicSubscriptions)
+					.subscribeHandler(MqttSubscribeMessage::topicSubscriptions)
 					.disconnectHandler(_ -> {
 						endpoints.remove(endpoint.clientIdentifier());
 						log.info("【Vertx-MQTT-Server】 => MQTT客户端主动断开连接");
