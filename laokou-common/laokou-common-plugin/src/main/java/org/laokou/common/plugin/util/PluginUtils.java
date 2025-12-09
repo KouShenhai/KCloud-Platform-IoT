@@ -17,10 +17,18 @@
 
 package org.laokou.common.plugin.util;
 
+import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
+import org.laokou.common.i18n.util.YamlUtils;
 import org.laokou.common.plugin.PluginMetadata;
+import org.laokou.common.plugin.exception.PluginLoadException;
+import org.laokou.common.plugin.exception.PluginNotFoundException;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLClassLoader;
+import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 /**
@@ -33,12 +41,42 @@ public final class PluginUtils {
 
 	public static PluginMetadata loadPluginMetadata(File jarFile) {
 		try (JarFile jar = new JarFile(jarFile)) {
+			JarEntry entry = jar.getJarEntry("plugin.yml");
+			if (ObjectUtils.isNull(entry)) {
+				throw new PluginNotFoundException("B_Plugin_YamlConfigNotFound",
+						"plugin.yml not found in " + jarFile.getName());
+			}
+			try (InputStream inputStream = jar.getInputStream(entry)) {
+				return validatePluginMetadata(inputStream);
+			}
+		}
+		catch (IOException ex) {
+			throw new PluginLoadException("B_Plugin_LoadFailed",
+					"Failed to load plugin metadata from " + jarFile.getName(), ex);
+		}
+	}
 
+	public static void closeQuietly(ClassLoader classLoader) throws IOException {
+		if (classLoader instanceof URLClassLoader urlClassLoader) {
+			urlClassLoader.close();
 		}
-		catch (IOException e) {
-			throw new RuntimeException(e);
+	}
+
+	private static PluginMetadata validatePluginMetadata(InputStream inputStream) {
+		PluginMetadata pluginMetadata = YamlUtils.load(inputStream, PluginMetadata.class);
+		if (StringExtUtils.isEmpty(pluginMetadata.getId())) {
+			throw new PluginLoadException("B_Plugin_IdRequired", "Plugin Id is required");
 		}
-		return null;
+		if (StringExtUtils.isEmpty(pluginMetadata.getName())) {
+			throw new PluginLoadException("B_Plugin_NameRequired", "Plugin Name is required");
+		}
+		if (StringExtUtils.isEmpty(pluginMetadata.getVersion())) {
+			throw new PluginLoadException("B_Plugin_VersionRequired", "Plugin Version is required");
+		}
+		if (StringExtUtils.isEmpty(pluginMetadata.getMainClass())) {
+			throw new PluginLoadException("B_Plugin_MainClassRequired", "Plugin MainClass is required");
+		}
+		return pluginMetadata;
 	}
 
 }

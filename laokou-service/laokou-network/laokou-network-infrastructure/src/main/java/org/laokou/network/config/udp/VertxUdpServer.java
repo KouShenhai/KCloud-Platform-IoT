@@ -41,7 +41,7 @@ final class VertxUdpServer extends AbstractVertxService<DatagramSocket> {
 	}
 
 	@Override
-	public Future<String> deploy0() {
+	public Future<String> doDeploy() {
 		return vertx.deployVerticle(this).onComplete(res -> {
 			if (res.succeeded()) {
 				log.info("【Vertx-UDP-Server】 => UDP服务部署成功，端口：{}", udpServerProperties.getPort());
@@ -54,7 +54,7 @@ final class VertxUdpServer extends AbstractVertxService<DatagramSocket> {
 	}
 
 	@Override
-	public Future<String> undeploy0() {
+	public Future<String> doUndeploy() {
 		return deploymentIdFuture.onSuccess(deploymentId -> vertx.undeploy(deploymentId)).onComplete(res -> {
 			if (res.succeeded()) {
 				log.info("【Vertx-UDP-Server】 => UDP服务卸载成功，端口：{}", udpServerProperties.getPort());
@@ -66,7 +66,7 @@ final class VertxUdpServer extends AbstractVertxService<DatagramSocket> {
 	}
 
 	@Override
-	public Future<DatagramSocket> start0() {
+	public Future<DatagramSocket> doStart() {
 		return vertx.createDatagramSocket(datagramSocketOptions)
 			.handler(packet -> log.debug("【Vertx-UDP-Server】 => 收到数据包：{}", packet.data()))
 			.listen(udpServerProperties.getPort(), udpServerProperties.getHost())
@@ -82,7 +82,7 @@ final class VertxUdpServer extends AbstractVertxService<DatagramSocket> {
 	}
 
 	@Override
-	public Future<DatagramSocket> stop0() {
+	public Future<DatagramSocket> doStop() {
 		return serverFuture.onSuccess(DatagramSocket::close).onComplete(result -> {
 			if (result.succeeded()) {
 				log.info("【Vertx-UDP-Server】 => UDP服务停止成功");

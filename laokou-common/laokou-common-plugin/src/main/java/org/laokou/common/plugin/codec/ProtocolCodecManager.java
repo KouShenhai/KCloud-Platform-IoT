@@ -31,11 +31,11 @@ import java.util.Map;
 public final class ProtocolCodecManager {
 
 	private ProtocolCodecManager() {
-		PROTOCOL_CODEC_MAP.put(ProtocolTypeEnum.MQTT, new MqttCodec());
-		PROTOCOL_CODEC_MAP.put(ProtocolTypeEnum.TCP, new TcpCodec());
+		registerCodec(new MqttCodec());
+		registerCodec(new TcpCodec());
 	}
 
-	private static final Map<ProtocolTypeEnum, ProtocolCodec<?>> PROTOCOL_CODEC_MAP = HashMap.newHashMap(2);
+	private static final Map<ProtocolTypeEnum, ProtocolCodec<?>> PROTOCOL_CODECS = HashMap.newHashMap(2);
 
 	/**
 	 * 解码字节流.
@@ -72,7 +72,11 @@ public final class ProtocolCodecManager {
 	 */
 	@SuppressWarnings("unchecked")
 	private static <T> ProtocolCodec<T> getCodec(ProtocolTypeEnum type) {
-		return (ProtocolCodec<T>) PROTOCOL_CODEC_MAP.get(type);
+		return (ProtocolCodec<T>) PROTOCOL_CODECS.get(type);
+	}
+
+	private static void registerCodec(ProtocolCodec<?> codec) {
+		PROTOCOL_CODECS.put(codec.getProtocolType(), codec);
 	}
 
 }

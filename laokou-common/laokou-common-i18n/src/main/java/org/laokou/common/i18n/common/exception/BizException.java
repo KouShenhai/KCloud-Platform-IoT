@@ -22,7 +22,7 @@ package org.laokou.common.i18n.common.exception;
  *
  * @author laokou
  */
-public final class BizException extends GlobalException {
+public class BizException extends GlobalException {
 
 	public BizException(String code) {
 		super(code);

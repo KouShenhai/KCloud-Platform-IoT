@@ -63,7 +63,7 @@ final class VertxMqttClient extends AbstractVertxService<Void> {
 	}
 
 	@Override
-	public Future<String> deploy0() {
+	public Future<String> doDeploy() {
 		return super.vertx.deployVerticle(this).onComplete(res -> {
 			if (res.succeeded()) {
 				log.info("【Vertx-MQTT-Client】 => MQTT服务部署成功，端口：{}", mqttClientProperties.getPort());
@@ -76,7 +76,7 @@ final class VertxMqttClient extends AbstractVertxService<Void> {
 	}
 
 	@Override
-	public Future<String> undeploy0() {
+	public Future<String> doUndeploy() {
 		return deploymentIdFuture.onSuccess(deploymentId -> this.vertx.undeploy(deploymentId)).onComplete(res -> {
 			if (res.succeeded()) {
 				log.info("【Vertx-MQTT-Client】 => MQTT服务卸载成功，端口：{}", mqttClientProperties.getPort());
@@ -88,7 +88,7 @@ final class VertxMqttClient extends AbstractVertxService<Void> {
 	}
 
 	@Override
-	public Future<Void> start0() {
+	public Future<Void> doStart() {
 		mqttClient.connect(mqttClientProperties.getPort(), mqttClientProperties.getHost()).onComplete(connectResult -> {
 			if (connectResult.succeeded()) {
 				log.info("【Vertx-MQTT-Client】 => MQTT连接成功，主机：{}，端口：{}，客户端ID：{}", mqttClientProperties.getHost(),
@@ -105,7 +105,7 @@ final class VertxMqttClient extends AbstractVertxService<Void> {
 	}
 
 	@Override
-	public Future<Void> stop0() {
+	public Future<Void> doStop() {
 		if (disconnect.compareAndSet(false, true)) {
 			mqttClient.disconnect().onComplete(disconnectResult -> {
 				if (disconnectResult.succeeded()) {

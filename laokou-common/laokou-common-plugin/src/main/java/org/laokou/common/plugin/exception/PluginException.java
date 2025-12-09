@@ -15,14 +15,16 @@
  *
  */
 
-package org.laokou.common.i18n.common.exception;
+package org.laokou.common.plugin.exception;
+
+import org.laokou.common.i18n.common.exception.BizException;
 
 /**
  * 插件异常.
  *
  * @author laokou
  */
-public class PluginException extends GlobalException {
+public class PluginException extends BizException {
 
 	public PluginException(String code) {
 		super(code);

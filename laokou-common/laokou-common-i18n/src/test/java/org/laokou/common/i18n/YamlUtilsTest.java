@@ -15,13 +15,13 @@
  *
  */
 
-package org.laokou.common.core;
+package org.laokou.common.i18n;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.core.util.YamlUtils;
+import org.laokou.common.i18n.util.YamlUtils;
 import org.laokou.common.i18n.util.ResourceExtUtils;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
@@ -42,7 +42,7 @@ class YamlUtilsTest {
 	@Test
 	void test_getPropertyAndLoad() throws IOException {
 		Assertions.assertThat(YamlUtils.getProperty("application.yml", "spring.application.name"))
-			.isEqualTo("laokou-common-core");
+			.isEqualTo("laokou-common-i18n");
 		Assertions.assertThat(YamlUtils.getProperty("application.yml", "spring.application.name2")).isEqualTo("");
 		Assertions.assertThat(YamlUtils.getProperty("application.yml", "spring.application.name2", "default"))
 			.isEqualTo("default");

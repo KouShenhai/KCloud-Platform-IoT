@@ -37,33 +37,33 @@ public abstract class AbstractVertxService<T> extends AbstractVerticle implement
 	@Override
 	public void deploy() {
 		// 部署服务
-		deploymentIdFuture = deploy0();
+		deploymentIdFuture = doDeploy();
 	}
 
 	@Override
 	public void undeploy() {
 		// 卸载服务
-		deploymentIdFuture = undeploy0();
+		deploymentIdFuture = doUndeploy();
 	}
 
 	@Override
 	public void start() {
 		// 启动服务
-		serverFuture = start0();
+		serverFuture = doStart();
 	}
 
 	@Override
 	public void stop() {
 		// 停止服务
-		serverFuture = stop0();
+		serverFuture = doStop();
 	}
 
-	public abstract Future<String> deploy0();
+	public abstract Future<String> doDeploy();
 
-	public abstract Future<String> undeploy0();
+	public abstract Future<String> doUndeploy();
 
-	public abstract Future<T> start0();
+	public abstract Future<T> doStart();
 
-	public abstract Future<T> stop0();
+	public abstract Future<T> doStop();
 
 }

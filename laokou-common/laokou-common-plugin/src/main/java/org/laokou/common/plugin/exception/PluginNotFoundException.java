@@ -15,43 +15,27 @@
  *
  */
 
-package org.laokou.common.plugin;
+package org.laokou.common.plugin.exception;
 
-import lombok.Data;
+/**
+ * @author laokou
+ */
+public class PluginNotFoundException extends PluginException {
 
-import java.io.Serializable;
+	public PluginNotFoundException(String code) {
+		super(code);
+	}
 
-@Data
-public class PluginMetadata implements Serializable {
+	public PluginNotFoundException(String code, String msg) {
+		super(code, msg);
+	}
 
-	/**
-	 * 插件ID。
-	 */
-	private String id;
+	public PluginNotFoundException(String code, String msg, Throwable throwable) {
+		super(code, msg, throwable);
+	}
 
-	/**
-	 * 插件名称.
-	 */
-	private String name;
-
-	/**
-	 * 插件作者.
-	 */
-	private String author;
-
-	/**
-	 * 版本.
-	 */
-	private String version;
-
-	/**
-	 * 插件备注.
-	 */
-	private String remark;
-
-	/**
-	 * 主类名称.
-	 */
-	private String mainClass;
+	public PluginNotFoundException(String code, String msg, Object data) {
+		super(code, msg, data);
+	}
 
 }

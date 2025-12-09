@@ -38,7 +38,7 @@ final class VertxTcpServer extends AbstractVertxService<NetServer> {
 	}
 
 	@Override
-	public Future<String> deploy0() {
+	public Future<String> doDeploy() {
 		return vertx.deployVerticle(this).onComplete(res -> {
 			if (res.succeeded()) {
 				log.info("【Vertx-TCP-Server】 => TCP服务部署成功，端口：{}", netServerOptions.getPort());
@@ -51,7 +51,7 @@ final class VertxTcpServer extends AbstractVertxService<NetServer> {
 	}
 
 	@Override
-	public Future<String> undeploy0() {
+	public Future<String> doUndeploy() {
 		return deploymentIdFuture.onSuccess(deploymentId -> vertx.undeploy(deploymentId)).onComplete(res -> {
 			if (res.succeeded()) {
 				log.info("【Vertx-TCP-Server】 => TCP服务卸载成功，端口：{}", netServerOptions.getPort());
@@ -63,7 +63,7 @@ final class VertxTcpServer extends AbstractVertxService<NetServer> {
 	}
 
 	@Override
-	public Future<NetServer> start0() {
+	public Future<NetServer> doStart() {
 		return vertx.createNetServer(netServerOptions)
 			.connectHandler(
 					socket -> socket.handler(buffer -> log.debug("【Vertx-TCP-Server】 => 服务端接收数据：{}", buffer.toString()))
@@ -81,7 +81,7 @@ final class VertxTcpServer extends AbstractVertxService<NetServer> {
 	}
 
 	@Override
-	public Future<NetServer> stop0() {
+	public Future<NetServer> doStop() {
 		return serverFuture.onSuccess(NetServer::close).onComplete(result -> {
 			if (result.succeeded()) {
 				log.info("【Vertx-TCP-Server】 => HTTP服务停止成功，端口：{}", netServerOptions.getPort());
