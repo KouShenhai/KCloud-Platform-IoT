@@ -20,7 +20,7 @@ package org.laokou.common.plugin.codec.mqtt;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 import org.laokou.common.i18n.annotation.Entity;
-import org.laokou.common.plugin.codec.BaseMessage;
+import org.laokou.common.plugin.model.DeviceMessage;
 
 import java.util.Map;
 
@@ -30,7 +30,7 @@ import java.util.Map;
 @Entity
 @Getter
 @SuperBuilder(toBuilder = true)
-public class MqttMessage extends BaseMessage {
+public class MqttMessage extends DeviceMessage {
 
 	private Map<String, Object> properties;
 

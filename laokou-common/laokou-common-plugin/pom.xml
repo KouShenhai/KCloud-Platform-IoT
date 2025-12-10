@@ -22,6 +22,10 @@
       <artifactId>laokou-common-i18n</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.springframework.pulsar</groupId>
+      <artifactId>spring-pulsar</artifactId>
+    </dependency>
   </dependencies>
 
 </project>

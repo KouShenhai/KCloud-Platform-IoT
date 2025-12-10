@@ -15,23 +15,30 @@
  *
  */
 
-package org.laokou.common.plugin.codec.tcp;
+package org.laokou.common.plugin.model;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.experimental.SuperBuilder;
-import org.laokou.common.i18n.annotation.Entity;
-import org.laokou.common.plugin.model.DeviceMessage;
+import lombok.NoArgsConstructor;
+import org.apache.pulsar.common.schema.SchemaType;
+import org.springframework.pulsar.annotation.PulsarMessage;
 
-import java.util.Map;
+import java.util.List;
 
 /**
+ * 读取属性消息.
+ *
  * @author laokou
  */
-@Entity
 @Getter
-@SuperBuilder(toBuilder = true)
-public class TcpMessage extends DeviceMessage {
+@Builder(toBuilder = true)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@PulsarMessage(schemaType = SchemaType.BYTES)
+public class ReadPropertyMessage extends DeviceMessage {
 
-	private Map<String, Object> properties;
+	private List<String> properties;
 
 }

@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.network.model;
+package org.laokou.common.plugin.model;
 
 import lombok.Getter;
 
@@ -25,7 +25,7 @@ import lombok.Getter;
 @Getter
 public enum MqttMessageEnum {
 
-	UP_PROPERTY_REPORT("up_property_report", "属性上报【上行】") {
+	UP_PROPERTY_REPORT(ReportPropertyMessage.class, "up_property_report", "上报属性【上行】") {
 		@Override
 		public String getTopic() {
 			return "/+/+/up/property/report";
@@ -37,7 +37,7 @@ public enum MqttMessageEnum {
 		}
 	},
 
-	DOWN_PROPERTY_READ("down_property_read", "属性读取【下行】") {
+	DOWN_PROPERTY_READ(ReadPropertyMessage.class, "down_property_read", "读取属性【下行】") {
 		@Override
 		public String getTopic() {
 			return "/+/+/down/property/read";
@@ -49,7 +49,7 @@ public enum MqttMessageEnum {
 		}
 	},
 
-	UP_PROPERTY_READ_REPLY("up_property_read_reply", "属性读取回复【上行】") {
+	UP_PROPERTY_READ_REPLY(null, "up_property_read_reply", "读取属性回复【上行】") {
 		@Override
 		public String getTopic() {
 			return "/+/+/up/property/read/reply";
@@ -61,7 +61,7 @@ public enum MqttMessageEnum {
 		}
 	},
 
-	DOWN_PROPERTY_WRITE("down_property_write", "属性修改【下行】") {
+	DOWN_PROPERTY_WRITE(null, "down_property_write", "修改属性【下行】") {
 		@Override
 		public String getTopic() {
 			return "/+/+/down/property/write";
@@ -73,7 +73,7 @@ public enum MqttMessageEnum {
 		}
 	},
 
-	UP_PROPERTY_WRITE_REPLY("up_property_write_reply", "属性修改回复【上行】") {
+	UP_PROPERTY_WRITE_REPLY(null, "up_property_write_reply", "修改属性回复【上行】") {
 		@Override
 		public String getTopic() {
 			return "/+/+/up/property/write/reply";
@@ -85,7 +85,7 @@ public enum MqttMessageEnum {
 		}
 	},
 
-	UP_OTA_UPGRADE_REPORT("up_ota_upgrade_report", "OTA固件升级上报【上行】") {
+	UP_OTA_UPGRADE_REPORT(null, "up_ota_upgrade_report", "升级OTA固件上报【上行】") {
 		@Override
 		public String getTopic() {
 			return "/+/+/up/ota/upgrade/report";
@@ -97,7 +97,7 @@ public enum MqttMessageEnum {
 		}
 	},
 
-	UP_OTA_UPGRADE_SET("up_ota_upgrade_set", "OTA固件升级【上行】") {
+	UP_OTA_UPGRADE_SET(null, "up_ota_upgrade_set", "升级OTA固件推送【上行】") {
 		@Override
 		public String getTopic() {
 			return "/+/+/up/ota/upgrade/set";
@@ -109,7 +109,7 @@ public enum MqttMessageEnum {
 		}
 	},
 
-	DOWN_OTA_UPGRADE_GET("down_ota_upgrade_get", "OTA固件升级【下行】") {
+	DOWN_OTA_UPGRADE_GET(null, "down_ota_upgrade_get", "升级OTA固件拉取【下行】") {
 		@Override
 		public String getTopic() {
 			return "/+/+/down/ota/upgrade/get";
@@ -125,9 +125,12 @@ public enum MqttMessageEnum {
 
 	private final String desc;
 
-	MqttMessageEnum(String code, String desc) {
+	private final Class<? extends DeviceMessage> clazz;
+
+	MqttMessageEnum(Class<? extends DeviceMessage> clazz, String code, String desc) {
 		this.code = code;
 		this.desc = desc;
+		this.clazz = clazz;
 	}
 
 	public abstract String getTopic();

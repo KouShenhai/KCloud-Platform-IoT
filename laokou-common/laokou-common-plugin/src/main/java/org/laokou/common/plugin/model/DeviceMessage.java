@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.plugin.codec;
+package org.laokou.common.plugin.model;
 
 import lombok.Getter;
 
@@ -25,12 +25,12 @@ import java.io.Serializable;
  * @author laokou
  */
 @Getter
-public abstract class BaseMessage implements Serializable {
+public abstract class DeviceMessage implements Serializable {
 
 	protected Long productId;
 
 	protected Long deviceId;
 
-	protected Long expireTime;
+	protected Long timestamp;
 
 }
