@@ -180,7 +180,7 @@
     <!--transmittable-thread-local版本-->
     <transmittable-thread-local.version>2.14.5</transmittable-thread-local.version>
     <!--mockito版本-->
-    <mockito.version>5.20.0</mockito.version>
+    <mockito.version>5.21.0</mockito.version>
     <!--knife4j版本-->
     <knife4j.version>4.5.0</knife4j.version>
     <!--taos-jdbcdriver版本-->
