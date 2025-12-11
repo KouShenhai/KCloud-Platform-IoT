@@ -20,7 +20,6 @@ package org.laokou.common.plugin.codec.tcp;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 import org.laokou.common.i18n.annotation.Entity;
-import org.laokou.common.plugin.model.DeviceMessage;
 
 import java.util.Map;
 
@@ -30,7 +29,7 @@ import java.util.Map;
 @Entity
 @Getter
 @SuperBuilder(toBuilder = true)
-public class TcpMessage extends DeviceMessage {
+public class TcpMessage {
 
 	private Map<String, Object> properties;
 

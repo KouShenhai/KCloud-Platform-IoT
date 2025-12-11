@@ -17,24 +17,9 @@
 
 package org.laokou.common.plugin.model;
 
-import lombok.Getter;
-
-import java.util.Map;
-
 /**
  * @author laokou
  */
-@Getter
-abstract class DeviceMessage implements Message {
-
-	protected Map<String, Object> extValues;
-
-	protected Long productId;
-
-	protected Long deviceId;
-
-	protected Long timestamp;
-
-	protected abstract MessageTypeEnum getMessageType();
+public abstract class EventMessage implements Message {
 
 }

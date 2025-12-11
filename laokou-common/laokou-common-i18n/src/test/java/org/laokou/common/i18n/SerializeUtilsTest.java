@@ -15,26 +15,39 @@
  *
  */
 
-package org.laokou.common.plugin.model;
+package org.laokou.common.i18n;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.laokou.common.i18n.util.SerializeUtils;
 
-import java.util.Map;
+import java.io.Serializable;
 
 /**
  * @author laokou
  */
-@Getter
-abstract class DeviceMessage implements Message {
+class SerializeUtilsTest {
 
-	protected Map<String, Object> extValues;
+	@Test
+	void test() {
+		User user = new User(1L, "laokou");
+		Assertions.assertThat(SerializeUtils.deserialize(SerializeUtils.serialize(user)))
+			.isInstanceOf(User.class)
+			.isEqualTo(user);
+	}
 
-	protected Long productId;
+	@Data
+	@NoArgsConstructor
+	@AllArgsConstructor
+	private static class User implements Serializable {
 
-	protected Long deviceId;
+		private Long id;
 
-	protected Long timestamp;
+		private String name;
 
-	protected abstract MessageTypeEnum getMessageType();
+	}
 
 }

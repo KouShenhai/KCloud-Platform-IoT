@@ -15,26 +15,26 @@
  *
  */
 
-package org.laokou.common.plugin.model;
+package org.laokou.common.i18n;
 
-import lombok.Getter;
-
-import java.util.Map;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.laokou.common.i18n.util.SystemUtils;
 
 /**
  * @author laokou
  */
-@Getter
-abstract class DeviceMessage implements Message {
+class SystemUtilsTest {
 
-	protected Map<String, Object> extValues;
-
-	protected Long productId;
-
-	protected Long deviceId;
-
-	protected Long timestamp;
-
-	protected abstract MessageTypeEnum getMessageType();
+	@Test
+	void test_windows() {
+		if (SystemUtils.isWindows()) {
+			Assertions.assertThat(SystemUtils.isWindows()).isTrue();
+		}
+		else {
+			Assertions.assertThat(SystemUtils.isWindows()).isFalse();
+			Assertions.assertThat(SystemUtils.isArchLinux()).isFalse();
+		}
+	}
 
 }

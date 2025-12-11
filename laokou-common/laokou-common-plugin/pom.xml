@@ -18,13 +18,13 @@
       <artifactId>vertx-core</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-i18n</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
       <groupId>org.springframework.pulsar</groupId>
       <artifactId>spring-pulsar</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-fory</artifactId>
+      <version>${project.version}</version>
     </dependency>
   </dependencies>
 

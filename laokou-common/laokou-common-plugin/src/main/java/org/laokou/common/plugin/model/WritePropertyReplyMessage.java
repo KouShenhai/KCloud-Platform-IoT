@@ -17,24 +17,33 @@
 
 package org.laokou.common.plugin.model;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.apache.pulsar.common.schema.SchemaType;
+import org.springframework.pulsar.annotation.PulsarMessage;
 
 import java.util.Map;
 
 /**
+ * 修改属性回复消息.
+ *
  * @author laokou
  */
 @Getter
-abstract class DeviceMessage implements Message {
+@Builder(toBuilder = true)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@PulsarMessage(schemaType = SchemaType.BYTES)
+public class WritePropertyReplyMessage extends DeviceMessage {
 
-	protected Map<String, Object> extValues;
+	private Map<String, Object> properties;
 
-	protected Long productId;
-
-	protected Long deviceId;
-
-	protected Long timestamp;
-
-	protected abstract MessageTypeEnum getMessageType();
+	@Override
+	protected MessageTypeEnum getMessageType() {
+		return null;
+	}
 
 }

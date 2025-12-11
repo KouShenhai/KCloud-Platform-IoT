@@ -15,39 +15,35 @@
  *
  */
 
-package org.laokou.common.core;
+package org.laokou.common.plugin.model;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.laokou.common.core.util.SerializeUtils;
+import org.apache.pulsar.common.schema.SchemaType;
+import org.springframework.pulsar.annotation.PulsarMessage;
 
-import java.io.Serializable;
+import java.util.Map;
 
 /**
+ * 读取属性回复消息.
+ *
  * @author laokou
  */
-class SerializeUtilsTest {
+@Getter
+@Builder(toBuilder = true)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@PulsarMessage(schemaType = SchemaType.BYTES)
+public class ReadPropertyReplyMessage extends DeviceMessage {
 
-	@Test
-	void test() {
-		User user = new User(1L, "laokou");
-		Assertions.assertThat(SerializeUtils.deserialize(SerializeUtils.serialize(user)))
-			.isInstanceOf(User.class)
-			.isEqualTo(user);
-	}
+	private Map<String, Object> properties;
 
-	@Data
-	@NoArgsConstructor
-	@AllArgsConstructor
-	private static class User implements Serializable {
-
-		private Long id;
-
-		private String name;
-
+	@Override
+	protected MessageTypeEnum getMessageType() {
+		return null;
 	}
 
 }

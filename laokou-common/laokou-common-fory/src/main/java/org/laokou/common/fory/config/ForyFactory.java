@@ -21,8 +21,9 @@ import org.apache.fory.ThreadSafeFory;
 import org.apache.fory.config.CompatibleMode;
 import org.apache.fory.config.ForyBuilder;
 import org.apache.fory.config.Language;
-import org.laokou.common.core.util.SerializeUtils;
-import org.laokou.common.core.util.SystemUtils;
+import org.laokou.common.i18n.util.SerializeUtils;
+import org.laokou.common.i18n.util.SystemUtils;
+
 import java.nio.charset.StandardCharsets;
 
 /**

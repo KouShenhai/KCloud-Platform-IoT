@@ -41,4 +41,9 @@ public class ReportPropertyMessage extends DeviceMessage {
 
 	private Map<String, Object> properties;
 
+	@Override
+	protected MessageTypeEnum getMessageType() {
+		return null;
+	}
+
 }

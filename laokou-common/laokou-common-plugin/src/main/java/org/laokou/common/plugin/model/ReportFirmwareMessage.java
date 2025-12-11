@@ -15,26 +15,29 @@
  *
  */
 
-package org.laokou.common.core;
+package org.laokou.common.plugin.model;
 
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.laokou.common.core.util.SystemUtils;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.apache.pulsar.common.schema.SchemaType;
+import org.springframework.pulsar.annotation.PulsarMessage;
 
 /**
  * @author laokou
  */
-class SystemUtilsTest {
+@Getter
+@Builder(toBuilder = true)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@PulsarMessage(schemaType = SchemaType.BYTES)
+public class ReportFirmwareMessage extends DeviceMessage {
 
-	@Test
-	void test_windows() {
-		if (SystemUtils.isWindows()) {
-			Assertions.assertThat(SystemUtils.isWindows()).isTrue();
-		}
-		else {
-			Assertions.assertThat(SystemUtils.isWindows()).isFalse();
-			Assertions.assertThat(SystemUtils.isArchLinux()).isFalse();
-		}
+	@Override
+	protected MessageTypeEnum getMessageType() {
+		return null;
 	}
 
 }

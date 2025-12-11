@@ -15,26 +15,33 @@
  *
  */
 
-package org.laokou.common.plugin.model;
+package org.laokou.common.i18n.util;
 
-import lombok.Getter;
-
-import java.util.Map;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
+ * 系统工具类.
+ *
  * @author laokou
  */
-@Getter
-abstract class DeviceMessage implements Message {
+public final class SystemUtils {
 
-	protected Map<String, Object> extValues;
+	private SystemUtils() {
+	}
 
-	protected Long productId;
+	/**
+	 * 判断是否是Window系统.
+	 */
+	public static boolean isWindows() {
+		return System.getProperty("os.name").contains("Windows");
+	}
 
-	protected Long deviceId;
-
-	protected Long timestamp;
-
-	protected abstract MessageTypeEnum getMessageType();
+	public static boolean isArchLinux() {
+		if (System.getProperty("os.name").equalsIgnoreCase("linux")) {
+			return Files.exists(Path.of("/etc/arch-release"));
+		}
+		return false;
+	}
 
 }

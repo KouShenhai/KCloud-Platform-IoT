@@ -20,7 +20,7 @@ package org.laokou.tool;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.util.FileUtils;
-import org.laokou.common.core.util.SystemUtils;
+import org.laokou.common.i18n.util.SystemUtils;
 import org.springframework.util.StopWatch;
 
 import java.io.File;
