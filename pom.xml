@@ -106,7 +106,7 @@
     <!--cloud-alibaba版本-->
     <spring-cloud-alibaba.version>2025.0.0.0</spring-cloud-alibaba.version>
     <!--spring-framework版本-->
-    <spring-framework.version>7.0.1</spring-framework.version>
+    <spring-framework.version>7.0.2</spring-framework.version>
     <!--spring-data版本-->
     <spring-data.version>2025.1.0</spring-data.version>
     <!--spring-security版本-->
