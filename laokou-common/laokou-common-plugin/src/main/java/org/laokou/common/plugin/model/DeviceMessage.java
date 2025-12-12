@@ -17,7 +17,11 @@
 
 package org.laokou.common.plugin.model;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Map;
 
@@ -25,6 +29,9 @@ import java.util.Map;
  * @author laokou
  */
 @Getter
+@SuperBuilder(toBuilder = true)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 abstract class DeviceMessage implements Message {
 
 	protected Map<String, Object> extValues;

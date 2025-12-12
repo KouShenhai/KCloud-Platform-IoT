@@ -17,13 +17,11 @@
 
 package org.laokou.common.plugin.model;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.apache.pulsar.common.schema.SchemaType;
 import org.springframework.pulsar.annotation.PulsarMessage;
+
 import java.util.Map;
 
 /**
@@ -32,9 +30,7 @@ import java.util.Map;
  * @author laokou
  */
 @Getter
-@Builder(toBuilder = true)
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@SuperBuilder(toBuilder = true)
 @PulsarMessage(schemaType = SchemaType.BYTES)
 public class WritePropertyMessage extends DeviceMessage {
 

@@ -137,7 +137,7 @@ final class VertxMqttClient extends AbstractVertxService<Void> {
 			return;
 		}
 		log.debug("【Vertx-MQTT-Client】 => MQTT尝试重连");
-		vertx.setTimer(mqttClientProperties.getReconnectInterval(), _ -> executorService.execute(this::start0));
+		vertx.setTimer(mqttClientProperties.getReconnectInterval(), _ -> executorService.execute(this::doStart));
 	}
 
 	private void subscribe() {
