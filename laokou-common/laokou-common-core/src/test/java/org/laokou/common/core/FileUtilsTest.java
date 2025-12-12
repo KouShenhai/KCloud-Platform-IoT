@@ -21,7 +21,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.FileUtils;
-import org.laokou.common.core.util.SystemUtils;
+import org.laokou.common.i18n.util.SystemUtils;
 import org.laokou.common.i18n.util.SslUtils;
 import org.springframework.boot.system.SystemProperties;
 

@@ -37,7 +37,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author laokou
  */
 @Slf4j
-final class VertxMqttClient extends AbstractVertxService<MqttClient> {
+final class VertxMqttClient extends AbstractVertxService<Void> {
 
 	private final MqttClientProperties mqttClientProperties;
 
@@ -63,7 +63,7 @@ final class VertxMqttClient extends AbstractVertxService<MqttClient> {
 	}
 
 	@Override
-	public Future<String> deploy0() {
+	public Future<String> doDeploy() {
 		return super.vertx.deployVerticle(this).onComplete(res -> {
 			if (res.succeeded()) {
 				log.info("【Vertx-MQTT-Client】 => MQTT服务部署成功，端口：{}", mqttClientProperties.getPort());
@@ -76,7 +76,7 @@ final class VertxMqttClient extends AbstractVertxService<MqttClient> {
 	}
 
 	@Override
-	public Future<String> undeploy0() {
+	public Future<String> doUndeploy() {
 		return deploymentIdFuture.onSuccess(deploymentId -> this.vertx.undeploy(deploymentId)).onComplete(res -> {
 			if (res.succeeded()) {
 				log.info("【Vertx-MQTT-Client】 => MQTT服务卸载成功，端口：{}", mqttClientProperties.getPort());
@@ -88,7 +88,7 @@ final class VertxMqttClient extends AbstractVertxService<MqttClient> {
 	}
 
 	@Override
-	public Future<MqttClient> start0() {
+	public Future<Void> doStart() {
 		mqttClient.connect(mqttClientProperties.getPort(), mqttClientProperties.getHost()).onComplete(connectResult -> {
 			if (connectResult.succeeded()) {
 				log.info("【Vertx-MQTT-Client】 => MQTT连接成功，主机：{}，端口：{}，客户端ID：{}", mqttClientProperties.getHost(),
@@ -101,11 +101,11 @@ final class VertxMqttClient extends AbstractVertxService<MqttClient> {
 						mqttClientProperties.getClientId(), ex);
 			}
 		});
-		return null;
+		return Future.succeededFuture();
 	}
 
 	@Override
-	public Future<MqttClient> stop0() {
+	public Future<Void> doStop() {
 		if (disconnect.compareAndSet(false, true)) {
 			mqttClient.disconnect().onComplete(disconnectResult -> {
 				if (disconnectResult.succeeded()) {
@@ -117,7 +117,7 @@ final class VertxMqttClient extends AbstractVertxService<MqttClient> {
 				}
 			});
 		}
-		return null;
+		return Future.succeededFuture();
 	}
 
 	/**
@@ -137,7 +137,7 @@ final class VertxMqttClient extends AbstractVertxService<MqttClient> {
 			return;
 		}
 		log.debug("【Vertx-MQTT-Client】 => MQTT尝试重连");
-		vertx.setTimer(mqttClientProperties.getReconnectInterval(), _ -> executorService.execute(this::start0));
+		vertx.setTimer(mqttClientProperties.getReconnectInterval(), _ -> executorService.execute(this::doStart));
 	}
 
 	private void subscribe() {

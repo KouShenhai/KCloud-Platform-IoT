@@ -15,33 +15,14 @@
  *
  */
 
-package org.laokou.common.i18n.common.exception;
+package org.laokou.common.plugin.codec;
+
+import org.laokou.common.plugin.Plugin;
 
 /**
- * 业务异常.
- *
  * @author laokou
+ * @param <T> 消息类型
  */
-public class BizException extends GlobalException {
-
-	public BizException(String code) {
-		super(code);
-	}
-
-	public BizException(String code, Throwable throwable) {
-		super(code, throwable);
-	}
-
-	public BizException(String code, String msg) {
-		super(code, msg);
-	}
-
-	public BizException(String code, String msg, Throwable throwable) {
-		super(code, msg, throwable);
-	}
-
-	public BizException(String code, String msg, Object data) {
-		super(code, msg, data);
-	}
+public abstract class CodecPlugin<T> extends Plugin implements ProtocolCodec<T> {
 
 }

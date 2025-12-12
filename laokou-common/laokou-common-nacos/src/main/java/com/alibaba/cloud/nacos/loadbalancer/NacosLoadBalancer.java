@@ -55,6 +55,7 @@ import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import com.alibaba.cloud.nacos.util.InetIPv6Utils;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.util.CollectionExtUtils;
 import org.laokou.common.core.util.RegexUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
@@ -167,8 +168,9 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	 * @param request 请求
 	 * @return 服务实例（响应式）
 	 */
+	@NonNull
 	@Override
-	public Mono<Response<ServiceInstance>> choose(Request request) {
+	public Mono<Response<ServiceInstance>> choose(@NonNull Request request) {
 		return serviceInstanceListSupplierProvider.getIfAvailable(NoopServiceInstanceListSupplier::new)
 			.get(request)
 			.next()
@@ -215,12 +217,12 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 		try {
 			String clusterName = this.nacosDiscoveryProperties.getClusterName();
 			List<ServiceInstance> instancesToChoose = serviceInstances;
-			if (com.alibaba.cloud.commons.lang.StringUtils.isNotBlank(clusterName)) {
+			if (StringUtils.isNotBlank(clusterName)) {
 				List<ServiceInstance> sameClusterInstances = serviceInstances.stream().filter(serviceInstance -> {
 					String cluster = serviceInstance.getMetadata().get("nacos.cluster");
-					return com.alibaba.cloud.commons.lang.StringUtils.equals(cluster, clusterName);
+					return StringUtils.equals(cluster, clusterName);
 				}).toList();
-				if (!CollectionExtUtils.isEmpty(sameClusterInstances)) {
+				if (CollectionExtUtils.isNotEmpty(sameClusterInstances)) {
 					instancesToChoose = sameClusterInstances;
 				}
 			}

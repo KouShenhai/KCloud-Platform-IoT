@@ -15,39 +15,30 @@
  *
  */
 
-package org.laokou.common.core;
+package org.laokou.common.plugin.codec.mqtt;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.laokou.common.core.util.SerializeUtils;
-
-import java.io.Serializable;
+import io.vertx.core.buffer.Buffer;
+import org.laokou.common.plugin.codec.CodecPlugin;
+import org.laokou.common.plugin.model.ProtocolTypeEnum;
 
 /**
  * @author laokou
  */
-class SerializeUtilsTest {
+public class MqttCodec extends CodecPlugin<MqttMessage> {
 
-	@Test
-	void test() {
-		User user = new User(1L, "laokou");
-		Assertions.assertThat(SerializeUtils.deserialize(SerializeUtils.serialize(user)))
-			.isInstanceOf(User.class)
-			.isEqualTo(user);
+	@Override
+	public MqttMessage decode(Buffer buffer) {
+		return null;
 	}
 
-	@Data
-	@NoArgsConstructor
-	@AllArgsConstructor
-	private static class User implements Serializable {
+	@Override
+	public Buffer encode(MqttMessage message) {
+		return null;
+	}
 
-		private Long id;
-
-		private String name;
-
+	@Override
+	public ProtocolTypeEnum getProtocolType() {
+		return ProtocolTypeEnum.MQTT;
 	}
 
 }

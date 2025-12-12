@@ -15,33 +15,27 @@
  *
  */
 
-package org.laokou.common.i18n.common.exception;
+package org.laokou.common.plugin.model;
+
+import lombok.Getter;
 
 /**
- * 业务异常.
- *
  * @author laokou
  */
-public class BizException extends GlobalException {
+@Getter
+public enum ProtocolTypeEnum {
 
-	public BizException(String code) {
-		super(code);
-	}
+	TCP("tcp", "TCP协议"),
 
-	public BizException(String code, Throwable throwable) {
-		super(code, throwable);
-	}
+	MQTT("mqtt", "MQTT协议");
 
-	public BizException(String code, String msg) {
-		super(code, msg);
-	}
+	private final String code;
 
-	public BizException(String code, String msg, Throwable throwable) {
-		super(code, msg, throwable);
-	}
+	private final String desc;
 
-	public BizException(String code, String msg, Object data) {
-		super(code, msg, data);
+	ProtocolTypeEnum(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
 	}
 
 }

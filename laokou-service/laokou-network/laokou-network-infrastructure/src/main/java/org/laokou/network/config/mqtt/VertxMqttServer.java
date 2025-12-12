@@ -26,13 +26,14 @@ import io.vertx.mqtt.MqttAuth;
 import io.vertx.mqtt.MqttEndpoint;
 import io.vertx.mqtt.MqttServer;
 import io.vertx.mqtt.MqttServerOptions;
+import io.vertx.mqtt.messages.MqttSubscribeMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.network.model.MqttMessage;
-import org.laokou.network.config.mqtt.handler.MqttMessageHandler;
-import org.laokou.network.util.VertxMqttUtils;
 import org.laokou.network.config.AbstractVertxService;
+import org.laokou.network.config.mqtt.handler.MqttMessageHandler;
+import org.laokou.network.model.MqttMessage;
+import org.laokou.network.util.VertxMqttUtils;
 
 import java.io.Serializable;
 import java.util.List;
@@ -75,7 +76,7 @@ final class VertxMqttServer extends AbstractVertxService<MqttServer> {
 	}
 
 	@Override
-	public Future<String> deploy0() {
+	public Future<String> doDeploy() {
 		return vertx.deployVerticle(this).onComplete(res -> {
 			if (res.succeeded()) {
 				log.info("【Vertx-MQTT-Server】 => MQTT服务部署成功，端口：{}", mqttServerOptions.getPort());
@@ -88,7 +89,7 @@ final class VertxMqttServer extends AbstractVertxService<MqttServer> {
 	}
 
 	@Override
-	public Future<String> undeploy0() {
+	public Future<String> doUndeploy() {
 		return deploymentIdFuture.onSuccess(deploymentId -> vertx.undeploy(deploymentId)).onComplete(res -> {
 			if (res.succeeded()) {
 				log.info("【Vertx-MQTT-Server】 => MQTT服务卸载成功，端口：{}", mqttServerOptions.getPort());
@@ -100,7 +101,7 @@ final class VertxMqttServer extends AbstractVertxService<MqttServer> {
 	}
 
 	@Override
-	public Future<MqttServer> start0() {
+	public Future<MqttServer> doStart() {
 		// @formatter:off
 		return MqttServer.create(super.vertx, mqttServerOptions)
 			.exceptionHandler(
@@ -111,7 +112,7 @@ final class VertxMqttServer extends AbstractVertxService<MqttServer> {
 						log.info("【Vertx-MQTT-Server】 => MQTT客户端断开连接");
 					})
 					// 【Vertx-MQTT-Server】 => MQTT客户端订阅主题
-					// .subscribeHandler(MqttSubscribeMessage::topicSubscriptions)
+					.subscribeHandler(MqttSubscribeMessage::topicSubscriptions)
 					.disconnectHandler(_ -> {
 						endpoints.remove(endpoint.clientIdentifier());
 						log.info("【Vertx-MQTT-Server】 => MQTT客户端主动断开连接");
@@ -166,7 +167,7 @@ final class VertxMqttServer extends AbstractVertxService<MqttServer> {
 	}
 
 	@Override
-	public Future<MqttServer> stop0() {
+	public Future<MqttServer> doStop() {
 		return serverFuture.onSuccess(MqttServer::close).onComplete(result -> {
 			if (result.succeeded()) {
 				log.info("【Vertx-MQTT-Server】 => MQTT服务停止成功，端口：{}", mqttServerOptions.getPort());

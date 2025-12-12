@@ -15,33 +15,33 @@
  *
  */
 
-package org.laokou.common.i18n.common.exception;
+package org.laokou.common.plugin.model;
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+
+import java.util.Map;
 
 /**
- * 业务异常.
- *
  * @author laokou
  */
-public class BizException extends GlobalException {
+@Getter
+@SuperBuilder(toBuilder = true)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+abstract class DeviceMessage implements Message {
 
-	public BizException(String code) {
-		super(code);
-	}
+	protected Map<String, Object> extValues;
 
-	public BizException(String code, Throwable throwable) {
-		super(code, throwable);
-	}
+	protected Long productId;
 
-	public BizException(String code, String msg) {
-		super(code, msg);
-	}
+	protected Long deviceId;
 
-	public BizException(String code, String msg, Throwable throwable) {
-		super(code, msg, throwable);
-	}
+	protected Long timestamp;
 
-	public BizException(String code, String msg, Object data) {
-		super(code, msg, data);
-	}
+	protected abstract MessageTypeEnum getMessageType();
 
 }

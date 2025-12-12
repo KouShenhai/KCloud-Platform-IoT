@@ -15,32 +15,30 @@
  *
  */
 
-package org.laokou.common.i18n.common.exception;
+package org.laokou.common.plugin.exception;
+
+import org.laokou.common.i18n.common.exception.BizException;
 
 /**
- * 业务异常.
+ * 插件异常.
  *
  * @author laokou
  */
-public class BizException extends GlobalException {
+public class PluginException extends BizException {
 
-	public BizException(String code) {
+	public PluginException(String code) {
 		super(code);
 	}
 
-	public BizException(String code, Throwable throwable) {
-		super(code, throwable);
-	}
-
-	public BizException(String code, String msg) {
+	public PluginException(String code, String msg) {
 		super(code, msg);
 	}
 
-	public BizException(String code, String msg, Throwable throwable) {
+	public PluginException(String code, String msg, Throwable throwable) {
 		super(code, msg, throwable);
 	}
 
-	public BizException(String code, String msg, Object data) {
+	public PluginException(String code, String msg, Object data) {
 		super(code, msg, data);
 	}
 

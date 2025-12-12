@@ -74,6 +74,11 @@
       <artifactId>laokou-common-pulsar</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-plugin</artifactId>
+      <version>${project.version}</version>
+    </dependency>
   </dependencies>
 
 </project>

@@ -43,7 +43,7 @@ final class VertxHttpServer extends AbstractVertxService<HttpServer> {
 	}
 
 	@Override
-	public Future<String> deploy0() {
+	public Future<String> doDeploy() {
 		return super.vertx.deployVerticle(this).onComplete(res -> {
 			if (res.succeeded()) {
 				log.info("【Vertx-HTTP-Server】 => HTTP服务部署成功，端口：{}", httpServerOptions.getPort());
@@ -56,7 +56,7 @@ final class VertxHttpServer extends AbstractVertxService<HttpServer> {
 	}
 
 	@Override
-	public Future<String> undeploy0() {
+	public Future<String> doUndeploy() {
 		return deploymentIdFuture.onSuccess(deploymentId -> this.vertx.undeploy(deploymentId)).onComplete(res -> {
 			if (res.succeeded()) {
 				log.info("【Vertx-HTTP-Server】 => HTTP服务卸载成功，端口：{}", httpServerOptions.getPort());
@@ -68,7 +68,7 @@ final class VertxHttpServer extends AbstractVertxService<HttpServer> {
 	}
 
 	@Override
-	public Future<HttpServer> start0() {
+	public Future<HttpServer> doStart() {
 		return super.vertx.createHttpServer(httpServerOptions).webSocketHandler(serverWebSocket -> {
 			if (!RegexUtils.matches(WebsocketMessageEnum.UP_PROPERTY_REPORT.getPath(), serverWebSocket.path())) {
 				serverWebSocket.close();
@@ -90,7 +90,7 @@ final class VertxHttpServer extends AbstractVertxService<HttpServer> {
 	}
 
 	@Override
-	public Future<HttpServer> stop0() {
+	public Future<HttpServer> doStop() {
 		return serverFuture.onSuccess(HttpServer::close).onComplete(result -> {
 			if (result.succeeded()) {
 				log.info("【Vertx-HTTP-Server】 => HTTP服务停止成功，端口：{}", httpServerOptions.getPort());

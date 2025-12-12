@@ -20,7 +20,7 @@ package org.laokou.common.core;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.CmdUtils;
-import org.laokou.common.core.util.SystemUtils;
+import org.laokou.common.i18n.util.SystemUtils;
 
 import java.io.IOException;
 

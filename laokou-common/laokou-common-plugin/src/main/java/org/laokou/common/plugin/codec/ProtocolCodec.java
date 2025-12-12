@@ -15,32 +15,23 @@
  *
  */
 
-package org.laokou.common.core.util;
+package org.laokou.common.plugin.codec;
 
-import java.nio.file.Path;
+import io.vertx.core.buffer.Buffer;
+import org.laokou.common.plugin.model.ProtocolTypeEnum;
 
 /**
- * 系统工具类.
+ * 协议编解码器接口.
  *
  * @author laokou
+ * @param <T> 消息类型
  */
-public final class SystemUtils {
+public interface ProtocolCodec<T> {
 
-	private SystemUtils() {
-	}
+	T decode(Buffer buffer);
 
-	/**
-	 * 判断是否是Window系统.
-	 */
-	public static boolean isWindows() {
-		return System.getProperty("os.name").contains("Windows");
-	}
+	Buffer encode(T message);
 
-	public static boolean isArchLinux() {
-		if (System.getProperty("os.name").equalsIgnoreCase("linux")) {
-			return FileUtils.exists(Path.of("/etc/arch-release"));
-		}
-		return false;
-	}
+	ProtocolTypeEnum getProtocolType();
 
 }

@@ -15,33 +15,22 @@
  *
  */
 
-package org.laokou.common.i18n.common.exception;
+package org.laokou.common.plugin.codec.mqtt;
+
+import lombok.Getter;
+import lombok.experimental.SuperBuilder;
+import org.laokou.common.i18n.annotation.Entity;
+
+import java.util.Map;
 
 /**
- * 业务异常.
- *
  * @author laokou
  */
-public class BizException extends GlobalException {
+@Entity
+@Getter
+@SuperBuilder(toBuilder = true)
+public class MqttMessage {
 
-	public BizException(String code) {
-		super(code);
-	}
-
-	public BizException(String code, Throwable throwable) {
-		super(code, throwable);
-	}
-
-	public BizException(String code, String msg) {
-		super(code, msg);
-	}
-
-	public BizException(String code, String msg, Throwable throwable) {
-		super(code, msg, throwable);
-	}
-
-	public BizException(String code, String msg, Object data) {
-		super(code, msg, data);
-	}
+	private Map<String, Object> properties;
 
 }

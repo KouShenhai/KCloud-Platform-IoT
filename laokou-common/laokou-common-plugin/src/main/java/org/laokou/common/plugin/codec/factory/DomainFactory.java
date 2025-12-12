@@ -15,33 +15,23 @@
  *
  */
 
-package org.laokou.common.i18n.common.exception;
+package org.laokou.common.plugin.codec.factory;
 
-/**
- * 业务异常.
- *
- * @author laokou
- */
-public class BizException extends GlobalException {
+import org.laokou.common.i18n.util.SpringContextUtils;
+import org.laokou.common.plugin.codec.mqtt.MqttMessage;
+import org.laokou.common.plugin.codec.tcp.TcpMessage;
 
-	public BizException(String code) {
-		super(code);
+public final class DomainFactory {
+
+	private DomainFactory() {
 	}
 
-	public BizException(String code, Throwable throwable) {
-		super(code, throwable);
+	public static MqttMessage getMqttMessage() {
+		return SpringContextUtils.getBeanProvider(MqttMessage.class);
 	}
 
-	public BizException(String code, String msg) {
-		super(code, msg);
-	}
-
-	public BizException(String code, String msg, Throwable throwable) {
-		super(code, msg, throwable);
-	}
-
-	public BizException(String code, String msg, Object data) {
-		super(code, msg, data);
+	public static TcpMessage getTcpMessage() {
+		return SpringContextUtils.getBeanProvider(TcpMessage.class);
 	}
 
 }

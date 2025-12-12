@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.core.util;
+package org.laokou.common.i18n.util;
 
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;

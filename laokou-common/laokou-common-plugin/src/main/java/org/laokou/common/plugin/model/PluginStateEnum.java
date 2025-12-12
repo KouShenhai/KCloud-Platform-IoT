@@ -15,26 +15,37 @@
  *
  */
 
-package org.laokou.common.core;
+package org.laokou.common.plugin.model;
 
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.laokou.common.core.util.SystemUtils;
+import lombok.Getter;
 
 /**
+ * 插件状态.
+ *
  * @author laokou
  */
-class SystemUtilsTest {
+@Getter
+public enum PluginStateEnum {
 
-	@Test
-	void test_windows() {
-		if (SystemUtils.isWindows()) {
-			Assertions.assertThat(SystemUtils.isWindows()).isTrue();
-		}
-		else {
-			Assertions.assertThat(SystemUtils.isWindows()).isFalse();
-			Assertions.assertThat(SystemUtils.isArchLinux()).isFalse();
-		}
+	INIT("init", "初始化状态"),
+
+	LOADED("loaded", "已加载状态（插件已加载但未启动）"),
+
+	STARTED("started", "已启动状态（插件正在运行）"),
+
+	STOPPED("stopped", "已停止状态（插件已停止但未销毁）"),
+
+	DESTROYED("destroyed", "已销毁状态（插件已完全卸载）"),
+
+	ERROR("error", "错误状态（插件出现异常）");
+
+	private final String code;
+
+	private final String desc;
+
+	PluginStateEnum(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
 	}
 
 }

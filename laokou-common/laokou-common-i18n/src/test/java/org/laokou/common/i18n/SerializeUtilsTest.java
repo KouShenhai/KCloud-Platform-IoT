@@ -15,33 +15,39 @@
  *
  */
 
-package org.laokou.common.i18n.common.exception;
+package org.laokou.common.i18n;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.laokou.common.i18n.util.SerializeUtils;
+
+import java.io.Serializable;
 
 /**
- * 业务异常.
- *
  * @author laokou
  */
-public class BizException extends GlobalException {
+class SerializeUtilsTest {
 
-	public BizException(String code) {
-		super(code);
+	@Test
+	void test() {
+		User user = new User(1L, "laokou");
+		Assertions.assertThat(SerializeUtils.deserialize(SerializeUtils.serialize(user)))
+			.isInstanceOf(User.class)
+			.isEqualTo(user);
 	}
 
-	public BizException(String code, Throwable throwable) {
-		super(code, throwable);
-	}
+	@Data
+	@NoArgsConstructor
+	@AllArgsConstructor
+	private static class User implements Serializable {
 
-	public BizException(String code, String msg) {
-		super(code, msg);
-	}
+		private Long id;
 
-	public BizException(String code, String msg, Throwable throwable) {
-		super(code, msg, throwable);
-	}
+		private String name;
 
-	public BizException(String code, String msg, Object data) {
-		super(code, msg, data);
 	}
 
 }

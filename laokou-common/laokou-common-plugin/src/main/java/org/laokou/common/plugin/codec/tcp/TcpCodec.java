@@ -15,33 +15,30 @@
  *
  */
 
-package org.laokou.common.i18n.common.exception;
+package org.laokou.common.plugin.codec.tcp;
+
+import io.vertx.core.buffer.Buffer;
+import org.laokou.common.plugin.codec.CodecPlugin;
+import org.laokou.common.plugin.model.ProtocolTypeEnum;
 
 /**
- * 业务异常.
- *
  * @author laokou
  */
-public class BizException extends GlobalException {
+public class TcpCodec extends CodecPlugin<TcpMessage> {
 
-	public BizException(String code) {
-		super(code);
+	@Override
+	public TcpMessage decode(Buffer buffer) {
+		return null;
 	}
 
-	public BizException(String code, Throwable throwable) {
-		super(code, throwable);
+	@Override
+	public Buffer encode(TcpMessage message) {
+		return null;
 	}
 
-	public BizException(String code, String msg) {
-		super(code, msg);
-	}
-
-	public BizException(String code, String msg, Throwable throwable) {
-		super(code, msg, throwable);
-	}
-
-	public BizException(String code, String msg, Object data) {
-		super(code, msg, data);
+	@Override
+	public ProtocolTypeEnum getProtocolType() {
+		return ProtocolTypeEnum.TCP;
 	}
 
 }

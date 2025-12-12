@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.network.model;
+package org.laokou.common.plugin.model;
 
 import lombok.Getter;
 
@@ -23,9 +23,9 @@ import lombok.Getter;
  * mqtt消息枚举.
  */
 @Getter
-public enum MqttMessageEnum {
+public enum MessageTypeEnum {
 
-	UP_PROPERTY_REPORT("up_property_report", "属性上报【上行】") {
+	UP_PROPERTY_REPORT("up_property_report", "上报属性【上行】") {
 		@Override
 		public String getTopic() {
 			return "/+/+/up/property/report";
@@ -37,7 +37,7 @@ public enum MqttMessageEnum {
 		}
 	},
 
-	DOWN_PROPERTY_READ("down_property_read", "属性读取【下行】") {
+	DOWN_PROPERTY_READ("down_property_read", "读取属性【下行】") {
 		@Override
 		public String getTopic() {
 			return "/+/+/down/property/read";
@@ -49,7 +49,7 @@ public enum MqttMessageEnum {
 		}
 	},
 
-	UP_PROPERTY_READ_REPLY("up_property_read_reply", "属性读取回复【上行】") {
+	UP_PROPERTY_READ_REPLY("up_property_read_reply", "读取属性回复【上行】") {
 		@Override
 		public String getTopic() {
 			return "/+/+/up/property/read/reply";
@@ -61,7 +61,7 @@ public enum MqttMessageEnum {
 		}
 	},
 
-	DOWN_PROPERTY_WRITE("down_property_write", "属性修改【下行】") {
+	DOWN_PROPERTY_WRITE("down_property_write", "修改属性【下行】") {
 		@Override
 		public String getTopic() {
 			return "/+/+/down/property/write";
@@ -73,7 +73,7 @@ public enum MqttMessageEnum {
 		}
 	},
 
-	UP_PROPERTY_WRITE_REPLY("up_property_write_reply", "属性修改回复【上行】") {
+	UP_PROPERTY_WRITE_REPLY("up_property_write_reply", "修改属性回复【上行】") {
 		@Override
 		public String getTopic() {
 			return "/+/+/up/property/write/reply";
@@ -85,39 +85,75 @@ public enum MqttMessageEnum {
 		}
 	},
 
-	UP_OTA_UPGRADE_REPORT("up_ota_upgrade_report", "OTA固件升级上报【上行】") {
+	UP_FIRMWARE_REPORT("up_firmware_report", "上报固件版本【上行】") {
 		@Override
 		public String getTopic() {
-			return "/+/+/up/ota/upgrade/report";
+			return "/+/+/up/firmware/report";
 		}
 
 		@Override
 		public String getMqTopic() {
-			return "up-ota-upgrade-report";
+			return "up-firmware-report";
 		}
 	},
 
-	UP_OTA_UPGRADE_SET("up_ota_upgrade_set", "OTA固件升级【上行】") {
+	UP_FIRMWARE_PULL("up_firmware_pull", "拉取固件【上行】") {
 		@Override
 		public String getTopic() {
-			return "/+/+/up/ota/upgrade/set";
+			return "/+/+/up/firmware/pull";
 		}
 
 		@Override
 		public String getMqTopic() {
-			return "up-ota-upgrade-set";
+			return "up-firmware-pull";
 		}
 	},
 
-	DOWN_OTA_UPGRADE_GET("down_ota_upgrade_get", "OTA固件升级【下行】") {
+	DOWN_FIRMWARE_PULL_REPLY("up_firmware_pull_reply", "拉取固件回复【上行】") {
 		@Override
 		public String getTopic() {
-			return "/+/+/down/ota/upgrade/get";
+			return "/+/+/down/firmware/pull/reply";
 		}
 
 		@Override
 		public String getMqTopic() {
-			return "down-ota-upgrade-get";
+			return "down-firmware-pull-reply";
+		}
+	},
+
+	DOWN_FIRMWARE_UPGRADE("down_firmware_upgrade", "升级固件【下行】") {
+		@Override
+		public String getTopic() {
+			return "/+/+/down/firmware/upgrade";
+		}
+
+		@Override
+		public String getMqTopic() {
+			return "down-firmware-upgrade";
+		}
+	},
+
+	UP_FIRMWARE_UPGRADE_REPLY("up_firmware_upgrade_reply", "升级固件回复【上行】") {
+		@Override
+		public String getTopic() {
+			return "/+/+/up/firmware/upgrade/reply";
+		}
+
+		@Override
+		public String getMqTopic() {
+			return "up-firmware-upgrade-reply";
+		}
+	},
+
+	UP_FIRMWARE_UPGRADE_PROGRESS("up_firmware_upgrade_progress", "升级固件进度【上行】") {
+		@Override
+		public String getTopic() {
+			return "/+/+/up/firmware/upgrade/process";
+		}
+
+		@Override
+		public String getMqTopic() {
+			return "up-firmware-upgrade-process";
 		}
 	};
 
@@ -125,7 +161,7 @@ public enum MqttMessageEnum {
 
 	private final String desc;
 
-	MqttMessageEnum(String code, String desc) {
+	MessageTypeEnum(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}

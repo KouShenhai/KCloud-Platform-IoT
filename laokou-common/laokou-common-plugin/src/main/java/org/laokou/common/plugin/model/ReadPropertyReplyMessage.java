@@ -15,40 +15,30 @@
  *
  */
 
-package org.laokou.network.model;
+package org.laokou.common.plugin.model;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 import org.apache.pulsar.common.schema.SchemaType;
-import org.laokou.common.i18n.common.constant.StringConstants;
 import org.springframework.pulsar.annotation.PulsarMessage;
 
-import java.io.Serializable;
+import java.util.Map;
 
 /**
- * 属性消息.
+ * 读取属性回复消息.
  *
  * @author laokou
  */
-@Data
-@NoArgsConstructor
+@Getter
+@SuperBuilder(toBuilder = true)
 @PulsarMessage(schemaType = SchemaType.BYTES)
-public class PropertyMessage implements Serializable {
+public class ReadPropertyReplyMessage extends DeviceMessage {
 
-	private Long productId;
+	private Map<String, Object> properties;
 
-	private Long deviceId;
-
-	private String code;
-
-	private String payload;
-
-	public PropertyMessage(String topic, String code, String payload) {
-		String[] arr = topic.split(StringConstants.SLASH);
-		this.productId = Long.valueOf(arr[1]);
-		this.deviceId = Long.valueOf(arr[2]);
-		this.code = code;
-		this.payload = payload;
+	@Override
+	protected MessageTypeEnum getMessageType() {
+		return null;
 	}
 
 }

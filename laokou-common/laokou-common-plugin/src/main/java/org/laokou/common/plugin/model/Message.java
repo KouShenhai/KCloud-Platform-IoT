@@ -15,33 +15,13 @@
  *
  */
 
-package org.laokou.common.i18n.common.exception;
+package org.laokou.common.plugin.model;
+
+import java.io.Serializable;
 
 /**
- * 业务异常.
- *
  * @author laokou
  */
-public class BizException extends GlobalException {
-
-	public BizException(String code) {
-		super(code);
-	}
-
-	public BizException(String code, Throwable throwable) {
-		super(code, throwable);
-	}
-
-	public BizException(String code, String msg) {
-		super(code, msg);
-	}
-
-	public BizException(String code, String msg, Throwable throwable) {
-		super(code, msg, throwable);
-	}
-
-	public BizException(String code, String msg, Object data) {
-		super(code, msg, data);
-	}
+public interface Message extends Serializable {
 
 }

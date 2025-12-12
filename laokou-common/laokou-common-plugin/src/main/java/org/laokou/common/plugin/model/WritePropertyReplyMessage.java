@@ -15,33 +15,30 @@
  *
  */
 
-package org.laokou.common.i18n.common.exception;
+package org.laokou.common.plugin.model;
+
+import lombok.Getter;
+import lombok.experimental.SuperBuilder;
+import org.apache.pulsar.common.schema.SchemaType;
+import org.springframework.pulsar.annotation.PulsarMessage;
+
+import java.util.Map;
 
 /**
- * 业务异常.
+ * 修改属性回复消息.
  *
  * @author laokou
  */
-public class BizException extends GlobalException {
+@Getter
+@SuperBuilder(toBuilder = true)
+@PulsarMessage(schemaType = SchemaType.BYTES)
+public class WritePropertyReplyMessage extends DeviceMessage {
 
-	public BizException(String code) {
-		super(code);
-	}
+	private Map<String, Object> properties;
 
-	public BizException(String code, Throwable throwable) {
-		super(code, throwable);
-	}
-
-	public BizException(String code, String msg) {
-		super(code, msg);
-	}
-
-	public BizException(String code, String msg, Throwable throwable) {
-		super(code, msg, throwable);
-	}
-
-	public BizException(String code, String msg, Object data) {
-		super(code, msg, data);
+	@Override
+	protected MessageTypeEnum getMessageType() {
+		return null;
 	}
 
 }
