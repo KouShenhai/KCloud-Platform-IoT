@@ -130,7 +130,7 @@
     <!--opentelemetry版本-->
     <opentelemetry.version>1.57.0</opentelemetry.version>
     <!--netty版本-->
-    <netty.version>4.2.7.Final</netty.version>
+    <netty.version>4.2.8.Final</netty.version>
     <!--grpc版本-->
     <grpc.version>1.77.0</grpc.version>
     <!--jackson版本-->
