@@ -94,7 +94,7 @@
     <!--jacoco-maven-plugin版本-->
     <jacoco-maven-plugin.version>0.8.14</jacoco-maven-plugin.version>
     <!--checkstyle版本-->
-    <checkstyle.version>12.2.0</checkstyle.version>
+    <checkstyle.version>12.3.0</checkstyle.version>
     <!--spring-javaformat-checkstyle版本-->
     <spring-javaformat-checkstyle.version>0.0.47</spring-javaformat-checkstyle.version>
     <!--spring-asciidoctor-backends版本-->
