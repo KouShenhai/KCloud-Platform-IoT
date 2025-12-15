@@ -110,7 +110,7 @@
     <!--spring-data版本-->
     <spring-data.version>2025.1.1</spring-data.version>
     <!--spring-security版本-->
-    <spring-security.version>7.0.0</spring-security.version>
+    <spring-security.version>7.0.2</spring-security.version>
     <!--spring-grpc版本-->
     <spring-grpc.version>1.0.0</spring-grpc.version>
     <!--spring-ai版本-->
