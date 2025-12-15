@@ -28,6 +28,7 @@ CREATE TABLE "public"."sys_cluster" (
  "del_flag" int2 NOT NULL DEFAULT 0,
  "version" int4 NOT NULL DEFAULT 0,
  "tenant_id" int8 NOT NULL DEFAULT 0,
+ "dept_id" int8 NOT NULL DEFAULT 1,
  "name" varchar(50) NOT NULL,
  "code" varchar(50) NOT NULL,
  "remark" varchar(200) NOT NULL
@@ -40,6 +41,7 @@ COMMENT ON COLUMN "public"."sys_cluster"."update_time" IS '修改时间';
 COMMENT ON COLUMN "public"."sys_cluster"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."sys_cluster"."version" IS '版本号';
 COMMENT ON COLUMN "public"."sys_cluster"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."sys_cluster"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."sys_cluster"."name" IS '集群名称';
 COMMENT ON COLUMN "public"."sys_cluster"."code" IS '集群编码';
 COMMENT ON COLUMN "public"."sys_cluster"."remark" IS '集群备注';
@@ -60,6 +62,7 @@ CREATE TABLE "public"."sys_dept" (
   "del_flag" int2 NOT NULL DEFAULT 0,
   "version" int4 NOT NULL DEFAULT 0,
   "tenant_id" int8 NOT NULL DEFAULT 0,
+  "dept_id" int8 NOT NULL DEFAULT 1,
   "pid" int8 NOT NULL,
   "name" varchar(100) NOT NULL,
   "sort" int4 NOT NULL DEFAULT 1
@@ -102,6 +105,7 @@ CREATE TABLE "public"."sys_dict" (
   "del_flag" int2 NOT NULL DEFAULT 0,
   "version" int4 NOT NULL DEFAULT 0,
   "tenant_id" int8 NOT NULL DEFAULT 0,
+  "dept_id" int8 NOT NULL DEFAULT 1,
   "name" varchar(100) NOT NULL,
   "type" varchar(100) NOT NULL,
   "remark" varchar(500),
@@ -115,6 +119,7 @@ COMMENT ON COLUMN "public"."sys_dict"."update_time" IS '修改时间';
 COMMENT ON COLUMN "public"."sys_dict"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."sys_dict"."version" IS '版本号';
 COMMENT ON COLUMN "public"."sys_dict"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."sys_dict"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."sys_dict"."name" IS '字典名称';
 COMMENT ON COLUMN "public"."sys_dict"."type" IS '字典类型';
 COMMENT ON COLUMN "public"."sys_dict"."remark" IS '字典备注';
@@ -138,6 +143,7 @@ CREATE TABLE "public"."sys_dict_item" (
    "del_flag" int2 NOT NULL DEFAULT 0,
    "version" int4 NOT NULL DEFAULT 0,
    "tenant_id" int8 NOT NULL DEFAULT 0,
+   "dept_id" int8 NOT NULL DEFAULT 1,
    "label" varchar(100) NOT NULL,
    "value" varchar(100) NOT NULL,
    "sort" int4 NOT NULL DEFAULT 1,
@@ -153,6 +159,7 @@ COMMENT ON COLUMN "public"."sys_dict_item"."update_time" IS '修改时间';
 COMMENT ON COLUMN "public"."sys_dict_item"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."sys_dict_item"."version" IS '版本号';
 COMMENT ON COLUMN "public"."sys_dict_item"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."sys_dict_item"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."sys_dict_item"."label" IS '字典标签';
 COMMENT ON COLUMN "public"."sys_dict_item"."value" IS '字典值';
 COMMENT ON COLUMN "public"."sys_dict_item"."sort" IS '字典排序';
@@ -182,6 +189,7 @@ CREATE TABLE "public"."sys_i18n_message" (
   "del_flag" int2 NOT NULL DEFAULT 0,
   "version" int4 NOT NULL DEFAULT 0,
   "tenant_id" int8 NOT NULL DEFAULT 0,
+  "dept_id" int8 NOT NULL DEFAULT 1,
   "code" varchar(50) NOT NULL,
   "zh_message" varchar(50) NOT NULL,
   "en_message" varchar(50) NOT NULL
@@ -194,6 +202,7 @@ COMMENT ON COLUMN "public"."sys_i18n_message"."update_time" IS '修改时间';
 COMMENT ON COLUMN "public"."sys_i18n_message"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."sys_i18n_message"."version" IS '版本号';
 COMMENT ON COLUMN "public"."sys_i18n_message"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."sys_i18n_messsage"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."sys_i18n_message"."code" IS '编码';
 COMMENT ON COLUMN "public"."sys_i18n_message"."zh_message" IS '中文';
 COMMENT ON COLUMN "public"."sys_i18n_message"."en_message" IS '英文';
@@ -224,6 +233,7 @@ CREATE TABLE "public"."sys_menu" (
   "del_flag" int2 NOT NULL DEFAULT 0,
   "version" int4 NOT NULL DEFAULT 0,
   "tenant_id" int8 NOT NULL DEFAULT 0,
+  "dept_id" int8 NOT NULL DEFAULT 1,
   "pid" int8 NOT NULL,
   "permission" varchar(200),
   "type" int2 NOT NULL DEFAULT 0,
@@ -243,6 +253,7 @@ COMMENT ON COLUMN "public"."sys_menu"."update_time" IS '修改时间';
 COMMENT ON COLUMN "public"."sys_menu"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."sys_menu"."version" IS '版本号';
 COMMENT ON COLUMN "public"."sys_menu"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."sys_menu"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."sys_menu"."pid" IS '菜单父节点ID';
 COMMENT ON COLUMN "public"."sys_menu"."permission" IS '菜单权限标识';
 COMMENT ON COLUMN "public"."sys_menu"."type" IS '菜单类型 0菜单 1按钮';
@@ -358,6 +369,7 @@ CREATE TABLE "public"."sys_menu_package" (
   "del_flag" int2 NOT NULL DEFAULT 0,
   "version" int4 NOT NULL DEFAULT 0,
   "tenant_id" int8 NOT NULL DEFAULT 0,
+  "dept_id" int8 NOT NULL DEFAULT 1,
   "menu_id" int8 NOT NULL,
   "package_id" int8 NOT NULL
 );
@@ -369,6 +381,7 @@ COMMENT ON COLUMN "public"."sys_menu_package"."update_time" IS '修改时间';
 COMMENT ON COLUMN "public"."sys_menu_package"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."sys_menu_package"."version" IS '版本号';
 COMMENT ON COLUMN "public"."sys_menu_package"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."sys_menu_package"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."sys_menu_package"."menu_id" IS '菜单ID';
 COMMENT ON COLUMN "public"."sys_menu_package"."package_id" IS '套餐ID';
 COMMENT ON TABLE "public"."sys_menu_package" IS '菜单套餐';
@@ -388,6 +401,7 @@ CREATE TABLE "public"."sys_message" (
 	 "del_flag" int2 NOT NULL DEFAULT 0,
 	 "version" int4 NOT NULL DEFAULT 0,
 	 "tenant_id" int8 NOT NULL DEFAULT 0,
+	 "dept_id" int8 NOT NULL DEFAULT 1,
 	 "title" varchar(400) NOT NULL,
 	 "content" text NOT NULL,
 	 "type" int2 NOT NULL DEFAULT 0
@@ -401,6 +415,7 @@ COMMENT ON COLUMN "public"."sys_message"."update_time" IS '修改时间';
 COMMENT ON COLUMN "public"."sys_message"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."sys_message"."version" IS '版本号';
 COMMENT ON COLUMN "public"."sys_message"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."sys_message"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."sys_message"."title" IS '消息标题';
 COMMENT ON COLUMN "public"."sys_message"."content" IS '消息内容';
 COMMENT ON COLUMN "public"."sys_message"."type" IS '消息类型 0通知 1提醒';
@@ -421,6 +436,7 @@ CREATE TABLE "public"."sys_oss" (
  "del_flag" int2 NOT NULL DEFAULT 0,
  "version" int4 NOT NULL DEFAULT 0,
  "tenant_id" int8 NOT NULL DEFAULT 0,
+ "dept_id" int8 NOT NULL DEFAULT 1,
  "name" varchar(20) NOT NULL,
  "type" varchar(50) NOT NULL,
  "param" json NOT NULL,
@@ -434,6 +450,7 @@ COMMENT ON COLUMN "public"."sys_oss"."update_time" IS '修改时间';
 COMMENT ON COLUMN "public"."sys_oss"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."sys_oss"."version" IS '版本号';
 COMMENT ON COLUMN "public"."sys_oss"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."sys_oss"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."sys_oss"."name" IS 'OSS的名称';
 COMMENT ON COLUMN "public"."sys_oss"."type" IS 'OSS的类型';
 COMMENT ON COLUMN "public"."sys_oss"."param" IS 'OSS的参数';
@@ -459,6 +476,7 @@ CREATE TABLE "public"."sys_package" (
  "del_flag" int2 NOT NULL DEFAULT 0,
  "version" int4 NOT NULL DEFAULT 0,
  "tenant_id" int8 NOT NULL DEFAULT 0,
+ "dept_id" int8 NOT NULL DEFAULT 1,
  "name" varchar(100) NOT NULL
 );
 COMMENT ON COLUMN "public"."sys_package"."id" IS 'ID';
@@ -469,6 +487,7 @@ COMMENT ON COLUMN "public"."sys_package"."update_time" IS '修改时间';
 COMMENT ON COLUMN "public"."sys_package"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."sys_package"."version" IS '版本号';
 COMMENT ON COLUMN "public"."sys_package"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."sys_package"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."sys_package"."name" IS '套餐名称';
 COMMENT ON TABLE "public"."sys_package" IS '套餐';
 
@@ -491,6 +510,7 @@ CREATE TABLE "public"."sys_role" (
   "del_flag" int2 NOT NULL DEFAULT 0,
   "version" int4 NOT NULL DEFAULT 0,
   "tenant_id" int8 NOT NULL DEFAULT 0,
+  "dept_id" int8 NOT NULL DEFAULT 1,
   "name" varchar(50) NOT NULL,
   "sort" int4 NOT NULL DEFAULT 1,
   "data_scope" varchar(30) NOT NULL DEFAULT 'all'
@@ -503,6 +523,7 @@ COMMENT ON COLUMN "public"."sys_role"."update_time" IS '修改时间';
 COMMENT ON COLUMN "public"."sys_role"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."sys_role"."version" IS '版本号';
 COMMENT ON COLUMN "public"."sys_role"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."sys_role"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."sys_role"."name" IS '角色名称';
 COMMENT ON COLUMN "public"."sys_role"."sort" IS '角色排序';
 COMMENT ON COLUMN "public"."sys_role"."data_scope" IS '数据范围 all全部 custom自定义 self仅本人';
@@ -519,16 +540,16 @@ INSERT INTO "public"."sys_role" VALUES (3, 1, 1, '2022-06-12 19:38:32', '2023-12
 -- ----------------------------
 DROP TABLE IF EXISTS "public"."sys_role_dept";
 CREATE TABLE "public"."sys_role_dept" (
-   "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY,
-   "creator" int8 NOT NULL DEFAULT 0,
-   "editor" int8 NOT NULL DEFAULT 0,
-   "create_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-   "update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-   "del_flag" int2 NOT NULL DEFAULT 0,
-   "version" int4 NOT NULL DEFAULT 0,
-   "tenant_id" int8 NOT NULL DEFAULT 0,
-   "role_id" int8 NOT NULL,
-   "dept_id" int8 NOT NULL
+  "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY,
+  "creator" int8 NOT NULL DEFAULT 0,
+  "editor" int8 NOT NULL DEFAULT 0,
+  "create_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "del_flag" int2 NOT NULL DEFAULT 0,
+  "version" int4 NOT NULL DEFAULT 0,
+  "tenant_id" int8 NOT NULL DEFAULT 0,
+  "role_id" int8 NOT NULL,
+  "dept_id" int8 NOT NULL
 );
 COMMENT ON COLUMN "public"."sys_role_dept"."id" IS 'ID';
 COMMENT ON COLUMN "public"."sys_role_dept"."creator" IS '创建人';
@@ -547,8 +568,9 @@ ALTER TABLE "public"."sys_role_dept" ADD CONSTRAINT "sys_role_dept_pkey" PRIMARY
 CREATE UNIQUE INDEX "sys_role_dept_roleId_deptId_idx" ON "public"."sys_role_dept" USING btree (
 	"role_id",
 	"dept_id"
-);
+	);
 COMMENT ON INDEX "public"."sys_role_dept_roleId_deptId_idx" IS '角色ID_部门ID_唯一索引';
+
 
 -- ----------------------------
 -- -------------角色菜单------------
@@ -574,6 +596,7 @@ COMMENT ON COLUMN "public"."sys_role_menu"."update_time" IS '修改时间';
 COMMENT ON COLUMN "public"."sys_role_menu"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."sys_role_menu"."version" IS '版本号';
 COMMENT ON COLUMN "public"."sys_role_menu"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."sys_role_menu"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."sys_role_menu"."role_id" IS '角色ID';
 COMMENT ON COLUMN "public"."sys_role_menu"."menu_id" IS '菜单ID';
 COMMENT ON TABLE "public"."sys_role_menu" IS '角色菜单';
@@ -613,6 +636,7 @@ COMMENT ON COLUMN "public"."sys_source"."update_time" IS '修改时间';
 COMMENT ON COLUMN "public"."sys_source"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."sys_source"."version" IS '版本号';
 COMMENT ON COLUMN "public"."sys_source"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."sys_source"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."sys_source"."name" IS '数据源名称';
 COMMENT ON COLUMN "public"."sys_source"."driver_class_name" IS '数据源的驱动名称';
 COMMENT ON COLUMN "public"."sys_source"."url" IS '数据源的连接信息';
@@ -648,6 +672,7 @@ COMMENT ON COLUMN "public"."sys_tenant"."update_time" IS '修改时间';
 COMMENT ON COLUMN "public"."sys_tenant"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."sys_tenant"."version" IS '版本号';
 COMMENT ON COLUMN "public"."sys_tenant"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."sys_tenant"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."sys_tenant"."name" IS '租户名称';
 COMMENT ON COLUMN "public"."sys_tenant"."code" IS '租户编码';
 COMMENT ON COLUMN "public"."sys_tenant"."source_id" IS '数据源ID';
@@ -671,6 +696,7 @@ CREATE TABLE "public"."sys_user" (
   "del_flag" int2 NOT NULL DEFAULT 0,
   "version" int4 NOT NULL DEFAULT 0,
   "tenant_id" int8 NOT NULL DEFAULT 0,
+  "dept_id" int8 NOT NULL DEFAULT 1,
   "password" varchar(100) NOT NULL,
   "super_admin" int2 NOT NULL DEFAULT 0,
   "mail" varchar(200),
@@ -691,6 +717,7 @@ COMMENT ON COLUMN "public"."sys_user"."update_time" IS '修改时间';
 COMMENT ON COLUMN "public"."sys_user"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."sys_user"."version" IS '版本号';
 COMMENT ON COLUMN "public"."sys_user"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."sys_user"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."sys_user"."username" IS '用户名';
 COMMENT ON COLUMN "public"."sys_user"."password" IS '用户密码';
 COMMENT ON COLUMN "public"."sys_user"."super_admin" IS '超级管理员标识 0否 1是';
@@ -730,42 +757,6 @@ INSERT INTO "public"."sys_user" VALUES (3, 1, 1, '2022-01-31 11:29:35+08', '2024
 INSERT INTO "public"."sys_user" VALUES (4, 1, 1, '2022-06-16 00:33:39+08', '2024-04-29 23:52:52+08', 0, 0, 0, '{bcrypt}$2a$10$Wac.3sTE4A4pi/Zy6B/HWOstwLFjOH9g8Qrf4gHiBLa/avKAVcwpG', 0, NULL, NULL, 0, 1, 'Ylh4QTF0YmdEWWJRnHBMPWPaKJGlV652rAqtN8Q9MYg=~Ylh4QTF0YmdEWWJRnmhJYJS/YXrtS/sF9dNgHyAmxEI=', NULL, NULL, 'Ylh4QTF0YmdEWWJRnHBMPT3MJcA20x+AfW1mDSW5q1zV');
 
 -- ----------------------------
--- -------------用户部门------------
--- ----------------------------
-DROP TABLE IF EXISTS "public"."sys_user_dept";
-CREATE TABLE "public"."sys_user_dept" (
-   "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY,
-   "creator" int8 NOT NULL DEFAULT 0,
-   "editor" int8 NOT NULL DEFAULT 0,
-   "create_time" timestamptz(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-   "update_time" timestamptz(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-   "del_flag" int2 NOT NULL DEFAULT 0,
-   "version" int4 NOT NULL DEFAULT 0,
-   "tenant_id" int8 NOT NULL DEFAULT 0,
-   "user_id" int8 NOT NULL,
-   "dept_id" int8 NOT NULL
-);
-COMMENT ON COLUMN "public"."sys_user_dept"."id" IS 'ID';
-COMMENT ON COLUMN "public"."sys_user_dept"."creator" IS '创建人';
-COMMENT ON COLUMN "public"."sys_user_dept"."editor" IS '编辑人';
-COMMENT ON COLUMN "public"."sys_user_dept"."create_time" IS '创建时间';
-COMMENT ON COLUMN "public"."sys_user_dept"."update_time" IS '修改时间';
-COMMENT ON COLUMN "public"."sys_user_dept"."del_flag" IS '删除标识 0未删除 1已删除';
-COMMENT ON COLUMN "public"."sys_user_dept"."version" IS '版本号';
-COMMENT ON COLUMN "public"."sys_user_dept"."tenant_id" IS '租户ID';
-COMMENT ON COLUMN "public"."sys_user_dept"."user_id" IS '用户ID';
-COMMENT ON COLUMN "public"."sys_user_dept"."dept_id" IS '部门ID';
-COMMENT ON TABLE "public"."sys_user_dept" IS '用户部门';
-
-ALTER TABLE "public"."sys_user_dept" ADD CONSTRAINT "sys_user_dept_pkey" PRIMARY KEY ("id");
-
-CREATE UNIQUE INDEX "sys_user_dept_userId_deptId_idx" ON "public"."sys_user_dept" USING btree (
-	"user_id",
-	"dept_id"
-);
-COMMENT ON INDEX "public"."sys_user_dept_userId_deptId_idx" IS '用户ID_部门ID_唯一索引';
-
--- ----------------------------
 -- -------------用户消息------------
 -- ----------------------------
 DROP TABLE IF EXISTS "public"."sys_user_message";
@@ -778,6 +769,7 @@ CREATE TABLE "public"."sys_user_message" (
   "del_flag" int2 NOT NULL DEFAULT 0,
   "version" int4 NOT NULL DEFAULT 0,
   "tenant_id" int8 NOT NULL DEFAULT 0,
+  "dept_id" int8 NOT NULL DEFAULT 1,
   "user_id" int8 NOT NULL,
   "message_id" int8 NOT NULL,
   "read_flag" int2 NOT NULL DEFAULT 0
@@ -790,6 +782,7 @@ COMMENT ON COLUMN "public"."sys_user_message"."update_time" IS '修改时间';
 COMMENT ON COLUMN "public"."sys_user_message"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."sys_user_message"."version" IS '版本号';
 COMMENT ON COLUMN "public"."sys_user_message"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."sys_user_message"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."sys_user_message"."user_id" IS '用户ID';
 COMMENT ON COLUMN "public"."sys_user_message"."message_id" IS '消息ID';
 COMMENT ON COLUMN "public"."sys_user_message"."read_flag" IS '消息已读标识 0未读 1已读';
@@ -816,6 +809,7 @@ CREATE TABLE "public"."sys_user_role" (
    "del_flag" int2 NOT NULL DEFAULT 0,
    "version" int4 NOT NULL DEFAULT 0,
    "tenant_id" int8 NOT NULL DEFAULT 0,
+   "dept_id" int8 NOT NULL DEFAULT 1,
    "user_id" int8 NOT NULL,
    "role_id" int8 NOT NULL
 );
@@ -827,6 +821,7 @@ COMMENT ON COLUMN "public"."sys_user_role"."update_time" IS '修改时间';
 COMMENT ON COLUMN "public"."sys_user_role"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."sys_user_role"."version" IS '版本号';
 COMMENT ON COLUMN "public"."sys_user_role"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."sys_user_role"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."sys_user_role"."user_id" IS '用户ID';
 COMMENT ON COLUMN "public"."sys_user_role"."role_id" IS '角色ID';
 COMMENT ON TABLE "public"."sys_user_role" IS '用户角色';

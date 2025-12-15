@@ -24,7 +24,8 @@ CREATE TABLE "public"."iot_device_event_log" (
 "update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 "del_flag" int2 NOT NULL DEFAULT 0,
 "version" int4 NOT NULL DEFAULT 0,
-"tenant_id" int8 NOT NULL DEFAULT 0
+"tenant_id" int8 NOT NULL DEFAULT 0,
+"dept_id" int8 NOT NULL DEFAULT 1
 )
 ;
 COMMENT ON COLUMN "public"."iot_device_event_log"."id" IS 'ID';
@@ -35,6 +36,7 @@ COMMENT ON COLUMN "public"."iot_device_event_log"."update_time" IS '修改时间
 COMMENT ON COLUMN "public"."iot_device_event_log"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."iot_device_event_log"."version" IS '版本号';
 COMMENT ON COLUMN "public"."iot_device_event_log"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."iot_device_event_log"."dept_id" IS '部门ID';
 COMMENT ON TABLE "public"."iot_device_event_log" IS '设备事件日志';
 
 
@@ -47,7 +49,8 @@ CREATE TABLE "public"."iot_device_property_log" (
 "update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 "del_flag" int2 NOT NULL DEFAULT 0,
 "version" int4 NOT NULL DEFAULT 0,
-"tenant_id" int8 NOT NULL DEFAULT 0
+"tenant_id" int8 NOT NULL DEFAULT 0,
+"dept_id" int8 NOT NULL DEFAULT 1
 )
 ;
 COMMENT ON COLUMN "public"."iot_device_property_log"."id" IS 'ID';
@@ -58,6 +61,7 @@ COMMENT ON COLUMN "public"."iot_device_property_log"."update_time" IS '修改时
 COMMENT ON COLUMN "public"."iot_device_property_log"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."iot_device_property_log"."version" IS '版本号';
 COMMENT ON COLUMN "public"."iot_device_property_log"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."iot_device_property_log"."dept_id" IS '部门ID';
 COMMENT ON TABLE "public"."iot_device_property_log" IS '设备属性日志';
 
 DROP TABLE IF EXISTS "public"."sys_login_log";
@@ -70,6 +74,7 @@ CREATE TABLE "public"."sys_login_log" (
 "del_flag" int2 NOT NULL DEFAULT 0,
 "version" int4 NOT NULL DEFAULT 0,
 "tenant_id" int8,
+"dept_id" int8,
 "username" varchar(200) NOT NULL,
 "ip" varchar(50) NOT NULL,
 "address" varchar(200) NOT NULL,
@@ -88,6 +93,7 @@ COMMENT ON COLUMN "public"."sys_login_log"."update_time" IS '修改时间';
 COMMENT ON COLUMN "public"."sys_login_log"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."sys_login_log"."version" IS '版本号';
 COMMENT ON COLUMN "public"."sys_login_log"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."sys_login_log"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."sys_login_log"."username" IS '登录的用户名';
 COMMENT ON COLUMN "public"."sys_login_log"."ip" IS '登录的IP地址';
 COMMENT ON COLUMN "public"."sys_login_log"."address" IS '登录的归属地';
@@ -108,6 +114,7 @@ CREATE TABLE "public"."sys_notice_log" (
 "del_flag" int2 NOT NULL DEFAULT 0,
 "version" int4 NOT NULL DEFAULT 0,
 "tenant_id" int8 NOT NULL DEFAULT 0,
+"dept_id" int8 NOT NULL DEFAULT 1,
 "code" varchar(100)  NOT NULL,
 "name" varchar(200)  NOT NULL,
 "status" int2 NOT NULL DEFAULT 0,
@@ -123,6 +130,7 @@ COMMENT ON COLUMN "public"."sys_notice_log"."update_time" IS '修改时间';
 COMMENT ON COLUMN "public"."sys_notice_log"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."sys_notice_log"."version" IS '版本号';
 COMMENT ON COLUMN "public"."sys_notice_log"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."sys_notice_log"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."sys_notice_log"."code" IS '通知编码';
 COMMENT ON COLUMN "public"."sys_notice_log"."name" IS '通知名称';
 COMMENT ON COLUMN "public"."sys_notice_log"."status" IS '通知状态 0成功 1失败';
@@ -140,6 +148,7 @@ CREATE TABLE "public"."sys_sql_log" (
 "del_flag" int2 NOT NULL DEFAULT 0,
 "version" int4 NOT NULL DEFAULT 0,
 "tenant_id" int8 DEFAULT 0,
+"dept_id" int8 DEFAULT 1,
 "service_id" varchar(50) NOT NULL,
 "sql" text  NOT NULL,
 "cost_time" int8 NOT NULL DEFAULT 0
@@ -153,6 +162,7 @@ COMMENT ON COLUMN "public"."sys_sql_log"."update_time" IS '修改时间';
 COMMENT ON COLUMN "public"."sys_sql_log"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."sys_sql_log"."version" IS '版本号';
 COMMENT ON COLUMN "public"."sys_sql_log"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."sys_sql_log"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."sys_sql_log"."service_id" IS '服务ID';
 COMMENT ON COLUMN "public"."sys_sql_log"."sql" IS 'SQL';
 COMMENT ON COLUMN "public"."sys_sql_log"."cost_time" IS '消耗时间';
@@ -168,6 +178,7 @@ CREATE TABLE "public"."sys_operate_log" (
 "del_flag" int2 NOT NULL DEFAULT 0,
 "version" int4 NOT NULL DEFAULT 0,
 "tenant_id" int8 NOT NULL DEFAULT 0,
+"dept_id" int8 NOT NULL DEFAULT 1,
 "name" varchar(50) NOT NULL,
 "module_name" varchar(32)  NOT NULL,
 "uri" varchar(200)  NOT NULL,
@@ -195,6 +206,7 @@ COMMENT ON COLUMN "public"."sys_operate_log"."update_time" IS '修改时间';
 COMMENT ON COLUMN "public"."sys_operate_log"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."sys_operate_log"."version" IS '版本号';
 COMMENT ON COLUMN "public"."sys_operate_log"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."sys_operate_log"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."sys_operate_log"."name" IS '操作名称';
 COMMENT ON COLUMN "public"."sys_operate_log"."module_name" IS '操作的模块名称';
 COMMENT ON COLUMN "public"."sys_operate_log"."uri" IS '操作的请求路径';
@@ -224,6 +236,7 @@ CREATE TABLE "public"."sys_oss_log" (
 	"del_flag" int2 NOT NULL DEFAULT 0,
 	"version" int4 NOT NULL DEFAULT 0,
 	"tenant_id" int8 NOT NULL DEFAULT 0,
+	"dept_id" int8 NOT NULL DEFAULT 1,
 	"name" varchar(100) NOT NULL,
 	"md5" varchar(100) NOT NULL,
 	"url" varchar(2000) NOT NULL,
@@ -242,6 +255,7 @@ COMMENT ON COLUMN "public"."sys_oss_log"."update_time" IS '修改时间';
 COMMENT ON COLUMN "public"."sys_oss_log"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."sys_oss_log"."version" IS '版本号';
 COMMENT ON COLUMN "public"."sys_oss_log"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."sys_oss_log"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."sys_oss_log"."name" IS '文件名称';
 COMMENT ON COLUMN "public"."sys_oss_log"."md5" IS '文件的MD5标识';
 COMMENT ON COLUMN "public"."sys_oss_log"."url" IS '文件的URL';

@@ -25,6 +25,7 @@ CREATE TABLE "public"."iot_device" (
 "del_flag" int2 NOT NULL DEFAULT 0,
 "version" int4 NOT NULL DEFAULT 0,
 "tenant_id" int8 NOT NULL DEFAULT 0,
+"dept_id" int8 NOT NULL DEFAULT 1,
 "sn" varchar(64)  NOT NULL,
 "name" varchar(50)  NOT NULL,
 "status" int2 NOT NULL DEFAULT 1,
@@ -44,6 +45,7 @@ COMMENT ON COLUMN "public"."iot_device"."update_time" IS '修改时间';
 COMMENT ON COLUMN "public"."iot_device"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."iot_device"."version" IS '版本号';
 COMMENT ON COLUMN "public"."iot_device"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."iot_device"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."iot_device"."sn" IS '设备序列号';
 COMMENT ON COLUMN "public"."iot_device"."name" IS '设备名称';
 COMMENT ON COLUMN "public"."iot_device"."status" IS '设备状态 0在线 1离线';
@@ -68,6 +70,7 @@ CREATE TABLE "public"."iot_thing_model" (
 "del_flag" int2 NOT NULL DEFAULT 0,
 "version" int4 NOT NULL DEFAULT 0,
 "tenant_id" int8 NOT NULL DEFAULT 0,
+"dept_id" int8 NOT NULL DEFAULT 1,
 "name" varchar(50)  NOT NULL,
 "code" varchar(50)  NOT NULL,
 "data_type" varchar(20)  NOT NULL,
@@ -86,6 +89,7 @@ COMMENT ON COLUMN "public"."iot_thing_model"."update_time" IS '修改时间';
 COMMENT ON COLUMN "public"."iot_thing_model"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."iot_thing_model"."version" IS '版本号';
 COMMENT ON COLUMN "public"."iot_thing_model"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."iot_thing_model"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."iot_thing_model"."name" IS '物模型名称';
 COMMENT ON COLUMN "public"."iot_thing_model"."code" IS '物模型编码';
 COMMENT ON COLUMN "public"."iot_thing_model"."data_type" IS '数据类型 integer string decimal boolean';
@@ -115,6 +119,7 @@ CREATE TABLE "public"."iot_product" (
 "del_flag" int2 NOT NULL DEFAULT 0,
 "version" int4 NOT NULL DEFAULT 0,
 "tenant_id" int8 NOT NULL DEFAULT 0,
+"dept_id" int8 NOT NULL DEFAULT 1,
 "name" varchar(50)  NOT NULL,
 "category_id" int8 NOT NULL,
 "device_type" int2 NOT NULL,
@@ -132,6 +137,7 @@ COMMENT ON COLUMN "public"."iot_product"."update_time" IS '修改时间';
 COMMENT ON COLUMN "public"."iot_product"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."iot_product"."version" IS '版本号';
 COMMENT ON COLUMN "public"."iot_product"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."iot_product"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."iot_product"."name" IS '产品名称';
 COMMENT ON COLUMN "public"."iot_product"."category_id" IS '产品类别';
 COMMENT ON COLUMN "public"."iot_product"."device_type" IS '设备类型 1直连设备 2网关设备 3监控设备';
@@ -152,6 +158,7 @@ CREATE TABLE "public"."iot_product_category" (
 "del_flag" int2 NOT NULL DEFAULT 0,
 "version" int4 NOT NULL DEFAULT 0,
 "tenant_id" int8 NOT NULL DEFAULT 0,
+"dept_id" int8 NOT NULL DEFAULT 1,
 "name" varchar(50) NOT NULL,
 "sort" int4 NOT NULL,
 "pid" int8 NOT NULL,
@@ -166,6 +173,7 @@ COMMENT ON COLUMN "public"."iot_product_category"."update_time" IS '修改时间
 COMMENT ON COLUMN "public"."iot_product_category"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."iot_product_category"."version" IS '版本号';
 COMMENT ON COLUMN "public"."iot_product_category"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."iot_product_category"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."iot_product_category"."name" IS '产品类别名称';
 COMMENT ON COLUMN "public"."iot_product_category"."sort" IS '产品类别排序';
 COMMENT ON COLUMN "public"."iot_product_category"."pid" IS '产品类别父节点ID';
@@ -183,6 +191,7 @@ CREATE TABLE "public"."iot_product_model" (
 "del_flag" int2 NOT NULL DEFAULT 0,
 "version" int4 NOT NULL DEFAULT 0,
 "tenant_id" int8 NOT NULL DEFAULT 0,
+"dept_id" int8 NOT NULL DEFAULT 1,
 "product_id" int8 NOT NULL,
 "model_id" int8 NOT NULL
 )
@@ -195,6 +204,7 @@ COMMENT ON COLUMN "public"."iot_product_model"."update_time" IS '修改时间';
 COMMENT ON COLUMN "public"."iot_product_model"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."iot_product_model"."version" IS '版本号';
 COMMENT ON COLUMN "public"."iot_product_model"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."iot_product_model"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."iot_product_model"."product_id" IS '产品ID';
 COMMENT ON COLUMN "public"."iot_product_model"."model_id" IS '模型ID';
 COMMENT ON TABLE "public"."iot_product_model" IS '产品模型';
