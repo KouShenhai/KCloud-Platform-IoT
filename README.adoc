@@ -35,6 +35,7 @@ image:https://gitee.com/laokouyun/KCloud-Platform-IoT/badge/star.svg?theme=dark[
 image:https://gitee.com/laokouyun/KCloud-Platform-IoT/badge/fork.svg?theme=dark[Gitee fork,link=https://gitee.com/laokouyun/KCloud-Platform-IoT/members]
 
 image:https://gitcode.com/KouShenhai_/KCloud-Platform-IoT/star/badge.svg?theme=dark[GitCode star,link=https://gitcode.com/KouShenhai_/KCloud-Platform-IoT]
+image:https://atomgit.com/KouShenhai_/KCloud-Platform-IoT/star/2025top.svg?theme=dark[GitCode star,link=https://gitcode.com/KouShenhai_/KCloud-Platform-IoT]
 
 image:https://img.shields.io/static/v1?label=Spring%20Framework&message=7.0.1&color=green[Spring Framework,link=https://spring.io/projects/spring-framework]
 image:https://img.shields.io/static/v1?label=Spring%20Security&message=7.0.0&color=green[Spring Security,link=https://spring.io/projects/spring-security]
