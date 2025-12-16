@@ -110,7 +110,7 @@
     <!--spring-data版本-->
     <spring-data.version>2025.1.1</spring-data.version>
     <!--spring-security版本-->
-    <spring-security.version>7.0.0</spring-security.version>
+    <spring-security.version>7.0.2</spring-security.version>
     <!--spring-grpc版本-->
     <spring-grpc.version>1.0.0</spring-grpc.version>
     <!--spring-ai版本-->
@@ -122,7 +122,7 @@
     <!--testcontainers版本-->
     <testcontainers.version>2.0.3</testcontainers.version>
     <!--vertx版本-->
-    <vertx.version>5.0.5</vertx.version>
+    <vertx.version>5.0.6</vertx.version>
     <!--mybatis-plus版本 -->
     <mybatis-plus.version>3.5.15</mybatis-plus.version>
     <!--nacos版本-->
@@ -130,7 +130,7 @@
     <!--opentelemetry版本-->
     <opentelemetry.version>1.57.0</opentelemetry.version>
     <!--netty版本-->
-    <netty.version>4.2.8.Final</netty.version>
+    <netty.version>4.2.9.Final</netty.version>
     <!--grpc版本-->
     <grpc.version>1.77.0</grpc.version>
     <!--jackson版本-->
@@ -174,7 +174,7 @@
     <!--ip2region版本-->
     <ip2region.version>3.3.1</ip2region.version>
     <!--spring-kafka版本-->
-    <spring-kafka.version>4.0.0</spring-kafka.version>
+    <spring-kafka.version>4.0.1</spring-kafka.version>
     <!--disruptor版本-->
     <disruptor.version>4.0.0</disruptor.version>
     <!--transmittable-thread-local版本-->
@@ -186,7 +186,7 @@
     <!--taos-jdbcdriver版本-->
     <taos-jdbcdriver.version>3.7.9</taos-jdbcdriver.version>
     <!--fory-core版本-->
-    <fory-core.version>0.13.2</fory-core.version>
+    <fory-core.version>0.14.0</fory-core.version>
     <!--browscap-java版本-->
     <browscap-java.version>1.5.1</browscap-java.version>
     <!--liquibase-core版本-->
