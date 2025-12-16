@@ -120,7 +120,7 @@
     <!--springdoc-openapi版本-->
     <springdoc-openapi.version>3.0.0</springdoc-openapi.version>
     <!--testcontainers版本-->
-    <testcontainers.version>2.0.2</testcontainers.version>
+    <testcontainers.version>2.0.3</testcontainers.version>
     <!--vertx版本-->
     <vertx.version>5.0.6</vertx.version>
     <!--mybatis-plus版本 -->
