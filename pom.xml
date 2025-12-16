@@ -140,7 +140,7 @@
     <!--protobuf版本-->
     <protobuf.version>3.25.8</protobuf.version>
     <!--redisson版本-->
-    <redisson.version>3.52.0</redisson.version>
+    <redisson.version>4.0.0</redisson.version>
     <!--lombok版本-->
     <lombok.version>1.18.42</lombok.version>
     <!--postgresql版本-->
