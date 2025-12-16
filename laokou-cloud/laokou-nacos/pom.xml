@@ -39,7 +39,7 @@
     <!--lombok版本-->
     <lombok.version>1.18.42</lombok.version>
     <!--jasypt版本-->
-    <jasypt.version>3.0.5</jasypt.version>
+    <jasypt.version>4.0.3</jasypt.version>
   </properties>
 
   <dependencies>
