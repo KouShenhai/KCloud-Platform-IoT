@@ -208,7 +208,7 @@
     <!--curator版本-->
     <curator.version>5.9.0</curator.version>
     <!--wiremock版本-->
-    <wiremock.version>4.0.0-beta.22</wiremock.version>
+    <wiremock.version>4.0.0-beta.23</wiremock.version>
     <!--commons-net版本-->
     <commons-net.version>3.12.0</commons-net.version>
     <!--jSerialComm版本-->
