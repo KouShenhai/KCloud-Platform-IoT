@@ -42,6 +42,7 @@ public final class UserConvertor {
 			.avatar(userV.avatar())
 			.superAdmin(userE.isSuperAdministrator())
 			.tenantId(userE.getTenantId())
+			.deptId(userE.getDeptId())
 			.permissions(userV.permissions())
 			.status(userE.getStatus())
 			.mail(userE.getMail())

@@ -64,6 +64,14 @@ public final class UserUtils {
 	}
 
 	/**
+	 * 部门ID.
+	 * @return Long
+	 */
+	public static Long getDeptId() {
+		return userDetail().getDeptId();
+	}
+
+	/**
 	 * 是否是超级管理员.
 	 * @return Boolean
 	 */

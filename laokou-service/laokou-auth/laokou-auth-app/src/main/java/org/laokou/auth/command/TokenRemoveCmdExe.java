@@ -56,7 +56,7 @@ public class TokenRemoveCmdExe {
 	 * 执行退出登录.
 	 * @param cmd 退出登录参数
 	 */
-	@Async
+	@Async("virtualThreadExecutor")
 	@CommandLog
 	public void executeVoid(TokenRemoveCmd cmd) {
 		String token = cmd.getToken();

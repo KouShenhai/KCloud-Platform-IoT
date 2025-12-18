@@ -31,7 +31,7 @@ import java.time.Duration;
 @Component
 public class UnsubscribeEventHandler {
 
-	@Async
+	@Async("virtualThreadExecutor")
 	@EventListener
 	public void onUnsubscribeEvent(NacosRouteDefinitionRepository.UnsubscribeEvent evt) throws InterruptedException {
 		Thread.sleep(Duration.ofSeconds(90));
