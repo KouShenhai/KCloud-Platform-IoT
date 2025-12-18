@@ -18,6 +18,9 @@
 package org.laokou.common.plugin.model;
 
 import lombok.Getter;
+import org.laokou.common.i18n.common.constant.StringConstants;
+
+import java.util.StringJoiner;
 
 /***
  * mqtt消息枚举.
@@ -169,5 +172,17 @@ public enum MessageTypeEnum {
 	public abstract String getTopic();
 
 	public abstract String getMqTopic();
+
+	public static String transformTopic(String topic) {
+		String[] strs = topic.split(StringConstants.SLASH);
+		strs[1] = "{productId:产品ID}";
+		strs[2] = "{deviceId:设备ID}";
+		StringJoiner stringJoiner = new StringJoiner(StringConstants.SLASH, StringConstants.SLASH,
+				StringConstants.EMPTY);
+		for (String str : strs) {
+			stringJoiner.add(str);
+		}
+		return stringJoiner.toString().substring(1);
+	}
 
 }

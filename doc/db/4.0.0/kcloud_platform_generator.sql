@@ -25,6 +25,7 @@ CREATE TABLE "public"."generator_column" (
 	"del_flag" int2 NOT NULL DEFAULT 0,
 	"version" int4 NOT NULL DEFAULT 0,
 	"tenant_id" int8 NOT NULL DEFAULT 0,
+	"dept_id" int8 NOT NULL DEFAULT 1,
 	"name" varchar(100) NOT NULL,
 	"comment" varchar(400),
 	"type" varchar(100) NOT NULL,
@@ -48,6 +49,7 @@ COMMENT ON COLUMN "public"."generator_column"."update_time" IS '修改时间';
 COMMENT ON COLUMN "public"."generator_column"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."generator_column"."version" IS '版本号';
 COMMENT ON COLUMN "public"."generator_column"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."generator_column"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."generator_column"."name" IS '列名';
 COMMENT ON COLUMN "public"."generator_column"."comment" IS '描述';
 COMMENT ON COLUMN "public"."generator_column"."type" IS '类型';
@@ -76,6 +78,7 @@ CREATE TABLE "public"."generator_info" (
 	"del_flag" int2 NOT NULL DEFAULT 0,
 	"version" int4 NOT NULL DEFAULT 0,
 	"tenant_id" int8 NOT NULL DEFAULT 0,
+	"dept_id" int8 NOT NULL DEFAULT 1,
 	"ds_name" varchar(50) NOT NULL,
 	"db_name" varchar(50) NOT NULL,
 	"table_name" varchar(50) NOT NULL,
@@ -96,6 +99,7 @@ COMMENT ON COLUMN "public"."generator_info"."update_time" IS '修改时间';
 COMMENT ON COLUMN "public"."generator_info"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."generator_info"."version" IS '版本号';
 COMMENT ON COLUMN "public"."generator_info"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."generator_info"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."generator_info"."ds_name" IS '数据源名称';
 COMMENT ON COLUMN "public"."generator_info"."db_name" IS '数据库名称';
 COMMENT ON COLUMN "public"."generator_info"."table_name" IS '数据库表名称';
@@ -110,7 +114,7 @@ COMMENT ON TABLE "public"."generator_info" IS '信息';
 
 ALTER TABLE "public"."generator_info" ADD CONSTRAINT "generator_info_pkey" PRIMARY KEY ("id");
 
-INSERT INTO "public"."generator_info" VALUES (1, 1, 1, '2025-10-03 18:10:38', '2025-10-03 18:10:40', 0, 0, 0, 'master', 'kcloud_platform', 'sys_tenant', 'laokou', '租户', 'org.laokou.admin', 'tenant', 'D:/iot', 'laokou-admin', 1);
+INSERT INTO "public"."generator_info" VALUES (1, 1, 1, '2025-10-03 18:10:38', '2025-10-03 18:10:40', 0, 0, 0,0, 'master', 'kcloud_platform', 'sys_tenant', 'laokou', '租户', 'org.laokou.admin', 'tenant', 'D:/iot', 'laokou-admin', 1);
 
 DROP TABLE IF EXISTS "public"."generator_template";
 CREATE TABLE "public"."generator_template" (
@@ -122,6 +126,7 @@ CREATE TABLE "public"."generator_template" (
 	"del_flag" int2 NOT NULL DEFAULT 0,
 	"version" int4 NOT NULL DEFAULT 0,
 	"tenant_id" int8 NOT NULL DEFAULT 0,
+	"dept_id" int8 NOT NULL DEFAULT 1,
 	"code" varchar(50)  NOT NULL,
 	"name" varchar(50)  NOT NULL,
 	"path_pattern" varchar(400) NOT NULL,
@@ -137,6 +142,7 @@ COMMENT ON COLUMN "public"."generator_template"."update_time" IS '修改时间';
 COMMENT ON COLUMN "public"."generator_template"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."generator_template"."version" IS '版本号';
 COMMENT ON COLUMN "public"."generator_template"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."generator_template"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."generator_template"."code" IS '编码';
 COMMENT ON COLUMN "public"."generator_template"."name" IS '名称';
 COMMENT ON COLUMN "public"."generator_template"."path_pattern" IS '路径表达式';
@@ -146,7 +152,7 @@ COMMENT ON TABLE  "public"."generator_template" IS '模板';
 
 ALTER TABLE "public"."generator_template" ADD CONSTRAINT "generator_template_pkey" PRIMARY KEY ("id");
 
-INSERT INTO "public"."generator_template" VALUES (1, 1, 1, '2025-10-03 11:20:06', '2025-10-03 11:20:10', 0, 0, 0, 'microservice_cola_controller', '微服务COLA控制器', '${path}/${serviceId}/${serviceId}-adapter/src/main/java/${packagePath}/web/Controller.java/${className}sController.java', '/*
+INSERT INTO "public"."generator_template" VALUES (1, 1, 1, '2025-10-03 11:20:06', '2025-10-03 11:20:10', 0, 0, 0,0, 'microservice_cola_controller', '微服务COLA控制器', '${path}/${serviceId}/${serviceId}-adapter/src/main/java/${packagePath}/web/Controller.java/${className}sController.java', '/*
  * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -277,6 +283,7 @@ CREATE TABLE "public"."generator_group" (
    "del_flag" int2 NOT NULL DEFAULT 0,
    "version" int4 NOT NULL DEFAULT 0,
    "tenant_id" int8 NOT NULL DEFAULT 0,
+   "dept_id" int8 NOT NULL DEFAULT 1,
    "name" varchar(50)  NOT NULL
 )
 ;
@@ -288,12 +295,13 @@ COMMENT ON COLUMN "public"."generator_group"."update_time" IS '修改时间';
 COMMENT ON COLUMN "public"."generator_group"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."generator_group"."version" IS '版本号';
 COMMENT ON COLUMN "public"."generator_group"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."generator_group"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."generator_group"."name" IS '名称';
 COMMENT ON TABLE  "public"."generator_group" IS '组';
 
 ALTER TABLE "public"."generator_group" ADD CONSTRAINT "generator_group_pkey" PRIMARY KEY ("id");
 
-INSERT INTO "public"."generator_group" VALUES (1, 1, 1, '2025-10-03 17:59:23', '2025-10-03 17:59:25', 0, 0, 0, '微服务COLA模板组');
+INSERT INTO "public"."generator_group" VALUES (1, 1, 1, '2025-10-03 17:59:23', '2025-10-03 17:59:25', 0, 0, 0,0, '微服务COLA模板组');
 
 DROP TABLE IF EXISTS "public"."generator_template_group";
 CREATE TABLE "public"."generator_template_group" (
@@ -305,6 +313,7 @@ CREATE TABLE "public"."generator_template_group" (
 	"del_flag" int2 NOT NULL DEFAULT 0,
 	"version" int4 NOT NULL DEFAULT 0,
 	"tenant_id" int8 NOT NULL DEFAULT 0,
+	"dept_id" int8 NOT NULL DEFAULT 1,
 	"template_id" int8  NOT NULL,
 	"group_id" int8  NOT NULL
 )
@@ -317,6 +326,7 @@ COMMENT ON COLUMN "public"."generator_template_group"."update_time" IS '修改�
 COMMENT ON COLUMN "public"."generator_template_group"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."generator_template_group"."version" IS '版本号';
 COMMENT ON COLUMN "public"."generator_template_group"."tenant_id" IS '租户ID';
+COMMENT ON COLUMN "public"."generator_template_group"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."generator_template_group"."template_id" IS '模板ID';
 COMMENT ON COLUMN "public"."generator_template_group"."group_id" IS '组ID';
 COMMENT ON TABLE  "public"."generator_template_group" IS '模板组';
@@ -329,4 +339,4 @@ CREATE UNIQUE INDEX "generator_template_group_templateId_groupId_idx" ON "public
 );
 COMMENT ON INDEX "public"."generator_template_group_templateId_groupId_idx" IS '模板ID_组ID_唯一索引';
 
-INSERT INTO "public"."generator_template_group" VALUES (1, 1, 1, '2025-10-03 18:04:32', '2025-10-03 18:04:34', 0, 0, 0, 1, 1);
+INSERT INTO "public"."generator_template_group" VALUES (1, 1, 1, '2025-10-03 18:04:32', '2025-10-03 18:04:34', 0, 0, 0,0, 1, 1);

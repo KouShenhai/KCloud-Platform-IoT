@@ -30,6 +30,7 @@
     ,mail
     ,mobile
     ,tenant_id
+    ,dept_id
     from sys_user
     <where>
       <if test="user.username != null and user.username != ''">

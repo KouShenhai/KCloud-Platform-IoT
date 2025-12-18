@@ -53,7 +53,8 @@ import java.util.stream.Collectors;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
 		isGetterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
 public record User(Long id, String username, String password, String avatar, Boolean superAdmin, Integer status,
-		String mail, String mobile, Long tenantId, Set<String> permissions) implements Authentication, Serializable {
+		String mail, String mobile, Long tenantId, Long deptId,
+		Set<String> permissions) implements Authentication, Serializable {
 
 	@Override
 	@NullMarked

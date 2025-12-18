@@ -42,6 +42,7 @@ public class DataObjectHandler implements MetaObjectHandler {
 		this.strictInsertFill(metaObject, BaseDO.DEL_FLAG, () -> 0, Integer.class);
 		this.strictInsertFill(metaObject, BaseDO.VERSION, () -> 0, Integer.class);
 		this.strictInsertFill(metaObject, BaseDO.TENANT_ID, UserUtils::getTenantId, Long.class);
+		this.strictInsertFill(metaObject, BaseDO.DEPT_ID, UserUtils::getDeptId, Long.class);
 	}
 
 	@Override

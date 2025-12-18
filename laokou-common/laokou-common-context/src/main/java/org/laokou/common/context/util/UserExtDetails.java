@@ -104,6 +104,12 @@ public final class UserExtDetails implements UserDetails, OAuth2AuthenticatedPri
 	private Long tenantId;
 
 	/**
+	 * 部门ID.
+	 */
+	@EqualsAndHashCode.Include
+	private Long deptId;
+
+	/**
 	 * 菜单权限标识集合.
 	 */
 	private Set<String> permissions;

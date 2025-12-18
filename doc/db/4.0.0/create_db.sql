@@ -3,6 +3,5 @@ create database kcloud_platform;
 create database kcloud_platform_nacos;
 create database kcloud_platform_iot;
 create database kcloud_platform_domain;
-create database kcloud_platform_test;
 create database kcloud_platform_generator;
 create database snail_job;
