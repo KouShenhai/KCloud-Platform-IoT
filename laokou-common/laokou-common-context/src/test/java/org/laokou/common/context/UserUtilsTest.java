@@ -89,10 +89,19 @@ class UserUtilsTest {
 		@Override
 		public Object getPrincipal() {
 			try {
-				User user = new User(1L, AESUtils.encrypt("admin"), "admin123",
-						"https://youke1.picui.cn/s1/2025/07/20/687ca202b2c53.jpg", true, 0,
-						AESUtils.encrypt("2413176044@qq.com"), AESUtils.encrypt("13574411111"), 0L,
-						Set.of("test:save"));
+				User user = User.builder()
+					.id(1L)
+					.username("admin")
+					.password("admin123")
+					.avatar("https://youke1.picui.cn/s1/2025/07/20/687ca202b2c53.jpg")
+					.superAdmin(true)
+					.tenantId(0L)
+					.deptId(0L)
+					.permissions(Set.of("test:save"))
+					.status(0)
+					.mail(AESUtils.encrypt("2413176044@qq.com"))
+					.mobile(AESUtils.encrypt("13574411111"))
+					.build();
 				return UserConvertor.toUserDetails(user);
 			}
 			catch (Exception e) {
