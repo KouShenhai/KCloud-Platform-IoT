@@ -72,6 +72,11 @@ public abstract class BaseDO implements Serializable {
 	 */
 	public static final String TENANT_ID = "tenantId";
 
+	/**
+	 * 部门ID.
+	 */
+	public static final String DEPT_ID = "deptId";
+
 	@Serial
 	private static final long serialVersionUID = -5855413730985647400L;
 
@@ -124,5 +129,11 @@ public abstract class BaseDO implements Serializable {
 	 */
 	@TableField(fill = FieldFill.INSERT)
 	protected Long tenantId;
+
+	/**
+	 * 部门ID.
+	 */
+	@TableField(fill = FieldFill.INSERT)
+	protected Long deptId;
 
 }

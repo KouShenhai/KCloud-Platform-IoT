@@ -114,7 +114,7 @@ COMMENT ON TABLE "public"."generator_info" IS '信息';
 
 ALTER TABLE "public"."generator_info" ADD CONSTRAINT "generator_info_pkey" PRIMARY KEY ("id");
 
-INSERT INTO "public"."generator_info" VALUES (1, 1, 1, '2025-10-03 18:10:38', '2025-10-03 18:10:40', 0, 0, 0, 'master', 'kcloud_platform', 'sys_tenant', 'laokou', '租户', 'org.laokou.admin', 'tenant', 'D:/iot', 'laokou-admin', 1);
+INSERT INTO "public"."generator_info" VALUES (1, 1, 1, '2025-10-03 18:10:38', '2025-10-03 18:10:40', 0, 0, 0,0, 'master', 'kcloud_platform', 'sys_tenant', 'laokou', '租户', 'org.laokou.admin', 'tenant', 'D:/iot', 'laokou-admin', 1);
 
 DROP TABLE IF EXISTS "public"."generator_template";
 CREATE TABLE "public"."generator_template" (
@@ -152,7 +152,7 @@ COMMENT ON TABLE  "public"."generator_template" IS '模板';
 
 ALTER TABLE "public"."generator_template" ADD CONSTRAINT "generator_template_pkey" PRIMARY KEY ("id");
 
-INSERT INTO "public"."generator_template" VALUES (1, 1, 1, '2025-10-03 11:20:06', '2025-10-03 11:20:10', 0, 0, 0, 'microservice_cola_controller', '微服务COLA控制器', '${path}/${serviceId}/${serviceId}-adapter/src/main/java/${packagePath}/web/Controller.java/${className}sController.java', '/*
+INSERT INTO "public"."generator_template" VALUES (1, 1, 1, '2025-10-03 11:20:06', '2025-10-03 11:20:10', 0, 0, 0,0, 'microservice_cola_controller', '微服务COLA控制器', '${path}/${serviceId}/${serviceId}-adapter/src/main/java/${packagePath}/web/Controller.java/${className}sController.java', '/*
  * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -301,7 +301,7 @@ COMMENT ON TABLE  "public"."generator_group" IS '组';
 
 ALTER TABLE "public"."generator_group" ADD CONSTRAINT "generator_group_pkey" PRIMARY KEY ("id");
 
-INSERT INTO "public"."generator_group" VALUES (1, 1, 1, '2025-10-03 17:59:23', '2025-10-03 17:59:25', 0, 0, 0, '微服务COLA模板组');
+INSERT INTO "public"."generator_group" VALUES (1, 1, 1, '2025-10-03 17:59:23', '2025-10-03 17:59:25', 0, 0, 0,0, '微服务COLA模板组');
 
 DROP TABLE IF EXISTS "public"."generator_template_group";
 CREATE TABLE "public"."generator_template_group" (
@@ -339,4 +339,4 @@ CREATE UNIQUE INDEX "generator_template_group_templateId_groupId_idx" ON "public
 );
 COMMENT ON INDEX "public"."generator_template_group_templateId_groupId_idx" IS '模板ID_组ID_唯一索引';
 
-INSERT INTO "public"."generator_template_group" VALUES (1, 1, 1, '2025-10-03 18:04:32', '2025-10-03 18:04:34', 0, 0, 0, 1, 1);
+INSERT INTO "public"."generator_template_group" VALUES (1, 1, 1, '2025-10-03 18:04:32', '2025-10-03 18:04:34', 0, 0, 0,0, 1, 1);

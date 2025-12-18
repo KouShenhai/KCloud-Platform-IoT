@@ -84,6 +84,11 @@ public class UserE implements Serializable {
 	 */
 	private Long tenantId;
 
+	/**
+	 * 部门ID.
+	 */
+	private Long deptId;
+
 	public boolean isSuperAdministrator() {
 		return ObjectUtils.equals(SuperAdminEnum.YES.getCode(), this.superAdmin);
 	}

@@ -62,7 +62,6 @@ CREATE TABLE "public"."sys_dept" (
   "del_flag" int2 NOT NULL DEFAULT 0,
   "version" int4 NOT NULL DEFAULT 0,
   "tenant_id" int8 NOT NULL DEFAULT 0,
-  "dept_id" int8 NOT NULL DEFAULT 1,
   "pid" int8 NOT NULL,
   "name" varchar(100) NOT NULL,
   "sort" int4 NOT NULL DEFAULT 1
@@ -128,7 +127,7 @@ COMMENT ON TABLE "public"."sys_dict" IS '字典';
 
 ALTER TABLE "public"."sys_dict" ADD CONSTRAINT "sys_dict_pkey" PRIMARY KEY ("id");
 
-INSERT INTO "public"."sys_dict" VALUES (1, 1, 1, '2024-05-09 00:15:30', '2024-05-09 00:15:40', 0, 0, 0, 'dict-type.manage.name.menu.show-hide', 'sys_menu_show_hide', '菜单状态列表', 0);
+INSERT INTO "public"."sys_dict" VALUES (1, 1, 1, '2024-05-09 00:15:30', '2024-05-09 00:15:40', 0, 0, 0,0, 'dict-type.manage.name.menu.show-hide', 'sys_menu_show_hide', '菜单状态列表', 0);
 
 -- ----------------------------
 -- -------------字典项------------
@@ -202,7 +201,7 @@ COMMENT ON COLUMN "public"."sys_i18n_message"."update_time" IS '修改时间';
 COMMENT ON COLUMN "public"."sys_i18n_message"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."sys_i18n_message"."version" IS '版本号';
 COMMENT ON COLUMN "public"."sys_i18n_message"."tenant_id" IS '租户ID';
-COMMENT ON COLUMN "public"."sys_i18n_messsage"."dept_id" IS '部门ID';
+COMMENT ON COLUMN "public"."sys_i18n_message"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."sys_i18n_message"."code" IS '编码';
 COMMENT ON COLUMN "public"."sys_i18n_message"."zh_message" IS '中文';
 COMMENT ON COLUMN "public"."sys_i18n_message"."en_message" IS '英文';
@@ -216,9 +215,9 @@ COMMENT ON INDEX "public"."sys_i18n_message_code_tenantId_idx" IS '编码_租户
 
 ALTER TABLE "public"."sys_i18n_message" ADD CONSTRAINT "sys_i18n_message_pkey" PRIMARY KEY ("id");
 
-INSERT INTO "public"."sys_i18n_message" VALUES (1, 1, 1, '2024-05-07 10:45:30', '2024-05-07 10:45:37', 0, 0, 0, 'sys.manage', '系统管理', 'System Management');
-INSERT INTO "public"."sys_i18n_message" VALUES (2, 1, 1, '2024-05-07 10:45:30', '2024-05-07 10:45:37', 0, 0, 0, 'menu.manage', '菜单管理', 'Menu Management');
-INSERT INTO "public"."sys_i18n_message" VALUES (4, 1, 1, '2024-05-07 10:45:30', '2024-05-07 10:45:37', 0, 0, 0, 'dict.manage', '字典管理', 'Dictionary Management');
+INSERT INTO "public"."sys_i18n_message" VALUES (1, 1, 1, '2024-05-07 10:45:30', '2024-05-07 10:45:37', 0, 0, 0,0, 'sys.manage', '系统管理', 'System Management');
+INSERT INTO "public"."sys_i18n_message" VALUES (2, 1, 1, '2024-05-07 10:45:30', '2024-05-07 10:45:37', 0, 0, 0,0, 'menu.manage', '菜单管理', 'Menu Management');
+INSERT INTO "public"."sys_i18n_message" VALUES (4, 1, 1, '2024-05-07 10:45:30', '2024-05-07 10:45:37', 0, 0, 0,0, 'dict.manage', '字典管理', 'Dictionary Management');
 
 -- ----------------------------
 -- -------------菜单------------
@@ -270,92 +269,92 @@ ALTER TABLE "public"."sys_menu" ADD CONSTRAINT "sys_menu_permission_unique" UNIQ
 CREATE INDEX "sys_menu_type_idx" ON "public"."sys_menu" USING btree ("type");
 COMMENT ON INDEX "public"."sys_menu_type_idx" IS '菜单类型_索引';
 
-INSERT INTO "public"."sys_menu" VALUES (1, 1, 1, '2024-06-04 17:20:42', '2024-06-04 17:20:46', 0, 0, 0, 0, NULL, 0, '系统管理', '/sys', 'SettingOutlined', 90000, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (2, 1, 1, '2024-06-04 17:27:14', '2024-06-04 17:27:12', 0, 0, 0, 1, NULL, 0, '日志管理', '/sys/log', '', 1500, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (3, 1, 1, '2024-09-15 12:56:07', '2024-09-15 12:56:10', 0, 0, 0, 2, NULL, 0, '登录日志', '/sys/log/login', '', 800, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (4, 1, 1, '2024-06-04 17:27:14', '2024-06-04 17:27:12', 0, 0, 0, 3, 'sys:login-log:page', 1, '分页查询登录日志列表', NULL, '', 50, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (5, 1, 1, '2024-06-04 17:27:14', '2024-06-04 17:27:12', 0, 0, 0, 3, 'sys:login-log:export', 1, '导出全部登录日志', NULL, '', 40, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (6, 1, 1, '2024-09-17 18:36:56', '2024-09-17 18:36:59', 0, 0, 0, 2, NULL, 0, '通知日志', '/sys/log/notice', '', 700, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (7, 1, 1, '2024-09-17 18:38:24', '2024-09-17 18:38:26', 0, 0, 0, 6, 'sys:notice-log:page', 1, '分页查询通知日志列表', NULL, '', 50, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (8, 1, 1, '2024-09-17 18:39:34', '2024-09-17 18:39:37', 0, 0, 0, 6, 'sys:notice-log:export', 1, '导出全部通知日志', NULL, '', 40, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (9, 1, 1, '2025-01-11 14:10:54', '2025-01-11 14:10:57', 0, 0, 0, 3, 'sys:login-log:detail', 1, '查看登录日志', '', '', 30, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (10, 1, 1, '2025-01-11 14:13:13', '2025-01-11 14:13:16', 0, 0, 0, 6, 'sys:notice-log:detail', 1, '查看通知日志', NULL, NULL, 30, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (11, 1, 1, '2025-01-18 09:26:17', '2025-01-18 09:26:20', 0, 0, 0, 0, NULL, 0, '物联管理', '/iot', 'RobotOutlined', 80000, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (12, 1, 1, '2025-01-18 09:28:42', '2025-01-18 09:28:44', 0, 0, 0, 11, NULL, 0, '设备管理', '/iot/device', NULL, 5000, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (13, 1, 1, '2025-01-18 09:30:03', '2025-01-18 09:30:05', 0, 0, 0, 12, NULL, 0, '设备', '/iot/device/index', NULL, 100, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (14, 1, 1, '2025-01-18 09:37:53', '2025-01-18 09:37:55', 0, 0, 0, 12, NULL, 0, '物模型', '/iot/device/thingModel', NULL, 400, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (15, 1, 1, '2025-01-18 09:38:58', '2025-01-18 09:39:00', 0, 0, 0, 12, NULL, 0, '产品', '/iot/device/product', NULL, 200, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (16, 1, 1, '2025-01-18 09:39:31', '2025-01-18 09:39:34', 0, 0, 0, 12, NULL, 0, '产品类别', '/iot/device/productCategory', NULL, 300, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (17, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0, 1, NULL, 0, '权限管理', '/sys/permission', NULL, 5000, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (18, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0, 17, NULL, 0, '菜单', '/sys/permission/menu', NULL, 900, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (19, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0, 17, NULL, 0, '部门', '/sys/permission/dept', NULL, 800, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (20, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0, 17, NULL, 0, '角色', '/sys/permission/role', NULL, 700, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (21, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0, 17, NULL, 0, '用户', '/sys/permission/user', NULL, 600, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (22, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0, 1, NULL, 0, '租户管理', '/sys/tenant', NULL, 4000, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (23, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0, 22, NULL, 0, '数据源', '/sys/tenant/source', NULL, 400, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (24, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0, 22, NULL, 0, '套餐', '/sys/tenant/package', NULL, 300, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (25, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0, 22, NULL, 0, '租户', '/sys/tenant/index', NULL, 200, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (26, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0, 1, NULL, 0, '基础数据', '/sys/base', NULL, 2000, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (27, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0, 26, NULL, 0, '数据字典', '/sys/base/dict', NULL, 900, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (28, 1, 1, '2024-09-15 12:56:07', '2024-09-15 12:56:10', 0, 0, 0, 2, NULL, 0, '操作日志', '/sys/log/operate', '', 900, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (29, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0, 26, NULL, 0, '国际化', '/sys/base/i18n', NULL, 800, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (30, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0, 1, NULL, 0, '对象存储', '/sys/oss', NULL, 1200, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (31, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0, 30, NULL, 0, '对象存储配置', '/sys/oss/config', NULL, 200, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (32, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0, 30, NULL, 0, '对象存储日志', '/sys/oss/log', NULL, 100, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (33, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0, 1, NULL, 0, '集群管理', '/sys/cluster', NULL, 3000, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (34, 1, 1, '2025-01-21 05:19:17', '2025-01-29 11:20:15.092772', 0, 0, 0, 18, 'sys:menu:list-tree', 1, '查询菜单树列表', '', NULL, 50, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (35, 1, 1, '2025-01-21 05:19:17', '2025-01-29 11:20:15.092772', 0, 0, 0, 18, 'sys:menu:remove', 1, '删除菜单', '', NULL, 20, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (36, 1, 1, '2025-01-21 05:19:17', '2025-01-29 14:32:03.026995', 0, 0, 0, 18, 'sys:menu:save', 1, '新增菜单', '', NULL, 40, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (37, 1, 1, '2025-01-31 13:08:53.459704', '2025-01-31 13:08:53.459779', 0, 0, 0, 18, 'sys:menu:detail', 1, '查看菜单', NULL, NULL, 10, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (38, 1, 1, '2025-01-31 13:50:50.855744', '2025-01-31 13:50:50.856767', 0, 0, 0, 18, 'sys:menu:modify', 1, '修改菜单', NULL, NULL, 30, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (39, 1, 1, '2025-02-01 09:57:06.903239', '2025-02-01 09:57:16.643637', 0, 1, 0, 19, 'sys:dept:list-tree', 1, '查询部门树列表', NULL, NULL, 50, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (40, 1, 1, '2025-02-02 13:24:26.26515', '2025-02-02 13:24:26.26515', 0, 0, 0, 19, 'sys:dept:detail', 1, '查看部门', NULL, NULL, 10, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (41, 1, 1, '2025-02-02 13:36:39.981857', '2025-02-02 13:36:39.981857', 0, 0, 0, 19, 'sys:dept:save', 1, '新增部门', NULL, NULL, 40, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (42, 1, 1, '2025-02-02 13:37:18.191332', '2025-02-02 13:37:26.503011', 0, 1, 0, 19, 'sys:dept:modify', 1, '修改部门', NULL, NULL, 30, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (43, 1, 1, '2025-02-02 13:37:56.611868', '2025-02-02 13:38:04.173925', 0, 1, 0, 19, 'sys:dept:remove', 1, '删除部门', NULL, NULL, 20, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (44, 1, 1, '2025-02-03 10:18:36.114539', '2025-02-03 10:18:36.115538', 0, 0, 0, 20, 'sys:role:page', 1, '分页查询角色列表', NULL, NULL, 50, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (45, 1, 1, '2025-02-03 10:19:23.231544', '2025-02-03 10:19:23.232089', 0, 0, 0, 20, 'sys:role:save', 1, '新增角色', NULL, NULL, 40, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (46, 1, 1, '2025-02-03 10:20:30.753445', '2025-02-03 10:20:30.753445', 0, 0, 0, 20, 'sys:role:modify', 1, '修改角色', NULL, NULL, 30, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (47, 1, 1, '2025-02-03 10:20:55.204108', '2025-02-03 10:20:55.204108', 0, 0, 0, 20, 'sys:role:remove', 1, '删除角色', NULL, NULL, 20, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (48, 1, 1, '2025-02-03 10:21:33.499697', '2025-02-03 10:21:33.499697', 0, 0, 0, 20, 'sys:role:detail', 1, '查看角色', NULL, NULL, 10, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (49, 1, 1, '2025-02-04 13:45:32.958243', '2025-02-04 13:45:32.959244', 0, 0, 0, 21, 'sys:user:page', 1, '分页查询用户列表', NULL, NULL, 50, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (50, 1, 1, '2025-02-04 13:46:48.225873', '2025-02-04 13:46:48.226411', 0, 0, 0, 21, 'sys:user:save', 1, '新增用户', NULL, NULL, 40, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (51, 1, 1, '2025-02-04 13:47:19.981199', '2025-02-04 13:47:19.981199', 0, 0, 0, 21, 'sys:user:modify', 1, '修改用户', NULL, NULL, 30, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (52, 1, 1, '2025-02-04 13:47:47.639939', '2025-02-04 13:47:47.639939', 0, 0, 0, 21, 'sys:user:remove', 1, '删除用户', NULL, NULL, 20, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (53, 1, 1, '2025-02-04 13:48:34.215596', '2025-02-04 13:48:34.215596', 0, 0, 0, 21, 'sys:user:detail', 1, '查看用户', NULL, NULL, 10, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (54, 1, 1, '2025-03-02 17:52:49.303296', '2025-03-02 17:54:03.34208', 0, 2, 0, 28, 'sys:operate-log:page', 1, '分页查询操作日志列表', NULL, NULL, 50, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (55, 1, 1, '2025-03-02 18:06:30.782409', '2025-03-02 18:07:31.180306', 0, 1, 0, 28, 'sys:operate-log:export', 1, '导出全部操作日志', NULL, NULL, 40, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (56, 1, 1, '2025-03-02 18:09:02.472121', '2025-03-02 18:09:02.472121', 0, 0, 0, 28, 'sys:operate-log:detail', 1, '查看操作日志', NULL, NULL, 30, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (57, 1, 1, '2025-03-16 11:24:21.93876', '2025-03-16 11:24:21.93876', 0, 0, 0, 13, 'iot:device:detail', 1, '查看设备', NULL, NULL, 10, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (58, 1, 1, '2025-03-16 11:24:02.28912', '2025-03-16 11:24:02.28912', 0, 0, 0, 13, 'iot:device:remove', 1, '删除设备', NULL, NULL, 20, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (59, 1, 1, '2025-03-16 11:23:41.504246', '2025-03-16 11:23:41.504246', 0, 0, 0, 13, 'iot:device:modify', 1, '修改设备', NULL, NULL, 30, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (60, 1, 1, '2025-03-16 11:23:23.056863', '2025-03-16 11:23:23.056863', 0, 0, 0, 13, 'iot:device:save', 1, '新增设备', NULL, NULL, 40, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (61, 1, 1, '2025-03-16 11:22:56.958172', '2025-03-16 11:22:56.958172', 0, 0, 0, 13, 'iot:device:page', 1, '分页查询设备', NULL, NULL, 50, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (62, 1, 1, '2025-03-16 11:22:20.518897', '2025-03-16 11:22:20.518897', 0, 0, 0, 16, 'iot:product-category:detail', 1, '查看产品类别', NULL, NULL, 10, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (63, 1, 1, '2025-03-16 11:22:00.290849', '2025-03-16 11:22:00.290849', 0, 0, 0, 16, 'iot:product-category:remove', 1, '删除产品类别', NULL, NULL, 20, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (64, 1, 1, '2025-03-16 11:21:32.205209', '2025-03-16 11:21:32.205209', 0, 0, 0, 16, 'iot:product-category:modify', 1, '修改产品类别', NULL, NULL, 30, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (65, 1, 1, '2025-03-16 11:21:04.431009', '2025-03-16 11:21:04.431009', 0, 0, 0, 16, 'iot:product-category:save', 1, '新增产品类别', NULL, NULL, 40, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (66, 1, 1, '2025-03-16 11:20:40.603807', '2025-03-16 11:20:40.603807', 0, 0, 0, 16, 'iot:product-category:list-tree', 1, '查询产品类别树列表', NULL, NULL, 50, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (67, 1, 1, '2025-03-16 11:19:25.506634', '2025-03-16 11:19:25.506634', 0, 0, 0, 15, 'iot:product:detail', 1, '查看产品', NULL, NULL, 10, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (68, 1, 1, '2025-03-16 11:18:43.37544', '2025-03-16 11:18:43.37544', 0, 0, 0, 15, 'iot:product:remove', 1, '删除产品', NULL, NULL, 20, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (69, 1, 1, '2025-03-16 11:17:16.858243', '2025-03-16 11:18:07.952616', 0, 1, 0, 15, 'iot:product:modify', 1, '修改产品', NULL, NULL, 30, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (70, 1, 1, '2025-03-16 11:16:56.540728', '2025-03-16 11:18:02.393751', 0, 1, 0, 15, 'iot:product:save', 1, '新增产品', NULL, NULL, 40, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (71, 1, 1, '2025-03-16 11:04:36.477875', '2025-03-16 11:04:36.477875', 0, 0, 0, 15, 'iot:product:page', 1, '分页查询产品', NULL, NULL, 50, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (72, 1, 1, '2025-03-16 11:02:48.298633', '2025-03-16 11:02:48.298633', 0, 0, 0, 14, 'iot:thing-model:detail', 1, '查看物模型', NULL, NULL, 10, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (73, 1, 1, '2025-03-16 11:02:24.689321', '2025-03-16 11:02:24.689321', 0, 0, 0, 14, 'iot:thing-model:remove', 1, '删除物模型', NULL, NULL, 20, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (74, 1, 1, '2025-03-16 11:01:52.176027', '2025-03-16 11:18:56.079399', 0, 2, 0, 14, 'iot:thing-model:modify', 1, '修改物模型', NULL, NULL, 30, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (75, 1, 1, '2025-03-16 11:01:31.000074', '2025-03-16 11:01:31.000074', 0, 0, 0, 14, 'iot:thing-model:save', 1, '新增物模型', NULL, NULL, 40, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (76, 1, 1, '2025-03-16 11:00:58.755018', '2025-03-16 11:00:58.755018', 0, 0, 0, 14, 'iot:thing-model:page', 1, '分页查询物模型列表', NULL, NULL, 50, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (77, 1, 1, '2025-03-16 11:19:25.506634', '2025-03-16 11:19:25.506634', 0, 0, 0, 31, 'sys:oss:detail', 1, '查看OSS', NULL, NULL, 10, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (78, 1, 1, '2025-03-16 11:18:43.375444', '2025-03-16 11:18:43.375444', 0, 0, 0, 31, 'sys:oss:remove', 1, '删除OSS', NULL, NULL, 20, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (79, 1, 1, '2025-03-16 11:17:16.858243', '2025-03-16 11:18:07.952616', 0, 1, 0, 31, 'sys:oss:modify', 1, '修改OSS', NULL, NULL, 30, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (80, 1, 1, '2025-03-16 11:16:56.540728', '2025-03-16 11:18:02.393751', 0, 1, 0, 31, 'sys:oss:save', 1, '新增OSS', NULL, NULL, 40, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (81, 1, 1, '2025-03-16 11:04:36.477875', '2025-03-16 11:04:36.477875', 0, 0, 0, 31, 'sys:oss:page', 1, '分页查询OSS列表', NULL, NULL, 50, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (82, 1, 1, '2025-03-15 12:15:37.277552', '2025-03-15 12:15:37.278549', 0, 0, 0, 31, 'sys:oss:upload', 1, '上传文件', NULL, NULL, 5, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (83, 1, 1, '2025-07-29 21:39:07', '2025-07-29 21:39:08', 0, 0, 0, 32, 'sys:oss-log:page', 1, '分页查询OSS日志列表', NULL, NULL, 50, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (84, 1, 1, '2025-07-29 21:40:53', '2025-07-29 21:40:55', 0, 0, 0, 32, 'sys:oss-log:export', 1, '导出全部OSS日志', NULL, NULL, 40, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (88, 1, 1, '2025-08-02 09:46:49.7142', '2025-08-02 09:46:49.715253', 0, 0, 0, 1, NULL, 0, '系统配置', '/sys/config', '', 1000, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (89, 1, 1, '2025-08-02 09:51:11', '2025-08-02 09:51:13', 0, 0, 0, 88, NULL, 0, '代码生成器', '/sys/config/generator', NULL, 800, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (1, 1, 1, '2024-06-04 17:20:42', '2024-06-04 17:20:46', 0, 0, 0,0, 0, NULL, 0, '系统管理', '/sys', 'SettingOutlined', 90000, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (2, 1, 1, '2024-06-04 17:27:14', '2024-06-04 17:27:12', 0, 0, 0,0, 1, NULL, 0, '日志管理', '/sys/log', '', 1500, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (3, 1, 1, '2024-09-15 12:56:07', '2024-09-15 12:56:10', 0, 0, 0,0, 2, NULL, 0, '登录日志', '/sys/log/login', '', 800, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (4, 1, 1, '2024-06-04 17:27:14', '2024-06-04 17:27:12', 0, 0, 0,0, 3, 'sys:login-log:page', 1, '分页查询登录日志列表', NULL, '', 50, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (5, 1, 1, '2024-06-04 17:27:14', '2024-06-04 17:27:12', 0, 0, 0,0, 3, 'sys:login-log:export', 1, '导出全部登录日志', NULL, '', 40, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (6, 1, 1, '2024-09-17 18:36:56', '2024-09-17 18:36:59', 0, 0, 0,0, 2, NULL, 0, '通知日志', '/sys/log/notice', '', 700, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (7, 1, 1, '2024-09-17 18:38:24', '2024-09-17 18:38:26', 0, 0, 0,0, 6, 'sys:notice-log:page', 1, '分页查询通知日志列表', NULL, '', 50, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (8, 1, 1, '2024-09-17 18:39:34', '2024-09-17 18:39:37', 0, 0, 0,0, 6, 'sys:notice-log:export', 1, '导出全部通知日志', NULL, '', 40, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (9, 1, 1, '2025-01-11 14:10:54', '2025-01-11 14:10:57', 0, 0, 0,0, 3, 'sys:login-log:detail', 1, '查看登录日志', '', '', 30, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (10, 1, 1, '2025-01-11 14:13:13', '2025-01-11 14:13:16', 0, 0, 0,0, 6, 'sys:notice-log:detail', 1, '查看通知日志', NULL, NULL, 30, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (11, 1, 1, '2025-01-18 09:26:17', '2025-01-18 09:26:20', 0, 0, 0,0, 0, NULL, 0, '物联管理', '/iot', 'RobotOutlined', 80000, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (12, 1, 1, '2025-01-18 09:28:42', '2025-01-18 09:28:44', 0, 0, 0,0, 11, NULL, 0, '设备管理', '/iot/device', NULL, 5000, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (13, 1, 1, '2025-01-18 09:30:03', '2025-01-18 09:30:05', 0, 0, 0,0, 12, NULL, 0, '设备', '/iot/device/index', NULL, 100, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (14, 1, 1, '2025-01-18 09:37:53', '2025-01-18 09:37:55', 0, 0, 0,0, 12, NULL, 0, '物模型', '/iot/device/thingModel', NULL, 400, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (15, 1, 1, '2025-01-18 09:38:58', '2025-01-18 09:39:00', 0, 0, 0,0, 12, NULL, 0, '产品', '/iot/device/product', NULL, 200, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (16, 1, 1, '2025-01-18 09:39:31', '2025-01-18 09:39:34', 0, 0, 0,0, 12, NULL, 0, '产品类别', '/iot/device/productCategory', NULL, 300, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (17, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0,0, 1, NULL, 0, '权限管理', '/sys/permission', NULL, 5000, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (18, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0,0, 17, NULL, 0, '菜单', '/sys/permission/menu', NULL, 900, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (19, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0,0, 17, NULL, 0, '部门', '/sys/permission/dept', NULL, 800, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (20, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0,0, 17, NULL, 0, '角色', '/sys/permission/role', NULL, 700, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (21, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0,0, 17, NULL, 0, '用户', '/sys/permission/user', NULL, 600, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (22, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0,0, 1, NULL, 0, '租户管理', '/sys/tenant', NULL, 4000, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (23, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0,0, 22, NULL, 0, '数据源', '/sys/tenant/source', NULL, 400, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (24, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0,0, 22, NULL, 0, '套餐', '/sys/tenant/package', NULL, 300, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (25, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0,0, 22, NULL, 0, '租户', '/sys/tenant/index', NULL, 200, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (26, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0,0, 1, NULL, 0, '基础数据', '/sys/base', NULL, 2000, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (27, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0,0, 26, NULL, 0, '数据字典', '/sys/base/dict', NULL, 900, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (28, 1, 1, '2024-09-15 12:56:07', '2024-09-15 12:56:10', 0, 0, 0,0, 2, NULL, 0, '操作日志', '/sys/log/operate', '', 900, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (29, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0,0, 26, NULL, 0, '国际化', '/sys/base/i18n', NULL, 800, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (30, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0,0, 1, NULL, 0, '对象存储', '/sys/oss', NULL, 1200, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (31, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0,0, 30, NULL, 0, '对象存储配置', '/sys/oss/config', NULL, 200, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (32, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0,0, 30, NULL, 0, '对象存储日志', '/sys/oss/log', NULL, 100, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (33, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0,0, 1, NULL, 0, '集群管理', '/sys/cluster', NULL, 3000, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (34, 1, 1, '2025-01-21 05:19:17', '2025-01-29 11:20:15.092772', 0, 0, 0,0, 18, 'sys:menu:list-tree', 1, '查询菜单树列表', '', NULL, 50, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (35, 1, 1, '2025-01-21 05:19:17', '2025-01-29 11:20:15.092772', 0, 0, 0,0, 18, 'sys:menu:remove', 1, '删除菜单', '', NULL, 20, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (36, 1, 1, '2025-01-21 05:19:17', '2025-01-29 14:32:03.026995', 0, 0, 0,0, 18, 'sys:menu:save', 1, '新增菜单', '', NULL, 40, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (37, 1, 1, '2025-01-31 13:08:53.459704', '2025-01-31 13:08:53.459779', 0, 0, 0,0, 18, 'sys:menu:detail', 1, '查看菜单', NULL, NULL, 10, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (38, 1, 1, '2025-01-31 13:50:50.855744', '2025-01-31 13:50:50.856767', 0, 0, 0,0, 18, 'sys:menu:modify', 1, '修改菜单', NULL, NULL, 30, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (39, 1, 1, '2025-02-01 09:57:06.903239', '2025-02-01 09:57:16.643637', 0, 1, 0,0, 19, 'sys:dept:list-tree', 1, '查询部门树列表', NULL, NULL, 50, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (40, 1, 1, '2025-02-02 13:24:26.26515', '2025-02-02 13:24:26.26515', 0, 0, 0,0, 19, 'sys:dept:detail', 1, '查看部门', NULL, NULL, 10, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (41, 1, 1, '2025-02-02 13:36:39.981857', '2025-02-02 13:36:39.981857', 0, 0, 0,0, 19, 'sys:dept:save', 1, '新增部门', NULL, NULL, 40, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (42, 1, 1, '2025-02-02 13:37:18.191332', '2025-02-02 13:37:26.503011', 0, 1, 0,0, 19, 'sys:dept:modify', 1, '修改部门', NULL, NULL, 30, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (43, 1, 1, '2025-02-02 13:37:56.611868', '2025-02-02 13:38:04.173925', 0, 1, 0,0, 19, 'sys:dept:remove', 1, '删除部门', NULL, NULL, 20, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (44, 1, 1, '2025-02-03 10:18:36.114539', '2025-02-03 10:18:36.115538', 0, 0, 0,0, 20, 'sys:role:page', 1, '分页查询角色列表', NULL, NULL, 50, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (45, 1, 1, '2025-02-03 10:19:23.231544', '2025-02-03 10:19:23.232089', 0, 0, 0,0, 20, 'sys:role:save', 1, '新增角色', NULL, NULL, 40, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (46, 1, 1, '2025-02-03 10:20:30.753445', '2025-02-03 10:20:30.753445', 0, 0, 0,0, 20, 'sys:role:modify', 1, '修改角色', NULL, NULL, 30, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (47, 1, 1, '2025-02-03 10:20:55.204108', '2025-02-03 10:20:55.204108', 0, 0, 0,0, 20, 'sys:role:remove', 1, '删除角色', NULL, NULL, 20, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (48, 1, 1, '2025-02-03 10:21:33.499697', '2025-02-03 10:21:33.499697', 0, 0, 0,0, 20, 'sys:role:detail', 1, '查看角色', NULL, NULL, 10, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (49, 1, 1, '2025-02-04 13:45:32.958243', '2025-02-04 13:45:32.959244', 0, 0, 0,0, 21, 'sys:user:page', 1, '分页查询用户列表', NULL, NULL, 50, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (50, 1, 1, '2025-02-04 13:46:48.225873', '2025-02-04 13:46:48.226411', 0, 0, 0,0, 21, 'sys:user:save', 1, '新增用户', NULL, NULL, 40, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (51, 1, 1, '2025-02-04 13:47:19.981199', '2025-02-04 13:47:19.981199', 0, 0, 0,0, 21, 'sys:user:modify', 1, '修改用户', NULL, NULL, 30, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (52, 1, 1, '2025-02-04 13:47:47.639939', '2025-02-04 13:47:47.639939', 0, 0, 0,0, 21, 'sys:user:remove', 1, '删除用户', NULL, NULL, 20, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (53, 1, 1, '2025-02-04 13:48:34.215596', '2025-02-04 13:48:34.215596', 0, 0, 0,0, 21, 'sys:user:detail', 1, '查看用户', NULL, NULL, 10, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (54, 1, 1, '2025-03-02 17:52:49.303296', '2025-03-02 17:54:03.34208', 0, 2, 0,0, 28, 'sys:operate-log:page', 1, '分页查询操作日志列表', NULL, NULL, 50, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (55, 1, 1, '2025-03-02 18:06:30.782409', '2025-03-02 18:07:31.180306', 0, 1, 0,0, 28, 'sys:operate-log:export', 1, '导出全部操作日志', NULL, NULL, 40, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (56, 1, 1, '2025-03-02 18:09:02.472121', '2025-03-02 18:09:02.472121', 0, 0, 0,0, 28, 'sys:operate-log:detail', 1, '查看操作日志', NULL, NULL, 30, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (57, 1, 1, '2025-03-16 11:24:21.93876', '2025-03-16 11:24:21.93876', 0, 0, 0,0, 13, 'iot:device:detail', 1, '查看设备', NULL, NULL, 10, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (58, 1, 1, '2025-03-16 11:24:02.28912', '2025-03-16 11:24:02.28912', 0, 0, 0,0, 13, 'iot:device:remove', 1, '删除设备', NULL, NULL, 20, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (59, 1, 1, '2025-03-16 11:23:41.504246', '2025-03-16 11:23:41.504246', 0, 0, 0,0, 13, 'iot:device:modify', 1, '修改设备', NULL, NULL, 30, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (60, 1, 1, '2025-03-16 11:23:23.056863', '2025-03-16 11:23:23.056863', 0, 0, 0,0, 13, 'iot:device:save', 1, '新增设备', NULL, NULL, 40, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (61, 1, 1, '2025-03-16 11:22:56.958172', '2025-03-16 11:22:56.958172', 0, 0, 0,0, 13, 'iot:device:page', 1, '分页查询设备', NULL, NULL, 50, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (62, 1, 1, '2025-03-16 11:22:20.518897', '2025-03-16 11:22:20.518897', 0, 0, 0,0, 16, 'iot:product-category:detail', 1, '查看产品类别', NULL, NULL, 10, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (63, 1, 1, '2025-03-16 11:22:00.290849', '2025-03-16 11:22:00.290849', 0, 0, 0,0, 16, 'iot:product-category:remove', 1, '删除产品类别', NULL, NULL, 20, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (64, 1, 1, '2025-03-16 11:21:32.205209', '2025-03-16 11:21:32.205209', 0, 0, 0,0, 16, 'iot:product-category:modify', 1, '修改产品类别', NULL, NULL, 30, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (65, 1, 1, '2025-03-16 11:21:04.431009', '2025-03-16 11:21:04.431009', 0, 0, 0,0, 16, 'iot:product-category:save', 1, '新增产品类别', NULL, NULL, 40, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (66, 1, 1, '2025-03-16 11:20:40.603807', '2025-03-16 11:20:40.603807', 0, 0, 0,0, 16, 'iot:product-category:list-tree', 1, '查询产品类别树列表', NULL, NULL, 50, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (67, 1, 1, '2025-03-16 11:19:25.506634', '2025-03-16 11:19:25.506634', 0, 0, 0,0, 15, 'iot:product:detail', 1, '查看产品', NULL, NULL, 10, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (68, 1, 1, '2025-03-16 11:18:43.37544', '2025-03-16 11:18:43.37544', 0, 0, 0,0, 15, 'iot:product:remove', 1, '删除产品', NULL, NULL, 20, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (69, 1, 1, '2025-03-16 11:17:16.858243', '2025-03-16 11:18:07.952616', 0, 1, 0,0, 15, 'iot:product:modify', 1, '修改产品', NULL, NULL, 30, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (70, 1, 1, '2025-03-16 11:16:56.540728', '2025-03-16 11:18:02.393751', 0, 1, 0,0, 15, 'iot:product:save', 1, '新增产品', NULL, NULL, 40, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (71, 1, 1, '2025-03-16 11:04:36.477875', '2025-03-16 11:04:36.477875', 0, 0, 0,0, 15, 'iot:product:page', 1, '分页查询产品', NULL, NULL, 50, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (72, 1, 1, '2025-03-16 11:02:48.298633', '2025-03-16 11:02:48.298633', 0, 0, 0,0, 14, 'iot:thing-model:detail', 1, '查看物模型', NULL, NULL, 10, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (73, 1, 1, '2025-03-16 11:02:24.689321', '2025-03-16 11:02:24.689321', 0, 0, 0,0, 14, 'iot:thing-model:remove', 1, '删除物模型', NULL, NULL, 20, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (74, 1, 1, '2025-03-16 11:01:52.176027', '2025-03-16 11:18:56.079399', 0, 2, 0,0, 14, 'iot:thing-model:modify', 1, '修改物模型', NULL, NULL, 30, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (75, 1, 1, '2025-03-16 11:01:31.000074', '2025-03-16 11:01:31.000074', 0, 0, 0,0, 14, 'iot:thing-model:save', 1, '新增物模型', NULL, NULL, 40, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (76, 1, 1, '2025-03-16 11:00:58.755018', '2025-03-16 11:00:58.755018', 0, 0, 0,0, 14, 'iot:thing-model:page', 1, '分页查询物模型列表', NULL, NULL, 50, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (77, 1, 1, '2025-03-16 11:19:25.506634', '2025-03-16 11:19:25.506634', 0, 0, 0,0, 31, 'sys:oss:detail', 1, '查看OSS', NULL, NULL, 10, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (78, 1, 1, '2025-03-16 11:18:43.375444', '2025-03-16 11:18:43.375444', 0, 0, 0,0, 31, 'sys:oss:remove', 1, '删除OSS', NULL, NULL, 20, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (79, 1, 1, '2025-03-16 11:17:16.858243', '2025-03-16 11:18:07.952616', 0, 1, 0,0, 31, 'sys:oss:modify', 1, '修改OSS', NULL, NULL, 30, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (80, 1, 1, '2025-03-16 11:16:56.540728', '2025-03-16 11:18:02.393751', 0, 1, 0,0, 31, 'sys:oss:save', 1, '新增OSS', NULL, NULL, 40, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (81, 1, 1, '2025-03-16 11:04:36.477875', '2025-03-16 11:04:36.477875', 0, 0, 0,0, 31, 'sys:oss:page', 1, '分页查询OSS列表', NULL, NULL, 50, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (82, 1, 1, '2025-03-15 12:15:37.277552', '2025-03-15 12:15:37.278549', 0, 0, 0,0, 31, 'sys:oss:upload', 1, '上传文件', NULL, NULL, 5, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (83, 1, 1, '2025-07-29 21:39:07', '2025-07-29 21:39:08', 0, 0, 0,0, 32, 'sys:oss-log:page', 1, '分页查询OSS日志列表', NULL, NULL, 50, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (84, 1, 1, '2025-07-29 21:40:53', '2025-07-29 21:40:55', 0, 0, 0,0, 32, 'sys:oss-log:export', 1, '导出全部OSS日志', NULL, NULL, 40, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (88, 1, 1, '2025-08-02 09:46:49.7142', '2025-08-02 09:46:49.7152', 0, 0, 0,0, 1, NULL, 0, '系统配置', '/sys/config', '', 1000, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (89, 1, 1, '2025-08-02 09:51:11', '2025-08-02 09:51:13', 0, 0, 0,0, 88, NULL, 0, '代码生成器', '/sys/config/generator', NULL, 800, 0, 0, NULL);
 -- ----------------------------
 -- -------------菜单套餐------------
 -- ----------------------------
@@ -459,9 +458,9 @@ COMMENT ON TABLE "public"."sys_oss" IS 'OSS';
 
 ALTER TABLE "public"."sys_oss" ADD CONSTRAINT "sys_oss_pkey" PRIMARY KEY ("id");
 
-INSERT INTO "public"."sys_oss" ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version", "tenant_id", "name", "type", "param", "status") VALUES (1, 1, 1, '2025-06-21 15:41:16', '2025-06-21 15:41:19', 0, 0, 0, '本地 OSS', 'local', '{"path":"D:/laokou/tmp","directory":"/upload","domain":"http://oss.laokou.org"}', 0);
-INSERT INTO "public"."sys_oss" ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version", "tenant_id", "name", "type", "param", "status") VALUES (2, 1, 1, '2025-06-28 12:30:53', '2025-06-28 12:30:55', 0, 0, 0, '亚马逊S3 OSS', 'amazon_s3', '{"endpoint":"https://s3.oss-cn-shenzhen.aliyuncs.com", "region":"shenzhen", "accessKey":"LTAI5tAEkzXJzbNjvYZPRgtf", "secretKey":"exoPPyR6e4uS0sCf6IwsCJnpJ95gal", "bucketName":"laokou","pathStyleAccessEnabled":0}', 1);
-INSERT INTO "public"."sys_oss" ("id", "creator", "editor", "create_time", "update_time", "del_flag", "version", "tenant_id", "name", "type", "param", "status") VALUES (3, 1, 1, '2025-06-28 12:30:53', '2025-06-28 12:30:55', 0, 0, 0, 'MinIO OSS', 'minio', '{"endpoint":"http://oss.laokou.org:9040", "region":"shenzhen", "accessKey":"asZo0GlcnCDRA0V8kqFg", "secretKey":"ebjV0cWm0MIE8JLPygWNXZuiBRxEv5o7XzvLA3yr", "bucketName":"laokou"}', 0);
+INSERT INTO "public"."sys_oss" VALUES (1, 1, 1, '2025-06-21 15:41:16', '2025-06-21 15:41:19', 0, 0, 0,0, '本地 OSS', 'local', '{"path":"D:/laokou/tmp","directory":"/upload","domain":"http://oss.laokou.org"}', 0);
+INSERT INTO "public"."sys_oss" VALUES (2, 1, 1, '2025-06-28 12:30:53', '2025-06-28 12:30:55', 0, 0, 0,0, '亚马逊S3 OSS', 'amazon_s3', '{"endpoint":"https://s3.oss-cn-shenzhen.aliyuncs.com", "region":"shenzhen", "accessKey":"LTAI5tAEkzXJzbNjvYZPRgtf", "secretKey":"exoPPyR6e4uS0sCf6IwsCJnpJ95gal", "bucketName":"laokou","pathStyleAccessEnabled":0}', 1);
+INSERT INTO "public"."sys_oss" VALUES (3, 1, 1, '2025-06-28 12:30:53', '2025-06-28 12:30:55', 0, 0, 0,0, 'MinIO OSS', 'minio', '{"endpoint":"http://oss.laokou.org:9040", "region":"shenzhen", "accessKey":"asZo0GlcnCDRA0V8kqFg", "secretKey":"ebjV0cWm0MIE8JLPygWNXZuiBRxEv5o7XzvLA3yr", "bucketName":"laokou"}', 0);
 
 -- ----------------------------
 -- -------------套餐------------
@@ -493,9 +492,9 @@ COMMENT ON TABLE "public"."sys_package" IS '套餐';
 
 ALTER TABLE "public"."sys_package" ADD CONSTRAINT "sys_package_pkey" PRIMARY KEY ("id");
 
-INSERT INTO "public"."sys_package" VALUES (1, 1, 1, '2023-02-09 13:38:42', '2023-09-25 17:27:57', 0, 10, 0, '普通套餐');
-INSERT INTO "public"."sys_package" VALUES (2, 1, 1, '2023-02-09 16:44:04', '2023-10-27 22:07:09', 0, 18, 0, '豪华套餐');
-INSERT INTO "public"."sys_package" VALUES (3, 1, 1, '2023-02-09 17:09:08', '2023-09-17 16:03:47', 0, 15, 0, '免费套餐');
+INSERT INTO "public"."sys_package" VALUES (1, 1, 1, '2023-02-09 13:38:42', '2023-09-25 17:27:57', 0, 10, 0, 0, '普通套餐');
+INSERT INTO "public"."sys_package" VALUES (2, 1, 1, '2023-02-09 16:44:04', '2023-10-27 22:07:09', 0, 18, 0, 0, '豪华套餐');
+INSERT INTO "public"."sys_package" VALUES (3, 1, 1, '2023-02-09 17:09:08', '2023-09-17 16:03:47', 0, 15, 0, 0, '免费套餐');
 
 -- ----------------------------
 -- -------------套餐------------
@@ -531,9 +530,9 @@ COMMENT ON TABLE "public"."sys_role" IS '角色';
 
 ALTER TABLE "public"."sys_role" ADD CONSTRAINT "sys_role_pkey" PRIMARY KEY ("id");
 
-INSERT INTO "public"."sys_role" VALUES (1, 1, 1, '2021-11-27 17:11:15', '2023-12-17 17:42:29', 0, 97, 0, '游客', 10, 'all');
-INSERT INTO "public"."sys_role" VALUES (2, 1, 1, '2021-11-27 17:11:19', '2023-12-17 17:40:13', 0, 250, 0, '管理员', 100, 'all');
-INSERT INTO "public"."sys_role" VALUES (3, 1, 1, '2022-06-12 19:38:32', '2023-12-17 17:41:35', 0, 42, 0, '测试', 50, 'all');
+INSERT INTO "public"."sys_role" VALUES (1, 1, 1, '2021-11-27 17:11:15', '2023-12-17 17:42:29', 0, 97, 0,0, '游客', 10, 'all');
+INSERT INTO "public"."sys_role" VALUES (2, 1, 1, '2021-11-27 17:11:19', '2023-12-17 17:40:13', 0, 250, 0,0, '管理员', 100, 'all');
+INSERT INTO "public"."sys_role" VALUES (3, 1, 1, '2022-06-12 19:38:32', '2023-12-17 17:41:35', 0, 42, 0,0, '测试', 50, 'all');
 
 -- ----------------------------
 -- -------------角色部门------------
@@ -585,6 +584,7 @@ CREATE TABLE "public"."sys_role_menu" (
    "del_flag" int4 NOT NULL DEFAULT 0,
    "version" int4 NOT NULL DEFAULT 0,
    "tenant_id" int8 NOT NULL DEFAULT 0,
+   "dept_id" int8 NOT NULL DEFAULT 1,
    "role_id" int8 NOT NULL,
    "menu_id" int8 NOT NULL
 );
@@ -622,6 +622,7 @@ CREATE TABLE "public"."sys_source" (
 	"del_flag" int2 NOT NULL DEFAULT 0,
 	"version" int4 NOT NULL DEFAULT 0,
 	"tenant_id" int8 NOT NULL DEFAULT 0,
+	"dept_id" int8 NOT NULL DEFAULT 1,
 	"name" varchar(50) NOT NULL,
 	"driver_class_name" varchar(100) NOT NULL,
 	"url" varchar(500) NOT NULL,
@@ -659,6 +660,7 @@ CREATE TABLE "public"."sys_tenant" (
 	"del_flag" int2 NOT NULL DEFAULT 0,
 	"version" int4 NOT NULL DEFAULT 0,
 	"tenant_id" int8 NOT NULL DEFAULT 0,
+	"dept_id" int8 NOT NULL DEFAULT 1,
 	"name" varchar(100) NOT NULL,
 	"code" varchar(30) NOT NULL,
 	"source_id" int8 NOT NULL,
@@ -681,7 +683,7 @@ COMMENT ON TABLE "public"."sys_tenant" IS '租户';
 
 ALTER TABLE "public"."sys_tenant" ADD CONSTRAINT "sys_tenant_pkey" PRIMARY KEY ("id");
 
-INSERT INTO "public"."sys_tenant" VALUES (1, 1, 1, '2023-09-17 15:42:27', '2023-12-17 18:37:13', 0, 1, 0, '阿里集团', 'tenant1', 1, 2);
+INSERT INTO "public"."sys_tenant" VALUES (1, 1, 1, '2023-09-17 15:42:27', '2023-12-17 18:37:13', 0, 1, 0,0, '阿里集团', 'tenant1', 1, 2);
 
 -- ----------------------------
 -- -------------用户------------
@@ -750,11 +752,11 @@ CREATE UNIQUE INDEX "sys_user_username_tenantId_idx" ON "public"."sys_user" USIN
 );
 COMMENT ON INDEX "public"."sys_user_username_tenantId_idx" IS '用户名_租户ID_唯一索引';
 
-INSERT INTO "public"."sys_user" VALUES (1, 1, 1, '2022-01-01 20:13:11+08', '2024-04-29 23:52:52+08', 0, 0, 0, '{bcrypt}$2a$10$bGXM7u58FPMDanMyqvZ7Reb9sqJiUTCdAcb1wN5IIkFa8nYOMOioK', 1, 'Ylh4QTF0YmdEWWJR2TEQZjlR4rzAz/73MsL8gxlNSv+/j3L7Sxne4hFAP+W9', 'Ylh4QTF0YmdEWWJR2j0YYjxS577BzIgIGdpZbU2I7EIUTVaxqvWu', 0, 1, 'Ylh4QTF0YmdEWWJRimFMPAPt8S6U+J8eEhIZiErF69o=~Ylh4QTF0YmdEWWJRj2hIO/7mcHvbRltmR9cojv2C2jE=', 'Ylh4QTF0YmdEWWJR2TEQZt/I7tdiOALwVrZXFxK5boI=~Ylh4QTF0YmdEWWJR3zQSZDEzo/mQ2Kt2ooeStwwy1DM=~Ylh4QTF0YmdEWWJR2jYQYvkuHP0mNYNzkmUPAkpRnNs=~Ylh4QTF0YmdEWWJR2DQWY04zb3FkQTCmuPFi97WrI08=~Ylh4QTF0YmdEWWJR2jIXZToqPakPCzCwmjz4XLwksmM=~Ylh4QTF0YmdEWWJR3DMRYRY/bEOz79QYxdiB5xtGMoU=~Ylh4QTF0YmdEWWJR3TUVYYBJ7iU6aLpsTeXBwNhb1lk=~Ylh4QTF0YmdEWWJR2zEVFRAKn1yHzG9spDDE8afQ1Ls=~Ylh4QTF0YmdEWWJR3zFhJLv17Ndjz3ymZABhpoKJPCE=~Ylh4QTF0YmdEWWJR30VQJOy8KF8pYc2r4yJkfOWIWnw=~Ylh4QTF0YmdEWWJRq3RQe8Vs9XmHQG6AkHOCtSwt6cA=~Ylh4QTF0YmdEWWJRmnQPNipHlgS+8wcVPz+EC5gdeeM=~Ylh4QTF0YmdEWWJRmitCOoJ+zG0CpSympji+U7NWxUw=~Ylh4QTF0YmdEWWJRxWZOOE8J8sq9k7iJhdxbniMpw9I=', 'Ylh4QTF0YmdEWWJR2j0YOQJF4W0Ofxd/k/LFC4GzoQ==~Ylh4QTF0YmdEWWJR3DEVZk3r4C1hv2eOukkPSzTOffA=~Ylh4QTF0YmdEWWJR2TAWY8HwM9jwPxZFMFE0pFibp9k=', 'Ylh4QTF0YmdEWWJRimFMPGaJmldyuWIb9BNmUN1ULMI7');
-INSERT INTO "public"."sys_user" VALUES (5, 1, 1, '2022-06-16 00:48:28+08', '2024-04-29 23:52:52+08', 0, 1, 0, '{bcrypt}$2a$10$RX9zW6rUMbGjybnlW77FWezhgbH0ZsFinGtKaoOsbovkEgij7kzNC', 0, NULL, NULL, 0, 1, 'Ylh4QTF0YmdEWWJRh2ROPuSvWyrTvf2MaPrw8GpjTBM=~Ylh4QTF0YmdEWWJRimpKYMTCzQiEJvp5Ar80c6jh1Wg=', NULL, NULL, 'Ylh4QTF0YmdEWWJRh2ROPj1LULONpfXTh6mWUOIX9SFO');
-INSERT INTO "public"."sys_user" VALUES (2, 1, 1, '2023-03-09 13:52:04+08', '2024-04-29 23:52:52+08', 0, 1, 0, '{bcrypt}$2a$10$J0DMR5098R33H6F.s5H/deeMLyo/j4yyzZgAn6gkyC0j537G7veKG', 0, NULL, NULL, 0, 1, 'Ylh4QTF0YmdEWWJRn2BSIeyAJZxxvGa9Rma06h4QOnQ=', NULL, NULL, 'Ylh4QTF0YmdEWWJRn2BSIeyAJZxxvGa9Rma06h4QOnQ=');
-INSERT INTO "public"."sys_user" VALUES (3, 1, 1, '2022-01-31 11:29:35+08', '2024-04-29 23:52:52+08', 0, 0, 0, '{bcrypt}$2a$10$ysAmruc249SiAUpIqQzrpeM8wcdpgIJ6nEdtsXQnDrBgvLZkt7tJ6', 0, NULL, NULL, 0, 1, 'Ylh4QTF0YmdEWWJRgGpUJiNPIjdI2XP1ZWEFUmonJDs=~Ylh4QTF0YmdEWWJRhHBSPSMrKeV2KZK27WU4BJGux6Q=~Ylh4QTF0YmdEWWJRnnZJYJsjtsAm+CPpK1W9SDWk46s=', NULL, NULL, 'Ylh4QTF0YmdEWWJRgGpUJmBT8fGpMah42bhHMZ9Aapk+jQ==');
-INSERT INTO "public"."sys_user" VALUES (4, 1, 1, '2022-06-16 00:33:39+08', '2024-04-29 23:52:52+08', 0, 0, 0, '{bcrypt}$2a$10$Wac.3sTE4A4pi/Zy6B/HWOstwLFjOH9g8Qrf4gHiBLa/avKAVcwpG', 0, NULL, NULL, 0, 1, 'Ylh4QTF0YmdEWWJRnHBMPWPaKJGlV652rAqtN8Q9MYg=~Ylh4QTF0YmdEWWJRnmhJYJS/YXrtS/sF9dNgHyAmxEI=', NULL, NULL, 'Ylh4QTF0YmdEWWJRnHBMPT3MJcA20x+AfW1mDSW5q1zV');
+INSERT INTO "public"."sys_user" VALUES (1, 1, 1, '2022-01-01 20:13:11+08', '2024-04-29 23:52:52+08', 0, 0, 0,0, '{bcrypt}$2a$10$bGXM7u58FPMDanMyqvZ7Reb9sqJiUTCdAcb1wN5IIkFa8nYOMOioK', 1, 'Ylh4QTF0YmdEWWJR2TEQZjlR4rzAz/73MsL8gxlNSv+/j3L7Sxne4hFAP+W9', 'Ylh4QTF0YmdEWWJR2j0YYjxS577BzIgIGdpZbU2I7EIUTVaxqvWu', 0, 1, 'Ylh4QTF0YmdEWWJRimFMPAPt8S6U+J8eEhIZiErF69o=~Ylh4QTF0YmdEWWJRj2hIO/7mcHvbRltmR9cojv2C2jE=', 'Ylh4QTF0YmdEWWJR2TEQZt/I7tdiOALwVrZXFxK5boI=~Ylh4QTF0YmdEWWJR3zQSZDEzo/mQ2Kt2ooeStwwy1DM=~Ylh4QTF0YmdEWWJR2jYQYvkuHP0mNYNzkmUPAkpRnNs=~Ylh4QTF0YmdEWWJR2DQWY04zb3FkQTCmuPFi97WrI08=~Ylh4QTF0YmdEWWJR2jIXZToqPakPCzCwmjz4XLwksmM=~Ylh4QTF0YmdEWWJR3DMRYRY/bEOz79QYxdiB5xtGMoU=~Ylh4QTF0YmdEWWJR3TUVYYBJ7iU6aLpsTeXBwNhb1lk=~Ylh4QTF0YmdEWWJR2zEVFRAKn1yHzG9spDDE8afQ1Ls=~Ylh4QTF0YmdEWWJR3zFhJLv17Ndjz3ymZABhpoKJPCE=~Ylh4QTF0YmdEWWJR30VQJOy8KF8pYc2r4yJkfOWIWnw=~Ylh4QTF0YmdEWWJRq3RQe8Vs9XmHQG6AkHOCtSwt6cA=~Ylh4QTF0YmdEWWJRmnQPNipHlgS+8wcVPz+EC5gdeeM=~Ylh4QTF0YmdEWWJRmitCOoJ+zG0CpSympji+U7NWxUw=~Ylh4QTF0YmdEWWJRxWZOOE8J8sq9k7iJhdxbniMpw9I=', 'Ylh4QTF0YmdEWWJR2j0YOQJF4W0Ofxd/k/LFC4GzoQ==~Ylh4QTF0YmdEWWJR3DEVZk3r4C1hv2eOukkPSzTOffA=~Ylh4QTF0YmdEWWJR2TAWY8HwM9jwPxZFMFE0pFibp9k=', 'Ylh4QTF0YmdEWWJRimFMPGaJmldyuWIb9BNmUN1ULMI7');
+INSERT INTO "public"."sys_user" VALUES (5, 1, 1, '2022-06-16 00:48:28+08', '2024-04-29 23:52:52+08', 0, 1, 0,0, '{bcrypt}$2a$10$RX9zW6rUMbGjybnlW77FWezhgbH0ZsFinGtKaoOsbovkEgij7kzNC', 0, NULL, NULL, 0, 1, 'Ylh4QTF0YmdEWWJRh2ROPuSvWyrTvf2MaPrw8GpjTBM=~Ylh4QTF0YmdEWWJRimpKYMTCzQiEJvp5Ar80c6jh1Wg=', NULL, NULL, 'Ylh4QTF0YmdEWWJRh2ROPj1LULONpfXTh6mWUOIX9SFO');
+INSERT INTO "public"."sys_user" VALUES (2, 1, 1, '2023-03-09 13:52:04+08', '2024-04-29 23:52:52+08', 0, 1, 0,0, '{bcrypt}$2a$10$J0DMR5098R33H6F.s5H/deeMLyo/j4yyzZgAn6gkyC0j537G7veKG', 0, NULL, NULL, 0, 1, 'Ylh4QTF0YmdEWWJRn2BSIeyAJZxxvGa9Rma06h4QOnQ=', NULL, NULL, 'Ylh4QTF0YmdEWWJRn2BSIeyAJZxxvGa9Rma06h4QOnQ=');
+INSERT INTO "public"."sys_user" VALUES (3, 1, 1, '2022-01-31 11:29:35+08', '2024-04-29 23:52:52+08', 0, 0, 0,0, '{bcrypt}$2a$10$ysAmruc249SiAUpIqQzrpeM8wcdpgIJ6nEdtsXQnDrBgvLZkt7tJ6', 0, NULL, NULL, 0, 1, 'Ylh4QTF0YmdEWWJRgGpUJiNPIjdI2XP1ZWEFUmonJDs=~Ylh4QTF0YmdEWWJRhHBSPSMrKeV2KZK27WU4BJGux6Q=~Ylh4QTF0YmdEWWJRnnZJYJsjtsAm+CPpK1W9SDWk46s=', NULL, NULL, 'Ylh4QTF0YmdEWWJRgGpUJmBT8fGpMah42bhHMZ9Aapk+jQ==');
+INSERT INTO "public"."sys_user" VALUES (4, 1, 1, '2022-06-16 00:33:39+08', '2024-04-29 23:52:52+08', 0, 0, 0,0, '{bcrypt}$2a$10$Wac.3sTE4A4pi/Zy6B/HWOstwLFjOH9g8Qrf4gHiBLa/avKAVcwpG', 0, NULL, NULL, 0, 1, 'Ylh4QTF0YmdEWWJRnHBMPWPaKJGlV652rAqtN8Q9MYg=~Ylh4QTF0YmdEWWJRnmhJYJS/YXrtS/sF9dNgHyAmxEI=', NULL, NULL, 'Ylh4QTF0YmdEWWJRnHBMPT3MJcA20x+AfW1mDSW5q1zV');
 
 -- ----------------------------
 -- -------------用户消息------------

@@ -58,7 +58,7 @@ COMMENT ON COLUMN "public"."iot_device"."product_id" IS '产品ID';
 COMMENT ON TABLE "public"."iot_device" IS '设备';
 ALTER TABLE "public"."iot_device" ADD CONSTRAINT "iot_device_pkey" PRIMARY KEY ("id");
 
-INSERT INTO "public"."iot_device" VALUES (1, 1, 1, '2024-05-11 03:56:15.821857', '2024-05-11 03:56:15.821857', 0, 0, 0, '139c5556-8494-5753-ac97-de09f2a6a929', 'HFCL设备', 0, NULL, NULL, NULL, NULL, NULL, 1);
+INSERT INTO "public"."iot_device" VALUES (1, 1, 1, '2024-05-11 03:56:15.821857', '2024-05-11 03:56:15.821857', 0, 0, 0,0, '139c5556-8494-5753-ac97-de09f2a6a929', 'HFCL设备', 0, NULL, NULL, NULL, NULL, NULL, 1);
 
 DROP TABLE IF EXISTS "public"."iot_thing_model";
 CREATE TABLE "public"."iot_thing_model" (

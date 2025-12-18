@@ -32,7 +32,7 @@ public class ReportFirmwareMessage extends DeviceMessage {
 
 	@Override
 	protected MessageTypeEnum getMessageType() {
-		return null;
+		return MessageTypeEnum.UP_FIRMWARE_REPORT;
 	}
 
 }
