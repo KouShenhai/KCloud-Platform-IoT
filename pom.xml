@@ -100,7 +100,7 @@
     <!--spring-asciidoctor-backends版本-->
     <spring-asciidoctor-backends.version>0.0.7</spring-asciidoctor-backends.version>
     <!--spring-boot版本-->
-    <spring-boot.version>4.0.0</spring-boot.version>
+    <spring-boot.version>4.0.1</spring-boot.version>
     <!--spring-cloud版本-->
     <spring-cloud.version>2025.1.0</spring-cloud.version>
     <!--cloud-alibaba版本-->
