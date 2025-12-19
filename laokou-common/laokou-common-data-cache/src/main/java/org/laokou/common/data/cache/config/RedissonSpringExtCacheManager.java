@@ -62,7 +62,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
- * 数据缓存扩展管理类. {@link org.springframework.cache.CacheManager}. implementation backed by
+ * 分布式数据缓存扩展管理类. {@link org.springframework.cache.CacheManager}. implementation backed by
  * Redisson instance.
  *
  * @author Nikita Koksharov

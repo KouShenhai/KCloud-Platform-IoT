@@ -35,7 +35,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Slf4j
 @Configuration
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
-public class WebMvcConfig implements WebMvcConfigurer {
+class WebMvcConfig implements WebMvcConfigurer {
 
 	@Bean(bootstrap = Bean.Bootstrap.BACKGROUND)
 	@ConditionalOnMissingBean({ RequestContextListener.class, RequestContextFilter.class })

@@ -19,9 +19,7 @@ package org.laokou.common.redis.config;
 
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.redisson.Redisson;
-import org.redisson.api.RBloomFilter;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -53,13 +51,6 @@ public class RedissonAutoConfig {
 	 */
 	private static final String REDISS_PROTOCOL_PREFIX = "rediss://";
 
-	@Bean
-	public RBloomFilter<String> bloomFilter(RedissonClient redisson) {
-		RBloomFilter<String> bloomFilter = redisson.getBloomFilter(RedisKeyUtils.getBloomFilterKey());
-		bloomFilter.tryInit(10000, 0.01);
-		return bloomFilter;
-	}
-
 	/**
 	 * redisson配置.
 	 * @param properties redis配置文件
@@ -69,6 +60,7 @@ public class RedissonAutoConfig {
 	@ConditionalOnMissingBean(RedissonClient.class)
 	public RedissonClient redisClient(DataRedisProperties properties) {
 		Config config = new Config();
+		config.setPassword(properties.getPassword());
 		int timeout = (int) properties.getTimeout().toMillis();
 		int connectTimeout = (int) properties.getConnectTimeout().toMillis();
 		boolean isSsl = properties.getSsl().isEnabled();
@@ -78,13 +70,11 @@ public class RedissonAutoConfig {
 				.addSentinelAddress(convertNodes(isSsl, properties.getSentinel().getNodes()))
 				.setDatabase(properties.getDatabase())
 				.setTimeout(timeout)
-				.setConnectTimeout(connectTimeout)
-				.setPassword(properties.getPassword());
+				.setConnectTimeout(connectTimeout);
 		}
 		else if (ObjectUtils.isNotNull(properties.getCluster())) {
 			config.useClusterServers()
 				.addNodeAddress(convertNodes(isSsl, properties.getCluster().getNodes()))
-				.setPassword(properties.getPassword())
 				.setTimeout(timeout)
 				.setConnectTimeout(connectTimeout);
 		}
@@ -92,7 +82,6 @@ public class RedissonAutoConfig {
 			config.useSingleServer()
 				.setAddress(convertAddress(isSsl, properties.getHost(), properties.getPort()))
 				.setDatabase(properties.getDatabase())
-				.setPassword(properties.getPassword())
 				.setConnectTimeout(connectTimeout)
 				.setTimeout(timeout);
 		}

@@ -34,13 +34,6 @@ public final class RedisKeyUtils {
 	}
 
 	/**
-	 * 布隆过滤器Key.
-	 */
-	public static String getBloomFilterKey() {
-		return "bloom:filter";
-	}
-
-	/**
 	 * 手机验证码Key.
 	 * @param mobile 手机号
 	 */

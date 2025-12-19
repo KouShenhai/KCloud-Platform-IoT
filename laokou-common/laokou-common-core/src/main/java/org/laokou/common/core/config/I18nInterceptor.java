@@ -19,6 +19,7 @@ package org.laokou.common.core.config;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import org.laokou.common.core.util.I18nUtils;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
@@ -29,14 +30,15 @@ import org.springframework.web.servlet.AsyncHandlerInterceptor;
 public class I18nInterceptor implements AsyncHandlerInterceptor {
 
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+	public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
+			@NonNull Object handler) {
 		I18nUtils.set(request);
 		return true;
 	}
 
 	@Override
-	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
-			@Nullable Exception ex) {
+	public void afterCompletion(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
+			@NonNull Object handler, @Nullable Exception ex) {
 		I18nUtils.reset();
 	}
 
