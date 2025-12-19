@@ -31,7 +31,6 @@ class RedisKeyUtilsTest {
 			.isEqualTo("auth:username-password:captcha:test");
 		Assertions.assertThat(RedisKeyUtils.getApiIdempotentKey("test")).isEqualTo("api:idempotent:test");
 		Assertions.assertThat(RedisKeyUtils.getRouteDefinitionHashKey()).isEqualTo("route:definition");
-		Assertions.assertThat(RedisKeyUtils.getBloomFilterKey()).isEqualTo("bloom:filter");
 	}
 
 }

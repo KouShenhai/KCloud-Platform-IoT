@@ -15,21 +15,13 @@
  *
  */
 
-package org.laokou.common.core.config;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import tools.jackson.databind.ext.javatime.ser.InstantSerializer;
-
-import java.time.format.DateTimeFormatter;
+package org.laokou.common.data.cache.annotation;
 
 /**
+ * 分布式缓存(强一致性).
+ *
  * @author laokou
  */
-final class CustomInstantSerializer extends InstantSerializer {
-
-	public CustomInstantSerializer(InstantSerializer base, DateTimeFormatter formatter, Boolean useTimestamp,
-			Boolean useNanoseconds) {
-		super(base, formatter, useTimestamp, useNanoseconds, JsonFormat.Shape.ANY);
-	}
+public @interface DistributedCache {
 
 }

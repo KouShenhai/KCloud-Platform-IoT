@@ -34,7 +34,7 @@ import java.security.NoSuchAlgorithmException;
 @Slf4j
 @Configuration
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
-public class RestClientConfig {
+class RestClientConfig {
 
 	@Bean
 	public RestClient restClient() throws NoSuchAlgorithmException, KeyManagementException {
