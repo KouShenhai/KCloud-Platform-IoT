@@ -25,7 +25,7 @@ import java.time.format.DateTimeFormatter;
 /**
  * @author laokou
  */
-public final class CustomInstantDeserializer extends InstantDeserializer<Instant> {
+final class CustomInstantDeserializer extends InstantDeserializer<Instant> {
 
 	public CustomInstantDeserializer(InstantDeserializer<Instant> base, DateTimeFormatter f) {
 		super(base, f);

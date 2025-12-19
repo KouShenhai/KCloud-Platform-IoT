@@ -15,14 +15,13 @@
  *
  */
 
-package org.laokou.common.cors.config;
+package org.laokou.common.core.config;
 
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.config.CustomInstantDeserializer;
-import org.laokou.common.core.config.CustomInstantSerializer;
 import org.laokou.common.i18n.common.constant.DateConstants;
 import org.laokou.common.i18n.util.InstantUtils;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
@@ -49,11 +48,11 @@ import java.util.TimeZone;
  * @author laokou
  */
 @Slf4j
-@AutoConfiguration
-public class HttpMessageConverterAutoConfig {
+@Configuration
+class HttpMessageConverterConfig {
 
 	// @formatter:off
-	//@Bean("jackson2HttpMessageConverter")
+	@Bean("jackson2HttpMessageConverter")
 	@Order(Ordered.LOWEST_PRECEDENCE - 10000)
 	public JacksonJsonHttpMessageConverter jacksonJsonHttpMessageConverter() {
 		// 时区

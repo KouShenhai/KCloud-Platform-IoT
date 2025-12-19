@@ -34,7 +34,7 @@ import java.util.concurrent.ExecutorService;
  */
 @Slf4j
 @Configuration
-public class SpringTaskExecutorConfig {
+class SpringTaskExecutorConfig {
 
 	@Bean(name = "virtualThreadExecutor", destroyMethod = "close")
 	public ExecutorService virtualThreadExecutor() {
