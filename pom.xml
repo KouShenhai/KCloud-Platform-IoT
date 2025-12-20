@@ -168,7 +168,7 @@
     <!--dynamic-datasource版本-->
     <dynamic-datasource.version>4.5.0</dynamic-datasource.version>
     <!--httpclient5版本-->
-    <httpclient5.version>5.5.1</httpclient5.version>
+    <httpclient5.version>5.5.2</httpclient5.version>
     <!--hibernate-validator版本-->
     <hibernate-validator.version>9.1.0.Final</hibernate-validator.version>
     <!--ip2region版本-->
@@ -208,7 +208,7 @@
     <!--curator版本-->
     <curator.version>5.9.0</curator.version>
     <!--wiremock版本-->
-    <wiremock.version>4.0.0-beta.23</wiremock.version>
+    <wiremock.version>4.0.0-beta.24</wiremock.version>
     <!--commons-net版本-->
     <commons-net.version>3.12.0</commons-net.version>
     <!--jSerialComm版本-->
