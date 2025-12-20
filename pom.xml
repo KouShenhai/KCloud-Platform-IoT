@@ -168,7 +168,7 @@
     <!--dynamic-datasource版本-->
     <dynamic-datasource.version>4.5.0</dynamic-datasource.version>
     <!--httpclient5版本-->
-    <httpclient5.version>5.5.2</httpclient5.version>
+    <httpclient5.version>5.6</httpclient5.version>
     <!--hibernate-validator版本-->
     <hibernate-validator.version>9.1.0.Final</hibernate-validator.version>
     <!--ip2region版本-->
