@@ -31,7 +31,7 @@ import org.laokou.admin.dept.dto.DeptSaveCmd;
 import org.laokou.admin.dept.dto.DeptTreeListQry;
 import org.laokou.admin.dept.dto.clientobject.DeptCO;
 import org.laokou.admin.dept.dto.clientobject.DeptTreeCO;
-import org.laokou.common.data.cache.annotation.DataCache;
+import org.laokou.common.data.cache.annotation.DistributedCache;
 import org.laokou.common.data.cache.constant.NameConstants;
 import org.laokou.common.data.cache.model.OperateTypeEnum;
 import org.laokou.common.i18n.dto.Page;
@@ -79,7 +79,7 @@ public class DeptsController {
 	@PreAuthorize("hasAuthority('sys:dept:modify')")
 	@OperateLog(module = "部门管理", operation = "修改部门")
 	@Operation(summary = "修改部门", description = "修改部门")
-	@DataCache(name = NameConstants.DEPTS, key = "#cmd.co.id", operateType = OperateTypeEnum.DEL)
+	@DistributedCache(name = NameConstants.DEPTS, key = "#cmd.co.id", operateType = OperateTypeEnum.DEL)
 	public void modifyDept(@RequestBody DeptModifyCmd cmd) {
 		deptsServiceI.modifyDept(cmd);
 	}
@@ -126,7 +126,7 @@ public class DeptsController {
 
 	@TraceLog
 	@GetMapping("/v1/depts/{id}")
-	@DataCache(name = NameConstants.DEPTS, key = "#id")
+	@DistributedCache(name = NameConstants.DEPTS, key = "#id")
 	@PreAuthorize("hasAuthority('sys:dept:detail')")
 	@Operation(summary = "查看部门详情", description = "查看部门详情")
 	public Result<DeptCO> getDeptById(@PathVariable("id") Long id) {

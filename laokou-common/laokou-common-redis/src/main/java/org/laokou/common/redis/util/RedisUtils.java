@@ -25,6 +25,7 @@ import org.redisson.api.RAtomicLong;
 import org.redisson.api.RList;
 import org.redisson.api.RLock;
 import org.redisson.api.RMap;
+import org.redisson.api.RMapCacheNative;
 import org.redisson.api.RRateLimiter;
 import org.redisson.api.RateType;
 import org.redisson.api.RedissonClient;
@@ -133,6 +134,10 @@ public record RedisUtils(RedisTemplate<String, Object> redisTemplate, RedissonCl
 
 	public boolean isHeldByCurrentThread(RLock lock) {
 		return lock.isHeldByCurrentThread();
+	}
+
+	public <K, V> RMapCacheNative<K, V> getMapCacheNative(String name) {
+		return redissonClient.getMapCacheNative(name);
 	}
 
 	public void set(String key, Object value) {

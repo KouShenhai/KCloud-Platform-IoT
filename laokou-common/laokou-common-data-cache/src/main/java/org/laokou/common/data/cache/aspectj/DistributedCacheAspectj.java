@@ -23,34 +23,34 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.common.core.util.SpringExpressionUtils;
-import org.laokou.common.data.cache.annotation.DataCache;
+import org.laokou.common.data.cache.annotation.DistributedCache;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Component;
 
 /**
- * 数据缓存切面.
+ * 分布式数据缓存切面.
  *
  * @author laokou
  */
 @Slf4j
 @Aspect
 @Component
-public class CacheAspectj {
+public class DistributedCacheAspectj {
 
-	private final CacheManager redissonCacheManager;
+	private final CacheManager distributedCacheManager;
 
-	public CacheAspectj(@Qualifier("redissonCacheManager") CacheManager redissonCacheManager) {
-		this.redissonCacheManager = redissonCacheManager;
+	public DistributedCacheAspectj(@Qualifier("distributedCacheManager") CacheManager distributedCacheManager) {
+		this.distributedCacheManager = distributedCacheManager;
 	}
 
-	@Around("@annotation(dataCache)")
-	public Object doAround(ProceedingJoinPoint point, DataCache dataCache) {
+	@Around("@annotation(distributedCache)")
+	public Object doAround(ProceedingJoinPoint point, DistributedCache distributedCache) {
 		MethodSignature signature = (MethodSignature) point.getSignature();
 		String[] parameterNames = signature.getParameterNames();
-		String name = dataCache.name();
-		String key = SpringExpressionUtils.parse(dataCache.key(), parameterNames, point.getArgs(), String.class);
-		return dataCache.operateType().execute(name, key, point, redissonCacheManager);
+		String name = distributedCache.name();
+		String key = SpringExpressionUtils.parse(distributedCache.key(), parameterNames, point.getArgs(), String.class);
+		return distributedCache.operateType().execute(name, key, point, distributedCacheManager);
 	}
 
 }

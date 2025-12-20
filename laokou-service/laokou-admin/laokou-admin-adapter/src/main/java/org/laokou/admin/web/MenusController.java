@@ -31,7 +31,7 @@ import org.laokou.admin.menu.dto.MenuSaveCmd;
 import org.laokou.admin.menu.dto.MenuTreeListQry;
 import org.laokou.admin.menu.dto.clientobject.MenuCO;
 import org.laokou.admin.menu.dto.clientobject.MenuTreeCO;
-import org.laokou.common.data.cache.annotation.DataCache;
+import org.laokou.common.data.cache.annotation.DistributedCache;
 import org.laokou.common.data.cache.constant.NameConstants;
 import org.laokou.common.data.cache.model.OperateTypeEnum;
 import org.laokou.common.i18n.dto.Page;
@@ -79,7 +79,7 @@ public class MenusController {
 	@PreAuthorize("hasAuthority('sys:menu:modify')")
 	@OperateLog(module = "菜单管理", operation = "修改菜单")
 	@Operation(summary = "修改菜单", description = "修改菜单")
-	@DataCache(name = NameConstants.MENUS, key = "#cmd.co.id", operateType = OperateTypeEnum.DEL)
+	@DistributedCache(name = NameConstants.MENUS, key = "#cmd.co.id", operateType = OperateTypeEnum.DEL)
 	public void modifyMenu(@RequestBody MenuModifyCmd cmd) {
 		menusServiceI.modifyMenu(cmd);
 	}
@@ -133,7 +133,7 @@ public class MenusController {
 
 	@TraceLog
 	@GetMapping("/v1/menus/{id}")
-	@DataCache(name = NameConstants.MENUS, key = "#id")
+	@DistributedCache(name = NameConstants.MENUS, key = "#id")
 	@PreAuthorize("hasAuthority('sys:menu:detail')")
 	@Operation(summary = "查看菜单详情", description = "查看菜单详情")
 	public Result<MenuCO> getMenuById(@PathVariable("id") Long id) {
