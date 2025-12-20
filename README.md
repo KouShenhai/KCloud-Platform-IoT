@@ -37,8 +37,8 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 <a href="https://gitcode.com/KouShenhai_/KCloud-Platform-IoT" target="_blank"><img src="https://gitcode.com/KouShenhai_/KCloud-Platform-IoT/star/badge.svg?theme=dark" alt="GitCode star"/></a>
 <a href="https://gitcode.com/KouShenhai_/KCloud-Platform-IoT" target="_blank"><img src="https://atomgit.com/KouShenhai_/KCloud-Platform-IoT/star/2025top.svg?theme=dark" alt="GitCode star"/></a>
 
-<a href="https://spring.io/projects/spring-framework" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Framework&message=7.0.1&color=green" alt="Spring Framework"/></a>
-<a href="https://spring.io/projects/spring-authorization-server" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Security&message=7.0.0&color=green" alt="Spring Security"/></a>
+<a href="https://spring.io/projects/spring-framework" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Framework&message=7.0.2&color=green" alt="Spring Framework"/></a>
+<a href="https://spring.io/projects/spring-authorization-server" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Security&message=7.0.2&color=green" alt="Spring Security"/></a>
 <a href="https://spring.io/projects/spring-boot" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Boot&message=4.0.1&color=green" alt="Spring Boot"/></a>
 <a href="https://spring.io/projects/spring-cloud" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Cloud&message=2025.1.0&color=green" alt="Spring Cloud"/></a>
 <a href="https://github.com/alibaba/spring-cloud-alibaba" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Cloud%20Alibaba&message=2025.1.0.0&color=orange" alt="Spring Cloud Alibaba"/></a>
@@ -139,8 +139,8 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 |          组件          |     版本      |
 |:--------------------:|:-----------:|
 |     Spring Boot      |    4.0.1    |
-|   Spring Framework   |    7.0.1    |
-|   Spring Security    |    7.0.0    |
+|   Spring Framework   |    7.0.2    |
+|   Spring Security    |    7.0.2    |
 |     Spring gRPC      |    1.0.0    |
 |     Spring Data      |  2025.1.0   |
 |     Spring Cloud     |  2025.1.0   |
@@ -150,9 +150,9 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 |        Nacos         |    3.1.0    |
 |         gRPC         |   1.77.0    |
 |        Redis         |    8.0.1    |
-|    Elasticsearch     |    9.2.2    |
+|    Elasticsearch     |    9.2.3    |
 |        Netty         | 4.2.7.Final |
-|        Kafka         |    4.0.0    |
+|        Kafka         |    4.0.1    |
 |        Pulsar        |    4.1.2    |
 |         EMQX         |    5.4.1    |
 |     TimescaleDB      |     17      |

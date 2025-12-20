@@ -73,7 +73,7 @@ public class ${className}sController {
 	@PreAuthorize("hasAuthority(${dsName}:${moduleName}:modify')")
 	@OperateLog(module = "${comment}管理", operation = "修改${comment}")
 	@Operation(summary = "修改${comment}", description = "修改${comment}")
-	@DataCache(name = ${(className)?upper_case}S, key = "#cmd.co.id", operateType = DEL)
+	@DistributedCache(name = ${(className)?upper_case}S, key = "#cmd.co.id", operateType = DEL)
 	public void modify${className}(@RequestBody ${className}ModifyCmd cmd) {
 		${moduleName}sServiceI.modify(cmd);
 	}
@@ -112,7 +112,7 @@ public class ${className}sController {
 
 	@TraceLog
 	@GetMapping("/v1/${moduleName}s/{id}")
-	@DataCache(name = ${(className)?upper_case}S, key = "#id")
+	@DistributedCache(name = ${(className)?upper_case}S, key = "#id")
 	@Operation(summary = "查看${comment}详情", description = "查看${comment}详情")
 	public Result<${className}CO> get${className}ById(@PathVariable("id") Long id) {
 		return ${moduleName}sServiceI.get${className}ById(new ${className}GetQry(id));

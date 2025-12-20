@@ -29,7 +29,7 @@ import org.laokou.admin.tenant.dto.TenantPageQry;
 import org.laokou.admin.tenant.dto.TenantRemoveCmd;
 import org.laokou.admin.tenant.dto.TenantSaveCmd;
 import org.laokou.admin.tenant.dto.clientobject.TenantCO;
-import org.laokou.common.data.cache.annotation.DataCache;
+import org.laokou.common.data.cache.annotation.DistributedCache;
 import org.laokou.common.data.cache.constant.NameConstants;
 import org.laokou.common.data.cache.model.OperateTypeEnum;
 import org.laokou.common.i18n.dto.Page;
@@ -75,7 +75,7 @@ public class TenantsController {
 	@PreAuthorize("hasAuthority('sys:tenant:modify')")
 	@OperateLog(module = "租户管理", operation = "修改租户")
 	@Operation(summary = "修改租户", description = "修改租户")
-	@DataCache(name = NameConstants.TENANTS, key = "#cmd.co.id", operateType = OperateTypeEnum.DEL)
+	@DistributedCache(name = NameConstants.TENANTS, key = "#cmd.co.id", operateType = OperateTypeEnum.DEL)
 	public void modifyTenant(@RequestBody TenantModifyCmd cmd) {
 		tenantsServiceI.modifyTenant(cmd);
 	}
@@ -114,7 +114,7 @@ public class TenantsController {
 
 	@TraceLog
 	@GetMapping("/v1/tenants/{id}")
-	@DataCache(name = NameConstants.TENANTS, key = "#id")
+	@DistributedCache(name = NameConstants.TENANTS, key = "#id")
 	@PreAuthorize("hasAuthority('sys:tenant:detail')")
 	@Operation(summary = "查看租户详情", description = "查看租户详情")
 	public Result<TenantCO> getTenantById(@PathVariable("id") Long id) {

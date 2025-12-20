@@ -31,69 +31,64 @@ package org.laokou.common.data.cache.constant;
 public final class NameConstants {
 
 	/**
-	 * 默认缓存配置.
-	 */
-	private static final String DEFAULT = "#10m#30m#1024";
-
-	/**
 	 * OSS缓存配置.
 	 */
-	public static final String OSS = "oss" + DEFAULT;
+	public static final String OSS = "oss";
 
 	/**
 	 * 部门缓存配置.
 	 */
-	public static final String DEPTS = "depts" + DEFAULT;
+	public static final String DEPTS = "depts";
 
 	/**
 	 * 字典缓存配置.
 	 */
-	public static final String DICTS = "dicts" + DEFAULT;
+	public static final String DICTS = "dicts";
 
 	/**
 	 * 菜单缓存配置.
 	 */
-	public static final String MENUS = "menus" + DEFAULT;
+	public static final String MENUS = "menus";
 
 	/**
 	 * 消息缓存配置.
 	 */
-	public static final String MESSAGES = "messages" + DEFAULT;
+	public static final String MESSAGES = "messages";
 
 	/**
 	 * 套餐缓存配置.
 	 */
-	public static final String PACKAGES = "packages" + DEFAULT;
+	public static final String PACKAGES = "packages";
 
 	/**
 	 * 租户缓存配置.
 	 */
-	public static final String TENANTS = "tenants" + DEFAULT;
+	public static final String TENANTS = "tenants";
 
 	/**
 	 * 数据源缓存配置.
 	 */
-	public static final String SOURCES = "sources" + DEFAULT;
+	public static final String SOURCES = "sources";
 
 	/**
 	 * 用户缓存配置.
 	 */
-	public static final String USERS = "users" + DEFAULT;
+	public static final String USERS = "users";
 
 	/**
 	 * 用户菜单缓存配置.
 	 */
-	public static final String USER_MENU = "user_menu" + "#5m#10m#1024";
+	public static final String USER_MENU = "user_menu";
 
 	/**
 	 * OSS日志缓存配置.
 	 */
-	public static final String OSS_LOG = "oss_log" + "#5m#10m#1024";
+	public static final String OSS_LOG = "oss_log";
 
 	/**
 	 * OSS资源缓存配置.
 	 */
-	public static final String OSS_RESOURCE = "oss_resource" + "#5m#10m#1024";
+	public static final String OSS_RESOURCE = "oss_resource";
 
 	private NameConstants() {
 	}

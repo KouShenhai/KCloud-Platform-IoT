@@ -25,9 +25,6 @@ import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * 操作类型枚举.
@@ -41,24 +38,15 @@ public enum OperateTypeEnum {
 	GET("get", "查看") {
 		@Override
 		public Object execute(String name, String key, ProceedingJoinPoint point, CacheManager redissonCacheManager) {
-			boolean isLocked = false;
-			int retry = 3;
 			try {
-				do {
-					isLocked = READ_LOCK.tryLock(50, TimeUnit.MILLISECONDS);
+				Cache redissonCache = getCache(redissonCacheManager, name);
+				Cache.ValueWrapper redissonValueWrapper = redissonCache.get(key);
+				if (ObjectUtils.isNotNull(redissonValueWrapper)) {
+					return redissonValueWrapper.get();
 				}
-				while (!isLocked && --retry > 0);
-				if (isLocked) {
-					Cache redissonCache = getCache(redissonCacheManager, name);
-					Cache.ValueWrapper redissonValueWrapper = redissonCache.get(key);
-					if (ObjectUtils.isNotNull(redissonValueWrapper)) {
-						return redissonValueWrapper.get();
-					}
-					Object value = point.proceed();
-					redissonCache.putIfAbsent(key, value);
-					return value;
-				}
-				return point.proceed();
+				Object value = point.proceed();
+				redissonCache.putIfAbsent(key, value);
+				return value;
 			}
 			catch (GlobalException e) {
 				// 系统异常/业务异常/参数异常直接捕获并抛出
@@ -68,27 +56,14 @@ public enum OperateTypeEnum {
 				log.error("获取缓存失败", e);
 				throw new SystemException("S_Cache_GetError", "获取缓存失败", e);
 			}
-			finally {
-				if (isLocked) {
-					READ_LOCK.unlock();
-				}
-			}
 		}
 	},
 
 	DEL("del", "删除") {
 		@Override
 		public Object execute(String name, String key, ProceedingJoinPoint point, CacheManager redissonCacheManager) {
-			boolean isLocked = false;
-			int retry = 3;
 			try {
-				do {
-					isLocked = WRITE_LOCK.tryLock(50, TimeUnit.MILLISECONDS);
-				}
-				while (!isLocked && --retry > 0);
-				if (isLocked) {
-					getCache(redissonCacheManager, name).evictIfPresent(key);
-				}
+				getCache(redissonCacheManager, name).evictIfPresent(key);
 				return point.proceed();
 			}
 			catch (GlobalException e) {
@@ -98,11 +73,6 @@ public enum OperateTypeEnum {
 			catch (Throwable e) {
 				log.error("获取缓存失败，错误信息：{}", e.getMessage(), e);
 				throw new SystemException("S_Cache_DelError", String.format("删除缓存失败，%s", e.getMessage()), e);
-			}
-			finally {
-				if (isLocked) {
-					WRITE_LOCK.unlock();
-				}
 			}
 		}
 	};
@@ -118,12 +88,6 @@ public enum OperateTypeEnum {
 
 	public abstract Object execute(String name, String key, ProceedingJoinPoint point,
 			CacheManager redissonCacheManager);
-
-	private static final ReentrantReadWriteLock READ_WRITE_LOCK = new ReentrantReadWriteLock();
-
-	private static final Lock READ_LOCK = READ_WRITE_LOCK.readLock();
-
-	private static final Lock WRITE_LOCK = READ_WRITE_LOCK.writeLock();
 
 	public static Cache getCache(CacheManager cacheManager, String name) {
 		Cache cache = cacheManager.getCache(name);

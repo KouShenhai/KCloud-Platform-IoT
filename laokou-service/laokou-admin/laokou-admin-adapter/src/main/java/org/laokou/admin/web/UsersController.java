@@ -35,7 +35,7 @@ import org.laokou.admin.user.dto.UserSaveCmd;
 import org.laokou.admin.user.dto.UserUploadAvatarCmd;
 import org.laokou.admin.user.dto.clientobject.UserCO;
 import org.laokou.admin.user.dto.clientobject.UserProfileCO;
-import org.laokou.common.data.cache.annotation.DataCache;
+import org.laokou.common.data.cache.annotation.DistributedCache;
 import org.laokou.common.data.cache.constant.NameConstants;
 import org.laokou.common.data.cache.model.OperateTypeEnum;
 import org.laokou.common.i18n.dto.Page;
@@ -82,7 +82,7 @@ public class UsersController {
 	@PreAuthorize("hasAuthority('sys:user:modify')")
 	@OperateLog(module = "用户管理", operation = "修改用户")
 	@Operation(summary = "修改用户", description = "修改用户")
-	@DataCache(name = NameConstants.USERS, key = "#cmd.co.id", operateType = OperateTypeEnum.DEL)
+	@DistributedCache(name = NameConstants.USERS, key = "#cmd.co.id", operateType = OperateTypeEnum.DEL)
 	public void modifyUser(@RequestBody UserModifyCmd cmd) throws Exception {
 		usersServiceI.modifyUser(cmd);
 	}
@@ -121,7 +121,7 @@ public class UsersController {
 
 	@PutMapping("/v1/users/authority")
 	@PreAuthorize("hasAuthority('sys:user:modify')")
-	@DataCache(name = NameConstants.USERS, key = "#cmd.co.id", operateType = OperateTypeEnum.DEL)
+	@DistributedCache(name = NameConstants.USERS, key = "#cmd.co.id", operateType = OperateTypeEnum.DEL)
 	@OperateLog(module = "用户管理", operation = "修改用户权限")
 	@Operation(summary = "修改用户权限", description = "修改用户权限")
 	public void modifyUserAuthority(@RequestBody UserModifyAuthorityCmd cmd) throws Exception {
@@ -138,7 +138,7 @@ public class UsersController {
 
 	@TraceLog
 	@GetMapping("/v1/users/{id}")
-	@DataCache(name = NameConstants.USERS, key = "#id")
+	@DistributedCache(name = NameConstants.USERS, key = "#id")
 	@PreAuthorize("hasAuthority('sys:user:detail')")
 	@Operation(summary = "查看用户详情", description = "查看用户详情")
 	public Result<UserCO> getUserById(@PathVariable("id") Long id) throws Exception {

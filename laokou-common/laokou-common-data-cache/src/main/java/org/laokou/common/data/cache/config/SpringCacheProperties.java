@@ -17,23 +17,36 @@
 
 package org.laokou.common.data.cache.config;
 
-import org.laokou.common.redis.config.RedisAutoConfig;
-import org.laokou.common.redis.util.RedisUtils;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.cache.CacheManager;
-import org.springframework.context.annotation.Bean;
+import lombok.Data;
+import org.redisson.api.EvictionMode;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+
+import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * 数据缓存自动装配类.
- *
  * @author laokou
  */
-@AutoConfiguration(after = { RedisAutoConfig.class })
-public class DataCacheAutoConfig {
+@Data
+@Component
+@ConfigurationProperties("spring.cache")
+public class SpringCacheProperties {
 
-	@Bean
-	public CacheManager distributedCacheManager(RedisUtils redisUtils, SpringCacheProperties springCacheProperties) {
-		return new RedissonSpringCacheNativeExtManager(redisUtils, springCacheProperties);
+	Map<String, CacheConfig> configs = new HashMap<>(0);
+
+	@Data
+	public static class CacheConfig {
+
+		private Duration ttl = Duration.ofMinutes(5);
+
+		private Duration maxIdleTime = Duration.ofMinutes(10);
+
+		private int maxSize = 1024;
+
+		private EvictionMode evictionMode = EvictionMode.LRU;
+
 	}
 
 }

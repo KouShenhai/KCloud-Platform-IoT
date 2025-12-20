@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.auth.gateway.OssLogGateway;
 import org.laokou.auth.gatewayimpl.database.OssLogMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.OssLogDO;
-import org.laokou.common.data.cache.annotation.DataCache;
+import org.laokou.common.data.cache.annotation.DistributedCache;
 import org.laokou.common.data.cache.constant.NameConstants;
 import org.laokou.common.data.cache.model.OperateTypeEnum;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -39,7 +39,7 @@ public class OssLogGatewayImpl implements OssLogGateway {
 	private final OssLogMapper ossLogMapper;
 
 	@Override
-	@DataCache(name = NameConstants.OSS_RESOURCE, key = "#id", operateType = OperateTypeEnum.GET)
+	@DistributedCache(name = NameConstants.OSS_RESOURCE, key = "#id", operateType = OperateTypeEnum.GET)
 	public String getOssUrl(Long id) {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);

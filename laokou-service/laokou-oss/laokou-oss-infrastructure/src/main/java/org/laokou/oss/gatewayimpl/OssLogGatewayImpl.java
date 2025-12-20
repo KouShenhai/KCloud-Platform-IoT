@@ -20,7 +20,7 @@ package org.laokou.oss.gatewayimpl;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.data.cache.annotation.DataCache;
+import org.laokou.common.data.cache.annotation.DistributedCache;
 import org.laokou.common.data.cache.constant.NameConstants;
 import org.laokou.common.data.cache.model.OperateTypeEnum;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -44,7 +44,7 @@ public class OssLogGatewayImpl implements OssLogGateway {
 	private final OssLogMapper ossLogMapper;
 
 	@Override
-	@DataCache(name = NameConstants.OSS_LOG, key = "#md5", operateType = OperateTypeEnum.GET)
+	@DistributedCache(name = NameConstants.OSS_LOG, key = "#md5", operateType = OperateTypeEnum.GET)
 	public OssUploadV getOssInfoByMd5(String md5) {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);

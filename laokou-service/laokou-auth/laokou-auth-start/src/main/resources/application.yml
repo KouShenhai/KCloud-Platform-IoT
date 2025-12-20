@@ -290,6 +290,13 @@ spring:
         dashboard: sentinel:8972
       filter:
         enabled: true
+  cache:
+    configs:
+      oss_resource:
+        ttl: 5m
+        max-idle-time: 10m
+        max-size: 1024
+        eviction-mode: LFU
 # actuator
 management:
   endpoints:
