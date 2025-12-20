@@ -42,7 +42,6 @@ import org.redisson.api.map.event.MapEntryListener;
 import org.redisson.spring.cache.CacheConfig;
 import org.redisson.spring.cache.RedissonCache;
 import org.redisson.spring.cache.RedissonSpringCacheManager;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.transaction.TransactionAwareCacheDecorator;
@@ -62,7 +61,7 @@ import java.util.concurrent.ConcurrentMap;
  * @see RedissonSpringCacheManager
  */
 @Data
-public class RedissonSpringCacheNativeExtManager implements CacheManager, InitializingBean {
+public class RedissonSpringCacheNativeExtManager implements CacheManager {
 
 	private final RedisUtils redisUtils;
 
@@ -126,11 +125,6 @@ public class RedissonSpringCacheNativeExtManager implements CacheManager, Initia
 		return Collections.unmodifiableSet(configMap.keySet());
 	}
 
-	@Override
-	public void afterPropertiesSet() {
-		validateProps();
-	}
-
 	private void createConfigMap(Map<String, SpringCacheProperties.CacheConfig> configs) {
 		configs.forEach((key, value) -> configMap.put(key, createConfig(value)));
 	}
@@ -151,20 +145,6 @@ public class RedissonSpringCacheNativeExtManager implements CacheManager, Initia
 		config.setTTL(cacheProperties.getTtl().toMillis());
 		config.setEvictionMode(cacheProperties.getEvictionMode());
 		return config;
-	}
-
-	private void validateProps() {
-		for (CacheConfig value : configMap.values()) {
-			if (value.getTTL() > 0) {
-				throw new UnsupportedOperationException("ttl isn't supported");
-			}
-			if (value.getMaxIdleTime() > 0) {
-				throw new UnsupportedOperationException("maxIdleTime isn't supported");
-			}
-			if (value.getMaxSize() > 0) {
-				throw new UnsupportedOperationException("maxSize isn't supported");
-			}
-		}
 	}
 
 }
