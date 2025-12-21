@@ -151,10 +151,10 @@ spring:
         - docker0
         - veth.*
   cache:
-    configs:
+    distributed-configs:
       oss_log:
         ttl: 5m
-        max-idle-time: 10m
+        max-idle-time: 1m
         max-size: 1024
         eviction-mode: LFU
 

@@ -29,11 +29,16 @@ import org.springframework.context.annotation.Bean;
  * @author laokou
  */
 @AutoConfiguration(after = { RedisAutoConfig.class })
-public class DataCacheAutoConfig {
+class DataCacheAutoConfig {
 
 	@Bean
 	public CacheManager distributedCacheManager(RedisUtils redisUtils, SpringCacheProperties springCacheProperties) {
-		return new RedissonSpringCacheNativeExtManager(redisUtils, springCacheProperties);
+		return new DistributedCacheManager(redisUtils, springCacheProperties);
+	}
+
+	@Bean
+	public CacheManager localCacheManager(RedisUtils redisUtils, SpringCacheProperties springCacheProperties) {
+		return new LocalCacheManager(redisUtils, springCacheProperties);
 	}
 
 }

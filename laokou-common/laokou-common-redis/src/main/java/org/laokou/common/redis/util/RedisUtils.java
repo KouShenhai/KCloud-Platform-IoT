@@ -23,13 +23,15 @@ import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
 import org.redisson.api.RAtomicLong;
 import org.redisson.api.RList;
+import org.redisson.api.RLocalCachedMap;
 import org.redisson.api.RLock;
 import org.redisson.api.RMap;
-import org.redisson.api.RMapCacheNative;
+import org.redisson.api.RMapCache;
 import org.redisson.api.RRateLimiter;
 import org.redisson.api.RateType;
 import org.redisson.api.RedissonClient;
 import org.redisson.api.options.KeysScanOptions;
+import org.redisson.api.options.LocalCachedMapOptions;
 import org.springframework.data.redis.connection.RedisServerCommands;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -136,8 +138,12 @@ public record RedisUtils(RedisTemplate<String, Object> redisTemplate, RedissonCl
 		return lock.isHeldByCurrentThread();
 	}
 
-	public <K, V> RMapCacheNative<K, V> getMapCacheNative(String name) {
-		return redissonClient.getMapCacheNative(name);
+	public <K, V> RMapCache<K, V> getMapCache(String name) {
+		return redissonClient.getMapCache(name);
+	}
+
+	public <K, V> RLocalCachedMap<K, V> getLocalCachedMap(LocalCachedMapOptions<K, V> options) {
+		return redissonClient.getLocalCachedMap(options);
 	}
 
 	public void set(String key, Object value) {

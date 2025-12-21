@@ -241,55 +241,55 @@ spring:
     enabled: true
     change-log: classpath:/db/changelog/db.changelog-master.xml
   cache:
-    configs:
+    distributed-configs:
       users:
         ttl: 5m
-        max-idle-time: 10m
+        max-idle-time: 1m
         max-size: 1024
         eviction-mode: LFU
       user_menu:
         ttl: 5m
-        max-idle-time: 10m
+        max-idle-time: 1m
         max-size: 1024
         eviction-mode: LFU
       sources:
         ttl: 5m
-        max-idle-time: 10m
+        max-idle-time: 1m
         max-size: 1024
         eviction-mode: LFU
       tenants:
         ttl: 5m
-        max-idle-time: 10m
+        max-idle-time: 1m
         max-size: 1024
         eviction-mode: LFU
       packages:
         ttl: 5m
-        max-idle-time: 10m
+        max-idle-time: 1m
         max-size: 1024
         eviction-mode: LFU
       messages:
         ttl: 5m
-        max-idle-time: 10m
+        max-idle-time: 1m
         max-size: 1024
         eviction-mode: LFU
       menus:
         ttl: 5m
-        max-idle-time: 10m
+        max-idle-time: 1m
         max-size: 1024
         eviction-mode: LFU
       dicts:
         ttl: 5m
-        max-idle-time: 10m
+        max-idle-time: 1m
         max-size: 1024
         eviction-mode: LFU
       depts:
         ttl: 5m
-        max-idle-time: 10m
+        max-idle-time: 1m
         max-size: 1024
         eviction-mode: LFU
       oss:
         ttl: 5m
-        max-idle-time: 10m
+        max-idle-time: 1m
         max-size: 1024
         eviction-mode: LFU
 
