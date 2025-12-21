@@ -291,10 +291,10 @@ spring:
       filter:
         enabled: true
   cache:
-    configs:
+    distributed-configs:
       oss_resource:
         ttl: 5m
-        max-idle-time: 10m
+        max-idle-time: 1m
         max-size: 1024
         eviction-mode: LFU
 # actuator

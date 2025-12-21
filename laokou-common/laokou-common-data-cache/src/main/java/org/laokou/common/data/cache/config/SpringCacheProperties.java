@@ -19,6 +19,7 @@ package org.laokou.common.data.cache.config;
 
 import lombok.Data;
 import org.redisson.api.EvictionMode;
+import org.redisson.api.options.LocalCachedMapOptions;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -34,10 +35,12 @@ import java.util.Map;
 @ConfigurationProperties("spring.cache")
 public class SpringCacheProperties {
 
-	Map<String, CacheConfig> configs = new HashMap<>(0);
+	private Map<String, DistributedCacheConfig> distributedConfigs = new HashMap<>(0);
+
+	private Map<String, LocalCacheConfig> localConfigs = new HashMap<>(0);
 
 	@Data
-	public static class CacheConfig {
+	public static class DistributedCacheConfig {
 
 		private Duration ttl = Duration.ofMinutes(5);
 
@@ -46,6 +49,33 @@ public class SpringCacheProperties {
 		private int maxSize = 1024;
 
 		private EvictionMode evictionMode = EvictionMode.LRU;
+
+	}
+
+	@Data
+	public static class LocalCacheConfig {
+
+		private LocalCachedMapOptions.ReconnectionStrategy reconnectionStrategy = LocalCachedMapOptions.ReconnectionStrategy.CLEAR;
+
+		private LocalCachedMapOptions.SyncStrategy syncStrategy = LocalCachedMapOptions.SyncStrategy.INVALIDATE;
+
+		private LocalCachedMapOptions.EvictionPolicy evictionPolicy = LocalCachedMapOptions.EvictionPolicy.LRU;
+
+		private int maxSize = 1024;
+
+		private Duration ttl = Duration.ofMinutes(5);
+
+		private Duration maxIdleTime = Duration.ofMinutes(1);
+
+		private LocalCachedMapOptions.CacheProvider cacheProvider = LocalCachedMapOptions.CacheProvider.CAFFEINE;
+
+		private LocalCachedMapOptions.StoreMode storeMode = LocalCachedMapOptions.StoreMode.LOCALCACHE_REDIS;
+
+		private boolean storeCacheMiss = true;
+
+		private LocalCachedMapOptions.ExpirationEventPolicy expirationEventPolicy = LocalCachedMapOptions.ExpirationEventPolicy.SUBSCRIBE_WITH_KEYEVENT_PATTERN;
+
+		private boolean useTopicPattern;
 
 	}
 

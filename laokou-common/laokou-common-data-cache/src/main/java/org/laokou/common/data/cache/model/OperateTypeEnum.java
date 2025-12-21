@@ -37,15 +37,15 @@ public enum OperateTypeEnum {
 
 	GET("get", "查看") {
 		@Override
-		public Object execute(String name, String key, ProceedingJoinPoint point, CacheManager redissonCacheManager) {
+		public Object execute(String name, String key, ProceedingJoinPoint point, CacheManager cacheManager) {
 			try {
-				Cache redissonCache = getCache(redissonCacheManager, name);
-				Cache.ValueWrapper redissonValueWrapper = redissonCache.get(key);
+				Cache cache = getCache(cacheManager, name);
+				Cache.ValueWrapper redissonValueWrapper = cache.get(key);
 				if (ObjectUtils.isNotNull(redissonValueWrapper)) {
 					return redissonValueWrapper.get();
 				}
 				Object value = point.proceed();
-				redissonCache.putIfAbsent(key, value);
+				cache.putIfAbsent(key, value);
 				return value;
 			}
 			catch (GlobalException e) {
@@ -61,9 +61,9 @@ public enum OperateTypeEnum {
 
 	DEL("del", "删除") {
 		@Override
-		public Object execute(String name, String key, ProceedingJoinPoint point, CacheManager redissonCacheManager) {
+		public Object execute(String name, String key, ProceedingJoinPoint point, CacheManager cacheManager) {
 			try {
-				getCache(redissonCacheManager, name).evictIfPresent(key);
+				getCache(cacheManager, name).evictIfPresent(key);
 				return point.proceed();
 			}
 			catch (GlobalException e) {

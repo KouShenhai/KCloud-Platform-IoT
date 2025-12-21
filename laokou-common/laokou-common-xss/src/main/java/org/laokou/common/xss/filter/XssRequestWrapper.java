@@ -30,9 +30,8 @@ import org.springframework.http.MediaType;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 /**
  * @author laokou
@@ -81,11 +80,7 @@ public final class XssRequestWrapper extends HttpServletRequestWrapper {
 		if (ArrayUtils.isEmpty(parameterValues)) {
 			return new String[0];
 		}
-		List<String> list = new ArrayList<>(parameterValues.length);
-		for (String parameterValue : parameterValues) {
-			list.add(XssUtils.clearHtml(parameterValue));
-		}
-		return list.toArray(String[]::new);
+		return Stream.of(parameterValues).map(XssUtils::clearHtml).toArray(String[]::new);
 	}
 
 	/**
@@ -99,11 +94,7 @@ public final class XssRequestWrapper extends HttpServletRequestWrapper {
 		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
 			String key = entry.getKey();
 			String[] values = entry.getValue();
-			List<String> list = new ArrayList<>(values.length);
-			for (String str : values) {
-				list.add(XssUtils.clearHtml(str));
-			}
-			newParameterMap.put(key, list.toArray(String[]::new));
+			newParameterMap.put(key, Stream.of(values).map(XssUtils::clearHtml).toList().toArray(String[]::new));
 		}
 		return newParameterMap;
 	}

@@ -36,7 +36,6 @@ package org.laokou.common.data.cache.config;
 import lombok.Data;
 import org.jspecify.annotations.NonNull;
 import org.laokou.common.redis.util.RedisUtils;
-import org.redisson.MapCacheNativeWrapper;
 import org.redisson.api.RMapCache;
 import org.redisson.api.map.event.MapEntryListener;
 import org.redisson.spring.cache.CacheConfig;
@@ -51,6 +50,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.stream.Collectors;
 
 /**
  * 分布式数据缓存扩展管理类. {@link org.springframework.cache.CacheManager}. implementation backed by
@@ -61,13 +61,13 @@ import java.util.concurrent.ConcurrentMap;
  * @see RedissonSpringCacheManager
  */
 @Data
-public class RedissonSpringCacheNativeExtManager implements CacheManager {
+final class DistributedCacheManager implements CacheManager {
 
 	private final RedisUtils redisUtils;
 
 	private boolean dynamic = true;
 
-	private boolean allowNullValues = true;
+	private boolean allowNullValues = false;
 
 	private boolean transactionAware = false;
 
@@ -75,13 +75,11 @@ public class RedissonSpringCacheNativeExtManager implements CacheManager {
 
 	private final ConcurrentMap<String, Cache> instanceMap;
 
-	public RedissonSpringCacheNativeExtManager(RedisUtils redisUtils, SpringCacheProperties properties) {
+	public DistributedCacheManager(RedisUtils redisUtils, SpringCacheProperties properties) {
 		this.redisUtils = redisUtils;
-		Map<String, SpringCacheProperties.CacheConfig> configs = properties.getConfigs();
-		int size = configs.size();
-		this.instanceMap = new ConcurrentHashMap<>(size);
-		this.configMap = new ConcurrentHashMap<>(size);
-		createConfigMap(configs);
+		Map<String, SpringCacheProperties.DistributedCacheConfig> configs = properties.getDistributedConfigs();
+		this.instanceMap = new ConcurrentHashMap<>(configs.size());
+		this.configMap = createConfigMap(configs);
 	}
 
 	@Override
@@ -116,8 +114,8 @@ public class RedissonSpringCacheNativeExtManager implements CacheManager {
 		return cache;
 	}
 
-	protected RMapCache<Object, Object> getMapCache(String name) {
-		return new MapCacheNativeWrapper<>(redisUtils.getMapCacheNative(name));
+	private RMapCache<Object, Object> getMapCache(String name) {
+		return redisUtils.getMapCache(name);
 	}
 
 	@Override
@@ -125,20 +123,23 @@ public class RedissonSpringCacheNativeExtManager implements CacheManager {
 		return Collections.unmodifiableSet(configMap.keySet());
 	}
 
-	private void createConfigMap(Map<String, SpringCacheProperties.CacheConfig> configs) {
-		configs.forEach((key, value) -> configMap.put(key, createConfig(value)));
+	private Map<String, CacheConfig> createConfigMap(
+			Map<String, SpringCacheProperties.DistributedCacheConfig> configs) {
+		return configs.entrySet()
+			.stream()
+			.collect(Collectors.toConcurrentMap(Map.Entry::getKey, entry -> createConfig(entry.getValue())));
 	}
 
 	private CacheConfig createDefaultConfig(String name) {
 		if (configMap.containsKey(name)) {
 			return configMap.get(name);
 		}
-		CacheConfig config = createConfig(new SpringCacheProperties.CacheConfig());
+		CacheConfig config = createConfig(new SpringCacheProperties.DistributedCacheConfig());
 		configMap.put(name, config);
 		return config;
 	}
 
-	private CacheConfig createConfig(SpringCacheProperties.CacheConfig cacheProperties) {
+	private CacheConfig createConfig(SpringCacheProperties.DistributedCacheConfig cacheProperties) {
 		CacheConfig config = new CacheConfig();
 		config.setMaxIdleTime(cacheProperties.getMaxIdleTime().toMillis());
 		config.setMaxSize(cacheProperties.getMaxSize());
