@@ -771,8 +771,8 @@
       </snapshots>
     </repository>
     <repository>
-      <id>xuxiaowei-spring-cloud-alibaba-gitlab-maven</id>
-      <url>https://gitlab.xuxiaowei.com.cn/api/v4/projects/430/packages/maven</url>
+      <id>xuxiaowei-spring-cloud-alibaba-refresh-gitlab-maven</id>
+      <url>https://gitlab.xuxiaowei.com.cn/api/v4/projects/524/packages/maven</url>
       <releases>
         <enabled>true</enabled>
       </releases>
