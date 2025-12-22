@@ -39,14 +39,11 @@ public enum OperateTypeEnum {
 		@Override
 		public Object execute(String name, String key, ProceedingJoinPoint point, CacheManager cacheManager) {
 			try {
-				Cache cache = getCache(cacheManager, name);
-				Cache.ValueWrapper redissonValueWrapper = cache.get(key);
-				if (ObjectUtils.isNotNull(redissonValueWrapper)) {
-					return redissonValueWrapper.get();
+				Cache.ValueWrapper valueWrapper = getCache(cacheManager, name).putIfAbsent(key, point.proceed());
+				if (ObjectUtils.isNotNull(valueWrapper)) {
+					return valueWrapper.get();
 				}
-				Object value = point.proceed();
-				cache.putIfAbsent(key, value);
-				return value;
+				return null;
 			}
 			catch (GlobalException e) {
 				// 系统异常/业务异常/参数异常直接捕获并抛出
@@ -71,7 +68,7 @@ public enum OperateTypeEnum {
 				throw e;
 			}
 			catch (Throwable e) {
-				log.error("获取缓存失败，错误信息：{}", e.getMessage(), e);
+				log.error("删除缓存失败，错误信息：{}", e.getMessage(), e);
 				throw new SystemException("S_Cache_DelError", String.format("删除缓存失败，%s", e.getMessage()), e);
 			}
 		}
