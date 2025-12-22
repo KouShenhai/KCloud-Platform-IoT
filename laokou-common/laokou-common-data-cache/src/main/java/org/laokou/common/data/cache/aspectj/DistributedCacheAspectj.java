@@ -46,10 +46,9 @@ public class DistributedCacheAspectj {
 
 	@Around("@annotation(distributedCache)")
 	public Object doAround(ProceedingJoinPoint point, DistributedCache distributedCache) {
-		MethodSignature signature = (MethodSignature) point.getSignature();
-		String[] parameterNames = signature.getParameterNames();
 		String name = distributedCache.name();
-		String key = SpringExpressionUtils.parse(distributedCache.key(), parameterNames, point.getArgs(), String.class);
+		String key = SpringExpressionUtils.parse(distributedCache.key(),
+				((MethodSignature) point.getSignature()).getParameterNames(), point.getArgs(), String.class);
 		return distributedCache.operateType().execute(name, key, point, distributedCacheManager);
 	}
 

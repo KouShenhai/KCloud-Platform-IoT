@@ -36,21 +36,17 @@ package org.laokou.common.data.cache.config;
 import lombok.Data;
 import org.jspecify.annotations.NonNull;
 import org.laokou.common.redis.util.RedisUtils;
+import org.redisson.MapCacheNativeWrapper;
 import org.redisson.api.RMapCache;
-import org.redisson.api.map.event.MapEntryListener;
-import org.redisson.spring.cache.CacheConfig;
-import org.redisson.spring.cache.RedissonCache;
+import org.redisson.api.options.MapOptions;
 import org.redisson.spring.cache.RedissonSpringCacheManager;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
-import org.springframework.cache.transaction.TransactionAwareCacheDecorator;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import java.util.stream.Collectors;
 
 /**
  * 分布式数据缓存扩展管理类. {@link org.springframework.cache.CacheManager}. implementation backed by
@@ -67,19 +63,14 @@ final class DistributedCacheManager implements CacheManager {
 
 	private boolean dynamic = true;
 
-	private boolean allowNullValues = false;
-
-	private boolean transactionAware = false;
-
-	private final Map<String, CacheConfig> configMap;
+	private final Map<String, SpringCacheProperties.DistributedCacheConfig> configMap;
 
 	private final ConcurrentMap<String, Cache> instanceMap;
 
 	public DistributedCacheManager(RedisUtils redisUtils, SpringCacheProperties properties) {
 		this.redisUtils = redisUtils;
-		Map<String, SpringCacheProperties.DistributedCacheConfig> configs = properties.getDistributedConfigs();
-		this.instanceMap = new ConcurrentHashMap<>(configs.size());
-		this.configMap = createConfigMap(configs);
+		this.configMap = properties.getDistributedConfigs();
+		this.instanceMap = new ConcurrentHashMap<>(configMap.size());
 	}
 
 	@Override
@@ -94,28 +85,13 @@ final class DistributedCacheManager implements CacheManager {
 		return createMapCache(name, createDefaultConfig(name));
 	}
 
-	private Cache createMapCache(String name, CacheConfig config) {
+	private Cache createMapCache(String name, SpringCacheProperties.DistributedCacheConfig config) {
 		RMapCache<Object, Object> map = getMapCache(name);
-
-		Cache cache = new RedissonCache(map, config, allowNullValues);
-		if (transactionAware) {
-			cache = new TransactionAwareCacheDecorator(cache);
-		}
-		Cache oldCache = instanceMap.putIfAbsent(name, cache);
-		if (oldCache != null) {
-			cache = oldCache;
-		}
-		else {
-			map.setMaxSize(config.getMaxSize(), config.getEvictionMode());
-			for (MapEntryListener listener : config.getListeners()) {
-				map.addListener(listener);
-			}
-		}
-		return cache;
+		return instanceMap.computeIfAbsent(name, _ -> new RedissonCacheNative(map, config.getTtl()));
 	}
 
 	private RMapCache<Object, Object> getMapCache(String name) {
-		return redisUtils.getMapCache(name);
+		return new MapCacheNativeWrapper<>(redisUtils.getMapCacheNative(MapOptions.name(name)));
 	}
 
 	@Override
@@ -123,29 +99,11 @@ final class DistributedCacheManager implements CacheManager {
 		return Collections.unmodifiableSet(configMap.keySet());
 	}
 
-	private Map<String, CacheConfig> createConfigMap(
-			Map<String, SpringCacheProperties.DistributedCacheConfig> configs) {
-		return configs.entrySet()
-			.stream()
-			.collect(Collectors.toConcurrentMap(Map.Entry::getKey, entry -> createConfig(entry.getValue())));
-	}
-
-	private CacheConfig createDefaultConfig(String name) {
+	private SpringCacheProperties.DistributedCacheConfig createDefaultConfig(String name) {
 		if (configMap.containsKey(name)) {
 			return configMap.get(name);
 		}
-		CacheConfig config = createConfig(new SpringCacheProperties.DistributedCacheConfig());
-		configMap.put(name, config);
-		return config;
-	}
-
-	private CacheConfig createConfig(SpringCacheProperties.DistributedCacheConfig cacheProperties) {
-		CacheConfig config = new CacheConfig();
-		config.setMaxIdleTime(cacheProperties.getMaxIdleTime().toMillis());
-		config.setMaxSize(cacheProperties.getMaxSize());
-		config.setTTL(cacheProperties.getTtl().toMillis());
-		config.setEvictionMode(cacheProperties.getEvictionMode());
-		return config;
+		return new SpringCacheProperties.DistributedCacheConfig();
 	}
 
 }

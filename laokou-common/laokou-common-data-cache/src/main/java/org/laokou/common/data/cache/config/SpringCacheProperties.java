@@ -18,7 +18,6 @@
 package org.laokou.common.data.cache.config;
 
 import lombok.Data;
-import org.redisson.api.EvictionMode;
 import org.redisson.api.options.LocalCachedMapOptions;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -43,12 +42,6 @@ public class SpringCacheProperties {
 	public static class DistributedCacheConfig {
 
 		private Duration ttl = Duration.ofMinutes(5);
-
-		private Duration maxIdleTime = Duration.ofMinutes(10);
-
-		private int maxSize = 1024;
-
-		private EvictionMode evictionMode = EvictionMode.LRU;
 
 	}
 
