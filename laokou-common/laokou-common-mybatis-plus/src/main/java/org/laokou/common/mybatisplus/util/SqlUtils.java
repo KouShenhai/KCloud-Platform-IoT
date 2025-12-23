@@ -73,7 +73,8 @@ public class SqlUtils {
 		MetaObject metaObject = ObjectUtils.isNotNull(parameterObject) ? configuration.newMetaObject(parameterObject)
 				: null;
 		StringBuilder sqlBuilder = new StringBuilder();
-		int lastPos = 0, paramIndex = 0;
+		int lastPos = 0;
+		int paramIndex = 0;
 		for (int i = 0; i < sql.length(); i++) {
 			if (sql.charAt(i) == '?') {
 				// 将问号之前的内容追加到结果
