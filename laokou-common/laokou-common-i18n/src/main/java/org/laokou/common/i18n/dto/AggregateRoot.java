@@ -33,7 +33,7 @@ public abstract class AggregateRoot extends Identifier {
 	 */
 	protected final Instant createTime;
 
-	public AggregateRoot(Long id, Instant createTime) {
+	protected AggregateRoot(Long id, Instant createTime) {
 		super(id);
 		this.createTime = createTime;
 	}
