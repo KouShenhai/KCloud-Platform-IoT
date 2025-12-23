@@ -17,21 +17,18 @@
 
 package org.laokou.common.mybatisplus.config;
 
-import com.zaxxer.hikari.pool.HikariProxyPreparedStatement;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.executor.statement.StatementHandler;
+import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.logging.jdbc.PreparedStatementLogger;
+import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.plugin.Intercepts;
 import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Signature;
-import org.laokou.common.i18n.common.constant.StringConstants;
+import org.apache.ibatis.session.ResultHandler;
+import org.apache.ibatis.session.RowBounds;
+import org.laokou.common.mybatisplus.util.SqlUtils;
 import org.springframework.util.StopWatch;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 // @formatter:off
 /**
@@ -49,11 +46,19 @@ import java.sql.SQLException;
  * @see PreparedStatementLogger
  */
 @Slf4j
-@RequiredArgsConstructor
-@Intercepts({@Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class, Integer.class }) })
-public class SqlMonitorInterceptor implements Interceptor {
-
-    private final MybatisPlusExtProperties mybatisPlusExtProperties;
+@Intercepts({
+	@Signature(
+		type = Executor.class,
+		method = "query",
+		args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class}
+	),
+	@Signature(
+		type = Executor.class,
+		method = "update",
+		args = {MappedStatement.class, Object.class}
+	)
+})
+public record SqlMonitorInterceptor(MybatisPlusExtProperties mybatisPlusExtProperties) implements Interceptor {
 
     @Override
 	public Object intercept(Invocation invocation) throws Throwable {
@@ -62,27 +67,13 @@ public class SqlMonitorInterceptor implements Interceptor {
 		Object obj = invocation.proceed();
 		stopWatch.stop();
 		long costTime = stopWatch.getTotalTimeMillis();
-		Object target = invocation.getTarget();
         MybatisPlusExtProperties.SqlMonitor sqlMonitor = mybatisPlusExtProperties.getSqlMonitor();
-        if (sqlMonitor.isEnabled()
-                && costTime >= sqlMonitor.getInterval()
-                && target instanceof StatementHandler statementHandler) {
-			String sql = getSql(invocation, statementHandler).replaceAll("\\s+", StringConstants.SPACE);
+        if (sqlMonitor.isEnabled() && costTime >= sqlMonitor.getInterval() && invocation.getArgs()[0] instanceof MappedStatement mappedStatement) {
+			Object param = invocation.getArgs().length > 1 ? invocation.getArgs()[1] : null;
+			String sql = SqlUtils.getCompleteSql(mappedStatement.getConfiguration(), mappedStatement.getBoundSql(param));
             log.info("Consume Time：{} ms，Execute SQL：{}", costTime, sql);
         }
 		return obj;
-	}
-
-	private String getSql(Invocation invocation, StatementHandler statementHandler) throws SQLException {
-		String sql = statementHandler.getBoundSql().getSql();
-		if (invocation.getArgs()[0] instanceof Connection connection) {
-			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			statementHandler.getParameterHandler().setParameters(preparedStatement);
-			if (preparedStatement instanceof HikariProxyPreparedStatement hikariProxyPreparedStatement) {
-				return hikariProxyPreparedStatement.toString().split("wrapping")[1].trim();
-			}
-		}
-		return sql;
 	}
 
 }

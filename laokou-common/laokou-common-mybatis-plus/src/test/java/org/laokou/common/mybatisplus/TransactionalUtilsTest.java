@@ -161,6 +161,7 @@ class TransactionalUtilsTest {
 		testUserDO.setUpdateTime(InstantUtils.now());
 		testUserDO.setVersion(0);
 		testUserDO.setTenantId(0L);
+		testUserDO.setDeptId(1L);
 		testUserDO.setDelFlag(0);
 		testUserDO.setId(9L);
 		return testUserDO;
@@ -175,6 +176,7 @@ class TransactionalUtilsTest {
 		testUserDO.setUpdateTime(InstantUtils.now());
 		testUserDO.setVersion(0);
 		testUserDO.setTenantId(0L);
+		testUserDO.setDeptId(1L);
 		testUserDO.setDelFlag(0);
 		testUserDO.setId(10L);
 		return testUserDO;

@@ -19,6 +19,7 @@ package org.laokou.common.mybatisplus.config;
 
 import com.baomidou.mybatisplus.extension.parser.cache.AbstractCaffeineJsqlParseCache;
 import com.github.benmanes.caffeine.cache.Cache;
+import org.jspecify.annotations.NonNull;
 import org.laokou.common.fory.config.ForyFactory;
 
 /**
@@ -271,7 +272,7 @@ public class ForySerialCaffeineJsqlParseCache extends AbstractCaffeineJsqlParseC
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.expression.WindowOffset.Type.class);
 	}
 
-	public ForySerialCaffeineJsqlParseCache(Cache<String, byte[]> cache) {
+	public ForySerialCaffeineJsqlParseCache(Cache<@NonNull String, byte[]> cache) {
 		super(cache);
 	}
 

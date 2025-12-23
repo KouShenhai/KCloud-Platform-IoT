@@ -43,7 +43,7 @@ public final class ForyFactory {
 		.withLongCompressed(true)
 		// enable type forward/backward compatibility
 		// disable it for small size and better performance.
-		.withCompatibleMode(CompatibleMode.COMPATIBLE)
+		.withCompatibleMode(CompatibleMode.SCHEMA_CONSISTENT)
 		// enable async multi-threaded compilation.
 		.withAsyncCompilation(true)
 		.requireClassRegistration(true)
