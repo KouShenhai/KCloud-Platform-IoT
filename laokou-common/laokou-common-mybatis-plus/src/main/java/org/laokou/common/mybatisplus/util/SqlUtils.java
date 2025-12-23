@@ -22,7 +22,18 @@ import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import net.sf.jsqlparser.statement.Statement;
 import net.sf.jsqlparser.statement.select.PlainSelect;
 import net.sf.jsqlparser.statement.select.Select;
+import org.apache.ibatis.mapping.BoundSql;
+import org.apache.ibatis.mapping.ParameterMapping;
+import org.apache.ibatis.reflection.MetaObject;
+import org.apache.ibatis.session.Configuration;
+import org.apache.ibatis.type.TypeHandlerRegistry;
+import org.laokou.common.core.util.CollectionExtUtils;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
+
+import java.util.List;
 
 /**
  * @author laokou
@@ -31,6 +42,9 @@ import org.laokou.common.i18n.common.exception.SystemException;
 public class SqlUtils {
 
 	public static String formatSql(String sql) {
+		if (StringExtUtils.isEmpty(sql)) {
+			throw new IllegalArgumentException("SQL cannot be empty");
+		}
 		return parseSql(sql).toString();
 	}
 
@@ -42,10 +56,74 @@ public class SqlUtils {
 		try {
 			return CCJSqlParserUtil.parse(sql);
 		}
-		catch (Exception e) {
-			log.error("SQL解析失败", e);
-			throw new SystemException("S_DS_SqlParseFailed", "SQL解析失败", e);
+		catch (Exception ex) {
+			log.error("SQL解析失败，错误信息：{}", ex.getMessage(), ex);
+			throw new SystemException("S_DS_SqlParseFailed", "SQL解析失败", ex);
 		}
+	}
+
+	public static String getCompleteSql(Configuration configuration, BoundSql boundSql) {
+		String sql = boundSql.getSql().replaceAll("\\s+", StringConstants.SPACE);
+		List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
+		Object parameterObject = boundSql.getParameterObject();
+		if (CollectionExtUtils.isEmpty(parameterMappings)) {
+			return sql;
+		}
+		TypeHandlerRegistry typeHandlerRegistry = configuration.getTypeHandlerRegistry();
+		MetaObject metaObject = ObjectUtils.isNotNull(parameterObject) ? configuration.newMetaObject(parameterObject)
+				: null;
+		StringBuilder sqlBuilder = new StringBuilder();
+		int lastPos = 0, paramIndex = 0;
+		for (int i = 0; i < sql.length(); i++) {
+			if (sql.charAt(i) == '?') {
+				// 将问号之前的内容追加到结果
+				sqlBuilder.append(sql, lastPos, i);
+				// 获取参数值
+				if (paramIndex < parameterMappings.size()) {
+					ParameterMapping parameterMapping = parameterMappings.get(paramIndex++);
+					Object value = getParameterValue(boundSql, parameterMapping, metaObject, typeHandlerRegistry);
+					sqlBuilder.append(formatValue(value));
+				}
+				lastPos = i + 1;
+			}
+		}
+		// 追加剩余的 SQL
+		sqlBuilder.append(sql.substring(lastPos));
+		return sqlBuilder.toString();
+	}
+
+	/**
+	 * 严谨获取参数值：考虑了附加参数、内置类型处理器等.
+	 */
+	private static Object getParameterValue(BoundSql boundSql, ParameterMapping pm, MetaObject metaObject,
+			TypeHandlerRegistry registry) {
+		String propertyName = pm.getProperty();
+		if (boundSql.hasAdditionalParameter(propertyName)) {
+			return boundSql.getAdditionalParameter(propertyName);
+		}
+		else if (metaObject == null) {
+			return null;
+		}
+		else if (registry.hasTypeHandler(metaObject.getOriginalObject().getClass())) {
+			return metaObject.getOriginalObject();
+		}
+		else {
+			return metaObject.getValue(propertyName);
+		}
+	}
+
+	/**
+	 * 格式化参数值，使其符合 SQL 语法.
+	 */
+	private static String formatValue(Object obj) {
+		if (obj == null) {
+			return "NULL";
+		}
+		if (obj instanceof String) {
+			// 处理字符串中的单引号，防止SQL注入（虽然仅用于日志展示，也应严谨）
+			return "'" + obj.toString().replace("'", "''") + "'";
+		}
+		return obj.toString();
 	}
 
 }

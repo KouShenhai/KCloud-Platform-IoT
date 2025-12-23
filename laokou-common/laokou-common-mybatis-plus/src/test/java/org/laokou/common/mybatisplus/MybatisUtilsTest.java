@@ -129,6 +129,7 @@ class MybatisUtilsTest {
 		testUserDO.setTenantId(0L);
 		testUserDO.setDelFlag(0);
 		testUserDO.setId(8L);
+		testUserDO.setDeptId(1L);
 		return testUserDO;
 	}
 
@@ -143,6 +144,7 @@ class MybatisUtilsTest {
 		testUserDO.setTenantId(0L);
 		testUserDO.setDelFlag(0);
 		testUserDO.setId(20L);
+		testUserDO.setDeptId(1L);
 		return testUserDO;
 	}
 
