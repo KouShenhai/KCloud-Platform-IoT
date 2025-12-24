@@ -164,8 +164,7 @@ class LocalDateTimeUtilsTest {
 	@Test
 	void test_now() {
 		LocalDateTime now = LocalDateTimeUtils.now();
-		Assertions.assertThat(now).isNotNull();
-		Assertions.assertThat(now).isBeforeOrEqualTo(LocalDateTime.now());
+		Assertions.assertThat(now).isNotNull().isBeforeOrEqualTo(LocalDateTime.now());
 	}
 
 	@Test
@@ -186,8 +185,8 @@ class LocalDateTimeUtilsTest {
 		Assertions.assertThat(localDateTime.getMonthValue()).isEqualTo(10);
 		Assertions.assertThat(localDateTime.getDayOfMonth()).isEqualTo(15);
 		Assertions.assertThat(localDateTime.getHour()).isEqualTo(12);
-		Assertions.assertThat(localDateTime.getMinute()).isEqualTo(0);
-		Assertions.assertThat(localDateTime.getSecond()).isEqualTo(0);
+		Assertions.assertThat(localDateTime.getMinute()).isZero();
+		Assertions.assertThat(localDateTime.getSecond()).isZero();
 	}
 
 	@Test

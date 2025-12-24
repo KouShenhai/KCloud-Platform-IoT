@@ -22,6 +22,9 @@ package org.laokou.common.context.util;
  */
 public final class UserConvertor {
 
+	private UserConvertor() {
+	}
+
 	public static UserExtDetails toUserDetails(User user) {
 		return DomainFactory.getUserDetails()
 			.toBuilder()

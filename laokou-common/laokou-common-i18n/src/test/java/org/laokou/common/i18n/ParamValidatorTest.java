@@ -79,8 +79,7 @@ class ParamValidatorTest {
 		// Test validates method with single error
 		ParamValidator.Validate invalid = ParamValidator.invalidate("用户名不能为空");
 		Set<String> errors = ParamValidator.validates(invalid);
-		Assertions.assertThat(errors).hasSize(1);
-		Assertions.assertThat(errors).contains("用户名不能为空");
+		Assertions.assertThat(errors).hasSize(1).contains("用户名不能为空");
 	}
 
 	@Test
@@ -90,8 +89,7 @@ class ParamValidatorTest {
 		ParamValidator.Validate invalid2 = ParamValidator.invalidate("密码不能为空");
 		ParamValidator.Validate invalid3 = ParamValidator.invalidate("邮箱格式不正确");
 		Set<String> errors = ParamValidator.validates(invalid1, invalid2, invalid3);
-		Assertions.assertThat(errors).hasSize(3);
-		Assertions.assertThat(errors).contains("用户名不能为空", "密码不能为空", "邮箱格式不正确");
+		Assertions.assertThat(errors).hasSize(3).contains("用户名不能为空", "密码不能为空", "邮箱格式不正确");
 	}
 
 	@Test
@@ -100,8 +98,7 @@ class ParamValidatorTest {
 		ParamValidator.Validate invalid1 = ParamValidator.invalidate("用户名不能为空");
 		ParamValidator.Validate invalid2 = ParamValidator.invalidate("用户名不能为空");
 		Set<String> errors = ParamValidator.validates(invalid1, invalid2);
-		Assertions.assertThat(errors).hasSize(1);
-		Assertions.assertThat(errors).contains("用户名不能为空");
+		Assertions.assertThat(errors).hasSize(1).contains("用户名不能为空");
 	}
 
 	@Test
@@ -132,8 +129,7 @@ class ParamValidatorTest {
 		ParamValidator.Validate invalid = ParamValidator.invalidate(errorMessage);
 		Assertions.assertThat(invalid).isNotNull();
 		Set<String> errors = ParamValidator.validates(invalid);
-		Assertions.assertThat(errors).hasSize(1);
-		Assertions.assertThat(errors).contains(errorMessage);
+		Assertions.assertThat(errors).hasSize(1).contains(errorMessage);
 	}
 
 	@Test
@@ -197,8 +193,7 @@ class ParamValidatorTest {
 			.isInstanceOf(ParamException.class);
 
 		Set<String> errors = ParamValidator.validates(valid1, invalid1, valid2, invalid2, invalid3);
-		Assertions.assertThat(errors).hasSize(3);
-		Assertions.assertThat(errors).contains("用户名长度必须在3-20个字符之间", "密码强度不够", "邮箱已被注册");
+		Assertions.assertThat(errors).hasSize(3).contains("用户名长度必须在3-20个字符之间", "密码强度不够", "邮箱已被注册");
 	}
 
 	@Test
@@ -216,8 +211,7 @@ class ParamValidatorTest {
 		// Test with special characters in error message
 		ParamValidator.Validate invalid = ParamValidator.invalidate("错误：<script>alert('test')</script>");
 		Set<String> errors = ParamValidator.validates(invalid);
-		Assertions.assertThat(errors).hasSize(1);
-		Assertions.assertThat(errors).contains("错误：<script>alert('test')</script>");
+		Assertions.assertThat(errors).hasSize(1).contains("错误：<script>alert('test')</script>");
 	}
 
 	@Test

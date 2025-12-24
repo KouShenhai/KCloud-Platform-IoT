@@ -18,12 +18,12 @@
 package org.laokou.common.data.cache.config;
 
 import lombok.Data;
+import org.laokou.common.core.util.MapUtils;
 import org.redisson.api.options.LocalCachedMapOptions;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -34,9 +34,9 @@ import java.util.Map;
 @ConfigurationProperties("spring.cache")
 public class SpringCacheProperties {
 
-	private Map<String, DistributedCacheConfig> distributedConfigs = new HashMap<>(0);
+	private Map<String, DistributedCacheConfig> distributedConfigs = MapUtils.newHashMap(0);
 
-	private Map<String, LocalCacheConfig> localConfigs = new HashMap<>(0);
+	private Map<String, LocalCacheConfig> localConfigs = MapUtils.newHashMap(0);
 
 	@Data
 	public static class DistributedCacheConfig {

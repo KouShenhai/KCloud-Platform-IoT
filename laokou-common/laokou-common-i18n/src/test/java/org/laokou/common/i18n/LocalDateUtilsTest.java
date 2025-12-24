@@ -93,8 +93,7 @@ class LocalDateUtilsTest {
 	@Test
 	void test_now() {
 		LocalDate now = LocalDateUtils.now();
-		Assertions.assertThat(now).isNotNull();
-		Assertions.assertThat(now).isBeforeOrEqualTo(LocalDate.now());
+		Assertions.assertThat(now).isNotNull().isBeforeOrEqualTo(LocalDate.now());
 	}
 
 	@Test
@@ -106,7 +105,7 @@ class LocalDateUtilsTest {
 
 		// Test same date
 		long sameDays = LocalDateUtils.betweenDays(start, start);
-		Assertions.assertThat(sameDays).isEqualTo(0);
+		Assertions.assertThat(sameDays).isZero();
 
 		// Test reverse order
 		long reverseDays = LocalDateUtils.betweenDays(end, start);
@@ -122,7 +121,7 @@ class LocalDateUtilsTest {
 
 		// Test same month
 		long sameMonths = LocalDateUtils.betweenMonths(start, start);
-		Assertions.assertThat(sameMonths).isEqualTo(0);
+		Assertions.assertThat(sameMonths).isZero();
 
 		// Test reverse order
 		long reverseMonths = LocalDateUtils.betweenMonths(end, start);
@@ -138,7 +137,7 @@ class LocalDateUtilsTest {
 
 		// Test same year
 		long sameYears = LocalDateUtils.betweenYears(start, start);
-		Assertions.assertThat(sameYears).isEqualTo(0);
+		Assertions.assertThat(sameYears).isZero();
 
 		// Test reverse order
 		long reverseYears = LocalDateUtils.betweenYears(end, start);
@@ -209,16 +208,14 @@ class LocalDateUtilsTest {
 		// 2025-10-15 is a Wednesday
 		LocalDate localDate = LocalDate.of(2025, 10, 15);
 		String dayOfWeekText = LocalDateUtils.getDayOfWeekText(localDate);
-		Assertions.assertThat(dayOfWeekText).isNotNull();
-		Assertions.assertThat(dayOfWeekText).isNotEmpty();
+		Assertions.assertThat(dayOfWeekText).isNotNull().isNotEmpty();
 		// The actual text depends on the system locale, so we just verify it's not
 		// null/empty
 
 		// Test with Monday
 		LocalDate monday = LocalDate.of(2025, 10, 13);
 		String mondayText = LocalDateUtils.getDayOfWeekText(monday);
-		Assertions.assertThat(mondayText).isNotNull();
-		Assertions.assertThat(mondayText).isNotEmpty();
+		Assertions.assertThat(mondayText).isNotNull().isNotEmpty();
 	}
 
 	@Test
@@ -228,8 +225,7 @@ class LocalDateUtilsTest {
 		String formatted = LocalDateUtils.format(original, DateConstants.YYYYMMDD);
 		LocalDate parsed = LocalDateUtils.parse(formatted, DateConstants.YYYYMMDD);
 
-		Assertions.assertThat(parsed).isNotNull();
-		Assertions.assertThat(parsed).isEqualTo(original);
+		Assertions.assertThat(parsed).isNotNull().isEqualTo(original);
 	}
 
 	@Test
