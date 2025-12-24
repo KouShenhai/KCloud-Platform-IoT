@@ -90,6 +90,7 @@ public record User(Long id, String username, String password, String avatar, Boo
 
 	@Override
 	public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
+		throw new UnsupportedOperationException("Cannot change authentication state");
 	}
 
 }

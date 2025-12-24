@@ -231,7 +231,7 @@ class NamingUtilsTest {
 
 		Assertions.assertThatNoException().isThrownBy(() -> namingService.batchDeregisterInstance("test-service", "DEFAULT_GROUP", List.of(instance)));
 		Thread.sleep(Duration.ofSeconds(1));
-		Assertions.assertThat(namingService.selectInstances("test-service", false).size()).isEqualTo(0);
+		Assertions.assertThat(namingService.selectInstances("test-service", false).size()).isZero();
 	}
 
 }

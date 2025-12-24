@@ -181,8 +181,7 @@ class ObjectUtilsTest {
 		// Test with non-null object
 		String str = "test";
 		String result = ObjectUtils.requireNotNull(str);
-		Assertions.assertThat(result).isNotNull();
-		Assertions.assertThat(result).isEqualTo("test");
+		Assertions.assertThat(result).isNotNull().isEqualTo("test");
 	}
 
 	@Test
@@ -197,8 +196,7 @@ class ObjectUtilsTest {
 		// Test with non-null integer
 		Integer num = 123;
 		Integer result = ObjectUtils.requireNotNull(num);
-		Assertions.assertThat(result).isNotNull();
-		Assertions.assertThat(result).isEqualTo(123);
+		Assertions.assertThat(result).isNotNull().isEqualTo(123);
 	}
 
 	@Test
@@ -207,8 +205,7 @@ class ObjectUtilsTest {
 		List<String> list = new ArrayList<>();
 		list.add("item");
 		List<String> result = ObjectUtils.requireNotNull(list);
-		Assertions.assertThat(result).isNotNull();
-		Assertions.assertThat(result).hasSize(1);
+		Assertions.assertThat(result).isNotNull().hasSize(1);
 		Assertions.assertThat(result.getFirst()).isEqualTo("item");
 	}
 
@@ -217,8 +214,7 @@ class ObjectUtilsTest {
 		// Test with empty string (not null)
 		String str = "";
 		String result = ObjectUtils.requireNotNull(str);
-		Assertions.assertThat(result).isNotNull();
-		Assertions.assertThat(result).isEmpty();
+		Assertions.assertThat(result).isNotNull().isEmpty();
 	}
 
 	@Test
@@ -227,7 +223,7 @@ class ObjectUtilsTest {
 		Integer num = 0;
 		Integer result = ObjectUtils.requireNotNull(num);
 		Assertions.assertThat(result).isNotNull();
-		Assertions.assertThat(result).isEqualTo(0);
+		Assertions.assertThat(result).isZero();
 	}
 
 	@Test

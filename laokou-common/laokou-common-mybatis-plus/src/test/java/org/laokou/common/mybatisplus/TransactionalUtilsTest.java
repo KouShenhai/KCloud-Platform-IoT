@@ -82,7 +82,7 @@ class TransactionalUtilsTest {
 		Assertions
 			.assertThat(testUserMapper.selectCount(
 					Wrappers.lambdaQuery(MybatisUtilsTest.TestUserDO.class).eq(MybatisUtilsTest.TestUserDO::getId, 9L)))
-			.isEqualTo(0);
+			.isZero();
 		Assertions.assertThatNoException()
 			.isThrownBy(() -> transactionalUtils.executeInNewTransaction(() -> testUserMapper.insert(getTestUserDO())));
 		Assertions
@@ -96,7 +96,7 @@ class TransactionalUtilsTest {
 		Assertions
 			.assertThat(testUserMapper.selectCount(
 					Wrappers.lambdaQuery(MybatisUtilsTest.TestUserDO.class).eq(MybatisUtilsTest.TestUserDO::getId, 9L)))
-			.isEqualTo(0);
+			.isZero();
 		Assertions.assertThatNoException()
 			.isThrownBy(() -> transactionalUtils.executeInTransaction(() -> testUserMapper.insert(getTestUserDO()),
 					TransactionDefinition.PROPAGATION_REQUIRED, TransactionDefinition.ISOLATION_READ_COMMITTED, false));
@@ -111,7 +111,7 @@ class TransactionalUtilsTest {
 		Assertions
 			.assertThat(testUserMapper.selectCount(
 					Wrappers.lambdaQuery(MybatisUtilsTest.TestUserDO.class).eq(MybatisUtilsTest.TestUserDO::getId, 9L)))
-			.isEqualTo(0);
+			.isZero();
 	}
 
 	@Test
@@ -125,7 +125,7 @@ class TransactionalUtilsTest {
 		Assertions.assertThat(count > 0).isTrue();
 		Assertions.assertThat(testUserMapper.selectCount(
 				Wrappers.lambdaQuery(MybatisUtilsTest.TestUserDO.class).eq(MybatisUtilsTest.TestUserDO::getId, 10L)))
-			.isEqualTo(0);
+			.isZero();
 		count = transactionalUtils.executeResultInNewTransaction(() -> testUserMapper.insert(getTestUserDO2()),
 				TransactionDefinition.ISOLATION_READ_COMMITTED, false);
 		Assertions.assertThat(count > 0).isTrue();
@@ -137,7 +137,7 @@ class TransactionalUtilsTest {
 		Assertions.assertThat(count > 0).isTrue();
 		Assertions.assertThat(testUserMapper.selectCount(
 				Wrappers.lambdaQuery(MybatisUtilsTest.TestUserDO.class).eq(MybatisUtilsTest.TestUserDO::getId, 10L)))
-			.isEqualTo(0);
+			.isZero();
 		count = transactionalUtils.executeResultInTransaction(() -> testUserMapper.insert(getTestUserDO2()),
 				TransactionDefinition.PROPAGATION_REQUIRES_NEW, TransactionDefinition.ISOLATION_READ_COMMITTED, false);
 		Assertions.assertThat(count > 0).isTrue();
@@ -149,7 +149,7 @@ class TransactionalUtilsTest {
 		Assertions.assertThat(count > 0).isTrue();
 		Assertions.assertThat(testUserMapper.selectCount(
 				Wrappers.lambdaQuery(MybatisUtilsTest.TestUserDO.class).eq(MybatisUtilsTest.TestUserDO::getId, 10L)))
-			.isEqualTo(0);
+			.isZero();
 	}
 
 	private MybatisUtilsTest.TestUserDO getTestUserDO() {
