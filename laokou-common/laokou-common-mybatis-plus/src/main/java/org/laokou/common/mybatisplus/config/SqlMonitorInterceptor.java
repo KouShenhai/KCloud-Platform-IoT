@@ -18,17 +18,16 @@
 package org.laokou.common.mybatisplus.config;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.executor.Executor;
+import org.apache.ibatis.executor.statement.StatementHandler;
 import org.apache.ibatis.logging.jdbc.PreparedStatementLogger;
-import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.plugin.Intercepts;
 import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Signature;
-import org.apache.ibatis.session.ResultHandler;
-import org.apache.ibatis.session.RowBounds;
 import org.laokou.common.mybatisplus.util.SqlUtils;
 import org.springframework.util.StopWatch;
+
+import java.sql.Connection;
 
 // @formatter:off
 /**
@@ -46,18 +45,7 @@ import org.springframework.util.StopWatch;
  * @see PreparedStatementLogger
  */
 @Slf4j
-@Intercepts({
-	@Signature(
-		type = Executor.class,
-		method = "query",
-		args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class}
-	),
-	@Signature(
-		type = Executor.class,
-		method = "update",
-		args = {MappedStatement.class, Object.class}
-	)
-})
+@Intercepts({@Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class, Integer.class }) })
 public record SqlMonitorInterceptor(MybatisPlusExtProperties mybatisPlusExtProperties) implements Interceptor {
 
     @Override
@@ -68,9 +56,8 @@ public record SqlMonitorInterceptor(MybatisPlusExtProperties mybatisPlusExtPrope
 		stopWatch.stop();
 		long costTime = stopWatch.getTotalTimeMillis();
         MybatisPlusExtProperties.SqlMonitor sqlMonitor = mybatisPlusExtProperties.getSqlMonitor();
-        if (sqlMonitor.isEnabled() && costTime >= sqlMonitor.getInterval() && invocation.getArgs()[0] instanceof MappedStatement mappedStatement) {
-			Object param = invocation.getArgs().length > 1 ? invocation.getArgs()[1] : null;
-			String sql = SqlUtils.getCompleteSql(mappedStatement.getConfiguration(), mappedStatement.getBoundSql(param));
+        if (sqlMonitor.isEnabled() && costTime >= sqlMonitor.getInterval() && invocation.getArgs()[0] instanceof StatementHandler statementHandler) {
+			String sql = SqlUtils.getCompleteSql(statementHandler.getBoundSql());
             log.info("Consume Time：{} ms，Execute SQL：{}", costTime, sql);
         }
 		return obj;

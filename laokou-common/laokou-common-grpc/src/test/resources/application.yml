@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: laokou-common-grpc
+  cloud:
+    nacos:
+      config:
+        enabled: false
