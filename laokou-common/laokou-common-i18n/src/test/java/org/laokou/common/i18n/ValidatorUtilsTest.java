@@ -23,6 +23,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
 import org.assertj.core.api.Assertions;
 import org.hibernate.validator.constraints.Range;
 import org.junit.jupiter.api.Test;
@@ -48,8 +49,7 @@ class ValidatorUtilsTest {
 		// Test with invalid name (null)
 		TestUser user = new TestUser(null, "john@example.com", 25);
 		Set<String> errors = ValidatorUtils.validate(user);
-		Assertions.assertThat(errors).isNotEmpty();
-		Assertions.assertThat(errors).hasSize(1);
+		Assertions.assertThat(errors).isNotEmpty().hasSize(1);
 	}
 
 	@Test
@@ -57,8 +57,7 @@ class ValidatorUtilsTest {
 		// Test with invalid email
 		TestUser user = new TestUser("John", "invalid-email", 25);
 		Set<String> errors = ValidatorUtils.validate(user);
-		Assertions.assertThat(errors).isNotEmpty();
-		Assertions.assertThat(errors).hasSize(1);
+		Assertions.assertThat(errors).isNotEmpty().hasSize(1);
 	}
 
 	@Test
@@ -66,8 +65,7 @@ class ValidatorUtilsTest {
 		// Test with invalid age (negative)
 		TestUser user = new TestUser("John", "john@example.com", -1);
 		Set<String> errors = ValidatorUtils.validate(user);
-		Assertions.assertThat(errors).isNotEmpty();
-		Assertions.assertThat(errors).hasSize(1);
+		Assertions.assertThat(errors).isNotEmpty().hasSize(1);
 	}
 
 	@Test
@@ -75,8 +73,7 @@ class ValidatorUtilsTest {
 		// Test with multiple constraint violations
 		TestUser user = new TestUser(null, "invalid-email", -1);
 		Set<String> errors = ValidatorUtils.validate(user);
-		Assertions.assertThat(errors).isNotEmpty();
-		Assertions.assertThat(errors).hasSize(3);
+		Assertions.assertThat(errors).isNotEmpty().hasSize(3);
 	}
 
 	@Test
@@ -230,6 +227,7 @@ class ValidatorUtilsTest {
 
 	// Test classes for validation
 
+	@Data
 	private static class TestUser {
 
 		@NotBlank(message = "Name must not be blank")
@@ -250,6 +248,7 @@ class ValidatorUtilsTest {
 
 	}
 
+	@Data
 	private static class TestUserWithGroups {
 
 		@NotBlank(message = "Name must not be blank")
@@ -267,6 +266,7 @@ class ValidatorUtilsTest {
 
 	}
 
+	@Data
 	private static class TestUserWithAddress {
 
 		@NotBlank(message = "Name must not be blank")
@@ -282,6 +282,7 @@ class ValidatorUtilsTest {
 
 	}
 
+	@Data
 	private static class Address {
 
 		@NotBlank(message = "Street must not be blank")
@@ -297,6 +298,7 @@ class ValidatorUtilsTest {
 
 	}
 
+	@Data
 	private static class TestUserWithSize {
 
 		@Size(min = 3, max = 20, message = "Name must be between 3 and 20 characters")
@@ -308,6 +310,7 @@ class ValidatorUtilsTest {
 
 	}
 
+	@Data
 	private static class TestUserWithPattern {
 
 		@Pattern(regexp = "^[a-zA-Z]+$", message = "Name must contain only letters")

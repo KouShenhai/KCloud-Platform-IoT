@@ -31,155 +31,92 @@ class LocaleUtilsTest {
 
 	@Test
 	void test_toLocale_withValidLanguage() {
-		// Test with standard language-country format
-		String language = "zh-CN";
-		Locale locale = LocaleUtils.toLocale(language);
-		Assertions.assertThat(locale).isNotNull();
-		Assertions.assertThat(locale.getLanguage()).isEqualTo("zh");
-		Assertions.assertThat(locale.getCountry()).isEqualTo("CN");
+		assertLocale(LocaleUtils.toLocale("zh-CN"), "zh", "CN");
 	}
 
 	@Test
 	void test_toLocale_withEnglishUS() {
-		// Test with English US
-		String language = "en-US";
-		Locale locale = LocaleUtils.toLocale(language);
-		Assertions.assertThat(locale).isNotNull();
-		Assertions.assertThat(locale.getLanguage()).isEqualTo("en");
-		Assertions.assertThat(locale.getCountry()).isEqualTo("US");
+		assertLocale(LocaleUtils.toLocale("en-US"), "en", "US");
 	}
 
 	@Test
 	void test_toLocale_withMultipleLanguages() {
-		// Test with multiple languages separated by comma (should pick first valid one)
-		String language = "zh-CN,en-US,ja-JP";
-		Locale locale = LocaleUtils.toLocale(language);
-		Assertions.assertThat(locale).isNotNull();
-		Assertions.assertThat(locale.getLanguage()).isEqualTo("zh");
-		Assertions.assertThat(locale.getCountry()).isEqualTo("CN");
+		assertLocale(LocaleUtils.toLocale("zh-CN,en-US,ja-JP"), "zh", "CN");
 	}
 
 	@Test
 	void test_toLocale_withEmptyString() {
-		// Test with empty string (should return default locale from context)
-		String language = "";
-		Locale locale = LocaleUtils.toLocale(language);
-		Assertions.assertThat(locale).isNotNull();
-		Assertions.assertThat(locale).isEqualTo(LocaleContextHolder.getLocale());
+		assertDefaultLocale(LocaleUtils.toLocale(""));
 	}
 
 	@Test
 	void test_toLocale_withNull() {
-		// Test with null (should return default locale from context)
-		String language = null;
-		Locale locale = LocaleUtils.toLocale(language);
-		Assertions.assertThat(locale).isNotNull();
-		Assertions.assertThat(locale).isEqualTo(LocaleContextHolder.getLocale());
+		assertDefaultLocale(LocaleUtils.toLocale(null));
 	}
 
 	@Test
 	void test_toLocale_withInvalidFormat() {
-		// Test with invalid format (should return default locale from context)
-		String language = "invalid";
-		Locale locale = LocaleUtils.toLocale(language);
-		Assertions.assertThat(locale).isNotNull();
-		Assertions.assertThat(locale).isEqualTo(LocaleContextHolder.getLocale());
+		assertDefaultLocale(LocaleUtils.toLocale("invalid"));
 	}
 
 	@Test
 	void test_toLocale_withOnlyLanguageCode() {
-		// Test with only language code without country (should return default locale)
-		String language = "zh";
-		Locale locale = LocaleUtils.toLocale(language);
-		Assertions.assertThat(locale).isNotNull();
-		Assertions.assertThat(locale).isEqualTo(LocaleContextHolder.getLocale());
+		assertDefaultLocale(LocaleUtils.toLocale("zh"));
 	}
 
 	@Test
 	void test_toLocale_withMultipleLanguagesNoValidFormat() {
-		// Test with multiple languages but none with valid format
-		String language = "zh,en,ja";
-		Locale locale = LocaleUtils.toLocale(language);
-		Assertions.assertThat(locale).isNotNull();
-		Assertions.assertThat(locale).isEqualTo(LocaleContextHolder.getLocale());
+		assertDefaultLocale(LocaleUtils.toLocale("zh,en,ja"));
 	}
 
 	@Test
 	void test_toLocale_withMixedValidInvalidLanguages() {
-		// Test with mixed valid and invalid languages
-		String language = "invalid,zh-CN,en-US";
-		Locale locale = LocaleUtils.toLocale(language);
-		Assertions.assertThat(locale).isNotNull();
-		Assertions.assertThat(locale.getLanguage()).isEqualTo("zh");
-		Assertions.assertThat(locale.getCountry()).isEqualTo("CN");
+		assertLocale(LocaleUtils.toLocale("invalid,zh-CN,en-US"), "zh", "CN");
 	}
 
 	@Test
 	void test_toLocale_withJapanese() {
-		// Test with Japanese locale
-		String language = "ja-JP";
-		Locale locale = LocaleUtils.toLocale(language);
-		Assertions.assertThat(locale).isNotNull();
-		Assertions.assertThat(locale.getLanguage()).isEqualTo("ja");
-		Assertions.assertThat(locale.getCountry()).isEqualTo("JP");
+		assertLocale(LocaleUtils.toLocale("ja-JP"), "ja", "JP");
 	}
 
 	@Test
 	void test_toLocale_withFrench() {
-		// Test with French locale
-		String language = "fr-FR";
-		Locale locale = LocaleUtils.toLocale(language);
-		Assertions.assertThat(locale).isNotNull();
-		Assertions.assertThat(locale.getLanguage()).isEqualTo("fr");
-		Assertions.assertThat(locale.getCountry()).isEqualTo("FR");
+		assertLocale(LocaleUtils.toLocale("fr-FR"), "fr", "FR");
 	}
 
 	@Test
 	void test_toLocale_withGerman() {
-		// Test with German locale
-		String language = "de-DE";
-		Locale locale = LocaleUtils.toLocale(language);
-		Assertions.assertThat(locale).isNotNull();
-		Assertions.assertThat(locale.getLanguage()).isEqualTo("de");
-		Assertions.assertThat(locale.getCountry()).isEqualTo("DE");
+		assertLocale(LocaleUtils.toLocale("de-DE"), "de", "DE");
 	}
 
 	@Test
 	void test_toLocale_withSpanish() {
-		// Test with Spanish locale
-		String language = "es-ES";
-		Locale locale = LocaleUtils.toLocale(language);
-		Assertions.assertThat(locale).isNotNull();
-		Assertions.assertThat(locale.getLanguage()).isEqualTo("es");
-		Assertions.assertThat(locale.getCountry()).isEqualTo("ES");
+		assertLocale(LocaleUtils.toLocale("es-ES"), "es", "ES");
 	}
 
 	@Test
 	void test_toLocale_withWhitespace() {
-		// Test with whitespace (should return default locale)
-		String language = "   ";
-		Locale locale = LocaleUtils.toLocale(language);
-		Assertions.assertThat(locale).isNotNull();
-		Assertions.assertThat(locale).isEqualTo(LocaleContextHolder.getLocale());
+		assertDefaultLocale(LocaleUtils.toLocale("   "));
 	}
 
 	@Test
 	void test_toLocale_withExtraHyphens() {
-		// Test with extra hyphens (should return default locale due to invalid format)
-		String language = "zh-CN-extra";
-		Locale locale = LocaleUtils.toLocale(language);
-		Assertions.assertThat(locale).isNotNull();
-		// This might fail depending on implementation, but should handle gracefully
+		assertDefaultLocale(LocaleUtils.toLocale("zh-CN-extra"));
 	}
 
 	@Test
 	void test_toLocale_withAcceptLanguageHeader() {
-		// Test with Accept-Language header format
-		String language = "zh-CN,zh;q=0.9,en;q=0.8";
-		Locale locale = LocaleUtils.toLocale(language);
+		assertLocale(LocaleUtils.toLocale("zh-CN,zh;q=0.9,en;q=0.8"), "zh", "CN");
+	}
+
+	private void assertLocale(Locale locale, String expectedLanguage, String expectedCountry) {
 		Assertions.assertThat(locale).isNotNull();
-		Assertions.assertThat(locale.getLanguage()).isEqualTo("zh");
-		Assertions.assertThat(locale.getCountry()).isEqualTo("CN");
+		Assertions.assertThat(locale.getLanguage()).isEqualTo(expectedLanguage);
+		Assertions.assertThat(locale.getCountry()).isEqualTo(expectedCountry);
+	}
+
+	private void assertDefaultLocale(Locale locale) {
+		Assertions.assertThat(locale).isNotNull().isEqualTo(LocaleContextHolder.getLocale());
 	}
 
 }

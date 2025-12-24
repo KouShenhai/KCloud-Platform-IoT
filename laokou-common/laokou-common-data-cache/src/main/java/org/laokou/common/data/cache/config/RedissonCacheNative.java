@@ -94,7 +94,7 @@ final class RedissonCacheNative implements Cache {
 		if (value == null) {
 			return null;
 		}
-		if (value.getClass().getName().equals(NullValue.class.getName())) {
+		if (NullValue.class.isAssignableFrom(value.getClass())) {
 			return NullValue.INSTANCE;
 		}
 		return new SimpleValueWrapper(value);

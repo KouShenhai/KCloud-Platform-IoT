@@ -80,7 +80,7 @@ class RequestUtilsTest {
 		Assertions.assertThat(capabilities.getValue(BrowsCapField.RENDERING_ENGINE_MAKER)).isEqualTo("Unknown");
 		Assertions.assertThat(RequestUtils.getParamValue(request, "test")).isEqualTo("");
 		byte[] body = RequestUtils.getRequestBody(request);
-		Assertions.assertThat(body.length).isEqualTo(0);
+		Assertions.assertThat(body.length).isZero();
 		Assertions.assertThat(RequestUtils.getInputStream(body)).isNotNull();
 		ServletRequest requestWrapper = new RequestUtils.RequestWrapper(request);
 		Assertions.assertThat(requestWrapper).isNotNull();
