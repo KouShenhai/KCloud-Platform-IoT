@@ -75,7 +75,7 @@ devDependencies:
     version: 19.2.3(@types/react@19.2.7)
   '@umijs/lint':
     specifier: ^4.4.6
-    version: 4.6.9(eslint@8.57.1)(stylelint@14.16.1)(typescript@5.9.3)
+    version: 4.6.14(eslint@8.57.1)(stylelint@14.16.1)(typescript@5.9.3)
   husky:
     specifier: ^9.1.7
     version: 9.1.7
@@ -4035,13 +4035,13 @@ packages:
       - supports-color
     dev: false
 
-  /@umijs/babel-preset-umi@4.6.9:
-    resolution: {integrity: sha512-nXukHW/Xihu0HPqdg7cTbMLXFquQks/2hirNyZarfjAQL560sELuglTgPzwjIpzwOrKBwC6Hb5C2vpr2jL0DzQ==}
+  /@umijs/babel-preset-umi@4.6.14:
+    resolution: {integrity: sha512-UoM9Q9OdQWs7f2Fi5inrzNaSPPT9AVc8RLGUAIWdxdTGmC2k0ZosPC/74kHYSlfUV8zebVBO6GYajl5IJXV5aQ==}
     dependencies:
       '@babel/runtime': 7.23.6
       '@bloomberg/record-tuple-polyfill': 0.0.4
-      '@umijs/bundler-utils': 4.6.9
-      '@umijs/utils': 4.6.9
+      '@umijs/bundler-utils': 4.6.14
+      '@umijs/utils': 4.6.14
       core-js: 3.34.0
     transitivePeerDependencies:
       - supports-color
@@ -4111,10 +4111,10 @@ packages:
       - supports-color
     dev: false
 
-  /@umijs/bundler-utils@4.6.9:
-    resolution: {integrity: sha512-6Vp8vIQnfqBpkCEb/V9juJt0lSfretynsSey15FAB3FtQUQFGP6UvyrC+Em9m+NzqPdhyC9rGrJdxrlZlxWEPg==}
+  /@umijs/bundler-utils@4.6.14:
+    resolution: {integrity: sha512-4ZVyKD/qNvTLNcxE9wQWA6kOBkpRQkw5lvyd6sncQeyYUyS1EPUeeu00/2jP/nz9QOHgMPp0WnxB/IvoelFOEQ==}
     dependencies:
-      '@umijs/utils': 4.6.9
+      '@umijs/utils': 4.6.14
       esbuild: 0.21.4
       regenerate: 1.4.2
       regenerate-unicode-properties: 10.1.1
@@ -4414,15 +4414,15 @@ packages:
       - typescript
     dev: false
 
-  /@umijs/lint@4.6.9(eslint@8.57.1)(stylelint@14.16.1)(typescript@5.9.3):
-    resolution: {integrity: sha512-7y+gxL7Wy/UtGRbvaq5J9bJtee58H4vnhY6wMkSZoGbJ5b1Ab6yZtgDSTqotzv2//UumXpR/Rx3cIdxwAEzJfg==}
+  /@umijs/lint@4.6.14(eslint@8.57.1)(stylelint@14.16.1)(typescript@5.9.3):
+    resolution: {integrity: sha512-0rGcczyDi9YmRRJFb9fZF9HZ6LcIuA2Ouuid8UXd4TLvOBEY3ngqcV2+TaMglDLnIoz05Us0S1ol1GGCpqyShA==}
     dependencies:
       '@babel/core': 7.23.6
       '@babel/eslint-parser': 7.23.3(@babel/core@7.23.6)(eslint@8.57.1)
       '@stylelint/postcss-css-in-js': 0.38.0(postcss-syntax@0.36.2)(postcss@8.5.6)
       '@typescript-eslint/eslint-plugin': 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.57.1)(typescript@5.9.3)
       '@typescript-eslint/parser': 5.62.0(eslint@8.57.1)(typescript@5.9.3)
-      '@umijs/babel-preset-umi': 4.6.9
+      '@umijs/babel-preset-umi': 4.6.14
       eslint-plugin-jest: 27.2.3(@typescript-eslint/eslint-plugin@5.62.0)(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-react: 7.33.2(eslint@8.57.1)
       eslint-plugin-react-hooks: 4.6.0(eslint@8.57.1)
@@ -5007,8 +5007,8 @@ packages:
       pino: 7.11.0
     dev: false
 
-  /@umijs/utils@4.6.9:
-    resolution: {integrity: sha512-tR58YcJR4J2dAG3gMlTksfjL/N8vFFt2T+v/dceN8aLc5YUk87G041VO/9yjcC2o6vbConOsFf8E53wkDAj5Vw==}
+  /@umijs/utils@4.6.14:
+    resolution: {integrity: sha512-jgnkt97Ck7NQd5w68z7miJl+MuY0toYO9J47vARKD+GbvDYtDbnuAFmMiRzbAU/Lk/1uWJLLB6HvpRML5Vx12w==}
     dependencies:
       chokidar: 3.5.3
       pino: 7.11.0
