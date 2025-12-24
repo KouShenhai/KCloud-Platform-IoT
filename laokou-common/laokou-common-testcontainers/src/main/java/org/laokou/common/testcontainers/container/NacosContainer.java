@@ -27,14 +27,14 @@ import org.testcontainers.utility.DockerImageName;
 public class NacosContainer extends GenericContainer<NacosContainer> {
 
 	public NacosContainer(DockerImageName dockerImageName) {
-		this(dockerImageName, 38848, 38080, 39848);
+		this(dockerImageName, 38848, 39848);
 	}
 
-	public NacosContainer(DockerImageName dockerImageName, int adminPort, int consolePort, int grpcPort) {
+	public NacosContainer(DockerImageName dockerImageName, int adminPort, int grpcPort) {
 		super(dockerImageName);
 		// 根据Nacos的设计，gRPC客户端端口为主端口加1000，即如果主端口为8849，则gRPC端口默认为9849
 		this.addFixedExposedPort(adminPort, 8848);
-		this.addFixedExposedPort(consolePort, 8080);
+		this.addExposedPort(8080);
 		this.addFixedExposedPort(grpcPort, 9848);
 		// 单机启动
 		this.withEnv("MODE", "standalone");

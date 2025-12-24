@@ -25,8 +25,7 @@ import net.sf.jsqlparser.statement.select.Select;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.ParameterMapping;
 import org.apache.ibatis.reflection.MetaObject;
-import org.apache.ibatis.session.Configuration;
-import org.apache.ibatis.type.TypeHandlerRegistry;
+import org.apache.ibatis.reflection.SystemMetaObject;
 import org.laokou.common.core.util.CollectionExtUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.SystemException;
@@ -52,18 +51,17 @@ public class SqlUtils {
 		return ((Select) parseSql(sql)).getPlainSelect();
 	}
 
-	public static String getCompleteSql(Configuration configuration, BoundSql boundSql) {
+	public static String getCompleteSql(BoundSql boundSql) {
 		String sql = boundSql.getSql().replaceAll("\\s+", StringConstants.SPACE);
 		List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
-		Object parameterObject = boundSql.getParameterObject();
 		if (CollectionExtUtils.isEmpty(parameterMappings)) {
 			return sql;
 		}
-		TypeHandlerRegistry typeHandlerRegistry = configuration.getTypeHandlerRegistry();
-		MetaObject metaObject = ObjectUtils.isNotNull(parameterObject) ? configuration.newMetaObject(parameterObject)
+		Object parameterObject = boundSql.getParameterObject();
+		MetaObject metaObject = ObjectUtils.isNotNull(parameterObject) ? SystemMetaObject.forObject(parameterObject)
 				: null;
 		for (ParameterMapping parameterMapping : parameterMappings) {
-			Object value = getParameterValue(boundSql, parameterMapping, metaObject, typeHandlerRegistry);
+			Object value = getParameterValue(boundSql, parameterMapping, metaObject);
 			sql = sql.replaceFirst("\\?", formatValue(value));
 		}
 		return sql;
@@ -72,20 +70,19 @@ public class SqlUtils {
 	/**
 	 * 严谨获取参数值：考虑了附加参数、内置类型处理器等.
 	 */
-	private static Object getParameterValue(BoundSql boundSql, ParameterMapping pm, MetaObject metaObject,
-			TypeHandlerRegistry registry) {
+	private static Object getParameterValue(BoundSql boundSql, ParameterMapping pm, MetaObject metaObject) {
 		String propertyName = pm.getProperty();
 		if (boundSql.hasAdditionalParameter(propertyName)) {
 			return boundSql.getAdditionalParameter(propertyName);
 		}
-		else if (metaObject == null) {
+		if (ObjectUtils.isNull(metaObject)) {
 			return null;
 		}
-		else if (registry.hasTypeHandler(metaObject.getOriginalObject().getClass())) {
-			return metaObject.getOriginalObject();
+		if (metaObject.hasGetter(propertyName)) {
+			return metaObject.getValue(propertyName);
 		}
 		else {
-			return metaObject.getValue(propertyName);
+			return metaObject.getOriginalObject();
 		}
 	}
 

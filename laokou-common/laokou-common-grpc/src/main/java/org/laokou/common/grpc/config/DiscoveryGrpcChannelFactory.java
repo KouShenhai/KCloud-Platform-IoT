@@ -19,6 +19,7 @@ package org.laokou.common.grpc.config;
 
 import io.grpc.ChannelCredentials;
 import io.grpc.netty.NettyChannelBuilder;
+import org.jspecify.annotations.NonNull;
 import org.springframework.grpc.client.ClientInterceptorsConfigurer;
 import org.springframework.grpc.client.GrpcChannelBuilderCustomizer;
 import org.springframework.grpc.client.NettyGrpcChannelFactory;
@@ -35,7 +36,8 @@ final class DiscoveryGrpcChannelFactory extends NettyGrpcChannelFactory {
 	 * @param globalCustomizers 要应用于所有已创建频道的全局自定义设置
 	 * @param interceptorsConfigurer 配置已创建通道上的客户端拦截器
 	 */
-	public DiscoveryGrpcChannelFactory(List<GrpcChannelBuilderCustomizer<NettyChannelBuilder>> globalCustomizers,
+	public DiscoveryGrpcChannelFactory(
+			List<GrpcChannelBuilderCustomizer<@NonNull NettyChannelBuilder>> globalCustomizers,
 			ClientInterceptorsConfigurer interceptorsConfigurer) {
 		super(globalCustomizers, interceptorsConfigurer);
 		setVirtualTargets((p) -> p.substring(12));
@@ -46,8 +48,9 @@ final class DiscoveryGrpcChannelFactory extends NettyGrpcChannelFactory {
 		return target.startsWith("discovery:");
 	}
 
+	@NonNull
 	@Override
-	protected NettyChannelBuilder newChannelBuilder(String target, ChannelCredentials credentials) {
+	protected NettyChannelBuilder newChannelBuilder(@NonNull String target, @NonNull ChannelCredentials credentials) {
 		return NettyChannelBuilder.forTarget(String.format("discovery://%s", target), credentials);
 	}
 

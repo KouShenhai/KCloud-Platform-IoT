@@ -157,7 +157,7 @@ class SqlUtilsTest {
 		Configuration configuration = new Configuration();
 		String sql = "SELECT * FROM user WHERE id = 1";
 		BoundSql boundSql = new BoundSql(configuration, sql, new ArrayList<>(), null);
-		String completeSql = SqlUtils.getCompleteSql(configuration, boundSql);
+		String completeSql = SqlUtils.getCompleteSql(boundSql);
 		Assertions.assertThat(completeSql).isEqualTo(sql);
 	}
 
@@ -166,7 +166,7 @@ class SqlUtilsTest {
 		Configuration configuration = new Configuration();
 		String sql = "SELECT   *   FROM   user   WHERE   id   =   1";
 		BoundSql boundSql = new BoundSql(configuration, sql, new ArrayList<>(), null);
-		String completeSql = SqlUtils.getCompleteSql(configuration, boundSql);
+		String completeSql = SqlUtils.getCompleteSql(boundSql);
 		Assertions.assertThat(completeSql).isEqualTo("SELECT * FROM user WHERE id = 1");
 	}
 
@@ -179,7 +179,7 @@ class SqlUtilsTest {
 		Map<String, Object> parameterObject = new HashMap<>();
 		parameterObject.put("name", "张三");
 		BoundSql boundSql = new BoundSql(configuration, sql, parameterMappings, parameterObject);
-		String completeSql = SqlUtils.getCompleteSql(configuration, boundSql);
+		String completeSql = SqlUtils.getCompleteSql(boundSql);
 		Assertions.assertThat(completeSql).isEqualTo("SELECT * FROM user WHERE name = '张三'");
 	}
 
@@ -192,7 +192,7 @@ class SqlUtilsTest {
 		Map<String, Object> parameterObject = new HashMap<>();
 		parameterObject.put("id", 123);
 		BoundSql boundSql = new BoundSql(configuration, sql, parameterMappings, parameterObject);
-		String completeSql = SqlUtils.getCompleteSql(configuration, boundSql);
+		String completeSql = SqlUtils.getCompleteSql(boundSql);
 		Assertions.assertThat(completeSql).isEqualTo("SELECT * FROM user WHERE id = 123");
 	}
 
@@ -205,7 +205,7 @@ class SqlUtilsTest {
 		Map<String, Object> parameterObject = new HashMap<>();
 		parameterObject.put("id", 999999999L);
 		BoundSql boundSql = new BoundSql(configuration, sql, parameterMappings, parameterObject);
-		String completeSql = SqlUtils.getCompleteSql(configuration, boundSql);
+		String completeSql = SqlUtils.getCompleteSql(boundSql);
 		Assertions.assertThat(completeSql).isEqualTo("SELECT * FROM user WHERE id = 999999999");
 	}
 
@@ -218,7 +218,7 @@ class SqlUtilsTest {
 		Map<String, Object> parameterObject = new HashMap<>();
 		parameterObject.put("name", null);
 		BoundSql boundSql = new BoundSql(configuration, sql, parameterMappings, parameterObject);
-		String completeSql = SqlUtils.getCompleteSql(configuration, boundSql);
+		String completeSql = SqlUtils.getCompleteSql(boundSql);
 		Assertions.assertThat(completeSql).isEqualTo("SELECT * FROM user WHERE name = NULL");
 	}
 
@@ -235,7 +235,7 @@ class SqlUtilsTest {
 		parameterObject.put("name", "李四");
 		parameterObject.put("age", 25);
 		BoundSql boundSql = new BoundSql(configuration, sql, parameterMappings, parameterObject);
-		String completeSql = SqlUtils.getCompleteSql(configuration, boundSql);
+		String completeSql = SqlUtils.getCompleteSql(boundSql);
 		Assertions.assertThat(completeSql).isEqualTo("SELECT * FROM user WHERE id = 1 AND name = '李四' AND age = 25");
 	}
 
@@ -248,7 +248,7 @@ class SqlUtilsTest {
 		Map<String, Object> parameterObject = new HashMap<>();
 		parameterObject.put("name", "O'Brien");
 		BoundSql boundSql = new BoundSql(configuration, sql, parameterMappings, parameterObject);
-		String completeSql = SqlUtils.getCompleteSql(configuration, boundSql);
+		String completeSql = SqlUtils.getCompleteSql(boundSql);
 		Assertions.assertThat(completeSql).isEqualTo("SELECT * FROM user WHERE name = 'O''Brien'");
 	}
 
@@ -261,7 +261,7 @@ class SqlUtilsTest {
 		Map<String, Object> parameterObject = new HashMap<>();
 		parameterObject.put("active", true);
 		BoundSql boundSql = new BoundSql(configuration, sql, parameterMappings, parameterObject);
-		String completeSql = SqlUtils.getCompleteSql(configuration, boundSql);
+		String completeSql = SqlUtils.getCompleteSql(boundSql);
 		Assertions.assertThat(completeSql).isEqualTo("SELECT * FROM user WHERE active = true");
 	}
 
@@ -274,7 +274,7 @@ class SqlUtilsTest {
 		Map<String, Object> parameterObject = new HashMap<>();
 		parameterObject.put("price", 99.99);
 		BoundSql boundSql = new BoundSql(configuration, sql, parameterMappings, parameterObject);
-		String completeSql = SqlUtils.getCompleteSql(configuration, boundSql);
+		String completeSql = SqlUtils.getCompleteSql(boundSql);
 		Assertions.assertThat(completeSql).isEqualTo("SELECT * FROM product WHERE price = 99.99");
 	}
 
@@ -286,7 +286,7 @@ class SqlUtilsTest {
 		parameterMappings.add(new ParameterMapping.Builder(configuration, "id", Integer.class).build());
 		BoundSql boundSql = new BoundSql(configuration, sql, parameterMappings, null);
 		boundSql.setAdditionalParameter("id", 100);
-		String completeSql = SqlUtils.getCompleteSql(configuration, boundSql);
+		String completeSql = SqlUtils.getCompleteSql(boundSql);
 		Assertions.assertThat(completeSql).isEqualTo("SELECT * FROM user WHERE id = 100");
 	}
 
@@ -297,7 +297,7 @@ class SqlUtilsTest {
 		List<ParameterMapping> parameterMappings = new ArrayList<>();
 		parameterMappings.add(new ParameterMapping.Builder(configuration, "id", Integer.class).build());
 		BoundSql boundSql = new BoundSql(configuration, sql, parameterMappings, null);
-		String completeSql = SqlUtils.getCompleteSql(configuration, boundSql);
+		String completeSql = SqlUtils.getCompleteSql(boundSql);
 		Assertions.assertThat(completeSql).isEqualTo("SELECT * FROM user WHERE id = NULL");
 	}
 
@@ -309,7 +309,7 @@ class SqlUtilsTest {
 		parameterMappings.add(new ParameterMapping.Builder(configuration, "id", Integer.class).build());
 		Integer parameterObject = 888;
 		BoundSql boundSql = new BoundSql(configuration, sql, parameterMappings, parameterObject);
-		String completeSql = SqlUtils.getCompleteSql(configuration, boundSql);
+		String completeSql = SqlUtils.getCompleteSql(boundSql);
 		Assertions.assertThat(completeSql).isEqualTo("SELECT * FROM user WHERE id = 888");
 	}
 
@@ -322,7 +322,7 @@ class SqlUtilsTest {
 		Map<String, Object> parameterObject = new HashMap<>();
 		parameterObject.put("name", "");
 		BoundSql boundSql = new BoundSql(configuration, sql, parameterMappings, parameterObject);
-		String completeSql = SqlUtils.getCompleteSql(configuration, boundSql);
+		String completeSql = SqlUtils.getCompleteSql(boundSql);
 		Assertions.assertThat(completeSql).isEqualTo("SELECT * FROM user WHERE name = ''");
 	}
 
@@ -337,7 +337,7 @@ class SqlUtilsTest {
 		parameterObject.put("name", "王二");
 		parameterObject.put("address", "北京市朝阳区");
 		BoundSql boundSql = new BoundSql(configuration, sql, parameterMappings, parameterObject);
-		String completeSql = SqlUtils.getCompleteSql(configuration, boundSql);
+		String completeSql = SqlUtils.getCompleteSql(boundSql);
 		Assertions.assertThat(completeSql).isEqualTo("SELECT * FROM user WHERE name = '王二' AND address = '北京市朝阳区'");
 	}
 
@@ -350,7 +350,7 @@ class SqlUtilsTest {
 		Map<String, Object> parameterObject = new HashMap<>();
 		parameterObject.put("email", "test@example.com");
 		BoundSql boundSql = new BoundSql(configuration, sql, parameterMappings, parameterObject);
-		String completeSql = SqlUtils.getCompleteSql(configuration, boundSql);
+		String completeSql = SqlUtils.getCompleteSql(boundSql);
 		Assertions.assertThat(completeSql).isEqualTo("SELECT * FROM user WHERE email = 'test@example.com'");
 	}
 
@@ -371,7 +371,7 @@ class SqlUtilsTest {
 		parameterObject.put("active", false);
 		parameterObject.put("salary", 8888.88);
 		BoundSql boundSql = new BoundSql(configuration, sql, parameterMappings, parameterObject);
-		String completeSql = SqlUtils.getCompleteSql(configuration, boundSql);
+		String completeSql = SqlUtils.getCompleteSql(boundSql);
 		Assertions.assertThat(completeSql)
 			.isEqualTo("INSERT INTO user (id, name, age, active, salary) VALUES (10, '赵六', 30, false, 8888.88)");
 	}
@@ -387,7 +387,7 @@ class SqlUtilsTest {
 		parameterObject.put("id", 5);
 		parameterObject.put("name", "测试");
 		BoundSql boundSql = new BoundSql(configuration, sql, parameterMappings, parameterObject);
-		String completeSql = SqlUtils.getCompleteSql(configuration, boundSql);
+		String completeSql = SqlUtils.getCompleteSql(boundSql);
 		Assertions.assertThat(completeSql).isEqualTo("SELECT * FROM user WHERE id = 5 AND name = '测试'");
 	}
 
@@ -400,7 +400,7 @@ class SqlUtilsTest {
 		Map<String, Object> parameterObject = new HashMap<>();
 		parameterObject.put("age", 0);
 		BoundSql boundSql = new BoundSql(configuration, sql, parameterMappings, parameterObject);
-		String completeSql = SqlUtils.getCompleteSql(configuration, boundSql);
+		String completeSql = SqlUtils.getCompleteSql(boundSql);
 		Assertions.assertThat(completeSql).isEqualTo("SELECT * FROM user WHERE age = 0");
 	}
 
@@ -413,7 +413,7 @@ class SqlUtilsTest {
 		Map<String, Object> parameterObject = new HashMap<>();
 		parameterObject.put("balance", -100.50);
 		BoundSql boundSql = new BoundSql(configuration, sql, parameterMappings, parameterObject);
-		String completeSql = SqlUtils.getCompleteSql(configuration, boundSql);
+		String completeSql = SqlUtils.getCompleteSql(boundSql);
 		Assertions.assertThat(completeSql).isEqualTo("SELECT * FROM account WHERE balance = -100.5");
 	}
 
