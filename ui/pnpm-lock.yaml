@@ -13,7 +13,7 @@ dependencies:
     version: 6.1.0(react-dom@18.3.1)(react@18.3.1)
   '@ant-design/plots':
     specifier: ^2.4.0
-    version: 2.6.7(react-dom@18.3.1)(react@18.3.1)
+    version: 2.6.8(react-dom@18.3.1)(react@18.3.1)
   '@ant-design/pro-card':
     specifier: ^2.9.7
     version: 2.10.0(antd@5.29.3)(react-dom@18.3.1)(react@18.3.1)
@@ -147,7 +147,7 @@ packages:
       react-dom: '>=16.8.4'
     dependencies:
       '@ant-design/graphs': 2.1.1(react-dom@18.3.1)(react@18.3.1)(workerize-loader@2.0.2)
-      '@ant-design/plots': 2.6.7(react-dom@18.3.1)(react@18.3.1)
+      '@ant-design/plots': 2.6.8(react-dom@18.3.1)(react@18.3.1)
       lodash: 4.17.21
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
@@ -289,8 +289,8 @@ packages:
     resolution: {integrity: sha512-MLm1FUpg02fP615ShQnCUN9la2E4RylDxKyolkGqAWTIHO4HyGM0A5x71AMALEyP/bC+UEEWBGSQ+D4/8hQ+ww==}
     dev: false
 
-  /@ant-design/plots@2.6.7(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-rChxRUaK2Uv6dtRJpdJ2OQOcphq0lYdUySpih9RCFB4IdNv33iFws0ANXCFtHMhVMyAz08zpAV15jK33uKuc6w==}
+  /@ant-design/plots@2.6.8(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-QsunUs2d5rbq/1BwVhga/siA5H50OaG23YopMYwPD4sPsza6NQzPQ8FM3elNIsD/BIk298tihqX1cJ/MmvVJbQ==}
     peerDependencies:
       react: '>=16.8.4'
       react-dom: '>=16.8.4'
