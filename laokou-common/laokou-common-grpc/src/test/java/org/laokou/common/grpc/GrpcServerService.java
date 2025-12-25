@@ -24,6 +24,9 @@ import org.laokou.common.grpc.proto.HelloWorldProto;
 import org.laokou.common.grpc.proto.SimpleGrpc;
 import org.springframework.grpc.server.service.GrpcService;
 
+/**
+ * @author laokou
+ */
 @GrpcService
 public class GrpcServerService extends SimpleGrpc.SimpleImplBase {
 
