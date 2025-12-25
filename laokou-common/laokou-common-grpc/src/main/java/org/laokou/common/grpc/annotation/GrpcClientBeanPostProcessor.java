@@ -17,11 +17,7 @@
 
 package org.laokou.common.grpc.annotation;
 
-import io.grpc.NameResolverRegistry;
-import jakarta.annotation.PostConstruct;
 import org.jspecify.annotations.NonNull;
-import org.laokou.common.core.util.ThreadUtils;
-import org.laokou.common.grpc.config.DiscoveryNameResolverProvider;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -37,12 +33,6 @@ import java.lang.reflect.Field;
  */
 public record GrpcClientBeanPostProcessor(GrpcClientFactory grpcClientFactory,
 		DiscoveryClient discoveryClient) implements BeanPostProcessor {
-
-	@PostConstruct
-	public void init() {
-		NameResolverRegistry.getDefaultRegistry()
-			.register(new DiscoveryNameResolverProvider(discoveryClient, ThreadUtils.newTtlVirtualTaskExecutor()));
-	}
 
 	@Override
 	public Object postProcessBeforeInitialization(@NonNull Object bean, @NonNull String beanName)
