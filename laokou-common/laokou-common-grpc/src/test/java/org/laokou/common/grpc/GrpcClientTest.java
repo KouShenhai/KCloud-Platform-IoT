@@ -17,25 +17,33 @@
 
 package org.laokou.common.grpc;
 
+import io.grpc.StatusException;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.laokou.common.grpc.annotation.GrpcClient;
+import org.laokou.common.grpc.proto.HelloWorldProto;
+import org.laokou.common.grpc.proto.SimpleGrpc;
 import org.laokou.common.testcontainers.container.NacosContainer;
 import org.laokou.common.testcontainers.util.DockerImageNames;
-import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.boot.WebApplicationType;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 
 /**
  * @author laokou
  */
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, classes = GrpcClientTest.GrpcTestConfig.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = GrpcClientTest.GrpcTest.class)
 class GrpcClientTest {
 
-	static final NacosContainer nacos = new NacosContainer(DockerImageNames.nacos("v3.1.0"), 28848, 29848);
+	@GrpcClient(serviceId = "laokou-common-grpc")
+	private SimpleGrpc.SimpleBlockingV2Stub simpleBlockingV2Stub;
+
+	static final NacosContainer nacos = new NacosContainer(DockerImageNames.nacos("v3.1.0"));
 
 	@BeforeAll
 	static void beforeAll() {
@@ -57,14 +65,19 @@ class GrpcClientTest {
 	}
 
 	@Test
-	void test() {
-
+	void test() throws StatusException {
+		HelloWorldProto.HelloRequest request = HelloWorldProto.HelloRequest.newBuilder().setName("test").build();
+		HelloWorldProto.HelloReply helloReply = simpleBlockingV2Stub.sayHello(request);
+		Assertions.assertThat(helloReply).isNotNull();
+		Assertions.assertThat(helloReply.getMessage()).isEqualTo("Hello ==> test");
 	}
 
-	@SpringBootConfiguration
-	@EnableDiscoveryClient
-	@ComponentScan(basePackages = "org.laokou")
-	static class GrpcTestConfig {
+	@SpringBootApplication(scanBasePackages = { "org.laokou" })
+	static class GrpcTest {
+
+		static void main(String[] args) {
+			new SpringApplicationBuilder(GrpcTest.class).web(WebApplicationType.SERVLET).run(args);
+		}
 
 	}
 

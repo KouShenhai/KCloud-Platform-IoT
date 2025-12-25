@@ -19,9 +19,7 @@ package org.laokou.common.grpc.annotation;
 
 import io.grpc.NameResolverRegistry;
 import jakarta.annotation.PostConstruct;
-import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
-import org.jspecify.annotations.Nullable;
 import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.grpc.config.DiscoveryNameResolverProvider;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -37,12 +35,8 @@ import java.lang.reflect.Field;
 /**
  * @author laokou
  */
-@RequiredArgsConstructor
-public class GrpcClientBeanPostProcessor implements BeanPostProcessor {
-
-	private final GrpcClientFactory grpcClientFactory;
-
-	private final DiscoveryClient discoveryClient;
+public record GrpcClientBeanPostProcessor(GrpcClientFactory grpcClientFactory,
+		DiscoveryClient discoveryClient) implements BeanPostProcessor {
 
 	@PostConstruct
 	public void init() {
@@ -51,7 +45,7 @@ public class GrpcClientBeanPostProcessor implements BeanPostProcessor {
 	}
 
 	@Override
-	public @Nullable Object postProcessBeforeInitialization(@NonNull Object bean, @NonNull String beanName)
+	public Object postProcessBeforeInitialization(@NonNull Object bean, @NonNull String beanName)
 			throws BeansException {
 		Class<?> clazz = bean.getClass();
 		do {

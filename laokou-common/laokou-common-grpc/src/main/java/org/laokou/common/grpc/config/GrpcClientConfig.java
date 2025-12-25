@@ -18,6 +18,7 @@
 package org.laokou.common.grpc.config;
 
 import io.grpc.netty.NettyChannelBuilder;
+import org.jspecify.annotations.NonNull;
 import org.laokou.common.grpc.annotation.GrpcClientBeanPostProcessor;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.context.annotation.Bean;
@@ -42,7 +43,7 @@ public class GrpcClientConfig {
 
 	@Bean
 	DiscoveryGrpcChannelFactory discoveryGrpcChannelFactory(
-			List<GrpcChannelBuilderCustomizer<NettyChannelBuilder>> globalCustomizers,
+			List<GrpcChannelBuilderCustomizer<@NonNull NettyChannelBuilder>> globalCustomizers,
 			ClientInterceptorsConfigurer interceptorsConfigurer) {
 		return new DiscoveryGrpcChannelFactory(globalCustomizers, interceptorsConfigurer);
 	}
