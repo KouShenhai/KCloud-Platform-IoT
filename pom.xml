@@ -780,6 +780,17 @@
       </snapshots>
     </repository>
     <repository>
+       <!--
+
+         需要在 settings.xml 配置
+
+        <server>
+            <id>github</id>
+            <username>Your GitHub Username</username>
+            <password>Your GitHub Token (requires read:packages permission)</password>
+        </server>
+
+       -->
       <id>github</id>
       <url>https://maven.pkg.github.com/alibaba/spring-cloud-alibaba</url>
       <releases>
