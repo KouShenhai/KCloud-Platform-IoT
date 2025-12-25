@@ -875,6 +875,14 @@
     </profile>
   </profiles>
 
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>GitHub Packages</name>
+      <url>https://maven.pkg.github.com/KouShenhai/KCloud-Platform-IoT</url>
+    </repository>
+  </distributionManagement>
+
   <build>
     <plugins>
       <!--先set后commit【先运行插件，再修改版本】-->
