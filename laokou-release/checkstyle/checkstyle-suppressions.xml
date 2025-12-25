@@ -1,3 +1,5 @@
+<?xml version="1.0"?>
+<!--
 /*
  * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
@@ -14,38 +16,13 @@
  * limitations under the License.
  *
  */
-
-package org.laokou.common.i18n.dto;
-
-import lombok.Getter;
-import org.laokou.common.i18n.util.InstantUtils;
-
-import java.time.Instant;
-
-/**
- * 聚合根.
- *
- * @author laokou
- */
-@Getter
-public abstract class AggregateRoot extends Identifier {
-
-	/**
-	 * 创建时间.
-	 */
-	protected final Instant createTime;
-
-	protected AggregateRoot() {
-		this(System.currentTimeMillis(), InstantUtils.now());
-	}
-
-	protected AggregateRoot(Long id) {
-		this(id, InstantUtils.now());
-	}
-
-	protected AggregateRoot(Long id, Instant createTime) {
-		super(id);
-		this.createTime = createTime;
-	}
-
-}
+-->
+<!DOCTYPE suppressions PUBLIC
+  "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
+  "https://checkstyle.org/dtds/suppressions_1_2.dtd">
+<suppressions>
+  <!-- https://checkstyle.sourceforge.io/filters/suppressionfilter.html -->
+  <suppress files="[/\\]target[/\\]" checks=".*"/>
+  <suppress files="[\\/]org[\\/]laokou[\\/]oss[\\/]api[\\/]" checks=".*" />
+  <suppress files="[\\/]org[\\/]laokou[\\/]distributed[\\/]identifier[\\/]api[\\/]" checks=".*" />
+</suppressions>

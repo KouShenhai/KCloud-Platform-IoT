@@ -211,8 +211,7 @@ class SslUtilsTest {
 		SSLContext sslContext = SslUtils.sslContext();
 		SSLSocketFactory socketFactory = sslContext.getSocketFactory();
 		String[] defaultCipherSuites = socketFactory.getDefaultCipherSuites();
-		Assertions.assertThat(defaultCipherSuites).isNotNull();
-		Assertions.assertThat(defaultCipherSuites).isNotEmpty();
+		Assertions.assertThat(defaultCipherSuites).isNotNull().isNotEmpty();
 	}
 
 	@Test

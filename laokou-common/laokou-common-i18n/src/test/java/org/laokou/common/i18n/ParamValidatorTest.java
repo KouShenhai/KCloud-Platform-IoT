@@ -109,8 +109,7 @@ class ParamValidatorTest {
 		ParamValidator.Validate valid2 = ParamValidator.validate();
 		ParamValidator.Validate invalid2 = ParamValidator.invalidate("密码不能为空");
 		Set<String> errors = ParamValidator.validates(valid1, invalid1, valid2, invalid2);
-		Assertions.assertThat(errors).hasSize(2);
-		Assertions.assertThat(errors).contains("用户名不能为空", "密码不能为空");
+		Assertions.assertThat(errors).hasSize(2).contains("用户名不能为空", "密码不能为空");
 	}
 
 	@Test
@@ -224,8 +223,7 @@ class ParamValidatorTest {
 		Set<String> errors2 = ParamValidator.validates(validate2);
 
 		Assertions.assertThat(errors1).isEmpty();
-		Assertions.assertThat(errors2).hasSize(1);
-		Assertions.assertThat(errors2).contains("错误信息");
+		Assertions.assertThat(errors2).hasSize(1).contains("错误信息");
 	}
 
 }

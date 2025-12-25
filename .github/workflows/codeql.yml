@@ -55,14 +55,24 @@ jobs:
       uses: github/codeql-action/init@v4.31.9
       with:
         languages: ${{ matrix.language }}
-        # If you wish to specify custom queries, you can do so here or in a config file.
-        # By default, queries listed here will override any specified in a config file.
-        # Prefix the list here with "+" to use these queries and those in the config file.
-
-        # Details on CodeQL's query packs refer to : https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
-        # queries: security-extended,security-and-quality
-    - name: Autobuild
-      uses: github/codeql-action/autobuild@v4.31.9
-
+    - name: Configure Maven settings
+      run: |
+        mkdir -p ~/.m2
+        cat <<EOF > ~/.m2/settings.xml
+        <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                                      https://maven.apache.org/xsd/settings-1.0.0.xsd">
+          <servers>
+            <server>
+              <id>github</id>
+              <username>${{ github.actor }}</username>
+              <password>${{ secrets.MAVEN_TOKEN }}</password>
+            </server>
+          </servers>
+        </settings>
+        EOF
+    - name: Build with Maven
+      run: mvn clean package -P dev -DskipTests
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v4.31.9

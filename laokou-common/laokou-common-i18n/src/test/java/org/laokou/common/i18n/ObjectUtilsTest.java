@@ -222,8 +222,7 @@ class ObjectUtilsTest {
 		// Test with zero (not null)
 		Integer num = 0;
 		Integer result = ObjectUtils.requireNotNull(num);
-		Assertions.assertThat(result).isNotNull();
-		Assertions.assertThat(result).isZero();
+		Assertions.assertThat(result).isNotNull().isZero();
 	}
 
 	@Test
