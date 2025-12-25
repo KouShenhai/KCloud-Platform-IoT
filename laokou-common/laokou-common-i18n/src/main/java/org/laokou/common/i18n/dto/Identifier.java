@@ -38,4 +38,8 @@ public abstract class Identifier implements Serializable {
 		this.id = id;
 	}
 
+	protected Identifier() {
+		this.id = System.currentTimeMillis();
+	}
+
 }
