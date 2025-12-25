@@ -40,7 +40,7 @@ jobs:
                                         https://maven.apache.org/xsd/settings-1.0.0.xsd">
             <servers>
               <server>
-                <id>github</id>
+                <id>spring-cloud-alibaba-github</id>
                 <username>KouShenhai</username>
                 <password>${{ secrets.MAVEN_TOKEN }}</password>
               </server>
