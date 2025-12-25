@@ -802,14 +802,6 @@
     </repository>
   </repositories>
 
-  <distributionManagement>
-    <repository>
-      <id>github</id>
-      <name>GitHub Packages</name>
-      <url>https://maven.pkg.github.com/KouShenhai/KCloud-Platform-IoT</url>
-    </repository>
-  </distributionManagement>
-
   <profiles>
     <!-- 开发环境 -->
     <profile>
