@@ -37,7 +37,6 @@ jobs:
         # Use only 'java' to analyze code written in Java, Kotlin or both
         # Use only 'javascript' to analyze code written in JavaScript, TypeScript or both
         # Learn more about CodeQL language support at https://aka.ms/codeql-docs/language-support
-
     steps:
     - name: Checkout repository
       uses: actions/checkout@v6.0.1
@@ -67,7 +66,7 @@ jobs:
             <server>
               <id>github</id>
               <username>${{ github.actor }}</username>
-              <password>${{ secrets.MAVEN_TOKEN }}</password>
+              <password>${{ secrets.USER_TOKEN }}</password>
             </server>
           </servers>
         </settings>

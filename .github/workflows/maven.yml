@@ -42,7 +42,7 @@ jobs:
               <server>
                 <id>github</id>
                 <username>${{ github.actor }}</username>
-                <password>${{ secrets.MAVEN_TOKEN }}</password>
+                <password>${{ secrets.USER_TOKEN }}</password>
               </server>
             </servers>
           </settings>
