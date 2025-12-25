@@ -1,7 +1,21 @@
 spring:
   application:
     name: laokou-common-grpc
+  grpc:
+    server:
+      servlet:
+        enabled: false
+      port: 9097
+    client:
+      channels:
+        laokou-common-grpc:
+           address: discovery://laokou-common-grpc
+           enable-keep-alive: true
   cloud:
     nacos:
       config:
         enabled: false
+      discovery:
+        enabled: true
+        metadata:
+          laokou_common_grpc_grpc_port: 9097

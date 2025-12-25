@@ -23,6 +23,7 @@ import io.grpc.NameResolver;
 import io.grpc.Status;
 import io.grpc.StatusOr;
 import org.laokou.common.core.util.CollectionExtUtils;
+import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
@@ -33,6 +34,7 @@ import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -45,6 +47,8 @@ import java.util.stream.Collectors;
 final class DiscoveryNameResolver extends NameResolver {
 
 	private final String serviceId;
+
+	private final String grpcPortName;
 
 	private final DiscoveryClient discoveryClient;
 
@@ -61,6 +65,7 @@ final class DiscoveryNameResolver extends NameResolver {
 	public DiscoveryNameResolver(String serviceId, DiscoveryClient discoveryClient, ExecutorService executorService,
 			Args args) {
 		this.serviceId = serviceId;
+		this.grpcPortName = String.format("%s_grpc_port", serviceId.replaceAll("-", "_"));
 		this.discoveryClient = discoveryClient;
 		this.executorService = executorService;
 		this.serviceInstanceReference = new AtomicReference<>(Collections.emptyList());
@@ -177,8 +182,11 @@ final class DiscoveryNameResolver extends NameResolver {
 	}
 
 	private int getGrpcPost(ServiceInstance serviceInstance) {
-		return Integer
-			.parseInt(ObjectUtils.requireNotNull(serviceInstance.getMetadata()).getOrDefault("grpc_port", "9090"));
+		Map<String, String> metadata = serviceInstance.getMetadata();
+		if (MapUtils.isNotEmpty(metadata)) {
+			return Integer.parseInt(ObjectUtils.requireNotNull(metadata).getOrDefault(grpcPortName, "9090"));
+		}
+		return 9090;
 	}
 
 }

@@ -99,6 +99,8 @@
     <spring-javaformat-checkstyle.version>0.0.47</spring-javaformat-checkstyle.version>
     <!--spring-asciidoctor-backends版本-->
     <spring-asciidoctor-backends.version>0.0.7</spring-asciidoctor-backends.version>
+    <!--protobuf-maven-plugin版本-->
+    <protobuf-maven-plugin.version>4.1.1</protobuf-maven-plugin.version>
     <!--spring-boot版本-->
     <spring-boot.version>4.0.1</spring-boot.version>
     <!--spring-cloud版本-->
@@ -150,7 +152,7 @@
     <!--jsoup版本-->
     <jsoup.version>1.21.2</jsoup.version>
     <!--jasypt版本-->
-    <jasypt.version>4.0.3</jasypt.version>
+    <jasypt.version>3.0.5</jasypt.version>
     <!--captcha版本-->
     <easy-captcha.version>1.6.2</easy-captcha.version>
     <!--guava版本-->
@@ -778,10 +780,10 @@
       </snapshots>
     </repository>
     <repository>
-      <id>xuxiaowei-spring-cloud-alibaba-refresh-gitlab-maven</id>
-      <url>https://gitlab.xuxiaowei.com.cn/api/v4/projects/524/packages/maven</url>
+      <id>github</id>
+      <url>https://maven.pkg.github.com/alibaba/spring-cloud-alibaba</url>
       <releases>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
       </releases>
       <snapshots>
         <enabled>true</enabled>
@@ -872,6 +874,14 @@
       </activation>
     </profile>
   </profiles>
+
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>GitHub Packages</name>
+      <url>https://maven.pkg.github.com/KouShenhai/KCloud-Platform-IoT</url>
+    </repository>
+  </distributionManagement>
 
   <build>
     <plugins>
