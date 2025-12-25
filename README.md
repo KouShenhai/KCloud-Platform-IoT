@@ -19,7 +19,6 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 
 <a href="https://github.com/KouShenhai/KCloud-Platform-IoT/actions/workflows/maven.yml" target="_blank"><img src="https://github.com/KouShenhai/KCloud-Platform-IoT/actions/workflows/maven.yml/badge.svg?branch=master" alt="Maven Mvnd Ci Build Stauts"/></a>
 <a href="https://github.com/KouShenhai/KCloud-Platform-IoT/actions/workflows/node.js.yml" target="_blank"><img src="https://github.com/KouShenhai/KCloud-Platform-IoT/actions/workflows/node.js.yml/badge.svg?branch=master" alt="Node.js CI Build Stauts"/></a>
-<a href="https://dl.circleci.com/status-badge/redirect/circleci/Bvmh1W3CkTV7xQCz5au73K/KgCR3Kb3gXzuxQP6YLKBUX/tree/master" target="_blank"><img src="https://dl.circleci.com/status-badge/img/circleci/Bvmh1W3CkTV7xQCz5au73K/KgCR3Kb3gXzuxQP6YLKBUX/tree/master.svg?style=svg" alt="CircleCI"/></a>
 
 <a href="https://app.deepsource.com/gh/KouShenhai/KCloud-Platform-IoT" target="_blank"><img src="https://app.deepsource.com/gh/KouShenhai/KCloud-Platform-IoT.svg/?label=active+issues&show_trend=true&token=dsp_7fcdb2050e509b27f5d2ab8f5f1109bcd468" alt="DeepSource Active Issues"/></a>
 <a href="https://app.deepsource.com/gh/KouShenhai/KCloud-Platform-IoT" target="_blank"><img src="https://app.deepsource.com/gh/KouShenhai/KCloud-Platform-IoT.svg/?label=resolved+issues&show_trend=true&token=dsp_7fcdb2050e509b27f5d2ab8f5f1109bcd468" alt="DeepSource Resolved Issues"/></a>
