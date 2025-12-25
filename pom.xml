@@ -791,7 +791,7 @@
         </server>
 
        -->
-      <id>spring-cloud-alibaba-github</id>
+      <id>github</id>
       <url>https://maven.pkg.github.com/alibaba/spring-cloud-alibaba</url>
       <releases>
         <enabled>false</enabled>
