@@ -174,7 +174,7 @@
     <!--hibernate-validator版本-->
     <hibernate-validator.version>9.1.0.Final</hibernate-validator.version>
     <!--ip2region版本-->
-    <ip2region.version>3.3.1</ip2region.version>
+    <ip2region.version>3.3.2</ip2region.version>
     <!--spring-kafka版本-->
     <spring-kafka.version>4.0.1</spring-kafka.version>
     <!--disruptor版本-->
@@ -194,7 +194,7 @@
     <!--liquibase-core版本-->
     <liquibase-core.version>5.0.1</liquibase-core.version>
     <!--snail-job版本-->
-    <snail-job.version>1.9.0</snail-job.version>
+    <snail-job.version>1.9.0-jdk8</snail-job.version>
     <!--archunit-junit5版本-->
     <archunit-junit5.version>1.4.1</archunit-junit5.version>
     <!--caffeine版本-->
