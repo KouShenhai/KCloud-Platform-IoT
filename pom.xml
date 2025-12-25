@@ -791,7 +791,7 @@
         </server>
 
        -->
-      <id>github</id>
+      <id>spring-cloud-alibaba-github</id>
       <url>https://maven.pkg.github.com/alibaba/spring-cloud-alibaba</url>
       <releases>
         <enabled>false</enabled>
@@ -804,7 +804,7 @@
 
   <distributionManagement>
     <repository>
-      <id>github</id>
+      <id>kcloud-platform-iot-github</id>
       <name>GitHub Packages</name>
       <url>https://maven.pkg.github.com/KouShenhai/KCloud-Platform-IoT</url>
     </repository>
