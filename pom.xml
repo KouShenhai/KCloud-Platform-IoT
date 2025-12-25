@@ -194,7 +194,7 @@
     <!--liquibase-core版本-->
     <liquibase-core.version>5.0.1</liquibase-core.version>
     <!--snail-job版本-->
-    <snail-job.version>1.9.0</snail-job.version>
+    <snail-job.version>1.9.0-jdk8</snail-job.version>
     <!--archunit-junit5版本-->
     <archunit-junit5.version>1.4.1</archunit-junit5.version>
     <!--caffeine版本-->
