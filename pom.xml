@@ -101,6 +101,8 @@
     <spring-asciidoctor-backends.version>0.0.7</spring-asciidoctor-backends.version>
     <!--protobuf-maven-plugin版本-->
     <protobuf-maven-plugin.version>4.1.1</protobuf-maven-plugin.version>
+    <!--central-publishing-maven-plugin版本-->
+    <central-publishing-maven-plugin.version>0.9.0</central-publishing-maven-plugin.version>
     <!--spring-boot版本-->
     <spring-boot.version>4.0.1</spring-boot.version>
     <!--spring-cloud版本-->
@@ -802,14 +804,6 @@
     </repository>
   </repositories>
 
-  <distributionManagement>
-    <repository>
-      <id>kcloud-platform-iot-github</id>
-      <name>GitHub Packages</name>
-      <url>https://maven.pkg.github.com/KouShenhai/KCloud-Platform-IoT</url>
-    </repository>
-  </distributionManagement>
-
   <profiles>
     <!-- 开发环境 -->
     <profile>
@@ -888,6 +882,39 @@
         <!--suppress UnresolvedMavenProperty -->
         <SECRET-KEY>${SECRET_KEY:laokou}</SECRET-KEY>
       </properties>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+    </profile>
+    <profile>
+      <id>snapshot</id>
+      <distributionManagement>
+        <repository>
+          <id>kcloud-platform-iot-github</id>
+          <name>GitHub Packages</name>
+          <url>https://maven.pkg.github.com/KouShenhai/KCloud-Platform-IoT</url>
+        </repository>
+      </distributionManagement>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+    </profile>
+    <profile>
+      <id>release</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.sonatype.central</groupId>
+            <artifactId>central-publishing-maven-plugin</artifactId>
+            <version>${central-publishing-maven-plugin.version}</version>
+            <extensions>true</extensions>
+            <configuration>
+              <publishingServerId>kcloud-platform-iot-maven-central</publishingServerId>
+              <autoPublish>true</autoPublish>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
       <activation>
         <activeByDefault>false</activeByDefault>
       </activation>
