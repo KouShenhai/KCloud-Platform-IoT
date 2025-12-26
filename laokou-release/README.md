@@ -1,6 +1,6 @@
 ```shell
-# 发布Github
-mvn clean deploy -P snapshot -DskipTests
-# 发布Maven Central
-mvn clean deploy -P release -DskipTests
+# 发布Github【快照版本】
+mvn clean deploy -P github-snapshot -DskipTests
+# 发布Maven Central【快照版本】
+mvn clean deploy -P maven-snapshot -DskipTests
 ```

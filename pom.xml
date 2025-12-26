@@ -804,14 +804,6 @@
     </repository>
   </repositories>
 
-  <distributionManagement>
-    <repository>
-      <id>kcloud-platform-iot-github</id>
-      <name>GitHub Packages</name>
-      <url>https://maven.pkg.github.com/KouShenhai/KCloud-Platform-IoT</url>
-    </repository>
-  </distributionManagement>
-
   <profiles>
     <!-- 开发环境 -->
     <profile>
@@ -895,13 +887,20 @@
       </activation>
     </profile>
     <profile>
-      <id>snapshot</id>
+      <id>github-snapshot</id>
+      <distributionManagement>
+        <repository>
+          <id>kcloud-platform-iot-github</id>
+          <name>GitHub Packages</name>
+          <url>https://maven.pkg.github.com/KouShenhai/KCloud-Platform-IoT</url>
+        </repository>
+      </distributionManagement>
       <activation>
         <activeByDefault>false</activeByDefault>
       </activation>
     </profile>
     <profile>
-      <id>release</id>
+      <id>maven-snapshot</id>
       <build>
         <plugins>
           <plugin>
