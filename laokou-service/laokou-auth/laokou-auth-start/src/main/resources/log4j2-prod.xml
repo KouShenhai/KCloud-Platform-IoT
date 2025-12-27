@@ -49,6 +49,8 @@
             <JsonExtLayout complete="false" compact="true" eventEol="true" properties="true" locationInfo="true" includeStacktrace="true" stacktraceAsString="false" objectMessageAsJsonObject="false">
               <KeyValuePair key="serviceId" value="${SERVICE_ID}"/>
               <KeyValuePair key="profile" value="${PROFILE}" />
+              <KeyValuePair key="traceId" value="%X{traceId}" />
+              <KeyValuePair key="spanId" value="%X{spanId}" />
             </JsonExtLayout>
       -->
       <PatternLayout pattern="${LOG_CONSOLE_PATTERN}"/>
@@ -62,6 +64,8 @@
       <JsonExtLayout complete="true" compact="false" eventEol="true" properties="true" locationInfo="false" includeStacktrace="true" stacktraceAsString="true" objectMessageAsJsonObject="true">
         <KeyValuePair key="serviceId" value="${SERVICE_ID}"/>
         <KeyValuePair key="profile" value="${PROFILE}" />
+        <KeyValuePair key="traceId" value="%X{traceId}" />
+        <KeyValuePair key="spanId" value="%X{spanId}" />
       </JsonExtLayout>
       <Policies>
         <TimeBasedTriggeringPolicy interval="${LOG_INTERVAL}"/>
@@ -78,6 +82,8 @@
       <JsonExtLayout complete="true" compact="false" eventEol="true" properties="true" locationInfo="false" includeStacktrace="true" stacktraceAsString="true" objectMessageAsJsonObject="true">
         <KeyValuePair key="serviceId" value="${SERVICE_ID}"/>
         <KeyValuePair key="profile" value="${PROFILE}" />
+        <KeyValuePair key="traceId" value="%X{traceId}" />
+        <KeyValuePair key="spanId" value="%X{spanId}" />
       </JsonExtLayout>
       <Policies>
         <TimeBasedTriggeringPolicy interval="${LOG_INTERVAL}"/>
@@ -100,6 +106,8 @@
       <JsonExtLayout complete="false" compact="true" eventEol="true" properties="true" locationInfo="false" includeStacktrace="true" stacktraceAsString="true" objectMessageAsJsonObject="true">
         <KeyValuePair key="serviceId" value="${SERVICE_ID}"/>
         <KeyValuePair key="profile" value="${PROFILE}" />
+        <KeyValuePair key="traceId" value="%X{traceId}" />
+        <KeyValuePair key="spanId" value="%X{spanId}" />
       </JsonExtLayout>
       <!-- 生产者发送消息最大阻塞时间，单位为毫秒，生产者阻塞超过2秒，则抛出异常并中断发送【生产者内部缓冲区已满或元数据不可用，send()会阻塞等待】 -->
       <Property name="max.block.ms">2000</Property>

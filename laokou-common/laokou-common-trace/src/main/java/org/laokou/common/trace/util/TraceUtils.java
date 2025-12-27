@@ -17,8 +17,7 @@
 
 package org.laokou.common.trace.util;
 
-import io.micrometer.tracing.TraceContext;
-import io.micrometer.tracing.Tracer;
+import io.prometheus.metrics.tracer.common.SpanContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -29,30 +28,24 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class TraceUtils {
 
-	private final Tracer tracer;
+	private final SpanContext spanContext;
 
 	public String getTraceId() {
 		try {
-			TraceContext context = getContext();
-			return context.traceId();
+			return spanContext.getCurrentTraceId();
 		}
-		catch (Exception e) {
+		catch (Exception ex) {
 			return MDCUtils.getTraceId();
 		}
 	}
 
 	public String getSpanId() {
 		try {
-			TraceContext context = getContext();
-			return context.spanId();
+			return spanContext.getCurrentSpanId();
 		}
-		catch (Exception e) {
+		catch (Exception ex) {
 			return MDCUtils.getSpanId();
 		}
-	}
-
-	private TraceContext getContext() {
-		return tracer.currentTraceContext().context();
 	}
 
 }

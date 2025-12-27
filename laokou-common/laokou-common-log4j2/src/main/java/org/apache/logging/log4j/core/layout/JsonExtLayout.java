@@ -94,7 +94,7 @@ import java.util.Map;
  * <h2>Additional Fields</h2>
  * <p>
  * This property allows addition of custom fields into generated JSON.
- * {@code <JsonLayout><KeyValuePair key="foo" value="bar"/></JsonLayout>} inserts
+ * {@code <JsonExtLayout><KeyValuePair key="foo" value="bar"/></JsonExtLayout>} inserts
  * {@code "foo":"bar"} directly into JSON output. Supports Lookup expressions.
  * </p>
  */

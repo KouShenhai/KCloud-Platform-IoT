@@ -19,10 +19,10 @@ package org.laokou.logstash.support;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.util.RegexUtils;
 import org.laokou.common.i18n.common.constant.DateConstants;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.InstantUtils;
-import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.logstash.gatewayimpl.database.dataobject.TraceLogIndex;
 
 @Slf4j
@@ -36,18 +36,15 @@ public abstract class AbstractTraceLogStorage implements TraceLogStorage {
 	}
 
 	protected TraceLogIndex getTraceLogIndex(Object obj) {
-		try {
-			TraceLogIndex traceLogIndex = (TraceLogIndex) obj;
-			String traceId = traceLogIndex.getTraceId();
-			String spanId = traceLogIndex.getSpanId();
-			if (StringExtUtils.isNotEmpty(spanId) && StringExtUtils.isNotEmpty(traceId)) {
-				return traceLogIndex;
-			}
-		}
-		catch (Exception ex) {
-			log.error("分布式链路日志JSON转换失败，错误信息：{}", ex.getMessage());
+		if (obj instanceof TraceLogIndex traceLogIndex && isRetain(traceLogIndex.getTraceId())
+				&& isRetain(traceLogIndex.getSpanId())) {
+			return traceLogIndex;
 		}
 		return null;
+	}
+
+	private boolean isRetain(String str) {
+		return !RegexUtils.matches("%X\\{(traceId|spanId)\\}", str);
 	}
 
 }

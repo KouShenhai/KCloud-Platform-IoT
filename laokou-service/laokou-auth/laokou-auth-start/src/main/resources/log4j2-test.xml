@@ -50,6 +50,8 @@
             <JsonExtLayout complete="false" compact="true" eventEol="true" properties="true" locationInfo="true" includeStacktrace="true" stacktraceAsString="false" objectMessageAsJsonObject="false">
               <KeyValuePair key="serviceId" value="${SERVICE_ID}"/>
               <KeyValuePair key="profile" value="${PROFILE}" />
+              <KeyValuePair key="traceId" value="%X{traceId}" />
+              <KeyValuePair key="spanId" value="%X{spanId}" />
             </JsonExtLayout>
       -->
       <PatternLayout pattern="${LOG_CONSOLE_PATTERN}"/>
@@ -63,6 +65,8 @@
       <JsonExtLayout complete="true" compact="false" eventEol="true" properties="true" locationInfo="true" includeStacktrace="true" stacktraceAsString="false" objectMessageAsJsonObject="false">
         <KeyValuePair key="serviceId" value="${SERVICE_ID}"/>
         <KeyValuePair key="profile" value="${PROFILE}" />
+        <KeyValuePair key="traceId" value="%X{traceId}" />
+        <KeyValuePair key="spanId" value="%X{spanId}" />
       </JsonExtLayout>
       <Policies>
         <TimeBasedTriggeringPolicy interval="${LOG_INTERVAL}"/>

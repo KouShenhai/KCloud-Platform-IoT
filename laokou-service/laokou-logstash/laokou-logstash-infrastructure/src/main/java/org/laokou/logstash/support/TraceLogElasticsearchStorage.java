@@ -47,7 +47,7 @@ public class TraceLogElasticsearchStorage extends AbstractTraceLogStorage {
 		List<TraceLogIndex> list = messages.stream().map(this::getTraceLogIndex).filter(Objects::nonNull).toList();
 		elasticsearchIndexTemplate
 			.asyncCreateIndex(getIndexName(), TRACE_INDEX, TraceLogIndex.class, virtualThreadExecutor)
-			.thenComposeAsync(result -> elasticsearchDocumentTemplate.asyncBulkCreateDocuments(getIndexName(), list,
+			.thenComposeAsync(_ -> elasticsearchDocumentTemplate.asyncBulkCreateDocuments(getIndexName(), list,
 					virtualThreadExecutor), virtualThreadExecutor)
 			.join();
 	}

@@ -71,7 +71,7 @@ public final class TreeUtils {
 		}
 		List<T> nodes = new ArrayList<>(treeNodes);
 		// 添加根节点
-		nodes.add(rootNode);
+		nodes.addFirst(rootNode);
 		// list转map
 		Map<Long, T> nodeMap = new LinkedHashMap<>(nodes.size());
 		for (T node : nodes) {
