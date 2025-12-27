@@ -16,12 +16,12 @@
 
 1. 下载并安装 [Gpg4win](https://www.gpg4win.org/)
 2. 验证安装:
-   ```powershell
+   ```shell
    gpg --version
    ```
 
 3. 生成 GPG 密钥对:
-   ```powershell
+   ```shell
    gpg --gen-key
    ```
    按提示输入:
@@ -30,14 +30,18 @@
    - 密码 (请妥善保管)
 
 4. 查看密钥:
-   ```powershell
+   ```shell
    gpg --list-keys
    ```
 
 5. 发布公钥到密钥服务器:
-   ```powershell
+   ```shell
    gpg --keyserver keyserver.ubuntu.com --send-keys <YOUR_KEY_ID>
    ```
+6. 验证密钥
+```shell
+gpg --keyserver keyserver.ubuntu.com --recv-keys <YOUR_KEY_ID>
+```
 
 #### Linux/Mac 系统
 
@@ -86,7 +90,7 @@ gpg --keyserver keyserver.ubuntu.com --send-keys <YOUR_KEY_ID>
 ```
 
 **安全建议**: 使用环境变量存储敏感信息:
-```powershell
+```shell
 # Windows PowerShell
 $env:GPG_PASSPHRASE="your_passphrase"
 
@@ -113,15 +117,20 @@ export GPG_PASSPHRASE="your_passphrase"
 
 #### 完整发布 (包含 GPG 签名)
 
-```powershell
-mvn clean deploy -Pmaven-release
+```shell
+# 发布GitHub【快照版本】
+mvn clean deploy -P github-snapshot -DskipTests
+# 发布Maven Central【快照版本】
+mvn clean deploy -P maven-snapshot -DskipTests
+# 发布Maven Central【正式版本】
+mvn clean deploy -P maven-release -DskipTests
 ```
 
 #### 跳过 GPG 签名 (测试用)
 
 如果您还没有配置 GPG 或只是想测试构建流程:
 
-```powershell
+```shell
 mvn clean deploy -Pmaven-release -Dgpg.skip=true
 ```
 
@@ -239,7 +248,7 @@ mvn clean deploy -Pmaven-release -Dgpg.skip=true
    ```
 
 3. 使用 versions-maven-plugin 批量更新版本:
-   ```powershell
+   ```shell
    mvn versions:set -DnewVersion=4.1.0
    mvn versions:commit
    ```
