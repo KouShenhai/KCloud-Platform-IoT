@@ -84,7 +84,7 @@ public enum OperateTypeEnum {
 	}
 
 	public abstract Object execute(String name, String key, ProceedingJoinPoint point,
-			CacheManager redissonCacheManager);
+			CacheManager cacheManager);
 
 	public static Cache getCache(CacheManager cacheManager, String name) {
 		Cache cache = cacheManager.getCache(name);

@@ -56,9 +56,9 @@ public final class RSAUtils {
 			PUBLIC_KEY = getKey("/conf/publicKey.scr");
 			PRIVATE_KEY = getKey("/conf/privateKey.scr");
 		}
-		catch (IOException e) {
-			log.error("读取私钥或密钥失败，错误信息：{}", e.getMessage(), e);
-			throw new IllegalArgumentException(e);
+		catch (IOException ex) {
+			log.error("读取私钥或密钥失败，错误信息：{}", ex.getMessage(), ex);
+			throw new IllegalArgumentException(ex);
 		}
 	}
 
@@ -95,9 +95,9 @@ public final class RSAUtils {
 			try {
 				return new String(decryptByRSAPrivateKey(str, privateKey), StandardCharsets.UTF_8);
 			}
-			catch (Exception e) {
-				log.error("RSA解密失败【私钥】，错误信息：{}", e.getMessage(), e);
-				throw new SystemException("S_RSA_DecryptFailedByPrivateKey", "RSA解密失败，请检查私钥是否正确", e);
+			catch (Exception ex) {
+				log.error("RSA解密失败【私钥】，错误信息：{}", ex.getMessage(), ex);
+				throw new SystemException("S_RSA_DecryptFailedByPrivateKey", "RSA解密失败，请检查私钥是否正确", ex);
 			}
 		}
 		return str;

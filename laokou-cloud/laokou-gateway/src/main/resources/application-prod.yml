@@ -15,20 +15,44 @@
 #    *
 #    */
 spring:
+  data:
+    redis:
+      client-type: lettuce
+      host: redis
+      port: 6379
+      password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
+      connect-timeout: 60000ms #连接超时时长（毫秒）
+      timeout: 60000ms #超时时长（毫秒）
+      lettuce:
+        pool:
+          max-active: -1 #连接池最大连接数（使用负值表示无极限）
+          max-wait: -1 #连接池最大阻塞等待时间（使用负值表示没有限制）
+          max-idle: 500 #连接池最大空闲连接
+          min-idle: 200 #连接池最小空间连接
+  config:
+    import:
+      # 临时配置文件【解决拉取nacos配置文件时，group默认为DEFAULT_GROUP问题】
+      - optional:nacos:laokou-gateway.yaml?refreshEnabled=true&group=${NACOS-GROUP}
   cloud:
     nacos:
       discovery:
         # 开启服务注册&发现
         enabled: true
+        # 服务注册&发现-地址
         server-addr: ${NACOS-DISCOVERY-ADDRESS}
+        # 服务注册&发现-命名空间
         namespace: ${NACOS-NAMESPACE}
+        # 服务注册&发现-用户名
         username: ${NACOS-USERNAME}
+        # 服务注册&发现-密码
         password: ${NACOS-PASSWORD}
+        # 服务注册&发现-分组
         group: ${NACOS-GROUP}
-        # https
+        # true支持https，false不支持https
         secure: @SSL-ENABLED@
         # true 临时 false 持久
         ephemeral: true
+        # 服务注册&发现-集群名称
         cluster-name: ${NACOS-CLUSTER-NAME}
         heart-beat:
           # 开启心跳检测
@@ -40,13 +64,19 @@ spring:
       config:
         # 开启配置中心
         enabled: true
+        # 配置中心-地址
         server-addr: ${NACOS-CONFIG-ADDRESS}
+        # 配置中心-命名空间
         namespace: ${NACOS-NAMESPACE}
+        # 配置中心-用户名
         username: ${NACOS-USERNAME}
+        # 配置中心-密码
         password: ${NACOS-PASSWORD}
-        cluster-name: ${NACOS-CLUSTER-NAME}
-        # https://github.com/alibaba/spring-cloud-alibaba/blob/2021.x/spring-cloud-alibaba-docs/src/main/asciidoc-zh/nacos-config.adoc
-        # 指定读取的文件格式
-        file-extension: yaml
+        # 配置中心-分组
         group: ${NACOS-GROUP}
+        # 配置中心-集群名称
+        cluster-name: ${NACOS-CLUSTER-NAME}
+        # 配置中心-开启自动刷新
         refresh-enabled: true
+        # 配置中心-配置文件格式
+        file-extension: yaml
