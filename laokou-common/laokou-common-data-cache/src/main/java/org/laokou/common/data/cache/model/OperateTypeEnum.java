@@ -43,7 +43,7 @@ public enum OperateTypeEnum {
 				if (ObjectUtils.isNotNull(valueWrapper)) {
 					return valueWrapper.get();
 				}
-				return null;
+				return point.proceed();
 			}
 			catch (GlobalException e) {
 				// 系统异常/业务异常/参数异常直接捕获并抛出
@@ -83,8 +83,7 @@ public enum OperateTypeEnum {
 		this.desc = desc;
 	}
 
-	public abstract Object execute(String name, String key, ProceedingJoinPoint point,
-			CacheManager cacheManager);
+	public abstract Object execute(String name, String key, ProceedingJoinPoint point, CacheManager cacheManager);
 
 	public static Cache getCache(CacheManager cacheManager, String name) {
 		Cache cache = cacheManager.getCache(name);

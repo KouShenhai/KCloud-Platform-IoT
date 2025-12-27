@@ -44,9 +44,9 @@ export default () => {
 	const [captchaImage, setCaptchaImage] = useState<string>('');
 	const [uuid, setUuid] = useState<string>('');
 	const [publicKey, setPublicKey] = useState<string>('');
-	const formRef = useRef<ProFormInstance>();
-	const mailCaptchaRef = useRef<CaptFieldRef | null | undefined>();
-	const mobileCaptchaRef = useRef<CaptFieldRef | null | undefined>();
+	const formRef = useRef<ProFormInstance>(null);
+	const mailCaptchaRef = useRef<CaptFieldRef | null | undefined>(null);
+	const mobileCaptchaRef = useRef<CaptFieldRef | null | undefined>(null);
 
 	const setFormField = (form: API.LoginParam) => {
 		formRef?.current?.setFieldsValue(form);

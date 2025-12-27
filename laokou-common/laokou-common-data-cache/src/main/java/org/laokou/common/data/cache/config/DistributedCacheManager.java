@@ -39,6 +39,8 @@ import org.laokou.common.redis.util.RedisUtils;
 import org.redisson.MapCacheNativeWrapper;
 import org.redisson.api.RMapCache;
 import org.redisson.api.options.MapOptions;
+import org.redisson.spring.cache.CacheConfig;
+import org.redisson.spring.cache.RedissonCache;
 import org.redisson.spring.cache.RedissonSpringCacheManager;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
@@ -47,6 +49,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.stream.Collectors;
 
 /**
  * 分布式数据缓存扩展管理类. {@link org.springframework.cache.CacheManager}. implementation backed by
@@ -63,13 +66,16 @@ final class DistributedCacheManager implements CacheManager {
 
 	private boolean dynamic = true;
 
-	private final Map<String, SpringCacheProperties.DistributedCacheConfig> configMap;
+	private final Map<String, CacheConfig> configMap;
 
 	private final ConcurrentMap<String, Cache> instanceMap;
 
 	public DistributedCacheManager(RedisUtils redisUtils, SpringCacheProperties properties) {
 		this.redisUtils = redisUtils;
-		this.configMap = properties.getDistributedConfigs();
+		this.configMap = properties.getDistributedConfigs()
+			.entrySet()
+			.stream()
+			.collect(Collectors.toMap(Map.Entry::getKey, entry -> createConfig(entry.getValue())));
 		this.instanceMap = new ConcurrentHashMap<>(configMap.size());
 	}
 
@@ -85,9 +91,9 @@ final class DistributedCacheManager implements CacheManager {
 		return createMapCache(name, createDefaultConfig(name));
 	}
 
-	private Cache createMapCache(String name, SpringCacheProperties.DistributedCacheConfig config) {
+	private Cache createMapCache(String name, CacheConfig config) {
 		RMapCache<Object, Object> map = getMapCache(name);
-		return instanceMap.computeIfAbsent(name, _ -> new RedissonCacheNative(map, config.getTtl()));
+		return instanceMap.computeIfAbsent(name, _ -> new RedissonCache(map, config, false));
 	}
 
 	private RMapCache<Object, Object> getMapCache(String name) {
@@ -99,11 +105,17 @@ final class DistributedCacheManager implements CacheManager {
 		return Collections.unmodifiableSet(configMap.keySet());
 	}
 
-	private SpringCacheProperties.DistributedCacheConfig createDefaultConfig(String name) {
+	private CacheConfig createDefaultConfig(String name) {
 		if (configMap.containsKey(name)) {
 			return configMap.get(name);
 		}
-		return new SpringCacheProperties.DistributedCacheConfig();
+		return createConfig(new SpringCacheProperties.DistributedCacheConfig());
+	}
+
+	private CacheConfig createConfig(SpringCacheProperties.DistributedCacheConfig distributedCacheConfig) {
+		CacheConfig cacheConfig = new CacheConfig();
+		cacheConfig.setTTL(distributedCacheConfig.getTtl().toMillis());
+		return cacheConfig;
 	}
 
 }

@@ -35,7 +35,9 @@ public enum LoginTypeEnum {
 
 	MOBILE("mobile", "手机号登录"),
 
-	MAIL("mail", "邮箱登录");
+	MAIL("mail", "邮箱登录"),
+
+	TEST("test", "测试登录");
 
 	private final String code;
 

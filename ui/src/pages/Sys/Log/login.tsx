@@ -25,7 +25,7 @@ export default () => {
 	};
 
 	const access = useAccess();
-	const actionRef = useRef();
+	const actionRef = useRef(null);
 	const [list, setList] = useState<TableColumns[]>([]);
 	const [param, setParam] = useState<any>({});
 	const [loading, setLoading] = useState(false)
