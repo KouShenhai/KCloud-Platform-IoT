@@ -47,6 +47,8 @@ class RegexUtilsTest {
 		Assertions.assertThat(RegexUtils.matches("^[A-Za-z]+$|^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z0-9]+$", "admin123"))
 			.isTrue();
 		Assertions.assertThat(RegexUtils.getRegexValue("/v1/test", "/(v\\d+)/")).isEqualTo("v1");
+		Assertions.assertThat(RegexUtils.matches("%X\\{(traceId|spanId)\\}", "%X{traceId}")).isTrue();
+		Assertions.assertThat(RegexUtils.matches("%X\\{(traceId|spanId)\\}", "%X{spanId}")).isTrue();
 	}
 
 }
