@@ -1,4 +1,26 @@
+#   /*
+#    * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+#    *
+#    * Licensed under the Apache License, Version 2.0 (the "License");
+#    * you may not use this file except in compliance with the License.
+#    * You may obtain a copy of the License at
+#    *
+#    *   http://www.apache.org/licenses/LICENSE-2.0
+#    *
+#    * Unless required by applicable law or agreed to in writing, software
+#    * distributed under the License is distributed on an "AS IS" BASIS,
+#    * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#    * See the License for the specific language governing permissions and
+#    * limitations under the License.
+#    *
+#    */
 spring:
+  # 邮箱配置
+  mail:
+    host: smtp.163.com
+    username: koushenhai@163.com
+    password: ENC(lyyF4qBHGnbwEHfz/RSj2JtahbLqWjMrkFz0hGqcND3Hp19Ea6aJejxqNBYCCGnL7iw8n11Y1xvM7Hp9EDPgtg==)
+    default-encoding: UTF-8
   datasource:
     dynamic:
       # 默认false,建议线上关闭
@@ -9,7 +31,7 @@ spring:
         master:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: @DS-DRIVER@
-          url: jdbc:@DS-PLATFORM@://@DS-HOST@:@DS-PORT@/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false
+          url: jdbc:@DS-PLATFORM@://@DS-HOST@:@DS-PORT@/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-auth&useSSL=false
           username: ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)
           password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -24,7 +46,7 @@ spring:
         domain:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: @DS-DRIVER@
-          url: jdbc:@DS-PLATFORM@://@DS-HOST@:@DS-PORT@/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false
+          url: jdbc:@DS-PLATFORM@://@DS-HOST@:@DS-PORT@/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-auth&useSSL=false
           username: ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)
           password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -60,11 +82,14 @@ spring:
       # 单次poll()调用返回的记录数
       max-poll-records: 500
       # 键的序列化方式
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
       # 值的序列化方式
-      value-deserializer: org.laokou.common.kafka.config.ForyKafkaDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
       # 单位拉取量
       fetch-min-size: 102400
+      properties:
+        spring.deserializer.key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
+        spring.deserializer.value.delegate.class: org.laokou.common.kafka.config.ForyKafkaDeserializer
     producer:
       # 发生错误后，消息重发的次数。
       retries: 5
@@ -99,7 +124,7 @@ spring:
   config:
     import:
       # 临时配置文件【解决拉取nacos配置文件时，group默认为DEFAULT_GROUP问题】
-      - optional:nacos:laokou-admin.yaml?refreshEnabled=true&group=${NACOS-GROUP}
+      - optional:nacos:laokou-auth.yaml?refreshEnabled=true&group=${NACOS-GROUP}
   cloud:
     nacos:
       discovery:
@@ -135,5 +160,10 @@ spring:
         file-extension: yaml
         group: ${NACOS-GROUP}
         refresh-enabled: true
-        import-check:
-          enabled: false
+
+sms:
+  type: gyy
+  gyy:
+    template-id: ENC(h+6CtZDd1st7pAOcFNcjNDmglNIkRsEMFAwPv76STLe7kxdTX0lyX+ZJ4tO9zY3Bd7Xp5511saK9E7nr0ZlnwvPypbTBqz6U/ICCu03EEo4=)
+    sign-id: ENC(6DZexca4yMNi/4FiyS0Vwa9uSRUidUpCo9N390puXIZBAGC/T3PxSqF01Bv62TzRbY6/O2IsAKISDqfEtDooofRglNcmN9dVx55pZEwV4ck=)
+    appcode: ENC(QIuOx6iFUg1VuPvrdarC3Q4kWhIMsnRjPSkAN+cPoRHitIJ58xicWbaT2sAuVo+PW+SBdJfsp0yUpBZX2usHzxOVosw9WYBuBsQYtns2/9c=)

@@ -42,13 +42,13 @@ import java.security.Principal;
 @Component
 public class TokenRemoveCmdExe {
 
-	private final CacheManager redissonCacheManager;
+	private final CacheManager distributedCacheManager;
 
 	private final OAuth2AuthorizationService authorizationService;
 
-	public TokenRemoveCmdExe(@Qualifier("redissonCacheManager") CacheManager redissonCacheManager,
+	public TokenRemoveCmdExe(@Qualifier("distributedCacheManager") CacheManager distributedCacheManager,
 			OAuth2AuthorizationService authorizationService) {
-		this.redissonCacheManager = redissonCacheManager;
+		this.distributedCacheManager = distributedCacheManager;
 		this.authorizationService = authorizationService;
 	}
 
@@ -74,7 +74,7 @@ public class TokenRemoveCmdExe {
 
 	private void evictCache(OAuth2Authorization authorization) {
 		if (authorization.getAttribute(Principal.class.getName()) instanceof User user) {
-			OperateTypeEnum.getCache(redissonCacheManager, NameConstants.USER_MENU).evict(user.id());
+			OperateTypeEnum.getCache(distributedCacheManager, NameConstants.USER_MENU).evict(user.id());
 		}
 	}
 

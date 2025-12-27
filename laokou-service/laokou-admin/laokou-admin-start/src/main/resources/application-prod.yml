@@ -96,6 +96,10 @@ spring:
       auto-create: true
     template:
       observation-enabled: true
+  config:
+    import:
+      # 临时配置文件【解决拉取nacos配置文件时，group默认为DEFAULT_GROUP问题】
+      - optional:nacos:laokou-admin.yaml?refreshEnabled=true&group=${NACOS-GROUP}
   cloud:
     nacos:
       discovery:

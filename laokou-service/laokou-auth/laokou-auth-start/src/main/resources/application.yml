@@ -66,12 +66,6 @@ spring:
       enabled: true
   lifecycle:
     timeout-per-shutdown-phase: 2m
-  # mail
-  mail:
-    host: smtp.163.com
-    username: koushenhai@163.com
-    password: ENC(lyyF4qBHGnbwEHfz/RSj2JtahbLqWjMrkFz0hGqcND3Hp19Ea6aJejxqNBYCCGnL7iw8n11Y1xvM7Hp9EDPgtg==)
-    default-encoding: UTF-8
   # security
   security:
     oauth2:
@@ -160,106 +154,6 @@ spring:
               - /v1/captchas/send/mobile=laokou-auth
             DELETE:
               - /v1/tokens=laokou-auth
-  datasource:
-    dynamic:
-      # 默认false,建议线上关闭
-      p6spy: false
-      #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源
-      strict: true
-      datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: @DS-DRIVER@
-          url: jdbc:@DS-PLATFORM@://@DS-HOST@:@DS-PORT@/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-auth&useSSL=false
-          username: ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)
-          password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-        domain:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: @DS-DRIVER@
-          url: jdbc:@DS-PLATFORM@://@DS-HOST@:@DS-PORT@/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-auth&useSSL=false
-          username: ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)
-          password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
-          # https://blog.csdn.net/u014644574/article/details/123680515
-          hikari:
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-  data:
-    redis:
-      client-type: lettuce
-      host: redis
-      port: 6379
-      password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
-      connect-timeout: 60000ms #连接超时时长（毫秒）
-      timeout: 60000ms #超时时长（毫秒）
-      lettuce:
-        pool:
-          max-active: -1 #连接池最大连接数（使用负值表示无极限）
-          max-wait: -1 #连接池最大阻塞等待时间（使用负值表示没有限制）
-          max-idle: 500 #连接池最大空闲连接
-          min-idle: 200 #连接池最小空间连接
-  kafka:
-    bootstrap-servers: kafka:9092
-    consumer:
-      # 消费者组ID
-      group-id: ${spring.application.name}
-      # 禁用自动提交（按周期）已消费offset
-      enable-auto-commit: false
-      # 单次poll()调用返回的记录数
-      max-poll-records: 500
-      # 键的序列化方式
-      key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
-      # 值的序列化方式
-      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
-      # 单位拉取量
-      fetch-min-size: 102400
-      properties:
-        spring.deserializer.key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
-        spring.deserializer.value.delegate.class: org.laokou.common.kafka.config.ForyKafkaDeserializer
-    producer:
-      # 发生错误后，消息重发的次数。
-      retries: 5
-      # 当有多个消息需要被发送到同一个分区时，生产者会把它们放在同一个批次里。该参数指定了一个批次可以使用的内存大小，按照字节数计算。
-      batch-size: 1048576
-      # 设置生产者内存缓冲区的大小。
-      buffer-memory: 33554432
-      # 键的序列化方式
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      # 值的序列化方式
-      value-serializer: org.laokou.common.kafka.config.ForyKafkaSerializer
-      # acks=0 ： 生产者在成功写入消息之前不会等待任何来自服务器的响应。
-      # acks=1 ： 只要集群的首领节点收到消息，生产者就会收到一个来自服务器成功响应。
-      # acks=all ：只有当所有参与复制的节点全部收到消息时，生产者才会收到一个来自服务器的成功响应。
-      acks: all
-      # 启用消息压缩
-      compression-type: lz4
-    listener:
-      # 在侦听器容器中运行的线程数。
-      concurrency: 5
-      # 批量提交模式
-      ack-mode: manual
-      # 批量batch类型
-      type: batch
-      # topic不存在报错
-      missing-topics-fatal: true
-      observation-enabled: true
-    admin:
-      auto-create: true
-    template:
-      observation-enabled: true
   cloud:
     # Loadbalancer配置
     loadbalancer:
@@ -294,9 +188,6 @@ spring:
     distributed-configs:
       oss_resource:
         ttl: 5m
-        max-idle-time: 1m
-        max-size: 1024
-        eviction-mode: LFU
 # actuator
 management:
   endpoints:
@@ -331,13 +222,6 @@ knife4j:
   enable: false
   setting:
     language: zh_cn
-
-sms:
-  type: gyy
-  gyy:
-    template-id: ENC(h+6CtZDd1st7pAOcFNcjNDmglNIkRsEMFAwPv76STLe7kxdTX0lyX+ZJ4tO9zY3Bd7Xp5511saK9E7nr0ZlnwvPypbTBqz6U/ICCu03EEo4=)
-    sign-id: ENC(6DZexca4yMNi/4FiyS0Vwa9uSRUidUpCo9N390puXIZBAGC/T3PxSqF01Bv62TzRbY6/O2IsAKISDqfEtDooofRglNcmN9dVx55pZEwV4ck=)
-    appcode: ENC(QIuOx6iFUg1VuPvrdarC3Q4kWhIMsnRjPSkAN+cPoRHitIJ58xicWbaT2sAuVo+PW+SBdJfsp0yUpBZX2usHzxOVosw9WYBuBsQYtns2/9c=)
 
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml
