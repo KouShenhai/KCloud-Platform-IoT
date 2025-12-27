@@ -38,6 +38,11 @@
       <name>laokou</name>
       <email>2413176044@qq.com</email>
       <organization>https://github.com/KouShenhai</organization>
+      <roles>
+        <role>Project Manager</role>
+        <role>Developer</role>
+        <role>Architect</role>
+      </roles>
     </developer>
   </developers>
   <scm>
@@ -788,6 +793,16 @@
       </snapshots>
     </repository>
     <repository>
+      <id>maven-release</id>
+      <url>https://central.sonatype.com/repository/maven-releases/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
        <!--
 
          需要在 settings.xml 配置
@@ -907,6 +922,12 @@
     </profile>
     <profile>
       <id>maven-snapshot</id>
+      <distributionManagement>
+        <snapshotRepository>
+          <id>maven-snapshot</id>
+          <url>https://central.sonatype.com/repository/maven-snapshot/</url>
+        </snapshotRepository>
+      </distributionManagement>
       <build>
         <plugins>
           <plugin>
@@ -927,6 +948,12 @@
     </profile>
     <profile>
       <id>maven-release</id>
+      <distributionManagement>
+        <repository>
+          <id>maven-release</id>
+          <url>https://central.sonatype.com/repository/maven-releases/</url>
+        </repository>
+      </distributionManagement>
       <build>
         <plugins>
           <!-- Central Publishing Plugin -->
@@ -993,10 +1020,8 @@
                   <goal>sign</goal>
                 </goals>
                 <configuration>
-                  <gpgArguments>
-                    <arg>--pinentry-mode</arg>
-                    <arg>loopback</arg>
-                  </gpgArguments>
+                  <executable>d:\Program Files (x86)\GnuPG\bin\gpg.exe</executable>
+                  <keyname>laokou</keyname>
                 </configuration>
               </execution>
             </executions>
@@ -1019,8 +1044,8 @@
         <configuration>
           <!--备份版本-->
           <generateBackupPoms>true</generateBackupPoms>
-          <newVersion>4.0.0</newVersion>
-          <oldVersion>4.0.0-M1</oldVersion>
+          <newVersion>4.0.1</newVersion>
+          <oldVersion>4.0.0</oldVersion>
         </configuration>
       </plugin>
       <plugin>
