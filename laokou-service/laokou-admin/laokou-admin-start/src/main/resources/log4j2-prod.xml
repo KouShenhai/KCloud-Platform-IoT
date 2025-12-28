@@ -114,6 +114,7 @@
       <!-- 客户端发送请求到kafka broker超时时间，单位为毫秒，2秒内没有从kafka broker收到响应，则认为请求失败则抛出异常 -->
       <Property name="request.timeout.ms">2000</Property>
       <Property name="bootstrap.servers">kafka:9092</Property>
+      <Property name="value.serializer">org.apache.kafka.common.serialization.ByteArraySerializer</Property>
     </Kafka>
   </Appenders>
   <!--

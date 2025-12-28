@@ -19,10 +19,11 @@ package org.laokou.logstash.support;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.util.RegexUtils;
 import org.laokou.common.i18n.common.constant.DateConstants;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.InstantUtils;
+import org.laokou.common.i18n.util.JacksonUtils;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.logstash.gatewayimpl.database.dataobject.TraceLogIndex;
 
 @Slf4j
@@ -36,15 +37,15 @@ public abstract class AbstractTraceLogStorage implements TraceLogStorage {
 	}
 
 	protected TraceLogIndex getTraceLogIndex(Object obj) {
-		if (obj instanceof TraceLogIndex traceLogIndex && isRetain(traceLogIndex.getTraceId())
-				&& isRetain(traceLogIndex.getSpanId())) {
-			return traceLogIndex;
+		if (obj instanceof byte[] buff) {
+			TraceLogIndex traceLogIndex = JacksonUtils.toBean(buff, TraceLogIndex.class);
+			if (!ObjectUtils.equals(traceLogIndex.getTraceId(), "%X{traceId}")
+					&& !ObjectUtils.equals(traceLogIndex.getSpanId(), "%X{spanId}")) {
+				return traceLogIndex;
+			}
+			return null;
 		}
 		return null;
-	}
-
-	private boolean isRetain(String str) {
-		return !RegexUtils.matches("%X\\{(traceId|spanId)\\}", str);
 	}
 
 }
