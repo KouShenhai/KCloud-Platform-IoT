@@ -29,8 +29,8 @@ import java.lang.annotation.Target;
  */
 @Inherited
 @Documented
-@Target({ ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
+@Target({ ElementType.ANNOTATION_TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER })
 public @interface GrpcClient {
 
 	String serviceId();

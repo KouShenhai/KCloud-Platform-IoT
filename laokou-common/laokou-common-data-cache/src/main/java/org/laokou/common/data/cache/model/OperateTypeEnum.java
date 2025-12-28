@@ -39,11 +39,12 @@ public enum OperateTypeEnum {
 		@Override
 		public Object execute(String name, String key, ProceedingJoinPoint point, CacheManager cacheManager) {
 			try {
-				Cache.ValueWrapper valueWrapper = getCache(cacheManager, name).putIfAbsent(key, point.proceed());
+				Cache cache = getCache(cacheManager, name);
+				Cache.ValueWrapper valueWrapper = cache.get(key);
 				if (ObjectUtils.isNotNull(valueWrapper)) {
 					return valueWrapper.get();
 				}
-				return point.proceed();
+				return cache.putIfAbsent(key, point.proceed());
 			}
 			catch (GlobalException e) {
 				// 系统异常/业务异常/参数异常直接捕获并抛出
