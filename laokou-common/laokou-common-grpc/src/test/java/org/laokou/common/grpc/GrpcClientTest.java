@@ -31,6 +31,7 @@ import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 
@@ -72,6 +73,7 @@ class GrpcClientTest {
 		Assertions.assertThat(helloReply.getMessage()).isEqualTo("Hello ==> test");
 	}
 
+	@EnableDiscoveryClient
 	@SpringBootApplication(scanBasePackages = { "org.laokou" })
 	static class GrpcTest {
 

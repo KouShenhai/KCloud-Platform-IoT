@@ -27,6 +27,7 @@ import org.springframework.grpc.client.GrpcClientFactory;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 /**
  * @author laokou
@@ -39,26 +40,37 @@ public record GrpcClientBeanPostProcessor(GrpcClientFactory grpcClientFactory,
 			throws BeansException {
 		Class<?> clazz = bean.getClass();
 		do {
-			processFields(bean, clazz);
+			setFields(bean, clazz);
+			setMethods(bean, clazz);
 			clazz = clazz.getSuperclass();
 		}
 		while (ObjectUtils.isNotNull(clazz));
 		return bean;
 	}
 
-	private void processFields(Object bean, Class<?> clazz) {
+	private void setFields(Object bean, Class<?> clazz) {
 		for (Field field : clazz.getDeclaredFields()) {
 			GrpcClient grpcClient = AnnotationUtils.findAnnotation(field, GrpcClient.class);
 			if (ObjectUtils.isNotNull(grpcClient)) {
 				ReflectionUtils.makeAccessible(field);
-				ReflectionUtils.setField(field, bean, processInjectionPoint(field.getType(), grpcClient));
+				ReflectionUtils.setField(field, bean, getClient(field.getType(), grpcClient));
 			}
 		}
 	}
 
-	private <T> T processInjectionPoint(Class<T> injectionType, GrpcClient grpcClient) {
+	private void setMethods(Object bean, Class<?> clazz) {
+		for (Method method : clazz.getDeclaredMethods()) {
+			GrpcClient grpcClient = AnnotationUtils.findAnnotation(method, GrpcClient.class);
+			if (ObjectUtils.isNotNull(grpcClient)) {
+				ReflectionUtils.makeAccessible(method);
+				ReflectionUtils.invokeMethod(method, bean, getClient(method.getParameterTypes()[0], grpcClient));
+			}
+		}
+	}
+
+	private <T> T getClient(Class<T> type, @NonNull GrpcClient grpcClient) {
 		String target = String.format("discovery://%s", grpcClient.serviceId());
-		return grpcClientFactory.getClient(target, injectionType, null);
+		return grpcClientFactory.getClient(target, type, null);
 	}
 
 }
