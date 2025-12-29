@@ -167,7 +167,7 @@
     <!--jsoup版本-->
     <jsoup.version>1.21.2</jsoup.version>
     <!--jasypt版本-->
-    <jasypt.version>3.0.5</jasypt.version>
+    <jasypt.version>4.0.3</jasypt.version>
     <!--captcha版本-->
     <easy-captcha.version>1.6.2</easy-captcha.version>
     <!--guava版本-->
