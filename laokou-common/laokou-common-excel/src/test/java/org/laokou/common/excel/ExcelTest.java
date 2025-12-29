@@ -37,7 +37,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.TestConstructor;
-import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.postgresql.PostgreSQLContainer;
 
 import java.io.FileOutputStream;
 import java.nio.file.Path;
@@ -57,8 +57,7 @@ class ExcelTest {
 
 	private final MybatisUtils mybatisUtils;
 
-	static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(DockerImageNames.postgresql())
-		.withUsername("root")
+	static PostgreSQLContainer postgres = new PostgreSQLContainer(DockerImageNames.postgresql()).withUsername("root")
 		.withPassword("laokou123")
 		.withInitScripts("init.sql")
 		.withDatabaseName("kcloud_platform_test");
