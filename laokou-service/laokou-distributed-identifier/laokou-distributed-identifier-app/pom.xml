@@ -4,11 +4,11 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-distributed-identifier</artifactId>
-    <version>4.0.0</version>
+    <version>4.0.1-SNAPSHOT</version>
   </parent>
 
   <artifactId>laokou-distributed-identifier-app</artifactId>
-  <version>4.0.0</version>
+  <version>4.0.1-SNAPSHOT</version>
 
   <dependencies>
     <dependency>

@@ -21,11 +21,12 @@ import org.laokou.common.redis.util.RedisUtils;
 import org.redisson.api.RedissonClient;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.boot.data.redis.autoconfigure.DataRedisAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
@@ -33,7 +34,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  *
  * @author laokou
  */
-@AutoConfiguration
+@AutoConfiguration(before = DataRedisAutoConfiguration.class)
 @ConditionalOnClass(LettuceConnectionFactory.class)
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class RedisAutoConfig {
@@ -44,7 +45,6 @@ public class RedisAutoConfig {
 	 * @return RedisTemplate
 	 */
 	@Bean("redisTemplate")
-	@ConditionalOnMissingBean(RedisTemplate.class)
 	public RedisTemplate<String, Object> redisTemplate(LettuceConnectionFactory lettuceConnectionFactory) {
 		RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
 		redisTemplate.setConnectionFactory(lettuceConnectionFactory);
@@ -65,8 +65,13 @@ public class RedisAutoConfig {
 		return redisTemplate;
 	}
 
-	@Bean
-	public RedisUtils redisUtil(RedissonClient redissonClient, RedisTemplate<String, Object> redisTemplate) {
+	@Bean("stringRedisTemplate")
+	StringRedisTemplate stringRedisTemplate(LettuceConnectionFactory lettuceConnectionFactory) {
+		return new StringRedisTemplate(lettuceConnectionFactory);
+	}
+
+	@Bean("redisUtils")
+	public RedisUtils redisUtils(RedissonClient redissonClient, RedisTemplate<String, Object> redisTemplate) {
 		return new RedisUtils(redisTemplate, redissonClient);
 	}
 

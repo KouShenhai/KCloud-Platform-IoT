@@ -44,7 +44,7 @@ class GrpcClientTest {
 	@GrpcClient(serviceId = "laokou-common-grpc")
 	private SimpleGrpc.SimpleBlockingV2Stub simpleBlockingV2Stub;
 
-	static final NacosContainer nacos = new NacosContainer(DockerImageNames.nacos("v3.1.0"));
+	static final NacosContainer nacos = new NacosContainer(DockerImageNames.nacos("v3.1.0"), 8848, 9848);
 
 	@BeforeAll
 	static void beforeAll() {
@@ -57,12 +57,17 @@ class GrpcClientTest {
 	}
 
 	@DynamicPropertySource
-	static void configureProperties(DynamicPropertyRegistry registry) {
+	static void configureProperties(DynamicPropertyRegistry registry) throws InterruptedException {
 		registry.add("spring.cloud.nacos.discovery.server-addr", nacos::getServerAddr);
 		registry.add("spring.cloud.nacos.discovery.group", () -> "DEFAULT_GROUP");
 		registry.add("spring.cloud.nacos.discovery.username", () -> "nacos");
 		registry.add("spring.cloud.nacos.discovery.password", () -> "nacos");
 		registry.add("spring.cloud.nacos.discovery.namespace", () -> "public");
+		registry.add("spring.cloud.nacos.config.server-addr", nacos::getServerAddr);
+		registry.add("spring.cloud.nacos.config.group", () -> "DEFAULT_GROUP");
+		registry.add("spring.cloud.nacos.config.username", () -> "nacos");
+		registry.add("spring.cloud.nacos.config.password", () -> "nacos");
+		registry.add("spring.cloud.nacos.config.namespace", () -> "public");
 	}
 
 	@Test

@@ -25,20 +25,20 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
-import org.laokou.common.i18n.util.SpringContextUtils;
 import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
+import org.laokou.common.i18n.util.SpringContextUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
+import org.laokou.common.redis.util.ReactiveRedisUtils;
 import org.laokou.gateway.constant.GatewayConstants;
+import org.redisson.api.RMapReactive;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionRepository;
 import org.springframework.context.ApplicationEvent;
-import org.springframework.data.redis.core.ReactiveHashOperations;
-import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.stereotype.Repository;
 import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
@@ -48,7 +48,6 @@ import reactor.core.scheduler.Schedulers;
 import javax.annotation.PostConstruct;
 import java.io.Serial;
 import java.util.Collection;
-import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -77,16 +76,16 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 
 	private final ConfigService configService;
 
-	private final ReactiveHashOperations<String, String, RouteDefinition> reactiveHashOperations;
+	private final RMapReactive<String, RouteDefinition> reactiveMap;
 
 	private final ExecutorService virtualThreadExecutor;
 
-	public NacosRouteDefinitionRepository(NacosConfigManager nacosConfigManager,
-			ReactiveRedisTemplate<String, Object> reactiveRedisTemplate, ExecutorService virtualThreadExecutor) {
+	public NacosRouteDefinitionRepository(NacosConfigManager nacosConfigManager, ReactiveRedisUtils reactiveRedisUtils,
+			ExecutorService virtualThreadExecutor) {
 		this.dataId = "router.json";
 		this.group = nacosConfigManager.getNacosConfigProperties().getGroup();
 		this.configService = nacosConfigManager.getConfigService();
-		this.reactiveHashOperations = reactiveRedisTemplate.opsForHash();
+		this.reactiveMap = reactiveRedisUtils.getMap(RedisKeyUtils.getRouteDefinitionHashKey());
 		this.virtualThreadExecutor = virtualThreadExecutor;
 	}
 
@@ -126,9 +125,8 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	 */
 	@NonNull
 	@Override
-	public Flux<RouteDefinition> getRouteDefinitions() {
-		return reactiveHashOperations.entries(RedisKeyUtils.getRouteDefinitionHashKey())
-			.mapNotNull(Map.Entry::getValue)
+	public Flux<@NonNull RouteDefinition> getRouteDefinitions() {
+		return reactiveMap.valueIterator()
 			.onErrorContinue((throwable, _) -> {
 				if (log.isErrorEnabled()) {
 					log.error("从Redis获取路由失败，错误信息：{}", throwable.getMessage(), throwable);
@@ -139,13 +137,13 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 
 	@NonNull
 	@Override
-	public Mono<Void> save(@NonNull Mono<RouteDefinition> route) {
+	public Mono<@NonNull Void> save(@NonNull Mono<@NonNull RouteDefinition> route) {
 		return Mono.empty();
 	}
 
 	@NonNull
 	@Override
-	public Mono<Void> delete(@NonNull Mono<String> routeId) {
+	public Mono<@NonNull Void> delete(@NonNull Mono<@NonNull String> routeId) {
 		return Mono.empty();
 	}
 
@@ -153,7 +151,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	 * 同步路由【同步Nacos动态路由配置到Redis，并且刷新本地缓存】.
 	 * @return 同步结果
 	 */
-	public Mono<Void> syncRouter() {
+	public Mono<@NonNull Void> syncRouter() {
 		return syncRouter(getRoutes());
 	}
 
@@ -162,14 +160,18 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	 * @param routes 路由
 	 * @return 同步结果
 	 */
-	private Mono<Void> syncRouter(@NonNull Collection<RouteDefinition> routes) {
-		return reactiveHashOperations.delete(RedisKeyUtils.getRouteDefinitionHashKey())
+	private Mono<@NonNull Void> syncRouter(@NonNull Collection<RouteDefinition> routes) {
+		return reactiveMap.delete()
 			.doOnError(throwable -> log.error("删除路由失败，错误信息：{}", throwable.getMessage(), throwable))
 			.doOnSuccess(_ -> publishRefreshRoutesEvent())
 			.thenMany(Flux.fromIterable(routes))
-			.flatMap(router -> reactiveHashOperations
-				.putIfAbsent(RedisKeyUtils.getRouteDefinitionHashKey(), router.getId(), router)
-				.doOnError(throwable -> log.error("保存路由失败，错误信息：{}", throwable.getMessage(), throwable)))
+			.flatMap(router -> {
+				if (StringExtUtils.isEmpty(router.getId())) {
+					return Mono.empty();
+				}
+				return reactiveMap.putIfAbsent(router.getId(), router)
+					.doOnError(throwable -> log.error("保存路由失败，错误信息：{}", throwable.getMessage(), throwable));
+			})
 			.then()
 			.doOnSuccess(_ -> publishRefreshRoutesEvent());
 	}

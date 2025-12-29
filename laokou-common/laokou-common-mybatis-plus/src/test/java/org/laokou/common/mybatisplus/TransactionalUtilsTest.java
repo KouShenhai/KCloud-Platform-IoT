@@ -31,7 +31,7 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.TestConstructor;
 import org.springframework.transaction.TransactionDefinition;
-import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.postgresql.PostgreSQLContainer;
 
 import java.util.List;
 
@@ -47,8 +47,7 @@ class TransactionalUtilsTest {
 
 	private final TransactionalUtils transactionalUtils;
 
-	static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(DockerImageNames.postgresql())
-		.withUsername("root")
+	static PostgreSQLContainer postgres = new PostgreSQLContainer(DockerImageNames.postgresql()).withUsername("root")
 		.withPassword("laokou123")
 		.withInitScripts("init.sql")
 		.withDatabaseName("kcloud_platform_test");

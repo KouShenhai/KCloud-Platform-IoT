@@ -39,7 +39,7 @@ public class NacosContainer extends GenericContainer<NacosContainer> {
 		// 单机启动
 		this.withEnv("MODE", "standalone");
 		// Nacos 用于生成JWT Token的密钥，使用长度大于32字符的字符串，再经过Base64编码。
-		this.withEnv("NACOS_AUTH_TOKEN", "SecretKey012345678901234567890123456789012345678901234567890123456789");
+		this.withEnv("NACOS_AUTH_TOKEN", "U2VjcmV0S2V5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5");
 		// Nacos Server端之间 Inner API的身份标识的Key，必填。
 		this.withEnv("NACOS_AUTH_IDENTITY_KEY", "serverIdentity");
 		// Nacos Server端之间 Inner API的身份标识的Value，必填。
