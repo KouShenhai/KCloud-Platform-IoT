@@ -17,6 +17,7 @@
 
 package org.laokou.common.redis.config;
 
+import org.jspecify.annotations.NonNull;
 import org.laokou.common.redis.util.ReactiveRedisUtils;
 import org.redisson.api.RedissonClient;
 import org.redisson.api.RedissonReactiveClient;
@@ -44,13 +45,13 @@ public class ReactiveRedisAutoConfig {
 
 	@Bean("reactiveRedisTemplate")
 	@ConditionalOnMissingBean(ReactiveRedisTemplate.class)
-	public ReactiveRedisTemplate<String, Object> reactiveRedisTemplate(
+	public ReactiveRedisTemplate<@NonNull String, @NonNull Object> reactiveRedisTemplate(
 			ReactiveRedisConnectionFactory reactiveRedisConnectionFactory) {
 		// fory序列化
 		ForyRedisSerializer foryRedisSerializer = ForyRedisSerializer.foryRedisSerializer();
 		// string序列化
 		StringRedisSerializer stringRedisSerializer = ForyRedisSerializer.getStringRedisSerializer();
-		RedisSerializationContext<String, Object> serializationContext = RedisSerializationContext
+		RedisSerializationContext<@NonNull String, @NonNull Object> serializationContext = RedisSerializationContext
 			.<String, Object>newSerializationContext()
 			.key(stringRedisSerializer)
 			.value(foryRedisSerializer)
@@ -76,7 +77,7 @@ public class ReactiveRedisAutoConfig {
 	@Bean
 	@ConditionalOnMissingBean(ReactiveRedisUtils.class)
 	public ReactiveRedisUtils reactiveRedisUtil(RedissonReactiveClient redissonReactiveClient,
-			ReactiveRedisTemplate<String, Object> reactiveRedisTemplate) {
+			ReactiveRedisTemplate<@NonNull String, @NonNull Object> reactiveRedisTemplate) {
 		return new ReactiveRedisUtils(reactiveRedisTemplate, redissonReactiveClient);
 	}
 

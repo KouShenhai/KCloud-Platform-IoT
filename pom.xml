@@ -1139,13 +1139,6 @@
           <target>${maven.compiler.target}</target>
           <release>${maven.compiler.release}</release>
           <encoding>${project.build.sourceEncoding}</encoding>
-          <annotationProcessorPaths>
-            <path>
-              <groupId>org.apache.logging.log4j</groupId>
-              <artifactId>log4j-core</artifactId>
-              <version>2.25.3</version>
-            </path>
-          </annotationProcessorPaths>
           <compilerArgs>
             <!-- 关闭对不推荐使用的编译器选项的警告 -->
             <arg>-Xlint:-options</arg>
@@ -1161,8 +1154,6 @@
             <arg>-parameters</arg>
             <!-- 启用注解处理器 -->
             <arg>-proc:full</arg>
-            <arg>-Alog4j.graalvm.groupId=${project.groupId}</arg>
-            <arg>-Alog4j.graalvm.artifactId=${project.artifactId}</arg>
           </compilerArgs>
         </configuration>
       </plugin>
