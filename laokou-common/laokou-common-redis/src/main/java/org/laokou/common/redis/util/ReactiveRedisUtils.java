@@ -31,7 +31,7 @@ import java.util.Map;
  * @author laokou
  */
 public record ReactiveRedisUtils(ReactiveRedisTemplate<@NonNull String, @NonNull Object> reactiveRedisTemplate,
-								 RedissonReactiveClient redissonReactiveClient) {
+		RedissonReactiveClient redissonReactiveClient) {
 
 	public Mono<@NonNull Object> get(String key) {
 		return redissonReactiveClient.getBucket(key).get();
@@ -56,7 +56,8 @@ public record ReactiveRedisUtils(ReactiveRedisTemplate<@NonNull String, @NonNull
 	public Mono<@NonNull Void> set(String key, Object obj, long expire) {
 		if (expire == -1) {
 			return redissonReactiveClient.getBucket(key).set(obj);
-		} else {
+		}
+		else {
 			return redissonReactiveClient.getBucket(key).set(obj, Duration.ofSeconds(expire));
 		}
 	}

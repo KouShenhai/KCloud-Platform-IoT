@@ -22,12 +22,12 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-common</artifactId>
-    <version>4.0.0</version>
+    <version>4.0.1-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.laokou</groupId>
   <artifactId>laokou-common-core</artifactId>
-  <version>4.0.0</version>
+  <version>4.0.1-SNAPSHOT</version>
   <name>laokou-common-core</name>
   <description>一个企业级微服务架构的云服务多租户IoT平台</description>
   <url>https://koushenhai.github.io/KCloud-Platform-IoT</url>

@@ -23,8 +23,8 @@ import org.redisson.api.RedissonClient;
 import org.redisson.api.RedissonReactiveClient;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.boot.data.redis.autoconfigure.DataRedisReactiveAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.connection.ReactiveRedisConnectionFactory;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
@@ -38,13 +38,12 @@ import reactor.core.publisher.Flux;
  *
  * @author laokou
  */
-@AutoConfiguration
+@AutoConfiguration(before = DataRedisReactiveAutoConfiguration.class)
 @ConditionalOnClass({ ReactiveRedisConnectionFactory.class, ReactiveRedisTemplate.class, Flux.class })
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.REACTIVE)
 public class ReactiveRedisAutoConfig {
 
 	@Bean("reactiveRedisTemplate")
-	@ConditionalOnMissingBean(ReactiveRedisTemplate.class)
 	public ReactiveRedisTemplate<@NonNull String, @NonNull Object> reactiveRedisTemplate(
 			ReactiveRedisConnectionFactory reactiveRedisConnectionFactory) {
 		// fory序列化
@@ -61,22 +60,19 @@ public class ReactiveRedisAutoConfig {
 		return new ReactiveRedisTemplate<>(reactiveRedisConnectionFactory, serializationContext);
 	}
 
-	@Bean
-	@ConditionalOnMissingBean(ReactiveStringRedisTemplate.class)
+	@Bean("reactiveStringRedisTemplate")
 	public ReactiveStringRedisTemplate reactiveStringRedisTemplate(
 			ReactiveRedisConnectionFactory reactiveRedisConnectionFactory) {
 		return new ReactiveStringRedisTemplate(reactiveRedisConnectionFactory);
 	}
 
-	@Bean(destroyMethod = "shutdown")
-	@ConditionalOnMissingBean(RedissonReactiveClient.class)
+	@Bean(name = "redissonReactiveClient", destroyMethod = "shutdown")
 	public RedissonReactiveClient redissonReactiveClient(RedissonClient redissonClient) {
 		return redissonClient.reactive();
 	}
 
-	@Bean
-	@ConditionalOnMissingBean(ReactiveRedisUtils.class)
-	public ReactiveRedisUtils reactiveRedisUtil(RedissonReactiveClient redissonReactiveClient,
+	@Bean("reactiveRedisUtils")
+	public ReactiveRedisUtils reactiveRedisUtils(RedissonReactiveClient redissonReactiveClient,
 			ReactiveRedisTemplate<@NonNull String, @NonNull Object> reactiveRedisTemplate) {
 		return new ReactiveRedisUtils(reactiveRedisTemplate, redissonReactiveClient);
 	}

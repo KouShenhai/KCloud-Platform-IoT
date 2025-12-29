@@ -24,7 +24,6 @@ import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.data.redis.autoconfigure.DataRedisProperties;
 import org.springframework.context.annotation.Bean;
@@ -56,8 +55,7 @@ public class RedissonAutoConfig {
 	 * @param properties redis配置文件
 	 * @return RedissonClient
 	 */
-	@Bean(destroyMethod = "shutdown")
-	@ConditionalOnMissingBean(RedissonClient.class)
+	@Bean(name = "redisClient", destroyMethod = "shutdown")
 	public RedissonClient redisClient(DataRedisProperties properties) {
 		Config config = new Config();
 		config.setPassword(properties.getPassword());

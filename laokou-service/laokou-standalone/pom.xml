@@ -3,10 +3,10 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-service</artifactId>
-    <version>4.0.0</version>
+    <version>4.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>laokou-standalone</artifactId>
-  <version>4.0.0</version>
+  <version>4.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
     <module>laokou-standalone-start</module>
