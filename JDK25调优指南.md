@@ -13,7 +13,7 @@ sudo pacman -R jdk25-openjdk
 
 ### 2.边缘网关调优指南【1G内存】
 
-<font color="red">👉 一旦 JVM 发生 OOM，立刻、直接退出进程（kill -9 级别）</font>
+<font color="red">👉 一旦 JVM 发生 OOM，立刻、直接退出进程（kill -9级别）</font>
 
 ```shell
 java \
@@ -25,6 +25,17 @@ java \
   -XX:MaxDirectMemorySize=32m \
   -XX:+ExitOnOutOfMemoryError \
   -jar app.jar
+```
+
+<font color="red">👉 注意：1G内存，默认开启指针压缩</font>
+
+```shell
+# 查看参数
+java -XX:+PrintFlagsFinal -version | grep Compressed
+
+# 开启情况
+# bool UseCompressedClassPointers = true
+# bool UseCompressedOops = true
 ```
 
 #### 2.1.锁死堆内存
