@@ -13,6 +13,20 @@ sudo pacman -R jdk25-openjdk
 
 ### 2.边缘网关调优指南【1G内存】
 
+<font color="red">👉 一旦 JVM 发生 OOM，立刻、直接退出进程（kill -9 级别）</font>
+
+```shell
+java \
+  -Xms256m \
+  -Xmx256m \
+  -XX:MaxMetaspaceSize=128m \
+  -XX:ReservedCodeCacheSize=32m \
+  -XX:+UseSerialGC \
+  -XX:MaxDirectMemorySize=32m \
+  -XX:+ExitOnOutOfMemoryError \
+  -jar app.jar
+```
+
 #### 2.1.锁死堆内存
 
 <font color="red">👉 防止JVM运行中偷偷扩容</font>
