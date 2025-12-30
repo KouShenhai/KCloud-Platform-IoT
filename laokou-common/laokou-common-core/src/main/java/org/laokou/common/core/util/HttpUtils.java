@@ -30,6 +30,7 @@ import org.apache.hc.core5.http.HttpEntity;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.SslUtils;
 
 import java.io.IOException;
@@ -46,15 +47,27 @@ import java.util.Map;
 @Slf4j
 public final class HttpUtils {
 
-	private static final CloseableHttpClient INSTANCE;
+	private static CloseableHttpClient CLIENT = null;
 
 	static {
 		try {
-			INSTANCE = getHttpClient();
+			CLIENT = getHttpClient();
 		}
 		catch (NoSuchAlgorithmException | KeyManagementException e) {
 			log.error("SSL初始化失败，错误信息：{}", e.getMessage(), e);
 			throw new SystemException("S_Http_SslInitFailed", "SSL初始化失败", e);
+		}
+		finally {
+			Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+				if (ObjectUtils.isNotNull(CLIENT)) {
+					try {
+						CLIENT.close();
+					}
+					catch (IOException ex) {
+						throw new RuntimeException(ex);
+					}
+				}
+			}));
 		}
 	}
 
@@ -82,7 +95,7 @@ public final class HttpUtils {
 		String resultString = StringConstants.EMPTY;
 		try {
 			// 执行请求
-			resultString = INSTANCE.execute(httpPost,
+			resultString = CLIENT.execute(httpPost,
 					handler -> EntityUtils.toString(handler.getEntity(), StandardCharsets.UTF_8));
 		}
 		catch (IOException e) {

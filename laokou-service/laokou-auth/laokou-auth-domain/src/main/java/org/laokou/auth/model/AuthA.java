@@ -79,6 +79,11 @@ public class AuthA extends AggregateRoot {
 	private transient CaptchaV captchaV;
 
 	/**
+	 * 数据权限.
+	 */
+	private transient DataFilterV dataFilterV;
+
+	/**
 	 * 用户实体.
 	 */
 	private UserE userE;
