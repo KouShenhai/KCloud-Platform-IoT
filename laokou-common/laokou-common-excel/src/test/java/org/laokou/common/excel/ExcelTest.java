@@ -91,6 +91,7 @@ class ExcelTest {
 			testUserDO.setUpdateTime(InstantUtils.now());
 			testUserDO.setVersion(0);
 			testUserDO.setTenantId(0L);
+			testUserDO.setDeptId(1L);
 			testUserDO.setDelFlag(0);
 			testUserMapper.insert(testUserDO);
 		});

@@ -17,6 +17,7 @@
 
 package org.laokou.common.fory.config;
 
+import lombok.Getter;
 import org.apache.fory.ThreadSafeFory;
 import org.apache.fory.config.CompatibleMode;
 import org.apache.fory.config.ForyBuilder;
@@ -29,6 +30,7 @@ import java.nio.charset.StandardCharsets;
 /**
  * @author laokou
  */
+@Getter
 public final class ForyFactory {
 
 	public static final ForyFactory INSTANCE = new ForyFactory();
@@ -47,7 +49,7 @@ public final class ForyFactory {
 		// enable async multi-threaded compilation.
 		.withAsyncCompilation(true)
 		.requireClassRegistration(true)
-		.buildThreadSafeFory();
+		.buildThreadSafeForyPool(50, 1024);
 
 	public <T> void register(Class<T> clazz) {
 		fory.register(clazz);

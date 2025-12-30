@@ -17,15 +17,17 @@
 
 package org.laokou.common.core.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.ResourceExtUtils;
-import org.lionsoul.ip2region.xdb.LongByteArray;
-import org.lionsoul.ip2region.xdb.Searcher;
-import org.lionsoul.ip2region.xdb.Version;
+import org.lionsoul.ip2region.service.Config;
+import org.lionsoul.ip2region.service.InvalidConfigException;
+import org.lionsoul.ip2region.service.Ip2Region;
+import org.lionsoul.ip2region.xdb.InetAddressException;
+import org.lionsoul.ip2region.xdb.XdbException;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Arrays;
 
 /**
@@ -33,29 +35,47 @@ import java.util.Arrays;
  *
  * @author laokou
  */
+@Slf4j
 public final class AddressUtils {
-
-	/**
-	 * 未解析的位置.
-	 */
-	private static final String EMPTY_ADDR = "0";
-
-	/**
-	 * 本地的位置.
-	 */
-	private static final String LOCAL_ADDR = "内网IP";
 
 	/**
 	 * IP搜索器.
 	 */
-	private static final Searcher SEARCHER;
+	private static Ip2Region IP2_REGION = null;
 
 	static {
-		try (InputStream inputStream = ResourceExtUtils.getResource("ip2region_v4.xdb").getInputStream()) {
-			SEARCHER = Searcher.newWithBuffer(Version.IPv4, new LongByteArray(inputStream.readAllBytes()));
+		try {
+			Config v4Config = Config.custom()
+				// 指定缓存策略: NoCache / VIndexCache / BufferCache
+				.setCachePolicy(Config.VIndexCache)
+				// 设置初始化的查询器数量
+				.setSearchers(15)
+				.setXdbFile(ResourceExtUtils.getResource("ip2region_v4.xdb").getFile())
+				// 设置初始化的查询器数量
+				.asV4();
+			Config v6Config = Config.custom()
+				// 指定缓存策略: NoCache / VIndexCache / BufferCache
+				.setCachePolicy(Config.VIndexCache)
+				// 设置初始化的查询器数量
+				.setSearchers(15)
+				.setXdbFile(ResourceExtUtils.getResource("ip2region_v6.xdb").getFile())
+				// 设置初始化的查询器数量
+				.asV6();
+			IP2_REGION = Ip2Region.create(v4Config, v6Config);
 		}
-		catch (IOException e) {
-			throw new RuntimeException(e);
+		catch (IOException | InvalidConfigException | XdbException ex) {
+			log.error("Ip2region加载失败，错误信息：{}", ex.getMessage(), ex);
+			throw new RuntimeException(ex);
+		}
+		finally {
+			Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+				try {
+					IP2_REGION.close();
+				}
+				catch (InterruptedException ex) {
+					throw new RuntimeException(ex);
+				}
+			}));
 		}
 	}
 
@@ -67,8 +87,8 @@ public final class AddressUtils {
 	 * @param ip IP
 	 * @return 所属位置
 	 */
-	public static String getRealAddress(String ip) throws Exception {
-		return IpUtils.internalIp(ip) ? LOCAL_ADDR : addressFormat(SEARCHER.search(ip));
+	public static String getRealAddress(String ip) throws InetAddressException, IOException, InterruptedException {
+		return IpUtils.internalIp(ip) ? "内网IP" : addressFormat(IP2_REGION.search(ip));
 	}
 
 	/**
@@ -81,7 +101,7 @@ public final class AddressUtils {
 		String[] info = address.split(StringConstants.BACKSLASH + StringConstants.ERECT);
 		Arrays.stream(info)
 			.forEach(str -> stringBuilder
-				.append(ObjectUtils.equals(EMPTY_ADDR, str) ? StringConstants.EMPTY : str + StringConstants.SPACE));
+				.append(ObjectUtils.equals("0", str) ? StringConstants.EMPTY : str + StringConstants.SPACE));
 		return stringBuilder.toString().trim();
 	}
 

@@ -43,15 +43,23 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public final class OkHttpUtils {
 
-	private static final OkHttpClient INSTANCE;
+	private static OkHttpClient CLIENT = null;
 
 	static {
 		try {
-			INSTANCE = getOkHttpClient();
+			CLIENT = getOkHttpClient();
 		}
 		catch (NoSuchAlgorithmException | KeyManagementException e) {
 			log.error("SSL初始化失败，错误信息：{}", e.getMessage(), e);
 			throw new SystemException("S_OkHttp_SslInitFailed", "SSL初始化失败", e);
+		}
+		finally {
+			Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+				if (ObjectUtils.isNotNull(CLIENT)) {
+					CLIENT.dispatcher().executorService().shutdown();
+					CLIENT.connectionPool().evictAll();
+				}
+			}));
 		}
 	}
 
@@ -64,7 +72,7 @@ public final class OkHttpUtils {
 			params.forEach(builder::add);
 		}
 		Request request = new Request.Builder().url(url).headers(Headers.of(headers)).post(builder.build()).build();
-		try (Response response = INSTANCE.newCall(request).execute()) {
+		try (Response response = CLIENT.newCall(request).execute()) {
 			ResponseBody body = response.body();
 			return ObjectUtils.isNotNull(body) ? body.string() : StringConstants.EMPTY;
 		}
