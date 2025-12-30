@@ -79,7 +79,7 @@ public class AuthA extends AggregateRoot {
 	private transient CaptchaV captchaV;
 
 	/**
-	 * 数据权限.
+	 * 数据权限值对象.
 	 */
 	private transient DataFilterV dataFilterV;
 
