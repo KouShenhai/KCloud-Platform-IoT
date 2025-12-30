@@ -17,18 +17,11 @@
 
 package org.laokou.mcp.client.command.query;
 
-import com.alibaba.cloud.ai.mcp.discovery.client.transport.LoadbalancedMcpSyncClient;
-import io.modelcontextprotocol.spec.McpSchema;
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.core.util.CollectionExtUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.mcp.client.dto.DevicePropertyGetQry;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * 查看设备属性请求执行器.
@@ -39,20 +32,20 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class DevicePropertyGetQryExe {
 
-	private final List<LoadbalancedMcpSyncClient> loadbalancedMcpSyncClients;
-
 	public Result<String> execute(DevicePropertyGetQry qry) {
-		McpSchema.CallToolResult callToolResult = loadbalancedMcpSyncClients.getFirst()
-			.callTool(new McpSchema.CallToolRequest("get_device_property_by_sn", Map.of("sn", qry.getSn())));
-		List<String> list = callToolResult.content().stream().map(content -> {
-			if (content instanceof McpSchema.TextContent textContent) {
-				return textContent.text();
-			}
-			return StringConstants.EMPTY;
-		}).filter(StringExtUtils::hasText).toList();
-		if (CollectionExtUtils.isNotEmpty(list)) {
-			return Result.ok(StringExtUtils.collectionToDelimitedString(list, StringConstants.DROP));
-		}
+		// McpSchema.CallToolResult callToolResult = loadbalancedMcpSyncClients.getFirst()
+		// .callTool(new McpSchema.CallToolRequest("get_device_property_by_sn",
+		// Map.of("sn", qry.getSn())));
+		// List<String> list = callToolResult.content().stream().map(content -> {
+		// if (content instanceof McpSchema.TextContent textContent) {
+		// return textContent.text();
+		// }
+		// return StringConstants.EMPTY;
+		// }).filter(StringExtUtils::hasText).toList();
+		// if (CollectionExtUtils.isNotEmpty(list)) {
+		// return Result.ok(StringExtUtils.collectionToDelimitedString(list,
+		// StringConstants.DROP));
+		// }
 		return Result.ok(StringConstants.EMPTY);
 	}
 

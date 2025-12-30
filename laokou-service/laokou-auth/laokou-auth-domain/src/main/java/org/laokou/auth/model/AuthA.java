@@ -222,6 +222,10 @@ public class AuthA extends AggregateRoot {
 		this.userV = this.userV.toBuilder().permissions(permissions).build();
 	}
 
+	public void getDataFilter(Set<String> dataScopes) {
+		throw new UnsupportedOperationException();
+	}
+
 	public void checkCaptchaParam() {
 		switch (sendCaptchaTypeEnum) {
 			case SEND_MAIL_CAPTCHA -> this.mailCaptchaParamValidator.validateCaptcha(this);
