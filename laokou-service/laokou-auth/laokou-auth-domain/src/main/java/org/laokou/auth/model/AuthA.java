@@ -79,7 +79,7 @@ public class AuthA extends AggregateRoot {
 	private transient CaptchaV captchaV;
 
 	/**
-	 * 数据权限.
+	 * 数据权限值对象.
 	 */
 	private transient DataFilterV dataFilterV;
 
@@ -220,6 +220,10 @@ public class AuthA extends AggregateRoot {
 
 	public void getMenuPermissions(Set<String> permissions) {
 		this.userV = this.userV.toBuilder().permissions(permissions).build();
+	}
+
+	public void getDataFilter(Set<String> dataScopes) {
+		throw new UnsupportedOperationException();
 	}
 
 	public void checkCaptchaParam() {
