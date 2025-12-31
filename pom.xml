@@ -203,7 +203,7 @@
     <!--knife4j版本-->
     <knife4j.version>4.5.0</knife4j.version>
     <!--taos-jdbcdriver版本-->
-    <taos-jdbcdriver.version>3.7.9</taos-jdbcdriver.version>
+    <taos-jdbcdriver.version>3.8.0</taos-jdbcdriver.version>
     <!--fory-core版本-->
     <fory-core.version>0.13.2</fory-core.version>
     <!--browscap-java版本-->
