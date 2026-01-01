@@ -235,7 +235,7 @@
     <!--californium版本-->
     <californium.version>4.0.0-M6</californium.version>
     <!--jsoup版本-->
-    <jsoup.version>1.21.2</jsoup.version>
+    <jsoup.version>1.22.1</jsoup.version>
     <!--minio版本-->
     <minio.version>8.6.0</minio.version>
     <!--mysql版本-->
