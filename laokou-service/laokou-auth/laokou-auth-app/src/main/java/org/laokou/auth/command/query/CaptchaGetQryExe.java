@@ -49,7 +49,6 @@ public class CaptchaGetQryExe {
 		String captcha = ca.text();
 		String base64 = ca.toBase64();
 		String usernamePasswordAuthCaptchaKey = RedisKeyUtils.getUsernamePasswordAuthCaptchaKey(qry.getUuid());
-		redisUtils.del(usernamePasswordAuthCaptchaKey);
 		redisUtils.set(usernamePasswordAuthCaptchaKey, captcha, RedisUtils.FIVE_MINUTE_EXPIRE);
 		return Result.ok(base64);
 	}

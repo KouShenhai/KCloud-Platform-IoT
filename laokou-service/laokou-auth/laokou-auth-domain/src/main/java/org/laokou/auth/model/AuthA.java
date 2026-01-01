@@ -28,6 +28,7 @@ import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.dto.IdGenerator;
+import org.laokou.common.i18n.dto.ValidateName;
 import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
@@ -47,7 +48,7 @@ import java.util.function.Supplier;
  */
 @Entity
 @Getter
-public class AuthA extends AggregateRoot {
+public class AuthA extends AggregateRoot implements ValidateName {
 
 	@Serial
 	private static final long serialVersionUID = 3319752558160144699L;
@@ -307,6 +308,7 @@ public class AuthA extends AggregateRoot {
 		this.userV = this.userV.toBuilder().avatar(avatar).build();
 	}
 
+	@Override
 	public String getValidateName() {
 		return "OAuth2";
 	}

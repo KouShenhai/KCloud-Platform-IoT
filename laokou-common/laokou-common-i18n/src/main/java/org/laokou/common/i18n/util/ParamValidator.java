@@ -58,16 +58,10 @@ public final class ParamValidator {
 		return new Validate(value);
 	}
 
-	public static class Validate {
-
-		private final String value;
+	public record Validate(String value) {
 
 		public Validate() {
 			this(StringConstants.EMPTY);
-		}
-
-		public Validate(String value) {
-			this.value = value;
 		}
 
 	}

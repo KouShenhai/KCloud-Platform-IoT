@@ -15,29 +15,13 @@
  *
  */
 
-package org.laokou.auth.gatewayimpl;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.gateway.CaptchaGateway;
-import org.laokou.common.redis.util.RedisUtils;
-import org.springframework.stereotype.Component;
+package org.laokou.common.i18n.dto;
 
 /**
- * 部门.
- *
  * @author laokou
  */
-@Slf4j
-@Component
-@RequiredArgsConstructor
-public class CaptchaGatewayImpl implements CaptchaGateway {
+public interface ValidateName {
 
-	private final RedisUtils redisUtils;
-
-	@Override
-	public void createCaptcha(String uuid, String captcha) {
-		redisUtils.set(uuid, captcha, RedisUtils.FIVE_MINUTE_EXPIRE);
-	}
+	String getValidateName();
 
 }
