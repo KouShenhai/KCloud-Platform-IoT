@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2026 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,13 +43,14 @@ public class DomainService {
 
 	private final OssLogGateway ossLogGateway;
 
-	public void sendCaptcha(AuthA authA) {
+	public void createCaptcha(AuthA authA) {
 		// 校验验证码参数
 		authA.checkCaptchaParam();
 		// 获取租户ID
 		authA.getTenantId(() -> tenantGateway.getTenantId(authA.getUserV().tenantCode()));
 		// 校验租户ID
 		authA.checkTenantId();
+		// 保存验证码
 	}
 
 	public void auth(AuthA authA) {

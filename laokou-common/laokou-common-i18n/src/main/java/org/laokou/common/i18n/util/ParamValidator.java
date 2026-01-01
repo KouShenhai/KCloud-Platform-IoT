@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2026 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,9 +33,13 @@ public final class ParamValidator {
 	}
 
 	public static void validate(Validate... validates) {
+		validate("System", validates);
+	}
+
+	public static void validate(String name, Validate... validates) {
 		String validateString = StringExtUtils.collectionToDelimitedString(validates(validates), StringConstants.DROP);
 		if (StringExtUtils.isNotEmpty(validateString)) {
-			throw new ParamException("P_System_ValidateFailed", validateString);
+			throw new ParamException(String.format("P_%s_ValidateFailed", name), validateString);
 		}
 	}
 

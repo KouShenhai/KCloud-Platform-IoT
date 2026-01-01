@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2026 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ package org.laokou.auth.model;
 
 import lombok.Getter;
 import org.laokou.auth.factory.DomainFactory;
+import org.laokou.common.core.util.RandomStringUtils;
 import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.crypto.util.RSAUtils;
 import org.laokou.common.i18n.annotation.Entity;
@@ -205,6 +206,10 @@ public class AuthA extends AggregateRoot {
 		return this;
 	}
 
+	public String getCaptcha() {
+		return RandomStringUtils.randomNumeric();
+	}
+
 	public void getTenantId(Supplier<Long> supplier) {
 		if (isDefaultTenant()) {
 			this.userV = this.userV.toBuilder().tenantId(0L).build();
@@ -300,6 +305,10 @@ public class AuthA extends AggregateRoot {
 
 	public void getUserAvatar(String avatar) {
 		this.userV = this.userV.toBuilder().avatar(avatar).build();
+	}
+
+	public String getValidateName() {
+		return "OAuth2";
 	}
 
 	private boolean isUseCaptcha() {
