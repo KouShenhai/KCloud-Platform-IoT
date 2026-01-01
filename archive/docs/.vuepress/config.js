@@ -184,6 +184,11 @@ module.exports = {
 						text: '养生', link: '/pages/e03541/', items: [
 							{text: '养生摘抄（一）', link: '/pages/e03541/'}
 						]
+					},
+					{
+						text: '法律', items: [
+							{text: '法律知识', link: '/pages/2c54d5/'}
+						]
 					}
 				]
 			},

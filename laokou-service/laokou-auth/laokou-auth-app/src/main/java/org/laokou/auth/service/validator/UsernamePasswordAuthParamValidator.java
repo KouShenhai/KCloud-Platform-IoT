@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2026 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,7 +39,7 @@ public class UsernamePasswordAuthParamValidator implements AuthParamValidator {
 	public void validateAuth(AuthA authA) {
 		UserV userV = authA.getUserV();
 		CaptchaV captchaV = authA.getCaptchaV();
-		ParamValidator.validate(
+		ParamValidator.validate(authA.getValidateName(),
 				// 校验租户编码
 				OAuth2ParamValidator.validateTenantCode(userV.tenantCode()),
 				// 校验UUID

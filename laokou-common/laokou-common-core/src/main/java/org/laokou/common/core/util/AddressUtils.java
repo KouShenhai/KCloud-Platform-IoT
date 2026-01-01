@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2026 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@ public final class AddressUtils {
 	/**
 	 * IP搜索器.
 	 */
-	private static Ip2Region IP2_REGION = null;
+	private static Ip2Region IP_REGION = null;
 
 	static {
 		try {
@@ -61,7 +61,7 @@ public final class AddressUtils {
 				.setXdbFile(ResourceExtUtils.getResource("ip2region_v6.xdb").getFile())
 				// 设置初始化的查询器数量
 				.asV6();
-			IP2_REGION = Ip2Region.create(v4Config, v6Config);
+			IP_REGION = Ip2Region.create(v4Config, v6Config);
 		}
 		catch (IOException | InvalidConfigException | XdbException ex) {
 			log.error("Ip2region加载失败，错误信息：{}", ex.getMessage(), ex);
@@ -69,11 +69,13 @@ public final class AddressUtils {
 		}
 		finally {
 			Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-				try {
-					IP2_REGION.close();
-				}
-				catch (InterruptedException ex) {
-					throw new RuntimeException(ex);
+				if (ObjectUtils.isNotNull(IP_REGION)) {
+					try {
+						IP_REGION.close();
+					}
+					catch (InterruptedException ex) {
+						throw new RuntimeException(ex);
+					}
 				}
 			}));
 		}
@@ -88,7 +90,7 @@ public final class AddressUtils {
 	 * @return 所属位置
 	 */
 	public static String getRealAddress(String ip) throws InetAddressException, IOException, InterruptedException {
-		return IpUtils.internalIp(ip) ? "内网IP" : addressFormat(IP2_REGION.search(ip));
+		return IpUtils.internalIp(ip) ? "内网IP" : addressFormat(IP_REGION.search(ip));
 	}
 
 	/**

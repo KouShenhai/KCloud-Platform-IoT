@@ -153,7 +153,7 @@ COMMENT ON TABLE  "public"."generator_template" IS '模板';
 ALTER TABLE "public"."generator_template" ADD CONSTRAINT "generator_template_pkey" PRIMARY KEY ("id");
 
 INSERT INTO "public"."generator_template" VALUES (1, 1, 1, '2025-10-03 11:20:06', '2025-10-03 11:20:10', 0, 0, 0,0, 'microservice_cola_controller', '微服务COLA控制器', '${path}/${serviceId}/${serviceId}-adapter/src/main/java/${packagePath}/web/Controller.java/${className}sController.java', '/*
- * Copyright (c) 2022-2025 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2026 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
