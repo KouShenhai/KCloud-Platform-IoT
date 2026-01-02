@@ -15,30 +15,31 @@
  *
  */
 
-package org.laokou.auth.model;
+package org.laokou.auth.model.enums;
 
 import lombok.Getter;
 
+/**
+ * 登录状态枚举.
+ *
+ * @author laokou
+ */
 @Getter
-enum DataScopeEnum {
+public enum LoginStatusEnum {
 
-	ALL("all", "全部"),
+	// @formatter:off
+	OK(0, "登录成功"),
 
-	CUSTOM("custom", "自定义"),
+	FAIL(1, "登录失败");
 
-	SELF_DEPT("self_dept", "仅本部门"),
-
-	BELOW_DEPT("below_dept", "部门及以下"),
-
-	SELF("self", "仅本人");
-
-	private final String code;
+	private final int code;
 
 	private final String desc;
 
-	DataScopeEnum(String code, String desc) {
+	LoginStatusEnum(int code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}
+	// @formatter:on
 
 }

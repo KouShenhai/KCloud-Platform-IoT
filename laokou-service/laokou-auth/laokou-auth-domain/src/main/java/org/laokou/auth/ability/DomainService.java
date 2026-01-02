@@ -54,7 +54,7 @@ public class DomainService {
 		// 校验租户ID
 		authA.checkTenantId();
 		// 保存验证码
-		captchaGateway.createCaptcha(authA.getCaptchaCacheKey0(), authA.getCaptcha());
+		captchaGateway.createCaptcha(authA.getCaptchaCacheKeyBySend(), authA.getCaptchaBySend());
 	}
 
 	public void auth(AuthA authA) {

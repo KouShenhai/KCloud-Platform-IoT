@@ -17,14 +17,12 @@
 
 package org.laokou.auth.model.exception;
 
-import org.laokou.common.i18n.common.exception.BizException;
-
 /**
  * @author laokou
  */
-class AuthException extends BizException {
+public final class UserDisabledException extends UserException {
 
-	public AuthException(String code) {
+	public UserDisabledException(String code) {
 		super(code);
 	}
 

@@ -61,7 +61,7 @@ public class DeptConvertor {
 
 	public static DeptE toEntity(DeptCO deptCO, boolean isInsert) {
 		DeptE deptE = DeptDomainFactory.getDept();
-		deptE.setId(deptCO.getId());
+		// deptE.setId(deptCO.getId());
 		deptE.setPid(deptCO.getPid());
 		deptE.setName(deptCO.getName());
 		deptE.setSort(deptCO.getSort());

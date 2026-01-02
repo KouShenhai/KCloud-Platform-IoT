@@ -26,20 +26,4 @@ public final class UsernameNotFoundException extends AuthException {
 		super(code);
 	}
 
-	public UsernameNotFoundException(String code, Throwable throwable) {
-		super(code, throwable);
-	}
-
-	public UsernameNotFoundException(String code, String msg) {
-		super(code, msg);
-	}
-
-	public UsernameNotFoundException(String code, String msg, Throwable throwable) {
-		super(code, msg, throwable);
-	}
-
-	public UsernameNotFoundException(String code, String msg, Object data) {
-		super(code, msg, data);
-	}
-
 }

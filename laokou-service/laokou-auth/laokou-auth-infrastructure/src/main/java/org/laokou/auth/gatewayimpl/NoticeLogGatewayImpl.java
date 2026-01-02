@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.auth.convertor.NoticeLogConvertor;
 import org.laokou.auth.gateway.NoticeLogGateway;
 import org.laokou.auth.gatewayimpl.database.NoticeLogMapper;
-import org.laokou.auth.model.NoticeLogE;
+import org.laokou.auth.model.entity.NoticeLogE;
 import org.springframework.stereotype.Component;
 
 /**

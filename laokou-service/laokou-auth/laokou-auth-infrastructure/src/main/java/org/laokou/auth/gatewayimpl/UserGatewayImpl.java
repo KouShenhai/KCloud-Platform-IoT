@@ -23,8 +23,8 @@ import org.laokou.auth.convertor.UserConvertor;
 import org.laokou.auth.gateway.UserGateway;
 import org.laokou.auth.gatewayimpl.database.UserMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
-import org.laokou.auth.model.UserE;
-import org.laokou.auth.model.UserV;
+import org.laokou.auth.model.entity.UserE;
+import org.laokou.auth.model.valueobject.UserV;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.stereotype.Component;
 

@@ -22,20 +22,8 @@ package org.laokou.common.plugin.exception;
  */
 public class PluginNotFoundException extends PluginException {
 
-	public PluginNotFoundException(String code) {
-		super(code);
-	}
-
 	public PluginNotFoundException(String code, String msg) {
 		super(code, msg);
-	}
-
-	public PluginNotFoundException(String code, String msg, Throwable throwable) {
-		super(code, msg, throwable);
-	}
-
-	public PluginNotFoundException(String code, String msg, Object data) {
-		super(code, msg, data);
 	}
 
 }

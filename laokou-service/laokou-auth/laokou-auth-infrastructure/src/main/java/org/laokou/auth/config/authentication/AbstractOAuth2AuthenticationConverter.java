@@ -19,7 +19,7 @@ package org.laokou.auth.config.authentication;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.model.OAuth2Constants;
+import org.laokou.auth.model.constant.OAuth2Constants;
 import org.laokou.common.core.util.CollectionExtUtils;
 import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.i18n.util.MessageUtils;

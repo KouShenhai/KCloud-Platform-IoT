@@ -22,20 +22,12 @@ package org.laokou.common.plugin.exception;
  */
 public class PluginLoadException extends PluginException {
 
-	public PluginLoadException(String code) {
-		super(code);
-	}
-
 	public PluginLoadException(String code, String msg) {
 		super(code, msg);
 	}
 
 	public PluginLoadException(String code, String msg, Throwable throwable) {
 		super(code, msg, throwable);
-	}
-
-	public PluginLoadException(String code, String msg, Object data) {
-		super(code, msg, data);
 	}
 
 }

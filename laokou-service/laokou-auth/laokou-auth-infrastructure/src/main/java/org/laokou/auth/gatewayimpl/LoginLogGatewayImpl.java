@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.auth.convertor.LoginLogConvertor;
 import org.laokou.auth.gateway.LoginLogGateway;
 import org.laokou.auth.gatewayimpl.database.LoginLogMapper;
-import org.laokou.auth.model.LoginLogE;
+import org.laokou.auth.model.entity.LoginLogE;
 import org.springframework.stereotype.Component;
 
 /**

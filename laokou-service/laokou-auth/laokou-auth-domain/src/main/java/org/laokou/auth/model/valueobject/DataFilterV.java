@@ -15,16 +15,14 @@
  *
  */
 
-package org.laokou.auth.model;
+package org.laokou.auth.model.valueobject;
 
-import java.util.Map;
+import java.util.List;
 
 /**
  * @author laokou
+ * @param deptIds 部门IDS
+ * @param creator 创建者
  */
-@FunctionalInterface
-public interface HttpRequest {
-
-	Map<String, String[]> getParameterMap();
-
+public record DataFilterV(List<Long> deptIds, Long creator) {
 }

@@ -18,9 +18,9 @@
 package org.laokou.auth.service.validator;
 
 import org.laokou.auth.model.AuthA;
-import org.laokou.auth.model.AuthParamValidator;
-import org.laokou.auth.model.CaptchaV;
-import org.laokou.auth.model.UserV;
+import org.laokou.auth.model.validator.AuthParamValidator;
+import org.laokou.auth.model.valueobject.CaptchaV;
+import org.laokou.auth.model.valueobject.UserV;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.springframework.stereotype.Component;
 

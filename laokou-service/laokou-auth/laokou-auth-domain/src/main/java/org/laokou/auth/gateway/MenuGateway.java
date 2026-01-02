@@ -17,7 +17,7 @@
 
 package org.laokou.auth.gateway;
 
-import org.laokou.auth.model.UserE;
+import org.laokou.auth.model.entity.UserE;
 
 import java.util.Set;
 

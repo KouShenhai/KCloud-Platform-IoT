@@ -26,20 +26,4 @@ public final class CaptchaErrorException extends CaptchaException {
 		super(code);
 	}
 
-	public CaptchaErrorException(String code, Throwable throwable) {
-		super(code, throwable);
-	}
-
-	public CaptchaErrorException(String code, String msg) {
-		super(code, msg);
-	}
-
-	public CaptchaErrorException(String code, String msg, Throwable throwable) {
-		super(code, msg, throwable);
-	}
-
-	public CaptchaErrorException(String code, String msg, Object data) {
-		super(code, msg, data);
-	}
-
 }

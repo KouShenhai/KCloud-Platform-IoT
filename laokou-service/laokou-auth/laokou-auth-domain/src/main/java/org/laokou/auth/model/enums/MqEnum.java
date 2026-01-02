@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.auth.model;
+package org.laokou.auth.model.enums;
 
 import lombok.Getter;
 

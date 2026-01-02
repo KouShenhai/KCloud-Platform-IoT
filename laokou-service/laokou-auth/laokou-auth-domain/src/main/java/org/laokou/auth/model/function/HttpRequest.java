@@ -15,16 +15,16 @@
  *
  */
 
-package org.laokou.auth.model;
+package org.laokou.auth.model.function;
 
-import java.io.Serializable;
+import java.util.Map;
 
 /**
  * @author laokou
  */
 @FunctionalInterface
-public interface PasswordValidator extends Serializable {
+public interface HttpRequest {
 
-	boolean validatePassword(CharSequence rawPassword, String encodedPassword);
+	Map<String, String[]> getParameterMap();
 
 }

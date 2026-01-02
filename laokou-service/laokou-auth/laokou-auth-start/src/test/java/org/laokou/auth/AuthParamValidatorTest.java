@@ -17,7 +17,7 @@
 
 package org.laokou.auth;
 
-import org.laokou.auth.model.AuthParamValidator;
+import org.laokou.auth.model.validator.AuthParamValidator;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 

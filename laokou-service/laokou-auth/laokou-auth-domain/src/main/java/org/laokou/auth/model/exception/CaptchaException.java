@@ -26,20 +26,4 @@ class CaptchaException extends AuthException {
 		super(code);
 	}
 
-	public CaptchaException(String code, Throwable throwable) {
-		super(code, throwable);
-	}
-
-	public CaptchaException(String code, String msg) {
-		super(code, msg);
-	}
-
-	public CaptchaException(String code, String msg, Throwable throwable) {
-		super(code, msg, throwable);
-	}
-
-	public CaptchaException(String code, String msg, Object data) {
-		super(code, msg, data);
-	}
-
 }

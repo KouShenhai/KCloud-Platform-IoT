@@ -15,17 +15,31 @@
  *
  */
 
-package org.laokou.auth.model.exception;
+package org.laokou.auth.model.enums;
 
-import org.laokou.common.i18n.common.exception.BizException;
+import lombok.Getter;
 
 /**
+ * 用户状态枚举.
+ *
  * @author laokou
  */
-class AuthException extends BizException {
+@Getter
+public enum UserStatusEnum {
 
-	public AuthException(String code) {
-		super(code);
+	// @formatter:off
+	ENABLE(0, "启用"),
+
+	DISABLE(1, "禁用");
+
+	private final int code;
+
+	private final String desc;
+
+	UserStatusEnum(int code, String desc) {
+		this.code = code;
+		this.desc = desc;
 	}
+	// @formatter:on
 
 }

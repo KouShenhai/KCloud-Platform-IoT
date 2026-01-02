@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.auth.model;
+package org.laokou.auth.model.entity;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -34,7 +34,7 @@ import java.time.Instant;
 @Builder(toBuilder = true)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class NoticeLogE {
+public class LoginLogE {
 
 	/**
 	 * 编号.
@@ -42,19 +42,34 @@ public class NoticeLogE {
 	private Long id;
 
 	/**
-	 * 编码.
+	 * 登录的用户名.
 	 */
-	private String code;
+	private String username;
 
 	/**
-	 * 名称.
+	 * 登录的IP地址.
 	 */
-	private String name;
+	private String ip;
 
 	/**
-	 * 状态 0成功 1失败.
+	 * 登录的归属地.
 	 */
-	private int status;
+	private String address;
+
+	/**
+	 * 登录的浏览器.
+	 */
+	private String browser;
+
+	/**
+	 * 登录的操作系统.
+	 */
+	private String os;
+
+	/**
+	 * 登录状态 0登录成功 1登录失败.
+	 */
+	private Integer status;
 
 	/**
 	 * 错误信息.
@@ -62,14 +77,14 @@ public class NoticeLogE {
 	private String errorMessage;
 
 	/**
-	 * 参数.
+	 * 登录类型.
 	 */
-	private String param;
+	private String type;
 
 	/**
-	 * 发送时间.
+	 * 登录时间.
 	 */
-	private Instant sendTime;
+	private Instant loginTime;
 
 	/**
 	 * 租户ID.
@@ -77,13 +92,8 @@ public class NoticeLogE {
 	private Long tenantId;
 
 	/**
-	 * 唯一标识.
+	 * 创建者.
 	 */
-	private String uuid;
-
-	/**
-	 * 验证码.
-	 */
-	private String captcha;
+	private Long creator;
 
 }

@@ -15,16 +15,15 @@
  *
  */
 
-package org.laokou.auth.model;
-
-import java.io.Serializable;
+package org.laokou.auth.model.exception;
 
 /**
  * @author laokou
  */
-@FunctionalInterface
-public interface AuthParamValidator extends Serializable {
+class UserException extends AuthException {
 
-	void validateAuth(AuthA authA);
+	public UserException(String code) {
+		super(code);
+	}
 
 }

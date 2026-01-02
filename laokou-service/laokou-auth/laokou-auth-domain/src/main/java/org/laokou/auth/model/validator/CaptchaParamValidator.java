@@ -15,14 +15,18 @@
  *
  */
 
-package org.laokou.auth.model;
+package org.laokou.auth.model.validator;
 
-import java.util.List;
+import org.laokou.auth.model.AuthA;
+
+import java.io.Serializable;
 
 /**
  * @author laokou
- * @param deptIds 部门IDS
- * @param creator 创建者
  */
-public record DataFilterV(List<Long> deptIds, Long creator) {
+@FunctionalInterface
+public interface CaptchaParamValidator extends Serializable {
+
+	void validateCaptcha(AuthA authA);
+
 }

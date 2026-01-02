@@ -15,18 +15,29 @@
  *
  */
 
-package org.laokou.auth.model;
+package org.laokou.auth.model.enums;
 
-import lombok.Builder;
+import lombok.Getter;
 
 /**
- * 验证码值对象.
- *
- * @param uuid UUID
- * @param captcha 验证码
  * @author laokou
  */
-@Builder(toBuilder = true)
-public record CaptchaV(String uuid, String captcha) {
+@Getter
+public enum SendCaptchaStatusEnum {
+
+	// @formatter:off
+	OK(0, "发送成功"),
+
+	FAIL(1, "发送失败");
+
+	private final int code;
+
+	private final String desc;
+
+	SendCaptchaStatusEnum(int code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
+	// @formatter:on
 
 }

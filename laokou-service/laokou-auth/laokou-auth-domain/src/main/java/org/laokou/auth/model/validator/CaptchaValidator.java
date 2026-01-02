@@ -15,17 +15,16 @@
  *
  */
 
-package org.laokou.auth.model.exception;
+package org.laokou.auth.model.validator;
 
-import org.laokou.common.i18n.common.exception.BizException;
+import java.io.Serializable;
 
 /**
  * @author laokou
  */
-class AuthException extends BizException {
+@FunctionalInterface
+public interface CaptchaValidator extends Serializable {
 
-	public AuthException(String code) {
-		super(code);
-	}
+	Boolean validateCaptcha(String uuid, String code);
 
 }

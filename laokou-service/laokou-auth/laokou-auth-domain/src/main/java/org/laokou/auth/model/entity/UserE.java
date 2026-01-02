@@ -15,13 +15,14 @@
  *
  */
 
-package org.laokou.auth.model;
+package org.laokou.auth.model.entity;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.laokou.auth.model.enums.SuperAdminEnum;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.util.ObjectUtils;
 

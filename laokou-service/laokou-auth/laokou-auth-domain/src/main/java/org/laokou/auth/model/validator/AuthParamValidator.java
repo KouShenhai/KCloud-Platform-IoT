@@ -15,31 +15,18 @@
  *
  */
 
-package org.laokou.auth.model;
+package org.laokou.auth.model.validator;
 
-import lombok.Getter;
+import org.laokou.auth.model.AuthA;
+
+import java.io.Serializable;
 
 /**
- * 用户状态枚举.
- *
  * @author laokou
  */
-@Getter
-public enum UserStatusEnum {
+@FunctionalInterface
+public interface AuthParamValidator extends Serializable {
 
-	// @formatter:off
-	ENABLE(0, "启用"),
-
-	DISABLE(1, "禁用");
-
-	private final int code;
-
-	private final String desc;
-
-	UserStatusEnum(int code, String desc) {
-		this.code = code;
-		this.desc = desc;
-	}
-	// @formatter:on
+	void validateAuth(AuthA authA);
 
 }

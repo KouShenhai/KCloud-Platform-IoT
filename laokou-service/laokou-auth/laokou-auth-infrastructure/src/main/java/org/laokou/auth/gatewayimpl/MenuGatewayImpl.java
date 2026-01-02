@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.gateway.MenuGateway;
 import org.laokou.auth.gatewayimpl.database.MenuMapper;
-import org.laokou.auth.model.UserE;
+import org.laokou.auth.model.entity.UserE;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;

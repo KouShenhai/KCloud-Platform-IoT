@@ -15,17 +15,18 @@
  *
  */
 
-package org.laokou.auth.model.exception;
+package org.laokou.auth.model.valueobject;
 
-import org.laokou.common.i18n.common.exception.BizException;
+import lombok.Builder;
 
 /**
+ * 验证码值对象.
+ *
+ * @param uuid UUID
+ * @param captcha 验证码
  * @author laokou
  */
-class AuthException extends BizException {
-
-	public AuthException(String code) {
-		super(code);
-	}
+@Builder(toBuilder = true)
+public record CaptchaV(String uuid, String captcha) {
 
 }

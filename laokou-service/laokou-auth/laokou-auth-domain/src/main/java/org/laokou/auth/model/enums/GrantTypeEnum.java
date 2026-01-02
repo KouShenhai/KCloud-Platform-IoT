@@ -15,9 +15,11 @@
  *
  */
 
-package org.laokou.auth.model;
+package org.laokou.auth.model.enums;
 
 import lombok.Getter;
+import org.laokou.auth.model.constant.Constants;
+import org.laokou.auth.model.constant.OAuth2Constants;
 import org.laokou.auth.model.exception.UsernameNotFoundException;
 
 /**
