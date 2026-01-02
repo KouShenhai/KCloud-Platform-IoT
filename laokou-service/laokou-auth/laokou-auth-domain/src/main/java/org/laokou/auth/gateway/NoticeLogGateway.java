@@ -17,7 +17,7 @@
 
 package org.laokou.auth.gateway;
 
-import org.laokou.auth.model.NoticeLogE;
+import org.laokou.auth.model.entity.NoticeLogE;
 
 /**
  * @author laokou

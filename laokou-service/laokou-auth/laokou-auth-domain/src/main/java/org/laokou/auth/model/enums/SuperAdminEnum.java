@@ -15,16 +15,31 @@
  *
  */
 
-package org.laokou.auth.model;
+package org.laokou.auth.model.enums;
 
-import java.io.Serializable;
+import lombok.Getter;
 
 /**
+ * 超级管理员枚举.
+ *
  * @author laokou
  */
-@FunctionalInterface
-public interface PasswordValidator extends Serializable {
+@Getter
+public enum SuperAdminEnum {
 
-	boolean validatePassword(CharSequence rawPassword, String encodedPassword);
+	// @formatter:off
+	NO(0, "否"),
+
+	YES(1, "是");
+
+	private final int code;
+
+	private final String desc;
+
+	SuperAdminEnum(int code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
+	// @formatter:on
 
 }

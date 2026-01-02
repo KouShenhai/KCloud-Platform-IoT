@@ -15,26 +15,31 @@
  *
  */
 
-package org.laokou.auth.model;
+package org.laokou.auth.model.enums;
 
-import lombok.Builder;
-
-import java.util.Set;
+import lombok.Getter;
 
 /**
- * 用户值对象.
+ * 登录状态枚举.
  *
  * @author laokou
- * @param username 用户名.
- * @param mail 邮箱.
- * @param mobile 手机号.
- * @param tenantId 租户ID.
- * @param password 密码.
- * @param avatar 头像.
- * @param permissions 权限标识集合.
- * @param tenantCode 租户编码.
  */
-@Builder(toBuilder = true)
-public record UserV(String username, String password, String avatar, String mail, String mobile, String tenantCode,
-		Long tenantId, Set<String> permissions) {
+@Getter
+public enum LoginStatusEnum {
+
+	// @formatter:off
+	OK(0, "登录成功"),
+
+	FAIL(1, "登录失败");
+
+	private final int code;
+
+	private final String desc;
+
+	LoginStatusEnum(int code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
+	// @formatter:on
+
 }

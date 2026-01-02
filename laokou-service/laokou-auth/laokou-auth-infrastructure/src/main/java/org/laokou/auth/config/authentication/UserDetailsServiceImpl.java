@@ -51,7 +51,7 @@ record UserDetailsServiceImpl(
 	public UserDetails loadUserByUsername(@NonNull String username) throws UsernameNotFoundException {
 		try {
 			Object principal = authenticationProcessor
-				.authentication(DomainFactory.getAuth().createUserVByAuthorizationCode(),
+				.authentication(DomainFactory.getAuth().createUserVByAuthorizationCodeAuth(),
 						RequestUtils.getHttpServletRequest())
 				.getPrincipal();
 			if (principal instanceof User user) {

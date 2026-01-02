@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.auth.model;
+package org.laokou.auth.model.validator;
 
 import java.io.Serializable;
 
@@ -23,8 +23,8 @@ import java.io.Serializable;
  * @author laokou
  */
 @FunctionalInterface
-public interface AuthParamValidator extends Serializable {
+public interface PasswordValidator extends Serializable {
 
-	void validateAuth(AuthA authA);
+	boolean validatePassword(CharSequence rawPassword, String encodedPassword);
 
 }

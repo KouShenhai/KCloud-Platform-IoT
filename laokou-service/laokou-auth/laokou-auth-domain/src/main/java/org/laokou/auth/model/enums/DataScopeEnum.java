@@ -15,18 +15,30 @@
  *
  */
 
-package org.laokou.auth.model;
+package org.laokou.auth.model.enums;
 
-import lombok.Builder;
+import lombok.Getter;
 
-/**
- * 验证码值对象.
- *
- * @param uuid UUID
- * @param captcha 验证码
- * @author laokou
- */
-@Builder(toBuilder = true)
-public record CaptchaV(String uuid, String captcha) {
+@Getter
+public enum DataScopeEnum {
+
+	ALL("all", "全部"),
+
+	CUSTOM("custom", "自定义"),
+
+	SELF_DEPT("self_dept", "仅本部门"),
+
+	BELOW_DEPT("below_dept", "部门及以下"),
+
+	SELF("self", "仅本人");
+
+	private final String code;
+
+	private final String desc;
+
+	DataScopeEnum(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
 
 }

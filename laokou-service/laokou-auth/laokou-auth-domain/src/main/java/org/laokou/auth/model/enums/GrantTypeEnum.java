@@ -15,10 +15,12 @@
  *
  */
 
-package org.laokou.auth.model;
+package org.laokou.auth.model.enums;
 
 import lombok.Getter;
-import org.laokou.common.i18n.common.exception.BizException;
+import org.laokou.auth.model.constant.Constants;
+import org.laokou.auth.model.constant.OAuth2Constants;
+import org.laokou.auth.model.exception.UsernameNotFoundException;
 
 /**
  * 登录类型枚举.
@@ -31,36 +33,36 @@ public enum GrantTypeEnum {
 	// @formatter:off
 	USERNAME_PASSWORD(Constants.USERNAME_PASSWORD, "用户名密码登录") {
 		@Override
-		public void checkUsernameNotExist() {
-			throw new BizException(OAuth2Constants.USERNAME_PASSWORD_ERROR);
+		public void checkUsernameNotFound() {
+			throw new UsernameNotFoundException(OAuth2Constants.USERNAME_PASSWORD_ERROR);
 		}
 	},
 
 	AUTHORIZATION_CODE(Constants.AUTHORIZATION_CODE, "授权码登录") {
 		@Override
-		public void checkUsernameNotExist() {
-			throw new BizException(OAuth2Constants.USERNAME_PASSWORD_ERROR);
+		public void checkUsernameNotFound() {
+			throw new UsernameNotFoundException(OAuth2Constants.USERNAME_PASSWORD_ERROR);
 		}
 	},
 
 	MOBILE(Constants.MOBILE, "手机号登录") {
 		@Override
-		public void checkUsernameNotExist() {
-			throw new BizException(OAuth2Constants.MOBILE_NOT_REGISTERED);
+		public void checkUsernameNotFound() {
+			throw new UsernameNotFoundException(OAuth2Constants.MOBILE_NOT_REGISTERED);
 		}
 	},
 
 	MAIL(Constants.MAIL, "邮箱登录") {
 		@Override
-		public void checkUsernameNotExist() {
-			throw new BizException(OAuth2Constants.MAIL_NOT_REGISTERED);
+		public void checkUsernameNotFound() {
+			throw new UsernameNotFoundException(OAuth2Constants.MAIL_NOT_REGISTERED);
 		}
 	},
 
 	TEST(Constants.TEST, "测试登录") {
 		@Override
-		public void checkUsernameNotExist() {
-			throw new BizException(OAuth2Constants.USERNAME_PASSWORD_ERROR);
+		public void checkUsernameNotFound() {
+			throw new UsernameNotFoundException(OAuth2Constants.USERNAME_PASSWORD_ERROR);
 		}
 	};
 
@@ -73,7 +75,7 @@ public enum GrantTypeEnum {
 		this.desc = desc;
 	}
 
-	public abstract void checkUsernameNotExist();
+	public abstract void checkUsernameNotFound();
 	// @formatter:on
 
 }

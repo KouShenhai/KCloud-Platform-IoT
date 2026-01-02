@@ -17,7 +17,6 @@
 
 package org.laokou.admin.dept.service.validator;
 
-import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dept.model.DeptE;
 import org.laokou.admin.dept.model.DeptParamValidator;
 import org.laokou.common.i18n.util.ParamValidator;
@@ -27,7 +26,6 @@ import org.springframework.stereotype.Component;
  * @author laokou
  */
 @Component("saveDeptParamValidator")
-@RequiredArgsConstructor
 public class SaveDeptParamValidator implements DeptParamValidator {
 
 	@Override

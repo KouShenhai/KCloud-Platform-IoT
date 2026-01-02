@@ -17,7 +17,7 @@
 
 package org.laokou.auth.service.validator;
 
-import org.laokou.auth.model.OAuth2Constants;
+import org.laokou.auth.model.constant.OAuth2Constants;
 import org.laokou.common.core.util.RegexUtils;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.laokou.common.i18n.util.StringExtUtils;

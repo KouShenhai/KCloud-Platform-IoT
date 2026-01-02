@@ -24,20 +24,8 @@ package org.laokou.common.i18n.common.exception;
  */
 public final class ParamException extends GlobalException {
 
-	public ParamException(String code) {
-		super(code);
-	}
-
 	public ParamException(String code, String msg) {
 		super(code, msg);
-	}
-
-	public ParamException(String code, String msg, Throwable throwable) {
-		super(code, msg, throwable);
-	}
-
-	public ParamException(String code, String msg, Object data) {
-		super(code, msg, data);
 	}
 
 }

@@ -15,16 +15,15 @@
  *
  */
 
-package org.laokou.auth.model;
-
-import java.util.Map;
+package org.laokou.auth.model.exception;
 
 /**
  * @author laokou
  */
-@FunctionalInterface
-public interface HttpRequest {
+public final class UsernameNotFoundException extends AuthException {
 
-	Map<String, String[]> getParameterMap();
+	public UsernameNotFoundException(String code) {
+		super(code);
+	}
 
 }

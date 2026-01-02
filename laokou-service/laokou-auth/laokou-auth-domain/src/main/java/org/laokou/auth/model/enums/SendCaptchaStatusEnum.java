@@ -15,16 +15,29 @@
  *
  */
 
-package org.laokou.auth.model;
+package org.laokou.auth.model.enums;
 
-import java.io.Serializable;
+import lombok.Getter;
 
 /**
  * @author laokou
  */
-@FunctionalInterface
-public interface CaptchaValidator extends Serializable {
+@Getter
+public enum SendCaptchaStatusEnum {
 
-	Boolean validateCaptcha(String uuid, String code);
+	// @formatter:off
+	OK(0, "发送成功"),
+
+	FAIL(1, "发送失败");
+
+	private final int code;
+
+	private final String desc;
+
+	SendCaptchaStatusEnum(int code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
+	// @formatter:on
 
 }

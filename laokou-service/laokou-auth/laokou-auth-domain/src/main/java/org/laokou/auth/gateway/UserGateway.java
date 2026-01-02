@@ -17,8 +17,8 @@
 
 package org.laokou.auth.gateway;
 
-import org.laokou.auth.model.UserE;
-import org.laokou.auth.model.UserV;
+import org.laokou.auth.model.entity.UserE;
+import org.laokou.auth.model.valueobject.UserV;
 
 /**
  * 用户.

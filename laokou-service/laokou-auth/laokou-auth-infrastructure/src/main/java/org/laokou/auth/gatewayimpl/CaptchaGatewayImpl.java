@@ -37,7 +37,7 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 
 	@Override
 	public void createCaptcha(String uuid, String captcha) {
-		redisUtils.setIfAbsent(uuid, captcha, RedisUtils.FIVE_MINUTE_EXPIRE);
+		redisUtils.set(uuid, captcha, RedisUtils.FIVE_MINUTE_EXPIRE);
 	}
 
 }

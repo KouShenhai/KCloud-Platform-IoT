@@ -15,31 +15,18 @@
  *
  */
 
-package org.laokou.auth.model;
+package org.laokou.auth.model.validator;
 
-import lombok.Getter;
+import org.laokou.auth.model.AuthA;
+
+import java.io.Serializable;
 
 /**
- * 登录状态枚举.
- *
  * @author laokou
  */
-@Getter
-public enum LoginStatusEnum {
+@FunctionalInterface
+public interface CaptchaParamValidator extends Serializable {
 
-	// @formatter:off
-	OK(0, "登录成功"),
-
-	FAIL(1, "登录失败");
-
-	private final int code;
-
-	private final String desc;
-
-	LoginStatusEnum(int code, String desc) {
-		this.code = code;
-		this.desc = desc;
-	}
-	// @formatter:on
+	void validateCaptcha(AuthA authA);
 
 }

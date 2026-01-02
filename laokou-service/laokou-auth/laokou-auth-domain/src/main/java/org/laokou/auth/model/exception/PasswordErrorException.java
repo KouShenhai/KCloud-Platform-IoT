@@ -15,16 +15,15 @@
  *
  */
 
-package org.laokou.auth.model;
-
-import java.io.Serializable;
+package org.laokou.auth.model.exception;
 
 /**
  * @author laokou
  */
-@FunctionalInterface
-public interface CaptchaParamValidator extends Serializable {
+public final class PasswordErrorException extends AuthException {
 
-	void validateCaptcha(AuthA authA);
+	public PasswordErrorException(String code) {
+		super(code);
+	}
 
 }

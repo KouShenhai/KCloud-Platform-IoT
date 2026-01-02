@@ -15,31 +15,16 @@
  *
  */
 
-package org.laokou.auth.model;
+package org.laokou.auth.model.function;
 
-import lombok.Getter;
+import java.util.Map;
 
 /**
- * 超级管理员枚举.
- *
  * @author laokou
  */
-@Getter
-public enum SuperAdminEnum {
+@FunctionalInterface
+public interface HttpRequest {
 
-	// @formatter:off
-	NO(0, "否"),
-
-	YES(1, "是");
-
-	private final int code;
-
-	private final String desc;
-
-	SuperAdminEnum(int code, String desc) {
-		this.code = code;
-		this.desc = desc;
-	}
-	// @formatter:on
+	Map<String, String[]> getParameterMap();
 
 }

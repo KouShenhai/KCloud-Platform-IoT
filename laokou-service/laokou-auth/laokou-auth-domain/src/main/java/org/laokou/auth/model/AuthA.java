@@ -19,15 +19,35 @@ package org.laokou.auth.model;
 
 import lombok.Getter;
 import org.laokou.auth.factory.DomainFactory;
+import org.laokou.auth.model.constant.Constants;
+import org.laokou.auth.model.constant.OAuth2Constants;
+import org.laokou.auth.model.entity.UserE;
+import org.laokou.auth.model.enums.GrantTypeEnum;
+import org.laokou.auth.model.enums.SendCaptchaTypeEnum;
+import org.laokou.auth.model.enums.UserStatusEnum;
+import org.laokou.auth.model.exception.CaptchaErrorException;
+import org.laokou.auth.model.exception.CaptchaExpiredException;
+import org.laokou.auth.model.exception.PasswordErrorException;
+import org.laokou.auth.model.exception.TenantNotFoundException;
+import org.laokou.auth.model.exception.UserDisabledException;
+import org.laokou.auth.model.exception.UserForbiddenException;
+import org.laokou.auth.model.function.HttpRequest;
+import org.laokou.auth.model.validator.AuthParamValidator;
+import org.laokou.auth.model.validator.CaptchaParamValidator;
+import org.laokou.auth.model.validator.CaptchaValidator;
+import org.laokou.auth.model.validator.PasswordValidator;
+import org.laokou.auth.model.valueobject.CaptchaV;
+import org.laokou.auth.model.valueobject.DataFilterV;
+import org.laokou.auth.model.valueobject.UserV;
 import org.laokou.common.core.util.RandomStringUtils;
 import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.crypto.util.RSAUtils;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.constant.StringConstants;
-import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.dto.IdGenerator;
+import org.laokou.common.i18n.dto.ValidateName;
 import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
@@ -47,7 +67,7 @@ import java.util.function.Supplier;
  */
 @Entity
 @Getter
-public class AuthA extends AggregateRoot {
+public class AuthA extends AggregateRoot implements ValidateName {
 
 	@Serial
 	private static final long serialVersionUID = 3319752558160144699L;
@@ -166,48 +186,53 @@ public class AuthA extends AggregateRoot {
 	}
 	// @formatter:on
 
-	public AuthA createUserVByUsernamePassword() throws Exception {
+	public AuthA createUserVByUsernamePasswordAuth() throws Exception {
 		this.grantTypeEnum = GrantTypeEnum.USERNAME_PASSWORD;
-		this.captchaV = getCaptchaVByUsernamePassword();
-		this.userV = getUserVByUsernamePassword();
+		this.captchaV = getCaptchaVByUsernamePasswordAuth();
+		this.userV = getUserVByUsernamePasswordAuth();
 		return this;
 	}
 
-	public AuthA createUserVByMobile() throws Exception {
+	public AuthA createUserVByMobileAuth() throws Exception {
 		this.grantTypeEnum = GrantTypeEnum.MOBILE;
-		this.captchaV = getCaptchaVByMobile();
-		this.userV = getUserVByMobile();
+		this.captchaV = getCaptchaVByMobileAuth();
+		this.userV = getUserVByMobileAuth();
 		return this;
 	}
 
-	public AuthA createUserVByMail() throws Exception {
+	public AuthA createUserVByMailAuth() throws Exception {
 		this.grantTypeEnum = GrantTypeEnum.MAIL;
-		this.captchaV = getCaptchaVByMail();
-		this.userV = getUserVByMail();
+		this.captchaV = getCaptchaVByMailAuth();
+		this.userV = getUserVByMailAuth();
 		return this;
 	}
 
-	public AuthA createUserVByAuthorizationCode() throws Exception {
+	public AuthA createUserVByAuthorizationCodeAuth() throws Exception {
 		this.grantTypeEnum = GrantTypeEnum.AUTHORIZATION_CODE;
-		this.userV = getUserVByAuthorizationCode();
+		this.userV = getUserVByAuthorizationCodeAuth();
 		return this;
 	}
 
-	public AuthA createUserVByTest() throws Exception {
+	public AuthA createUserVByTestAuth() throws Exception {
 		this.grantTypeEnum = GrantTypeEnum.TEST;
-		this.userV = getUserVByTest();
+		this.userV = getUserVByTestAuth();
 		return this;
 	}
 
-	public AuthA createCaptchaV(String uuid, String tag, String tenantCode) {
+	public AuthA createCaptchaVBySend(String uuid, String tag, String tenantCode) {
 		this.sendCaptchaTypeEnum = SendCaptchaTypeEnum.getByCode(tag);
 		this.captchaV = CaptchaV.builder().uuid(uuid).build();
 		this.userV = UserV.builder().tenantCode(tenantCode).build();
 		return this;
 	}
 
-	public String getCaptcha() {
-		return RandomStringUtils.randomNumeric();
+	public String getCaptchaBySend() {
+		this.captchaV = this.captchaV.toBuilder().captcha(RandomStringUtils.randomNumeric()).build();
+		return this.captchaV.captcha();
+	}
+
+	public String getCaptchaCacheKeyBySend() {
+		return sendCaptchaTypeEnum.getCaptchaCacheKey(this.captchaV.uuid());
 	}
 
 	public void getTenantId(Supplier<Long> supplier) {
@@ -228,15 +253,14 @@ public class AuthA extends AggregateRoot {
 	}
 
 	public void getDataFilter(Set<String> dataScopes) {
-		throw new UnsupportedOperationException();
+
 	}
 
 	public void checkCaptchaParam() {
 		switch (sendCaptchaTypeEnum) {
 			case SEND_MAIL_CAPTCHA -> this.mailCaptchaParamValidator.validateCaptcha(this);
 			case SEND_MOBILE_CAPTCHA -> this.mobileCaptchaParamValidator.validateCaptcha(this);
-			default -> {
-			}
+			default -> throw new UnsupportedOperationException("Unsupported captcha type");
 		}
 	}
 
@@ -247,51 +271,51 @@ public class AuthA extends AggregateRoot {
 			case USERNAME_PASSWORD -> this.usernamePasswordAuthParamValidator.validateAuth(this);
 			case AUTHORIZATION_CODE -> this.authorizationCodeAuthParamValidator.validateAuth(this);
 			case TEST -> this.testAuthParamValidator.validateAuth(this);
-			default -> {
-			}
+			default -> throw new UnsupportedOperationException("Unsupported grant type");
 		}
 	}
 
 	public void checkTenantId() {
 		if (ObjectUtils.isNull(this.userV.tenantId())) {
-			throw new BizException(OAuth2Constants.TENANT_NOT_EXIST);
+			throw new TenantNotFoundException(OAuth2Constants.TENANT_NOT_EXIST);
 		}
 	}
 
 	public void checkCaptcha() {
 		if (isUseCaptcha()) {
-			Boolean validate = this.captchaValidator.validateCaptcha(getCaptchaCacheKey(), this.captchaV.captcha());
+			Boolean validate = this.captchaValidator.validateCaptcha(getCaptchaCacheKeyByAuth(),
+					this.captchaV.captcha());
 			if (ObjectUtils.isNull(validate)) {
-				throw new BizException(OAuth2Constants.CAPTCHA_EXPIRED);
+				throw new CaptchaExpiredException(OAuth2Constants.CAPTCHA_EXPIRED);
 			}
 			if (!validate) {
-				throw new BizException(OAuth2Constants.CAPTCHA_ERROR);
+				throw new CaptchaErrorException(OAuth2Constants.CAPTCHA_ERROR);
 			}
 		}
 	}
 
 	public void checkUsername() {
 		if (ObjectUtils.isNull(this.userE)) {
-			this.grantTypeEnum.checkUsernameNotExist();
+			this.grantTypeEnum.checkUsernameNotFound();
 		}
 	}
 
 	public void checkPassword() {
 		if (isUsePassword()
 				&& !this.passwordValidator.validatePassword(this.userV.password(), this.userE.getPassword())) {
-			throw new BizException(OAuth2Constants.USERNAME_PASSWORD_ERROR);
+			throw new PasswordErrorException(OAuth2Constants.USERNAME_PASSWORD_ERROR);
 		}
 	}
 
 	public void checkUserStatus() {
 		if (ObjectUtils.equals(UserStatusEnum.DISABLE.getCode(), this.userE.getStatus())) {
-			throw new BizException(OAuth2Constants.USER_DISABLED);
+			throw new UserDisabledException(OAuth2Constants.USER_DISABLED);
 		}
 	}
 
 	public void checkMenuPermissions() {
 		if (CollectionUtils.isEmpty(this.userV.permissions())) {
-			throw new BizException(StatusCode.FORBIDDEN);
+			throw new UserForbiddenException(StatusCode.FORBIDDEN);
 		}
 	}
 
@@ -307,6 +331,7 @@ public class AuthA extends AggregateRoot {
 		this.userV = this.userV.toBuilder().avatar(avatar).build();
 	}
 
+	@Override
 	public String getValidateName() {
 		return "OAuth2";
 	}
@@ -321,12 +346,12 @@ public class AuthA extends AggregateRoot {
 			.contains(grantTypeEnum);
 	}
 
-	private String getCaptchaCacheKey() {
+	private String getCaptchaCacheKeyByAuth() {
 		return switch (grantTypeEnum) {
 			case MOBILE -> RedisKeyUtils.getMobileAuthCaptchaKey(this.captchaV.uuid());
 			case MAIL -> RedisKeyUtils.getMailAuthCaptchaKey(this.captchaV.uuid());
 			case USERNAME_PASSWORD -> RedisKeyUtils.getUsernamePasswordAuthCaptchaKey(this.captchaV.uuid());
-			case AUTHORIZATION_CODE, TEST -> StringConstants.EMPTY;
+			case AUTHORIZATION_CODE, TEST -> throw new UnsupportedOperationException("Unsupported grant type");
 		};
 	}
 
@@ -338,25 +363,25 @@ public class AuthA extends AggregateRoot {
 		return parameterMap.getOrDefault(key, new String[] { StringConstants.EMPTY })[0];
 	}
 
-	private CaptchaV getCaptchaVByUsernamePassword() {
+	private CaptchaV getCaptchaVByUsernamePasswordAuth() {
 		String uuid = getParameterValue(Constants.UUID);
 		String captcha = getParameterValue(Constants.CAPTCHA);
 		return CaptchaV.builder().uuid(uuid).captcha(captcha).build();
 	}
 
-	private CaptchaV getCaptchaVByMobile() {
+	private CaptchaV getCaptchaVByMobileAuth() {
 		String mobile = getParameterValue(Constants.MOBILE);
 		String code = getParameterValue(Constants.CODE);
 		return CaptchaV.builder().uuid(mobile).captcha(code).build();
 	}
 
-	private CaptchaV getCaptchaVByMail() {
+	private CaptchaV getCaptchaVByMailAuth() {
 		String mail = getParameterValue(Constants.MAIL);
 		String code = getParameterValue(Constants.CODE);
 		return CaptchaV.builder().uuid(mail).captcha(code).build();
 	}
 
-	private UserV getUserVByUsernamePassword() throws Exception {
+	private UserV getUserVByUsernamePasswordAuth() throws Exception {
 		String username = RSAUtils.decryptByPrivateKey(getParameterValue(Constants.USERNAME));
 		String password = RSAUtils.decryptByPrivateKey(getParameterValue(Constants.PASSWORD));
 		String tenantCode = getParameterValue(Constants.TENANT_CODE);
@@ -369,11 +394,11 @@ public class AuthA extends AggregateRoot {
 			.build();
 	}
 
-	private UserV getUserVByTest() throws Exception {
-		return getUserVByAuthorizationCode();
+	private UserV getUserVByTestAuth() throws Exception {
+		return getUserVByAuthorizationCodeAuth();
 	}
 
-	private UserV getUserVByAuthorizationCode() throws Exception {
+	private UserV getUserVByAuthorizationCodeAuth() throws Exception {
 		String username = getParameterValue(Constants.USERNAME);
 		String password = getParameterValue(Constants.PASSWORD);
 		String tenantCode = getParameterValue(Constants.TENANT_CODE);
@@ -386,7 +411,7 @@ public class AuthA extends AggregateRoot {
 			.build();
 	}
 
-	private UserV getUserVByMobile() throws Exception {
+	private UserV getUserVByMobileAuth() throws Exception {
 		String tenantCode = getParameterValue(Constants.TENANT_CODE);
 		return UserV.builder()
 			.username(StringConstants.EMPTY)
@@ -396,7 +421,7 @@ public class AuthA extends AggregateRoot {
 			.build();
 	}
 
-	private UserV getUserVByMail() throws Exception {
+	private UserV getUserVByMailAuth() throws Exception {
 		String tenantCode = getParameterValue(Constants.TENANT_CODE);
 		return UserV.builder()
 			.username(StringConstants.EMPTY)

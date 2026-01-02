@@ -21,7 +21,7 @@ import org.laokou.auth.dto.clientobject.NoticeLogCO;
 import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.gatewayimpl.database.dataobject.NoticeLogDO;
-import org.laokou.auth.model.NoticeLogE;
+import org.laokou.auth.model.entity.NoticeLogE;
 import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.common.mail.dto.MailResult;

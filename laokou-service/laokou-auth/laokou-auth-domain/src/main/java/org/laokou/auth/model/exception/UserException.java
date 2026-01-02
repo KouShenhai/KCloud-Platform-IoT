@@ -15,29 +15,15 @@
  *
  */
 
-package org.laokou.auth.model;
-
-import lombok.Getter;
+package org.laokou.auth.model.exception;
 
 /**
  * @author laokou
  */
-@Getter
-public enum SendCaptchaStatusEnum {
+class UserException extends AuthException {
 
-	// @formatter:off
-	OK(0, "发送成功"),
-
-	FAIL(1, "发送失败");
-
-	private final int code;
-
-	private final String desc;
-
-	SendCaptchaStatusEnum(int code, String desc) {
-		this.code = code;
-		this.desc = desc;
+	public UserException(String code) {
+		super(code);
 	}
-	// @formatter:on
 
 }

@@ -15,14 +15,17 @@
  *
  */
 
-package org.laokou.auth.model;
+package org.laokou.auth.model.exception;
 
-import java.util.List;
+import org.laokou.common.i18n.common.exception.BizException;
 
 /**
  * @author laokou
- * @param deptIds 部门IDS
- * @param creator 创建者
  */
-public record DataFilterV(List<Long> deptIds, Long creator) {
+class AuthException extends BizException {
+
+	public AuthException(String code) {
+		super(code);
+	}
+
 }

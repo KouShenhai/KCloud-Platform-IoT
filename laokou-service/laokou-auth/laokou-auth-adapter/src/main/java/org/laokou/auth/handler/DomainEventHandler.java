@@ -28,7 +28,7 @@ import org.laokou.auth.dto.LoginLogSaveCmd;
 import org.laokou.auth.dto.NoticeLogSaveCmd;
 import org.laokou.auth.dto.domainevent.LoginEvent;
 import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
-import org.laokou.auth.model.MqEnum;
+import org.laokou.auth.model.enums.MqEnum;
 import org.laokou.common.mail.service.MailService;
 import org.laokou.common.sms.service.SmsService;
 import org.springframework.kafka.annotation.KafkaListener;

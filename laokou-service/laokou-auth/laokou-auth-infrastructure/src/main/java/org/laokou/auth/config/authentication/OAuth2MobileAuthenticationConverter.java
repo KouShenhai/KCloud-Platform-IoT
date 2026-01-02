@@ -17,7 +17,7 @@
 
 package org.laokou.auth.config.authentication;
 
-import org.laokou.auth.model.Constants;
+import org.laokou.auth.model.constant.Constants;
 import org.springframework.security.core.Authentication;
 
 import java.util.Map;

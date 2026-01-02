@@ -18,9 +18,9 @@
 package org.laokou.auth.factory;
 
 import org.laokou.auth.model.AuthA;
-import org.laokou.auth.model.LoginLogE;
-import org.laokou.auth.model.NoticeLogE;
-import org.laokou.auth.model.UserE;
+import org.laokou.auth.model.entity.LoginLogE;
+import org.laokou.auth.model.entity.NoticeLogE;
+import org.laokou.auth.model.entity.UserE;
 import org.laokou.common.i18n.util.SpringContextUtils;
 
 /**

@@ -20,8 +20,8 @@ package org.laokou.auth.convertor;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.auth.model.AuthA;
-import org.laokou.auth.model.UserE;
-import org.laokou.auth.model.UserV;
+import org.laokou.auth.model.entity.UserE;
+import org.laokou.auth.model.valueobject.UserV;
 import org.laokou.common.context.util.User;
 
 /**
