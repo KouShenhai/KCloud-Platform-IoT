@@ -39,7 +39,7 @@ public class MobileCaptchaParamValidator implements CaptchaParamValidator {
 	public void validateCaptcha(AuthA authA) {
 		UserV userV = authA.getUserV();
 		CaptchaV captchaV = authA.getCaptchaV();
-		ParamValidator.validate(authA.name(),
+		ParamValidator.validate(authA.getValidateName(),
 				// 校验租户编码
 				OAuth2ParamValidator.validateTenantCode(userV.tenantCode()),
 				// 校验手机号

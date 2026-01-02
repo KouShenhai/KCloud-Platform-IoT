@@ -19,6 +19,8 @@ package org.laokou.auth.model;
 
 import lombok.Getter;
 import org.laokou.auth.factory.DomainFactory;
+import org.laokou.auth.model.exception.CaptchaErrorException;
+import org.laokou.auth.model.exception.CaptchaExpiredException;
 import org.laokou.common.core.util.RandomStringUtils;
 import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.crypto.util.RSAUtils;
@@ -208,7 +210,12 @@ public class AuthA extends AggregateRoot implements ValidateName {
 	}
 
 	public String getCaptcha() {
-		return RandomStringUtils.randomNumeric();
+		this.captchaV = this.captchaV.toBuilder().captcha(RandomStringUtils.randomNumeric()).build();
+		return this.captchaV.captcha();
+	}
+
+	public String getCaptchaCacheKey0() {
+		return sendCaptchaTypeEnum.getCaptchaCacheKey(this.captchaV.uuid());
 	}
 
 	public void getTenantId(Supplier<Long> supplier) {
@@ -229,15 +236,14 @@ public class AuthA extends AggregateRoot implements ValidateName {
 	}
 
 	public void getDataFilter(Set<String> dataScopes) {
-		throw new UnsupportedOperationException();
+
 	}
 
 	public void checkCaptchaParam() {
 		switch (sendCaptchaTypeEnum) {
 			case SEND_MAIL_CAPTCHA -> this.mailCaptchaParamValidator.validateCaptcha(this);
 			case SEND_MOBILE_CAPTCHA -> this.mobileCaptchaParamValidator.validateCaptcha(this);
-			default -> {
-			}
+			default -> throw new UnsupportedOperationException("Unsupported captcha type");
 		}
 	}
 
@@ -248,8 +254,7 @@ public class AuthA extends AggregateRoot implements ValidateName {
 			case USERNAME_PASSWORD -> this.usernamePasswordAuthParamValidator.validateAuth(this);
 			case AUTHORIZATION_CODE -> this.authorizationCodeAuthParamValidator.validateAuth(this);
 			case TEST -> this.testAuthParamValidator.validateAuth(this);
-			default -> {
-			}
+			default -> throw new UnsupportedOperationException("Unsupported grant type");
 		}
 	}
 
@@ -263,17 +268,17 @@ public class AuthA extends AggregateRoot implements ValidateName {
 		if (isUseCaptcha()) {
 			Boolean validate = this.captchaValidator.validateCaptcha(getCaptchaCacheKey(), this.captchaV.captcha());
 			if (ObjectUtils.isNull(validate)) {
-				throw new BizException(OAuth2Constants.CAPTCHA_EXPIRED);
+				throw new CaptchaExpiredException(OAuth2Constants.CAPTCHA_EXPIRED);
 			}
 			if (!validate) {
-				throw new BizException(OAuth2Constants.CAPTCHA_ERROR);
+				throw new CaptchaErrorException(OAuth2Constants.CAPTCHA_ERROR);
 			}
 		}
 	}
 
 	public void checkUsername() {
 		if (ObjectUtils.isNull(this.userE)) {
-			this.grantTypeEnum.checkUsernameNotExist();
+			this.grantTypeEnum.checkUsernameNotFound();
 		}
 	}
 
@@ -328,7 +333,7 @@ public class AuthA extends AggregateRoot implements ValidateName {
 			case MOBILE -> RedisKeyUtils.getMobileAuthCaptchaKey(this.captchaV.uuid());
 			case MAIL -> RedisKeyUtils.getMailAuthCaptchaKey(this.captchaV.uuid());
 			case USERNAME_PASSWORD -> RedisKeyUtils.getUsernamePasswordAuthCaptchaKey(this.captchaV.uuid());
-			case AUTHORIZATION_CODE, TEST -> StringConstants.EMPTY;
+			case AUTHORIZATION_CODE, TEST -> throw new UnsupportedOperationException("Unsupported grant type");
 		};
 	}
 

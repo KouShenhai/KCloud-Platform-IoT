@@ -20,9 +20,8 @@ package org.laokou.admin.dept.model;
 import lombok.Getter;
 import lombok.Setter;
 import org.laokou.common.i18n.annotation.Entity;
-import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.dto.IdGenerator;
-import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.i18n.dto.ValidateName;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
@@ -32,8 +31,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
  */
 @Entity
 @Getter
-@Setter
-public class DeptE {
+public class DeptE implements ValidateName {
 
 	private Long id;
 
@@ -52,13 +50,6 @@ public class DeptE {
 	private String name;
 
 	/**
-	 * 部门节点.
-	 */
-	@Setter
-	@Getter
-	private String path;
-
-	/**
 	 * 部门排序.
 	 */
 	@Setter
@@ -69,32 +60,18 @@ public class DeptE {
 	@Getter
 	private DeptOperateTypeEnum deptOperateTypeEnum;
 
-	/**
-	 * 部门父节点路径.
-	 */
-	private String parentPath;
-
-	/**
-	 * 旧路径.
-	 */
-	@Getter
-	private String oldPath;
-
 	private final DeptParamValidator saveDeptParamValidator;
 
 	private final DeptParamValidator modifyDeptParamValidator;
 
 	private final IdGenerator idGenerator;
 
-	// @formatter:off
 	public DeptE(@Qualifier("modifyDeptParamValidator") DeptParamValidator saveDeptParamValidator,
-				 @Qualifier("saveDeptParamValidator") DeptParamValidator modifyDeptParamValidator,
-				 IdGenerator idGenerator) {
-		super();this.saveDeptParamValidator = saveDeptParamValidator;
+			@Qualifier("saveDeptParamValidator") DeptParamValidator modifyDeptParamValidator, IdGenerator idGenerator) {
+		this.saveDeptParamValidator = saveDeptParamValidator;
 		this.modifyDeptParamValidator = modifyDeptParamValidator;
 		this.idGenerator = idGenerator;
 	}
-	// @formatter:on
 
 	public Long getPrimaryKey() {
 		return idGenerator.getId();
@@ -104,38 +81,13 @@ public class DeptE {
 		switch (deptOperateTypeEnum) {
 			case SAVE -> saveDeptParamValidator.validateDept(this);
 			case MODIFY -> modifyDeptParamValidator.validateDept(this);
-			default -> {
-			}
+			default -> throw new UnsupportedOperationException("Unsupported operation type");
 		}
 	}
 
-	public void getOldPath(String oldPath) {
-		this.oldPath = oldPath;
-	}
-
-	public void getParentPath(String parentPath) {
-		this.parentPath = parentPath;
-	}
-
-	public void checkParentPath(Long id) {
-		if (ObjectUtils.isNull(this.parentPath)) {
-			throw new BizException("B_Dept_ParentPathNotExist", "父级部门路径不存在");
-		}
-		this.path = this.parentPath + "," + id;
-	}
-
-	public void checkOldPath() {
-		if (ObjectUtils.isNull(this.oldPath)) {
-			throw new BizException("B_Dept_OldPathNotExist", "旧部门路径不存在");
-		}
-	}
-
-	public String getOldPrefix() {
-		return "^" + this.oldPath;
-	}
-
-	public String getNewPrefix() {
-		return this.path;
+	@Override
+	public String getValidateName() {
+		return "Dept";
 	}
 
 }

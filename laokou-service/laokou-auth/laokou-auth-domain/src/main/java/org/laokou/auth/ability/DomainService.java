@@ -18,6 +18,7 @@
 package org.laokou.auth.ability;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.auth.gateway.CaptchaGateway;
 import org.laokou.auth.gateway.DeptGateway;
 import org.laokou.auth.gateway.MenuGateway;
 import org.laokou.auth.gateway.OssLogGateway;
@@ -43,6 +44,8 @@ public class DomainService {
 
 	private final OssLogGateway ossLogGateway;
 
+	private final CaptchaGateway captchaGateway;
+
 	public void createCaptcha(AuthA authA) {
 		// 校验验证码参数
 		authA.checkCaptchaParam();
@@ -51,6 +54,7 @@ public class DomainService {
 		// 校验租户ID
 		authA.checkTenantId();
 		// 保存验证码
+		captchaGateway.createCaptcha(authA.getCaptchaCacheKey0(), authA.getCaptcha());
 	}
 
 	public void auth(AuthA authA) {
