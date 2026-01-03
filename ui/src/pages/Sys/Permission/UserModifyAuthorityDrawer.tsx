@@ -16,7 +16,7 @@ interface UserAuthorityProps {
 type TableColumns = {
 	id: number;
 	username: string | undefined;
-	deptIds: string[];
+	deptId: number;
 	roleIds: string[];
 };
 
@@ -48,10 +48,9 @@ export const UserModifyAuthorityDrawer: React.FC<UserAuthorityProps> = ({ modalM
 			}}
 			onFinish={ async (value) => {
 				setLoading(true)
-				const deptIds = value?.deptIds.map((item: any) => item?.value ? item?.value : item)
 				const co = {
 					id: value?.id,
-					deptIds: deptIds,
+					deptId: value?.deptId,
 					roleIds: value?.roleIds,
 				}
 				modifyUserAuthority({co: co}).then(res => {
@@ -100,7 +99,7 @@ export const UserModifyAuthorityDrawer: React.FC<UserAuthorityProps> = ({ modalM
 
 			<ProFormTreeSelect
 				disabled={loading}
-				name="deptIds"
+				name="deptId"
 				label="所属部门"
 				allowClear={true}
 				placeholder={'请选择所属部门'}
@@ -111,24 +110,6 @@ export const UserModifyAuthorityDrawer: React.FC<UserAuthorityProps> = ({ modalM
 						value: 'id',
 						children: 'children'
 					},
-					// 最多显示多少个 tag，响应式模式会对性能产生损耗
-					maxTagCount: 6,
-					// 多选
-					multiple: true,
-					// 显示复选框
-					treeCheckable: true,
-					// 展示策略
-					showCheckedStrategy: 'SHOW_ALL',
-					// 取消父子节点联动
-					treeCheckStrictly: true,
-					// 默认展示所有节点
-					treeDefaultExpandAll: true,
-					// 高度
-					dropdownStyle: { maxHeight: 600 },
-					// 不显示搜索
-					showSearch: false,
-					// 高度
-					listHeight: 550
 				}}
 				request={async () => {
 					return deptTreeList
