@@ -82,7 +82,7 @@ public class DomainService {
 		// 校验菜单权限标识集合
 		authA.checkMenuPermissions();
 		// 获取数据权限
-		authA.getDataFilter(Set.of(DataScopeEnum.ALL.getCode()));
+		authA.getDataFilter(Set.of(DataScopeEnum.ALL.getCode()), () -> Set.of(1L));
 		// 校验数据权限
 		authA.checkDataFilter();
 		// 获取用户头像

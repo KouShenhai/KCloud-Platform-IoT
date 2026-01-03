@@ -176,8 +176,7 @@ public class UserE {
 			case MODIFY -> modifyUserParamValidator.validateUser(this);
 			case RESET_PWD -> resetUserPwdParamValidator.validateUser(this);
 			case MODIFY_AUTHORITY -> modifyUserAuthorityParamValidator.validateUser(this);
-			default -> {
-			}
+			default -> throw new UnsupportedOperationException("Unsupported operation");
 		}
 	}
 

@@ -119,8 +119,7 @@ public class ThingModelE {
 		switch (thingModelOperateTypeEnum) {
 			case SAVE -> saveThingModelParamValidator.validateThingModel(this);
 			case MODIFY -> modifyThingModelParamValidator.validateThingModel(this);
-			default -> {
-			}
+			default -> throw new UnsupportedOperationException("Unsupported operation");
 		}
 	}
 

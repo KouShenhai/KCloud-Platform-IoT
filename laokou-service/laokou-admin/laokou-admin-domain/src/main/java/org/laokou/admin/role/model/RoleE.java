@@ -133,8 +133,7 @@ public class RoleE {
 			case SAVE -> saveRoleParamValidator.validateRole(this);
 			case MODIFY -> modifyRoleParamValidator.validateRole(this);
 			case MODIFY_AUTHORITY -> modifyRoleAuthorityParamValidator.validateRole(this);
-			default -> {
-			}
+			default -> throw new UnsupportedOperationException("Unsupported operation");
 		}
 	}
 
