@@ -24,7 +24,7 @@ import org.laokou.common.i18n.common.exception.BizException;
  */
 class AuthException extends BizException {
 
-	public AuthException(String code) {
+	AuthException(String code) {
 		super(code);
 	}
 

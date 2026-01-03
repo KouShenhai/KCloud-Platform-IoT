@@ -28,9 +28,14 @@ public final class OAuth2Constants {
 	}
 
 	/**
+	 * 部门不存在.
+	 */
+	public static final String DEPT_NOT_FOUND = "B_OAuth2_DeptNotFound";
+
+	/**
 	 * 租户不存在.
 	 */
-	public static final String TENANT_NOT_EXIST = "B_OAuth2_TenantNotExist";
+	public static final String TENANT_NOT_FOUND = "B_OAuth2_TenantNotFound";
 
 	/**
 	 * 令牌生成器无法生成刷新令牌.
@@ -45,7 +50,7 @@ public final class OAuth2Constants {
 	/**
 	 * 注册客户端不存在.
 	 */
-	public static final String REGISTERED_CLIENT_NOT_EXIST = "B_OAuth2_RegisteredClientNotExist";
+	public static final String REGISTERED_CLIENT_NOT_FOUND = "B_OAuth2_RegisteredClientNotFound";
 
 	/**
 	 * 无效客户端.

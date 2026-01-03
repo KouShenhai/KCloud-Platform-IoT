@@ -80,6 +80,7 @@ COMMENT ON COLUMN "public"."sys_dept"."sort" IS '部门排序';
 COMMENT ON TABLE "public"."sys_dept" IS '部门';
 
 ALTER TABLE "public"."sys_dept" ADD CONSTRAINT "sys_dept_pkey" PRIMARY KEY ("id");
+CREATE INDEX sys_dept_pid_idx ON sys_dept(pid);
 
 INSERT INTO "public"."sys_dept" VALUES (1535858679453085698, 1, 1, '2022-11-02 22:35:30', '2023-09-22 11:31:42', 0, 4, 0, 1535887940687765505, '广州分公司', 666);
 INSERT INTO "public"."sys_dept" VALUES (1535881356595175426, 1, 1, '2022-11-02 22:35:30', '2023-09-22 11:31:42', 0, 18, 0, 1535887940687765505, '长沙分公司', 111);

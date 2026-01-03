@@ -77,12 +77,14 @@ public class DomainService {
 		authA.checkPassword();
 		// 校验用户状态
 		authA.checkUserStatus();
+		// 校验部门ID
+		authA.checkDeptId();
 		// 获取菜单权限标识集合
 		authA.getMenuPermissions(menuGateway.getMenuPermissions(authA.getUserE()));
 		// 校验菜单权限标识集合
 		authA.checkMenuPermissions();
 		// 获取数据权限
-		authA.getDataFilter(Set.of(DataScopeEnum.ALL.getCode()));
+		authA.getDataFilter(Set.of(DataScopeEnum.ALL.getCode()), () -> Set.of(1L));
 		// 校验数据权限
 		authA.checkDataFilter();
 		// 获取用户头像

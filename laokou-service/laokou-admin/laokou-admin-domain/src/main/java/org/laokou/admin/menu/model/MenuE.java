@@ -118,8 +118,7 @@ public class MenuE {
 		switch (menuOperateTypeEnum) {
 			case SAVE -> saveMenuParamValidator.validateMenu(this);
 			case MODIFY -> modifyMenuParamValidator.validateMenu(this);
-			default -> {
-			}
+			default -> throw new UnsupportedOperationException("Unsupported operation");
 		}
 	}
 

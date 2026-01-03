@@ -24,7 +24,6 @@ import org.laokou.auth.gatewayimpl.database.MenuMapper;
 import org.laokou.auth.model.entity.UserE;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -47,9 +46,9 @@ public class MenuGatewayImpl implements MenuGateway {
 	@Override
 	public Set<String> getMenuPermissions(UserE user) {
 		if (user.isSuperAdministrator()) {
-			return new HashSet<>(menuMapper.selectPermissions());
+			return Set.copyOf(menuMapper.selectPermissions());
 		}
-		return new HashSet<>(menuMapper.selectPermissionsByUserId(user.getId()));
+		return Set.copyOf(menuMapper.selectPermissionsByUserId(user.getId()));
 	}
 
 }

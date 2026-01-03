@@ -92,8 +92,7 @@ public class ProductCategoryE {
 		switch (productCategoryOperateTypeEnum) {
 			case SAVE -> saveProductCategoryParamValidator.validateProductCategory(this);
 			case MODIFY -> modifyProductCategoryParamValidator.validateProductCategory(this);
-			default -> {
-			}
+			default -> throw new UnsupportedOperationException("Unsupported operation");
 		}
 	}
 

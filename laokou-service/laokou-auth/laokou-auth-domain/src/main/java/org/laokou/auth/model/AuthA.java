@@ -28,6 +28,7 @@ import org.laokou.auth.model.enums.SendCaptchaTypeEnum;
 import org.laokou.auth.model.enums.UserStatusEnum;
 import org.laokou.auth.model.exception.CaptchaErrorException;
 import org.laokou.auth.model.exception.CaptchaExpiredException;
+import org.laokou.auth.model.exception.DeptNotFoundException;
 import org.laokou.auth.model.exception.PasswordErrorException;
 import org.laokou.auth.model.exception.TenantNotFoundException;
 import org.laokou.auth.model.exception.UserDisabledException;
@@ -254,7 +255,7 @@ public class AuthA extends AggregateRoot implements ValidateName {
 		this.userV = this.userV.toBuilder().permissions(permissions).build();
 	}
 
-	public void getDataFilter(Set<String> dataScopes) {
+	public void getDataFilter(Set<String> dataScopes, Supplier<Set<Long>> deptIdsSupplier) {
 		if (CollectionUtils.isEmpty(dataScopes)) {
 			this.dataFilterV = null;
 			return;
@@ -263,7 +264,17 @@ public class AuthA extends AggregateRoot implements ValidateName {
 			this.dataFilterV = DataFilterV.builder().deptIds(Collections.emptySet()).creator(null).build();
 		}
 		else {
-			this.dataFilterV = DataFilterV.builder().build();
+			Set<Long> deptIds = Collections.emptySet();
+			Long creator = null;
+			if (dataScopes.contains(DataScopeEnum.BELOW_DEPT.getCode())
+					|| dataScopes.contains(DataScopeEnum.SELF_DEPT.getCode())
+					|| dataScopes.contains(DataScopeEnum.CUSTOM.getCode())) {
+				deptIds = deptIdsSupplier.get();
+			}
+			if (dataScopes.contains(DataScopeEnum.SELF.getCode())) {
+				creator = this.userE.getId();
+			}
+			this.dataFilterV = DataFilterV.builder().deptIds(deptIds).creator(creator).build();
 		}
 	}
 
@@ -288,7 +299,13 @@ public class AuthA extends AggregateRoot implements ValidateName {
 
 	public void checkTenantId() {
 		if (ObjectUtils.isNull(this.userV.tenantId())) {
-			throw new TenantNotFoundException(OAuth2Constants.TENANT_NOT_EXIST);
+			throw new TenantNotFoundException(OAuth2Constants.TENANT_NOT_FOUND);
+		}
+	}
+
+	public void checkDeptId() {
+		if (ObjectUtils.isNull(this.userE.getDeptId())) {
+			throw new DeptNotFoundException(OAuth2Constants.DEPT_NOT_FOUND);
 		}
 	}
 

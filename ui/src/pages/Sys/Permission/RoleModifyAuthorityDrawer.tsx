@@ -139,8 +139,8 @@ export const RoleModifyAuthorityDrawer: React.FC<RoleAuthorityProps> = ({ modalM
 				options={[
 					{value: 'all', label: '全部'},
 					{value: 'custom', label: '自定义'},
-					{value: 'dept_self', label: '仅本部门'},
-					{value: 'dept', label: '部门及以下'},
+					{value: 'self_dept', label: '仅本部门'},
+					{value: 'below_dept', label: '部门及以下'},
 					{value: 'self', label: '仅本人'},
 				]}
 			/>

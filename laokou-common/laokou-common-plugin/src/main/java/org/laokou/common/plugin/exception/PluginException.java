@@ -26,20 +26,12 @@ import org.laokou.common.i18n.common.exception.BizException;
  */
 public class PluginException extends BizException {
 
-	public PluginException(String code) {
-		super(code);
-	}
-
 	public PluginException(String code, String msg) {
 		super(code, msg);
 	}
 
 	public PluginException(String code, String msg, Throwable throwable) {
 		super(code, msg, throwable);
-	}
-
-	public PluginException(String code, String msg, Object data) {
-		super(code, msg, data);
 	}
 
 }

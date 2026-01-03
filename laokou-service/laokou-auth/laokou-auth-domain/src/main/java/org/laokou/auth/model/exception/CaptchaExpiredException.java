@@ -20,7 +20,7 @@ package org.laokou.auth.model.exception;
 /**
  * @author laokou
  */
-public final class CaptchaExpiredException extends CaptchaException {
+public final class CaptchaExpiredException extends AuthException {
 
 	public CaptchaExpiredException(String code) {
 		super(code);
