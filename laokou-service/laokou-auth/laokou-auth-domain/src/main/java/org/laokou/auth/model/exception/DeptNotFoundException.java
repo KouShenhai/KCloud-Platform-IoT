@@ -20,9 +20,9 @@ package org.laokou.auth.model.exception;
 /**
  * @author laokou
  */
-class UserException extends AuthException {
+public final class DeptNotFoundException extends AuthException {
 
-	public UserException(String code) {
+	public DeptNotFoundException(String code) {
 		super(code);
 	}
 

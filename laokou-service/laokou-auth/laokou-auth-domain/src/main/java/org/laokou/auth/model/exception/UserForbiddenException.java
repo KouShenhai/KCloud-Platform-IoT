@@ -20,7 +20,7 @@ package org.laokou.auth.model.exception;
 /**
  * @author laokou
  */
-public final class UserForbiddenException extends UserException {
+public final class UserForbiddenException extends AuthException {
 
 	public UserForbiddenException(String code) {
 		super(code);

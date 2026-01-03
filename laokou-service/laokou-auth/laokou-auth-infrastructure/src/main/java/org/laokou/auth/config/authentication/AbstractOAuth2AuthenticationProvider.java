@@ -144,7 +144,7 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 				abstractOAuth2Authentication);
 		RegisteredClient registeredClient = clientPrincipal.getRegisteredClient();
 		if (ObjectUtils.isNull(registeredClient)) {
-			throw OAuth2ExceptionHandler.getException(OAuth2Constants.REGISTERED_CLIENT_NOT_EXIST);
+			throw OAuth2ExceptionHandler.getException(OAuth2Constants.REGISTERED_CLIENT_NOT_FOUND);
 		}
 
 		// 获取认证范围

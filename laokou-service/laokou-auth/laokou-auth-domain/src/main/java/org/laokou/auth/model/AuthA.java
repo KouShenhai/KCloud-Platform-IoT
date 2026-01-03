@@ -28,6 +28,7 @@ import org.laokou.auth.model.enums.SendCaptchaTypeEnum;
 import org.laokou.auth.model.enums.UserStatusEnum;
 import org.laokou.auth.model.exception.CaptchaErrorException;
 import org.laokou.auth.model.exception.CaptchaExpiredException;
+import org.laokou.auth.model.exception.DeptNotFoundException;
 import org.laokou.auth.model.exception.PasswordErrorException;
 import org.laokou.auth.model.exception.TenantNotFoundException;
 import org.laokou.auth.model.exception.UserDisabledException;
@@ -298,7 +299,13 @@ public class AuthA extends AggregateRoot implements ValidateName {
 
 	public void checkTenantId() {
 		if (ObjectUtils.isNull(this.userV.tenantId())) {
-			throw new TenantNotFoundException(OAuth2Constants.TENANT_NOT_EXIST);
+			throw new TenantNotFoundException(OAuth2Constants.TENANT_NOT_FOUND);
+		}
+	}
+
+	public void checkDeptId() {
+		if (ObjectUtils.isNull(this.userE.getDeptId())) {
+			throw new DeptNotFoundException(OAuth2Constants.DEPT_NOT_FOUND);
 		}
 	}
 

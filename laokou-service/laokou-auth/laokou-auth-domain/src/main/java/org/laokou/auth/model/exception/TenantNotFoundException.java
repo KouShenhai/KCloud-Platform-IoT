@@ -20,7 +20,7 @@ package org.laokou.auth.model.exception;
 /**
  * @author laokou
  */
-public final class TenantNotFoundException extends TenantException {
+public final class TenantNotFoundException extends AuthException {
 
 	public TenantNotFoundException(String code) {
 		super(code);

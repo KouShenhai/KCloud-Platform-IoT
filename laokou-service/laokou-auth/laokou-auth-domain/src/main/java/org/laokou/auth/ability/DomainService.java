@@ -77,6 +77,8 @@ public class DomainService {
 		authA.checkPassword();
 		// 校验用户状态
 		authA.checkUserStatus();
+		// 校验部门ID
+		authA.checkDeptId();
 		// 获取菜单权限标识集合
 		authA.getMenuPermissions(menuGateway.getMenuPermissions(authA.getUserE()));
 		// 校验菜单权限标识集合
