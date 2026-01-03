@@ -44,7 +44,12 @@ public enum OperateTypeEnum {
 				if (ObjectUtils.isNotNull(valueWrapper)) {
 					return valueWrapper.get();
 				}
-				return cache.putIfAbsent(key, point.proceed());
+				Object newValue = point.proceed();
+				Object oldValue = cache.putIfAbsent(key, newValue);
+				if (ObjectUtils.isNull(oldValue)) {
+					return newValue;
+				}
+				return oldValue;
 			}
 			catch (GlobalException e) {
 				// 系统异常/业务异常/参数异常直接捕获并抛出

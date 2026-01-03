@@ -17,12 +17,15 @@
 
 package org.laokou.auth.model.valueobject;
 
-import java.util.List;
+import lombok.Builder;
+
+import java.util.Set;
 
 /**
  * @author laokou
  * @param deptIds 部门IDS
  * @param creator 创建者
  */
-public record DataFilterV(List<Long> deptIds, Long creator) {
+@Builder(toBuilder = true)
+public record DataFilterV(Set<Long> deptIds, Long creator) {
 }

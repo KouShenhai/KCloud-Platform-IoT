@@ -22,6 +22,7 @@ import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.constant.Constants;
 import org.laokou.auth.model.constant.OAuth2Constants;
 import org.laokou.auth.model.entity.UserE;
+import org.laokou.auth.model.enums.DataScopeEnum;
 import org.laokou.auth.model.enums.GrantTypeEnum;
 import org.laokou.auth.model.enums.SendCaptchaTypeEnum;
 import org.laokou.auth.model.enums.UserStatusEnum;
@@ -55,6 +56,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.util.CollectionUtils;
 
 import java.io.Serial;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -253,7 +255,16 @@ public class AuthA extends AggregateRoot implements ValidateName {
 	}
 
 	public void getDataFilter(Set<String> dataScopes) {
-
+		if (CollectionUtils.isEmpty(dataScopes)) {
+			this.dataFilterV = null;
+			return;
+		}
+		if (dataScopes.contains(DataScopeEnum.ALL.getCode())) {
+			this.dataFilterV = DataFilterV.builder().deptIds(Collections.emptySet()).creator(null).build();
+		}
+		else {
+			this.dataFilterV = DataFilterV.builder().build();
+		}
 	}
 
 	public void checkCaptchaParam() {
@@ -315,6 +326,12 @@ public class AuthA extends AggregateRoot implements ValidateName {
 
 	public void checkMenuPermissions() {
 		if (CollectionUtils.isEmpty(this.userV.permissions())) {
+			throw new UserForbiddenException(StatusCode.FORBIDDEN);
+		}
+	}
+
+	public void checkDataFilter() {
+		if (ObjectUtils.isNull(dataFilterV)) {
 			throw new UserForbiddenException(StatusCode.FORBIDDEN);
 		}
 	}
