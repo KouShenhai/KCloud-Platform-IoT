@@ -28,7 +28,7 @@ import java.nio.charset.StandardCharsets;
 /**
  * @author laokou
  */
-public final class ForyRedisSerializer implements RedisSerializer<Object> {
+public final class ForyRedisSerializer implements RedisSerializer<@NonNull Object> {
 
 	private ForyRedisSerializer() {
 

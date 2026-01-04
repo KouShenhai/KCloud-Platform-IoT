@@ -17,10 +17,12 @@
 
 package org.laokou.common.plugin.exception;
 
+import org.laokou.common.i18n.common.exception.BizException;
+
 /**
  * @author laokou
  */
-public class PluginNotFoundException extends PluginException {
+public class PluginNotFoundException extends BizException {
 
 	public PluginNotFoundException(String code, String msg) {
 		super(code, msg);

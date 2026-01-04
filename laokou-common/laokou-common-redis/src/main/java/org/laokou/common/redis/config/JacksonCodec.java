@@ -15,23 +15,23 @@
  *
  */
 
-package org.laokou.common.plugin.exception;
+package org.laokou.common.redis.config;
 
-import org.laokou.common.i18n.common.exception.BizException;
+import org.laokou.common.core.config.HttpMessageConverterConfig;
+import org.redisson.codec.JsonJackson3Codec;
 
 /**
- * 插件异常.
- *
  * @author laokou
  */
-public class PluginException extends BizException {
+final class JacksonCodec extends JsonJackson3Codec {
 
-	public PluginException(String code, String msg) {
-		super(code, msg);
-	}
+	/**
+	 * 实例.
+	 */
+	public static final JacksonCodec INSTANCE = new JacksonCodec();
 
-	public PluginException(String code, String msg, Throwable throwable) {
-		super(code, msg, throwable);
+	private JacksonCodec() {
+		super(HttpMessageConverterConfig.getJsonMapper());
 	}
 
 }

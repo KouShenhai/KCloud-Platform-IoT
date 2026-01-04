@@ -49,15 +49,24 @@ import java.util.TimeZone;
  */
 @Slf4j
 @Configuration
-class HttpMessageConverterConfig {
+public class HttpMessageConverterConfig {
 
 	// @formatter:off
 	@Bean("jackson2HttpMessageConverter")
 	@Order(Ordered.LOWEST_PRECEDENCE - 10000)
 	public JacksonJsonHttpMessageConverter jacksonJsonHttpMessageConverter() {
+		log.info("{} => jackson配置加载完毕", Thread.currentThread().getName());
+		JacksonJsonHttpMessageConverter jacksonJsonHttpMessageConverter = new JacksonJsonHttpMessageConverter(getJsonMapper());
+		jacksonJsonHttpMessageConverter.setSupportedMediaTypes(Collections.singletonList(MediaType.APPLICATION_JSON));
+		return jacksonJsonHttpMessageConverter;
+	}
+	// @formatter:on
+
+	public static JsonMapper getJsonMapper() {
 		// 时区
 		TimeZone timeZone = TimeZone.getTimeZone(DateConstants.DEFAULT_TIMEZONE);
-		DateTimeFormatter dateTimeFormatter = InstantUtils.getDateTimeFormatter(DateConstants.YYYY_B_MM_B_DD_HH_R_MM_R_SS);
+		DateTimeFormatter dateTimeFormatter = InstantUtils
+			.getDateTimeFormatter(DateConstants.YYYY_B_MM_B_DD_HH_R_MM_R_SS);
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DateConstants.YYYY_B_MM_B_DD_HH_R_MM_R_SS);
 		simpleDateFormat.setTimeZone(timeZone);
 		// Long类型转String类型
@@ -68,9 +77,11 @@ class HttpMessageConverterConfig {
 		simpleModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(dateTimeFormatter));
 		simpleModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(dateTimeFormatter));
 		// Instant
-		simpleModule.addSerializer(Instant.class, new CustomInstantSerializer(InstantSerializer.INSTANCE, dateTimeFormatter, false,false));
-		simpleModule.addDeserializer(Instant.class, new CustomInstantDeserializer(InstantDeserializer.INSTANT, dateTimeFormatter));
-		JsonMapper jsonMapper = JsonMapper.builder()
+		simpleModule.addSerializer(Instant.class,
+				new CustomInstantSerializer(InstantSerializer.INSTANCE, dateTimeFormatter, false, false));
+		simpleModule.addDeserializer(Instant.class,
+				new CustomInstantDeserializer(InstantDeserializer.INSTANT, dateTimeFormatter));
+		return JsonMapper.builder()
 			.findAndAddModules()
 			// 反序列化时，属性不存在的兼容处理
 			.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
@@ -78,11 +89,6 @@ class HttpMessageConverterConfig {
 			.defaultTimeZone(timeZone)
 			.addModule(simpleModule)
 			.build();
-		log.info("{} => jackson配置加载完毕", Thread.currentThread().getName());
-		JacksonJsonHttpMessageConverter jacksonJsonHttpMessageConverter = new JacksonJsonHttpMessageConverter(jsonMapper);
-		jacksonJsonHttpMessageConverter.setSupportedMediaTypes(Collections.singletonList(MediaType.APPLICATION_JSON));
-		return jacksonJsonHttpMessageConverter;
 	}
-	// @formatter:on
 
 }

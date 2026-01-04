@@ -17,10 +17,12 @@
 
 package org.laokou.auth.model.exception;
 
+import org.laokou.common.i18n.common.exception.BizException;
+
 /**
  * @author laokou
  */
-public final class CaptchaExpiredException extends AuthException {
+public final class CaptchaExpiredException extends BizException {
 
 	public CaptchaExpiredException(String code) {
 		super(code);

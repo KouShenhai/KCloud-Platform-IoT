@@ -15,17 +15,37 @@
  *
  */
 
-package org.laokou.auth.model.exception;
+package org.laokou.common.redis.config;
 
-import org.laokou.common.i18n.common.exception.BizException;
+import lombok.Getter;
+import org.redisson.client.codec.Codec;
 
-/**
- * @author laokou
- */
-class AuthException extends BizException {
+@Getter
+public enum CodecEnum {
 
-	AuthException(String code) {
-		super(code);
+	FORY("fory", "Fory") {
+		@Override
+		public Codec getCodec() {
+			return ForyCodec.INSTANCE;
+		}
+	},
+
+	JACKSON("jackson", "Jackson") {
+		@Override
+		public Codec getCodec() {
+			return JacksonCodec.INSTANCE;
+		}
+	};
+
+	private final String code;
+
+	private final String desc;
+
+	CodecEnum(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
 	}
+
+	public abstract Codec getCodec();
 
 }

@@ -17,10 +17,12 @@
 
 package org.laokou.auth.model.exception;
 
+import org.laokou.common.i18n.common.exception.BizException;
+
 /**
  * @author laokou
  */
-public final class DeptNotFoundException extends AuthException {
+public final class DeptNotFoundException extends BizException {
 
 	public DeptNotFoundException(String code) {
 		super(code);
