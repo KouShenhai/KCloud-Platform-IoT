@@ -47,7 +47,7 @@ public final class ForyRedisSerializer implements RedisSerializer<@NonNull Objec
 	}
 
 	public static StringRedisSerializer getStringRedisSerializer() {
-		return new Md5DigestStringRedisSerializer(StandardCharsets.UTF_8);
+		return new Sha512DigestStringRedisSerializer(StandardCharsets.UTF_8);
 	}
 
 	public static ForyRedisSerializer foryRedisSerializer() {
