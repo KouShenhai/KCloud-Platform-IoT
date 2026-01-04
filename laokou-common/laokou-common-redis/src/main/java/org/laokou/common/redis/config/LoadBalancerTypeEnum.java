@@ -18,34 +18,18 @@
 package org.laokou.common.redis.config;
 
 import lombok.Getter;
-import org.redisson.client.codec.Codec;
 
 @Getter
-public enum CodecEnum {
+public enum LoadBalancerTypeEnum {
 
-	FORY("fory", "Fory") {
-		@Override
-		public Codec getCodec() {
-			return ForyCodec.INSTANCE;
-		}
-	},
-
-	JACKSON("jackson", "Jackson") {
-		@Override
-		public Codec getCodec() {
-			return JacksonCodec.INSTANCE;
-		}
-	};
-
+	;
 	private final String code;
 
 	private final String desc;
 
-	CodecEnum(String code, String desc) {
+	LoadBalancerTypeEnum(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}
-
-	public abstract Codec getCodec();
 
 }
