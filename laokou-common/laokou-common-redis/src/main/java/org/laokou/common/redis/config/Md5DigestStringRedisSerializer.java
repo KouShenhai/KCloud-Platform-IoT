@@ -19,6 +19,7 @@ package org.laokou.common.redis.config;
 
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.Nullable;
+import org.laokou.common.fory.config.ForyFactory;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.util.Assert;
 import org.springframework.util.DigestUtils;
@@ -39,7 +40,7 @@ public class Md5DigestStringRedisSerializer extends StringRedisSerializer {
 	@Override
 	public byte[] serialize(@Nullable String key) {
 		Assert.notNull(key, "Cannot serialize null");
-		return super.serialize(DigestUtils.md5DigestAsHex(key.getBytes(StandardCharsets.UTF_8)));
+		return ForyFactory.INSTANCE.serialize(DigestUtils.md5DigestAsHex(key.getBytes(StandardCharsets.UTF_8)));
 	}
 
 }

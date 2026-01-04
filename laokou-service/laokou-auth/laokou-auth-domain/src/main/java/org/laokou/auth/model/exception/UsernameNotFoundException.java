@@ -17,10 +17,12 @@
 
 package org.laokou.auth.model.exception;
 
+import org.laokou.common.i18n.common.exception.BizException;
+
 /**
  * @author laokou
  */
-public final class UsernameNotFoundException extends AuthException {
+public final class UsernameNotFoundException extends BizException {
 
 	public UsernameNotFoundException(String code) {
 		super(code);

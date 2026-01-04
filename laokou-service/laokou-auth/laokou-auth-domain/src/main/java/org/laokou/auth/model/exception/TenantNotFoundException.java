@@ -17,10 +17,12 @@
 
 package org.laokou.auth.model.exception;
 
+import org.laokou.common.i18n.common.exception.BizException;
+
 /**
  * @author laokou
  */
-public final class TenantNotFoundException extends AuthException {
+public final class TenantNotFoundException extends BizException {
 
 	public TenantNotFoundException(String code) {
 		super(code);
