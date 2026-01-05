@@ -17,8 +17,12 @@
 
 package org.laokou.common.redis.config;
 
+import io.netty.channel.MultiThreadIoEventLoopGroup;
+import io.netty.channel.nio.NioIoHandler;
 import lombok.Data;
+import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
+import org.redisson.config.Config;
 import org.redisson.config.ReadMode;
 import org.redisson.config.ShardedSubscriptionMode;
 import org.redisson.config.SubscriptionMode;
@@ -43,8 +47,6 @@ import java.util.concurrent.TimeUnit;
 public class SpringRedissonProperties implements InitializingBean {
 
 	private String password;
-
-	private String username;
 
 	private boolean tcpKeepAlive;
 
@@ -92,15 +94,14 @@ public class SpringRedissonProperties implements InitializingBean {
 
 	private CodecTypeEnum codec = CodecTypeEnum.FORY;
 
+	private NodeTypeEnum type = NodeTypeEnum.SINGLE;
+
 	private Node node;
 
 	@Override
 	public void afterPropertiesSet() {
 		if (StringExtUtils.isEmpty(this.password)) {
 			throw new IllegalStateException("password must not be empty.");
-		}
-		if (StringExtUtils.isEmpty(this.username)) {
-			throw new IllegalStateException("username must not be empty.");
 		}
 		if (ObjectUtils.isEmpty(this.node)) {
 			throw new IllegalStateException("node must not be empty.");
@@ -151,8 +152,6 @@ public class SpringRedissonProperties implements InitializingBean {
 
 	@Data
 	public static class Node {
-
-		private NodeTypeEnum type;
 
 		private Single single;
 
@@ -338,7 +337,7 @@ public class SpringRedissonProperties implements InitializingBean {
 		/**
 		 * Replication group node urls list.
 		 */
-		private List<String> nodeAddresses = new ArrayList<>();
+		private Set<String> nodeAddresses = new HashSet<>(0);
 
 		/**
 		 * Replication group scan interval in milliseconds.
@@ -352,6 +351,19 @@ public class SpringRedissonProperties implements InitializingBean {
 
 		private boolean monitorIPChanges = false;
 
+	}
+
+	public Config createDefaultConfig() {
+		Config config = new Config();
+		config.setPassword(this.password);
+		config.setThreads(this.threads);
+		config.setCodec(this.codec.getCodec());
+		config.setTransportMode(this.transportMode);
+		config.setExecutor(ThreadUtils.newVirtualTaskExecutor());
+		config.setEventLoopGroup(new MultiThreadIoEventLoopGroup(this.nettyThreads,
+				ThreadUtils.newVirtualTaskExecutor(), NioIoHandler.newFactory()));
+		config.setNettyExecutor(ThreadUtils.newVirtualTaskExecutor());
+		return config;
 	}
 
 }

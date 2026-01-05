@@ -41,7 +41,7 @@ public final class AddressUtils {
 	/**
 	 * IP搜索器.
 	 */
-	private static Ip2Region IP_REGION = null;
+	private static Ip2Region ipRegion = null;
 
 	static {
 		try {
@@ -61,7 +61,7 @@ public final class AddressUtils {
 				.setXdbFile(ResourceExtUtils.getResource("ip2region_v6.xdb").getFile())
 				// 设置初始化的查询器数量
 				.asV6();
-			IP_REGION = Ip2Region.create(v4Config, v6Config);
+			ipRegion = Ip2Region.create(v4Config, v6Config);
 		}
 		catch (IOException | InvalidConfigException | XdbException ex) {
 			log.error("Ip2region加载失败，错误信息：{}", ex.getMessage(), ex);
@@ -69,9 +69,9 @@ public final class AddressUtils {
 		}
 		finally {
 			Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-				if (ObjectUtils.isNotNull(IP_REGION)) {
+				if (ObjectUtils.isNotNull(ipRegion)) {
 					try {
-						IP_REGION.close();
+						ipRegion.close();
 					}
 					catch (InterruptedException ex) {
 						throw new RuntimeException(ex);
@@ -90,7 +90,7 @@ public final class AddressUtils {
 	 * @return 所属位置
 	 */
 	public static String getRealAddress(String ip) throws InetAddressException, IOException, InterruptedException {
-		return IpUtils.internalIp(ip) ? "内网IP" : addressFormat(IP_REGION.search(ip));
+		return IpUtils.internalIp(ip) ? "内网IP" : addressFormat(ipRegion.search(ip));
 	}
 
 	/**

@@ -18,11 +18,52 @@
 package org.laokou.common.redis.config;
 
 import lombok.Getter;
+import org.redisson.config.Config;
 
 @Getter
 public enum NodeTypeEnum {
 
-	;
+	SINGLE("single", "单机模式") {
+		@Override
+		Config getConfig(SpringRedissonProperties springRedissonProperties) {
+			SpringRedissonProperties.Single single = springRedissonProperties.getNode().getSingle();
+			Config config = springRedissonProperties.createDefaultConfig();
+			config.useSingleServer()
+				.setAddress(single.getAddress())
+				.setConnectTimeout(single.getConnectTimeout())
+				.setTimeout(single.getTimeout())
+				.setDatabase(single.getDatabase());
+			return config;
+		}
+	},
+
+	CLUSTER("cluster", "集群模式") {
+		@Override
+		Config getConfig(SpringRedissonProperties springRedissonProperties) {
+			return null;
+		}
+	},
+
+	SENTINEL("sentinel", "哨兵模式") {
+		@Override
+		Config getConfig(SpringRedissonProperties springRedissonProperties) {
+			return null;
+		}
+	},
+
+	MASTER_SLAVE("master_slave", "主从模式") {
+		@Override
+		Config getConfig(SpringRedissonProperties springRedissonProperties) {
+			return null;
+		}
+	},
+
+	REPLICATED("replicated", "复制模式") {
+		@Override
+		Config getConfig(SpringRedissonProperties springRedissonProperties) {
+			return null;
+		}
+	};
 
 	private final String code;
 
@@ -32,5 +73,7 @@ public enum NodeTypeEnum {
 		this.code = code;
 		this.desc = desc;
 	}
+
+	abstract Config getConfig(SpringRedissonProperties springRedissonProperties);
 
 }
