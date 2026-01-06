@@ -191,7 +191,7 @@
     <!--hibernate-validator版本-->
     <hibernate-validator.version>9.1.0.Final</hibernate-validator.version>
     <!--ip2region版本-->
-    <ip2region.version>3.3.3</ip2region.version>
+    <ip2region.version>3.3.4</ip2region.version>
     <!--spring-kafka版本-->
     <spring-kafka.version>4.0.1</spring-kafka.version>
     <!--disruptor版本-->
