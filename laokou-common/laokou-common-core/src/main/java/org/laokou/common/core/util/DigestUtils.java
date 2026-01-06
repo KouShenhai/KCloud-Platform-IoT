@@ -15,23 +15,34 @@
  *
  */
 
-package org.laokou.common.redis.config;
+package org.laokou.common.core.util;
 
-import org.laokou.common.core.config.HttpMessageConverterConfig;
-import org.redisson.codec.JsonJackson3Codec;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * @author laokou
  */
-public final class JacksonCodec extends JsonJackson3Codec {
+public final class DigestUtils {
 
-	/**
-	 * 实例.
-	 */
-	public static final JacksonCodec INSTANCE = new JacksonCodec();
+	private DigestUtils() {
+	}
 
-	private JacksonCodec() {
-		super(HttpMessageConverterConfig.getJsonMapper());
+	public static byte[] digest(byte[] buff) {
+		return digest("SHA-512", buff);
+	}
+
+	public static byte[] digest(String algorithm, byte[] buff) {
+		return getDigest(algorithm).digest(buff);
+	}
+
+	private static MessageDigest getDigest(String algorithm) {
+		try {
+			return MessageDigest.getInstance(algorithm);
+		}
+		catch (NoSuchAlgorithmException ex) {
+			throw new IllegalStateException("Could not find MessageDigest with algorithm \"" + algorithm + "\"", ex);
+		}
 	}
 
 }

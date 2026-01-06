@@ -17,7 +17,7 @@
 
 package org.laokou.common.secret.util;
 
-import org.springframework.util.DigestUtils;
+import org.laokou.common.core.util.DigestUtils;
 
 import java.nio.charset.StandardCharsets;
 
@@ -49,7 +49,7 @@ public final class SecretUtils {
 	 */
 	public static String sign(String appKey, String appSecret, String nonce, String timestamp, String params) {
 		String str = appKey.concat(appSecret).concat(nonce).concat(timestamp).concat(params);
-		return DigestUtils.md5DigestAsHex(str.getBytes(StandardCharsets.UTF_8));
+		return new String(DigestUtils.digest(str.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);
 	}
 
 }

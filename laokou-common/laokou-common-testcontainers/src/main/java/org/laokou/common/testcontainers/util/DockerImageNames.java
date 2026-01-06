@@ -29,6 +29,14 @@ public final class DockerImageNames {
 	private DockerImageNames() {
 	}
 
+	public static DockerImageName redis() {
+		return redis(LATEST);
+	}
+
+	public static DockerImageName redis(String tag) {
+		return DockerImageName.parse("redis").withTag(tag);
+	}
+
 	public static DockerImageName elasticsearch(String tag) {
 		return DockerImageName.parse("koushenhai/elasticsearch9")
 			.asCompatibleSubstituteFor("docker.elastic.co/elasticsearch/elasticsearch")

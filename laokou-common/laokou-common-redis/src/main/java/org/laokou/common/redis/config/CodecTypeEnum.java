@@ -17,21 +17,35 @@
 
 package org.laokou.common.redis.config;
 
-import org.laokou.common.core.config.HttpMessageConverterConfig;
-import org.redisson.codec.JsonJackson3Codec;
+import lombok.Getter;
+import org.redisson.client.codec.Codec;
 
-/**
- * @author laokou
- */
-public final class JacksonCodec extends JsonJackson3Codec {
+@Getter
+public enum CodecTypeEnum {
 
-	/**
-	 * 实例.
-	 */
-	public static final JacksonCodec INSTANCE = new JacksonCodec();
+	FORY("fory", "Fory") {
+		@Override
+		public Codec getCodec() {
+			return ForyCodec.INSTANCE;
+		}
+	},
 
-	private JacksonCodec() {
-		super(HttpMessageConverterConfig.getJsonMapper());
+	JACKSON("jackson", "Jackson") {
+		@Override
+		public Codec getCodec() {
+			return JacksonCodec.INSTANCE;
+		}
+	};
+
+	private final String code;
+
+	private final String desc;
+
+	CodecTypeEnum(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
 	}
+
+	public abstract Codec getCodec();
 
 }

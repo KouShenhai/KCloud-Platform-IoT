@@ -18,22 +18,31 @@
 package org.laokou.common.redis.config;
 
 import lombok.Getter;
-import org.redisson.client.codec.Codec;
+import org.redisson.connection.balancer.LoadBalancer;
+import org.redisson.connection.balancer.RandomLoadBalancer;
+import org.redisson.connection.balancer.RoundRobinLoadBalancer;
 
 @Getter
-public enum CodecEnum {
+public enum LoadBalancerTypeEnum {
 
-	FORY("fory", "Fory") {
+	RANDOM("random", "随机") {
 		@Override
-		public Codec getCodec() {
-			return ForyCodec.INSTANCE;
+		LoadBalancer get() {
+			return new RandomLoadBalancer();
 		}
 	},
 
-	JACKSON("jackson", "Jackson") {
+	WEIGHTED_ROUND_ROBIN("weighted_round_robin", "加权轮询") {
 		@Override
-		public Codec getCodec() {
-			return JacksonCodec.INSTANCE;
+		LoadBalancer get() {
+			throw new UnsupportedOperationException("Unsupported WeightedRoundRobinBalancer.");
+		}
+	},
+
+	ROUND_ROBIN("round_robin", "轮询") {
+		@Override
+		LoadBalancer get() {
+			return new RoundRobinLoadBalancer();
 		}
 	};
 
@@ -41,11 +50,11 @@ public enum CodecEnum {
 
 	private final String desc;
 
-	CodecEnum(String code, String desc) {
+	LoadBalancerTypeEnum(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}
 
-	public abstract Codec getCodec();
+	abstract LoadBalancer get();
 
 }
