@@ -21,8 +21,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.Nullable;
 import org.laokou.common.core.util.DigestUtils;
 import org.laokou.common.fory.config.ForyFactory;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.util.Assert;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -39,7 +39,9 @@ public class Sha512DigestStringRedisSerializer extends StringRedisSerializer {
 	@NotNull
 	@Override
 	public byte[] serialize(@Nullable String key) {
-		Assert.notNull(key, "Cannot serialize null");
+		if (StringExtUtils.isEmpty(key)) {
+			return new byte[0];
+		}
 		return ForyFactory.INSTANCE.serialize(DigestUtils.digest(key.getBytes(StandardCharsets.UTF_8)));
 	}
 
