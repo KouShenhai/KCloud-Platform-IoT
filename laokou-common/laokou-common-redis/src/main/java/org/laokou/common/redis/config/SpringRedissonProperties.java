@@ -17,10 +17,7 @@
 
 package org.laokou.common.redis.config;
 
-import io.netty.channel.MultiThreadIoEventLoopGroup;
-import io.netty.channel.nio.NioIoHandler;
 import lombok.Data;
-import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
 import org.redisson.config.Config;
 import org.redisson.config.ReadMode;
@@ -30,11 +27,8 @@ import org.redisson.config.TransportMode;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ObjectUtils;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -94,17 +88,12 @@ public class SpringRedissonProperties implements InitializingBean {
 
 	private CodecTypeEnum codec = CodecTypeEnum.FORY;
 
-	private NodeTypeEnum type = NodeTypeEnum.SINGLE;
-
-	private Node node;
+	private Node node = new Node();
 
 	@Override
 	public void afterPropertiesSet() {
 		if (StringExtUtils.isEmpty(this.password)) {
 			throw new IllegalStateException("password must not be empty.");
-		}
-		if (ObjectUtils.isEmpty(this.node)) {
-			throw new IllegalStateException("node must not be empty.");
 		}
 	}
 
@@ -152,6 +141,8 @@ public class SpringRedissonProperties implements InitializingBean {
 
 	@Data
 	public static class Node {
+
+		private NodeTypeEnum type = NodeTypeEnum.SINGLE;
 
 		private Single single;
 
@@ -212,7 +203,7 @@ public class SpringRedissonProperties implements InitializingBean {
 		/**
 		 * Redis cluster node urls list.
 		 */
-		private List<String> nodeAddresses = new ArrayList<>();
+		private Set<String> nodeAddresses = new HashSet<>(0);
 
 		/**
 		 * Redis cluster scan interval in milliseconds.
@@ -232,7 +223,7 @@ public class SpringRedissonProperties implements InitializingBean {
 	@Data
 	public static class Sentinel extends BaseMasterSlave {
 
-		private List<String> sentinelAddresses = new ArrayList<>();
+		private Set<String> sentinelAddresses = new HashSet<>(0);
 
 		private String masterName;
 
@@ -264,7 +255,7 @@ public class SpringRedissonProperties implements InitializingBean {
 		/**
 		 * Сonnection load balancer for multiple Redis slave servers.
 		 */
-		private LoadBalancerTypeEnum loadBalancer;
+		private LoadBalancerTypeEnum loadBalancer = LoadBalancerTypeEnum.RANDOM;
 
 		/**
 		 * Redis 'slave' node minimum idle connection amount for <b>each</b> slave node.
@@ -317,7 +308,7 @@ public class SpringRedissonProperties implements InitializingBean {
 		/**
 		 * Redis slave servers addresses.
 		 */
-		private Set<String> slaveAddresses = new HashSet<>();
+		private Set<String> slaveAddresses = new HashSet<>(0);
 
 		/**
 		 * Redis master server address.
@@ -353,17 +344,8 @@ public class SpringRedissonProperties implements InitializingBean {
 
 	}
 
-	public Config createDefaultConfig() {
-		Config config = new Config();
-		config.setPassword(this.password);
-		config.setThreads(this.threads);
-		config.setCodec(this.codec.getCodec());
-		config.setTransportMode(this.transportMode);
-		config.setExecutor(ThreadUtils.newVirtualTaskExecutor());
-		config.setEventLoopGroup(new MultiThreadIoEventLoopGroup(this.nettyThreads,
-				ThreadUtils.newVirtualTaskExecutor(), NioIoHandler.newFactory()));
-		config.setNettyExecutor(ThreadUtils.newVirtualTaskExecutor());
-		return config;
+	public Config getConfig() {
+		return this.node.type.getConfig(this);
 	}
 
 }

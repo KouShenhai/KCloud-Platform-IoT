@@ -23,7 +23,7 @@ import org.redisson.codec.JsonJackson3Codec;
 /**
  * @author laokou
  */
-final class JacksonCodec extends JsonJackson3Codec {
+public final class JacksonCodec extends JsonJackson3Codec {
 
 	/**
 	 * 实例.

@@ -18,11 +18,34 @@
 package org.laokou.common.redis.config;
 
 import lombok.Getter;
+import org.redisson.connection.balancer.LoadBalancer;
+import org.redisson.connection.balancer.RandomLoadBalancer;
+import org.redisson.connection.balancer.RoundRobinLoadBalancer;
 
 @Getter
 public enum LoadBalancerTypeEnum {
 
-	;
+	RANDOM("random", "随机") {
+		@Override
+		LoadBalancer get() {
+			return new RandomLoadBalancer();
+		}
+	},
+
+	WEIGHTED_ROUND_ROBIN("weighted_round_robin", "加权轮询") {
+		@Override
+		LoadBalancer get() {
+			throw new UnsupportedOperationException("Unsupported WeightedRoundRobinBalancer.");
+		}
+	},
+
+	ROUND_ROBIN("round_robin", "轮询") {
+		@Override
+		LoadBalancer get() {
+			return new RoundRobinLoadBalancer();
+		}
+	};
+
 	private final String code;
 
 	private final String desc;
@@ -31,5 +54,7 @@ public enum LoadBalancerTypeEnum {
 		this.code = code;
 		this.desc = desc;
 	}
+
+	abstract LoadBalancer get();
 
 }
