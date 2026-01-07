@@ -48,7 +48,7 @@ jobs:
           </settings>
           EOF
       - name: Build with Maven Mvnd
-        run: mvnd clean install -P dev
+        run: mvnd clean install -P dev -U
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5.5.2
         env:
