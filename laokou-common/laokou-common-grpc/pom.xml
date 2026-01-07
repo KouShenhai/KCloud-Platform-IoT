@@ -15,8 +15,16 @@
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-nacos</artifactId>
+      <artifactId>laokou-common-core</artifactId>
       <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-commons</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.grpc</groupId>
@@ -48,9 +56,21 @@
       <optional>true</optional>
     </dependency>
     <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-consul-discovery</artifactId>
+      <scope>test</scope>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-testcontainers</artifactId>
       <version>${project.version}</version>
+      <scope>test</scope>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-jetty</artifactId>
       <scope>test</scope>
       <optional>true</optional>
     </dependency>
