@@ -21,14 +21,14 @@ import com.alibaba.nacos.api.PropertyKeyConst;
 import com.alibaba.nacos.api.config.ConfigService;
 import com.alibaba.nacos.api.exception.NacosException;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.nacos.util.ConfigUtils;
 import org.laokou.common.testcontainers.container.NacosContainer;
 import org.laokou.common.testcontainers.util.DockerImageNames;
 import org.springframework.util.DigestUtils;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.time.Duration;
 import java.util.Properties;
@@ -36,21 +36,13 @@ import java.util.Properties;
 /**
  * @author laokou
  */
+@Testcontainers
 class ConfigUtilsTest {
 
 	private ConfigService configService;
 
+	@Container
 	static final NacosContainer nacos = new NacosContainer(DockerImageNames.nacos("v3.1.0"), 38848, 39848);
-
-	@BeforeAll
-	static void beforeAll() {
-		nacos.start();
-	}
-
-	@AfterAll
-	static void afterAll() {
-		nacos.stop();
-	}
 
 	@BeforeEach
 	void setUp() throws NacosException {

@@ -29,6 +29,10 @@ public final class DockerImageNames {
 	private DockerImageNames() {
 	}
 
+	public static DockerImageName consul() {
+		return DockerImageName.parse("consul").withTag("1.14");
+	}
+
 	public static DockerImageName redis() {
 		return redis(LATEST);
 	}

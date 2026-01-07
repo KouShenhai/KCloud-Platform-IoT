@@ -1,5 +1,5 @@
 server:
-  port: 8975
+  port: 8979
 spring:
   application:
     name: laokou-common-grpc
@@ -14,30 +14,3 @@ spring:
            address: discovery://laokou-common-grpc
            enable-keep-alive: true
            idle-timeout: 60s
-  config:
-    import:
-      # 临时配置文件【解决拉取nacos配置文件时，group默认为DEFAULT_GROUP问题】
-      - optional:nacos:laokou-common-grpc.yaml?refreshEnabled=true&group=DEFAULT_GROUP
-  cloud:
-    nacos:
-      config:
-        enabled: true
-        server-addr: 127.0.0.1:8848
-        username: nacos
-        password: nacos
-        namespace: public
-        group: DEFAULT_GROUP
-        import-check:
-          enabled: false
-      discovery:
-        enabled: true
-        server-addr: 127.0.0.1:8848
-        username: nacos
-        password: nacos
-        namespace: public
-        group: DEFAULT_GROUP
-        metadata:
-          grpc_port: 9097
-      username: nacos
-      password: nacos
-      server-addr: 127.0.0.1:8848
