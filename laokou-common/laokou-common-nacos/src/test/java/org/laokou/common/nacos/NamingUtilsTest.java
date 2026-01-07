@@ -24,13 +24,13 @@ import com.alibaba.nacos.api.naming.pojo.Instance;
 import com.alibaba.nacos.api.naming.selector.NamingSelector;
 import com.alibaba.nacos.client.naming.selector.NamingSelectorFactory;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.nacos.util.NamingUtils;
 import org.laokou.common.testcontainers.container.NacosContainer;
 import org.laokou.common.testcontainers.util.DockerImageNames;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.time.Duration;
 import java.util.Collections;
@@ -40,22 +40,14 @@ import java.util.Properties;
 /**
  * @author laokou
  */
+@Testcontainers
 // @formatter:off
 class NamingUtilsTest {
 
 	private NamingService namingService;
 
+	@Container
 	static final NacosContainer nacos = new NacosContainer(DockerImageNames.nacos("v3.1.0"), 18848,  19848);
-
-	@BeforeAll
-	static void beforeAll() {
-		nacos.start();
-	}
-
-	@AfterAll
-	static void afterAll() {
-		nacos.stop();
-	}
 
 	@BeforeEach
 	void setUp()throws NacosException {

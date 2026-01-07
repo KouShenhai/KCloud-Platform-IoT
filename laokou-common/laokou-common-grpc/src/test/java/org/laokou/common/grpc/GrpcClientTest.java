@@ -19,56 +19,42 @@ package org.laokou.common.grpc;
 
 import io.grpc.StatusException;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.grpc.annotation.GrpcClient;
 import org.laokou.common.grpc.proto.HelloWorldProto;
 import org.laokou.common.grpc.proto.SimpleGrpc;
-import org.laokou.common.testcontainers.container.NacosContainer;
 import org.laokou.common.testcontainers.util.DockerImageNames;
-import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
+import org.testcontainers.consul.ConsulContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 /**
  * @author laokou
  */
+@Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = GrpcClientTest.GrpcTest.class)
 class GrpcClientTest {
 
-	@GrpcClient(serviceId = "laokou-common-grpc")
-	private SimpleGrpc.SimpleBlockingV2Stub simpleBlockingV2Stub;
-
-	static final NacosContainer nacos = new NacosContainer(DockerImageNames.nacos("v3.1.0"), 8848, 9848);
-
-	@BeforeAll
-	static void beforeAll() {
-		nacos.start();
-	}
-
-	@AfterAll
-	static void afterAll() {
-		nacos.stop();
-	}
+	@Container
+	static ConsulContainer consul = new ConsulContainer(DockerImageNames.consul());
 
 	@DynamicPropertySource
-	static void configureProperties(DynamicPropertyRegistry registry) throws InterruptedException {
-		registry.add("spring.cloud.nacos.discovery.server-addr", nacos::getServerAddr);
-		registry.add("spring.cloud.nacos.discovery.group", () -> "DEFAULT_GROUP");
-		registry.add("spring.cloud.nacos.discovery.username", () -> "nacos");
-		registry.add("spring.cloud.nacos.discovery.password", () -> "nacos");
-		registry.add("spring.cloud.nacos.discovery.namespace", () -> "public");
-		registry.add("spring.cloud.nacos.config.server-addr", nacos::getServerAddr);
-		registry.add("spring.cloud.nacos.config.group", () -> "DEFAULT_GROUP");
-		registry.add("spring.cloud.nacos.config.username", () -> "nacos");
-		registry.add("spring.cloud.nacos.config.password", () -> "nacos");
-		registry.add("spring.cloud.nacos.config.namespace", () -> "public");
+	static void consulProperties(DynamicPropertyRegistry registry) {
+		registry.add("spring.cloud.consul.host", consul::getHost);
+		registry.add("spring.cloud.consul.port", consul::getFirstMappedPort);
+		registry.add("spring.cloud.consul.discovery.service-name", () -> "laokou-common-grpc");
+		registry.add("spring.cloud.consul.discovery.instance-id", () -> "laokou-common-grpc-1");
+		registry.add("spring.cloud.consul.discovery.metadata.grpc_port", () -> "9097");
+		registry.add("spring.cloud.consul.discovery.prefer-ip-address", () -> true);
 	}
+
+	@GrpcClient(serviceId = "laokou-common-grpc")
+	private SimpleGrpc.SimpleBlockingV2Stub simpleBlockingV2Stub;
 
 	@Test
 	void test() throws StatusException {
@@ -81,10 +67,6 @@ class GrpcClientTest {
 	@EnableDiscoveryClient
 	@SpringBootApplication(scanBasePackages = { "org.laokou" })
 	static class GrpcTest {
-
-		static void main(String[] args) {
-			new SpringApplicationBuilder(GrpcTest.class).web(WebApplicationType.SERVLET).run(args);
-		}
 
 	}
 
