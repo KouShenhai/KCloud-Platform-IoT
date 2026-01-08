@@ -30,6 +30,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -344,8 +345,8 @@ public class SpringRedissonProperties implements InitializingBean {
 
 	}
 
-	public Config getConfig() {
-		return this.node.type.getConfig(this);
+	public Config getConfig(ExecutorService virtualThreadExecutor) {
+		return this.node.type.getConfig(virtualThreadExecutor, this);
 	}
 
 }

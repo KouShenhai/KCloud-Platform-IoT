@@ -25,6 +25,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.data.redis.autoconfigure.DataRedisProperties;
 import org.springframework.context.annotation.Bean;
 
+import java.util.concurrent.ExecutorService;
+
 /**
  * @author livk
  * @author laokou
@@ -40,8 +42,9 @@ public class RedissonAutoConfig {
 	 * @return RedissonClient
 	 */
 	@Bean(name = "redisClient", destroyMethod = "shutdown")
-	public RedissonClient redisClient(SpringRedissonProperties springRedissonProperties) {
-		return Redisson.create(springRedissonProperties.getConfig());
+	public RedissonClient redisClient(SpringRedissonProperties springRedissonProperties,
+			ExecutorService virtualThreadExecutor) {
+		return Redisson.create(springRedissonProperties.getConfig(virtualThreadExecutor));
 	}
 
 }

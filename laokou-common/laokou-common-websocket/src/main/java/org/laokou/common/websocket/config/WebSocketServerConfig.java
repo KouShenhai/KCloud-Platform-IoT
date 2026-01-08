@@ -21,10 +21,11 @@ import com.alibaba.cloud.nacos.ConditionalOnNacosDiscoveryEnabled;
 import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import com.alibaba.cloud.nacos.NacosServiceManager;
 import io.netty.channel.ChannelHandler;
-import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.security.config.OAuth2OpaqueTokenIntrospector;
 import org.springframework.boot.web.server.autoconfigure.ServerProperties;
 import org.springframework.context.annotation.Bean;
+
+import java.util.concurrent.ExecutorService;
 
 // @formatter:off
 /**
@@ -33,8 +34,8 @@ import org.springframework.context.annotation.Bean;
 public class WebSocketServerConfig {
 
     @Bean(name = "webSocketServer", initMethod = "start", destroyMethod = "stop")
-	public Server webSocketServer(ChannelHandler webSocketServerChannelInitializer, SpringWebSocketServerProperties springWebSocketServerProperties) {
-		return new WebSocketServer(webSocketServerChannelInitializer, springWebSocketServerProperties, ThreadUtils.newVirtualTaskExecutor());
+	public Server webSocketServer(ChannelHandler webSocketServerChannelInitializer, SpringWebSocketServerProperties springWebSocketServerProperties , ExecutorService virtualThreadExecutor) {
+		return new WebSocketServer(webSocketServerChannelInitializer, springWebSocketServerProperties, virtualThreadExecutor);
     }
 
 	@Bean("webSocketServerChannelInitializer")

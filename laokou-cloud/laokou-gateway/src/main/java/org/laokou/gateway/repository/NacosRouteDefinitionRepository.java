@@ -25,7 +25,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
-import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.SystemException;
@@ -81,13 +80,13 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 
 	private final ExecutorService virtualThreadExecutor;
 
-	public NacosRouteDefinitionRepository(NacosConfigManager nacosConfigManager,
-			ReactiveRedisUtils reactiveRedisUtils) {
+	public NacosRouteDefinitionRepository(NacosConfigManager nacosConfigManager, ReactiveRedisUtils reactiveRedisUtils,
+			ExecutorService virtualThreadExecutor) {
 		this.dataId = "router.json";
 		this.group = nacosConfigManager.getNacosConfigProperties().getGroup();
 		this.configService = nacosConfigManager.getConfigService();
 		this.reactiveMap = reactiveRedisUtils.getMap(RedisKeyUtils.getRouteDefinitionHashKey());
-		this.virtualThreadExecutor = ThreadUtils.newVirtualTaskExecutor();
+		this.virtualThreadExecutor = virtualThreadExecutor;
 	}
 
 	@PostConstruct

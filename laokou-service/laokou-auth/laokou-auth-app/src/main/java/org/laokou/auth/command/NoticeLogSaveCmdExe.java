@@ -40,7 +40,7 @@ public class NoticeLogSaveCmdExe {
 
 	private final TransactionalUtils transactionalUtils;
 
-	@Async
+	@Async("virtualThreadExecutor")
 	@CommandLog
 	public void executeVoid(NoticeLogSaveCmd cmd) {
 		NoticeLogCO co = cmd.getCo();

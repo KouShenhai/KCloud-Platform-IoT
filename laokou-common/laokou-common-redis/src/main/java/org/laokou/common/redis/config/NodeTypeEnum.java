@@ -20,43 +20,44 @@ package org.laokou.common.redis.config;
 import io.netty.channel.MultiThreadIoEventLoopGroup;
 import io.netty.channel.nio.NioIoHandler;
 import lombok.Getter;
-import org.laokou.common.core.util.ThreadUtils;
 import org.redisson.config.Config;
+
+import java.util.concurrent.ExecutorService;
 
 @Getter
 public enum NodeTypeEnum {
 
 	SINGLE("single", "单机模式") {
 		@Override
-		Config getConfig(SpringRedissonProperties springRedissonProperties) {
-			return useSingleServer(springRedissonProperties);
+		Config getConfig(ExecutorService virtualThreadExecutor, SpringRedissonProperties springRedissonProperties) {
+			return useSingleServer(virtualThreadExecutor, springRedissonProperties);
 		}
 	},
 
 	CLUSTER("cluster", "集群模式") {
 		@Override
-		Config getConfig(SpringRedissonProperties springRedissonProperties) {
-			return useClusterServers(springRedissonProperties);
+		Config getConfig(ExecutorService virtualThreadExecutor, SpringRedissonProperties springRedissonProperties) {
+			return useClusterServers(virtualThreadExecutor, springRedissonProperties);
 		}
 	},
 
 	SENTINEL("sentinel", "哨兵模式") {
 		@Override
-		Config getConfig(SpringRedissonProperties springRedissonProperties) {
-			return useSentinelServers(springRedissonProperties);
+		Config getConfig(ExecutorService virtualThreadExecutor, SpringRedissonProperties springRedissonProperties) {
+			return useSentinelServers(virtualThreadExecutor, springRedissonProperties);
 		}
 	},
 
 	MASTER_SLAVE("master_slave", "主从模式") {
 		@Override
-		Config getConfig(SpringRedissonProperties springRedissonProperties) {
+		Config getConfig(ExecutorService virtualThreadExecutor, SpringRedissonProperties springRedissonProperties) {
 			throw new UnsupportedOperationException("Unsupported master and slave");
 		}
 	},
 
 	REPLICATED("replicated", "复制模式") {
 		@Override
-		Config getConfig(SpringRedissonProperties springRedissonProperties) {
+		Config getConfig(ExecutorService virtualThreadExecutor, SpringRedissonProperties springRedissonProperties) {
 			throw new UnsupportedOperationException("Unsupported replicated");
 		}
 	};
@@ -70,10 +71,11 @@ public enum NodeTypeEnum {
 		this.desc = desc;
 	}
 
-	abstract Config getConfig(SpringRedissonProperties springRedissonProperties);
+	abstract Config getConfig(ExecutorService virtualThreadExecutor, SpringRedissonProperties springRedissonProperties);
 
-	private static Config useSingleServer(SpringRedissonProperties springRedissonProperties) {
-		Config config = createDefaultConfig(springRedissonProperties);
+	private static Config useSingleServer(ExecutorService virtualThreadExecutor,
+			SpringRedissonProperties springRedissonProperties) {
+		Config config = createDefaultConfig(virtualThreadExecutor, springRedissonProperties);
 		SpringRedissonProperties.Single single = springRedissonProperties.getNode().getSingle();
 		config.useSingleServer()
 			.setAddress(single.getAddress())
@@ -93,8 +95,9 @@ public enum NodeTypeEnum {
 		return config;
 	}
 
-	private static Config useClusterServers(SpringRedissonProperties springRedissonProperties) {
-		Config config = createDefaultConfig(springRedissonProperties);
+	private static Config useClusterServers(ExecutorService virtualThreadExecutor,
+			SpringRedissonProperties springRedissonProperties) {
+		Config config = createDefaultConfig(virtualThreadExecutor, springRedissonProperties);
 		SpringRedissonProperties.Cluster cluster = springRedissonProperties.getNode().getCluster();
 		config.useClusterServers()
 			.addNodeAddress(cluster.getNodeAddresses().toArray(String[]::new))
@@ -125,8 +128,9 @@ public enum NodeTypeEnum {
 		return config;
 	}
 
-	private static Config useSentinelServers(SpringRedissonProperties springRedissonProperties) {
-		Config config = createDefaultConfig(springRedissonProperties);
+	private static Config useSentinelServers(ExecutorService virtualThreadExecutor,
+			SpringRedissonProperties springRedissonProperties) {
+		Config config = createDefaultConfig(virtualThreadExecutor, springRedissonProperties);
 		SpringRedissonProperties.Sentinel sentinel = springRedissonProperties.getNode().getSentinel();
 		config.useSentinelServers()
 			.setMasterName(sentinel.getMasterName())
@@ -160,16 +164,17 @@ public enum NodeTypeEnum {
 		return config;
 	}
 
-	private static Config createDefaultConfig(SpringRedissonProperties springRedissonProperties) {
+	private static Config createDefaultConfig(ExecutorService virtualThreadExecutor,
+			SpringRedissonProperties springRedissonProperties) {
 		Config config = new Config();
 		config.setPassword(springRedissonProperties.getPassword());
 		config.setThreads(springRedissonProperties.getThreads());
 		config.setCodec(springRedissonProperties.getCodec().getCodec());
 		config.setTransportMode(springRedissonProperties.getTransportMode());
-		config.setExecutor(ThreadUtils.newVirtualTaskExecutor());
+		config.setExecutor(virtualThreadExecutor);
 		config.setEventLoopGroup(new MultiThreadIoEventLoopGroup(springRedissonProperties.getNettyThreads(),
-				ThreadUtils.newVirtualTaskExecutor(), NioIoHandler.newFactory()));
-		config.setNettyExecutor(ThreadUtils.newVirtualTaskExecutor());
+				virtualThreadExecutor, NioIoHandler.newFactory()));
+		config.setNettyExecutor(virtualThreadExecutor);
 		config.setReferenceEnabled(springRedissonProperties.isReferenceEnabled());
 		config.setNettyThreads(springRedissonProperties.getNettyThreads());
 		config.setLockWatchdogTimeout(springRedissonProperties.getLockWatchdogTimeout());

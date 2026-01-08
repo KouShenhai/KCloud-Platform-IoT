@@ -18,12 +18,14 @@
 package org.laokou.common.core.config;
 
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.util.ThreadUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.time.Duration;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 
 /**
  * 异步配置.
@@ -33,6 +35,11 @@ import java.util.concurrent.Executor;
 @Slf4j
 @Configuration
 class SpringTaskExecutorConfig {
+
+	@Bean(name = "virtualThreadExecutor", destroyMethod = "close")
+	public ExecutorService virtualThreadExecutor() {
+		return ThreadUtils.newVirtualTaskExecutor();
+	}
 
 	@Bean
 	public Executor bootstrapExecutor() {

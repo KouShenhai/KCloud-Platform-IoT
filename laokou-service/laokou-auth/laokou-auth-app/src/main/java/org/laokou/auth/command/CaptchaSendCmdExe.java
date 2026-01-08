@@ -38,7 +38,7 @@ public class CaptchaSendCmdExe {
 
 	private final DomainEventPublisher kafkaDomainEventPublisher;
 
-	@Async
+	@Async("virtualThreadExecutor")
 	@CommandLog
 	public void executeVoid(CaptchaSendCmd cmd) {
 		CaptchaCO co = cmd.getCo();
