@@ -38,37 +38,20 @@ server:
   shutdown: graceful
   servlet:
     context-path: /api
-  jetty:
+  tomcat:
     threads:
       # 工作线程池的最大线程数
-      max: 5000
+      max: 500
       # 工作线程池的最小备用线程数
-      min: 50
-      # 空闲超时时间
-      idle-timeout: 30s
-      # 线程池队列大小
-      max-queue-capacity: 10000
-      # selector线程池大小
-      selectors: 16
-      # accept线程池大小
-      acceptors: 16
-    accesslog:
-      # 是否开启
-      append: false
-      # 访问日志格式
-      format: ncsa
-      # 访问日志保留天数
-      retention-period: 7
+      min-spare: 50
     # 最大连接数
-    max-connections: 50000
-    # 表单参数最大数量
-    max-form-keys: 5000
-    # 连接空闲超时时间
-    connection-idle-timeout: 5m
-    # 请求参数最大大小
-    max-http-form-post-size: 100MB
-    # 最大响应头大小
-    max-http-response-header-size: 32KB
+    max-connections: 10000
+    # 当所有工作线程都在忙时，允许等待处理的最大连接数
+    accept-count: 200
+    # URI编码
+    uri-encoding: UTF-8
+    # 连接超时时间
+    connection-timeout: 60s
 
 spring:
   application:
