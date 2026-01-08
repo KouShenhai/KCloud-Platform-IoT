@@ -41,7 +41,7 @@ public class OssLogSaveCmdExe {
 
 	private final TransactionalUtils transactionalUtils;
 
-	@Async("virtualThreadExecutor")
+	@Async
 	@CommandLog
 	public void executeVoid(OssLogSaveCmd cmd) {
 		try {

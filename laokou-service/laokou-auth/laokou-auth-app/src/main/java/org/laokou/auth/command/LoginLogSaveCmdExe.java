@@ -39,7 +39,7 @@ public class LoginLogSaveCmdExe {
 
 	private final TransactionalUtils transactionalUtils;
 
-	@Async("virtualThreadExecutor")
+	@Async
 	@CommandLog
 	public void executeVoid(LoginLogSaveCmd cmd) {
 		try {
