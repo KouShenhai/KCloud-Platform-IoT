@@ -20,7 +20,6 @@ package org.laokou.common.grpc.config;
 import io.grpc.NameResolverRegistry;
 import io.grpc.netty.NettyChannelBuilder;
 import org.jspecify.annotations.NonNull;
-import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.grpc.annotation.GrpcClientBeanPostProcessor;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.context.annotation.Bean;
@@ -30,6 +29,7 @@ import org.springframework.grpc.client.GrpcChannelBuilderCustomizer;
 import org.springframework.grpc.client.GrpcClientFactory;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author laokou
@@ -39,9 +39,9 @@ public class GrpcClientConfig {
 
 	@Bean
 	GrpcClientBeanPostProcessor grpcClientBeanPostProcessor(GrpcClientFactory grpcClientFactory,
-			DiscoveryClient discoveryClient) {
+			DiscoveryClient discoveryClient, ExecutorService virtualThreadExecutor) {
 		NameResolverRegistry.getDefaultRegistry()
-			.register(new DiscoveryNameResolverProvider(discoveryClient, ThreadUtils.newVirtualTaskExecutor()));
+			.register(new DiscoveryNameResolverProvider(discoveryClient, virtualThreadExecutor));
 		return new GrpcClientBeanPostProcessor(grpcClientFactory, discoveryClient);
 	}
 
