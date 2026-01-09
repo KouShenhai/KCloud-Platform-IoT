@@ -1,7 +1,0 @@
-=== 下载依赖
-
-[source,shell]
-----
-pip install -r requirements.txt
-----
-
