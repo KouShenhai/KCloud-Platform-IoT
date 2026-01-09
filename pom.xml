@@ -175,7 +175,7 @@
     <!--oshi版本-->
     <oshi.version>6.9.2</oshi.version>
     <!--elasticsearch版本-->
-    <elasticsearch.version>9.2.3</elasticsearch.version>
+    <elasticsearch.version>9.2.4</elasticsearch.version>
     <!--jakarta.servlet-api版本-->
     <jakarta-servlet-api.version>6.1.0</jakarta-servlet-api.version>
     <!--fastexcel-->
@@ -227,7 +227,7 @@
     <!--curator版本-->
     <curator.version>5.9.0</curator.version>
     <!--wiremock版本-->
-    <wiremock.version>4.0.0-beta.24</wiremock.version>
+    <wiremock.version>4.0.0-beta.25</wiremock.version>
     <!--commons-net版本-->
     <commons-net.version>3.12.0</commons-net.version>
     <!--jSerialComm版本-->
