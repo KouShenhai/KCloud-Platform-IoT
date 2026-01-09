@@ -59,12 +59,12 @@ public final class DockerImageNames {
 		return nacos("v3.1.0");
 	}
 
-	public static DockerImageName ftp(String tag) {
-		return DockerImageName.parse("fauria/vsftpd").withTag(tag);
+	public static DockerImageName sftp(String tag) {
+		return DockerImageName.parse("atmoz/sftp").withTag(tag);
 	}
 
-	public static DockerImageName ftp() {
-		return ftp(LATEST);
+	public static DockerImageName sftp() {
+		return sftp(LATEST);
 	}
 
 	public static DockerImageName minIO(String tag) {

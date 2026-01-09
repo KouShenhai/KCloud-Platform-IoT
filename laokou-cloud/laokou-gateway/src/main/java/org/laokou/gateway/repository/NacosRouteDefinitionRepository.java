@@ -21,8 +21,6 @@ import com.alibaba.cloud.nacos.NacosConfigManager;
 import com.alibaba.nacos.api.config.ConfigService;
 import com.alibaba.nacos.api.config.listener.Listener;
 import com.alibaba.nacos.api.exception.NacosException;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.laokou.common.fory.config.ForyFactory;
@@ -38,15 +36,13 @@ import org.redisson.api.RMapReactive;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionRepository;
-import org.springframework.context.ApplicationEvent;
 import org.springframework.stereotype.Repository;
-import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
 import javax.annotation.PostConstruct;
-import java.io.Serial;
+import java.time.Duration;
 import java.util.Collection;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
@@ -101,12 +97,10 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 			@Override
 			public void receiveConfigInfo(String routes) {
 				log.info("监听路由配置信息，开始同步路由配置：{}", routes);
-				virtualThreadExecutor.execute(() -> {
-					Disposable disposable = syncRouter(getRoutes(routes)).subscribeOn(Schedulers.boundedElastic())
-						.subscribe();
-					// 发布关闭订阅事件
-					SpringContextUtils.publishEvent(new UnsubscribeEvent(this, disposable));
-				});
+				// 30s后自动释放内存
+				virtualThreadExecutor.execute(() -> syncRouter(getRoutes(routes)).take(Duration.ofSeconds(30))
+					.subscribeOn(Schedulers.boundedElastic())
+					.subscribe());
 			}
 		});
 	}
@@ -209,21 +203,5 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 		SpringContextUtils.publishEvent(new RefreshRoutesEvent(this));
 	}
 	// @formatter:on
-
-	@Getter
-	@Setter
-	public static class UnsubscribeEvent extends ApplicationEvent {
-
-		@Serial
-		private static final long serialVersionUID = 3319752558160144610L;
-
-		private final transient Disposable disposable;
-
-		public UnsubscribeEvent(Object source, Disposable disposable) {
-			super(source);
-			this.disposable = disposable;
-		}
-
-	}
 
 }

@@ -9,13 +9,13 @@
     <version>4.0.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>laokou-common-ftp</artifactId>
+  <artifactId>laokou-common-sftp</artifactId>
   <version>4.0.1-SNAPSHOT</version>
 
   <dependencies>
     <dependency>
-      <groupId>commons-net</groupId>
-      <artifactId>commons-net</artifactId>
+      <groupId>com.github.mwiede</groupId>
+      <artifactId>jsch</artifactId>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>

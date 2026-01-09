@@ -22,10 +22,10 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.ftp.config.FtpProperties;
-import org.laokou.common.ftp.template.FtpTemplate;
+import org.laokou.common.ftp.config.SFtpProperties;
+import org.laokou.common.ftp.template.SFtpTemplate;
 import org.laokou.common.i18n.util.ResourceExtUtils;
-import org.laokou.common.testcontainers.container.FtpContainer;
+import org.laokou.common.testcontainers.container.SFtpContainer;
 import org.laokou.common.testcontainers.util.DockerImageNames;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -43,43 +43,45 @@ import java.io.InputStream;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @RequiredArgsConstructor
 @EnableConfigurationProperties
-@ContextConfiguration(classes = { FtpProperties.class, FtpTemplate.class })
+@ContextConfiguration(classes = { SFtpProperties.class, SFtpTemplate.class })
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-class FtpTest {
+class SFtpTest {
 
-	private final FtpTemplate ftpTemplate;
+	private final SFtpTemplate sftpTemplate;
 
-	private final FtpProperties ftpProperties;
+	private final SFtpProperties sftpProperties;
 
-	static final FtpContainer ftp = new FtpContainer(DockerImageNames.ftp()).withUsername("root")
-		.withPassword("laokou123");
+	static final SFtpContainer sftp = new SFtpContainer(DockerImageNames.sftp()).withPassword("laokou", "laokou123");
 
 	@BeforeAll
 	static void beforeAll() {
-		ftp.start();
+		sftp.start();
 	}
 
 	@AfterAll
 	static void afterAll() {
-		ftp.stop();
+		sftp.stop();
 	}
 
 	@DynamicPropertySource
 	static void configureProperties(DynamicPropertyRegistry registry) {
-		registry.add("spring.ftp.host", ftp::getHost);
-		registry.add("spring.ftp.port", () -> ftp.getMappedPort(21));
+		registry.add("spring.sftp.host", sftp::getHost);
+		registry.add("spring.sftp.port", () -> sftp.getMappedPort(22));
+		registry.add("spring.sftp.username", () -> "laokou");
+		registry.add("spring.sftp.password", () -> "laokou123");
+		registry.add("spring.sftp.directory", () -> "/upload");
 	}
 
 	@Test
-	void test_ftp() throws IOException {
-		Assertions.assertThat(ftpTemplate.upload(ftpProperties.getDirectory(), "测试中文文本.txt",
+	void test_sftp() throws IOException {
+		Assertions.assertThat(sftpTemplate.upload(sftpProperties.getDirectory(), "测试中文文本.txt",
 				ResourceExtUtils.getResource("测试中文文本.txt").getInputStream()))
 			.isTrue();
-		InputStream inputStream = ftpTemplate.download(ftpProperties.getDirectory(), "测试中文文本.txt");
+		InputStream inputStream = sftpTemplate.download(sftpProperties.getDirectory(), "测试中文文本.txt");
 		Assertions.assertThat(inputStream).isNotNull();
 		Assertions.assertThat(new String(inputStream.readAllBytes()).trim()).isEqualTo("123");
-		Assertions.assertThat(ftpTemplate.delete(ftpProperties.getDirectory(), "测试中文文本.txt")).isTrue();
-		Assertions.assertThat(ftpTemplate.download(ftpProperties.getDirectory(), "测试中文文本.txt")).isNull();
+		Assertions.assertThat(sftpTemplate.delete(sftpProperties.getDirectory(), "测试中文文本.txt")).isTrue();
+		Assertions.assertThat(sftpTemplate.download(sftpProperties.getDirectory(), "测试中文文本.txt")).isNull();
 	}
 
 }

@@ -38,6 +38,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.time.Duration;
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -81,8 +82,9 @@ class GatewayApp implements CommandLineRunner {
 
 	@Override
 	public void run(@NotNull String... args) {
-		// 执行同步路由任务
+		// 执行同步路由任务【30s后自动释放内存】
 		virtualThreadExecutor.execute(() -> nacosRouteDefinitionRepository.syncRouter()
+			.take(Duration.ofSeconds(30))
 			.subscribeOn(Schedulers.boundedElastic())
 			.subscribe());
 	}
