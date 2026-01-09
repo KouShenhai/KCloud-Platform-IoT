@@ -26,8 +26,8 @@ import org.springframework.stereotype.Component;
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = "spring.ftp")
-public class FtpProperties {
+@ConfigurationProperties(prefix = "spring.sftp")
+public class SFtpProperties {
 
 	private String host;
 

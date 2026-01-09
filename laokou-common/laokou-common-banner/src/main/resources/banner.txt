@@ -22,7 +22,7 @@ ${AnsiColor.BRIGHT_RED}
 |  .  \  |  `----.|  `----.|  `--'  | |  `--'  | |  '--'  |      |  |      |  `----./  _____  \   |  |     |  |     |  `--'  | |  |\  \----.|  |  |  |        |  | |  `--'  |     |  |
 |__|\__\  \______||_______| \______/   \______/  |_______/       | _|      |_______/__/     \__\  |__|     |__|      \______/  | _| `._____||__|  |__|        |__|  \______/      |__|
 ${AnsiColor.DEFAULT}
-作者：老寇
+Author：laokou
 GitHub：https://github.com/KouShenhai
 Gitee：https://gitee.com/laokouyun
 CSDN：https://kcloud.blog.csdn.net
@@ -52,4 +52,4 @@ ${AnsiColor.DEFAULT}
 
 老寇IoT云平台正在启动中......
 
-相遇便是缘分，感谢各位盆友
+相逢便是缘分，感谢各位盆友

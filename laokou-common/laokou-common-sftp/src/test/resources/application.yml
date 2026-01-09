@@ -1,0 +1,8 @@
+server:
+  port: 8097
+
+spring:
+  application:
+    name: laokou-common-ftp
+  profiles:
+    active: test

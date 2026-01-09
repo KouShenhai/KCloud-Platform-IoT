@@ -23,25 +23,15 @@ import org.testcontainers.utility.DockerImageName;
 /**
  * @author laokou
  */
-public class FtpContainer extends GenericContainer<FtpContainer> {
+public class SFtpContainer extends GenericContainer<SFtpContainer> {
 
-	public FtpContainer(DockerImageName dockerImageName) {
+	public SFtpContainer(DockerImageName dockerImageName) {
 		super(dockerImageName);
-		this.addFixedExposedPort(21, 21);
-		this.addFixedExposedPort(30000, 30000);
-		this.addFixedExposedPort(30001, 30001);
-		this.withEnv("PASV_ADDRESS", "127.0.0.1");
-		this.withEnv("PASV_MIN_PORT", "30000");
-		this.withEnv("PASV_MAX_PORT", "30001");
+		this.withExposedPorts(22);
 	}
 
-	public FtpContainer withPassword(String password) {
-		this.withEnv("FTP_PASS", password);
-		return this;
-	}
-
-	public FtpContainer withUsername(String username) {
-		this.withEnv("FTP_USER", username);
+	public SFtpContainer withPassword(String username, String password) {
+		this.withEnv("SFTP_USERS", String.format("%s:%s:::upload", username, password));
 		return this;
 	}
 

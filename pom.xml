@@ -228,8 +228,8 @@
     <curator.version>5.9.0</curator.version>
     <!--wiremock版本-->
     <wiremock.version>4.0.0-beta.25</wiremock.version>
-    <!--commons-net版本-->
-    <commons-net.version>3.12.0</commons-net.version>
+    <!--jsch版本-->
+    <jsch.version>2.27.7</jsch.version>
     <!--jSerialComm版本-->
     <jSerialComm.version>2.11.4</jSerialComm.version>
     <!--californium版本-->
@@ -517,9 +517,9 @@
         <version>${jSerialComm.version}</version>
       </dependency>
       <dependency>
-        <groupId>commons-net</groupId>
-        <artifactId>commons-net</artifactId>
-        <version>${commons-net.version}</version>
+        <groupId>com.github.mwiede</groupId>
+        <artifactId>jsch</artifactId>
+        <version>${jsch.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.curator</groupId>
