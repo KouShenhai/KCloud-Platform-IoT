@@ -54,8 +54,8 @@ class CollectionUtilsTest {
 	@Test
 	void test_toList() {
 		Assertions.assertThat(CollectionExtUtils.toList("a,b,c", ",")).isEqualTo(Arrays.asList("a", "b", "c"));
-		Assertions.assertThat(CollectionExtUtils.toList("", ",").isEmpty()).isTrue();
-		Assertions.assertThat(CollectionExtUtils.toList(null, ",").isEmpty()).isTrue();
+		Assertions.assertThat(CollectionExtUtils.toList("", ",")).hasSize(0);
+		Assertions.assertThat(CollectionExtUtils.toList(null, ",")).hasSize(0);
 		Assertions.assertThat(CollectionExtUtils.toList("a, b , c", ",")).isEqualTo(Arrays.asList("a", "b", "c"));
 	}
 
