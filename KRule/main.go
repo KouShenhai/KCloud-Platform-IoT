@@ -1,5 +1,0 @@
-package KRule
-
-func main() {
-
-}
