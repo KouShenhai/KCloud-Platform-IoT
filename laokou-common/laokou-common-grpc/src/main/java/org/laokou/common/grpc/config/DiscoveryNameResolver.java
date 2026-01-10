@@ -23,9 +23,7 @@ import io.grpc.NameResolver;
 import io.grpc.Status;
 import io.grpc.StatusOr;
 import org.laokou.common.core.util.CollectionExtUtils;
-import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.i18n.util.StringExtUtils;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 
@@ -51,21 +49,17 @@ final class DiscoveryNameResolver extends NameResolver {
 
 	private final ExecutorService executorService;
 
-	private final ServiceConfigParser serviceConfigParser;
-
 	private final AtomicReference<List<ServiceInstance>> serviceInstanceReference;
 
 	private final AtomicBoolean resolving;
 
 	private Listener2 listener;
 
-	public DiscoveryNameResolver(String serviceId, DiscoveryClient discoveryClient, ExecutorService executorService,
-			Args args) {
+	public DiscoveryNameResolver(String serviceId, DiscoveryClient discoveryClient, ExecutorService executorService) {
 		this.serviceId = serviceId;
 		this.discoveryClient = discoveryClient;
 		this.executorService = executorService;
 		this.serviceInstanceReference = new AtomicReference<>(Collections.emptyList());
-		this.serviceConfigParser = args.getServiceConfigParser();
 		this.resolving = new AtomicBoolean(false);
 	}
 
@@ -119,7 +113,6 @@ final class DiscoveryNameResolver extends NameResolver {
 		}
 		this.listener.onResult(ResolutionResult.newBuilder()
 			.setAddressesOrError(StatusOr.fromValue(toAddresses(newServiceInstanceList)))
-			.setServiceConfig(resolveServiceConfig(newServiceInstanceList))
 			.build());
 		return newServiceInstanceList;
 	}
@@ -132,24 +125,6 @@ final class DiscoveryNameResolver extends NameResolver {
 		Set<String> oldSet = serviceInstances.stream().map(this::getAddressStr).collect(Collectors.toSet());
 		Set<String> newSet = newServiceInstanceList.stream().map(this::getAddressStr).collect(Collectors.toSet());
 		return !ObjectUtils.equals(oldSet, newSet);
-	}
-
-	private ConfigOrError resolveServiceConfig(List<ServiceInstance> newServiceInstanceList) {
-		String serviceConfig = getServiceConfig(newServiceInstanceList);
-		if (StringExtUtils.hasText(serviceConfig)) {
-			return serviceConfigParser
-				.parseServiceConfig(JacksonUtils.toMap(serviceConfig, String.class, Object.class));
-		}
-		return null;
-	}
-
-	private String getServiceConfig(List<ServiceInstance> newServiceInstanceList) {
-		if (CollectionExtUtils.isEmpty(newServiceInstanceList)) {
-			return "";
-		}
-		return newServiceInstanceList.stream()
-			.map(item -> ObjectUtils.requireNotNull(item.getMetadata()).getOrDefault("grpc_service_config", ""))
-			.collect(Collectors.joining(","));
 	}
 
 	private List<EquivalentAddressGroup> toAddresses(List<ServiceInstance> newServiceInstanceList) {

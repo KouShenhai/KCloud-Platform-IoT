@@ -57,7 +57,7 @@ class DiscoveryNameResolverTest {
 
 		Mockito.when(args.getServiceConfigParser()).thenReturn(Mockito.mock(NameResolver.ServiceConfigParser.class));
 
-		resolver = new DiscoveryNameResolver(serviceId, discoveryClient, executorService, args);
+		resolver = new DiscoveryNameResolver(serviceId, discoveryClient, executorService);
 	}
 
 	@Test

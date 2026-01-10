@@ -42,7 +42,7 @@ public class GrpcClientConfig {
 			DiscoveryClient discoveryClient, ExecutorService virtualThreadExecutor) {
 		NameResolverRegistry.getDefaultRegistry()
 			.register(new DiscoveryNameResolverProvider(discoveryClient, virtualThreadExecutor));
-		return new GrpcClientBeanPostProcessor(grpcClientFactory, discoveryClient);
+		return new GrpcClientBeanPostProcessor(grpcClientFactory);
 	}
 
 	@Bean

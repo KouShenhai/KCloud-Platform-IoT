@@ -23,7 +23,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.grpc.client.GrpcClientFactory;
 
 /**
@@ -38,8 +37,7 @@ class GrpcClientBeanPostProcessorTest {
 	@BeforeEach
 	void setUp() {
 		GrpcClientFactory grpcClientFactory = Mockito.mock(GrpcClientFactory.class);
-		DiscoveryClient discoveryClient = Mockito.mock(DiscoveryClient.class);
-		postProcessor = new GrpcClientBeanPostProcessor(grpcClientFactory, discoveryClient);
+		postProcessor = new GrpcClientBeanPostProcessor(grpcClientFactory);
 
 		Mockito
 			.when(grpcClientFactory.getClient(ArgumentMatchers.eq("discovery://laokou-auth"),
