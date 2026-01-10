@@ -18,8 +18,7 @@
 package org.laokou.common.grpc;
 
 import io.grpc.stub.StreamObserver;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.grpc.proto.HelloWorldProto;
 import org.laokou.common.grpc.proto.SimpleGrpc;
 import org.springframework.grpc.server.service.GrpcService;
@@ -27,10 +26,9 @@ import org.springframework.grpc.server.service.GrpcService;
 /**
  * @author laokou
  */
+@Slf4j
 @GrpcService
 public class GrpcServerService extends SimpleGrpc.SimpleImplBase {
-
-	private static final Log log = LogFactory.getLog(GrpcServerService.class);
 
 	@Override
 	public void sayHello(HelloWorldProto.HelloRequest req,

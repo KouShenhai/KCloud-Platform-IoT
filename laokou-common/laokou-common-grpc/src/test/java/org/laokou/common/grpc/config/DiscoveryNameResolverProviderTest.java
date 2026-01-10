@@ -80,11 +80,6 @@ class DiscoveryNameResolverProviderTest {
 
 		HeartbeatEvent event = new HeartbeatEvent(new Object(), "test");
 		provider.onHeartbeatEvent(event);
-
-		// verify triggers discoveryClient.getInstances eventually
-		// Since we can't easily poll the internal state of the resolver, we verify that
-		// it doesn't crash
-		// and we've invoked the event handler.
 	}
 
 }

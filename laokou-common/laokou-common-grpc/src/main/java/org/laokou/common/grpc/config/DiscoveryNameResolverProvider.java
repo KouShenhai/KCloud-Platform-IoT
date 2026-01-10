@@ -60,7 +60,7 @@ public final class DiscoveryNameResolverProvider extends NameResolverProvider {
 	@Override
 	public NameResolver newNameResolver(URI uri, NameResolver.Args args) {
 		DiscoveryNameResolver discoveryNameResolver = new DiscoveryNameResolver(uri.getHost(), discoveryClient,
-				executorService, args);
+				executorService);
 		discoveryNameResolvers.add(discoveryNameResolver);
 		return discoveryNameResolver;
 	}
