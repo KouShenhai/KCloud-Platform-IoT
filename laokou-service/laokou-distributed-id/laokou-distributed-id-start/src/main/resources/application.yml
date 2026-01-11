@@ -42,13 +42,6 @@ spring:
   threads:
     virtual:
       enabled: true
-  zookeeper:
-    address: zookeeper:2181
-    connection-timeout-ms: 15000
-    session-timeout-ms: 60000
-  distributed-identifier:
-    data-center-id: ${DATA_CENTER_ID:1}
-    start-timestamp: ${START_TIMESTAMP:1600166465631}
   cloud:
     inetutils:
       ignored-interfaces:

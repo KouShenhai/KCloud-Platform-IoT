@@ -18,26 +18,34 @@
 package org.laokou.distributed.identifier.config;
 
 import com.alibaba.cloud.nacos.NacosConfigManager;
+import com.alibaba.nacos.api.exception.NacosException;
 import com.alibaba.nacos.api.naming.NamingService;
+import com.alibaba.nacos.api.naming.pojo.Instance;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.i18n.util.InstantUtils;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.SpringContextUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 
+import java.net.InetAddress;
 import java.time.Instant;
+import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
 /**
  * 基于 Nacos 的雪花算法生成器.
  * <p>
- * 通过 Nacos 服务注册中心自动分配 workerId 和 datacenterId，
- * 保证集群环境下每个微服务实例都有唯一的ID。
+ * 通过 Nacos 服务注册中心自动分配 machineId 和 datacenterId， 保证集群环境下每个微服务实例都有唯一的ID。
  * </p>
  * <p>
- * 位数分配方案：5位datacenter + 5位worker + 13位序列 = 1024节点，每毫秒8192个ID
+ * 位数分配方案：5位datacenter + 5位machine + 13位序列 = 1024节点，每毫秒8192个ID
  * </p>
+ *
  * @author laokou
  */
 @Slf4j
@@ -51,22 +59,27 @@ public class NacosSnowflakeGenerator implements SnowflakeGenerator {
 	 * 序列号标识占用的位数.
 	 */
 	private final long sequenceBit;
+
 	/**
 	 * 机器ID占用的位数.
 	 */
 	private final long machineBit;
+
 	/**
 	 * 数据ID占用的位数.
 	 */
 	private final long datacenterBit;
+
 	/**
 	 * 机器ID最大值.
 	 */
 	private final long maxMachineId;
+
 	/**
 	 * 数据ID最大值.
 	 */
 	private final long maxDatacenterId;
+
 	/**
 	 * 序列号最大值.
 	 */
@@ -113,21 +126,22 @@ public class NacosSnowflakeGenerator implements SnowflakeGenerator {
 	private final NamingService namingService;
 
 	/**
-	 * 已分配的 machineId 缓存 (key: ip:port).
-	 */
-	private static final Map<String, Long> MACHINE_ID_CACHE = new ConcurrentHashMap<>();
-
-	/**
-	 * 静态 datacenter 计数器，用于分配 datacenterId.
-	 */
-	private static final Map<String, Long> DATACENTER_ID_CACHE = new ConcurrentHashMap<>();
-
-	/**
 	 * 初始化标识.
 	 */
-	private final AtomicBoolean initialized = new AtomicBoolean(false);
+	private final AtomicBoolean initialized;
 
-	public NacosSnowflakeGenerator(NacosConfigManager nacosConfigManager, NamingService namingService, SpringSnowflakeProperties springSnowflakeProperties) {
+	/**
+	 * 当前实例IP.
+	 */
+	private String currentIp;
+
+	/**
+	 * 当前实例端口.
+	 */
+	private int currentPort;
+
+	public NacosSnowflakeGenerator(NacosConfigManager nacosConfigManager, NamingService namingService,
+			SpringSnowflakeProperties springSnowflakeProperties) {
 		this.machineBit = 5L;
 		this.datacenterBit = 5L;
 		this.sequenceBit = 13L;
@@ -138,8 +152,8 @@ public class NacosSnowflakeGenerator implements SnowflakeGenerator {
 		this.serviceId = SpringContextUtils.getServiceId();
 		this.groupName = nacosConfigManager.getNacosConfigProperties().getGroup();
 		this.namingService = namingService;
+		this.initialized = new AtomicBoolean(false);
 	}
-
 
 	@Override
 	public synchronized void init() throws Exception {
@@ -147,16 +161,33 @@ public class NacosSnowflakeGenerator implements SnowflakeGenerator {
 			log.warn("NacosSnowflakeGenerator has already been initialized.");
 			return;
 		}
+		this.currentIp = InetAddress.getLocalHost().getHostAddress();
+		this.currentPort = getServerPort();
+		// 获取所有实例列表
+		List<Instance> allInstances = namingService.getAllInstances(serviceId, groupName);
+		// 分配 datacenterId 和 machineId
+		allocateIds(allInstances);
+		// 注册当前实例及其元数据
+		registerMetadata();
+		// 订阅实例变更事件
+		namingService.subscribe(serviceId, groupName, _ -> {
+			log.debug("NacosSnowflakeGenerator received instance change event.");
+		});
+		initialized.set(true);
+		log.info("NacosSnowflakeGenerator initialized with datacenterId: {}, machineId: {}", datacenterId, machineId);
 	}
 
 	@Override
-	public synchronized void close() throws Exception {
-
+	public synchronized void close() throws NacosException {
+		namingService.unsubscribe(serviceId, groupName,
+				_ -> log.debug(
+						"NacosSnowflakeGenerator unsubscribed from serviceId: {}, groupName: {}, ip: {}, port: {}",
+						serviceId, groupName, currentIp, currentPort));
+		initialized.set(false);
 	}
 
 	/**
 	 * 生成雪花ID.
-	 *
 	 * @return 雪花ID
 	 */
 	@Override
@@ -176,16 +207,18 @@ public class NacosSnowflakeGenerator implements SnowflakeGenerator {
 					wait(offset << 1);
 					currentTimestamp = getCurrentTimestamp();
 					if (currentTimestamp < lastTimestamp) {
-						throw new RuntimeException(String.format(
-							"Clock moved backwards. Refusing to generate id for %d milliseconds", offset));
+						throw new RuntimeException(String
+							.format("Clock moved backwards. Refusing to generate id for %d milliseconds", offset));
 					}
-				} catch (InterruptedException e) {
+				}
+				catch (InterruptedException e) {
 					Thread.currentThread().interrupt();
 					throw new RuntimeException("Interrupted while waiting for clock sync", e);
 				}
-			} else {
-				throw new RuntimeException(String.format(
-					"Clock moved backwards. Refusing to generate id for %d milliseconds", offset));
+			}
+			else {
+				throw new RuntimeException(
+						String.format("Clock moved backwards. Refusing to generate id for %d milliseconds", offset));
 			}
 		}
 
@@ -197,7 +230,8 @@ public class NacosSnowflakeGenerator implements SnowflakeGenerator {
 			if (sequence == 0L) {
 				currentTimestamp = waitNextMillis(lastTimestamp);
 			}
-		} else {
+		}
+		else {
 			// 不同毫秒，序列号置为随机数（避免连续ID分布不均）
 			sequence = ThreadLocalRandom.current().nextLong(1, Math.min(3, maxSequence + 1));
 		}
@@ -205,12 +239,12 @@ public class NacosSnowflakeGenerator implements SnowflakeGenerator {
 		lastTimestamp = currentTimestamp;
 		// 组装雪花ID【左移】
 		return ((currentTimestamp - startTimestamp) << (sequenceBit + machineBit + datacenterBit))
-			// 数据ID部分
-			| (datacenterId << (sequenceBit + machineBit))
-			// 机器ID部分
-			| (machineId << sequenceBit)
-			// 序列标识部分
-			| sequence;
+				// 数据ID部分
+				| (datacenterId << (sequenceBit + machineBit))
+				// 机器ID部分
+				| (machineId << sequenceBit)
+				// 序列标识部分
+				| sequence;
 	}
 
 	@Override
@@ -220,7 +254,6 @@ public class NacosSnowflakeGenerator implements SnowflakeGenerator {
 
 	/**
 	 * 从雪花ID中提取 datacenterId.
-	 *
 	 * @param snowflakeId 雪花ID
 	 * @return datacenterId
 	 */
@@ -230,7 +263,6 @@ public class NacosSnowflakeGenerator implements SnowflakeGenerator {
 
 	/**
 	 * 从雪花ID中提取 workerId.
-	 *
 	 * @param snowflakeId 雪花ID
 	 * @return workerId
 	 */
@@ -240,7 +272,6 @@ public class NacosSnowflakeGenerator implements SnowflakeGenerator {
 
 	/**
 	 * 从雪花ID中提取序列号.
-	 *
 	 * @param snowflakeId 雪花ID
 	 * @return 序列号
 	 */
@@ -250,7 +281,6 @@ public class NacosSnowflakeGenerator implements SnowflakeGenerator {
 
 	/**
 	 * 获取当前时间戳.
-	 *
 	 * @return 当前时间戳
 	 */
 	private long getCurrentTimestamp() {
@@ -259,7 +289,6 @@ public class NacosSnowflakeGenerator implements SnowflakeGenerator {
 
 	/**
 	 * 等待下一毫秒.
-	 *
 	 * @param lastTimestamp 上一次时间戳
 	 * @return 下一毫秒时间戳
 	 */
@@ -273,13 +302,62 @@ public class NacosSnowflakeGenerator implements SnowflakeGenerator {
 
 	/**
 	 * 从雪花ID中提取时间戳.
-	 *
 	 * @param snowflakeId 雪花ID
 	 * @return 时间戳
 	 */
 	private long getTimestamp(long snowflakeId) {
 		// 反推 -> 右移 + 开始时间戳
 		return (snowflakeId >> (sequenceBit + machineBit + datacenterBit)) + startTimestamp;
+	}
+
+	private int getServerPort() {
+		String serverPort = System.getProperty("server.port");
+		return StringExtUtils.isEmpty(serverPort) ? 9094 : Integer.parseInt(serverPort);
+	}
+
+	private void allocateIds(List<Instance> allInstances) {
+		Set<Long> usedIds = allInstances.stream()
+			.filter(instance -> !isCurrentInstance(instance))
+			.map(Instance::getMetadata)
+			.filter(MapUtils::isNotEmpty)
+			.map(metadata -> {
+				String machineIdStr = metadata.get(MACHINE_ID_KEY);
+				String datacenterIdStr = metadata.get(DATACENTER_ID_KEY);
+				if (StringExtUtils.isNotEmpty(datacenterIdStr) && StringExtUtils.isNotEmpty(machineIdStr)) {
+					long wid = Long.parseLong(metadata.get(MACHINE_ID_KEY));
+					long did = Long.parseLong(metadata.get(DATACENTER_ID_KEY));
+					return did * (maxMachineId + 1) + wid;
+				}
+				return 0L;
+			})
+			.collect(Collectors.toSet());
+		// 分配新的 datacenterId 和 machineId
+		long maxCombinedId = (maxDatacenterId + 1) * (maxMachineId + 1);
+		long foundCombinedId = java.util.stream.LongStream.range(0, maxCombinedId)
+			.filter(id -> !usedIds.contains(id))
+			.findFirst()
+			.orElseThrow(() -> new RuntimeException(
+					String.format("No available ID slot. All %d slots are in use.", maxCombinedId)));
+		this.datacenterId = foundCombinedId / maxDatacenterId;
+		this.machineId = foundCombinedId % maxMachineId;
+	}
+
+	private void registerMetadata() throws NacosException {
+		Map<String, String> metadata = Map.of(DATACENTER_ID_KEY, String.valueOf(this.datacenterId), MACHINE_ID_KEY,
+				String.valueOf(this.machineId));
+		Instance instance = new Instance();
+		instance.setIp(currentIp);
+		instance.setPort(currentPort);
+		instance.setMetadata(metadata);
+		instance.setWeight(1.0);
+		instance.setHealthy(true);
+		instance.setEnabled(true);
+		namingService.registerInstance(serviceId, groupName, instance);
+		log.info("Registered instance with metadata: {}", metadata);
+	}
+
+	private boolean isCurrentInstance(Instance instance) {
+		return ObjectUtils.equals(instance.getIp(), currentIp) && instance.getPort() == currentPort;
 	}
 
 }

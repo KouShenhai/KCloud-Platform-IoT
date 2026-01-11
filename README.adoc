@@ -200,7 +200,6 @@ image::doc/image/老寇IoT云平台业务架构图.png[架构图,align=center]
 - 时序数据库：TimescaleDB & TDengine & InfluxDB
 - 数据库迁移：Liquibase
 - 链路&指标采集：Micrometer
-- 分布式ID：Zookeeper
 
 ==== 🌴 项目结构
 

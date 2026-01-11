@@ -25,11 +25,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DistributedIdConfig {
 
-//	@Bean(initMethod = "init", destroyMethod = "close")
-//	public SnowflakeGenerator snowflakeGenerator(CuratorFramework curatorFramework,
-//			SpringDistributedIdentifierProperties springDistributedIdentifierProperties) {
-//		return new ZookeeperSnowflakeGenerator(springDistributedIdentifierProperties.getStartTimestamp(),
-//				springDistributedIdentifierProperties.getDataCenterId(), curatorFramework);
-//	}
+	// @Bean(initMethod = "init", destroyMethod = "close")
+	// public SnowflakeGenerator snowflakeGenerator(CuratorFramework curatorFramework,
+	// SpringDistributedIdentifierProperties springDistributedIdentifierProperties) {
+	// return new
+	// ZookeeperSnowflakeGenerator(springDistributedIdentifierProperties.getStartTimestamp(),
+	// springDistributedIdentifierProperties.getDataCenterId(), curatorFramework);
+	// }
 
 }

@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.distributed.identifier;
+package org.laokou.distributed.id;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +23,7 @@ import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.util.StopWatch;
 import java.net.InetAddress;
@@ -37,8 +38,9 @@ import java.net.UnknownHostException;
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy
 @RequiredArgsConstructor
+@EnableDiscoveryClient(autoRegister = false)
 @SpringBootApplication(scanBasePackages = "org.laokou")
-class DistributedIdentifierApp {
+class DistributedIdApp {
 
 	// @formatter:off
 	static void main(String[] args) throws UnknownHostException {
@@ -49,7 +51,7 @@ class DistributedIdentifierApp {
 		System.setProperty("nacos.logging.default.config.enabled", "false");
 		// 关闭sentinel健康检查 https://github.com/alibaba/Sentinel/issues/1494
 		System.setProperty("management.health.sentinel.enabled", "false");
-		new SpringApplicationBuilder(DistributedIdentifierApp.class).web(WebApplicationType.SERVLET).run(args);
+		new SpringApplicationBuilder(DistributedIdApp.class).web(WebApplicationType.SERVLET).run(args);
 		stopWatch.stop();
 		log.info("{}", stopWatch.prettyPrint());
 	}

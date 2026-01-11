@@ -188,7 +188,6 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 - 时序数据库：TimescaleDB & TDengine & InfluxDB
 - 数据库迁移：Liquibase
 - 链路&指标采集：Micrometer
-- 分布式ID：Zookeeper
 
 #### 🌴 项目结构
 
