@@ -99,7 +99,6 @@
     <module>laokou-common-reactor</module>
     <module>laokou-common-ai</module>
     <module>laokou-common-csv</module>
-    <module>laokou-common-zookeeper</module>
     <module>laokou-common-sftp</module>
     <module>laokou-common-websocket</module>
     <module>laokou-common-pulsar</module>

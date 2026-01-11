@@ -1,0 +1,88 @@
+server:
+  port: ${SERVER_PORT:9094}
+  ssl:
+    # 开启证书
+    enabled: @SSL-ENABLED@
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: @SSL-ENABLED@
+  forward-headers-strategy: native
+  shutdown: graceful
+  servlet:
+    context-path: /api
+  tomcat:
+    threads:
+      # 工作线程池的最大线程数
+      max: 500
+      # 工作线程池的最小备用线程数
+      min-spare: 50
+    # 最大连接数
+    max-connections: 10000
+    # 当所有工作线程都在忙时，允许等待处理的最大连接数
+    accept-count: 200
+    # URI编码
+    uri-encoding: UTF-8
+    # 连接超时时间
+    connection-timeout: 60s
+spring:
+  application:
+    name: ${SERVICE_ID:laokou-distributed-id}
+  profiles:
+    active: @PROFILE-ACTIVE@
+  lifecycle:
+    timeout-per-shutdown-phase: "2m"
+  # 开启虚拟线程
+  threads:
+    virtual:
+      enabled: true
+  zookeeper:
+    address: zookeeper:2181
+    connection-timeout-ms: 15000
+    session-timeout-ms: 60000
+  distributed-identifier:
+    data-center-id: ${DATA_CENTER_ID:1}
+    start-timestamp: ${START_TIMESTAMP:1600166465631}
+  cloud:
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+
+logging:
+  config: classpath:log4j2-@PROFILE-ACTIVE@.xml
+
+# Actuator配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+  tracing:
+    enabled: true
+    propagation:
+      type: w3c
+    # 采样率 => 100%
+    sampling:
+      probability: 1
+  otlp:
+    tracing:
+      endpoint: http://otel-collector:4317/v1/traces
+      compression: gzip
+      timeout: 10s
+      transport: grpc
+    metrics:
+      export:
+        enabled: false
+  metrics:
+    tags:
+      application: ${spring.application.name}

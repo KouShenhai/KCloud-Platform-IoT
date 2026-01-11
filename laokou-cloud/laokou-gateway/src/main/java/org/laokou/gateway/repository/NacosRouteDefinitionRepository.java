@@ -68,7 +68,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 
 	private final String dataId;
 
-	private final String group;
+	private final String groupName;
 
 	private final ConfigService configService;
 
@@ -79,7 +79,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	public NacosRouteDefinitionRepository(NacosConfigManager nacosConfigManager, ReactiveRedisUtils reactiveRedisUtils,
 			ExecutorService virtualThreadExecutor) {
 		this.dataId = "router.json";
-		this.group = nacosConfigManager.getNacosConfigProperties().getGroup();
+		this.groupName = nacosConfigManager.getNacosConfigProperties().getGroup();
 		this.configService = nacosConfigManager.getConfigService();
 		this.reactiveMap = reactiveRedisUtils.getMap(RedisKeyUtils.getRouteDefinitionHashKey());
 		this.virtualThreadExecutor = virtualThreadExecutor;
@@ -88,7 +88,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	@PostConstruct
 	public void listenRouter() throws NacosException {
 		log.info("开始监听路由配置信息");
-		configService.addListener(dataId, group, new Listener() {
+		configService.addListener(dataId, groupName, new Listener() {
 			@Override
 			public Executor getExecutor() {
 				return Executors.newSingleThreadExecutor();
@@ -186,7 +186,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	 */
 	private Collection<RouteDefinition> getRoutes(String str) {
 		try {
-			String routes = StringExtUtils.isEmpty(str) ? configService.getConfig(dataId, group, 5000) : str;
+			String routes = StringExtUtils.isEmpty(str) ? configService.getConfig(dataId, groupName, 5000) : str;
 			return JacksonUtils.toList(routes, RouteDefinition.class);
 		}
 		catch (Exception ex) {
