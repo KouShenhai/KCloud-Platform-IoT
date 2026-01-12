@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.distributed.identifier.config;
+package org.laokou.distributed.id.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -41,5 +41,10 @@ public class SpringSnowflakeProperties {
 	 * </p>
 	 */
 	private long startTimestamp = 1655222400000L;
+
+	/**
+	 * 批量生成ID的最大数量.
+	 */
+	private int maxBatchSize = 1000;
 
 }

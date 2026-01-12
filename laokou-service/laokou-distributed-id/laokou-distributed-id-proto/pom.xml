@@ -12,6 +12,14 @@
   <artifactId>laokou-distributed-id-proto</artifactId>
   <version>4.0.1-SNAPSHOT</version>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-grpc</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
+
   <build>
     <plugins>
       <plugin>
@@ -31,6 +39,30 @@
         <configuration>
           <skip>true</skip>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>io.github.ascopes</groupId>
+        <artifactId>protobuf-maven-plugin</artifactId>
+        <version>${protobuf-maven-plugin.version}</version>
+        <configuration>
+          <protocVersion>${protobuf.version}</protocVersion>
+          <binaryMavenPlugins>
+            <binaryMavenPlugin>
+              <groupId>io.grpc</groupId>
+              <artifactId>protoc-gen-grpc-java</artifactId>
+              <version>${grpc.version}</version>
+              <options>@generated=omit</options>
+            </binaryMavenPlugin>
+          </binaryMavenPlugins>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate</goal>
+              <goal>generate-test</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

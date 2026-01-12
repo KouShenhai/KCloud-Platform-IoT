@@ -10,12 +10,4 @@
   <artifactId>laokou-distributed-id-client</artifactId>
   <version>4.0.1-SNAPSHOT</version>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-core</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-  </dependencies>
-
 </project>

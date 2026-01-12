@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.distributed.identifier.config;
+package org.laokou.distributed.id.config;
 
 import com.alibaba.cloud.nacos.NacosConfigManager;
 import com.alibaba.nacos.api.exception.NacosException;
@@ -170,9 +170,8 @@ public class NacosSnowflakeGenerator implements SnowflakeGenerator {
 		// 注册当前实例及其元数据
 		registerMetadata();
 		// 订阅实例变更事件
-		namingService.subscribe(serviceId, groupName, _ -> {
-			log.debug("NacosSnowflakeGenerator received instance change event.");
-		});
+		namingService.subscribe(serviceId, groupName,
+				_ -> log.debug("NacosSnowflakeGenerator received instance change event."));
 		initialized.set(true);
 		log.info("NacosSnowflakeGenerator initialized with datacenterId: {}, machineId: {}", datacenterId, machineId);
 	}
