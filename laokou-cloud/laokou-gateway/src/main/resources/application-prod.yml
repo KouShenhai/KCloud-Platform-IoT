@@ -29,6 +29,12 @@ spring:
           max-wait: -1 #连接池最大阻塞等待时间（使用负值表示没有限制）
           max-idle: 500 #连接池最大空闲连接
           min-idle: 200 #连接池最小空间连接
+  redisson:
+    node:
+      type: single
+      single:
+        address: redis://${spring.data.redis.host}:${spring.data.redis.port}
+    password: ${spring.data.redis.password}
   config:
     import:
       # 临时配置文件【解决拉取nacos配置文件时，group默认为DEFAULT_GROUP问题】

@@ -33,22 +33,10 @@
     <dependency>
       <groupId>com.alibaba.cloud</groupId>
       <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>com.alibaba.nacos</groupId>
-          <artifactId>nacos-client</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>com.alibaba.cloud</groupId>
       <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>com.alibaba.nacos</groupId>
-          <artifactId>nacos-client</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.springframework.cloud</groupId>
@@ -75,20 +63,6 @@
           <artifactId>log4j-to-slf4j</artifactId>
         </exclusion>
       </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>com.alibaba.nacos</groupId>
-      <artifactId>nacos-api</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>com.google.errorprone</groupId>
-          <artifactId>error_prone_annotations</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>com.alibaba.nacos</groupId>
-      <artifactId>nacos-common</artifactId>
     </dependency>
     <dependency>
       <groupId>jakarta.servlet</groupId>
@@ -118,11 +92,6 @@
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-reactor</artifactId>
       <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.alibaba.nacos</groupId>
-      <artifactId>nacos-client</artifactId>
-      <version>${nacos.version}</version>
     </dependency>
   </dependencies>
 

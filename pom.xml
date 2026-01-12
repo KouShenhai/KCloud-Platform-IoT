@@ -141,7 +141,7 @@
     <!--mybatis-plus版本 -->
     <mybatis-plus.version>3.5.16</mybatis-plus.version>
     <!--nacos版本-->
-    <nacos.version>3.1.0</nacos.version>
+    <nacos.version>3.1.1</nacos.version>
     <!--micrometer-tracing-bom版本-->
     <micrometer-tracing.version>1.6.1</micrometer-tracing.version>
     <!--opentelemetry版本-->
