@@ -4,23 +4,26 @@ option java_multiple_files = true;
 option java_package = "org.laokou.distributed.id.proto";
 option java_outer_classname = "DistributedIdProto";
 
-message DistributedIdCmd {
+message GenerateIdRequest {
+}
+
+message GenerateBatchIdRequest {
 	int32 num = 1;
 }
 
-message DistributedIdResult {
+message GenerateIdResponse {
 	string code = 1;
 	string msg = 2;
 	int64 data = 3;
 }
 
- message DistributedIdsResult {
+ message GenerateBatchIdsResponse {
 	string code = 1;
 	string msg = 2;
 	repeated int64 data = 3;
 }
 
 service DistributedIdServiceI {
-	rpc generateId(DistributedIdCmd) returns (DistributedIdResult);
-	rpc generateIds(DistributedIdCmd) returns (DistributedIdsResult);
+	rpc generateId(GenerateIdRequest) returns (GenerateIdResponse);
+	rpc generateBatchIds(GenerateBatchIdRequest) returns (GenerateBatchIdsResponse);
 }

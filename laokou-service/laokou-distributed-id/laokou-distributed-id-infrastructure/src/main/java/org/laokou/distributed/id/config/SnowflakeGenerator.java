@@ -15,13 +15,40 @@
  *
  */
 
-package org.laokou.distributed.identifier.dto;
+package org.laokou.distributed.id.config;
+
+import java.time.Instant;
 
 /**
- * 分布式标识生成批量命令.
+ * 雪花算法生成器接口.
  *
  * @author laokou
  */
-public record DistributedIdGenerateBatchCmd(Integer num) {
+public interface SnowflakeGenerator {
+
+	/**
+	 * 初始化生成器.
+	 * @throws Exception 初始化异常
+	 */
+	void init() throws Exception;
+
+	/**
+	 * 关闭生成器.
+	 * @throws Exception 关闭异常
+	 */
+	void close() throws Exception;
+
+	/**
+	 * 生成下一个雪花ID.
+	 * @return 雪花ID
+	 */
+	long nextId();
+
+	/**
+	 * 根据雪花ID获取生成时间.
+	 * @param id 雪花ID
+	 * @return 生成时间
+	 */
+	Instant getInstant(long id);
 
 }

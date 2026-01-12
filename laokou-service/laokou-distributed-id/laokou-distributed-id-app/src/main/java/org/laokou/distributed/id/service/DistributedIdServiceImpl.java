@@ -17,9 +17,17 @@
 
 package org.laokou.distributed.id.service;
 
+import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
-import org.laokou.distributed.id.command.DistributedIdGenerateBatchCmdExe;
-import org.laokou.distributed.id.command.DistributedIdGenerateCmdExe;
+import org.laokou.common.i18n.common.exception.StatusCode;
+import org.laokou.common.i18n.util.MessageUtils;
+import org.laokou.distributed.id.proto.DistributedIdServiceIGrpc;
+import org.laokou.distributed.id.proto.GenerateBatchIdRequest;
+import org.laokou.distributed.id.proto.GenerateBatchIdsResponse;
+import org.laokou.distributed.id.proto.GenerateIdRequest;
+import org.laokou.distributed.id.proto.GenerateIdResponse;
+import org.laokou.distributed.id.config.SnowflakeGenerator;
+import org.laokou.distributed.id.config.SpringSnowflakeProperties;
 import org.springframework.stereotype.Service;
 
 /**
@@ -27,10 +35,35 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
-public class DistributedIdServiceImpl {
+public class DistributedIdServiceImpl extends DistributedIdServiceIGrpc.DistributedIdServiceIImplBase {
 
-	private final DistributedIdGenerateCmdExe distributedIdGenerateCmdExe;
+	private final SnowflakeGenerator snowflakeGenerator;
 
-	private final DistributedIdGenerateBatchCmdExe distributedIdGenerateBatchCmdExe;
+	private final SpringSnowflakeProperties springSnowflakeProperties;
+
+	@Override
+	public void generateBatchIds(GenerateBatchIdRequest request,
+			StreamObserver<GenerateBatchIdsResponse> responseObserver) {
+		GenerateBatchIdsResponse.Builder builder = GenerateBatchIdsResponse.newBuilder()
+			.setCode(StatusCode.OK)
+			.setMsg(MessageUtils.getMessage(StatusCode.OK));
+		int count = Math.min(springSnowflakeProperties.getMaxBatchSize(), request.getNum());
+		for (int i = 0; i < count; i++) {
+			builder.addData(snowflakeGenerator.nextId());
+		}
+		responseObserver.onNext(builder.build());
+		responseObserver.onCompleted();
+	}
+
+	@Override
+	public void generateId(GenerateIdRequest request, StreamObserver<GenerateIdResponse> responseObserver) {
+		GenerateIdResponse response = GenerateIdResponse.newBuilder()
+			.setCode(StatusCode.OK)
+			.setMsg(MessageUtils.getMessage(StatusCode.OK))
+			.setData(snowflakeGenerator.nextId())
+			.build();
+		responseObserver.onNext(response);
+		responseObserver.onCompleted();
+	}
 
 }
