@@ -21,6 +21,7 @@ import com.alibaba.cloud.nacos.NacosConfigManager;
 import com.alibaba.nacos.api.config.ConfigService;
 import com.alibaba.nacos.api.config.listener.Listener;
 import com.alibaba.nacos.api.exception.NacosException;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.laokou.common.fory.config.ForyFactory;
@@ -41,9 +42,9 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
-import javax.annotation.PostConstruct;
 import java.time.Duration;
 import java.util.Collection;
+import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -97,8 +98,8 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 			@Override
 			public void receiveConfigInfo(String routes) {
 				log.info("监听路由配置信息，开始同步路由配置：{}", routes);
-				// 30s后自动释放内存
-				virtualThreadExecutor.execute(() -> syncRouter(getRoutes(routes)).take(Duration.ofSeconds(30))
+				// 10s后自动释放内存
+				virtualThreadExecutor.execute(() -> syncRouter(getRoutes(routes)).take(Duration.ofSeconds(10))
 					.subscribeOn(Schedulers.boundedElastic())
 					.subscribe());
 			}
@@ -120,7 +121,8 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	@NonNull
 	@Override
 	public Flux<@NonNull RouteDefinition> getRouteDefinitions() {
-		return reactiveMap.valueIterator()
+		return reactiveMap.entryIterator()
+			.mapNotNull(Map.Entry::getValue)
 			.onErrorContinue((throwable, _) -> {
 				if (log.isErrorEnabled()) {
 					log.error("从Redis获取路由失败，错误信息：{}", throwable.getMessage(), throwable);
