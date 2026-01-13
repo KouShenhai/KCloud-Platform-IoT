@@ -18,6 +18,7 @@
 package org.laokou.common.websocket.config;
 
 import io.netty.channel.Channel;
+import org.laokou.common.i18n.util.ObjectUtils;
 
 import java.util.Collections;
 import java.util.Map;
@@ -72,9 +73,9 @@ public final class WebSocketSessionManager {
 	public static void remove(Channel channel) {
 		String channelId = channel.id().asLongText();
 		Long clientId = CHANNEL_TO_CLIENT.remove(channelId);
-		if (clientId != null) {
+		if (ObjectUtils.isNotNull(clientId)) {
 			Set<Channel> channels = CLIENT_CACHE.get(clientId);
-			if (channels != null) {
+			if (ObjectUtils.isNotNull(channels)) {
 				channels.remove(channel);
 				// 如果客户端没有任何Channel了，移除整个条目
 				if (channels.isEmpty()) {
