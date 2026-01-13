@@ -59,7 +59,7 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 	 * @param msg 消息
 	 */
 	@Override
-	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+	public void channelRead(ChannelHandlerContext ctx, Object msg) {
 		boolean release = true;
 		// @formatter:off
 		try {
@@ -87,7 +87,7 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 	}
 
 	@Override
-	public void handlerRemoved(ChannelHandlerContext ctx) throws InterruptedException {
+	public void handlerRemoved(ChannelHandlerContext ctx) {
 		String channelId = ctx.channel().id().asLongText();
 		log.info("【WebSocket-Server】 => 断开连接：{}", channelId);
 		WebSocketSessionManager.remove(ctx.channel());
@@ -118,7 +118,7 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 		}
 	}
 
-	private void read(ChannelHandlerContext ctx, TextWebSocketFrame frame) throws InterruptedException {
+	private void read(ChannelHandlerContext ctx, TextWebSocketFrame frame) {
 		Channel channel = ctx.channel();
 		String str = frame.text();
 		if (StringExtUtils.isEmpty(str)) {

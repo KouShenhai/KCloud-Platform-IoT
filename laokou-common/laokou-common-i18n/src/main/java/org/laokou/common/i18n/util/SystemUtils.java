@@ -37,8 +37,12 @@ public final class SystemUtils {
 		return System.getProperty("os.name").contains("Windows");
 	}
 
+	public static boolean isLinux() {
+		return System.getProperty("os.name").contains("Linux");
+	}
+
 	public static boolean isArchLinux() {
-		if (System.getProperty("os.name").equalsIgnoreCase("linux")) {
+		if (isLinux()) {
 			return Files.exists(Path.of("/etc/arch-release"));
 		}
 		return false;

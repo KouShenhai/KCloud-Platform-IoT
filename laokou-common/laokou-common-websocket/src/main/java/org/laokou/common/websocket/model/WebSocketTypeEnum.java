@@ -42,8 +42,7 @@ public enum WebSocketTypeEnum {
 
 	CONNECT("connect", "建立连接") {
 		@Override
-		public void handle(UserExtDetails userExtDetails, WebSocketMessageCO co, Channel channel)
-				throws InterruptedException {
+		public void handle(UserExtDetails userExtDetails, WebSocketMessageCO co, Channel channel) {
 			Long clientId = userExtDetails.getId();
 			log.info("【WebSocket-Server】 => 已建立连接，通道ID：{}，用户ID：{}", channel.id().asLongText(), clientId);
 			WebSocketSessionManager.add(clientId, channel);
@@ -80,7 +79,6 @@ public enum WebSocketTypeEnum {
 		return EnumParser.parse(WebSocketTypeEnum.class, WebSocketTypeEnum::getCode, code);
 	}
 
-	public abstract void handle(UserExtDetails userExtDetails, WebSocketMessageCO co, Channel channel)
-			throws InterruptedException;
+	public abstract void handle(UserExtDetails userExtDetails, WebSocketMessageCO co, Channel channel);
 
 }
