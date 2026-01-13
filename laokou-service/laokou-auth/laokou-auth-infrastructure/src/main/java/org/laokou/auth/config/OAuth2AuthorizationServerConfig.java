@@ -29,7 +29,6 @@ import org.laokou.auth.model.function.HttpRequest;
 import org.laokou.auth.model.enums.MqEnum;
 import org.laokou.auth.model.validator.PasswordValidator;
 import org.laokou.common.fory.config.ForyFactory;
-import org.laokou.common.i18n.dto.IdGenerator;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.redis.util.RedisUtils;
 import org.laokou.common.security.config.RedisOAuth2AuthorizationConsentService;
@@ -154,15 +153,6 @@ class OAuth2AuthorizationServerConfig {
 		OAuth2AccessTokenGenerator accessTokenGenerator = new OAuth2AccessTokenGenerator();
 		OAuth2RefreshTokenGenerator refreshTokenGenerator = new OAuth2RefreshTokenGenerator();
 		return new DelegatingOAuth2TokenGenerator(jwtGenerator, accessTokenGenerator, refreshTokenGenerator);
-	}
-
-	/**
-	 * 分布式ID生成器.
-	 * @return 分布式ID生成器
-	 */
-	@Bean
-	IdGenerator distributedIdentifierGenerator() {
-		return System::currentTimeMillis;
 	}
 
 	/**

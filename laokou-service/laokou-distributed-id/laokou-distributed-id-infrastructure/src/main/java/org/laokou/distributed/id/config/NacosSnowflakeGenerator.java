@@ -247,8 +247,8 @@ public class NacosSnowflakeGenerator implements SnowflakeGenerator {
 	}
 
 	@Override
-	public Instant getInstant(long id) {
-		return InstantUtils.getInstantOfTimestamp(getTimestamp(id));
+	public Instant getInstant(long snowflakeId) {
+		return InstantUtils.getInstantOfTimestamp(getTimestamp(snowflakeId));
 	}
 
 	/**

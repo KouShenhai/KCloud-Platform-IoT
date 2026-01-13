@@ -17,13 +17,15 @@
 
 package org.laokou.common.i18n.dto;
 
-import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author laokou
  */
-public interface IdGenerator extends Serializable {
+public interface IdGenerator {
 
 	Long getId();
+
+	List<Long> getIds(int num);
 
 }

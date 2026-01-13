@@ -47,7 +47,6 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 
 <a href="https://codecov.io/gh/KouShenhai/KCloud-Platform-IoT" target="_blank"><img src="https://codecov.io/gh/KouShenhai/KCloud-Platform-IoT/branch/master/graph/badge.svg?token=49USEMX2MN" alt="Codecov"/></a>
 <a href="https://cla-assistant.io/KouShenhai/KCloud-Platform-IoT" target="_blank"><img src="https://cla-assistant.io/readme/badge/KouShenhai/KCloud-Platform-IoT" alt="CLA assistant"/></a>
-<a href="https://github.com/KouShenhai/KCloud-Platform-IoT" target="_blank"><img src="https://tokei.rs/b1/github/KouShenhai/KCloud-Platform-IoT?category=lines" alt="代码行数"/></a>
 <a href="https://wakatime.com/projects/KCloud-Platform-IoT" target="_blank"><img src="https://wakatime.com/badge/user/587a6632-ba42-422b-84b7-628dcb839b95/project/59654e89-b082-4cf3-8cf1-7542b343b448.svg" alt="Wakatime"/></a>
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/KouShenhai/KCloud-Platform-IoT)
 
@@ -145,12 +144,12 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 |     Spring Cloud     |  2025.1.0   |
 | Spring Cloud Alibaba | 2025.1.0.0  |
 |  Spring Boot Admin   |    3.5.6    |
-|     Mybatis Plus     |   3.5.15    |
+|     Mybatis Plus     |   3.5.16    |
 |        Nacos         |    3.1.0    |
 |         gRPC         |   1.77.0    |
 |        Redis         |    8.0.1    |
-|    Elasticsearch     |    9.2.3    |
-|        Netty         | 4.2.7.Final |
+|    Elasticsearch     |    9.2.4    |
+|        Netty         | 4.2.9.Final |
 |        Kafka         |    4.0.1    |
 |        Pulsar        |    4.1.2    |
 |         EMQX         |    5.4.1    |
@@ -177,7 +176,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 - 任务调度：Snail Job
 - 日志分析：EFK
 - 缓存&分布式锁：Redis & Redisson
-- 统计报表：MongoDB & StarRocks
+- 统计报表：MongoDB
 - 对象存储：Amazon S3
 - 自动化部署：Docker & Kubernetes
 - 网络通讯：Netty

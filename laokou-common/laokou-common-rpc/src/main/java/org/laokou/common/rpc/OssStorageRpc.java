@@ -1,5 +1,3 @@
-<?xml version="1.0"?>
-<!--
 /*
  * Copyright (c) 2022-2026 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
@@ -16,13 +14,14 @@
  * limitations under the License.
  *
  */
--->
-<!DOCTYPE suppressions PUBLIC
-  "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
-  "https://checkstyle.org/dtds/suppressions_1_2.dtd">
-<suppressions>
-  <!-- https://checkstyle.sourceforge.io/filters/suppressionfilter.html -->
-  <suppress files="[/\\]target[/\\]" checks=".*"/>
-  <suppress files="[\\/]org[\\/]laokou[\\/]oss[\\/]api[\\/]" checks=".*" />
-  <suppress files="[\\/]org[\\/]laokou[\\/]distributed[\\/]identifier[\\/]api[\\/]" checks=".*" />
-</suppressions>
+
+package org.laokou.common.rpc;
+
+import org.laokou.common.i18n.dto.OssStorage;
+
+/**
+ * @author laokou
+ */
+public class OssStorageRpc implements OssStorage {
+
+}

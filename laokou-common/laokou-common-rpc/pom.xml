@@ -12,4 +12,12 @@
   <artifactId>laokou-common-rpc</artifactId>
   <version>4.0.1-SNAPSHOT</version>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-distributed-id-proto</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
+
 </project>

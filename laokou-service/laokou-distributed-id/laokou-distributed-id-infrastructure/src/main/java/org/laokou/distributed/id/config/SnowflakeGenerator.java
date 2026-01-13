@@ -46,9 +46,9 @@ public interface SnowflakeGenerator {
 
 	/**
 	 * 根据雪花ID获取生成时间.
-	 * @param id 雪花ID
+	 * @param snowflakeId 雪花ID
 	 * @return 生成时间
 	 */
-	Instant getInstant(long id);
+	Instant getInstant(long snowflakeId);
 
 }

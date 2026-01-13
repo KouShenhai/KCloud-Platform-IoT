@@ -22,7 +22,6 @@ import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.dto.IdGenerator;
-import org.laokou.common.i18n.dto.IdGeneratorBatch;
 import org.laokou.common.i18n.util.StringExtUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -136,9 +135,7 @@ public class UserE {
 
 	private final PasswordEncoder passwordEncoder;
 
-	private final IdGeneratorBatch idGeneratorBatch;
-
-	public UserE(IdGenerator idGenerator, IdGeneratorBatch idGeneratorBatch,
+	public UserE(IdGenerator idGenerator,
 			@Qualifier("saveUserParamValidator") UserParamValidator saveUserParamValidator,
 			@Qualifier("modifyUserParamValidator") UserParamValidator modifyUserParamValidator,
 			@Qualifier("resetUserPwdParamValidator") UserParamValidator resetUserPwdParamValidator,
@@ -151,7 +148,6 @@ public class UserE {
 		this.resetUserPwdParamValidator = resetUserPwdParamValidator;
 		this.modifyUserAuthorityParamValidator = modifyUserAuthorityParamValidator;
 		this.passwordEncoder = passwordEncoder;
-		this.idGeneratorBatch = idGeneratorBatch;
 	}
 
 	public Long getPrimaryKey() {
@@ -159,7 +155,8 @@ public class UserE {
 	}
 
 	public List<Long> getPrimaryKeys(int num) {
-		return idGeneratorBatch.getIds(num);
+		return null;
+		// return idGeneratorBatch.getIds(num);
 	}
 
 	public String getDefaultEncodedPassword() {

@@ -15,22 +15,11 @@
  *
  */
 
-package org.laokou.common.security.annotation;
+package org.laokou.common.i18n.dto;
 
-import org.laokou.common.security.config.OAuth2OpaqueTokenIntrospector;
-import org.laokou.common.security.config.OAuth2ResourceServerConfig;
-import org.springframework.context.annotation.Import;
-
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
-@Documented
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Import({ OAuth2OpaqueTokenIntrospector.class, OAuth2ResourceServerConfig.class })
-public @interface EnableSecurity {
+/**
+ * @author laokou
+ */
+public interface OssStorage {
 
 }

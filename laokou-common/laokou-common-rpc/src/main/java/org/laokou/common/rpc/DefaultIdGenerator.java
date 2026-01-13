@@ -15,16 +15,30 @@
  *
  */
 
-package org.laokou.common.i18n.dto;
+package org.laokou.common.rpc;
 
-import java.io.Serializable;
+import org.laokou.common.i18n.dto.IdGenerator;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author laokou
  */
-public interface IdGeneratorBatch extends Serializable {
+public class DefaultIdGenerator implements IdGenerator {
 
-	List<Long> getIds(int num);
+	@Override
+	public Long getId() {
+		return System.currentTimeMillis();
+	}
+
+	@Override
+	public List<Long> getIds(int num) {
+		List<Long> ids = new ArrayList<>(num);
+		for (int i = 0; i < num; i++) {
+			ids.add(System.currentTimeMillis());
+		}
+		return ids;
+	}
 
 }

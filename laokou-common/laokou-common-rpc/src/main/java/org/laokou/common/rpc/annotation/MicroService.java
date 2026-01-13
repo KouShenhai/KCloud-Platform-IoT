@@ -15,18 +15,25 @@
  *
  */
 
-package org.laokou.oss.gatewayimpl.rpc;
+package org.laokou.common.rpc.annotation;
 
-import org.springframework.stereotype.Component;
+import org.laokou.common.rpc.IdGeneratorRpc;
+import org.laokou.common.rpc.OssStorageRpc;
+import org.springframework.context.annotation.Import;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * @author laokou
  */
-@Component
-public class DistributedIdentifierRpc {
-
-	public Long getId() {
-		return null;
-	}
+@Documented
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Import({ IdGeneratorRpc.class, OssStorageRpc.class })
+public @interface MicroService {
 
 }
