@@ -19,8 +19,6 @@ package org.laokou.oss.config;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.laokou.common.fory.config.ForyFactory;
-import org.laokou.common.i18n.dto.IdGenerator;
-import org.laokou.oss.gatewayimpl.rpc.DistributedIdentifierRpc;
 import org.laokou.oss.model.MqEnum;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,11 +32,6 @@ public class OssConfig {
 
 	static {
 		ForyFactory.INSTANCE.register(org.laokou.oss.dto.domainevent.OssUploadEvent.class);
-	}
-
-	@Bean
-	IdGenerator idGenerator(DistributedIdentifierRpc distributedIdentifierRpc) {
-		return distributedIdentifierRpc::getId;
 	}
 
 	@Bean("authNewTopics")

@@ -15,18 +15,13 @@
  *
  */
 
-package org.laokou.oss.gatewayimpl.rpc;
+package org.laokou.common.rpc;
 
-import org.springframework.stereotype.Component;
+import org.laokou.common.i18n.dto.OssStorage;
 
 /**
  * @author laokou
  */
-@Component
-public class DistributedIdentifierRpc {
-
-	public Long getId() {
-		return null;
-	}
+public class OssStorageRpc implements OssStorage {
 
 }

@@ -15,10 +15,10 @@
  *
  */
 
-package org.laokou.common.security.annotation;
+package org.laokou.common.rpc.annotation;
 
-import org.laokou.common.security.config.OAuth2OpaqueTokenIntrospector;
-import org.laokou.common.security.config.OAuth2ResourceServerConfig;
+import org.laokou.common.rpc.IdGeneratorRpc;
+import org.laokou.common.rpc.OssStorageRpc;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.Documented;
@@ -27,10 +27,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * @author laokou
+ */
 @Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Import({ OAuth2OpaqueTokenIntrospector.class, OAuth2ResourceServerConfig.class })
-public @interface EnableSecurity {
+@Import({ IdGeneratorRpc.class, OssStorageRpc.class })
+public @interface MicroService {
 
 }

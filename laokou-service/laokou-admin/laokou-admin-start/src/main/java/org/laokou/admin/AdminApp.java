@@ -22,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.annotation.EnableWarmUp;
 import org.laokou.common.i18n.util.SslUtils;
 import org.laokou.common.nacos.annotation.EnableRouter;
+import org.laokou.common.rpc.annotation.MicroService;
 import org.laokou.common.security.annotation.EnableSecurity;
 import org.laokou.common.security.config.TransmittableThreadLocalSecurityContextHolderStrategy;
 import org.mybatis.spring.annotation.MapperScan;
@@ -46,6 +47,7 @@ import java.security.NoSuchAlgorithmException;
  * @author laokou
  */
 @Slf4j
+@MicroService
 @EnableWarmUp
 @EnableRouter
 @EnableSecurity

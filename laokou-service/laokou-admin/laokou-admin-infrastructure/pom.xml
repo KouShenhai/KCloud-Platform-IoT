@@ -175,6 +175,11 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-liquibase</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-rpc</artifactId>
+      <version>${project.version}</version>
+    </dependency>
   </dependencies>
 
 </project>
