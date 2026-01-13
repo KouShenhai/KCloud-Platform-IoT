@@ -79,6 +79,13 @@ spring:
               - /actuator/**=laokou-admin
               - /doc.html=laokou-admin
               - /webjars/**=laokou-admin
+  grpc:
+    client:
+      channels:
+        laokou-distributed-id:
+          address: discovery://laokou-distributed-id
+          enable-keep-alive: true
+          idle-timeout: 60s
   cloud:
     loadbalancer:
       nacos:

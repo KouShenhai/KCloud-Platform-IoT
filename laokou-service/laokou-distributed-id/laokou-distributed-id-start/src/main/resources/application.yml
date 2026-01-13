@@ -47,6 +47,13 @@ spring:
       ignored-interfaces:
         - docker0
         - veth.*
+  snowflake:
+    enabled: true
+  grpc:
+    server:
+      servlet:
+        enabled: false
+      port: 10111
 
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml
@@ -61,21 +68,24 @@ management:
     health:
       show-details: always
   tracing:
-    enabled: true
+    export:
+      enabled: true
     propagation:
       type: w3c
     # 采样率 => 100%
     sampling:
       probability: 1
-  otlp:
+  logging:
+    export:
+      enabled: true
+  opentelemetry:
     tracing:
-      endpoint: http://otel-collector:4317/v1/traces
-      compression: gzip
-      timeout: 10s
-      transport: grpc
-    metrics:
       export:
-        enabled: false
+        otlp:
+          endpoint: http://otel-collector:4317/v1/traces
+          compression: gzip
+          timeout: 10s
+          transport: grpc
   metrics:
     tags:
       application: ${spring.application.name}

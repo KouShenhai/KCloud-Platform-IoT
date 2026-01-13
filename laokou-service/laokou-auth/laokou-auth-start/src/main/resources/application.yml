@@ -151,6 +151,13 @@ spring:
               - /v1/captchas/send/mobile=laokou-auth
             DELETE:
               - /v1/tokens=laokou-auth
+  grpc:
+    client:
+      channels:
+        laokou-distributed-id:
+          address: discovery://laokou-distributed-id
+          enable-keep-alive: true
+          idle-timeout: 60s
   cloud:
     # Loadbalancer配置
     loadbalancer:
