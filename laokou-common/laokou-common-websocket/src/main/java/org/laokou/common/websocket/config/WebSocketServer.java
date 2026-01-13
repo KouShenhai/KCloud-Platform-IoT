@@ -96,15 +96,19 @@ public final class WebSocketServer extends AbstractServer {
 
 	private IoHandlerFactory getIoHandlerFactory() {
 		if (properties.isUseIoUring() && isIoUringAvailable()) {
+			log.info("Use IoUringIoHandler factory");
 			return IoUringIoHandler.newFactory();
 		}
+		log.info("Use NioIoHandler factory");
 		return NioIoHandler.newFactory();
 	}
 
 	public Class<? extends ServerChannel> getServerChannel() {
 		if (properties.isUseIoUring() && isIoUringAvailable()) {
+			log.info("Use IoUringServerSocketChannel");
 			return IoUringServerSocketChannel.class;
 		}
+		log.info("Use NioServerSocketChannel");
 		return NioServerSocketChannel.class;
 	}
 
