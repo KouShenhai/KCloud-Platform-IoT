@@ -131,4 +131,9 @@ public class SpringWebSocketServerProperties {
 	 */
 	private String keyCertPrivateKeyPath = "classpath:private.key";
 
+	/**
+	 * 是否启用io_uring(仅Linux生效).
+	 */
+	private boolean useIoUring = true;
+
 }

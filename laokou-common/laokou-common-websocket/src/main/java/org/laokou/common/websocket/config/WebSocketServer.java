@@ -22,12 +22,17 @@ import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelOption;
+import io.netty.channel.IoHandlerFactory;
 import io.netty.channel.MultiThreadIoEventLoopGroup;
 import io.netty.channel.ServerChannel;
 import io.netty.channel.nio.NioIoHandler;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.channel.uring.IoUring;
+import io.netty.channel.uring.IoUringIoHandler;
+import io.netty.channel.uring.IoUringServerSocketChannel;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.i18n.util.SystemUtils;
 
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
@@ -58,16 +63,17 @@ public final class WebSocketServer extends AbstractServer {
 	 */
 	@Override
 	protected AbstractBootstrap<ServerBootstrap, ServerChannel> init() {
+		IoHandlerFactory ioHandlerFactory = getIoHandlerFactory();
 		// boss负责监听端口
-		boss = new MultiThreadIoEventLoopGroup(bossCorePoolSize, virtualThreadExecutor, NioIoHandler.newFactory());
+		boss = new MultiThreadIoEventLoopGroup(bossCorePoolSize, virtualThreadExecutor, ioHandlerFactory);
 		// work负责线程读写
-		worker = new MultiThreadIoEventLoopGroup(workerCorePoolSize, virtualThreadExecutor, NioIoHandler.newFactory());
+		worker = new MultiThreadIoEventLoopGroup(workerCorePoolSize, virtualThreadExecutor, ioHandlerFactory);
 		// 配置引导
 		ServerBootstrap serverBootstrap = new ServerBootstrap();
 		// 绑定线程组
 		return serverBootstrap.group(boss, worker)
 			// 指定通道
-			.channel(NioServerSocketChannel.class)
+			.channel(getServerChannel())
 			// 请求队列最大长度（如果连接建立频繁，服务器处理创建新连接较慢，可以适当调整参数）
 			.option(ChannelOption.SO_BACKLOG, properties.getBacklogLength())
 			// 延迟发送
@@ -79,13 +85,34 @@ public final class WebSocketServer extends AbstractServer {
 	}
 
 	@Override
-	public void send(Long clientId, Object payload) throws InterruptedException {
+	public void send(Long clientId, Object payload) {
 		Set<Channel> channels = WebSocketSessionManager.get(clientId);
 		for (Channel channel : channels) {
 			if (ObjectUtils.isNotNull(channel) && channel.isActive() && channel.isWritable()) {
 				virtualThreadExecutor.execute(() -> channel.writeAndFlush(payload));
 			}
 		}
+	}
+
+	private IoHandlerFactory getIoHandlerFactory() {
+		if (properties.isUseIoUring() && isIoUringAvailable()) {
+			return IoUringIoHandler.newFactory();
+		}
+		return NioIoHandler.newFactory();
+	}
+
+	public Class<? extends ServerChannel> getServerChannel() {
+		if (properties.isUseIoUring() && isIoUringAvailable()) {
+			return IoUringServerSocketChannel.class;
+		}
+		return NioServerSocketChannel.class;
+	}
+
+	private boolean isIoUringAvailable() {
+		if (SystemUtils.isLinux()) {
+			return IoUring.isAvailable();
+		}
+		return false;
 	}
 
 }

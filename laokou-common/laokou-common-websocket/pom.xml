@@ -28,6 +28,17 @@
         </exclusion>
       </exclusions>
     </dependency>
+    <!--io_uring传输(Linux)-->
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-transport-native-io_uring</artifactId>
+      <classifier>linux-x86_64</classifier>
+    </dependency>
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-transport-native-io_uring</artifactId>
+      <classifier>linux-aarch_64</classifier>
+    </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-domain</artifactId>

@@ -27,7 +27,7 @@ public interface Server {
 	 * @param clientId 客户端ID
 	 * @param payload 消息内容
 	 */
-	void send(Long clientId, Object payload) throws InterruptedException;
+	void send(Long clientId, Object payload);
 
 	/**
 	 * 启动.

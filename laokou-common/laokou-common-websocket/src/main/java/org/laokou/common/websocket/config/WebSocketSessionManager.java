@@ -18,18 +18,17 @@
 package org.laokou.common.websocket.config;
 
 import io.netty.channel.Channel;
-import org.laokou.common.i18n.util.ObjectUtils;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
+ * WebSocket会话管理器.
+ * <p>
+ * 使用ConcurrentHashMap保证线程安全，添加反向索引实现O(1)时间复杂度的Channel删除.
+ *
  * @author laokou
  */
 public final class WebSocketSessionManager {
@@ -37,74 +36,68 @@ public final class WebSocketSessionManager {
 	private WebSocketSessionManager() {
 	}
 
+	/**
+	 * 客户端ID -> Channel集合映射.
+	 */
 	private static final Map<Long, Set<Channel>> CLIENT_CACHE = new ConcurrentHashMap<>(8192);
 
-	private static final ReentrantReadWriteLock READ_WRITE_LOCK = new ReentrantReadWriteLock();
+	/**
+	 * Channel ID -> 客户端ID 反向索引，用于快速删除.
+	 */
+	private static final Map<String, Long> CHANNEL_TO_CLIENT = new ConcurrentHashMap<>(8192);
 
-	private static final Lock WRITE_LOCK = READ_WRITE_LOCK.writeLock();
+	/**
+	 * 添加Channel到指定客户端.
+	 * @param clientId 客户端ID
+	 * @param channel Channel
+	 */
+	public static void add(Long clientId, Channel channel) {
+		CLIENT_CACHE.computeIfAbsent(clientId, _ -> ConcurrentHashMap.newKeySet(256)).add(channel);
+		CHANNEL_TO_CLIENT.put(channel.id().asLongText(), clientId);
+	}
 
-	private static final Lock READ_LOCK = READ_WRITE_LOCK.readLock();
+	/**
+	 * 获取指定客户端的所有Channel.
+	 * @param clientId 客户端ID
+	 * @return Channel集合（不可变）
+	 */
+	public static Set<Channel> get(Long clientId) {
+		return CLIENT_CACHE.getOrDefault(clientId, Collections.emptySet());
+	}
 
-	public static void add(Long clientId, Channel channel) throws InterruptedException {
-		boolean isLocked = false;
-		int retry = 10;
-		try {
-			do {
-				isLocked = WRITE_LOCK.tryLock(50, TimeUnit.MILLISECONDS);
-			}
-			while (!isLocked && --retry > 0);
-			if (isLocked) {
-				CLIENT_CACHE.computeIfAbsent(clientId, k -> new HashSet<>(256)).add(channel);
-			}
-		}
-		finally {
-			if (isLocked) {
-				WRITE_LOCK.unlock();
+	/**
+	 * 移除指定Channel.
+	 * @param channel Channel
+	 */
+	public static void remove(Channel channel) {
+		String channelId = channel.id().asLongText();
+		Long clientId = CHANNEL_TO_CLIENT.remove(channelId);
+		if (clientId != null) {
+			Set<Channel> channels = CLIENT_CACHE.get(clientId);
+			if (channels != null) {
+				channels.remove(channel);
+				// 如果客户端没有任何Channel了，移除整个条目
+				if (channels.isEmpty()) {
+					CLIENT_CACHE.remove(clientId);
+				}
 			}
 		}
 	}
 
-	public static Set<Channel> get(Long clientId) throws InterruptedException {
-		boolean isLocked = false;
-		int retry = 10;
-		try {
-			do {
-				// 防止读到中间状态数据，保证读取的完整性【数据强一致性】
-				// 在数据读取频繁的场景（如缓存、数据库查询），读锁允许大量读操作并行执行，避免线程因等待锁而阻塞
-				isLocked = READ_LOCK.tryLock(50, TimeUnit.MILLISECONDS);
-			}
-			while (!isLocked && --retry > 0);
-			if (isLocked) {
-				return CLIENT_CACHE.getOrDefault(clientId, Collections.emptySet());
-			}
-			return Collections.emptySet();
-		}
-		finally {
-			if (isLocked) {
-				READ_LOCK.unlock();
-			}
-		}
+	/**
+	 * 获取当前在线客户端数量.
+	 * @return 客户端数量
+	 */
+	public static int getClientCount() {
+		return CLIENT_CACHE.size();
 	}
 
-	public static void remove(Channel channel) throws InterruptedException {
-		boolean isLocked = false;
-		int retry = 10;
-		try {
-			do {
-				isLocked = WRITE_LOCK.tryLock(50, TimeUnit.MILLISECONDS);
-			}
-			while (!isLocked && --retry > 0);
-			if (isLocked) {
-				String channelId = channel.id().asLongText();
-				CLIENT_CACHE.values()
-					.forEach(set -> set.removeIf(c -> ObjectUtils.equals(c.id().asLongText(), channelId)));
-			}
-		}
-		finally {
-			if (isLocked) {
-				WRITE_LOCK.unlock();
-			}
-		}
+	/**
+	 * 获取当前在线Channel总数.
+	 * @return Channel总数
+	 */
+	public static int getChannelCount() {
+		return CHANNEL_TO_CLIENT.size();
 	}
 
 }
