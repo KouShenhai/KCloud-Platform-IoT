@@ -2,7 +2,7 @@
 # Based on pymodbus library
 # Supports both TCP and UDP protocols
 
-FROM python:3.11-slim
+FROM python:3.14-slim
 
 LABEL maintainer="laokou"
 LABEL description="Modbus TCP/UDP Server Simulator using pymodbus"
