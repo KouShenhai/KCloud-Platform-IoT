@@ -81,8 +81,8 @@ public class ModbusContainer extends GenericContainer<ModbusContainer> {
 	public static ModbusContainer udp(DockerImageName dockerImageName, int port) {
 		ModbusContainer container = new ModbusContainer(dockerImageName, port);
 		// UDP 不能使用 forListeningPort，使用日志输出等待策略
-		container
-			.setWaitStrategy(Wait.forLogMessage(".*Starting Modbus UDP server.*", 1).withStartupTimeout(Duration.ofSeconds(60)));
+		container.setWaitStrategy(
+				Wait.forLogMessage(".*Starting Modbus UDP server.*", 1).withStartupTimeout(Duration.ofSeconds(60)));
 		// UDP 使用固定端口
 		container.addFixedExposedPort(port, port, InternetProtocol.UDP);
 		container.fixedUdpPort = port;

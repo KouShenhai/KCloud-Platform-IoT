@@ -52,6 +52,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
  * <li>ASCII - 需要物理串口或虚拟串口软件</li>
  * </ul>
  * </p>
+ *
  * @author laokou
  */
 @Testcontainers
@@ -62,7 +63,8 @@ class ModbusTest {
 	 * Modbus TCP 服务器容器 (iotechsys/pymodbus-sim)。 支持 Modbus TCP 协议，默认端口 5020。
 	 */
 	@Container
-	static ModbusContainer tcpContainer = ModbusContainer.tcp(DockerImageNames.pymodbus(), ModbusContainer.PYMODBUS_PORT);
+	static ModbusContainer tcpContainer = ModbusContainer.tcp(DockerImageNames.pymodbus(),
+			ModbusContainer.PYMODBUS_PORT);
 
 	/**
 	 * Modbus UDP 服务器容器 (koushenhai/modbus-sim)。 支持 Modbus UDP 协议，端口 502。 需要先构建镜像。
