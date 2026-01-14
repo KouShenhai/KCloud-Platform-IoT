@@ -83,12 +83,25 @@ public final class DockerImageNames {
 		return postgresql(LATEST);
 	}
 
-	public static DockerImageName starrocks(String tag) {
-		return DockerImageName.parse("starrocks/allin1-ubuntu").withTag(tag);
+	public static DockerImageName pymodbus(String tag) {
+		return DockerImageName.parse("iotechsys/pymodbus-sim").withTag(tag);
 	}
 
-	public static DockerImageName starrocks() {
-		return starrocks(LATEST);
+	public static DockerImageName pymodbus() {
+		return pymodbus("1.0");
+	}
+
+	/**
+	 * 自定义 Modbus TCP/UDP 服务器镜像.
+	 * @param tag 镜像标签
+	 * @return DockerImageName
+	 */
+	public static DockerImageName modbusSim(String tag) {
+		return DockerImageName.parse("koushenhai/modbus-sim").withTag(tag);
+	}
+
+	public static DockerImageName modbusSim() {
+		return modbusSim(LATEST);
 	}
 
 }
