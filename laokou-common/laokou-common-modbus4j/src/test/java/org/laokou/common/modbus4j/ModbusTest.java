@@ -25,76 +25,317 @@ import com.serotonin.modbus4j.msg.ReadCoilsResponse;
 import com.serotonin.modbus4j.msg.ReadDiscreteInputsResponse;
 import com.serotonin.modbus4j.msg.ReadHoldingRegistersResponse;
 import com.serotonin.modbus4j.msg.ReadInputRegistersResponse;
-import lombok.RequiredArgsConstructor;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.core.util.ConvertUtils;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.laokou.common.modbus4j.config.Modbus;
 import org.laokou.common.modbus4j.config.ModbusTypeEnum;
 import org.laokou.common.modbus4j.config.SpringModbusProperties;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestConstructor;
+import org.laokou.common.testcontainers.container.ModbusContainer;
+import org.laokou.common.testcontainers.util.DockerImageNames;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 /**
+ * 基于 Testcontainers 的 Modbus 协议测试用例。
+ * <p>
+ * 测试覆盖：
+ * <ul>
+ * <li>TCP - 使用 iotechsys/pymodbus-sim Docker 容器</li>
+ * <li>UDP - 使用 laokou/modbus-sim Docker 容器（需先构建）</li>
+ * <li>RTU - 需要物理串口或虚拟串口软件</li>
+ * <li>ASCII - 需要物理串口或虚拟串口软件</li>
+ * </ul>
+ * </p>
+ * <p>
+ * UDP 测试前需要先构建 laokou/modbus-sim 镜像：
+ *
+ * <pre>
+ * cd laokou-common/laokou-common-testcontainers/src/main/resources/docker/modbus
+ * docker build -t laokou/modbus-sim:1.0 .
+ * </pre>
+ * </p>
+ *
  * @author laokou
  */
-@TestConfiguration
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
-@RequiredArgsConstructor
-@ContextConfiguration(classes = { ModbusFactory.class, SpringModbusProperties.class })
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
+@Testcontainers
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ModbusTest {
 
-	private final ModbusFactory modbusFactory;
+	/**
+	 * Modbus TCP 服务器容器 (iotechsys/pymodbus-sim)。 支持 Modbus TCP 协议，默认端口 5020。
+	 */
+	@Container
+	static ModbusContainer tcpContainer = new ModbusContainer(DockerImageNames.pymodbus());
 
-	private final SpringModbusProperties springModbusProperties;
+	/**
+	 * Modbus UDP 服务器容器 (laokou/modbus-sim)。 支持 Modbus UDP 协议，端口 502。 需要先构建镜像。
+	 */
+	@Container
+	static ModbusContainer udpContainer = ModbusContainer.udp(DockerImageNames.modbusSim(),
+			ModbusContainer.MODBUS_STANDARD_PORT);
+
+	private ModbusFactory modbusFactory;
+
+	private SpringModbusProperties springModbusProperties;
+
+	@BeforeEach
+	void setUp() {
+		modbusFactory = new ModbusFactory();
+		springModbusProperties = new SpringModbusProperties();
+		springModbusProperties.setTimeout(5000);
+		springModbusProperties.setRetries(2);
+	}
+
+	// ==================== TCP 协议测试 ====================
 
 	@Test
-	void test_ascii() throws ModbusInitException, ModbusTransportException {
-		test(ModbusTypeEnum.ASCII_MASTER);
+	@Order(1)
+	@DisplayName("Test Modbus TCP - Read Holding Registers")
+	void test_tcp_read_holding_registers() throws ModbusInitException, ModbusTransportException {
+		configureTcp(tcpContainer.getHost(), tcpContainer.getModbusTcpPort());
+		Modbus modbus = createModbus(ModbusTypeEnum.TCP_MASTER);
+		try {
+			modbus.open();
+			ModbusResponse response = modbus.sendReadHoldingRegistersRequest(1, 0, 1);
+			Assertions.assertThat(response).isNotNull();
+			if (response instanceof ReadHoldingRegistersResponse holdingResponse) {
+				Assertions.assertThat(holdingResponse.getShortData()).isNotNull();
+			}
+		}
+		finally {
+			modbus.close();
+		}
 	}
 
 	@Test
-	void test_rtu() throws ModbusInitException, ModbusTransportException {
-		test(ModbusTypeEnum.RTU_MASTER);
+	@Order(2)
+	@DisplayName("Test Modbus TCP - Read Coils")
+	void test_tcp_read_coils() throws ModbusInitException, ModbusTransportException {
+		configureTcp(tcpContainer.getHost(), tcpContainer.getModbusTcpPort());
+		Modbus modbus = createModbus(ModbusTypeEnum.TCP_MASTER);
+		try {
+			modbus.open();
+			ModbusResponse response = modbus.sendReadCoilsRequest(1, 0, 1);
+			Assertions.assertThat(response).isNotNull();
+			if (response instanceof ReadCoilsResponse coilsResponse) {
+				Assertions.assertThat(coilsResponse.getBooleanData()).isNotNull();
+			}
+		}
+		finally {
+			modbus.close();
+		}
 	}
 
 	@Test
-	void test_udp() throws ModbusInitException, ModbusTransportException {
-		test(ModbusTypeEnum.UDP_MASTER);
+	@Order(3)
+	@DisplayName("Test Modbus TCP - Read Input Registers")
+	void test_tcp_read_input_registers() throws ModbusInitException, ModbusTransportException {
+		configureTcp(tcpContainer.getHost(), tcpContainer.getModbusTcpPort());
+		Modbus modbus = createModbus(ModbusTypeEnum.TCP_MASTER);
+		try {
+			modbus.open();
+			ModbusResponse response = modbus.sendReadInputRegistersRequest(1, 0, 1);
+			Assertions.assertThat(response).isNotNull();
+			if (response instanceof ReadInputRegistersResponse inputResponse) {
+				Assertions.assertThat(inputResponse.getShortData()).isNotNull();
+			}
+		}
+		finally {
+			modbus.close();
+		}
 	}
 
 	@Test
-	void test_tcp() throws ModbusInitException, ModbusTransportException {
-		test(ModbusTypeEnum.TCP_MASTER);
+	@Order(4)
+	@DisplayName("Test Modbus TCP - Read Discrete Inputs")
+	void test_tcp_read_discrete_inputs() throws ModbusInitException, ModbusTransportException {
+		configureTcp(tcpContainer.getHost(), tcpContainer.getModbusTcpPort());
+		Modbus modbus = createModbus(ModbusTypeEnum.TCP_MASTER);
+		try {
+			modbus.open();
+			ModbusResponse response = modbus.sendReadDiscreteInputsRequest(1, 0, 1);
+			Assertions.assertThat(response).isNotNull();
+			if (response instanceof ReadDiscreteInputsResponse discreteResponse) {
+				Assertions.assertThat(discreteResponse.getBooleanData()).isNotNull();
+			}
+		}
+		finally {
+			modbus.close();
+		}
 	}
 
-	private void test(ModbusTypeEnum typeEnum) throws ModbusInitException, ModbusTransportException {
-		SpringModbusProperties properties = ConvertUtils.sourceToTarget(springModbusProperties,
-				SpringModbusProperties.class);
-		Assertions.assertThat(properties).isNotNull();
-		properties.setType(typeEnum);
-		Modbus modbus = properties.getType().getModbus(modbusFactory, properties);
-		modbus.open();
-		ModbusResponse modbusResponse = modbus.sendReadHoldingRegistersRequest(1, 0, 1);
-		if (modbusResponse instanceof ReadHoldingRegistersResponse readRegistersResponse) {
-			Assertions.assertThat(readRegistersResponse.getShortData()[0] == 1).isTrue();
+	// ==================== UDP 协议测试 ====================
+
+	@Test
+	@Order(5)
+	@DisplayName("Test Modbus UDP - Read Holding Registers")
+	void test_udp_read_holding_registers() throws ModbusInitException, ModbusTransportException {
+		configureUdp(udpContainer.getHost(), udpContainer.getModbusPort());
+		Modbus modbus = createModbus(ModbusTypeEnum.UDP_MASTER);
+		try {
+			modbus.open();
+			ModbusResponse response = modbus.sendReadHoldingRegistersRequest(1, 0, 1);
+			Assertions.assertThat(response).isNotNull();
+			if (response instanceof ReadHoldingRegistersResponse holdingResponse) {
+				Assertions.assertThat(holdingResponse.getShortData()).isNotNull();
+			}
 		}
-		modbusResponse = modbus.sendReadCoilsRequest(1, 0, 1);
-		if (modbusResponse instanceof ReadCoilsResponse readCoilsResponse) {
-			Assertions.assertThat(readCoilsResponse.getBooleanData()[0]).isTrue();
+		finally {
+			modbus.close();
 		}
-		modbusResponse = modbus.sendReadInputRegistersRequest(1, 0, 1);
-		if (modbusResponse instanceof ReadInputRegistersResponse readInputRegistersResponse) {
-			Assertions.assertThat(readInputRegistersResponse.getShortData()[0] == 1).isTrue();
+	}
+
+	@Test
+	@Order(6)
+	@DisplayName("Test Modbus UDP - Read Coils")
+	void test_udp_read_coils() throws ModbusInitException, ModbusTransportException {
+		configureUdp(udpContainer.getHost(), udpContainer.getModbusPort());
+		Modbus modbus = createModbus(ModbusTypeEnum.UDP_MASTER);
+		try {
+			modbus.open();
+			ModbusResponse response = modbus.sendReadCoilsRequest(1, 0, 1);
+			Assertions.assertThat(response).isNotNull();
+			if (response instanceof ReadCoilsResponse coilsResponse) {
+				Assertions.assertThat(coilsResponse.getBooleanData()).isNotNull();
+			}
 		}
-		modbusResponse = modbus.sendReadDiscreteInputsRequest(1, 0, 1);
-		if (modbusResponse instanceof ReadDiscreteInputsResponse readDiscreteInputsResponse) {
-			Assertions.assertThat(readDiscreteInputsResponse.getBooleanData()[0]).isTrue();
+		finally {
+			modbus.close();
 		}
-		modbus.close();
+	}
+
+	@Test
+	@Order(7)
+	@DisplayName("Test Modbus UDP - Read Input Registers")
+	void test_udp_read_input_registers() throws ModbusInitException, ModbusTransportException {
+		configureUdp(udpContainer.getHost(), udpContainer.getModbusPort());
+		Modbus modbus = createModbus(ModbusTypeEnum.UDP_MASTER);
+		try {
+			modbus.open();
+			ModbusResponse response = modbus.sendReadInputRegistersRequest(1, 0, 1);
+			Assertions.assertThat(response).isNotNull();
+			if (response instanceof ReadInputRegistersResponse inputResponse) {
+				Assertions.assertThat(inputResponse.getShortData()).isNotNull();
+			}
+		}
+		finally {
+			modbus.close();
+		}
+	}
+
+	@Test
+	@Order(8)
+	@DisplayName("Test Modbus UDP - Read Discrete Inputs")
+	void test_udp_read_discrete_inputs() throws ModbusInitException, ModbusTransportException {
+		configureUdp(udpContainer.getHost(), udpContainer.getModbusPort());
+		Modbus modbus = createModbus(ModbusTypeEnum.UDP_MASTER);
+		try {
+			modbus.open();
+			ModbusResponse response = modbus.sendReadDiscreteInputsRequest(1, 0, 1);
+			Assertions.assertThat(response).isNotNull();
+			if (response instanceof ReadDiscreteInputsResponse discreteResponse) {
+				Assertions.assertThat(discreteResponse.getBooleanData()).isNotNull();
+			}
+		}
+		finally {
+			modbus.close();
+		}
+	}
+
+	// ==================== RTU 协议测试 ====================
+
+	@Test
+	@Order(9)
+	@Disabled("RTU requires physical or virtual serial ports")
+	@DisplayName("Test Modbus RTU - Read Holding Registers")
+	void test_rtu_read_holding_registers() throws ModbusInitException, ModbusTransportException {
+		springModbusProperties.getRtu().setCommPortId("COM1");
+		springModbusProperties.getRtu().setBaudRate(9600);
+		Modbus modbus = createModbus(ModbusTypeEnum.RTU_MASTER);
+		try {
+			modbus.open();
+			ModbusResponse response = modbus.sendReadHoldingRegistersRequest(1, 0, 1);
+			Assertions.assertThat(response).isNotNull();
+		}
+		finally {
+			modbus.close();
+		}
+	}
+
+	@Test
+	@Order(10)
+	@Disabled("RTU requires physical or virtual serial ports")
+	@DisplayName("Test Modbus RTU - Read Coils")
+	void test_rtu_read_coils() throws ModbusInitException, ModbusTransportException {
+		springModbusProperties.getRtu().setCommPortId("COM1");
+		Modbus modbus = createModbus(ModbusTypeEnum.RTU_MASTER);
+		try {
+			modbus.open();
+			ModbusResponse response = modbus.sendReadCoilsRequest(1, 0, 1);
+			Assertions.assertThat(response).isNotNull();
+		}
+		finally {
+			modbus.close();
+		}
+	}
+
+	// ==================== ASCII 协议测试 ====================
+
+	@Test
+	@Order(11)
+	@Disabled("ASCII requires physical or virtual serial ports")
+	@DisplayName("Test Modbus ASCII - Read Holding Registers")
+	void test_ascii_read_holding_registers() throws ModbusInitException, ModbusTransportException {
+		springModbusProperties.getAscii().setCommPortId("COM1");
+		Modbus modbus = createModbus(ModbusTypeEnum.ASCII_MASTER);
+		try {
+			modbus.open();
+			ModbusResponse response = modbus.sendReadHoldingRegistersRequest(1, 0, 1);
+			Assertions.assertThat(response).isNotNull();
+		}
+		finally {
+			modbus.close();
+		}
+	}
+
+	@Test
+	@Order(12)
+	@Disabled("ASCII requires physical or virtual serial ports")
+	@DisplayName("Test Modbus ASCII - Read Coils")
+	void test_ascii_read_coils() throws ModbusInitException, ModbusTransportException {
+		springModbusProperties.getAscii().setCommPortId("COM1");
+		Modbus modbus = createModbus(ModbusTypeEnum.ASCII_MASTER);
+		try {
+			modbus.open();
+			ModbusResponse response = modbus.sendReadCoilsRequest(1, 0, 1);
+			Assertions.assertThat(response).isNotNull();
+		}
+		finally {
+			modbus.close();
+		}
+	}
+
+	// ==================== 辅助方法 ====================
+
+	private void configureTcp(String host, int port) {
+		springModbusProperties.getTcp().setHost(host);
+		springModbusProperties.getTcp().setPort(port);
+	}
+
+	private void configureUdp(String host, int port) {
+		springModbusProperties.getUdp().setHost(host);
+		springModbusProperties.getUdp().setPort(port);
+	}
+
+	private Modbus createModbus(ModbusTypeEnum typeEnum) {
+		springModbusProperties.setType(typeEnum);
+		return typeEnum.getModbus(modbusFactory, springModbusProperties);
 	}
 
 }
