@@ -47,20 +47,11 @@ import org.testcontainers.junit.jupiter.Testcontainers;
  * 测试覆盖：
  * <ul>
  * <li>TCP - 使用 iotechsys/pymodbus-sim Docker 容器</li>
- * <li>UDP - 使用 laokou/modbus-sim Docker 容器（需先构建）</li>
+ * <li>UDP - 使用 koushenhai/modbus-sim Docker 容器（需先构建）</li>
  * <li>RTU - 需要物理串口或虚拟串口软件</li>
  * <li>ASCII - 需要物理串口或虚拟串口软件</li>
  * </ul>
  * </p>
- * <p>
- * UDP 测试前需要先构建 laokou/modbus-sim 镜像：
- *
- * <pre>
- * cd laokou-common/laokou-common-testcontainers/src/main/resources/docker/modbus
- * docker build -t laokou/modbus-sim:1.0 .
- * </pre>
- * </p>
- *
  * @author laokou
  */
 @Testcontainers
@@ -71,10 +62,10 @@ class ModbusTest {
 	 * Modbus TCP 服务器容器 (iotechsys/pymodbus-sim)。 支持 Modbus TCP 协议，默认端口 5020。
 	 */
 	@Container
-	static ModbusContainer tcpContainer = new ModbusContainer(DockerImageNames.pymodbus());
+	static ModbusContainer tcpContainer = ModbusContainer.tcp(DockerImageNames.pymodbus(), ModbusContainer.PYMODBUS_PORT);
 
 	/**
-	 * Modbus UDP 服务器容器 (laokou/modbus-sim)。 支持 Modbus UDP 协议，端口 502。 需要先构建镜像。
+	 * Modbus UDP 服务器容器 (koushenhai/modbus-sim)。 支持 Modbus UDP 协议，端口 502。 需要先构建镜像。
 	 */
 	@Container
 	static ModbusContainer udpContainer = ModbusContainer.udp(DockerImageNames.modbusSim(),
@@ -183,7 +174,9 @@ class ModbusTest {
 			ModbusResponse response = modbus.sendReadHoldingRegistersRequest(1, 0, 1);
 			Assertions.assertThat(response).isNotNull();
 			if (response instanceof ReadHoldingRegistersResponse holdingResponse) {
-				Assertions.assertThat(holdingResponse.getShortData()).isNotNull();
+				short[] data = holdingResponse.getShortData();
+				Assertions.assertThat(data).isNotNull();
+				Assertions.assertThat(data[0]).isEqualTo((short) 101);
 			}
 		}
 		finally {
