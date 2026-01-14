@@ -25,14 +25,7 @@ import org.testcontainers.utility.DockerImageName;
 import java.time.Duration;
 
 /**
- * Modbus TCP/UDP 服务器容器，用于测试 Modbus 通信协议。
- * <p>
- * 支持的镜像:
- * <ul>
- * <li>iotechsys/pymodbus-sim - TCP only, port 5020</li>
- * <li>laokou/modbus-sim - TCP and UDP, port 502 (需自行构建)</li>
- * </ul>
- * </p>
+ * Modbus TCP/UDP 服务器容器，用于测试 Modbus 通信协议.
  *
  * @author laokou
  */
@@ -53,19 +46,11 @@ public class ModbusContainer extends GenericContainer<ModbusContainer> {
 	private Integer fixedUdpPort = null;
 
 	/**
-	 * 使用 pymodbus-sim 镜像创建 Modbus TCP 容器（端口 5020）。
-	 * @param dockerImageName Docker 镜像名称
-	 */
-	public ModbusContainer(DockerImageName dockerImageName) {
-		this(dockerImageName, PYMODBUS_PORT);
-	}
-
-	/**
 	 * 使用指定的 Docker 镜像和端口创建 Modbus 容器。
 	 * @param dockerImageName Docker 镜像名称
 	 * @param port Modbus 端口
 	 */
-	public ModbusContainer(DockerImageName dockerImageName, int port) {
+	private ModbusContainer(DockerImageName dockerImageName, int port) {
 		super(dockerImageName);
 		this.port = port;
 		this.withExposedPorts(port);
@@ -97,7 +82,7 @@ public class ModbusContainer extends GenericContainer<ModbusContainer> {
 		ModbusContainer container = new ModbusContainer(dockerImageName, port);
 		// UDP 不能使用 forListeningPort，使用日志输出等待策略
 		container
-			.setWaitStrategy(Wait.forLogMessage(".*Starting Modbus.*", 1).withStartupTimeout(Duration.ofSeconds(60)));
+			.setWaitStrategy(Wait.forLogMessage(".*Starting Modbus UDP server.*", 1).withStartupTimeout(Duration.ofSeconds(60)));
 		// UDP 使用固定端口
 		container.addFixedExposedPort(port, port, InternetProtocol.UDP);
 		container.fixedUdpPort = port;
