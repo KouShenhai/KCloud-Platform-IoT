@@ -44,7 +44,7 @@ class DistributedIdApp {
 
 	// @formatter:off
 	static void main(String[] args) throws UnknownHostException {
-		StopWatch stopWatch = new StopWatch("DistributedIdentifier应用程序");
+		StopWatch stopWatch = new StopWatch("DistributedId应用程序");
 		stopWatch.start();
 		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "9094")));
 		// 配置关闭nacos日志，因为nacos的log4j2导致本项目的日志不输出的问题

@@ -18,6 +18,7 @@
 package org.laokou.distributed.id.config;
 
 import com.alibaba.cloud.nacos.NacosConfigManager;
+import com.alibaba.cloud.nacos.NacosServiceManager;
 import com.alibaba.nacos.api.exception.NacosException;
 import com.alibaba.nacos.api.naming.NamingService;
 import com.alibaba.nacos.api.naming.pojo.Instance;
@@ -25,8 +26,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.i18n.util.SpringContextUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
+import org.springframework.core.env.Environment;
 
 import java.net.InetAddress;
 import java.time.Instant;
@@ -51,9 +52,11 @@ import java.util.stream.Collectors;
 @Slf4j
 public class NacosSnowflakeGenerator implements SnowflakeGenerator {
 
-	private static final String DATACENTER_ID_KEY = "datacenterId";
+	private static final String DATACENTER_ID_KEY = "datacenter_id";
 
-	private static final String MACHINE_ID_KEY = "machineId";
+	private static final String MACHINE_ID_KEY = "machine_id";
+
+	private static final String GRPC_PORT_KEY = "grpc_port";
 
 	/**
 	 * 序列号标识占用的位数.
@@ -131,6 +134,11 @@ public class NacosSnowflakeGenerator implements SnowflakeGenerator {
 	private final AtomicBoolean initialized;
 
 	/**
+	 * Spring 环境变量.
+	 */
+	private final Environment environment;
+
+	/**
 	 * 当前实例IP.
 	 */
 	private String currentIp;
@@ -140,8 +148,8 @@ public class NacosSnowflakeGenerator implements SnowflakeGenerator {
 	 */
 	private int currentPort;
 
-	public NacosSnowflakeGenerator(NacosConfigManager nacosConfigManager, NamingService namingService,
-			SpringSnowflakeProperties springSnowflakeProperties) {
+	public NacosSnowflakeGenerator(NacosConfigManager nacosConfigManager, NacosServiceManager nacosServiceManager,
+			SpringSnowflakeProperties springSnowflakeProperties, Environment environment) {
 		this.machineBit = 5L;
 		this.datacenterBit = 5L;
 		this.sequenceBit = 13L;
@@ -149,9 +157,10 @@ public class NacosSnowflakeGenerator implements SnowflakeGenerator {
 		this.maxDatacenterId = ~(-1L << datacenterBit);
 		this.maxSequence = ~(-1L << sequenceBit);
 		this.startTimestamp = springSnowflakeProperties.getStartTimestamp();
-		this.serviceId = SpringContextUtils.getServiceId();
+		this.environment = environment;
+		this.serviceId = getServiceId();
 		this.groupName = nacosConfigManager.getNacosConfigProperties().getGroup();
-		this.namingService = namingService;
+		this.namingService = nacosServiceManager.getNamingService();
 		this.initialized = new AtomicBoolean(false);
 	}
 
@@ -310,8 +319,17 @@ public class NacosSnowflakeGenerator implements SnowflakeGenerator {
 	}
 
 	private int getServerPort() {
-		String serverPort = System.getProperty("server.port");
-		return StringExtUtils.isEmpty(serverPort) ? 9094 : Integer.parseInt(serverPort);
+		return Integer.parseInt(environment.getProperty("server.port", System.getProperty("server.port", "9094")));
+	}
+
+	private int getGrpcServerPort() {
+		return Integer.parseInt(environment.getProperty("spring.grpc.server.port",
+				System.getProperty("spring.grpc.server.port", "10111")));
+	}
+
+	private String getServiceId() {
+		return environment.getProperty("spring.application.name",
+				System.getProperty("spring.application.name", "laokou-distributed-id"));
 	}
 
 	private void allocateIds(List<Instance> allInstances) {
@@ -343,7 +361,7 @@ public class NacosSnowflakeGenerator implements SnowflakeGenerator {
 
 	private void registerMetadata() throws NacosException {
 		Map<String, String> metadata = Map.of(DATACENTER_ID_KEY, String.valueOf(this.datacenterId), MACHINE_ID_KEY,
-				String.valueOf(this.machineId));
+				String.valueOf(this.machineId), GRPC_PORT_KEY, String.valueOf(getGrpcServerPort()));
 		Instance instance = new Instance();
 		instance.setIp(currentIp);
 		instance.setPort(currentPort);

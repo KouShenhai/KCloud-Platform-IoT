@@ -18,21 +18,17 @@
 package org.laokou.distributed.id.config;
 
 import com.alibaba.cloud.nacos.NacosConfigManager;
-import com.alibaba.nacos.api.naming.NamingService;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import com.alibaba.cloud.nacos.NacosServiceManager;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 
 /**
  * @author laokou
  */
 @Configuration
-@ConditionalOnClass({ NacosConfigManager.class, NamingService.class, DiscoveryClient.class })
 @ConditionalOnProperty(prefix = "spring.snowflake", name = "enabled", havingValue = "true", matchIfMissing = true)
 @EnableConfigurationProperties(SpringSnowflakeProperties.class)
 class SnowflakeConfig {
@@ -42,11 +38,11 @@ class SnowflakeConfig {
 	 * @return NacosSnowflakeGenerator
 	 */
 	@Bean(initMethod = "init", destroyMethod = "close")
-	@ConditionalOnMissingBean(SnowflakeGenerator.class)
-	@ConditionalOnBean({ NamingService.class, NacosConfigManager.class })
-	public SnowflakeGenerator snowflakeGenerator(NacosConfigManager nacosConfigManager, NamingService namingService,
-			SpringSnowflakeProperties springSnowflakeProperties) {
-		return new NacosSnowflakeGenerator(nacosConfigManager, namingService, springSnowflakeProperties);
+	public SnowflakeGenerator snowflakeGenerator(NacosConfigManager nacosConfigManager,
+			NacosServiceManager nacosServiceManager, SpringSnowflakeProperties springSnowflakeProperties,
+			Environment environment) {
+		return new NacosSnowflakeGenerator(nacosConfigManager, nacosServiceManager, springSnowflakeProperties,
+				environment);
 	}
 
 }
