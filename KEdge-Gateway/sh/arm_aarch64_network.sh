@@ -25,32 +25,56 @@ WLAN0="wlan0"
 
 # 启用连接【以太网】
 enable_eth0() {
-  nmcli device connect $ETH0
+  if nmcli device connect $ETH0 2>/dev/null; then
+    echo true
+  else
+    echo false
+  fi
 }
 
 # 启用连接【4G】
 enable_usb0() {
-  nmcli device connect $USB0
+  if nmcli device connect $USB0 2>/dev/null; then
+    echo true
+  else
+    echo false
+  fi
 }
 
 # 启用W连接【WIFI】
 enable_wlan0() {
-  nmcli device connect $WLAN0
+  if ifconfig $WLAN0 up; then
+    echo true
+  else
+    echo false
+  fi
 }
 
 # 禁用以太网连接【以太网】
 disable_eth0() {
-  nmcli device disconnect $ETH0
+  if nmcli device disconnect $ETH0 2>/dev/null; then
+    echo true
+  else
+    echo false
+  fi
 }
 
 # 禁用连接【4G】
 disable_usb0() {
-  nmcli device disconnect $USB0
+  if nmcli device disconnect $USB0 2>/dev/null; then
+    echo true
+  else
+    echo false
+  fi
 }
 
 # 禁用连接【WIFI】
 disable_wlan0() {
-  nmcli device disconnect $WLAN0
+  if ifconfig $WLAN0 down; then
+    echo true
+  else
+    echo false
+  fi
 }
 
 # 连接以太网【DHCP】
@@ -122,7 +146,7 @@ show_wlan0_ip_gateway() {
 
 # 扫描可用的WIFI网络
 scan_wlan0() {
-
+  nmcli -f SSID,SIGNAL device wifi list 2>/dev/null | grep -v "^--" | head -20
 }
 
 # 查看连接状态【以太网】
