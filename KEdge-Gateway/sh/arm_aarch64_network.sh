@@ -24,144 +24,132 @@ USB0="usb0"
 WLAN0="wlan0"
 
 # 启用连接【以太网】
+# 启用连接【以太网】
 enable_eth0() {
-  if nmcli device connect $ETH0 2>/dev/null; then
-    echo true
-  else
-    echo false
-  fi
+sudo ip link set $ETH0 up
 }
 
 # 启用连接【4G】
 enable_usb0() {
-  if nmcli device connect $USB0 2>/dev/null; then
-    echo true
-  else
-    echo false
-  fi
+sudo ip link set $USB0 up
 }
 
 # 启用W连接【WIFI】
 enable_wlan0() {
-  if ifconfig $WLAN0 up; then
-    echo true
-  else
-    echo false
-  fi
+sudo ip link set $WLAN0 up
 }
 
 # 禁用以太网连接【以太网】
 disable_eth0() {
-  if nmcli device disconnect $ETH0 2>/dev/null; then
-    echo true
-  else
-    echo false
-  fi
+sudo ip link set $ETH0 down
 }
 
 # 禁用连接【4G】
 disable_usb0() {
-  if nmcli device disconnect $USB0 2>/dev/null; then
-    echo true
-  else
-    echo false
-  fi
+sudo ip link set $USB0 down
 }
 
 # 禁用连接【WIFI】
 disable_wlan0() {
-  if ifconfig $WLAN0 down; then
-    echo true
-  else
-    echo false
-  fi
+sudo ip link set $WLAN0 down
 }
 
 # 连接以太网【DHCP】
 connect_eth0_dhcp() {
-  nohup edge-gateway-network $ETH0 dhcp >/dev/null 2>&1 &
-  sleep 2
-  echo true
+nohup edge-gateway-network $ETH0 dhcp >/dev/null 2>&1 &
 }
 
 # 连接以太网【STATIC】
 connect_eth0_static() {
-  local ipAddr=$2
-  local ipGateway=$3
-  local ipDns=$4
-  nohup edge-gateway-network $ETH0 static "$ipAddr" "$ipGateway" "$ipDns" >/dev/null 2>&1 &
-  sleep 2
-  echo true
+local ipAddr=$2
+local ipGateway=$3
+local ipDns=$4
+nohup edge-gateway-network $ETH0 static "$ipAddr" "$ipGateway" "$ipDns" >/dev/null 2>&1 &
 }
 
 # 连接WIFI
 connect_wlan0() {
-
+# 删除配置文件
+sudo rm -f /etc/NetworkManager/system-connections/*wifi*
+sudo rm -f /etc/NetworkManager/system-connections/*wlan*
+systemctl restart NetworkManager
+local ssid=$2
+local pwd=$3
+sudo nmcli con add type wifi con-name "default-wlan0" ssid "$ssid" wifi-sec.key-mgmt wpa-psk wifi-sec.psk "$pwd"
 }
 
 # 查看MAC地址【以太网】
 show_eth0_mac_addr() {
-  ip link show $ETH0 | awk '/ether/ {print $2}'
+sudo ip link show $ETH0 | awk '/ether/ {print $2}'
 }
 
 # 查看MAC地址【4G】
 show_usb0_mac_addr() {
-  ip link show $USB0 | awk '/ether/ {print $2}'
+sudo ip link show $USB0 | awk '/ether/ {print $2}'
 }
 
 # 查看MAC地址【WIFI】
 show_wlan0_mac_addr() {
-  ip link show $WLAN0 | awk '/ether/ {print $2}'
+sudo ip link show $WLAN0 | awk '/ether/ {print $2}'
 }
 
 # 查看IP地址【以太网】
 show_eth0_ip_addr() {
-  ip addr show $ETH0 | grep "inet " | awk '{print $2}'
+sudo ip addr show $ETH0 | grep "inet " | awk '{print $2}'
 }
 
 # 查看IP地址【4G】
 show_usb0_ip_addr() {
-  ip addr show $USB0 | grep "inet " | awk '{print $2}'
+sudo ip addr show $USB0 | grep "inet " | awk '{print $2}'
 }
 
 # 查看IP地址【WIFI】
 show_wlan0_ip_addr() {
-  ip addr show $WLAN0 | grep "inet " | awk '{print $2}'
+sudo ip addr show $WLAN0 | grep "inet " | awk '{print $2}'
 }
 
 # 查看IP网关【以太网】
 show_eth0_ip_gateway() {
-  ip route | grep default | grep $ETH0 | awk '{print $3}'
+sudo ip route | grep default | grep $ETH0 | awk '{print $3}'
 }
 
 # 查看IP网关【4G】
 show_usb0_ip_gateway() {
-  ip route | grep default | grep $USB0 | awk '{print $3}'
+sudo ip route | grep default | grep $USB0 | awk '{print $3}'
 }
 
 # 查看IP网关【WIFI】
 show_wlan0_ip_gateway() {
-  ip route | grep default | grep $WLAN0 | awk '{print $3}'
+sudo ip route | grep default | grep $WLAN0 | awk '{print $3}'
 }
 
 # 扫描可用的WIFI网络
 scan_wlan0() {
-  nmcli -f SSID,SIGNAL device wifi list 2>/dev/null | grep -v "^--" | head -20
+sudo nmcli -f SSID,SIGNAL device wifi list 2>/dev/null | grep -v "^--" | head -20
 }
 
 # 查看连接状态【以太网】
 show_eth0_connect_status() {
-  nmcli -t -f DEVICE,STATE device | grep -q "^$ETH0:connected" && echo true || echo false
+sudo nmcli -t -f DEVICE,STATE device | grep -q "^$ETH0:connected" && echo true || echo false
 }
 
 # 查看连接状态【4G】
 show_usb0_connect_status() {
-  nmcli -t -f DEVICE,STATE device | grep -q "^$USB0:connected" && echo true || echo false
+sudo nmcli -t -f DEVICE,STATE device | grep -q "^$USB0:connected" && echo true || echo false
 }
 
 # 查看连接状态【WIFI】
 show_wlan0_connect_status() {
-  nmcli -t -f DEVICE,STATE device | grep -q "^$WLAN0:connected" && echo true || echo false
+sudo nmcli -t -f DEVICE,STATE device | grep -q "^$WLAN0:connected" && echo true || echo false
+}
+
+# 获取以太网类型【DHCP/STATIC】
+show_eth0_type() {
+if pgrep -a dhclient | grep -q "$ETH0"; then
+  echo "dhcp"
+else
+  echo "static"
+fi
 }
 
 case "$1" in
@@ -172,7 +160,7 @@ case "$1" in
     connect_eth0_static "$@"
     ;;
   connect_wlan0)
-    connect_wlan0
+    connect_wlan0 "$@"
     ;;
   show_eth0_ip_gateway)
     show_eth0_ip_gateway
@@ -230,6 +218,9 @@ case "$1" in
     ;;
   scan_wlan0)
     scan_wlan0
+    ;;
+  show_eth0_type)
+    show_eth0_type
     ;;
   *)
     exit 1
