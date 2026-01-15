@@ -24,7 +24,6 @@ USB0="usb0"
 WLAN0="wlan0"
 
 # 启用连接【以太网】
-# 启用连接【以太网】
 enable_eth0() {
 sudo ip link set $ETH0 up
 }
