@@ -100,8 +100,8 @@ class ElasticsearchApiTest {
 		registry.add("spring.data.elasticsearch.uris", () -> "https://" + elasticsearch.getHttpHostAddress());
 		registry.add("spring.data.elasticsearch.username", () -> "elastic");
 		registry.add("spring.data.elasticsearch.password", () -> "laokou123");
-		registry.add("spring.data.elasticsearch.client-version", () -> "9.2.3");
-		registry.add("spring.data.elasticsearch.version", () -> "9.2.3");
+		registry.add("spring.data.elasticsearch.client-version", () -> "9.2.4");
+		registry.add("spring.data.elasticsearch.version", () -> "9.2.4");
 		registry.add("spring.data.elasticsearch.connection-timeout", () -> "60s");
 		registry.add("spring.data.elasticsearch.socket-timeout", () -> "60s");
 	}
