@@ -19,7 +19,7 @@ module network
 
 go 1.24.0
 
-toolchain go1.25.5
+toolchain go1.25.6
 
 require (
 	github.com/DeRuina/timberjack v1.3.9
