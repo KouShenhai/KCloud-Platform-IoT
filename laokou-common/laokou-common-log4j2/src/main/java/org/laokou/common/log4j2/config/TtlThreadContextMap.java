@@ -25,6 +25,7 @@ import org.apache.logging.log4j.util.BiConsumer;
 import org.apache.logging.log4j.util.ReadOnlyStringMap;
 import org.apache.logging.log4j.util.TriConsumer;
 
+import java.io.Serial;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -36,11 +37,11 @@ import java.util.Objects;
  */
 public class TtlThreadContextMap implements ThreadContextMap, ReadOnlyStringMap {
 
-	private final ThreadLocal<Object[]> localState;
+	@Serial
+	private static final long serialVersionUID = 1L;
 
-	public TtlThreadContextMap() {
-		localState = new TransmittableThreadLocal<>();
-	}
+	private final transient ThreadLocal<Object[]> localState = TransmittableThreadLocal
+		.withInitial(() -> new Object[0]);
 
 	@Override
 	public void put(final String key, final String value) {
