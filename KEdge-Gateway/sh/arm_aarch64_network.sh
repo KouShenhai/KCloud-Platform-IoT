@@ -66,8 +66,28 @@ local ipDns=$4
 nohup edge-gateway-network $ETH0 static "$ipAddr" "$ipGateway" "$ipDns" >/dev/null 2>&1 &
 }
 
-# 连接WIFI
-connect_wlan0() {
+# 连接以太网
+connect_eth0() {
+sudo nmcli device connect $ETH0
+}
+
+# 断开以太网连接
+disconnect_eth0() {
+sudo nmcli device disconnect $ETH0
+}
+
+# 连接4G
+connect_usb0() {
+sudo nmcli device connect $USB0
+}
+
+# 断开4G
+disconnect_usb0() {
+sudo nmcli device disconnect $USB0
+}
+
+# 连接WIFI并保存配置
+connect_wlan0_to_save() {
 # 删除配置文件
 sudo rm -f /etc/NetworkManager/system-connections/*wifi*
 sudo rm -f /etc/NetworkManager/system-connections/*wlan*
@@ -75,6 +95,16 @@ systemctl restart NetworkManager
 local ssid=$2
 local pwd=$3
 sudo nmcli con add type wifi con-name "default-wlan0" ssid "$ssid" wifi-sec.key-mgmt wpa-psk wifi-sec.psk "$pwd"
+}
+
+# 连接WIFI
+connect_wlan0() {
+sudo nmcli device connect $WLAN0
+}
+
+# 断开WIFI连接
+disconnect_wlan0() {
+sudo nmcli device disconnect $WLAN0
 }
 
 # 查看MAC地址【以太网】
@@ -158,8 +188,26 @@ case "$1" in
   connect_eth0_static)
     connect_eth0_static "$@"
     ;;
+  connect_eth0)
+  	connect_eth0
+  	;;
+  disconnect_eth0)
+  	disconnect_eth0
+  	;;
+  connect_usb0)
+  	connect_usb0
+  	;;
+  disconnect_usb0)
+  	disconnect_usb0
+  	;;
+  connect_wlan0_to_save)
+    connect_wlan0_to_save "$@"
+    ;;
   connect_wlan0)
-    connect_wlan0 "$@"
+    connect_wlan0
+    ;;
+  disconnect_wlan0)
+    disconnect_wlan0
     ;;
   show_eth0_ip_gateway)
     show_eth0_ip_gateway
