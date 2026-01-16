@@ -33,7 +33,7 @@
     <!--pig-nacos版本-->
     <pig-nacos.version>3.1.0</pig-nacos.version>
     <!--postgresql版本-->
-    <postgresql.version>42.7.8</postgresql.version>
+    <postgresql.version>42.7.9</postgresql.version>
     <!--client-java版本-->
     <client-java.version>22.0.0</client-java.version>
     <!--lombok版本-->
