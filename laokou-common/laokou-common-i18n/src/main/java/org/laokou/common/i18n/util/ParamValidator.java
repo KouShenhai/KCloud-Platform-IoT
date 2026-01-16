@@ -44,10 +44,7 @@ public final class ParamValidator {
 	}
 
 	public static Set<String> validates(Validate... validates) {
-		return Stream.of(validates)
-			.filter(item -> StringExtUtils.isNotEmpty(item.value))
-			.map(item -> item.value)
-			.collect(Collectors.toSet());
+		return Stream.of(validates).filter(Validate::isNotEmpty).map(Validate::getMessage).collect(Collectors.toSet());
 	}
 
 	public static Validate validate() {
@@ -62,6 +59,18 @@ public final class ParamValidator {
 
 		public Validate() {
 			this(StringConstants.EMPTY);
+		}
+
+		public boolean isNotEmpty() {
+			return StringExtUtils.isNotEmpty(value());
+		}
+
+		public boolean isValidate() {
+			return StringExtUtils.isEmpty(value());
+		}
+
+		public String getMessage() {
+			return value();
 		}
 
 	}

@@ -104,4 +104,12 @@ public final class DockerImageNames {
 		return modbusSim(LATEST);
 	}
 
+	public static DockerImageName kafka(String tag) {
+		return DockerImageName.parse("apache/kafka").withTag(tag);
+	}
+
+	public static DockerImageName kafka() {
+		return kafka(LATEST);
+	}
+
 }
