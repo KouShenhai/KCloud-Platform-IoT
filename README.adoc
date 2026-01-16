@@ -151,7 +151,7 @@ image::doc/image/老寇IoT云平台业务架构图.png[架构图,align=center]
 |Spring Framework            |7.0.3
 |Spring Security             |7.0.2
 |Spring gRPC                 |1.0.0
-|Spring Data                 |2025.1.0
+|Spring Data                 |2025.1.2
 |Spring Cloud                |2025.1.0
 |Spring Cloud Alibaba        |2025.1.0.0
 |Spring Boot Admin           |3.5.6
