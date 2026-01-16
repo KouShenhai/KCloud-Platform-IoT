@@ -59,7 +59,10 @@ jobs:
           files: |
             ./laokou-common/laokou-common-core/target/site/jacoco/jacoco.xml,
             ./laokou-common/laokou-common-fory/target/site/jacoco/jacoco.xml,
+            ./laokou-common/laokou-common-kafka/target/site/jacoco/jacoco.xml,
+            ./laokou-common/laokou-common-lock/target/site/jacoco/jacoco.xml,
             ./laokou-common/laokou-common-trace/target/site/jacoco/jacoco.xml,
+            ./laokou-common/laokou-common-log4j2/target/site/jacoco/jacoco.xml,
             ./laokou-common/laokou-common-algorithm/target/site/jacoco/jacoco.xml,
             ./laokou-common/laokou-common-context/target/site/jacoco/jacoco.xml,
             ./laokou-common/laokou-common-crypto/target/site/jacoco/jacoco.xml,

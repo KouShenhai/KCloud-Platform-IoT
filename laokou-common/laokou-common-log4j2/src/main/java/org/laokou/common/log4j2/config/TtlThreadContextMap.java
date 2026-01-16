@@ -18,94 +18,206 @@
 package org.laokou.common.log4j2.config;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
+import org.apache.logging.log4j.internal.map.UnmodifiableArrayBackedMap;
 import org.apache.logging.log4j.spi.DefaultThreadContextMap;
 import org.apache.logging.log4j.spi.ThreadContextMap;
+import org.apache.logging.log4j.util.BiConsumer;
+import org.apache.logging.log4j.util.ReadOnlyStringMap;
+import org.apache.logging.log4j.util.TriConsumer;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
- * @author Jerry Lee (oldratlee at gmail dot com)
+ * @author log4j
  * @author laokou
  * @see DefaultThreadContextMap
  */
-public class TtlThreadContextMap implements ThreadContextMap {
+public class TtlThreadContextMap implements ThreadContextMap, ReadOnlyStringMap {
 
-	public static final TtlThreadContextMap INSTANCE = new TtlThreadContextMap();
+	private final ThreadLocal<Object[]> localState;
 
-	private final ThreadLocal<Map<String, String>> LOCAL_MAP = TransmittableThreadLocal.withInitial(HashMap::new);
+	public TtlThreadContextMap() {
+		localState = new TransmittableThreadLocal<>();
+	}
 
 	@Override
 	public void put(final String key, final String value) {
-		Map<String, String> map = LOCAL_MAP.get();
-		map = map == null ? new HashMap<>() : new HashMap<>(map);
-		map.put(key, value);
-		LOCAL_MAP.set(Collections.unmodifiableMap(map));
+		final Object[] state = localState.get();
+		if (state == null || state.length == 0) {
+			// Initialize with new entry when state is null or empty
+			localState.set(UnmodifiableArrayBackedMap.EMPTY_MAP.copyAndPut(key, value).getBackingArray());
+		}
+		else {
+			localState.set(UnmodifiableArrayBackedMap.getMap(state).copyAndPut(key, value).getBackingArray());
+		}
 	}
 
 	@Override
 	public String get(final String key) {
-		final Map<String, String> map = LOCAL_MAP.get();
-		return map == null ? null : map.get(key);
+		final Object[] state = localState.get();
+		if (state == null || state.length == 0) {
+			return null;
+		}
+		return UnmodifiableArrayBackedMap.getMap(state).get(key);
 	}
 
 	@Override
 	public void remove(final String key) {
-		Map<String, String> map = LOCAL_MAP.get();
-		if (map != null) {
-			final Map<String, String> copy = new HashMap<>(map);
-			copy.remove(key);
-			LOCAL_MAP.set(Collections.unmodifiableMap(copy));
+		final Object[] state = localState.get();
+		if (state != null && state.length > 0) {
+			localState.set(UnmodifiableArrayBackedMap.getMap(state).copyAndRemove(key).getBackingArray());
+		}
+	}
+
+	/**
+	 * @since 2.8
+	 */
+	public void removeAll(final Iterable<String> keys) {
+		final Object[] state = localState.get();
+		if (state != null && state.length > 0) {
+			localState.set(UnmodifiableArrayBackedMap.getMap(state).copyAndRemoveAll(keys).getBackingArray());
 		}
 	}
 
 	@Override
 	public void clear() {
-		LOCAL_MAP.remove();
+		localState.remove();
+	}
+
+	@Override
+	public Map<String, String> toMap() {
+		return getCopy();
 	}
 
 	@Override
 	public boolean containsKey(final String key) {
-		return Optional.ofNullable(LOCAL_MAP.get()).orElseGet(HashMap::new).containsKey(key);
+		final Object[] state = localState.get();
+		if (state == null || state.length == 0) {
+			return false;
+		}
+		return UnmodifiableArrayBackedMap.getMap(state).containsKey(key);
 	}
 
 	@Override
+	public <V> void forEach(final BiConsumer<String, ? super V> action) {
+		final Object[] state = localState.get();
+		if (state == null || state.length == 0) {
+			return;
+		}
+		UnmodifiableArrayBackedMap.getMap(state).forEach(action);
+	}
+
+	@Override
+	public <V, S> void forEach(final TriConsumer<String, ? super V, S> action, final S state) {
+		final Object[] localState = this.localState.get();
+		if (localState == null || localState.length == 0) {
+			return;
+		}
+		UnmodifiableArrayBackedMap.getMap(localState).forEach(action, state);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <V> V getValue(final String key) {
+		return (V) get(key);
+	}
+
+	/**
+	 * {@return a mutable copy of the current thread context map}
+	 */
+	@Override
 	public Map<String, String> getCopy() {
-		return Optional.ofNullable(LOCAL_MAP.get()).orElseGet(HashMap::new);
+		final Object[] state = localState.get();
+		if (state == null || state.length == 0) {
+			return new HashMap<>(0);
+		}
+
+		final Map<String, String> map = UnmodifiableArrayBackedMap.getMap(state);
+
+		// Handle empty map case efficiently - constructor is faster for empty maps
+		if (map.isEmpty()) {
+			return new HashMap<>();
+		}
+
+		// Pre-size HashMap to minimize rehashing operations
+		// Factor 1.35 accounts for HashMap's 0.75 load factor (1/0.75 ≈ 1.33)
+		return getStringStringHashMap(map);
+	}
+
+	private static HashMap<String, String> getStringStringHashMap(Map<String, String> map) {
+		final HashMap<String, String> copy = new HashMap<>((int) (map.size() * 1.35));
+
+		// Manual iteration avoids megamorphic virtual calls that prevent JIT
+		// optimization.
+		// The HashMap(Map) constructor requires (3 + 4n) virtual method calls that
+		// become
+		// megamorphic when used with different map types, leading to 24-136%
+		// performance
+		// degradation. Manual iteration creates monomorphic call sites that JIT can
+		// optimize.
+		// See https://bugs.openjdk.org/browse/JDK-8368292
+		copy.putAll(map);
+		return copy;
 	}
 
 	@Override
 	public Map<String, String> getImmutableMapOrNull() {
-		return LOCAL_MAP.get();
+		final Object[] state = localState.get();
+		if (state == null || state.length == 0) {
+			return null;
+		}
+		return UnmodifiableArrayBackedMap.getMap(state);
 	}
 
 	@Override
 	public boolean isEmpty() {
-		Map<String, String> map = LOCAL_MAP.get();
-		return map == null || map.isEmpty();
+		return size() == 0;
+	}
+
+	@Override
+	public int size() {
+		final Object[] state = localState.get();
+		if (state == null || state.length == 0) {
+			return 0;
+		}
+		return UnmodifiableArrayBackedMap.getMap(state).size();
 	}
 
 	@Override
 	public String toString() {
-		Map<String, String> map = LOCAL_MAP.get();
-		return map == null ? "{}" : map.toString();
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (o == null || getClass() != o.getClass()) {
-			return false;
-		}
-		TtlThreadContextMap that = (TtlThreadContextMap) o;
-		return Objects.equals(LOCAL_MAP, that.LOCAL_MAP);
+		final Object[] state = localState.get();
+		return state == null ? "{}" : UnmodifiableArrayBackedMap.getMap(state).toString();
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hashCode(LOCAL_MAP);
+		return toMap().hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (obj instanceof ReadOnlyStringMap readOnlyStringMap) {
+			if (size() != readOnlyStringMap.size()) {
+				return false;
+			}
+
+			// Convert to maps and compare
+			obj = readOnlyStringMap.toMap();
+		}
+		if (!(obj instanceof ThreadContextMap other)) {
+			return false;
+		}
+		final Map<String, String> map = UnmodifiableArrayBackedMap.getMap(localState.get());
+		final Map<String, String> otherMap = other.getImmutableMapOrNull();
+		return Objects.equals(map, otherMap);
 	}
 
 }
