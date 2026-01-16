@@ -27,7 +27,6 @@ import org.slf4j.MDC;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicReference;
@@ -159,37 +158,25 @@ class MDCUtilsTest {
 
 	@Test
 	@DisplayName("Test concurrent MDC operations")
-	void testConcurrentMdcOperations() throws InterruptedException {
+	void testConcurrentMdcOperations() {
 		int threadCount = 10;
-		CountDownLatch startLatch = new CountDownLatch(1);
-		CountDownLatch endLatch = new CountDownLatch(threadCount);
-
 		try (ExecutorService executor = Executors.newFixedThreadPool(threadCount)) {
 			for (int i = 0; i < threadCount; i++) {
 				final int index = i;
-				executor.submit(() -> {
+				executor.execute(() -> {
 					try {
-						startLatch.await();
 						String traceId = "trace-" + index;
 						String spanId = "span-" + index;
 						MDCUtils.put(traceId, spanId);
-
 						// Verify this thread's values
 						Assertions.assertThat(MDCUtils.getTraceId()).isEqualTo(traceId);
 						Assertions.assertThat(MDCUtils.getSpanId()).isEqualTo(spanId);
 					}
-					catch (InterruptedException e) {
-						Thread.currentThread().interrupt();
-					}
 					finally {
 						MDCUtils.clear();
-						endLatch.countDown();
 					}
 				});
 			}
-
-			startLatch.countDown();
-			endLatch.await();
 		}
 	}
 
