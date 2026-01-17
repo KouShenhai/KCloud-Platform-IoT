@@ -38,6 +38,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import org.jspecify.annotations.NonNull;
 
 import java.util.Map;
 
@@ -52,7 +53,7 @@ import java.util.Map;
 abstract class ClaimsHolderMixin {
 
 	@JsonCreator
-	ClaimsHolderMixin(@JsonProperty("claims") Map<String, Object> claims) {
+	ClaimsHolderMixin(@NonNull @JsonProperty("claims") Map<String, Object> claims) {
 	}
 
 }
