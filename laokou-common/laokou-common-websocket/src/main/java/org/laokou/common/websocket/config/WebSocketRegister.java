@@ -31,7 +31,7 @@ import org.springframework.context.ApplicationListener;
 @Slf4j
 public record WebSocketRegister(NacosDiscoveryProperties nacosDiscoveryProperties,
 		SpringWebSocketServerProperties springWebSocketServerProperties,
-		NamingService namingService) implements ApplicationListener<ApplicationReadyEvent> {
+		NamingService namingService) implements ApplicationListener<@NonNull ApplicationReadyEvent> {
 
 	@Override
 	public void onApplicationEvent(@NonNull ApplicationReadyEvent event) {

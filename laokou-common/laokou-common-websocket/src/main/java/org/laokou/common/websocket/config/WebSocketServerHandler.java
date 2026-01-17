@@ -50,7 +50,7 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 
 	private final SpringWebSocketServerProperties springWebSocketServerProperties;
 
-	private final OAuth2OpaqueTokenIntrospector oAuth2OpaqueTokenIntrospector;
+	private final OAuth2OpaqueTokenIntrospector opaqueTokenIntrospector;
 
 	/**
 	 * see
@@ -126,7 +126,7 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 		}
 		try {
 			WebSocketMessageCO co = JacksonUtils.toBean(str, WebSocketMessageCO.class);
-			OAuth2AuthenticatedPrincipal principal = oAuth2OpaqueTokenIntrospector.introspect(co.getToken());
+			OAuth2AuthenticatedPrincipal principal = opaqueTokenIntrospector.introspect(co.getToken());
 			UserExtDetails userExtDetails = (UserExtDetails) principal;
 			log.info("【WebSocket-Server】 => 令牌校验成功，用户名：{}", principal.getName());
 			WebSocketTypeEnum.getByCode(co.getType()).handle(userExtDetails, co, channel);

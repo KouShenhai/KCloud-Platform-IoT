@@ -125,7 +125,7 @@ public abstract class AbstractServer implements Server {
 				bind(bootstrap, port + 1);
 			}
 			else {
-				log.info("启动成功，端口{}已绑定，运行状态【true已启动，false已停止】：{}", port, running.compareAndExchange(false, true));
+				log.info("启动成功，端口{}已绑定，运行状态【true已启动，false已停止】：{}", port, running.getAndSet(true));
 			}
 		});
 	}
