@@ -218,7 +218,7 @@ class WebSocketServerHandlerTest {
 		Mockito.when(introspector.introspect("valid-token")).thenReturn(userDetails);
 
 		// Initialize heartbeat counter (get() creates the entry if not exists)
-		WebSocketSessionHeartBeatManager.get(TEST_CHANNEL_ID);
+		Assertions.assertThat(WebSocketSessionHeartBeatManager.get(TEST_CHANNEL_ID)).isZero();
 		// Then increment to simulate missed heartbeats
 		WebSocketSessionHeartBeatManager.increment(TEST_CHANNEL_ID);
 		WebSocketSessionHeartBeatManager.increment(TEST_CHANNEL_ID);

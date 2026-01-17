@@ -112,4 +112,12 @@ public final class DockerImageNames {
 		return kafka(LATEST);
 	}
 
+	public static DockerImageName pulsar(String tag) {
+		return DockerImageName.parse("apachepulsar/pulsar").withTag(tag);
+	}
+
+	public static DockerImageName pulsar() {
+		return pulsar("4.0.3");
+	}
+
 }
