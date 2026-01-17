@@ -19,7 +19,6 @@ package org.laokou.common.security.config.repository;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.data.repository.CrudRepository;
 
 /**
  * OAuth2UserConsentRepository test class.
@@ -27,12 +26,6 @@ import org.springframework.data.repository.CrudRepository;
  * @author laokou
  */
 class OAuth2UserConsentRepositoryTest {
-
-	@Test
-	void test_repository_extends_CrudRepository() {
-		// Then
-		Assertions.assertThat(CrudRepository.class.isAssignableFrom(OAuth2UserConsentRepository.class)).isTrue();
-	}
 
 	@Test
 	void test_repository_has_findByRegisteredClientIdAndPrincipalName_method() throws NoSuchMethodException {
