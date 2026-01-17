@@ -33,6 +33,7 @@
 
 package org.laokou.common.security.config.repository;
 
+import org.jspecify.annotations.NonNull;
 import org.laokou.common.security.config.entity.OAuth2RegisteredClient;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -42,7 +43,8 @@ import org.springframework.stereotype.Repository;
  * @author laokou
  */
 @Repository
-public interface OAuth2RegisteredClientRepository extends CrudRepository<OAuth2RegisteredClient, String> {
+public interface OAuth2RegisteredClientRepository
+		extends CrudRepository<@NonNull OAuth2RegisteredClient, @NonNull String> {
 
 	OAuth2RegisteredClient findByClientId(String clientId);
 

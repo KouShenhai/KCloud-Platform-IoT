@@ -56,7 +56,7 @@ public final class UsernamePasswordAuthenticationTokenToBytesConverter
 	public UsernamePasswordAuthenticationTokenToBytesConverter() {
 		ObjectMapper objectMapper = JsonMapper.builder()
 			.addModules(SecurityJacksonModules
-				.getModules(BytesToUsernamePasswordAuthenticationTokenConverter.class.getClassLoader()))
+				.getModules(UsernamePasswordAuthenticationTokenToBytesConverter.class.getClassLoader()))
 			.build();
 		this.serializer = new JacksonJsonRedisSerializer<>(objectMapper, UsernamePasswordAuthenticationToken.class);
 	}

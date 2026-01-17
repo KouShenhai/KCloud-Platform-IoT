@@ -33,7 +33,6 @@
 
 package org.laokou.common.security.config.convertor;
 
-import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
 import org.laokou.common.security.config.entity.OAuth2AuthorizationGrantAuthorization;
 import org.springframework.core.convert.converter.Converter;
@@ -65,7 +64,7 @@ public final class ClaimsHolderToBytesConverter
 	}
 
 	@Override
-	public byte[] convert(@NotNull OAuth2AuthorizationGrantAuthorization.ClaimsHolder value) {
+	public byte[] convert(OAuth2AuthorizationGrantAuthorization.@NonNull ClaimsHolder value) {
 		return this.serializer.serialize(value);
 	}
 

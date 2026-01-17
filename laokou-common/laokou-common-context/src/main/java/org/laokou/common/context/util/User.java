@@ -26,12 +26,11 @@ import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * @param id 用户ID.
@@ -44,6 +43,7 @@ import java.util.stream.Collectors;
  * @param mobile 手机号.
  * @param tenantId 租户ID.
  * @param permissions 菜单权限标识集合.
+ * @param deptId 部门ID.
  * @author laokou
  */
 @Builder
@@ -64,8 +64,8 @@ public record User(Long id, String username, String password, String avatar, Boo
 
 	@Override
 	@NullMarked
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return this.permissions.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toSet());
+	public Collection<GrantedAuthority> getAuthorities() {
+		return AuthorityUtils.createAuthorityList(this.permissions());
 	}
 
 	@Override

@@ -29,6 +29,7 @@ import org.laokou.common.core.util.TreeUtils;
 import org.laokou.common.data.cache.annotation.DistributedCache;
 import org.laokou.common.data.cache.constant.NameConstants;
 import org.laokou.common.data.cache.model.OperateTypeEnum;
+import org.laokou.common.fory.config.ForyFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -41,6 +42,10 @@ import java.util.List;
 public class UserMenuTreeBuilder implements MenuTreeBuilder {
 
 	private final MenuMapper menuMapper;
+
+	static {
+		ForyFactory.INSTANCE.register(org.laokou.admin.menu.dto.clientobject.MenuTreeCO.class);
+	}
 
 	@Override
 	@DistributedCache(name = NameConstants.USER_MENU, key = "#userId", operateType = OperateTypeEnum.GET)

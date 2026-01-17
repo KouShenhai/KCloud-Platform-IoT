@@ -33,7 +33,7 @@
 
 package org.laokou.common.security.config.convertor;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
 import org.springframework.data.redis.serializer.JacksonJsonRedisSerializer;
@@ -48,9 +48,9 @@ import tools.jackson.databind.json.JsonMapper;
  */
 @ReadingConverter
 public final class BytesToUsernamePasswordAuthenticationTokenConverter
-		implements Converter<byte[], UsernamePasswordAuthenticationToken> {
+		implements Converter<byte @NonNull [], UsernamePasswordAuthenticationToken> {
 
-	private final JacksonJsonRedisSerializer<UsernamePasswordAuthenticationToken> serializer;
+	private final JacksonJsonRedisSerializer<@NonNull UsernamePasswordAuthenticationToken> serializer;
 
 	public BytesToUsernamePasswordAuthenticationTokenConverter() {
 		ObjectMapper objectMapper = JsonMapper.builder()
@@ -61,7 +61,7 @@ public final class BytesToUsernamePasswordAuthenticationTokenConverter
 	}
 
 	@Override
-	public UsernamePasswordAuthenticationToken convert(@NotNull byte[] value) {
+	public UsernamePasswordAuthenticationToken convert(byte @NonNull [] value) {
 		return this.serializer.deserialize(value);
 	}
 
