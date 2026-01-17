@@ -37,6 +37,13 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import tools.jackson.databind.json.JsonMapper;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * IdempotentAspectj integration test with Redis Testcontainer.
  *
@@ -184,32 +191,21 @@ class IdempotentAspectjIntegrationTest {
 		String idempotentKey = RedisKeyUtils.getApiIdempotentKey(requestId);
 
 		int threadCount = 10;
-		java.util.concurrent.CountDownLatch startLatch = new java.util.concurrent.CountDownLatch(1);
-		java.util.concurrent.CountDownLatch endLatch = new java.util.concurrent.CountDownLatch(threadCount);
-		java.util.concurrent.atomic.AtomicInteger successCount = new java.util.concurrent.atomic.AtomicInteger(0);
-
-		// When
-		for (int i = 0; i < threadCount; i++) {
-			new Thread(() -> {
-				try {
-					startLatch.await();
+		AtomicInteger successCount = new AtomicInteger(0);
+		List<Callable<Boolean>> tasks = new ArrayList<>(threadCount);
+		try (ExecutorService executor = Executors.newFixedThreadPool(threadCount)) {
+			for (int i = 0; i < threadCount; i++) {
+				tasks.add(() -> {
 					if (redisUtils.setIfAbsent(idempotentKey, 0, RedisUtils.FIVE_MINUTE_EXPIRE)) {
 						successCount.incrementAndGet();
 					}
-				}
-				catch (InterruptedException e) {
-					Thread.currentThread().interrupt();
-				}
-				finally {
-					endLatch.countDown();
-				}
-			}).start();
+					return true;
+				});
+			}
+			executor.invokeAll(tasks);
+			// Then - only one thread should succeed
+			Assertions.assertThat(successCount.get()).isEqualTo(1);
 		}
-		startLatch.countDown();
-		endLatch.await();
-
-		// Then - only one thread should succeed
-		Assertions.assertThat(successCount.get()).isEqualTo(1);
 	}
 
 	@Test

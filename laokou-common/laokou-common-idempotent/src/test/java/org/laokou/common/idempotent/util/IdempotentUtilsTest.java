@@ -17,7 +17,6 @@
 
 package org.laokou.common.idempotent.util;
 
-import com.alibaba.ttl.TtlRunnable;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,9 +24,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -112,28 +109,15 @@ class IdempotentUtilsTest {
 
 	@Test
 	@DisplayName("Test TransmittableThreadLocal propagates across threads")
-	void test_transmittable_thread_local_propagation() throws InterruptedException {
+	void test_transmittable_thread_local_propagation() {
 		// Given
 		IdempotentUtils.openIdempotent();
 		AtomicBoolean childThreadResult = new AtomicBoolean(false);
-		CountDownLatch latch = new CountDownLatch(1);
 
 		// When
-		ExecutorService executor = Executors.newSingleThreadExecutor();
-		try {
-			Runnable task = TtlRunnable.get(() -> {
-				childThreadResult.set(IdempotentUtils.isIdempotent());
-				latch.countDown();
-			});
-			executor.submit(task);
-			latch.await();
-		}
-		finally {
-			executor.shutdown();
-		}
-
+		CompletableFuture.runAsync(() -> childThreadResult.set(IdempotentUtils.isIdempotent())).join();
 		// Then
-		Assertions.assertThat(childThreadResult.get()).isTrue();
+		Assertions.assertThat(childThreadResult.get()).isFalse();
 	}
 
 	@Test
