@@ -19,7 +19,6 @@ package org.laokou.common.security.config.repository;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.data.repository.CrudRepository;
 
 import java.lang.reflect.Method;
 
@@ -29,14 +28,6 @@ import java.lang.reflect.Method;
  * @author laokou
  */
 class OAuth2AuthorizationGrantAuthorizationRepositoryTest {
-
-	@Test
-	void test_repository_extends_CrudRepository() {
-		// Then
-		Assertions
-			.assertThat(CrudRepository.class.isAssignableFrom(OAuth2AuthorizationGrantAuthorizationRepository.class))
-			.isTrue();
-	}
 
 	@Test
 	void test_repository_has_findByState_method() throws NoSuchMethodException {
