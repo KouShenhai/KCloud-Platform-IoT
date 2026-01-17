@@ -18,6 +18,7 @@
 package org.laokou.common.domain.support;
 
 import lombok.RequiredArgsConstructor;
+import org.jspecify.annotations.NonNull;
 import org.laokou.common.i18n.dto.DomainEvent;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
@@ -29,7 +30,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class KafkaDomainEventPublisher implements DomainEventPublisher {
 
-	private final KafkaTemplate<String, Object> kafkaTemplate;
+	private final KafkaTemplate<@NonNull String, @NonNull Object> kafkaTemplate;
 
 	@Override
 	public void publish(String topic, DomainEvent payload) {

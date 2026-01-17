@@ -33,7 +33,7 @@
 
 package org.laokou.common.security.config.convertor;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 import org.laokou.common.security.config.entity.OAuth2AuthorizationGrantAuthorization;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
@@ -49,9 +49,9 @@ import tools.jackson.databind.json.JsonMapper;
  */
 @ReadingConverter
 public final class BytesToClaimsHolderConverter
-		implements Converter<byte[], OAuth2AuthorizationGrantAuthorization.ClaimsHolder> {
+		implements Converter<byte @NonNull [], OAuth2AuthorizationGrantAuthorization.ClaimsHolder> {
 
-	private final JacksonJsonRedisSerializer<OAuth2AuthorizationGrantAuthorization.ClaimsHolder> serializer;
+	private final JacksonJsonRedisSerializer<OAuth2AuthorizationGrantAuthorization.@NonNull ClaimsHolder> serializer;
 
 	public BytesToClaimsHolderConverter() {
 		ObjectMapper objectMapper = JsonMapper.builder()
@@ -64,7 +64,7 @@ public final class BytesToClaimsHolderConverter
 	}
 
 	@Override
-	public OAuth2AuthorizationGrantAuthorization.ClaimsHolder convert(@NotNull byte[] value) {
+	public OAuth2AuthorizationGrantAuthorization.ClaimsHolder convert(byte @NonNull [] value) {
 		return this.serializer.deserialize(value);
 	}
 

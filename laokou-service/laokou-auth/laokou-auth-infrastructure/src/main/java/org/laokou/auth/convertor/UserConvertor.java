@@ -60,6 +60,7 @@ public final class UserConvertor {
 			.avatar(userDO.getAvatar())
 			.mail(userDO.getMail())
 			.status(userDO.getStatus())
+			.deptId(userDO.getDeptId())
 			.mobile(userDO.getMobile())
 			.tenantId(userDO.getTenantId())
 			.build();

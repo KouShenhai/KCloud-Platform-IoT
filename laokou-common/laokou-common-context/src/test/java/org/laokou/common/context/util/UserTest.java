@@ -1,0 +1,208 @@
+/*
+ * Copyright (c) 2022-2026 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+package org.laokou.common.context.util;
+
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.security.core.GrantedAuthority;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
+/**
+ * User record test class.
+ *
+ * @author laokou
+ */
+@DisplayName("User Record Unit Tests")
+class UserTest {
+
+	private User user;
+
+	private Set<String> permissions;
+
+	@BeforeEach
+	void setUp() {
+		permissions = new HashSet<>();
+		permissions.add("sys:user:query");
+		permissions.add("sys:user:add");
+		permissions.add("sys:role:query");
+
+		user = User.builder()
+			.id(1L)
+			.username("admin")
+			.password("password123")
+			.avatar("https://example.com/avatar.png")
+			.superAdmin(true)
+			.status(0)
+			.mail("admin@example.com")
+			.mobile("13800138000")
+			.tenantId(100L)
+			.deptId(10L)
+			.permissions(permissions)
+			.build();
+	}
+
+	@Test
+	@DisplayName("Test User record basic properties")
+	void test_user_basic_properties() {
+		// Then
+		Assertions.assertThat(user.id()).isEqualTo(1L);
+		Assertions.assertThat(user.username()).isEqualTo("admin");
+		Assertions.assertThat(user.password()).isEqualTo("password123");
+		Assertions.assertThat(user.avatar()).isEqualTo("https://example.com/avatar.png");
+		Assertions.assertThat(user.superAdmin()).isTrue();
+		Assertions.assertThat(user.status()).isZero();
+		Assertions.assertThat(user.mail()).isEqualTo("admin@example.com");
+		Assertions.assertThat(user.mobile()).isEqualTo("13800138000");
+		Assertions.assertThat(user.tenantId()).isEqualTo(100L);
+		Assertions.assertThat(user.deptId()).isEqualTo(10L);
+		Assertions.assertThat(user.permissions())
+			.hasSize(3)
+			.containsExactlyInAnyOrder("sys:user:query", "sys:user:add", "sys:role:query");
+	}
+
+	@Test
+	@DisplayName("Test getName returns username")
+	void test_getName_returns_username() {
+		// When
+		String name = user.getName();
+
+		// Then
+		Assertions.assertThat(name).isEqualTo("admin");
+	}
+
+	@Test
+	@DisplayName("Test getAuthorities returns correct authorities from permissions")
+	void test_getAuthorities_returns_correct_authorities() {
+		// When
+		Collection<GrantedAuthority> authorities = user.getAuthorities();
+
+		// Then
+		Assertions.assertThat(authorities)
+			.isNotNull()
+			.hasSize(3)
+			.extracting(GrantedAuthority::getAuthority)
+			.containsExactlyInAnyOrder("sys:user:query", "sys:user:add", "sys:role:query");
+	}
+
+	@Test
+	@DisplayName("Test getCredentials returns username")
+	void test_getCredentials_returns_username() {
+		// When
+		Object credentials = user.getCredentials();
+
+		// Then
+		Assertions.assertThat(credentials).isEqualTo("admin");
+	}
+
+	@Test
+	@DisplayName("Test getDetails returns username")
+	void test_getDetails_returns_username() {
+		// When
+		Object details = user.getDetails();
+
+		// Then
+		Assertions.assertThat(details).isEqualTo("admin");
+	}
+
+	@Test
+	@DisplayName("Test getPrincipal returns username")
+	void test_getPrincipal_returns_username() {
+		// When
+		Object principal = user.getPrincipal();
+
+		// Then
+		Assertions.assertThat(principal).isEqualTo("admin");
+	}
+
+	@Test
+	@DisplayName("Test isAuthenticated always returns true")
+	void test_isAuthenticated_returns_true() {
+		// When
+		boolean authenticated = user.isAuthenticated();
+
+		// Then
+		Assertions.assertThat(authenticated).isTrue();
+	}
+
+	@Test
+	@DisplayName("Test setAuthenticated throws UnsupportedOperationException")
+	void test_setAuthenticated_throws_exception() {
+		// When & Then
+		Assertions.assertThatThrownBy(() -> user.setAuthenticated(false))
+			.isInstanceOf(UnsupportedOperationException.class)
+			.hasMessage("Cannot change authentication state");
+	}
+
+	@Test
+	@DisplayName("Test User with null optional fields")
+	void test_user_with_null_optional_fields() {
+		// Given
+		User userWithNulls = User.builder()
+			.id(2L)
+			.username("testuser")
+			.password(null)
+			.avatar(null)
+			.superAdmin(false)
+			.status(1)
+			.mail(null)
+			.mobile(null)
+			.tenantId(null)
+			.deptId(null)
+			.permissions(null)
+			.build();
+
+		// Then
+		Assertions.assertThat(userWithNulls.id()).isEqualTo(2L);
+		Assertions.assertThat(userWithNulls.username()).isEqualTo("testuser");
+		Assertions.assertThat(userWithNulls.password()).isNull();
+		Assertions.assertThat(userWithNulls.avatar()).isNull();
+		Assertions.assertThat(userWithNulls.superAdmin()).isFalse();
+		Assertions.assertThat(userWithNulls.status()).isEqualTo(1);
+		Assertions.assertThat(userWithNulls.mail()).isNull();
+		Assertions.assertThat(userWithNulls.mobile()).isNull();
+		Assertions.assertThat(userWithNulls.tenantId()).isNull();
+		Assertions.assertThat(userWithNulls.deptId()).isNull();
+		Assertions.assertThat(userWithNulls.permissions()).isNull();
+	}
+
+	@Test
+	@DisplayName("Test User with empty permissions")
+	void test_user_with_empty_permissions() {
+		// Given
+		User userWithEmptyPerms = User.builder().id(3L).username("user3").permissions(new HashSet<>()).build();
+
+		// When
+		Collection<GrantedAuthority> authorities = userWithEmptyPerms.getAuthorities();
+
+		// Then
+		Assertions.assertThat(authorities).isNotNull().isEmpty();
+	}
+
+	@Test
+	@DisplayName("Test User implements Authentication interface")
+	void test_user_implements_authentication() {
+		// Then
+		Assertions.assertThat(user).isInstanceOf(org.springframework.security.core.Authentication.class);
+	}
+
+}

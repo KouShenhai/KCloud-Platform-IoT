@@ -33,7 +33,6 @@
 
 package org.laokou.common.security.config.convertor;
 
-import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.WritingConverter;
@@ -64,7 +63,7 @@ public final class OAuth2AuthorizationRequestToBytesConverter
 	}
 
 	@Override
-	public byte[] convert(@NotNull OAuth2AuthorizationRequest value) {
+	public byte[] convert(@NonNull OAuth2AuthorizationRequest value) {
 		return this.serializer.serialize(value);
 	}
 

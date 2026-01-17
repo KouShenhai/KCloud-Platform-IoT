@@ -33,7 +33,6 @@
 
 package org.laokou.common.security.config.convertor;
 
-import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
@@ -49,7 +48,8 @@ import tools.jackson.databind.json.JsonMapper;
  * @author laokou
  */
 @ReadingConverter
-public final class BytesToOAuth2AuthorizationRequestConverter implements Converter<byte[], OAuth2AuthorizationRequest> {
+public final class BytesToOAuth2AuthorizationRequestConverter
+		implements Converter<byte @NonNull [], OAuth2AuthorizationRequest> {
 
 	private final JacksonJsonRedisSerializer<@NonNull OAuth2AuthorizationRequest> serializer;
 
@@ -63,7 +63,7 @@ public final class BytesToOAuth2AuthorizationRequestConverter implements Convert
 	}
 
 	@Override
-	public OAuth2AuthorizationRequest convert(@NotNull byte[] value) {
+	public OAuth2AuthorizationRequest convert(byte @NonNull [] value) {
 		return this.serializer.deserialize(value);
 	}
 
