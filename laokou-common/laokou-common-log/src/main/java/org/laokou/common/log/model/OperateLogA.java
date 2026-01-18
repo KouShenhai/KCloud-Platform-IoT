@@ -28,11 +28,11 @@ import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.dto.AggregateRoot;
-import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.util.StopWatch;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -144,7 +144,7 @@ public class OperateLogA extends AggregateRoot {
 	private String stackTrace;
 
 	protected OperateLogA() {
-		super(1L, InstantUtils.now());
+		// super(1L, InstantUtils.now());
 	}
 
 	public void getProfile(String profile) {
