@@ -28,6 +28,7 @@ import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.log.mapper.OperateLogDO;
 import org.springframework.util.Assert;
 
+import java.time.ZoneId;
 import java.util.List;
 
 /**
@@ -142,8 +143,8 @@ public final class OperateLogConvertor implements ExcelUtils.ExcelConvertor<Oper
 		operateLogExcel.setStatus(status.getDesc());
 		operateLogExcel.setErrorMessage(operateLogDO.getErrorMessage());
 		operateLogExcel.setCostTime(operateLogDO.getCostTime());
-		operateLogExcel.setCreateTime(
-				InstantUtils.format(operateLogDO.getCreateTime(), DateConstants.YYYY_B_MM_B_DD_HH_R_MM_R_SS));
+		operateLogExcel.setCreateTime(InstantUtils.format(operateLogDO.getCreateTime(), ZoneId.of("Asia/Shanghai"),
+				DateConstants.YYYY_B_MM_B_DD_HH_R_MM_R_SS));
 		return operateLogExcel;
 	}
 

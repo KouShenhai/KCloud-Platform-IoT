@@ -29,6 +29,7 @@ import org.laokou.common.i18n.common.constant.DateConstants;
 import org.laokou.common.i18n.util.InstantUtils;
 import org.springframework.util.Assert;
 
+import java.time.ZoneId;
 import java.util.List;
 
 /**
@@ -119,8 +120,8 @@ public final class LoginLogConvertor implements ExcelUtils.ExcelConvertor<LoginL
 		loginLogExcel.setStatus(status.getDesc());
 		loginLogExcel.setType(type.getDesc());
 		loginLogExcel.setErrorMessage(loginLogDO.getErrorMessage());
-		loginLogExcel
-			.setCreateTime(InstantUtils.format(loginLogDO.getCreateTime(), DateConstants.YYYY_B_MM_B_DD_HH_R_MM_R_SS));
+		loginLogExcel.setCreateTime(InstantUtils.format(loginLogDO.getCreateTime(), ZoneId.of("Asia/Shanghai"),
+				DateConstants.YYYY_B_MM_B_DD_HH_R_MM_R_SS));
 		return loginLogExcel;
 	}
 

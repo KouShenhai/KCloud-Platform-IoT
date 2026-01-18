@@ -49,6 +49,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -166,7 +167,8 @@ public final class ExcelUtils {
 	}
 
 	private static void setHeader(String fileName, HttpServletResponse response) {
-		fileName = fileName + "_导出全部_" + InstantUtils.format(InstantUtils.now(), DateConstants.YYYYMMDDHHMMSS)
+		fileName = fileName + "_导出全部_"
+				+ InstantUtils.format(InstantUtils.now(), ZoneId.of("Asia/Shanghai"), DateConstants.YYYYMMDDHHMMSS)
 				+ ".xlsx";
 		response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		response.setContentType("application/vnd.ms-excel;charset=UTF-8");

@@ -44,15 +44,15 @@ class InstantUtilsTest {
 		Assertions.assertThat(instant2).isNotNull();
 		Assertions.assertThat(InstantUtils.betweenSeconds(instant, instant2)).isEqualTo(2);
 
-		Instant instant3 = InstantUtils.parse("2025-10-15 12:00:00", DateConstants.YYYY_B_MM_B_DD_HH_R_MM_R_SS);
-		Assertions.assertThat(instant3).isNotNull();
 		Instant instant4 = InstantUtils.parse("2025-10-15 12:00:00", ZoneId.of("Asia/Shanghai"),
 				DateConstants.YYYY_B_MM_B_DD_HH_R_MM_R_SS);
-		Assertions.assertThat(instant4).isNotNull().isEqualTo(instant3);
-		Assertions.assertThat(InstantUtils.format(instant3, DateConstants.YYYY_B_MM_B_DD_HH_R_MM_R_SS))
+		Assertions.assertThat(instant4).isNotNull();
+		Assertions
+			.assertThat(InstantUtils.format(instant4, ZoneId.of("Asia/Shanghai"),
+					DateConstants.YYYY_B_MM_B_DD_HH_R_MM_R_SS))
 			.isEqualTo("2025-10-15 12:00:00");
 		Assertions
-			.assertThat(InstantUtils.format(instant3, ZoneId.of("Asia/Shanghai"),
+			.assertThat(InstantUtils.format(instant4, ZoneId.of("Asia/Shanghai"),
 					DateConstants.YYYY_B_MM_B_DD_HH_R_MM_R_SS))
 			.isEqualTo("2025-10-15 12:00:00");
 
