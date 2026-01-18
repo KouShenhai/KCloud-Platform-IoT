@@ -27,8 +27,11 @@ import lombok.Data;
 import org.assertj.core.api.Assertions;
 import org.hibernate.validator.constraints.Range;
 import org.junit.jupiter.api.Test;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.ValidatorUtils;
+import org.springframework.context.i18n.LocaleContextHolder;
 
+import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -158,14 +161,26 @@ class ValidatorUtilsTest {
 	void test_getMessage_withValidCode() {
 		// Test getMessage with valid code
 		String message = ValidatorUtils.getMessage("test.message");
-		Assertions.assertThat(message).isEqualTo("测试");
+		Locale locale = LocaleContextHolder.getLocale();
+		if (ObjectUtils.equals("zh", locale.getLanguage())) {
+			Assertions.assertThat(message).isEqualTo("测试");
+		}
+		else {
+			Assertions.assertThat(message).isEqualTo("test");
+		}
 	}
 
 	@Test
 	void test_getMessage_withNullArgs() {
 		// Test getMessage with null args
 		String message = ValidatorUtils.getMessage("test.message", null);
-		Assertions.assertThat(message).isEqualTo("测试");
+		Locale locale = LocaleContextHolder.getLocale();
+		if (ObjectUtils.equals("zh", locale.getLanguage())) {
+			Assertions.assertThat(message).isEqualTo("测试");
+		}
+		else {
+			Assertions.assertThat(message).isEqualTo("test");
+		}
 	}
 
 	@Test
