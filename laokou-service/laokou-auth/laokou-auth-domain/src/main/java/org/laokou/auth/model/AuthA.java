@@ -115,7 +115,7 @@ public class AuthA extends AggregateRoot implements ValidateName {
 	/**
 	 * ID生成器.
 	 */
-	private final IdGenerator idGenerator;
+	private final transient IdGenerator idGenerator;
 
 	/**
 	 * 请求值Map映射.
