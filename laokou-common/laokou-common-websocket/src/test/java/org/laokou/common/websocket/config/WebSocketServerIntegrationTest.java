@@ -154,6 +154,8 @@ class WebSocketServerIntegrationTest {
 		properties.setReaderIdleTime(60);
 		properties.setBossCorePoolSize(1);
 		properties.setWorkerCorePoolSize(2);
+		// Disable io_uring for consistent test behavior across environments
+		properties.setUseIoUring(false);
 
 		// Create handler
 		WebSocketServerHandler handler = new WebSocketServerHandler(properties, introspector);
@@ -166,8 +168,16 @@ class WebSocketServerIntegrationTest {
 		server = new WebSocketServer(initializer, properties, Executors.newVirtualThreadPerTaskExecutor());
 		Thread.ofVirtual().start(() -> server.start());
 
-		// Wait for server to start
-		Thread.sleep(1000);
+		// Wait for server to be ready with polling (max 10 seconds)
+		int maxWaitMs = 10000;
+		int waitedMs = 0;
+		while (!server.isRunning() && waitedMs < maxWaitMs) {
+			Thread.sleep(100);
+			waitedMs += 100;
+		}
+		if (!server.isRunning()) {
+			throw new RuntimeException("Server failed to start within " + maxWaitMs + "ms");
+		}
 
 		// Initialize client event loop
 		clientGroup = new MultiThreadIoEventLoopGroup(1, NioIoHandler.newFactory());
@@ -318,7 +328,7 @@ class WebSocketServerIntegrationTest {
 		void close() throws Exception {
 			if (channel != null && channel.isActive()) {
 				channel.writeAndFlush(new CloseWebSocketFrame());
-				channel.closeFuture().await(5, TimeUnit.SECONDS);
+				channel.close().await(5, TimeUnit.SECONDS);
 			}
 		}
 
