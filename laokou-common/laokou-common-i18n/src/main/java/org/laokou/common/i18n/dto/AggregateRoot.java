@@ -18,6 +18,7 @@
 package org.laokou.common.i18n.dto;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.Instant;
 
@@ -27,6 +28,7 @@ import java.time.Instant;
  * @author laokou
  */
 @Getter
+@Setter
 public abstract class AggregateRoot extends Identifier {
 
 	/**
