@@ -39,4 +39,10 @@ public interface Server {
 	 */
 	void stop();
 
+	/**
+	 * 是否正在运行.
+	 * @return true表示正在运行，false表示已停止
+	 */
+	boolean isRunning();
+
 }

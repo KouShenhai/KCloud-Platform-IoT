@@ -114,6 +114,15 @@ public abstract class AbstractServer implements Server {
 	}
 
 	/**
+	 * 是否正在运行.
+	 * @return true表示正在运行，false表示已停止
+	 */
+	@Override
+	public final boolean isRunning() {
+		return running.get();
+	}
+
+	/**
 	 * 绑定端口.
 	 * @param bootstrap 启动类
 	 * @param port 端口
