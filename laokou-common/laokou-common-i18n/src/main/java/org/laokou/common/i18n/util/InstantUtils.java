@@ -55,10 +55,6 @@ public final class InstantUtils {
 		return ChronoUnit.HOURS.between(instant1, instant2);
 	}
 
-	public static Instant parse(String instant, String pattern) {
-		return parse(instant, getDefaultZoneId(), pattern);
-	}
-
 	public static Instant parse(String instant, ZoneId zoneId, String pattern) {
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
 		LocalDateTime localDateTime = LocalDateTime.parse(instant, dateTimeFormatter);
@@ -68,13 +64,6 @@ public final class InstantUtils {
 	public static String format(Instant instant, ZoneId zoneId, String pattern) {
 		// 指定时区
 		ZonedDateTime zonedDateTime = instant.atZone(zoneId);
-		DateTimeFormatter dateTimeFormatter = getDateTimeFormatter(pattern);
-		return zonedDateTime.format(dateTimeFormatter);
-	}
-
-	public static String format(Instant instant, String pattern) {
-		// 指定时区
-		ZonedDateTime zonedDateTime = instant.atZone(getDefaultZoneId());
 		DateTimeFormatter dateTimeFormatter = getDateTimeFormatter(pattern);
 		return zonedDateTime.format(dateTimeFormatter);
 	}
@@ -95,7 +84,7 @@ public final class InstantUtils {
 	 * @return 格式化配置
 	 */
 	public static DateTimeFormatter getDateTimeFormatter(String pattern) {
-		return DateTimeFormatter.ofPattern(pattern).withZone(getDefaultZoneId());
+		return DateTimeFormatter.ofPattern(pattern);
 	}
 
 	public static Instant getInstantOfTimestamp(long timestamp) {

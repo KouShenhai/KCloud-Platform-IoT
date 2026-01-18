@@ -28,6 +28,7 @@ import org.laokou.common.i18n.common.constant.DateConstants;
 import org.laokou.common.i18n.util.InstantUtils;
 import org.springframework.util.Assert;
 
+import java.time.ZoneId;
 import java.util.List;
 
 /**
@@ -105,8 +106,8 @@ public final class NoticeLogConvertor implements ExcelUtils.ExcelConvertor<Notic
 		noticeLogExcel.setStatus(status.getDesc());
 		noticeLogExcel.setParam(noticeLogDO.getParam());
 		noticeLogExcel.setErrorMessage(noticeLogDO.getErrorMessage());
-		noticeLogExcel
-			.setCreateTime(InstantUtils.format(noticeLogDO.getCreateTime(), DateConstants.YYYY_B_MM_B_DD_HH_R_MM_R_SS));
+		noticeLogExcel.setCreateTime(InstantUtils.format(noticeLogDO.getCreateTime(), ZoneId.of("Asia/Shanghai"),
+				DateConstants.YYYY_B_MM_B_DD_HH_R_MM_R_SS));
 		return noticeLogExcel;
 	}
 

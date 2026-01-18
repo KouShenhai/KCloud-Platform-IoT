@@ -23,6 +23,7 @@ import org.laokou.logstash.dto.clientobject.LokiPushDTO;
 import org.laokou.logstash.gatewayimpl.database.dataobject.TraceLogIndex;
 
 import java.time.Instant;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +40,7 @@ public final class TraceLogConvertor {
 	}
 
 	private static LokiPushDTO.Stream toDTO(TraceLogIndex traceLogIndex) {
-		Instant instant = InstantUtils.parse(traceLogIndex.getDateTime(),
+		Instant instant = InstantUtils.parse(traceLogIndex.getDateTime(), ZoneId.of("Asia/Shanghai"),
 				DateConstants.YYYY_B_MM_B_DD_HH_R_MM_R_SS_D_SSS);
 		// 毫秒转纳秒
 		String lokiTimestamp = String.valueOf(instant.toEpochMilli() * 1000000);

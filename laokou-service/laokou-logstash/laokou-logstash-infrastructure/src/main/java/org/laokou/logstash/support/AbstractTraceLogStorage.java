@@ -26,6 +26,8 @@ import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.logstash.gatewayimpl.database.dataobject.TraceLogIndex;
 
+import java.time.ZoneId;
+
 @Slf4j
 @RequiredArgsConstructor
 public abstract class AbstractTraceLogStorage implements TraceLogStorage {
@@ -33,7 +35,8 @@ public abstract class AbstractTraceLogStorage implements TraceLogStorage {
 	protected static final String TRACE_INDEX = "trace_log";
 
 	protected String getIndexName() {
-		return TRACE_INDEX + StringConstants.UNDER + InstantUtils.format(InstantUtils.now(), DateConstants.YYYYMMDD);
+		return TRACE_INDEX + StringConstants.UNDER
+				+ InstantUtils.format(InstantUtils.now(), ZoneId.of("Asia/Shanghai"), DateConstants.YYYYMMDD);
 	}
 
 	protected TraceLogIndex getTraceLogIndex(Object obj) {
