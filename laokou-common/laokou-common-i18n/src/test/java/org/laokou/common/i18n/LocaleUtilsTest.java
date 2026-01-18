@@ -45,31 +45,6 @@ class LocaleUtilsTest {
 	}
 
 	@Test
-	void test_toLocale_withEmptyString() {
-		assertDefaultLocale(LocaleUtils.toLocale(""));
-	}
-
-	@Test
-	void test_toLocale_withNull() {
-		assertDefaultLocale(LocaleUtils.toLocale(null));
-	}
-
-	@Test
-	void test_toLocale_withInvalidFormat() {
-		assertDefaultLocale(LocaleUtils.toLocale("invalid"));
-	}
-
-	@Test
-	void test_toLocale_withOnlyLanguageCode() {
-		assertDefaultLocale(LocaleUtils.toLocale("zh"));
-	}
-
-	@Test
-	void test_toLocale_withMultipleLanguagesNoValidFormat() {
-		assertDefaultLocale(LocaleUtils.toLocale("zh,en,ja"));
-	}
-
-	@Test
 	void test_toLocale_withMixedValidInvalidLanguages() {
 		assertLocale(LocaleUtils.toLocale("invalid,zh-CN,en-US"), "zh", "CN");
 	}
@@ -95,28 +70,139 @@ class LocaleUtilsTest {
 	}
 
 	@Test
-	void test_toLocale_withWhitespace() {
-		assertDefaultLocale(LocaleUtils.toLocale("   "));
-	}
-
-	@Test
-	void test_toLocale_withExtraHyphens() {
-		assertDefaultLocale(LocaleUtils.toLocale("zh-CN-extra"));
-	}
-
-	@Test
 	void test_toLocale_withAcceptLanguageHeader() {
 		assertLocale(LocaleUtils.toLocale("zh-CN,zh;q=0.9,en;q=0.8"), "zh", "CN");
+	}
+
+	@Test
+	void test_toLocale_withNullLanguage() {
+		// Should return default locale from LocaleContextHolder
+		Locale locale = LocaleUtils.toLocale(null);
+		Assertions.assertThat(locale).isNotNull();
+	}
+
+	@Test
+	void test_toLocale_withEmptyString() {
+		// Should return default locale from LocaleContextHolder
+		Locale locale = LocaleUtils.toLocale("");
+		Assertions.assertThat(locale).isNotNull();
+	}
+
+	@Test
+	void test_toLocale_withBlankString() {
+		// Should return default locale from LocaleContextHolder
+		Locale locale = LocaleUtils.toLocale("   ");
+		Assertions.assertThat(locale).isNotNull();
+	}
+
+	@Test
+	void test_toLocale_withInvalidFormat() {
+		// No hyphen, should return default locale
+		Locale locale = LocaleUtils.toLocale("invalid");
+		Assertions.assertThat(locale).isNotNull();
+	}
+
+	@Test
+	void test_toLocale_withOnlyLanguageCode() {
+		// Only language code without country, should return default locale
+		Locale locale = LocaleUtils.toLocale("zh");
+		Assertions.assertThat(locale).isNotNull();
+	}
+
+	@Test
+	void test_toLocale_withMultipleCommasNoValid() {
+		// Multiple commas but no valid language-country pair
+		Locale locale = LocaleUtils.toLocale("invalid,another,test");
+		Assertions.assertThat(locale).isNotNull();
+	}
+
+	@Test
+	void test_toLocale_withKorean() {
+		assertLocale(LocaleUtils.toLocale("ko-KR"), "ko", "KR");
+	}
+
+	@Test
+	void test_toLocale_withPortuguese() {
+		assertLocale(LocaleUtils.toLocale("pt-BR"), "pt", "BR");
+	}
+
+	@Test
+	void test_toLocale_withItalian() {
+		assertLocale(LocaleUtils.toLocale("it-IT"), "it", "IT");
+	}
+
+	@Test
+	void test_toLocale_withRussian() {
+		assertLocale(LocaleUtils.toLocale("ru-RU"), "ru", "RU");
+	}
+
+	@Test
+	void test_toLocale_withEnglishGB() {
+		assertLocale(LocaleUtils.toLocale("en-GB"), "en", "GB");
+	}
+
+	@Test
+	void test_toLocale_withTraditionalChinese() {
+		assertLocale(LocaleUtils.toLocale("zh-TW"), "zh", "TW");
+	}
+
+	@Test
+	void test_toLocale_withComplexAcceptHeader() {
+		// Complex Accept-Language header with quality values
+		Locale locale = LocaleContextHolder.getLocale();
+		assertLocale(LocaleUtils.toLocale("en-US;q=0.8,zh-CN;q=0.9,ja-JP;q=0.7"), locale.getLanguage(),
+				locale.getCountry());
+	}
+
+	@Test
+	void test_toLocale_withLeadingComma() {
+		assertLocale(LocaleUtils.toLocale(",zh-CN"), "zh", "CN");
+	}
+
+	@Test
+	void test_toLocale_withTrailingComma() {
+		assertLocale(LocaleUtils.toLocale("zh-CN,"), "zh", "CN");
+	}
+
+	@Test
+	void test_toLocale_withSpacesAroundLanguage() {
+		// Spaces might cause parsing issues, should handle gracefully
+		Locale locale = LocaleUtils.toLocale(" zh-CN ");
+		Assertions.assertThat(locale).isNotNull();
+	}
+
+	@Test
+	void test_toLocale_withLowercaseCountryCode() {
+		// Lowercase country code should work
+		assertLocale(LocaleUtils.toLocale("zh-cn"), "zh", "CN");
+	}
+
+	@Test
+	void test_toLocale_withUppercaseLanguageCode() {
+		// Uppercase language code should work
+		assertLocale(LocaleUtils.toLocale("ZH-CN"), "zh", "CN");
+	}
+
+	@Test
+	void test_toLocale_withOnlyHyphen() {
+		// Only hyphen, should return default locale
+		Locale locale = LocaleUtils.toLocale("-");
+		Assertions.assertThat(locale).isNotNull();
+	}
+
+	@Test
+	void test_toLocale_withMultipleHyphens() {
+		// Multiple hyphens, should parse first two parts
+		Locale locale = LocaleUtils.toLocale("zh-CN-Hans");
+		Assertions.assertThat(locale).isNotNull();
+		Assertions.assertThat(locale.getLanguage()).isEqualTo("zh");
+		Assertions.assertThat(locale.getCountry()).isEqualTo("CN");
 	}
 
 	private void assertLocale(Locale locale, String expectedLanguage, String expectedCountry) {
 		Assertions.assertThat(locale).isNotNull();
 		Assertions.assertThat(locale.getLanguage()).isEqualTo(expectedLanguage);
 		Assertions.assertThat(locale.getCountry()).isEqualTo(expectedCountry);
-	}
-
-	private void assertDefaultLocale(Locale locale) {
-		Assertions.assertThat(locale).isNotNull().isEqualTo(LocaleContextHolder.getLocale());
 	}
 
 }

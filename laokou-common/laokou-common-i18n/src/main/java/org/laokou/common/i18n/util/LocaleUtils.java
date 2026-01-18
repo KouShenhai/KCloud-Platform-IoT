@@ -49,7 +49,8 @@ public final class LocaleUtils {
 
 	private static String filterLanguage(String language) {
 		return Arrays.stream(language.split(StringConstants.COMMA))
-			.filter(i -> i.contains(StringConstants.ROD))
+			.filter(item -> !item.contains(StringConstants.SEM))
+			.filter(item -> item.contains(StringConstants.ROD))
 			.findFirst()
 			.orElse(StringConstants.EMPTY);
 	}

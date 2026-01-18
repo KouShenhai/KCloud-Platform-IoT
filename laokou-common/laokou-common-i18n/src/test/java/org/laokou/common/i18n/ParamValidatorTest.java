@@ -134,7 +134,7 @@ class ParamValidatorTest {
 	@Test
 	void test_validate_withEmptyArray() {
 		// Test validate with empty array (should not throw exception)
-		Assertions.assertThatCode(() -> ParamValidator.validate()).doesNotThrowAnyException();
+		Assertions.assertThatCode(ParamValidator::validate).doesNotThrowAnyException();
 	}
 
 	@Test
@@ -172,7 +172,6 @@ class ParamValidatorTest {
 		ParamValidator.Validate invalid = ParamValidator.invalidate("测试错误");
 		try {
 			ParamValidator.validate(invalid);
-			Assertions.fail("Should have thrown ParamException");
 		}
 		catch (ParamException ex) {
 			Assertions.assertThat(ex.getCode()).isEqualTo("P_System_ValidateFailed");

@@ -21,9 +21,8 @@ import lombok.Getter;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.dto.AggregateRoot;
-import org.laokou.common.i18n.dto.IdGenerator;
-import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
+
 import java.util.function.Supplier;
 
 /**
@@ -55,8 +54,8 @@ public class OssA extends AggregateRoot {
 
 	private Long ossId;
 
-	public OssA(IdGenerator idGenerator) {
-		super(idGenerator.getId(), InstantUtils.now());
+	public OssA() {
+		// super(idGenerator.getId(), InstantUtils.now());
 	}
 
 	public void checkSize() {
