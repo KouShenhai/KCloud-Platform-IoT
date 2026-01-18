@@ -18,7 +18,7 @@
 package org.laokou.common.websocket.config;
 
 import io.netty.channel.ChannelPipeline;
-import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
@@ -33,13 +33,13 @@ import java.util.concurrent.TimeUnit;
  * @author laokou
  */
 @RequiredArgsConstructor
-public abstract class AbstractWebSocketServerChannelInitializer extends AbstractChannelInitializer<NioSocketChannel> {
+public abstract class AbstractWebSocketServerChannelInitializer extends AbstractChannelInitializer<SocketChannel> {
 
 	protected final SpringWebSocketServerProperties springWebSocketServerProperties;
 
 	// @formatter:off
 	@Override
-	protected void initChannel(NioSocketChannel channel) throws Exception {
+	protected void initChannel(SocketChannel channel) throws Exception {
 		ChannelPipeline pipeline = channel.pipeline();
 		// 前置处理
 		preHandler(channel, pipeline);
