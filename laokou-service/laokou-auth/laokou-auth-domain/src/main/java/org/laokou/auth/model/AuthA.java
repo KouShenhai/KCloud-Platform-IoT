@@ -113,6 +113,11 @@ public class AuthA extends AggregateRoot implements ValidateName {
 	private UserE userE;
 
 	/**
+	 * ID生成器.
+	 */
+	private final IdGenerator idGenerator;
+
+	/**
 	 * 请求值Map映射.
 	 */
 	private final Map<String, String[]> parameterMap;
@@ -174,7 +179,7 @@ public class AuthA extends AggregateRoot implements ValidateName {
                  @Qualifier("usernamePasswordAuthParamValidator") AuthParamValidator usernamePasswordAuthParamValidator,
 				 @Qualifier("mailCaptchaParamValidator") CaptchaParamValidator mailCaptchaParamValidator,
 				 @Qualifier("mobileCaptchaParamValidator") CaptchaParamValidator mobileCaptchaParamValidator) {
-		super(idGenerator.getId(), InstantUtils.now());
+		this.idGenerator = idGenerator;
 		this.parameterMap = httpRequest.getParameterMap();
 		this.userE = DomainFactory.getUser();
 		this.passwordValidator = passwordValidator;
@@ -193,40 +198,40 @@ public class AuthA extends AggregateRoot implements ValidateName {
 		this.grantTypeEnum = GrantTypeEnum.USERNAME_PASSWORD;
 		this.captchaV = getCaptchaVByUsernamePasswordAuth();
 		this.userV = getUserVByUsernamePasswordAuth();
-		return this;
+		return init();
 	}
 
 	public AuthA createUserVByMobileAuth() throws Exception {
 		this.grantTypeEnum = GrantTypeEnum.MOBILE;
 		this.captchaV = getCaptchaVByMobileAuth();
 		this.userV = getUserVByMobileAuth();
-		return this;
+		return init();
 	}
 
 	public AuthA createUserVByMailAuth() throws Exception {
 		this.grantTypeEnum = GrantTypeEnum.MAIL;
 		this.captchaV = getCaptchaVByMailAuth();
 		this.userV = getUserVByMailAuth();
-		return this;
+		return init();
 	}
 
 	public AuthA createUserVByAuthorizationCodeAuth() throws Exception {
 		this.grantTypeEnum = GrantTypeEnum.AUTHORIZATION_CODE;
 		this.userV = getUserVByAuthorizationCodeAuth();
-		return this;
+		return init();
 	}
 
 	public AuthA createUserVByTestAuth() throws Exception {
 		this.grantTypeEnum = GrantTypeEnum.TEST;
 		this.userV = getUserVByTestAuth();
-		return this;
+		return init();
 	}
 
 	public AuthA createCaptchaVBySend(String uuid, String tag, String tenantCode) {
 		this.sendCaptchaTypeEnum = SendCaptchaTypeEnum.getByCode(tag);
 		this.captchaV = CaptchaV.builder().uuid(uuid).build();
 		this.userV = UserV.builder().tenantCode(tenantCode).build();
-		return this;
+		return init();
 	}
 
 	public String getCaptchaBySend() {
@@ -463,6 +468,12 @@ public class AuthA extends AggregateRoot implements ValidateName {
 			.mail(AESUtils.encrypt(this.captchaV.uuid()))
 			.mobile(StringConstants.EMPTY)
 			.build();
+	}
+
+	private AuthA init() {
+		super.id = idGenerator.getId();
+		super.createTime = InstantUtils.now();
+		return this;
 	}
 
 }

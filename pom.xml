@@ -1201,7 +1201,7 @@
         <version>${maven-surefire-plugin.version}</version>
         <configuration>
           <skip>false</skip>
-          <testFailureIgnore>true</testFailureIgnore>
+          <testFailureIgnore>false</testFailureIgnore>
         </configuration>
       </plugin>
       <plugin>
@@ -1211,7 +1211,6 @@
         <configuration>
           <skip>false</skip>
           <destFile>${project.build.directory}/coverage-reports/jacoco-unit.exec</destFile>
-          <dataFile>${project.build.directory}/coverage-reports/jacoco-unit.exec</dataFile>
         </configuration>
         <executions>
           <execution>
