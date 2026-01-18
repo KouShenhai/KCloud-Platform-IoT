@@ -56,12 +56,15 @@ class ForySchemaIntegrationTest {
 
 	private static PulsarClient pulsarClient;
 
-	@BeforeAll
-	static void setup() throws PulsarClientException {
+	static {
 		// Register test classes for Fory serialization
 		ForyFactory.INSTANCE.register(PulsarTestMessage.class);
 		ForyFactory.INSTANCE.register(PulsarTestEvent.class);
 		ForyFactory.INSTANCE.register(ArrayList.class);
+	}
+
+	@BeforeAll
+	static void setup() throws PulsarClientException {
 
 		// Create Pulsar client
 		pulsarClient = PulsarClient.builder().serviceUrl(pulsarContainer.getPulsarBrokerUrl()).build();

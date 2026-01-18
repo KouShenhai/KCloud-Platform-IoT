@@ -15,23 +15,17 @@
  *
  */
 
-package org.laokou.common.i18n.dto;
+package org.laokou.common.rpc.exception;
 
-import lombok.Getter;
-
-import java.time.Instant;
+import org.laokou.common.i18n.common.exception.BizException;
 
 /**
- * 聚合根.
- *
  * @author laokou
  */
-@Getter
-public abstract class AggregateRoot extends Identifier {
+public class GrpcNotFoundException extends BizException {
 
-	/**
-	 * 创建时间.
-	 */
-	protected Instant createTime;
+	public GrpcNotFoundException(String code, String msg, Object data) {
+		super(code, msg, data);
+	}
 
 }

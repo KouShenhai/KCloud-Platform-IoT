@@ -21,6 +21,7 @@ import io.grpc.StatusException;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.grpc.annotation.GrpcClient;
 import org.laokou.common.i18n.dto.IdGenerator;
+import org.laokou.common.rpc.exception.GrpcNotFoundException;
 import org.laokou.distributed.id.proto.DistributedIdServiceIGrpc;
 import org.laokou.distributed.id.proto.GenerateBatchIdRequest;
 import org.laokou.distributed.id.proto.GenerateBatchIdsResponse;
@@ -45,9 +46,9 @@ public class IdGeneratorRpc implements IdGenerator {
 				.generateId(GenerateIdRequest.newBuilder().build());
 			return generateIdResponse.getData();
 		}
-		catch (StatusException e) {
-			log.error("生成分布式ID失败，错误信息：{}", e.getMessage(), e);
-			throw new RuntimeException(e);
+		catch (StatusException ex) {
+			log.error("生成分布式ID失败，错误信息：{}", ex.getMessage(), ex);
+			throw new GrpcNotFoundException("B_Grpc_DistributedIdNotFound", "调用分布式ID服务失败，请联系管理员", ex);
 		}
 	}
 
@@ -58,9 +59,9 @@ public class IdGeneratorRpc implements IdGenerator {
 				.generateBatchIds(GenerateBatchIdRequest.newBuilder().setNum(num).build());
 			return generateBatchIdsResponse.getDataList();
 		}
-		catch (StatusException e) {
-			log.error("批量生成分布式ID失败，错误信息：{}", e.getMessage(), e);
-			throw new RuntimeException(e);
+		catch (StatusException ex) {
+			log.error("批量生成分布式ID失败，错误信息：{}", ex.getMessage(), ex);
+			throw new GrpcNotFoundException("B_Grpc_DistributedIdNotFound", "调用分布式ID服务失败，请联系管理员", ex);
 		}
 	}
 

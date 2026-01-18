@@ -32,14 +32,6 @@ public abstract class Identifier implements Serializable {
 	/**
 	 * ID.
 	 */
-	protected final Long id;
-
-	protected Identifier(Long id) {
-		this.id = id;
-	}
-
-	protected Identifier() {
-		this.id = System.currentTimeMillis();
-	}
+	protected Long id;
 
 }
