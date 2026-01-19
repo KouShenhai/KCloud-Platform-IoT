@@ -369,12 +369,20 @@ public class NacosSnowflakeGenerator implements SnowflakeGenerator {
 		instance.setWeight(1.0);
 		instance.setHealthy(true);
 		instance.setEnabled(true);
+		instance.setClusterName(getClusterName());
+		// CP强一致性【永久实例】
+		instance.setEphemeral(false);
 		namingService.registerInstance(serviceId, groupName, instance);
 		log.info("Registered instance with metadata: {}", metadata);
 	}
 
 	private boolean isCurrentInstance(Instance instance) {
 		return ObjectUtils.equals(instance.getIp(), currentIp) && instance.getPort() == currentPort;
+	}
+
+	private String getClusterName() {
+		return environment.getProperty("spring.cloud.nacos.discovery.cluster-name",
+				System.getProperty("spring.cloud.nacos.discovery.cluster-name", "iot-cluster"));
 	}
 
 }
