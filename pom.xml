@@ -816,17 +816,17 @@
       </snapshots>
     </repository>
     <repository>
-       <!--
+      <!--
 
-         需要在 settings.xml 配置
+        需要在 settings.xml 配置
 
-        <server>
-            <id>github</id>
-            <username>Your GitHub Username</username>
-            <password>Your GitHub Token (requires read:packages permission)</password>
-        </server>
+       <server>
+           <id>github</id>
+           <username>Your GitHub Username</username>
+           <password>Your GitHub Token (requires read:packages permission)</password>
+       </server>
 
-       -->
+      -->
       <id>spring-cloud-alibaba-github</id>
       <url>https://maven.pkg.github.com/alibaba/spring-cloud-alibaba</url>
       <releases>
@@ -855,7 +855,7 @@
         <NACOS-GROUP>IOT_GROUP</NACOS-GROUP>
         <NACOS-USERNAME>nacos</NACOS-USERNAME>
         <NACOS-PASSWORD>nacos</NACOS-PASSWORD>
-        <NACOS-CLUSTER-NAME>nacos-cluster</NACOS-CLUSTER-NAME>
+        <NACOS-CLUSTER-NAME>iot-cluster</NACOS-CLUSTER-NAME>
         <SECRET-KEY>laokou</SECRET-KEY>
       </properties>
       <activation>
@@ -878,7 +878,7 @@
         <NACOS-GROUP>IOT_GROUP</NACOS-GROUP>
         <NACOS-USERNAME>nacos</NACOS-USERNAME>
         <NACOS-PASSWORD>nacos</NACOS-PASSWORD>
-        <NACOS-CLUSTER-NAME>nacos-cluster</NACOS-CLUSTER-NAME>
+        <NACOS-CLUSTER-NAME>iot-cluster</NACOS-CLUSTER-NAME>
         <SECRET-KEY>laokou</SECRET-KEY>
       </properties>
       <activation>
@@ -912,7 +912,7 @@
         <!--suppress UnresolvedMavenProperty -->
         <NACOS-PASSWORD>${NACOS_PASSWORD:nacos}</NACOS-PASSWORD>
         <!--suppress UnresolvedMavenProperty -->
-        <NACOS-CLUSTER-NAME>${NACOS_CLUSTER_NAME:nacos-cluster}</NACOS-CLUSTER-NAME>
+        <NACOS-CLUSTER-NAME>${NACOS_CLUSTER_NAME:iot-cluster}</NACOS-CLUSTER-NAME>
         <!--suppress UnresolvedMavenProperty -->
         <SECRET-KEY>${SECRET_KEY:laokou}</SECRET-KEY>
       </properties>
@@ -1210,21 +1210,32 @@
         <version>${jacoco-maven-plugin.version}</version>
         <configuration>
           <skip>false</skip>
-          <destFile>${project.build.directory}/coverage-reports/jacoco-unit.exec</destFile>
         </configuration>
         <executions>
           <execution>
-            <id>pre-test</id>
+            <id>prepare-agent</id>
             <goals>
               <goal>prepare-agent</goal>
             </goals>
           </execution>
           <execution>
-            <id>post-test</id>
-            <phase>test</phase>
+            <id>report</id>
+            <phase>verify</phase>
             <goals>
               <goal>report</goal>
             </goals>
+            <configuration>
+              <!-- 指定读取的 exec 文件路径（JaCoCo 默认位置） -->
+              <dataFile>${project.build.directory}/jacoco.exec</dataFile>
+              <!-- 指定报告输出目录 -->
+              <outputDirectory>${project.build.directory}/site/jacoco</outputDirectory>
+              <formats>
+                <!-- 生成 HTML 格式以创建 site 目录 -->
+                <format>HTML</format>
+                <!-- 同时生成 XML 格式供 CI 工具使用 -->
+                <format>XML</format>
+              </formats>
+            </configuration>
           </execution>
         </executions>
       </plugin>

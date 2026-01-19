@@ -55,7 +55,7 @@ jobs:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
           verbose: true
-          fail_ci_if_error: false
+          fail_ci_if_error: true
           files: |
             ./laokou-common/laokou-common-core/target/site/jacoco/jacoco.xml,
             ./laokou-common/laokou-common-fory/target/site/jacoco/jacoco.xml,

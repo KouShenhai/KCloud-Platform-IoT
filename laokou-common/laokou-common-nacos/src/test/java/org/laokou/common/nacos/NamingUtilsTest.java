@@ -93,13 +93,13 @@ class NamingUtilsTest {
 		Thread.sleep(Duration.ofSeconds(1));
 		Assertions.assertThat(namingService.getAllInstances("test-service", "DEFAULT_GROUP", Collections.emptyList())).hasSize(0);
 
-		Assertions.assertThatNoException().isThrownBy(() -> namingService.registerInstance("test-service", "DEFAULT_GROUP", "127.0.0.1", 8080, "nacos-cluster"));
+		Assertions.assertThatNoException().isThrownBy(() -> namingService.registerInstance("test-service", "DEFAULT_GROUP", "127.0.0.1", 8080, "iot-cluster"));
 		Thread.sleep(Duration.ofSeconds(1));
-		Assertions.assertThat(namingService.getAllInstances("test-service", List.of("nacos-cluster"), false)).hasSize(1);
+		Assertions.assertThat(namingService.getAllInstances("test-service", List.of("iot-cluster"), false)).hasSize(1);
 
-		Assertions.assertThatNoException().isThrownBy(() -> namingService.deregisterInstance("test-service", "DEFAULT_GROUP", "127.0.0.1", 8080, "nacos-cluster"));
+		Assertions.assertThatNoException().isThrownBy(() -> namingService.deregisterInstance("test-service", "DEFAULT_GROUP", "127.0.0.1", 8080, "iot-cluster"));
 		Thread.sleep(Duration.ofSeconds(1));
-		Assertions.assertThat(namingService.getAllInstances("test-service", "DEFAULT_GROUP", List.of("nacos-cluster"), false)).hasSize(0);
+		Assertions.assertThat(namingService.getAllInstances("test-service", "DEFAULT_GROUP", List.of("iot-cluster"), false)).hasSize(0);
 
 		Assertions.assertThatNoException().isThrownBy(() -> namingService.registerInstance("test-service", "DEFAULT_GROUP", "127.0.0.1", 8080));
 		Thread.sleep(Duration.ofSeconds(1));
@@ -109,44 +109,44 @@ class NamingUtilsTest {
 		Thread.sleep(Duration.ofSeconds(1));
 		Assertions.assertThat(namingService.getAllInstances("test-service", "DEFAULT_GROUP", false)).hasSize(0);
 
-		Assertions.assertThatNoException().isThrownBy(() -> namingService.registerInstance("test-service", "127.0.0.1", 8080, "nacos-cluster"));
+		Assertions.assertThatNoException().isThrownBy(() -> namingService.registerInstance("test-service", "127.0.0.1", 8080, "iot-cluster"));
 		Thread.sleep(Duration.ofSeconds(1));
-		Assertions.assertThat(namingService.getAllInstances("test-service", "DEFAULT_GROUP", List.of("nacos-cluster"), false)).hasSize(1);
+		Assertions.assertThat(namingService.getAllInstances("test-service", "DEFAULT_GROUP", List.of("iot-cluster"), false)).hasSize(1);
 
-		Assertions.assertThatNoException().isThrownBy(() -> namingService.deregisterInstance("test-service", "127.0.0.1", 8080, "nacos-cluster"));
+		Assertions.assertThatNoException().isThrownBy(() -> namingService.deregisterInstance("test-service", "127.0.0.1", 8080, "iot-cluster"));
 		Thread.sleep(Duration.ofSeconds(1));
-		Assertions.assertThat(namingService.getAllInstances("test-service", "DEFAULT_GROUP", List.of("nacos-cluster"), false)).hasSize(0);
+		Assertions.assertThat(namingService.getAllInstances("test-service", "DEFAULT_GROUP", List.of("iot-cluster"), false)).hasSize(0);
 	}
 
 	@Test
 	void test_selectInstances() throws NacosException, InterruptedException {
-		Assertions.assertThatNoException().isThrownBy(() -> namingService.registerInstance("test-service", "127.0.0.1", 8080, "nacos-cluster"));
+		Assertions.assertThatNoException().isThrownBy(() -> namingService.registerInstance("test-service", "127.0.0.1", 8080, "iot-cluster"));
 		Thread.sleep(Duration.ofSeconds(1));
 		Assertions.assertThat(namingService.selectInstances("test-service", true)).hasSize(1);
 
-		Assertions.assertThatNoException().isThrownBy(() -> namingService.deregisterInstance("test-service", "127.0.0.1", 8080, "nacos-cluster"));
+		Assertions.assertThatNoException().isThrownBy(() -> namingService.deregisterInstance("test-service", "127.0.0.1", 8080, "iot-cluster"));
 		Thread.sleep(Duration.ofSeconds(1));
 		Assertions.assertThat(namingService.selectInstances("test-service", true)).hasSize(0);
 
-		Assertions.assertThatNoException().isThrownBy(() -> namingService.registerInstance("test-service", "127.0.0.1", 8080, "nacos-cluster"));
+		Assertions.assertThatNoException().isThrownBy(() -> namingService.registerInstance("test-service", "127.0.0.1", 8080, "iot-cluster"));
 		Thread.sleep(Duration.ofSeconds(1));
 		Assertions.assertThat(namingService.selectInstances("test-service", true, false)).hasSize(1);
 
 		Assertions.assertThat(namingService.selectInstances("test-service", "DEFAULT_GROUP", true, false)).hasSize(1);
-		Assertions.assertThat(namingService.selectInstances("test-service", List.of("nacos-cluster"), true)).hasSize(1);
-		Assertions.assertThat(namingService.selectInstances("test-service", "DEFAULT_GROUP", List.of("nacos-cluster"), true, false)).hasSize(1);
-		Assertions.assertThat(namingService.selectInstances("test-service", List.of("nacos-cluster"), true, false)).hasSize(1);
+		Assertions.assertThat(namingService.selectInstances("test-service", List.of("iot-cluster"), true)).hasSize(1);
+		Assertions.assertThat(namingService.selectInstances("test-service", "DEFAULT_GROUP", List.of("iot-cluster"), true, false)).hasSize(1);
+		Assertions.assertThat(namingService.selectInstances("test-service", List.of("iot-cluster"), true, false)).hasSize(1);
 		Assertions.assertThat(namingService.selectInstances("test-service", "DEFAULT_GROUP", true)).hasSize(1);
-		Assertions.assertThat(namingService.selectInstances("test-service", "DEFAULT_GROUP", List.of("nacos-cluster"), true)).hasSize(1);
+		Assertions.assertThat(namingService.selectInstances("test-service", "DEFAULT_GROUP", List.of("iot-cluster"), true)).hasSize(1);
 
-		Assertions.assertThatNoException().isThrownBy(() -> namingService.deregisterInstance("test-service", "127.0.0.1", 8080, "nacos-cluster"));
+		Assertions.assertThatNoException().isThrownBy(() -> namingService.deregisterInstance("test-service", "127.0.0.1", 8080, "iot-cluster"));
 		Thread.sleep(Duration.ofSeconds(1));
-		Assertions.assertThat(namingService.getAllInstances("test-service", "DEFAULT_GROUP", List.of("nacos-cluster"), false)).hasSize(0);
+		Assertions.assertThat(namingService.getAllInstances("test-service", "DEFAULT_GROUP", List.of("iot-cluster"), false)).hasSize(0);
 	}
 
 	@Test
 	void test_selectOneHealthyInstance() throws NacosException, InterruptedException {
-		Assertions.assertThatNoException().isThrownBy(() -> namingService.registerInstance("test-service", "127.0.0.1", 8080, "nacos-cluster"));
+		Assertions.assertThatNoException().isThrownBy(() -> namingService.registerInstance("test-service", "127.0.0.1", 8080, "iot-cluster"));
 		Thread.sleep(Duration.ofSeconds(1));
 		Assertions.assertThat(namingService.selectInstances("test-service", true)).hasSize(1);
 
@@ -154,19 +154,19 @@ class NamingUtilsTest {
 		Assertions.assertThat(namingService.selectOneHealthyInstance("test-service", "DEFAULT_GROUP")).isNotNull();
 		Assertions.assertThat(namingService.selectOneHealthyInstance("test-service", false)).isNotNull();
 		Assertions.assertThat(namingService.selectOneHealthyInstance("test-service", "DEFAULT_GROUP", false)).isNotNull();
-		Assertions.assertThat(namingService.selectOneHealthyInstance("test-service", List.of("nacos-cluster"))).isNotNull();
-		Assertions.assertThat(namingService.selectOneHealthyInstance("test-service", "DEFAULT_GROUP", List.of("nacos-cluster"))).isNotNull();
-		Assertions.assertThat(namingService.selectOneHealthyInstance("test-service", List.of("nacos-cluster"), false)).isNotNull();
-		Assertions.assertThat(namingService.selectOneHealthyInstance("test-service", "DEFAULT_GROUP", List.of("nacos-cluster"), false)).isNotNull();
+		Assertions.assertThat(namingService.selectOneHealthyInstance("test-service", List.of("iot-cluster"))).isNotNull();
+		Assertions.assertThat(namingService.selectOneHealthyInstance("test-service", "DEFAULT_GROUP", List.of("iot-cluster"))).isNotNull();
+		Assertions.assertThat(namingService.selectOneHealthyInstance("test-service", List.of("iot-cluster"), false)).isNotNull();
+		Assertions.assertThat(namingService.selectOneHealthyInstance("test-service", "DEFAULT_GROUP", List.of("iot-cluster"), false)).isNotNull();
 
-		Assertions.assertThatNoException().isThrownBy(() -> namingService.deregisterInstance("test-service", "127.0.0.1", 8080, "nacos-cluster"));
+		Assertions.assertThatNoException().isThrownBy(() -> namingService.deregisterInstance("test-service", "127.0.0.1", 8080, "iot-cluster"));
 		Thread.sleep(Duration.ofSeconds(1));
 		Assertions.assertThat(namingService.selectInstances("test-service", true)).hasSize(0);
 	}
 
 	@Test
 	void test_subscribeService() throws NacosException, InterruptedException {
-		Assertions.assertThatNoException().isThrownBy(() -> namingService.registerInstance("test-service", "127.0.0.1", 8080, "nacos-cluster"));
+		Assertions.assertThatNoException().isThrownBy(() -> namingService.registerInstance("test-service", "127.0.0.1", 8080, "iot-cluster"));
 		Thread.sleep(Duration.ofSeconds(1));
 		Assertions.assertThat(namingService.selectInstances("test-service", true)).hasSize(1);
 
@@ -176,11 +176,11 @@ class NamingUtilsTest {
 		Assertions.assertThatNoException().isThrownBy(() -> namingService.subscribe("test-service", evt -> Assertions.assertThat(evt).isNotNull()));
 		Assertions.assertThatNoException().isThrownBy(() -> namingService.unsubscribe("test-service", evt -> Assertions.assertThat(evt).isNotNull()));
 
-		Assertions.assertThatNoException().isThrownBy(() -> namingService.subscribe("test-service", "DEFAULT_GROUP", List.of("nacos-cluster"), evt -> Assertions.assertThat(evt).isNotNull()));
-		Assertions.assertThatNoException().isThrownBy(() -> namingService.unsubscribe("test-service", "DEFAULT_GROUP", List.of("nacos-cluster"), evt -> Assertions.assertThat(evt).isNotNull()));
+		Assertions.assertThatNoException().isThrownBy(() -> namingService.subscribe("test-service", "DEFAULT_GROUP", List.of("iot-cluster"), evt -> Assertions.assertThat(evt).isNotNull()));
+		Assertions.assertThatNoException().isThrownBy(() -> namingService.unsubscribe("test-service", "DEFAULT_GROUP", List.of("iot-cluster"), evt -> Assertions.assertThat(evt).isNotNull()));
 
-		Assertions.assertThatNoException().isThrownBy(() -> namingService.subscribe("test-service", List.of("nacos-cluster"), evt -> Assertions.assertThat(evt).isNotNull()));
-		Assertions.assertThatNoException().isThrownBy(() -> namingService.unsubscribe("test-service", List.of("nacos-cluster"), evt -> Assertions.assertThat(evt).isNotNull()));
+		Assertions.assertThatNoException().isThrownBy(() -> namingService.subscribe("test-service", List.of("iot-cluster"), evt -> Assertions.assertThat(evt).isNotNull()));
+		Assertions.assertThatNoException().isThrownBy(() -> namingService.unsubscribe("test-service", List.of("iot-cluster"), evt -> Assertions.assertThat(evt).isNotNull()));
 
 		// 只选择订阅ip为`127.0`开头的实例。
 		NamingSelector selector = NamingSelectorFactory.newIpSelector("127.0.*");
@@ -190,14 +190,14 @@ class NamingUtilsTest {
 		Assertions.assertThatNoException().isThrownBy(() -> namingService.subscribe("test-service", selector, evt -> Assertions.assertThat(evt).isNotNull()));
 		Assertions.assertThatNoException().isThrownBy(() -> namingService.unsubscribe("test-service", selector, evt -> Assertions.assertThat(evt).isNotNull()));
 
-		Assertions.assertThatNoException().isThrownBy(() -> namingService.deregisterInstance("test-service", "127.0.0.1", 8080, "nacos-cluster"));
+		Assertions.assertThatNoException().isThrownBy(() -> namingService.deregisterInstance("test-service", "127.0.0.1", 8080, "iot-cluster"));
 		Thread.sleep(Duration.ofSeconds(1));
 		Assertions.assertThat(namingService.selectInstances("test-service", true)).hasSize(0);
 	}
 
 	@Test
 	void test_getServicesOfServer() throws NacosException, InterruptedException {
-		Assertions.assertThatNoException().isThrownBy(() -> namingService.registerInstance("test-service", "DEFAULT_GROUP", "127.0.0.1", 8080, "nacos-cluster"));
+		Assertions.assertThatNoException().isThrownBy(() -> namingService.registerInstance("test-service", "DEFAULT_GROUP", "127.0.0.1", 8080, "iot-cluster"));
 		Thread.sleep(Duration.ofSeconds(1));
 		Assertions.assertThat(namingService.selectInstances("test-service", true)).hasSize(1);
 
@@ -207,7 +207,7 @@ class NamingUtilsTest {
 		Assertions.assertThatNoException().isThrownBy(() -> namingService.subscribe("test-service", "DEFAULT_GROUP", evt -> Assertions.assertThat(evt).isNotNull()));
 		Assertions.assertThat(namingService.getSubscribeServices()).hasSize(1);
 
-		Assertions.assertThatNoException().isThrownBy(() -> namingService.deregisterInstance("test-service", "DEFAULT_GROUP", "127.0.0.1", 8080, "nacos-cluster"));
+		Assertions.assertThatNoException().isThrownBy(() -> namingService.deregisterInstance("test-service", "DEFAULT_GROUP", "127.0.0.1", 8080, "iot-cluster"));
 		Thread.sleep(Duration.ofSeconds(1));
 		Assertions.assertThat(namingService.selectInstances("test-service", true)).hasSize(0);
 	}
