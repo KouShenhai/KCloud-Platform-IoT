@@ -25,10 +25,10 @@ import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.laokou.iot.thingModel.gatewayimpl.database.ThingModelMapper;
 import org.laokou.iot.thingModel.gatewayimpl.database.dataobject.ThingModelDO;
-import org.laokou.iot.thingModel.model.CategoryEnum;
-import org.laokou.iot.thingModel.model.DataTypeEnum;
+import org.laokou.iot.thingModel.model.enums.Category;
+import org.laokou.iot.thingModel.model.enums.DataType;
 import org.laokou.iot.thingModel.model.ThingModelE;
-import org.laokou.iot.thingModel.model.TypeEnum;
+import org.laokou.iot.thingModel.model.enums.Type;
 
 import java.util.Arrays;
 
@@ -75,8 +75,8 @@ public final class ThingModelParamValidator {
 		if (ObjectUtils.isNull(specs)) {
 			return ParamValidator.invalidate("物模型规则说明不能为空");
 		}
-		DataTypeEnum dataTypeEnum = DataTypeEnum.getByCode(thingModelE.getDataType());
-		return dataTypeEnum.validate(specs);
+		DataType dataType = DataType.getByCode(thingModelE.getDataType());
+		return dataType.validate(specs);
 	}
 
 	public static ParamValidator.Validate validateSort(ThingModelE thingModelE) {
@@ -96,7 +96,7 @@ public final class ThingModelParamValidator {
 			return ParamValidator.invalidate("物模型类型不能为空");
 		}
 		boolean isExist = CollectionExtUtils.containsAll(Arrays.stream(type.split(StringConstants.COMMA)).toList(),
-				Arrays.stream(TypeEnum.values()).map(TypeEnum::getCode).toList());
+				Arrays.stream(Type.values()).map(Type::getCode).toList());
 		if (!isExist) {
 			return ParamValidator.invalidate("物模型类型不存在");
 		}
@@ -108,8 +108,7 @@ public final class ThingModelParamValidator {
 		if (ObjectUtils.isNull(category)) {
 			return ParamValidator.invalidate("物模型类别不能为空");
 		}
-		if (!CollectionExtUtils.contains(Arrays.stream(CategoryEnum.values()).map(CategoryEnum::getCode).toList(),
-				category)) {
+		if (!CollectionExtUtils.contains(Arrays.stream(Category.values()).map(Category::getCode).toList(), category)) {
 			return ParamValidator.invalidate("物模型类别不存在");
 		}
 		return ParamValidator.validate();
@@ -120,7 +119,7 @@ public final class ThingModelParamValidator {
 		if (ObjectUtils.isNull(dataType)) {
 			return ParamValidator.invalidate("物模型数据类型不能为空");
 		}
-		if (!Arrays.stream(DataTypeEnum.values()).map(DataTypeEnum::getCode).toList().contains(dataType)) {
+		if (!Arrays.stream(DataType.values()).map(DataType::getCode).toList().contains(dataType)) {
 			return ParamValidator.invalidate("物模型数据类型不存在");
 		}
 		return ParamValidator.validate();

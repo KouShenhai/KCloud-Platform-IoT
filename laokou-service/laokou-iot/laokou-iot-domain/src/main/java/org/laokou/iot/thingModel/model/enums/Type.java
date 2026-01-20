@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.iot.thingModel.model;
+package org.laokou.iot.thingModel.model.enums;
 
 import lombok.Getter;
 
@@ -23,17 +23,19 @@ import lombok.Getter;
  * @author laokou
  */
 @Getter
-public enum CategoryEnum {
+public enum Type {
 
-	PROPERTY(1, "属性"),
+	READ("read", "读"),
 
-	EVENT(2, "事件");
+	WRITE("write", "写"),
 
-	private final int code;
+	REPORT("report", "上报");
+
+	private final String code;
 
 	private final String desc;
 
-	CategoryEnum(int code, String desc) {
+	Type(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}

@@ -21,7 +21,7 @@ import org.laokou.iot.thingModel.dto.clientobject.ThingModelCO;
 import org.laokou.iot.thingModel.factory.ThingModelFactory;
 import org.laokou.iot.thingModel.gatewayimpl.database.dataobject.ThingModelDO;
 import org.laokou.iot.thingModel.model.ThingModelE;
-import org.laokou.iot.thingModel.model.ThingModelOperateTypeEnum;
+import org.laokou.iot.thingModel.model.enums.OperateType;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ public class ThingModelConvertor {
 
 	public static ThingModelDO toDataObject(ThingModelE thingModelE) {
 		ThingModelDO thingModelDO = new ThingModelDO();
-		switch (thingModelE.getThingModelOperateTypeEnum()) {
+		switch (thingModelE.getOperateType()) {
 			case SAVE -> thingModelDO.setId(thingModelE.getPrimaryKey());
 			case MODIFY -> thingModelDO.setId(thingModelE.getId());
 		}
@@ -80,8 +80,7 @@ public class ThingModelConvertor {
 		thingModelE.setSort(thingModelCO.getSort());
 		thingModelE.setSpecs(thingModelCO.getSpecs());
 		thingModelE.setRemark(thingModelCO.getRemark());
-		thingModelE
-			.setThingModelOperateTypeEnum(isInsert ? ThingModelOperateTypeEnum.SAVE : ThingModelOperateTypeEnum.MODIFY);
+		thingModelE.setOperateType(isInsert ? OperateType.SAVE : OperateType.MODIFY);
 		return thingModelE;
 	}
 

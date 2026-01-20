@@ -21,6 +21,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.dto.IdGenerator;
+import org.laokou.iot.thingModel.model.enums.OperateType;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
@@ -94,7 +95,7 @@ public class ThingModelE {
 
 	@Setter
 	@Getter
-	private ThingModelOperateTypeEnum thingModelOperateTypeEnum;
+	private OperateType operateType;
 
 	private final ThingModelParamValidator saveThingModelParamValidator;
 
@@ -116,7 +117,7 @@ public class ThingModelE {
 	}
 
 	public void checkThingModelParam() throws Exception {
-		switch (thingModelOperateTypeEnum) {
+		switch (operateType) {
 			case SAVE -> saveThingModelParamValidator.validateThingModel(this);
 			case MODIFY -> modifyThingModelParamValidator.validateThingModel(this);
 			default -> throw new UnsupportedOperationException("Unsupported operation");

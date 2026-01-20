@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.iot.thingModel.model;
+package org.laokou.iot.thingModel.model.enums;
 
 import lombok.Getter;
 
@@ -23,19 +23,17 @@ import lombok.Getter;
  * @author laokou
  */
 @Getter
-public enum TypeEnum {
+public enum OperateType {
 
-	READ("read", "读"),
+	SAVE("save", "保存物模型"),
 
-	WRITE("write", "写"),
-
-	REPORT("report", "上报");
+	MODIFY("modify", "修改物模型");
 
 	private final String code;
 
 	private final String desc;
 
-	TypeEnum(String code, String desc) {
+	OperateType(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}
