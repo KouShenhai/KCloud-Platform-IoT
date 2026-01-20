@@ -13,7 +13,7 @@
 #  * See the License for the specific language governing permissions and
 #  * limitations under the License.
 #  */
-FROM ghcr.io/graalvm/jdk-community:25.0.1
+FROM ghcr.io/graalvm/jdk-community:25.0.2
 LABEL maintainer="laokou"
 LABEL description="laokou-logstash"
 COPY target/laokou-logstash-start.jar app.jar
