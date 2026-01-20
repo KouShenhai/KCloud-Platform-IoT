@@ -43,7 +43,7 @@ public class ReactiveI18nUtils {
 	 */
 	public static void set(@NonNull ServerWebExchange exchange) {
 		ServerHttpRequest request = exchange.getRequest();
-		String language = ReactiveRequestUtils.getParamValue(request, "lang");
+		String language = ReactiveRequestUtils.getParamValue(request, "Language");
 		language = StringExtUtils.isNotEmpty(language) ? language
 				: ReactiveRequestUtils.getParamValue(request, HttpHeaders.ACCEPT_LANGUAGE);
 		LocaleContextHolder.setLocale(LocaleUtils.toLocale(language), true);

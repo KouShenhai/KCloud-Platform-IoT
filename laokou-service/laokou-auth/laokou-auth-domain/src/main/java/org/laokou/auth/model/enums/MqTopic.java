@@ -25,7 +25,7 @@ import lombok.Getter;
  * @author laokou
  */
 @Getter
-public enum MqEnum {
+public enum MqTopic {
 
 	LOGIN_LOG("login_log", "登录日志") {
 		@Override
@@ -52,7 +52,7 @@ public enum MqEnum {
 
 	private final String desc;
 
-	MqEnum(String code, String desc) {
+	MqTopic(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}

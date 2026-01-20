@@ -25,7 +25,7 @@ import lombok.Getter;
 @Getter
 public enum DeptOperateTypeEnum {
 
-	SAVE("save", "新增部门"),
+	SAVE("save", "保存部门"),
 
 	MODIFY("modify", "修改部门");
 

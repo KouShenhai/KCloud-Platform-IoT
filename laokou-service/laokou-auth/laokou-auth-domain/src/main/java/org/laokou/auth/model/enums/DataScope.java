@@ -15,25 +15,28 @@
  *
  */
 
-package org.laokou.iot.thingModel.model;
+package org.laokou.auth.model.enums;
 
 import lombok.Getter;
 
-/**
- * @author laokou
- */
 @Getter
-public enum ThingModelOperateTypeEnum {
+public enum DataScope {
 
-	SAVE("save", "新增物模型"),
+	ALL("all", "全部"),
 
-	MODIFY("modify", "修改物模型");
+	CUSTOM("custom", "自定义"),
+
+	SELF_DEPT("self_dept", "仅本部门"),
+
+	BELOW_DEPT("below_dept", "部门及以下"),
+
+	SELF("self", "仅本人");
 
 	private final String code;
 
 	private final String desc;
 
-	ThingModelOperateTypeEnum(String code, String desc) {
+	DataScope(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}

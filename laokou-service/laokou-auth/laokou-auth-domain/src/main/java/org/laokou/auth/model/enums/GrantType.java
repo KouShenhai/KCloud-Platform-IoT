@@ -28,7 +28,7 @@ import org.laokou.auth.model.exception.UsernameNotFoundException;
  * @author laokou
  */
 @Getter
-public enum GrantTypeEnum {
+public enum GrantType {
 
 	// @formatter:off
 	USERNAME_PASSWORD(Constants.USERNAME_PASSWORD, "用户名密码登录") {
@@ -70,7 +70,7 @@ public enum GrantTypeEnum {
 
 	private final String desc;
 
-	GrantTypeEnum(String code, String desc) {
+	GrantType(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}

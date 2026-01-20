@@ -35,7 +35,7 @@ public enum SendCaptchaTypeEnum {
 		}
 
 		@Override public String getMqTopic() {
-    		return MqEnum.MAIL_CAPTCHA.getTopic();
+    		return MqTopic.MAIL_CAPTCHA.getTopic();
     	}
 	},
 
@@ -46,7 +46,7 @@ public enum SendCaptchaTypeEnum {
 		}
 
 		@Override public String getMqTopic() {
-    		return MqEnum.MOBILE_CAPTCHA.getTopic();
+    		return MqTopic.MOBILE_CAPTCHA.getTopic();
     	}
 	};
 

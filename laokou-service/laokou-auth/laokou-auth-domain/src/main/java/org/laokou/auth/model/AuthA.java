@@ -22,10 +22,10 @@ import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.constant.Constants;
 import org.laokou.auth.model.constant.OAuth2Constants;
 import org.laokou.auth.model.entity.UserE;
-import org.laokou.auth.model.enums.DataScopeEnum;
-import org.laokou.auth.model.enums.GrantTypeEnum;
+import org.laokou.auth.model.enums.DataScope;
+import org.laokou.auth.model.enums.GrantType;
 import org.laokou.auth.model.enums.SendCaptchaTypeEnum;
-import org.laokou.auth.model.enums.UserStatusEnum;
+import org.laokou.auth.model.enums.UserStatus;
 import org.laokou.auth.model.exception.CaptchaErrorException;
 import org.laokou.auth.model.exception.CaptchaExpiredException;
 import org.laokou.auth.model.exception.DeptNotFoundException;
@@ -85,7 +85,7 @@ public class AuthA extends AggregateRoot implements ValidateName {
 	 * test测试
 	 */
 	// @formatter:on
-	private GrantTypeEnum grantTypeEnum;
+	private GrantType grantType;
 
 	/**
 	 * 发送验证码类型.
@@ -195,34 +195,34 @@ public class AuthA extends AggregateRoot implements ValidateName {
 	// @formatter:on
 
 	public AuthA createUserVByUsernamePasswordAuth() throws Exception {
-		this.grantTypeEnum = GrantTypeEnum.USERNAME_PASSWORD;
+		this.grantType = GrantType.USERNAME_PASSWORD;
 		this.captchaV = getCaptchaVByUsernamePasswordAuth();
 		this.userV = getUserVByUsernamePasswordAuth();
 		return init();
 	}
 
 	public AuthA createUserVByMobileAuth() throws Exception {
-		this.grantTypeEnum = GrantTypeEnum.MOBILE;
+		this.grantType = GrantType.MOBILE;
 		this.captchaV = getCaptchaVByMobileAuth();
 		this.userV = getUserVByMobileAuth();
 		return init();
 	}
 
 	public AuthA createUserVByMailAuth() throws Exception {
-		this.grantTypeEnum = GrantTypeEnum.MAIL;
+		this.grantType = GrantType.MAIL;
 		this.captchaV = getCaptchaVByMailAuth();
 		this.userV = getUserVByMailAuth();
 		return init();
 	}
 
 	public AuthA createUserVByAuthorizationCodeAuth() throws Exception {
-		this.grantTypeEnum = GrantTypeEnum.AUTHORIZATION_CODE;
+		this.grantType = GrantType.AUTHORIZATION_CODE;
 		this.userV = getUserVByAuthorizationCodeAuth();
 		return init();
 	}
 
 	public AuthA createUserVByTestAuth() throws Exception {
-		this.grantTypeEnum = GrantTypeEnum.TEST;
+		this.grantType = GrantType.TEST;
 		this.userV = getUserVByTestAuth();
 		return init();
 	}
@@ -265,18 +265,18 @@ public class AuthA extends AggregateRoot implements ValidateName {
 			this.dataFilterV = null;
 			return;
 		}
-		if (dataScopes.contains(DataScopeEnum.ALL.getCode())) {
+		if (dataScopes.contains(DataScope.ALL.getCode())) {
 			this.dataFilterV = DataFilterV.builder().deptIds(Collections.emptySet()).creator(null).build();
 		}
 		else {
 			Set<Long> deptIds = Collections.emptySet();
 			Long creator = null;
-			if (dataScopes.contains(DataScopeEnum.BELOW_DEPT.getCode())
-					|| dataScopes.contains(DataScopeEnum.SELF_DEPT.getCode())
-					|| dataScopes.contains(DataScopeEnum.CUSTOM.getCode())) {
+			if (dataScopes.contains(DataScope.BELOW_DEPT.getCode())
+					|| dataScopes.contains(DataScope.SELF_DEPT.getCode())
+					|| dataScopes.contains(DataScope.CUSTOM.getCode())) {
 				deptIds = deptIdsSupplier.get();
 			}
-			if (dataScopes.contains(DataScopeEnum.SELF.getCode())) {
+			if (dataScopes.contains(DataScope.SELF.getCode())) {
 				creator = this.userE.getId();
 			}
 			this.dataFilterV = DataFilterV.builder().deptIds(deptIds).creator(creator).build();
@@ -292,7 +292,7 @@ public class AuthA extends AggregateRoot implements ValidateName {
 	}
 
 	public void checkAuthParam() {
-		switch (grantTypeEnum) {
+		switch (grantType) {
 			case MOBILE -> this.mobileAuthParamValidator.validateAuth(this);
 			case MAIL -> this.mailAuthParamValidator.validateAuth(this);
 			case USERNAME_PASSWORD -> this.usernamePasswordAuthParamValidator.validateAuth(this);
@@ -329,7 +329,7 @@ public class AuthA extends AggregateRoot implements ValidateName {
 
 	public void checkUsername() {
 		if (ObjectUtils.isNull(this.userE)) {
-			this.grantTypeEnum.checkUsernameNotFound();
+			this.grantType.checkUsernameNotFound();
 		}
 	}
 
@@ -341,7 +341,7 @@ public class AuthA extends AggregateRoot implements ValidateName {
 	}
 
 	public void checkUserStatus() {
-		if (ObjectUtils.equals(UserStatusEnum.DISABLE.getCode(), this.userE.getStatus())) {
+		if (ObjectUtils.equals(UserStatus.DISABLE.getCode(), this.userE.getStatus())) {
 			throw new UserDisabledException(OAuth2Constants.USER_DISABLED);
 		}
 	}
@@ -359,8 +359,7 @@ public class AuthA extends AggregateRoot implements ValidateName {
 	}
 
 	public String getLoginName() {
-		if (List.of(GrantTypeEnum.USERNAME_PASSWORD, GrantTypeEnum.AUTHORIZATION_CODE, GrantTypeEnum.TEST)
-			.contains(grantTypeEnum)) {
+		if (List.of(GrantType.USERNAME_PASSWORD, GrantType.AUTHORIZATION_CODE, GrantType.TEST).contains(grantType)) {
 			return this.userV.username();
 		}
 		return this.captchaV.uuid();
@@ -376,17 +375,15 @@ public class AuthA extends AggregateRoot implements ValidateName {
 	}
 
 	private boolean isUseCaptcha() {
-		return List.of(GrantTypeEnum.USERNAME_PASSWORD, GrantTypeEnum.MOBILE, GrantTypeEnum.MAIL)
-			.contains(grantTypeEnum);
+		return List.of(GrantType.USERNAME_PASSWORD, GrantType.MOBILE, GrantType.MAIL).contains(grantType);
 	}
 
 	private boolean isUsePassword() {
-		return List.of(GrantTypeEnum.USERNAME_PASSWORD, GrantTypeEnum.AUTHORIZATION_CODE, GrantTypeEnum.TEST)
-			.contains(grantTypeEnum);
+		return List.of(GrantType.USERNAME_PASSWORD, GrantType.AUTHORIZATION_CODE, GrantType.TEST).contains(grantType);
 	}
 
 	private String getCaptchaCacheKeyByAuth() {
-		return switch (grantTypeEnum) {
+		return switch (grantType) {
 			case MOBILE -> RedisKeyUtils.getMobileAuthCaptchaKey(this.captchaV.uuid());
 			case MAIL -> RedisKeyUtils.getMailAuthCaptchaKey(this.captchaV.uuid());
 			case USERNAME_PASSWORD -> RedisKeyUtils.getUsernamePasswordAuthCaptchaKey(this.captchaV.uuid());

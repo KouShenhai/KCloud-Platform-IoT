@@ -15,27 +15,31 @@
  *
  */
 
-package org.laokou.iot.thingModel.model;
+package org.laokou.auth.model.enums;
 
 import lombok.Getter;
 
 /**
+ * 超级管理员枚举.
+ *
  * @author laokou
  */
 @Getter
-public enum CategoryEnum {
+public enum SuperAdmin {
 
-	PROPERTY(1, "属性"),
+	// @formatter:off
+	NO(0, "否"),
 
-	EVENT(2, "事件");
+	YES(1, "是");
 
 	private final int code;
 
 	private final String desc;
 
-	CategoryEnum(int code, String desc) {
+	SuperAdmin(int code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}
+	// @formatter:on
 
 }

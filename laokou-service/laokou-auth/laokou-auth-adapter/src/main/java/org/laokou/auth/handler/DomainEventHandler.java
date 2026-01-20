@@ -28,7 +28,7 @@ import org.laokou.auth.dto.LoginLogSaveCmd;
 import org.laokou.auth.dto.NoticeLogSaveCmd;
 import org.laokou.auth.dto.domainevent.LoginEvent;
 import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
-import org.laokou.auth.model.enums.MqEnum;
+import org.laokou.auth.model.enums.MqTopic;
 import org.laokou.common.mail.service.MailService;
 import org.laokou.common.sms.service.SmsService;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -53,8 +53,8 @@ public class DomainEventHandler {
 
 	private final NoticeLogServiceI noticeLogServiceI;
 
-	@KafkaListener(topics = MqEnum.LOGIN_LOG_TOPIC,
-			groupId = "${spring.kafka.consumer.group-id}-" + MqEnum.LOGIN_LOG_CONSUMER_GROUP)
+	@KafkaListener(topics = MqTopic.LOGIN_LOG_TOPIC,
+			groupId = "${spring.kafka.consumer.group-id}-" + MqTopic.LOGIN_LOG_CONSUMER_GROUP)
 	public void handleLoginLog(List<ConsumerRecord<String, Object>> messages, Acknowledgment acknowledgment) {
 		try {
 			for (ConsumerRecord<String, Object> record : messages) {
@@ -67,8 +67,8 @@ public class DomainEventHandler {
 		}
 	}
 
-	@KafkaListener(topics = MqEnum.MAIL_CAPTCHA_TOPIC,
-			groupId = "${spring.kafka.consumer.group-id}-" + MqEnum.MAIL_CAPTCHA_CONSUMER_GROUP)
+	@KafkaListener(topics = MqTopic.MAIL_CAPTCHA_TOPIC,
+			groupId = "${spring.kafka.consumer.group-id}-" + MqTopic.MAIL_CAPTCHA_CONSUMER_GROUP)
 	public void handleMailCaptcha(List<ConsumerRecord<String, Object>> messages, Acknowledgment acknowledgment) {
 		try {
 			for (ConsumerRecord<String, Object> record : messages) {
@@ -82,8 +82,8 @@ public class DomainEventHandler {
 		}
 	}
 
-	@KafkaListener(topics = MqEnum.MOBILE_CAPTCHA_TOPIC,
-			groupId = "${spring.kafka.consumer.group-id}-" + MqEnum.MOBILE_CAPTCHA_CONSUMER_GROUP)
+	@KafkaListener(topics = MqTopic.MOBILE_CAPTCHA_TOPIC,
+			groupId = "${spring.kafka.consumer.group-id}-" + MqTopic.MOBILE_CAPTCHA_CONSUMER_GROUP)
 	public void handleMobileCaptcha(List<ConsumerRecord<String, Object>> messages, Acknowledgment acknowledgment) {
 		try {
 			for (ConsumerRecord<String, Object> record : messages) {

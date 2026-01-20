@@ -83,7 +83,8 @@ jobs:
             ./laokou-common/laokou-common-sftp/target/site/jacoco/jacoco.xml,
             ./laokou-common/laokou-common-grpc/target/site/jacoco/jacoco.xml,
             ./laokou-common/laokou-common-modbus4j/target/site/jacoco/jacoco.xml,
-            ./laokou-common/laokou-common-redis/target/site/jacoco/jacoco.xml
+            ./laokou-common/laokou-common-redis/target/site/jacoco/jacoco.xml,
+            ./laokou-cloud/laokou-gateway/target/site/jacoco/jacoco.xml
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Build the Docker image
         run: |

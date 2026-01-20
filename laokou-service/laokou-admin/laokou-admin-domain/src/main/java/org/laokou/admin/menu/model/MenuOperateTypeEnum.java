@@ -25,7 +25,7 @@ import lombok.Getter;
 @Getter
 public enum MenuOperateTypeEnum {
 
-	SAVE("save", "新增菜单"),
+	SAVE("save", "保存菜单"),
 
 	MODIFY("modify", "修改菜单");
 

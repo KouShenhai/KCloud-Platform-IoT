@@ -25,7 +25,7 @@ import lombok.Getter;
 @Getter
 public enum RoleOperateTypeEnum {
 
-	SAVE("save", "新增角色"),
+	SAVE("save", "保存角色"),
 
 	MODIFY("modify", "修改角色"),
 

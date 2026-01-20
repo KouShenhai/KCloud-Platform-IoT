@@ -25,7 +25,7 @@ import lombok.Getter;
 @Getter
 public enum ProductCategoryOperateTypeEnum {
 
-	SAVE("save", "新增产品类别"),
+	SAVE("save", "保存产品类别"),
 
 	MODIFY("modify", "修改产品类别");
 

@@ -26,7 +26,7 @@ import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.entity.LoginLogE;
-import org.laokou.auth.model.enums.LoginStatusEnum;
+import org.laokou.auth.model.enums.LoginStatus;
 import org.laokou.auth.model.entity.UserE;
 import org.laokou.common.core.util.AddressUtils;
 import org.laokou.common.core.util.IpUtils;
@@ -102,14 +102,14 @@ public final class LoginLogConvertor {
 	public static LoginEvent toDomainEvent(HttpServletRequest request, AuthA authA, BizException ex) throws Exception {
 		Capabilities capabilities = RequestUtils.getCapabilities(request);
 		String ip = IpUtils.getIpAddr(request);
-		int status = LoginStatusEnum.OK.getCode();
+		int status = LoginStatus.OK.getCode();
 		UserE userE = authA.getUserE();
 		Optional<UserE> optional = Optional.ofNullable(userE);
 		Long creator = optional.map(UserE::getId).orElse(null);
 		Long tenantId = optional.map(UserE::getTenantId).orElse(null);
 		String errorMessage = StringConstants.EMPTY;
 		if (ObjectUtils.isNotNull(ex)) {
-			status = LoginStatusEnum.FAIL.getCode();
+			status = LoginStatus.FAIL.getCode();
 			errorMessage = ex.getMsg();
 		}
 		return LoginEvent.builder()
@@ -121,7 +121,7 @@ public final class LoginLogConvertor {
 			.os(capabilities.getPlatform())
 			.status(status)
 			.errorMessage(errorMessage)
-			.type(authA.getGrantTypeEnum().getCode())
+			.type(authA.getGrantType().getCode())
 			.loginTime(authA.getCreateTime())
 			.tenantId(tenantId)
 			.creator(creator)

@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.admin.user.model;
+package org.laokou.iot.thingModel.model.enums;
 
 import lombok.Getter;
 
@@ -23,21 +23,17 @@ import lombok.Getter;
  * @author laokou
  */
 @Getter
-public enum UserOperateTypeEnum {
+public enum Category {
 
-	SAVE("save", "新增用户"),
+	PROPERTY(1, "属性"),
 
-	MODIFY("modify", "修改用户"),
+	EVENT(2, "事件");
 
-	RESET_PWD("rest_pwd", "重置用户密码"),
-
-	MODIFY_AUTHORITY("modify_authority", "修改用户权限");
-
-	private final String code;
+	private final int code;
 
 	private final String desc;
 
-	UserOperateTypeEnum(String code, String desc) {
+	Category(int code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}

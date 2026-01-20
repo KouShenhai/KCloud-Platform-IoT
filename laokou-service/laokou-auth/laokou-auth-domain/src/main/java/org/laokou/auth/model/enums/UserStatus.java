@@ -15,28 +15,28 @@
  *
  */
 
-package org.laokou.admin.user.model;
+package org.laokou.auth.model.enums;
 
 import lombok.Getter;
 
 /**
- * 超级管理员枚举.
+ * 用户状态枚举.
  *
  * @author laokou
  */
 @Getter
-public enum SuperAdminEnum {
+public enum UserStatus {
 
 	// @formatter:off
-	NO(0, "否"),
+	ENABLE(0, "启用"),
 
-	YES(1, "是");
+	DISABLE(1, "禁用");
 
 	private final int code;
 
 	private final String desc;
 
-	SuperAdminEnum(int code, String desc) {
+	UserStatus(int code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}

@@ -15,18 +15,22 @@
  *
  */
 
-package org.laokou.iot.thingModel.model;
+package org.laokou.iot.thingModel.model.enums;
 
 import lombok.Getter;
 import org.laokou.common.i18n.util.EnumParser;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.ParamValidator;
+import org.laokou.iot.thingModel.model.BooleanType;
+import org.laokou.iot.thingModel.model.DecimalType;
+import org.laokou.iot.thingModel.model.IntegerType;
+import org.laokou.iot.thingModel.model.StringType;
 
 /**
  * @author laokou
  */
 @Getter
-public enum DataTypeEnum {
+public enum DataType {
 
 	INTEGER("integer", "整数型") {
 		@Override
@@ -57,15 +61,15 @@ public enum DataTypeEnum {
 
 	private final String desc;
 
-	DataTypeEnum(String code, String desc) {
+	DataType(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}
 
 	public abstract ParamValidator.Validate validate(String specs);
 
-	public static DataTypeEnum getByCode(String code) {
-		return EnumParser.parse(DataTypeEnum.class, DataTypeEnum::getCode, code);
+	public static DataType getByCode(String code) {
+		return EnumParser.parse(DataType.class, DataType::getCode, code);
 	}
 
 }

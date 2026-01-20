@@ -22,7 +22,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.laokou.auth.model.enums.SuperAdminEnum;
+import org.laokou.auth.model.enums.SuperAdmin;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.util.ObjectUtils;
 
@@ -91,7 +91,7 @@ public class UserE implements Serializable {
 	private Long deptId;
 
 	public boolean isSuperAdministrator() {
-		return ObjectUtils.equals(SuperAdminEnum.YES.getCode(), this.superAdmin);
+		return ObjectUtils.equals(SuperAdmin.YES.getCode(), this.superAdmin);
 	}
 
 }

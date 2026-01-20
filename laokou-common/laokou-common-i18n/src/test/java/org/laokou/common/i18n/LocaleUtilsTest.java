@@ -20,7 +20,6 @@ package org.laokou.common.i18n;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.i18n.util.LocaleUtils;
-import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.util.Locale;
 
@@ -149,9 +148,7 @@ class LocaleUtilsTest {
 	@Test
 	void test_toLocale_withComplexAcceptHeader() {
 		// Complex Accept-Language header with quality values
-		Locale locale = LocaleContextHolder.getLocale();
-		assertLocale(LocaleUtils.toLocale("en-US;q=0.8,zh-CN;q=0.9,ja-JP;q=0.7"), locale.getLanguage(),
-				locale.getCountry());
+		assertLocale(LocaleUtils.toLocale("en-US;q=0.8,zh-CN;q=0.9,ja-JP;q=0.7"), "en", "US");
 	}
 
 	@Test

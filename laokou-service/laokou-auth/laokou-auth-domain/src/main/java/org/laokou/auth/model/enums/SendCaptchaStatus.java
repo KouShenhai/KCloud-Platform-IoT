@@ -19,26 +19,25 @@ package org.laokou.auth.model.enums;
 
 import lombok.Getter;
 
+/**
+ * @author laokou
+ */
 @Getter
-public enum DataScopeEnum {
+public enum SendCaptchaStatus {
 
-	ALL("all", "全部"),
+	// @formatter:off
+	OK(0, "发送成功"),
 
-	CUSTOM("custom", "自定义"),
+	FAIL(1, "发送失败");
 
-	SELF_DEPT("self_dept", "仅本部门"),
-
-	BELOW_DEPT("below_dept", "部门及以下"),
-
-	SELF("self", "仅本人");
-
-	private final String code;
+	private final int code;
 
 	private final String desc;
 
-	DataScopeEnum(String code, String desc) {
+	SendCaptchaStatus(int code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}
+	// @formatter:on
 
 }

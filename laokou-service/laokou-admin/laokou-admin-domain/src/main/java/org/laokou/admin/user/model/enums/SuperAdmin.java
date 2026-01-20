@@ -15,26 +15,28 @@
  *
  */
 
-package org.laokou.auth.model.enums;
+package org.laokou.admin.user.model.enums;
 
 import lombok.Getter;
 
 /**
+ * 超级管理员枚举.
+ *
  * @author laokou
  */
 @Getter
-public enum SendCaptchaStatusEnum {
+public enum SuperAdmin {
 
 	// @formatter:off
-	OK(0, "发送成功"),
+	NO(0, "否"),
 
-	FAIL(1, "发送失败");
+	YES(1, "是");
 
 	private final int code;
 
 	private final String desc;
 
-	SendCaptchaStatusEnum(int code, String desc) {
+	SuperAdmin(int code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}
