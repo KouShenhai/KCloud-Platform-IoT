@@ -17,7 +17,6 @@
 
 package org.laokou.common.i18n.util;
 
-import org.laokou.common.i18n.common.constant.StringConstants;
 import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.util.Locale;
@@ -47,7 +46,7 @@ public final class LocaleUtils {
 	}
 
 	private static String[] filterLanguage(String language) {
-		int idx = language.indexOf(StringConstants.ROD);
+		int idx = language.indexOf('-');
 		if (idx > 0) {
 			String[] arr = new String[2];
 			arr[0] = language.substring(idx - 2, idx);
