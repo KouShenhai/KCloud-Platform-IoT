@@ -87,7 +87,7 @@
     <!--spotbugs-maven-plugin版本-->
     <spotbugs-maven-plugin.version>4.9.8.2</spotbugs-maven-plugin.version>
     <!--native-maven-plugin版本-->
-    <native-maven-plugin.version>0.11.3</native-maven-plugin.version>
+    <native-maven-plugin.version>0.11.4</native-maven-plugin.version>
     <!--versions-maven-plugin版本-->
     <versions-maven-plugin.version>2.21.0</versions-maven-plugin.version>
     <!--asciidoctor-maven-plugin版本-->
