@@ -23,7 +23,7 @@ import lombok.Getter;
  * @author laokou
  */
 @Getter
-public enum SendCaptchaStatusEnum {
+public enum SendCaptchaStatus {
 
 	// @formatter:off
 	OK(0, "发送成功"),
@@ -34,7 +34,7 @@ public enum SendCaptchaStatusEnum {
 
 	private final String desc;
 
-	SendCaptchaStatusEnum(int code, String desc) {
+	SendCaptchaStatus(int code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}

@@ -25,7 +25,7 @@ import lombok.Getter;
 @Getter
 public enum OssOperateTypeEnum {
 
-	SAVE("save", "新增OSS"),
+	SAVE("save", "保存OSS"),
 
 	MODIFY("modify", "修改OSS");
 

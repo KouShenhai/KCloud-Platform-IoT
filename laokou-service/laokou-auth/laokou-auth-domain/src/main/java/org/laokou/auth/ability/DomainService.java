@@ -25,7 +25,7 @@ import org.laokou.auth.gateway.OssLogGateway;
 import org.laokou.auth.gateway.TenantGateway;
 import org.laokou.auth.gateway.UserGateway;
 import org.laokou.auth.model.AuthA;
-import org.laokou.auth.model.enums.DataScopeEnum;
+import org.laokou.auth.model.enums.DataScope;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
@@ -84,7 +84,7 @@ public class DomainService {
 		// 校验菜单权限标识集合
 		authA.checkMenuPermissions();
 		// 获取数据权限
-		authA.getDataFilter(Set.of(DataScopeEnum.ALL.getCode()), () -> Set.of(1L));
+		authA.getDataFilter(Set.of(DataScope.ALL.getCode()), () -> Set.of(1L));
 		// 校验数据权限
 		authA.checkDataFilter();
 		// 获取用户头像

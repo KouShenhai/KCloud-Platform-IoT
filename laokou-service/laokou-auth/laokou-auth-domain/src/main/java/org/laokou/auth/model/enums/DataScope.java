@@ -20,7 +20,7 @@ package org.laokou.auth.model.enums;
 import lombok.Getter;
 
 @Getter
-public enum DataScopeEnum {
+public enum DataScope {
 
 	ALL("all", "全部"),
 
@@ -36,7 +36,7 @@ public enum DataScopeEnum {
 
 	private final String desc;
 
-	DataScopeEnum(String code, String desc) {
+	DataScope(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}

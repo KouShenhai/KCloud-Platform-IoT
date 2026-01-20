@@ -25,7 +25,7 @@ import lombok.Getter;
 @Getter
 public enum ThingModelOperateTypeEnum {
 
-	SAVE("save", "新增物模型"),
+	SAVE("save", "保存物模型"),
 
 	MODIFY("modify", "修改物模型");
 

@@ -15,31 +15,31 @@
  *
  */
 
-package org.laokou.auth.model.enums;
+package org.laokou.admin.user.model.enums;
 
 import lombok.Getter;
 
 /**
- * 登录状态枚举.
- *
  * @author laokou
  */
 @Getter
-public enum LoginStatusEnum {
+public enum UserOperateType {
 
-	// @formatter:off
-	OK(0, "登录成功"),
+	SAVE("save", "保存用户"),
 
-	FAIL(1, "登录失败");
+	MODIFY("modify", "修改用户"),
 
-	private final int code;
+	RESET_PWD("rest_pwd", "重置用户密码"),
+
+	MODIFY_AUTHORITY("modify_authority", "修改用户权限");
+
+	private final String code;
 
 	private final String desc;
 
-	LoginStatusEnum(int code, String desc) {
+	UserOperateType(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}
-	// @formatter:on
 
 }

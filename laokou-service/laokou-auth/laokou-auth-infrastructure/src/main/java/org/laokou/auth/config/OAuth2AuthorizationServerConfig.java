@@ -26,7 +26,7 @@ import org.laokou.auth.config.authentication.OAuth2TestAuthenticationConverter;
 import org.laokou.auth.config.authentication.OAuth2UsernamePasswordAuthenticationConverter;
 import org.laokou.auth.model.validator.CaptchaValidator;
 import org.laokou.auth.model.function.HttpRequest;
-import org.laokou.auth.model.enums.MqEnum;
+import org.laokou.auth.model.enums.MqTopic;
 import org.laokou.auth.model.validator.PasswordValidator;
 import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -209,9 +209,9 @@ class OAuth2AuthorizationServerConfig {
 
 	@Bean("authNewTopics")
 	KafkaAdmin.NewTopics newTopics() {
-		return new KafkaAdmin.NewTopics(new NewTopic(MqEnum.LOGIN_LOG_TOPIC, 3, (short) 1),
-				new NewTopic(MqEnum.MAIL_CAPTCHA_TOPIC, 3, (short) 1),
-				new NewTopic(MqEnum.MOBILE_CAPTCHA_TOPIC, 3, (short) 1));
+		return new KafkaAdmin.NewTopics(new NewTopic(MqTopic.LOGIN_LOG_TOPIC, 3, (short) 1),
+				new NewTopic(MqTopic.MAIL_CAPTCHA_TOPIC, 3, (short) 1),
+				new NewTopic(MqTopic.MOBILE_CAPTCHA_TOPIC, 3, (short) 1));
 	}
 
 	private Boolean validateCaptcha(String key, String code) {

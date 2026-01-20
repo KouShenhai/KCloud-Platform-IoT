@@ -25,7 +25,7 @@ import org.laokou.auth.convertor.LoginLogConvertor;
 import org.laokou.auth.convertor.UserConvertor;
 import org.laokou.auth.dto.domainevent.LoginEvent;
 import org.laokou.auth.model.AuthA;
-import org.laokou.auth.model.enums.MqEnum;
+import org.laokou.auth.model.enums.MqTopic;
 import org.laokou.common.context.util.User;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.common.exception.BizException;
@@ -68,7 +68,7 @@ final class OAuth2AuthenticationProcessor {
 		}
 		finally {
 			// 发布领域事件
-			kafkaDomainEventPublisher.publish(MqEnum.LOGIN_LOG.getTopic(), evt);
+			kafkaDomainEventPublisher.publish(MqTopic.LOGIN_LOG.getTopic(), evt);
 		}
 	}
 

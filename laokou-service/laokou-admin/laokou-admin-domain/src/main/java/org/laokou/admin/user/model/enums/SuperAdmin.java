@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.auth.model.enums;
+package org.laokou.admin.user.model.enums;
 
 import lombok.Getter;
 
@@ -25,7 +25,7 @@ import lombok.Getter;
  * @author laokou
  */
 @Getter
-public enum SuperAdminEnum {
+public enum SuperAdmin {
 
 	// @formatter:off
 	NO(0, "否"),
@@ -36,7 +36,7 @@ public enum SuperAdminEnum {
 
 	private final String desc;
 
-	SuperAdminEnum(int code, String desc) {
+	SuperAdmin(int code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}

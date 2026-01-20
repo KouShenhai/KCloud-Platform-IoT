@@ -20,23 +20,23 @@ package org.laokou.auth.model.enums;
 import lombok.Getter;
 
 /**
- * 用户状态枚举.
+ * 登录状态枚举.
  *
  * @author laokou
  */
 @Getter
-public enum UserStatusEnum {
+public enum LoginStatus {
 
 	// @formatter:off
-	ENABLE(0, "启用"),
+	OK(0, "登录成功"),
 
-	DISABLE(1, "禁用");
+	FAIL(1, "登录失败");
 
 	private final int code;
 
 	private final String desc;
 
-	UserStatusEnum(int code, String desc) {
+	LoginStatus(int code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}
