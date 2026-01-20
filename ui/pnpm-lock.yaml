@@ -37,7 +37,7 @@ dependencies:
     version: 4.25.4(@babel/runtime@7.28.6)(@codemirror/autocomplete@6.20.0)(@codemirror/language@6.12.1)(@codemirror/lint@6.9.2)(@codemirror/search@6.6.0)(@codemirror/state@6.5.4)(@codemirror/theme-one-dark@6.1.3)(@codemirror/view@6.39.11)(codemirror@6.0.2)(react-dom@18.3.1)(react@18.3.1)
   '@umijs/max':
     specifier: ^4.4.6
-    version: 4.6.23(@babel/core@7.28.6)(@types/react-dom@19.2.3)(@types/react@19.2.8)(dva@2.5.0-beta.2)(less-loader@12.3.0)(less@4.5.1)(prettier@2.8.8)(rc-field-form@2.7.1)(react-dom@18.3.1)(react@18.3.1)(resolve-url-loader@5.0.0)(sass-loader@13.3.3)(sass@1.54.0)(typescript@5.9.3)(webpack@5.104.1)
+    version: 4.6.24(@babel/core@7.28.6)(@types/react-dom@19.2.3)(@types/react@19.2.8)(dva@2.5.0-beta.2)(less-loader@12.3.0)(less@4.5.1)(prettier@2.8.8)(rc-field-form@2.7.1)(react-dom@18.3.1)(react@18.3.1)(resolve-url-loader@5.0.0)(sass-loader@13.3.3)(sass@1.54.0)(typescript@5.9.3)(webpack@5.104.1)
   '@umijs/plugin-openapi':
     specifier: ^1.3.3
     version: 1.3.3(typescript@5.9.3)(umi@3.5.43)
@@ -2418,6 +2418,7 @@ packages:
     dependencies:
       eslint: 8.57.1
       eslint-visitor-keys: 3.4.3
+    dev: true
 
   /@eslint-community/regexpp@4.12.2:
     resolution: {integrity: sha512-EriSTlt5OC9/7SXkRSCAhfSxxoSUgBm33OH+IkwbdpgoqsSsUg7y3uh+IICI/Qg4BBWr3U2i39RpmycbxMq4ew==}
@@ -2447,6 +2448,7 @@ packages:
   /@eslint/js@8.57.1:
     resolution: {integrity: sha512-d9zaMRSTIKDLhctzH12MtXvJKSSUhaHcjV+2Z+GK+EEY7XKpP5yR4x+N3TAcHTcu963nIr+TMcCb4DBCYX1z6Q==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    dev: true
 
   /@exodus/schemasafe@1.3.0:
     resolution: {integrity: sha512-5Aap/GaRupgNx/feGBwLLTVv8OQFfv3pq2lPRzPg9R+IOBnDgghTGW7l7EuVXOvg5cc/xSAlRW8rBrjIC3Nvqw==}
@@ -2542,6 +2544,7 @@ packages:
       minimatch: 3.1.2
     transitivePeerDependencies:
       - supports-color
+    dev: true
 
   /@humanwhocodes/module-importer@1.0.1:
     resolution: {integrity: sha512-bxveV4V8v5Yb4ncFTT3rPSgZBOpCkjfK0y4oVVVJwIuDVBRMDXrPyXRL988i5ap9m9bnyEEjWfm5WkBmtffLfA==}
@@ -2641,7 +2644,7 @@ packages:
     dependencies:
       '@types/istanbul-lib-coverage': 2.0.6
       '@types/istanbul-reports': 3.0.4
-      '@types/node': 25.0.7
+      '@types/node': 25.0.9
       '@types/yargs': 16.0.11
       chalk: 4.1.2
     dev: false
@@ -2653,7 +2656,7 @@ packages:
       '@jest/schemas': 29.6.3
       '@types/istanbul-lib-coverage': 2.0.6
       '@types/istanbul-reports': 3.0.4
-      '@types/node': 25.0.7
+      '@types/node': 25.0.9
       '@types/yargs': 17.0.35
       chalk: 4.1.2
     dev: false
@@ -3309,11 +3312,11 @@ packages:
       remove-accents: 0.5.0
     dev: false
 
-  /@tanstack/query-core@4.41.0:
-    resolution: {integrity: sha512-193R4Jp9hjvlij6LryxrB5Mpbffd2L9PeWh3KlIy/hJV4SkBOfiQZ+jc5qAZLDCrdbkA5FjGj+UoDYw6TcNnyA==}
+  /@tanstack/query-core@4.41.1:
+    resolution: {integrity: sha512-XZvEw2OT+Nmi+ByQjURv3ckxRfzbYXSL6Hb60lgEn4GqUXz8HQTFdySvcSuCdxashqkBLrDvn9NwOhAbMTe9ow==}
     dev: false
 
-  /@tanstack/react-query-devtools@4.42.0(@tanstack/react-query@4.42.0)(react-dom@18.3.1)(react@18.3.1):
+  /@tanstack/react-query-devtools@4.42.0(@tanstack/react-query@4.42.2)(react-dom@18.3.1)(react@18.3.1):
     resolution: {integrity: sha512-N35fQ+tayyyNhKfkyH5OJdJL5eBx5S8lsyagtJre8rxtkyEjyQSEGyF+Xusao8LiqbYsi1ZMQgC7+e3zrwH3Kw==}
     peerDependencies:
       '@tanstack/react-query': ^4.42.0
@@ -3321,15 +3324,15 @@ packages:
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
     dependencies:
       '@tanstack/match-sorter-utils': 8.19.4
-      '@tanstack/react-query': 4.42.0(react-dom@18.3.1)(react@18.3.1)
+      '@tanstack/react-query': 4.42.2(react-dom@18.3.1)(react@18.3.1)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       superjson: 1.13.3
       use-sync-external-store: 1.6.0(react@18.3.1)
     dev: false
 
-  /@tanstack/react-query@4.42.0(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-j0tiofkzE3CSrYKmVRaKuwGgvCE+P2OOEDlhmfjeZf5ufcuFHwYwwgw3j08n4WYPVZ+OpsHblcFYezhKA3jDwg==}
+  /@tanstack/react-query@4.42.2(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-KFqT8wb/d0bHbzvJEuD/vEU8lUSC5cZDurOMtAR3G+mUABqVWvVswQ/norjFXedjQe+nfQQ9CWrOabWcRP3TKA==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
@@ -3340,7 +3343,7 @@ packages:
       react-native:
         optional: true
     dependencies:
-      '@tanstack/query-core': 4.41.0
+      '@tanstack/query-core': 4.41.1
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       use-sync-external-store: 1.6.0(react@18.3.1)
@@ -3491,7 +3494,7 @@ packages:
   /@types/graceful-fs@4.1.9:
     resolution: {integrity: sha512-olP3sd1qOEe5dXTSaFvQG+02VdRXcdytWLAZsAq1PecU8uqQAhkrnbli7DagjtXKW/Bl7YJbUsa8MPcuc8LHEQ==}
     dependencies:
-      '@types/node': 25.0.7
+      '@types/node': 25.0.9
     dev: false
 
   /@types/hapi__joi@17.1.9:
@@ -3506,7 +3509,7 @@ packages:
     resolution: {integrity: sha512-hy8b7Y1J8OGe6LbAjj3xniQrj3v6lsivCcrmf4TzSgPzLkhIeKgc5IZnT7ReIqmEuodjfO8EYAuoFvIrHi/+jQ==}
     deprecated: This is a stub types definition. history provides its own type definitions, so you do not need this installed.
     dependencies:
-      history: 4.10.1
+      history: 5.3.0
     dev: false
 
   /@types/hoist-non-react-statics@3.3.7(@types/react@19.2.8):
@@ -3558,12 +3561,6 @@ packages:
 
   /@types/minimist@1.2.5:
     resolution: {integrity: sha512-hov8bUuiLiyFPGyFPE1lwWhmzYbirOXQNNo40+y3zow8aFVTeyn3VWL0VFFfdNddA8S4Vf0Tc062rzyNr7Paag==}
-
-  /@types/node@25.0.7:
-    resolution: {integrity: sha512-C/er7DlIZgRJO7WtTdYovjIFzGsz0I95UlMyR9anTb4aCpBSRWe5Jc1/RvLKUfzmOxHPGjSE5+63HgLtndxU4w==}
-    dependencies:
-      undici-types: 7.16.0
-    dev: false
 
   /@types/node@25.0.9:
     resolution: {integrity: sha512-/rpCXHlCWeqClNBwUhDcusJxXYDjZTyE8v5oTO7WbL8eij2nKhUeU89/6xgjU7N4/Vh3He0BtyhJdQbDyhiXAw==}
@@ -3713,7 +3710,7 @@ packages:
         optional: true
     dependencies:
       '@eslint-community/regexpp': 4.12.2
-      '@typescript-eslint/parser': 5.62.0(eslint@8.57.1)(typescript@5.9.3)
+      '@typescript-eslint/parser': 5.62.0(eslint@8.35.0)(typescript@5.9.3)
       '@typescript-eslint/scope-manager': 5.62.0
       '@typescript-eslint/type-utils': 5.62.0(eslint@8.35.0)(typescript@5.9.3)
       '@typescript-eslint/utils': 5.62.0(eslint@8.35.0)(typescript@5.9.3)
@@ -3757,6 +3754,26 @@ packages:
       - supports-color
     dev: true
 
+  /@typescript-eslint/parser@5.62.0(eslint@8.35.0)(typescript@5.9.3):
+    resolution: {integrity: sha512-VlJEV0fOQ7BExOsHYAGrgbEiZoi8D+Bl2+f6V2RrXerRSylnp+ZBHmPvaIa8cz0Ajx7WO7Z5RqfgYg7ED1nRhA==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    peerDependencies:
+      eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@typescript-eslint/scope-manager': 5.62.0
+      '@typescript-eslint/types': 5.62.0
+      '@typescript-eslint/typescript-estree': 5.62.0(typescript@5.9.3)
+      debug: 4.4.3
+      eslint: 8.35.0
+      typescript: 5.9.3
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
   /@typescript-eslint/parser@5.62.0(eslint@8.57.1)(typescript@5.9.3):
     resolution: {integrity: sha512-VlJEV0fOQ7BExOsHYAGrgbEiZoi8D+Bl2+f6V2RrXerRSylnp+ZBHmPvaIa8cz0Ajx7WO7Z5RqfgYg7ED1nRhA==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
@@ -3775,6 +3792,7 @@ packages:
       typescript: 5.9.3
     transitivePeerDependencies:
       - supports-color
+    dev: true
 
   /@typescript-eslint/scope-manager@5.62.0:
     resolution: {integrity: sha512-VXuvVvZeQCQb5Zgf4HAxc04q5j+WrNAtNh9OwCsCgpKqESMTu3tF/jhZ3xG6T4NZwWl65Bg8KuS2uEvhSfLl0w==}
@@ -3947,10 +3965,10 @@ packages:
       '@umijs/utils': 3.5.43
     dev: false
 
-  /@umijs/ast@4.6.23:
-    resolution: {integrity: sha512-v605uLdbXkqATjRNV0cVSv5yn5xJJY2i17MiQOV7zjor0su0K4pTvr8FD/RG8Plq47dGSdpmsvTLloNyl8nyjQ==}
+  /@umijs/ast@4.6.24:
+    resolution: {integrity: sha512-bfv2ASYFBcZyfavRfoE8wZB9lBh24FJg6eVvwJqemZAyWxxg0QpdTIBxsnwhGDd5mZ+roAAm7lIt9gegiPuiiQ==}
     dependencies:
-      '@umijs/bundler-utils': 4.6.23
+      '@umijs/bundler-utils': 4.6.24
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -4004,24 +4022,24 @@ packages:
       - supports-color
     dev: true
 
-  /@umijs/babel-preset-umi@4.6.23:
-    resolution: {integrity: sha512-ql1lbvaMECKmG+twe7V2e8q02uibvN9jBezxtGUJWq6it3dJnlTdCE3GZFdEu8IHdARu/Hu6mKCOfirOeFAnQQ==}
+  /@umijs/babel-preset-umi@4.6.24:
+    resolution: {integrity: sha512-10Tz+ttL5sN/Hv0MG+PKx9FvZzYnUZxUSEN2NeSnQoz0A2S0J9UzoIG+yMrUnHiPSfnnF1tlFCyJJE5PK+7bHA==}
     dependencies:
       '@babel/runtime': 7.23.6
       '@bloomberg/record-tuple-polyfill': 0.0.4
-      '@umijs/bundler-utils': 4.6.23
-      '@umijs/utils': 4.6.23
+      '@umijs/bundler-utils': 4.6.24
+      '@umijs/utils': 4.6.24
       core-js: 3.34.0
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /@umijs/bundler-esbuild@4.6.23:
-    resolution: {integrity: sha512-KLZvY8OFP/2f2lrrrbsF1MySPEeLNKBxZiLqloG3GvtHlJBRv0uDY3lScOrBappibRIMfVbX34ajulg4yw1t0Q==}
+  /@umijs/bundler-esbuild@4.6.24:
+    resolution: {integrity: sha512-uzpbKNt7TYc2DbkZpnDr8A3FZ0U88ts4cZZUY3Xgih8H/UIgtE3aHHjLdyjLLGNjY5fu/29zONjG6FXA3v41kA==}
     hasBin: true
     dependencies:
-      '@umijs/bundler-utils': 4.6.23
-      '@umijs/utils': 4.6.23
+      '@umijs/bundler-utils': 4.6.24
+      '@umijs/utils': 4.6.24
       enhanced-resolve: 5.9.3
       postcss: 8.5.6
       postcss-flexbugs-fixes: 5.0.2(postcss@8.5.6)
@@ -4033,7 +4051,7 @@ packages:
   /@umijs/bundler-mako@0.11.10(postcss@8.5.6)(sass@1.54.0)(typescript@5.9.3)(webpack@5.104.1):
     resolution: {integrity: sha512-RNop0kmMXJUOLQYp61ZW3NVdD8ikOPW0zoCmgkN+nIUVw+QKcA+9tSPEcT6Rr8id9+Ed3lMjLqktev20guRp1g==}
     dependencies:
-      '@umijs/bundler-utils': 4.6.23
+      '@umijs/bundler-utils': 4.6.24
       '@umijs/mako': 0.11.10(postcss@8.5.6)(sass@1.54.0)(typescript@5.9.3)(webpack@5.104.1)
       chalk: 4.1.2
       compression: 1.8.1
@@ -4080,10 +4098,10 @@ packages:
       - supports-color
     dev: true
 
-  /@umijs/bundler-utils@4.6.23:
-    resolution: {integrity: sha512-8AeRQRxx8mcOFei+bC+t3W6//Q+Y9/F9fFQzIIGto6cnCDngIpgkp5QQ6bN5qpLtoMFiFeWf8VtzZsn6cFf8LA==}
+  /@umijs/bundler-utils@4.6.24:
+    resolution: {integrity: sha512-jCXETKfJbqDSP8kVqDs6/z03SoAgpaV7J6ITKrzRtfpYI+1TchbNlCth1r4lQDSoJh9I5TBG1RO2o1azZiqpEA==}
     dependencies:
-      '@umijs/utils': 4.6.23
+      '@umijs/utils': 4.6.24
       esbuild: 0.21.4
       regenerate: 1.4.2
       regenerate-unicode-properties: 10.1.1
@@ -4092,12 +4110,12 @@ packages:
       - supports-color
     dev: false
 
-  /@umijs/bundler-utoopack@4.6.23(less-loader@12.3.0)(less@4.5.1)(postcss@8.5.6)(resolve-url-loader@5.0.0)(sass-loader@13.3.3)(sass@1.54.0)(typescript@5.9.3)(webpack@5.104.1):
-    resolution: {integrity: sha512-E43oANu9ct/V3cVrwqyJKb1k34fa+hsTkxRsS1CeLr/xrWKmS3kBHc5fWEo8jtgMlQBjPR1EGfBX/wIT64ATUw==}
+  /@umijs/bundler-utoopack@4.6.24(less-loader@12.3.0)(less@4.5.1)(postcss@8.5.6)(resolve-url-loader@5.0.0)(sass-loader@13.3.3)(sass@1.54.0)(typescript@5.9.3)(webpack@5.104.1):
+    resolution: {integrity: sha512-b2JajIoeKro3xeMMIPd5/ZDiT2j9oCQKHWdF0BSax1dVn7y3OcNFTzBi6JFqAkGgFecfyjfvyQD+7umfqz8K+Q==}
     dependencies:
-      '@umijs/bundler-utils': 4.6.23
-      '@umijs/bundler-webpack': 4.6.23(typescript@5.9.3)(webpack@5.104.1)
-      '@utoo/pack': 1.1.23(less-loader@12.3.0)(less@4.5.1)(postcss@8.5.6)(resolve-url-loader@5.0.0)(sass-loader@13.3.3)(sass@1.54.0)
+      '@umijs/bundler-utils': 4.6.24
+      '@umijs/bundler-webpack': 4.6.24(typescript@5.9.3)(webpack@5.104.1)
+      '@utoo/pack': 1.1.25(less-loader@12.3.0)(less@4.5.1)(postcss@8.5.6)(resolve-url-loader@5.0.0)(sass-loader@13.3.3)(sass@1.54.0)
       compression: 1.8.1
       connect-history-api-fallback: 2.0.0
       cors: 2.8.5
@@ -4123,13 +4141,13 @@ packages:
       - webpack-plugin-serve
     dev: false
 
-  /@umijs/bundler-vite@4.6.23(postcss@8.5.6)(sass@1.54.0):
-    resolution: {integrity: sha512-rEXv5wGBrRnorP0v8vNVIchFfQROYzZXWg+c867xZ98prpkYS3+LzH0kuQRlMLCG41giIFi+L3UW788bMuTZXA==}
+  /@umijs/bundler-vite@4.6.24(postcss@8.5.6)(sass@1.54.0):
+    resolution: {integrity: sha512-7rTjnDH1RXp3ecFc4qOu87mNeM09Ow+hZVZdyQR0bLto01knpx9nZq7SUdyF5gGTQxlPTwuQXiw68GBRtaMCbg==}
     hasBin: true
     dependencies:
       '@svgr/core': 6.5.1
-      '@umijs/bundler-utils': 4.6.23
-      '@umijs/utils': 4.6.23
+      '@umijs/bundler-utils': 4.6.24
+      '@umijs/utils': 4.6.24
       '@vitejs/plugin-react': 4.0.0(vite@4.5.2)
       core-js: 3.34.0
       less: 4.1.3
@@ -4174,20 +4192,20 @@ packages:
       - react-router
     dev: false
 
-  /@umijs/bundler-webpack@4.6.23(typescript@5.9.3)(webpack@5.104.1):
-    resolution: {integrity: sha512-L678eTYu2hUXUilR8rvbhClueR7CufbpJw4hhj2D+8/1TCXASF60NfQyMEcgPNCWtQ7WMpvArw4RtDpdElgq4A==}
+  /@umijs/bundler-webpack@4.6.24(typescript@5.9.3)(webpack@5.104.1):
+    resolution: {integrity: sha512-UQQUAt2mE6riQErbmLm5mcBM5y89PCcagBNxBuC5Pp+jrWloNbLcWAu/0L7wrCYga7n2/Z0225EXTJPSV8tXHA==}
     hasBin: true
     dependencies:
       '@svgr/core': 6.5.1
       '@svgr/plugin-jsx': 6.5.1(@svgr/core@6.5.1)
       '@svgr/plugin-svgo': 6.5.1(@svgr/core@6.5.1)
       '@types/hapi__joi': 17.1.9
-      '@umijs/babel-preset-umi': 4.6.23
-      '@umijs/bundler-utils': 4.6.23
+      '@umijs/babel-preset-umi': 4.6.24
+      '@umijs/bundler-utils': 4.6.24
       '@umijs/case-sensitive-paths-webpack-plugin': 1.0.1
-      '@umijs/mfsu': 4.6.23
+      '@umijs/mfsu': 4.6.24
       '@umijs/react-refresh-webpack-plugin': 0.5.11(react-refresh@0.14.0)(webpack@5.104.1)
-      '@umijs/utils': 4.6.23
+      '@umijs/utils': 4.6.24
       cors: 2.8.5
       css-loader: 6.7.1(webpack@5.104.1)
       es5-imcompatible-versions: 0.1.90
@@ -4224,11 +4242,11 @@ packages:
       '@umijs/utils': 3.5.43
     dev: false
 
-  /@umijs/core@4.6.23:
-    resolution: {integrity: sha512-iK/XT0dIhJY0fCU1DBNBLeMGPeULhE95xBN547BydJZwuNMV7ST0b0griUpKChyZQ+XkmQhf7C5hWpcnh4XJkw==}
+  /@umijs/core@4.6.24:
+    resolution: {integrity: sha512-zyYLvOVjLivDG3oPJvO6b4TU9xdU1ga5NMTvIxs88PJHGYw0qs8ulHd3nNMTk8s9T7w2kqVrk4I53IyTBHvY+w==}
     dependencies:
-      '@umijs/bundler-utils': 4.6.23
-      '@umijs/utils': 4.6.23
+      '@umijs/bundler-utils': 4.6.24
+      '@umijs/utils': 4.6.24
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -4385,15 +4403,15 @@ packages:
       - typescript
     dev: true
 
-  /@umijs/lint@4.6.23(eslint@8.35.0)(stylelint@14.8.2)(typescript@5.9.3):
-    resolution: {integrity: sha512-osBrKwkjEPq800N2s4ReBmI7UhFEFVCMzYVNGvhy2PBhlD9jtBY9/0xU+ehirS4Wvg6DcYS1XHgtyimRpCOK+w==}
+  /@umijs/lint@4.6.24(eslint@8.35.0)(stylelint@14.8.2)(typescript@5.9.3):
+    resolution: {integrity: sha512-nT1QduTY5e5Eu+UgglHPmra2W4ijFdwF9Xhfp/O+UVXS3DWJhPU17w+3525XSdDRLc8xEHWCJEpOOM+laKquBw==}
     dependencies:
       '@babel/core': 7.23.6
       '@babel/eslint-parser': 7.23.3(@babel/core@7.23.6)(eslint@8.35.0)
       '@stylelint/postcss-css-in-js': 0.38.0(postcss-syntax@0.36.2)(postcss@8.5.6)
       '@typescript-eslint/eslint-plugin': 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.35.0)(typescript@5.9.3)
-      '@typescript-eslint/parser': 5.62.0(eslint@8.57.1)(typescript@5.9.3)
-      '@umijs/babel-preset-umi': 4.6.23
+      '@typescript-eslint/parser': 5.62.0(eslint@8.35.0)(typescript@5.9.3)
+      '@umijs/babel-preset-umi': 4.6.24
       eslint-plugin-jest: 27.2.3(@typescript-eslint/eslint-plugin@5.62.0)(eslint@8.35.0)(typescript@5.9.3)
       eslint-plugin-react: 7.33.2(eslint@8.35.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@8.35.0)
@@ -4532,16 +4550,16 @@ packages:
       - webpack
     dev: false
 
-  /@umijs/max@4.6.23(@babel/core@7.28.6)(@types/react-dom@19.2.3)(@types/react@19.2.8)(dva@2.5.0-beta.2)(less-loader@12.3.0)(less@4.5.1)(prettier@2.8.8)(rc-field-form@2.7.1)(react-dom@18.3.1)(react@18.3.1)(resolve-url-loader@5.0.0)(sass-loader@13.3.3)(sass@1.54.0)(typescript@5.9.3)(webpack@5.104.1):
-    resolution: {integrity: sha512-+whfkwCCGHK9JfhbgApm3W+vLXiixUHixeJtQbei4/uFpNLwvUwDGfc6u5Fcez1lK92ysVf1kCqjIfJvYxdhFw==}
+  /@umijs/max@4.6.24(@babel/core@7.28.6)(@types/react-dom@19.2.3)(@types/react@19.2.8)(dva@2.5.0-beta.2)(less-loader@12.3.0)(less@4.5.1)(prettier@2.8.8)(rc-field-form@2.7.1)(react-dom@18.3.1)(react@18.3.1)(resolve-url-loader@5.0.0)(sass-loader@13.3.3)(sass@1.54.0)(typescript@5.9.3)(webpack@5.104.1):
+    resolution: {integrity: sha512-BDTHoGXw5jdUmpa2qFGJ4Mgi/svqkqTI6c85ey9PZQuBIjlBZ2QH/CUOkTN09ShUdICTa/x076wJW9L7R4v5XQ==}
     hasBin: true
     dependencies:
-      '@umijs/lint': 4.6.23(eslint@8.35.0)(stylelint@14.8.2)(typescript@5.9.3)
-      '@umijs/plugins': 4.6.23(@babel/core@7.28.6)(@types/react-dom@19.2.3)(@types/react@19.2.8)(antd@4.24.16)(dva@2.5.0-beta.2)(rc-field-form@2.7.1)(react-dom@18.3.1)(react@18.3.1)
+      '@umijs/lint': 4.6.24(eslint@8.35.0)(stylelint@14.8.2)(typescript@5.9.3)
+      '@umijs/plugins': 4.6.24(@babel/core@7.28.6)(@types/react-dom@19.2.3)(@types/react@19.2.8)(antd@4.24.16)(dva@2.5.0-beta.2)(rc-field-form@2.7.1)(react-dom@18.3.1)(react@18.3.1)
       antd: 4.24.16(react-dom@18.3.1)(react@18.3.1)
       eslint: 8.35.0
       stylelint: 14.8.2
-      umi: 4.6.23(@babel/core@7.28.6)(@types/react@19.2.8)(eslint@8.35.0)(less-loader@12.3.0)(less@4.5.1)(prettier@2.8.8)(react-dom@18.3.1)(react@18.3.1)(resolve-url-loader@5.0.0)(sass-loader@13.3.3)(sass@1.54.0)(stylelint@14.8.2)(typescript@5.9.3)(webpack@5.104.1)
+      umi: 4.6.24(@babel/core@7.28.6)(@types/react@19.2.8)(eslint@8.35.0)(less-loader@12.3.0)(less@4.5.1)(prettier@2.8.8)(react-dom@18.3.1)(react@18.3.1)(resolve-url-loader@5.0.0)(sass-loader@13.3.3)(sass@1.54.0)(stylelint@14.8.2)(typescript@5.9.3)(webpack@5.104.1)
     transitivePeerDependencies:
       - '@babel/core'
       - '@rspack/core'
@@ -4588,12 +4606,12 @@ packages:
       - webpack-plugin-serve
     dev: false
 
-  /@umijs/mfsu@4.6.23:
-    resolution: {integrity: sha512-SJ5nr250O08Kqz2bQtzTKOjd896J8puhXcs3wcBu1jWhwn6OL1IBO15DesDFv/tVzGKG5VxPL6EkjR9BbAn+MA==}
+  /@umijs/mfsu@4.6.24:
+    resolution: {integrity: sha512-yR02Xr/BBR8PPFh9UVJR7c3q+UAsOrf/x4Cbtmu7/yGWl8fCW7YuqqPy/D/EBHTgM/9ai7tHFNCOdmY/uvELZg==}
     dependencies:
-      '@umijs/bundler-esbuild': 4.6.23
-      '@umijs/bundler-utils': 4.6.23
-      '@umijs/utils': 4.6.23
+      '@umijs/bundler-esbuild': 4.6.24
+      '@umijs/bundler-utils': 4.6.24
+      '@umijs/utils': 4.6.24
       enhanced-resolve: 5.9.3
       is-equal: 1.7.0
     transitivePeerDependencies:
@@ -4643,14 +4661,14 @@ packages:
       - typescript
     dev: false
 
-  /@umijs/plugin-run@4.6.23:
-    resolution: {integrity: sha512-RYRhnl1Sjh/oREb2GZ8h3qH0pKWsZqWzspndRkbwNubYNjoL/eHI/SW7RfE2YUgG109gHF6442rOstr4/cmKqg==}
+  /@umijs/plugin-run@4.6.24:
+    resolution: {integrity: sha512-AAXLYfVO/JzYk8Ocn+Y308aQZOpkkII0n4JYT16T8g8+XRULt3wcDjRvibajO8nyBPOo0SLI3kK6SlNNIZD7KQ==}
     dependencies:
       tsx: 3.12.2
     dev: false
 
-  /@umijs/plugins@4.6.23(@babel/core@7.28.6)(@types/react-dom@19.2.3)(@types/react@19.2.8)(antd@4.24.16)(dva@2.5.0-beta.2)(rc-field-form@2.7.1)(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-Lg4eXaWjejP1x2BaSLMArfQE10IfPnx5qfpGtpymZJACKAFLW2dBbni+RXrxQ/2MrUPSPVROYQm4qEr5i2vHJw==}
+  /@umijs/plugins@4.6.24(@babel/core@7.28.6)(@types/react-dom@19.2.3)(@types/react@19.2.8)(antd@4.24.16)(dva@2.5.0-beta.2)(rc-field-form@2.7.1)(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-QqEKjGdn7YXmqy+utkGQU4evd/DYGWw5Q+sIG1S7tGsvrBDT4hOz8Pt/Nl9I/zQNvZg/SBa1zmnLZnzk23NZFw==}
     dependencies:
       '@ahooksjs/use-request': 2.8.15(react@18.3.1)
       '@ant-design/antd-theme-variable': 1.0.0
@@ -4658,9 +4676,9 @@ packages:
       '@ant-design/icons': 4.8.3(react-dom@18.3.1)(react@18.3.1)
       '@ant-design/moment-webpack-plugin': 0.0.3
       '@ant-design/pro-components': 2.8.10(antd@4.24.16)(rc-field-form@2.7.1)(react-dom@18.3.1)(react@18.3.1)
-      '@tanstack/react-query': 4.42.0(react-dom@18.3.1)(react@18.3.1)
-      '@tanstack/react-query-devtools': 4.42.0(@tanstack/react-query@4.42.0)(react-dom@18.3.1)(react@18.3.1)
-      '@umijs/bundler-utils': 4.6.23
+      '@tanstack/react-query': 4.42.2(react-dom@18.3.1)(react@18.3.1)
+      '@tanstack/react-query-devtools': 4.42.0(@tanstack/react-query@4.42.2)(react-dom@18.3.1)(react@18.3.1)
+      '@umijs/bundler-utils': 4.6.24
       '@umijs/valtio': 1.0.4(@types/react@19.2.8)(react@18.3.1)
       antd-dayjs-webpack-plugin: 1.0.6(dayjs@1.11.19)
       axios: 0.27.2
@@ -4732,31 +4750,31 @@ packages:
       - react-dom
     dev: false
 
-  /@umijs/preset-umi@4.6.23(@types/react@19.2.8)(less-loader@12.3.0)(less@4.5.1)(resolve-url-loader@5.0.0)(sass-loader@13.3.3)(sass@1.54.0)(typescript@5.9.3)(webpack@5.104.1):
-    resolution: {integrity: sha512-K5BqVLQ65BYZHdETWQnMK1SquNtvkQitpg6qxg5agAq9tCrVBygVIHQ4HTQ/kAt6dEUT4rv8vOVE3J0Jpgxzqg==}
+  /@umijs/preset-umi@4.6.24(@types/react@19.2.8)(less-loader@12.3.0)(less@4.5.1)(resolve-url-loader@5.0.0)(sass-loader@13.3.3)(sass@1.54.0)(typescript@5.9.3)(webpack@5.104.1):
+    resolution: {integrity: sha512-zOvpsAs6Cm2Us8iXwZQQg71JjqkQMFoxqDPKft6TIdI2JQzD+hB7DJagDRJsXuKEqLO06C2vSxZztqeemElGtg==}
     dependencies:
       '@iconify/utils': 2.1.1
       '@stagewise/toolbar': 0.6.2
       '@svgr/core': 6.5.1
-      '@umijs/ast': 4.6.23
-      '@umijs/babel-preset-umi': 4.6.23
-      '@umijs/bundler-esbuild': 4.6.23
+      '@umijs/ast': 4.6.24
+      '@umijs/babel-preset-umi': 4.6.24
+      '@umijs/bundler-esbuild': 4.6.24
       '@umijs/bundler-mako': 0.11.10(postcss@8.5.6)(sass@1.54.0)(typescript@5.9.3)(webpack@5.104.1)
-      '@umijs/bundler-utils': 4.6.23
-      '@umijs/bundler-utoopack': 4.6.23(less-loader@12.3.0)(less@4.5.1)(postcss@8.5.6)(resolve-url-loader@5.0.0)(sass-loader@13.3.3)(sass@1.54.0)(typescript@5.9.3)(webpack@5.104.1)
-      '@umijs/bundler-vite': 4.6.23(postcss@8.5.6)(sass@1.54.0)
-      '@umijs/bundler-webpack': 4.6.23(typescript@5.9.3)(webpack@5.104.1)
-      '@umijs/core': 4.6.23
+      '@umijs/bundler-utils': 4.6.24
+      '@umijs/bundler-utoopack': 4.6.24(less-loader@12.3.0)(less@4.5.1)(postcss@8.5.6)(resolve-url-loader@5.0.0)(sass-loader@13.3.3)(sass@1.54.0)(typescript@5.9.3)(webpack@5.104.1)
+      '@umijs/bundler-vite': 4.6.24(postcss@8.5.6)(sass@1.54.0)
+      '@umijs/bundler-webpack': 4.6.24(typescript@5.9.3)(webpack@5.104.1)
+      '@umijs/core': 4.6.24
       '@umijs/did-you-know': 1.0.4
       '@umijs/es-module-parser': 0.0.7
       '@umijs/history': 5.3.1
-      '@umijs/mfsu': 4.6.23
-      '@umijs/plugin-run': 4.6.23
-      '@umijs/renderer-react': 4.6.23(react-dom@18.3.1)(react@18.3.1)
-      '@umijs/server': 4.6.23
+      '@umijs/mfsu': 4.6.24
+      '@umijs/plugin-run': 4.6.24
+      '@umijs/renderer-react': 4.6.24(react-dom@18.3.1)(react@18.3.1)
+      '@umijs/server': 4.6.24
       '@umijs/ui': 3.0.1
-      '@umijs/utils': 4.6.23
-      '@umijs/zod2ts': 4.6.23
+      '@umijs/utils': 4.6.24
+      '@umijs/zod2ts': 4.6.24
       babel-plugin-dynamic-import-node: 2.3.3
       babel-plugin-react-compiler: 0.0.0-experimental-c23de8d-20240515
       click-to-react-component: 1.1.0(@types/react@19.2.8)(react-dom@18.3.1)(react@18.3.1)
@@ -4872,8 +4890,8 @@ packages:
       - react-router
     dev: false
 
-  /@umijs/renderer-react@4.6.23(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-hePmCPxuuq0OWpu6I2oOE71T8ShG3JSyNLB0IwExlPlLw8TWdb5FAucNzlvgIQkrYNE0ZZmB53yNikuewB3amg==}
+  /@umijs/renderer-react@4.6.24(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-OX3StmEwBhSRR4ygUPEA8aVvjK0Oye7z4YKSsQzw2VI5JCHGlrUUS4WEi8HyWCGs7IdbdoJwDiTCGNvfqWX9+Q==}
     peerDependencies:
       react: '>=16.8'
       react-dom: '>=16.8'
@@ -4913,10 +4931,10 @@ packages:
       '@umijs/utils': 3.5.43
     dev: false
 
-  /@umijs/server@4.6.23:
-    resolution: {integrity: sha512-qrfgcL9stT6y84/tdJG7u7tReN29xLvZt+ZjZa2DtvND54M3mlb5o3tBFkrV8se/DKEwvMJflsznutBCEocK6Q==}
+  /@umijs/server@4.6.24:
+    resolution: {integrity: sha512-//2E4w73MWUCOYTCSxon9NoKg3LOaE+ebPBUVrpJJqqG8Vz6effKjdTPj98NUdi7cJIdo2VYR93mGfmT2gAbRg==}
     dependencies:
-      '@umijs/bundler-utils': 4.6.23
+      '@umijs/bundler-utils': 4.6.24
       history: 5.3.0
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
@@ -4925,13 +4943,13 @@ packages:
       - supports-color
     dev: false
 
-  /@umijs/test@4.6.23(@babel/core@7.28.6):
-    resolution: {integrity: sha512-IpqGPUa8RO0au9lUVSxfsKi7IJ8pDaIlCx2uofNHH1xV4L1P/0XYrKO7FOdA3OzKktwmoropB0vzMN4vFEtVyA==}
+  /@umijs/test@4.6.24(@babel/core@7.28.6):
+    resolution: {integrity: sha512-AFPn3H+s+hE/9/Y62W2SrX83Kp5Iy8G9jjMhOKVQHDqIUPb+gFG3182weiHCSc2qt1WrRc50CreVNFosFJwxRw==}
     dependencies:
       '@babel/plugin-transform-modules-commonjs': 7.23.3(@babel/core@7.28.6)
       '@jest/types': 27.5.1
-      '@umijs/bundler-utils': 4.6.23
-      '@umijs/utils': 4.6.23
+      '@umijs/bundler-utils': 4.6.24
+      '@umijs/utils': 4.6.24
       babel-jest: 29.7.0(@babel/core@7.28.6)
       esbuild: 0.21.4
       identity-obj-proxy: 3.0.0
@@ -4983,8 +5001,8 @@ packages:
       pino: 7.11.0
     dev: true
 
-  /@umijs/utils@4.6.23:
-    resolution: {integrity: sha512-02zVXy49q1x9oaAtHwbEVUbpaQh7Ov5SCpnLcSmpCzhHUlvGhNep/i27d2e4cN5xeZ/JCFFEqq6PicMKuO4hEw==}
+  /@umijs/utils@4.6.24:
+    resolution: {integrity: sha512-PzIhJjHq2Nhtuso+WTghDev3XGUZn/2jKqXy0IeyQXAEl1agwNQPedKSVIn+mU29gsnSvG1hBiI1As8fNgNARQ==}
     dependencies:
       chokidar: 3.5.3
       pino: 7.11.0
@@ -4999,15 +5017,16 @@ packages:
       - react
     dev: false
 
-  /@umijs/zod2ts@4.6.23:
-    resolution: {integrity: sha512-0b5v2jHw5+59TruDXJOTMqeaf0ZazWRxY2zGIY6MZFHXx0H/FwtJxxSU61RSemYV0ykqAIGxx6Nlp/cv5rkIHA==}
+  /@umijs/zod2ts@4.6.24:
+    resolution: {integrity: sha512-EP9BFl7iUMnQ0nwyuxP0dvvvSu37XwwJivd1S2j/rD0m2Ks+BPlTGFPmlHzZaw6g8Yc/eHtXf2LWnf+tv6NgXg==}
     dev: false
 
   /@ungap/structured-clone@1.3.0:
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
+    dev: true
 
-  /@utoo/pack-darwin-arm64@1.1.23:
-    resolution: {integrity: sha512-sal0D1jWqP6h5YBd9xMjyuvkf89jAphEf1Mde0Iqcq7tDrSCCzXOKUARFCcvyTE2DnzT/wplzqsghh9ccjErmQ==}
+  /@utoo/pack-darwin-arm64@1.1.25:
+    resolution: {integrity: sha512-YiyhROQjQ4LFoYJl9nviOBg2roni+sdtsFTbQyN6vmROwTLzUtoPuATP3cAuO0QxV5h7RzwdZQDz0clWy9Barw==}
     engines: {node: '>= 20'}
     cpu: [arm64]
     os: [darwin]
@@ -5015,8 +5034,8 @@ packages:
     dev: false
     optional: true
 
-  /@utoo/pack-darwin-x64@1.1.23:
-    resolution: {integrity: sha512-hzdwH+k/FadLr8vZQCujw7K9KTm7M//A0/KJegC1aZvXsOrb+hpbgRH0NAr3hB843NWAhMbrB/te40nRM46xHw==}
+  /@utoo/pack-darwin-x64@1.1.25:
+    resolution: {integrity: sha512-xpt6nPqaVwqMmSp2jKZ5UR3tBts+h/TqwgQtqz4LS/L6sSq994YIdsox4UqGYM+qlAH2/DPGKS8aVV/4b1bHng==}
     engines: {node: '>= 20'}
     cpu: [x64]
     os: [darwin]
@@ -5024,8 +5043,8 @@ packages:
     dev: false
     optional: true
 
-  /@utoo/pack-linux-arm64-gnu@1.1.23:
-    resolution: {integrity: sha512-ZuCF6w9vvri976xmD17l4q+5TqYFWx6CSFuhG5HcTrauAAbACbOrl3J7CpC5DCdJXcckG/1US1NbEt3all4gNA==}
+  /@utoo/pack-linux-arm64-gnu@1.1.25:
+    resolution: {integrity: sha512-AReMXYNUfw4b7+MH15tB4BbVuLBLc+jmYg3HZLYePRT9g5UBwfK9dOgeEYhPvDVsrAubw6D4Y6ccWYDo0vo4dw==}
     engines: {node: '>= 20'}
     cpu: [arm64]
     os: [linux]
@@ -5034,8 +5053,8 @@ packages:
     dev: false
     optional: true
 
-  /@utoo/pack-linux-arm64-musl@1.1.23:
-    resolution: {integrity: sha512-5PcSp5tlUt0vIYaRd6jr/W+WVIKAY9q5aXnUM9xrR5UUvs6XVCyy6hMLZdyNXrNkE0oz/TcxMSJ2mFaG3J262g==}
+  /@utoo/pack-linux-arm64-musl@1.1.25:
+    resolution: {integrity: sha512-CcfNYEouq1kXVbpKfZcLddGOVYZ8omMvOk+S8QK8TLcNgkvYnyKiG4IZVtFxPZocpuAWWqeocLZHHmgFx8RNyQ==}
     engines: {node: '>= 20'}
     cpu: [arm64]
     os: [linux]
@@ -5044,8 +5063,8 @@ packages:
     dev: false
     optional: true
 
-  /@utoo/pack-linux-x64-gnu@1.1.23:
-    resolution: {integrity: sha512-Hx2CXsKH4+xdf5u8eFrMNUaiK7PiGzRUUOnDTytX6Q9WyuyJbgnSdNQud8tueWCCMmPaO+mDsLPAYttG7Ef1OQ==}
+  /@utoo/pack-linux-x64-gnu@1.1.25:
+    resolution: {integrity: sha512-QDpWylKJXylmCu1UYe4ivJy0QJ/g064kZjSr4MqjooQQf/VSrZc2oYfSJtb+I/j2u/YRtuFDhd0eifE2unPnZw==}
     engines: {node: '>= 20'}
     cpu: [x64]
     os: [linux]
@@ -5054,8 +5073,8 @@ packages:
     dev: false
     optional: true
 
-  /@utoo/pack-linux-x64-musl@1.1.23:
-    resolution: {integrity: sha512-+78zDuprWXuIswUSnBbp5LgR1j96cO9sTsJhK1VTPLvAJb1QezeLenXgJhgf27TLE9zdKn7uQPS775BtKjVjXA==}
+  /@utoo/pack-linux-x64-musl@1.1.25:
+    resolution: {integrity: sha512-8hsjT8AhhMqueaSUTZYDzfZXVVEeC5NIBZfVMwHt6lkXdn2jfPQqhuDUEqZyVoeSLrMoKyXzfwTAk1f6V54gOA==}
     engines: {node: '>= 20'}
     cpu: [x64]
     os: [linux]
@@ -5064,16 +5083,16 @@ packages:
     dev: false
     optional: true
 
-  /@utoo/pack-shared@1.1.23:
-    resolution: {integrity: sha512-2jj1xc6x1TmlvQvBElHzrNn/TifqcqyPjFQaSwa+EzsCj0XngWjVDRWnnpuJ/5Dd/bvqsZJFj9aCYMyVNOJ4Vw==}
+  /@utoo/pack-shared@1.1.25:
+    resolution: {integrity: sha512-oo7TrBMcOfObXrXjzz2GWaTojSnX4q8vOEAyfAHblgAvblhQdhFPcUgAnlTJAAGq10D6E34HW552wJJxlHa5+A==}
     engines: {node: '>= 20'}
     dependencies:
       '@babel/code-frame': 7.22.5
       picocolors: 1.1.1
     dev: false
 
-  /@utoo/pack-win32-x64-msvc@1.1.23:
-    resolution: {integrity: sha512-lCEOK24ZosI+Mmu6MBjzAkV+mt+eBgJ6x/9F0ma32mpMtxpG2P4mxyZnVDRVAy3L/XJkgiCqMUiADh0myL0aZg==}
+  /@utoo/pack-win32-x64-msvc@1.1.25:
+    resolution: {integrity: sha512-LLO9pjAI7OKoKAMka5jygzhn6uFUZL9wAauTePEDYFN6yQfiZPAKmqetRTb6PiHxH/82iK4u1TIyJ2qgDMjV8Q==}
     engines: {node: '>= 20'}
     cpu: [x64]
     os: [win32]
@@ -5081,8 +5100,8 @@ packages:
     dev: false
     optional: true
 
-  /@utoo/pack@1.1.23(less-loader@12.3.0)(less@4.5.1)(postcss@8.5.6)(resolve-url-loader@5.0.0)(sass-loader@13.3.3)(sass@1.54.0):
-    resolution: {integrity: sha512-n6AGugPYTTToFdhqd8lm7lu+QV+jC/fK7c6dbq7coTximOcNN7ATLu4KkBnblnZyptLVpTm/g3z0Dmobn0eSnQ==}
+  /@utoo/pack@1.1.25(less-loader@12.3.0)(less@4.5.1)(postcss@8.5.6)(resolve-url-loader@5.0.0)(sass-loader@13.3.3)(sass@1.54.0):
+    resolution: {integrity: sha512-8TJzOKyTg+u9mesvCHFNQlyDJGwYGXZdUEN9rGnywWlgyBwF+90UEZrTy7BRmpbuKHd78LZWIW1eyEuYCx2gIw==}
     engines: {node: '>= 20'}
     peerDependencies:
       less: ^4.0.0
@@ -5094,7 +5113,7 @@ packages:
     dependencies:
       '@babel/code-frame': 7.22.5
       '@swc/helpers': 0.5.15
-      '@utoo/pack-shared': 1.1.23
+      '@utoo/pack-shared': 1.1.25
       '@utoo/style-loader': 1.0.1
       domparser-rs: 0.0.5
       find-up: 4.1.0
@@ -5109,13 +5128,13 @@ packages:
       send: 0.17.1
       ws: 8.19.0
     optionalDependencies:
-      '@utoo/pack-darwin-arm64': 1.1.23
-      '@utoo/pack-darwin-x64': 1.1.23
-      '@utoo/pack-linux-arm64-gnu': 1.1.23
-      '@utoo/pack-linux-arm64-musl': 1.1.23
-      '@utoo/pack-linux-x64-gnu': 1.1.23
-      '@utoo/pack-linux-x64-musl': 1.1.23
-      '@utoo/pack-win32-x64-msvc': 1.1.23
+      '@utoo/pack-darwin-arm64': 1.1.25
+      '@utoo/pack-darwin-x64': 1.1.25
+      '@utoo/pack-linux-arm64-gnu': 1.1.25
+      '@utoo/pack-linux-arm64-musl': 1.1.25
+      '@utoo/pack-linux-x64-gnu': 1.1.25
+      '@utoo/pack-linux-x64-musl': 1.1.25
+      '@utoo/pack-win32-x64-msvc': 1.1.25
     transitivePeerDependencies:
       - bufferutil
       - supports-color
@@ -5713,7 +5732,7 @@ packages:
       postcss: ^8.1.0
     dependencies:
       browserslist: 4.28.1
-      caniuse-lite: 1.0.30001764
+      caniuse-lite: 1.0.30001765
       fraction.js: 5.3.4
       picocolors: 1.1.1
       postcss: 8.5.6
@@ -8079,6 +8098,7 @@ packages:
       text-table: 0.2.0
     transitivePeerDependencies:
       - supports-color
+    dev: true
 
   /esniff@2.0.1:
     resolution: {integrity: sha512-kTUIGKQ/mDPFoJ0oVfcmyJn4iBDRptjNVIzwIFR7tqWXdVI9xfA2RMwY/gbSpJG3lkdWNEjLap/NqVHZiJsdfg==}
@@ -8923,7 +8943,7 @@ packages:
       he: 1.2.0
       param-case: 3.0.4
       relateurl: 0.2.7
-      terser: 5.44.1
+      terser: 5.46.0
     dev: false
 
   /html-tags@3.3.1:
@@ -9587,7 +9607,7 @@ packages:
     dependencies:
       '@jest/types': 29.6.3
       '@types/graceful-fs': 4.1.9
-      '@types/node': 25.0.7
+      '@types/node': 25.0.9
       anymatch: 3.1.3
       fb-watchman: 2.0.2
       graceful-fs: 4.2.11
@@ -9610,7 +9630,7 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
       '@jest/types': 29.6.3
-      '@types/node': 25.0.7
+      '@types/node': 25.0.9
       chalk: 4.1.2
       ci-info: 3.9.0
       graceful-fs: 4.2.11
@@ -9647,7 +9667,7 @@ packages:
     resolution: {integrity: sha512-GLHN/GTAAMEy5BFdvpUfzr9Dr80zQqBrh0fz1mtRMe05hqP45+HfQltu7oTBfduD0UeZs09d+maFtFYAXFWvAA==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
-      '@types/node': 25.0.7
+      '@types/node': 25.0.9
       jest-util: 29.7.0
       merge-stream: 2.0.0
       supports-color: 8.1.1
@@ -9657,7 +9677,7 @@ packages:
     resolution: {integrity: sha512-eIz2msL/EzL9UFTFFx7jBTkeZfku0yUAyZZZmJ93H2TYEiroIx2PQjEXcwYtYl8zXCxb+PAmA2hLIt/6ZEkPHw==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
-      '@types/node': 25.0.7
+      '@types/node': 25.0.9
       jest-util: 29.7.0
       merge-stream: 2.0.0
       supports-color: 8.1.1
@@ -14902,17 +14922,6 @@ packages:
       source-map-support: 0.5.21
     dev: false
 
-  /terser@5.44.1:
-    resolution: {integrity: sha512-t/R3R/n0MSwnnazuPpPNVO60LX0SKL45pyl9YlvxIdkH0Of7D5qM2EVe+yASRIlY5pZ73nclYJfNANGWPwFDZw==}
-    engines: {node: '>=10'}
-    hasBin: true
-    dependencies:
-      '@jridgewell/source-map': 0.3.11
-      acorn: 8.15.0
-      commander: 2.20.3
-      source-map-support: 0.5.21
-    dev: false
-
   /terser@5.46.0:
     resolution: {integrity: sha512-jTwoImyr/QbOWFFso3YoU3ik0jBBDJ6JTOQiy/J2YxVJdZCc+5u7skhNwiOR3FQIygFqVUPHl7qbbxtjW2K3Qg==}
     engines: {node: '>=10'}
@@ -15179,21 +15188,21 @@ packages:
       - react-router
     dev: false
 
-  /umi@4.6.23(@babel/core@7.28.6)(@types/react@19.2.8)(eslint@8.35.0)(less-loader@12.3.0)(less@4.5.1)(prettier@2.8.8)(react-dom@18.3.1)(react@18.3.1)(resolve-url-loader@5.0.0)(sass-loader@13.3.3)(sass@1.54.0)(stylelint@14.8.2)(typescript@5.9.3)(webpack@5.104.1):
-    resolution: {integrity: sha512-y7SrtlpW+JUZwUc7ScImNnAFW5v7tNerEBUNdfqc9nVe0fI0bj3vSVsGY49xPrvUjnB/NlzNuwYKo4s1CcRzRg==}
+  /umi@4.6.24(@babel/core@7.28.6)(@types/react@19.2.8)(eslint@8.35.0)(less-loader@12.3.0)(less@4.5.1)(prettier@2.8.8)(react-dom@18.3.1)(react@18.3.1)(resolve-url-loader@5.0.0)(sass-loader@13.3.3)(sass@1.54.0)(stylelint@14.8.2)(typescript@5.9.3)(webpack@5.104.1):
+    resolution: {integrity: sha512-g9/wwic5sW/TinlmfaOOatp7p0dImY6/uiBm9TglZ+PsL1hIs+S0nh0XySxaCi3UWqqA9QWijeFJd/FD85I7Zg==}
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
       '@babel/runtime': 7.23.6
-      '@umijs/bundler-utils': 4.6.23
-      '@umijs/bundler-webpack': 4.6.23(typescript@5.9.3)(webpack@5.104.1)
-      '@umijs/core': 4.6.23
-      '@umijs/lint': 4.6.23(eslint@8.35.0)(stylelint@14.8.2)(typescript@5.9.3)
-      '@umijs/preset-umi': 4.6.23(@types/react@19.2.8)(less-loader@12.3.0)(less@4.5.1)(resolve-url-loader@5.0.0)(sass-loader@13.3.3)(sass@1.54.0)(typescript@5.9.3)(webpack@5.104.1)
-      '@umijs/renderer-react': 4.6.23(react-dom@18.3.1)(react@18.3.1)
-      '@umijs/server': 4.6.23
-      '@umijs/test': 4.6.23(@babel/core@7.28.6)
-      '@umijs/utils': 4.6.23
+      '@umijs/bundler-utils': 4.6.24
+      '@umijs/bundler-webpack': 4.6.24(typescript@5.9.3)(webpack@5.104.1)
+      '@umijs/core': 4.6.24
+      '@umijs/lint': 4.6.24(eslint@8.35.0)(stylelint@14.8.2)(typescript@5.9.3)
+      '@umijs/preset-umi': 4.6.24(@types/react@19.2.8)(less-loader@12.3.0)(less@4.5.1)(resolve-url-loader@5.0.0)(sass-loader@13.3.3)(sass@1.54.0)(typescript@5.9.3)(webpack@5.104.1)
+      '@umijs/renderer-react': 4.6.24(react-dom@18.3.1)(react@18.3.1)
+      '@umijs/server': 4.6.24
+      '@umijs/test': 4.6.24(@babel/core@7.28.6)
+      '@umijs/utils': 4.6.24
       prettier-plugin-organize-imports: 3.2.4(prettier@2.8.8)(typescript@5.9.3)
       prettier-plugin-packagejson: 2.4.3(prettier@2.8.8)
     transitivePeerDependencies:
