@@ -122,11 +122,6 @@ public final class StringConstants {
 	/**
 	 * 分割参数.
 	 */
-	public static final String SEM = ";";
-
-	/**
-	 * 分割参数.
-	 */
 	public static final String WELL_NO = "#";
 
 	private StringConstants() {

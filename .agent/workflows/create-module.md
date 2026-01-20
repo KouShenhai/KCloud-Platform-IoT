@@ -31,7 +31,7 @@ laokou-{模块名}/
 ├── laokou-{模块名}-domain/        # 领域层
 │   └── src/main/java/org/laokou/{模块名}/
 │       ├── ability/               # 领域能力
-│       ├── event/                 # 领域事件
+│       ├── factory/               # 领域工厂
 │       ├── gateway/               # 网关接口
 │       └── model/                 # 聚合根、实体、值对象
 ├── laokou-{模块名}-infrastructure/ # 基础设施层
@@ -111,7 +111,7 @@ import org.laokou.common.domain.entity.AggregateRoot;
 public class XxxAggregate extends AggregateRoot<Long> {
     private String name;
     // 业务字段...
-    
+
     // 领域行为
     public void doSomething() {
         // 业务逻辑

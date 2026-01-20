@@ -106,35 +106,35 @@ class XxxTest {
 #### AssertJ 断言
 ```java
 // 基础断言
-assertThat(actual).isEqualTo(expected);
-assertThat(actual).isNotNull();
-assertThat(actual).isNull();
-assertThat(actual).isTrue();
-assertThat(actual).isFalse();
+Assertions.assertThat(actual).isEqualTo(expected);
+Assertions.assertThat(actual).isNotNull();
+Assertions.assertThat(actual).isNull();
+Assertions.assertThat(actual).isTrue();
+Assertions.assertThat(actual).isFalse();
 
 // 字符串断言
-assertThat(str).isEmpty();
-assertThat(str).isNotEmpty();
-assertThat(str).contains("sub");
-assertThat(str).startsWith("prefix");
-assertThat(str).matches("regex");
+Assertions.assertThat(str).isEmpty();
+Assertions.assertThat(str).isNotEmpty();
+Assertions.assertThat(str).contains("sub");
+Assertions.assertThat(str).startsWith("prefix");
+Assertions.assertThat(str).matches("regex");
 
 // 集合断言
-assertThat(list).isEmpty();
-assertThat(list).hasSize(3);
-assertThat(list).contains("a", "b");
-assertThat(list).containsExactly("a", "b", "c");
-assertThat(list).containsAnyOf("a", "x");
+Assertions.assertThat(list).isEmpty();
+Assertions.assertThat(list).hasSize(3);
+Assertions.assertThat(list).contains("a", "b");
+Assertions.assertThat(list).containsExactly("a", "b", "c");
+Assertions.assertThat(list).containsAnyOf("a", "x");
 
 // 异常断言
-assertThatThrownBy(() -> method())
+Assertions.assertThatThrownBy(() -> method())
     .isInstanceOf(IllegalArgumentException.class)
     .hasMessageContaining("error");
 
-assertThatCode(() -> method()).doesNotThrowAnyException();
+Assertions.assertThatCode(() -> method()).doesNotThrowAnyException();
 
 // 对象断言
-assertThat(obj)
+Assertions.assertThat(obj)
     .extracting("field1", "field2")
     .containsExactly("value1", "value2");
 ```
@@ -194,14 +194,14 @@ verifyNoInteractions(mock);
 class IntegrationTest {
 
     @Container
-    static PostgreSQLContainer<?> postgres = 
+    static PostgreSQLContainer<?> postgres =
         new PostgreSQLContainer<>("postgres:17")
             .withDatabaseName("test")
             .withUsername("test")
             .withPassword("test");
 
     @Container
-    static RedisContainer redis = 
+    static RedisContainer redis =
         new RedisContainer(DockerImageName.parse("redis:8"));
 
     @DynamicPropertySource

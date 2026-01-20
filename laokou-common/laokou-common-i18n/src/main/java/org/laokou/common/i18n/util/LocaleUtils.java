@@ -20,7 +20,6 @@ package org.laokou.common.i18n.util;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.springframework.context.i18n.LocaleContextHolder;
 
-import java.util.Arrays;
 import java.util.Locale;
 
 /**
@@ -38,21 +37,24 @@ public final class LocaleUtils {
 			if (StringExtUtils.isEmpty(language)) {
 				return LocaleContextHolder.getLocale();
 			}
-			String[] str = filterLanguage(language).split(StringConstants.ROD);
+			String[] arr = filterLanguage(language);
 			// 语言 国家
-			return Locale.of(str[0], str[1]);
+			return Locale.of(arr[0], arr[1]);
 		}
 		catch (Exception e) {
 			return LocaleContextHolder.getLocale();
 		}
 	}
 
-	private static String filterLanguage(String language) {
-		return Arrays.stream(language.split(StringConstants.COMMA))
-			.filter(item -> !item.contains(StringConstants.SEM))
-			.filter(item -> item.contains(StringConstants.ROD))
-			.findFirst()
-			.orElse(StringConstants.EMPTY);
+	private static String[] filterLanguage(String language) {
+		int idx = language.indexOf(StringConstants.ROD);
+		if (idx > 0) {
+			String[] arr = new String[2];
+			arr[0] = language.substring(idx - 2, idx);
+			arr[1] = language.substring(idx + 1, idx + 3);
+			return arr;
+		}
+		throw new IllegalArgumentException("language not found: " + language);
 	}
 
 }
