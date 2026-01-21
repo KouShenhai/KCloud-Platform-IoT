@@ -92,7 +92,7 @@ class NacosRouteDefinitionRepositoryUnitTest {
 
 		@Test
 		@DisplayName("Test getRouteDefinitions returns routes from Redis")
-		void testGetRouteDefinitions_success() {
+		void test_getRouteDefinitions_withRoutes_returnsRoutesFromRedis() {
 			// Given
 			RouteDefinition route1 = createRouteDefinition("route-1", "lb://service-1");
 			RouteDefinition route2 = createRouteDefinition("route-2", "lb://service-2");
@@ -113,7 +113,7 @@ class NacosRouteDefinitionRepositoryUnitTest {
 
 		@Test
 		@DisplayName("Test getRouteDefinitions returns empty when no routes")
-		void testGetRouteDefinitions_empty() {
+		void test_getRouteDefinitions_noRoutes_returnsEmpty() {
 			// Given
 			Mockito.when(reactiveMap.entryIterator()).thenReturn(Flux.empty());
 
@@ -126,7 +126,7 @@ class NacosRouteDefinitionRepositoryUnitTest {
 
 		@Test
 		@DisplayName("Test getRouteDefinitions handles Redis error from source")
-		void testGetRouteDefinitions_redisError() {
+		void test_getRouteDefinitions_redisError_propagatesError() {
 			// Given
 			Mockito.when(reactiveMap.entryIterator())
 				.thenReturn(Flux.error(new RuntimeException("Redis connection failed")));
@@ -148,7 +148,7 @@ class NacosRouteDefinitionRepositoryUnitTest {
 
 		@Test
 		@DisplayName("Test save returns Mono.empty()")
-		void testSave_returnsEmpty() {
+		void test_save_routeDefinition_returnsEmpty() {
 			// Given
 			RouteDefinition route = createRouteDefinition("route-test", "lb://test-service");
 
@@ -161,7 +161,7 @@ class NacosRouteDefinitionRepositoryUnitTest {
 
 		@Test
 		@DisplayName("Test delete returns Mono.empty()")
-		void testDelete_returnsEmpty() {
+		void test_delete_routeId_returnsEmpty() {
 			// When
 			Mono<@NonNull Void> result = repository.delete(Mono.just("route-test"));
 
@@ -177,7 +177,7 @@ class NacosRouteDefinitionRepositoryUnitTest {
 
 		@Test
 		@DisplayName("Test syncRouter fetches config from Nacos and stores to Redis")
-		void testSyncRouter_success() throws NacosException {
+		void test_syncRouter_withValidConfig_syncsSuccessfully() throws NacosException {
 			// 使用 MockedStatic 来 mock SpringContextUtils 静态方法
 			try (var _ = Mockito.mockStatic(org.laokou.common.i18n.util.SpringContextUtils.class)) {
 				// Given
@@ -200,7 +200,7 @@ class NacosRouteDefinitionRepositoryUnitTest {
 
 		@Test
 		@DisplayName("Test syncRouter handles empty routes from Nacos")
-		void testSyncRouter_emptyRoutes() throws NacosException {
+		void test_syncRouter_emptyRoutes_handlesGracefully() throws NacosException {
 			// 使用 MockedStatic 来 mock SpringContextUtils 静态方法
 			try (var _ = Mockito.mockStatic(org.laokou.common.i18n.util.SpringContextUtils.class)) {
 				// Given
@@ -217,7 +217,7 @@ class NacosRouteDefinitionRepositoryUnitTest {
 
 		@Test
 		@DisplayName("Test syncRouter throws SystemException when Nacos config not found")
-		void testSyncRouter_nacosConfigNotFound() throws NacosException {
+		void test_syncRouter_nacosConfigNotFound_throwsSystemException() throws NacosException {
 			// Given
 			Mockito.when(configService.getConfig("router.json", "DEFAULT_GROUP", 5000)).thenReturn(null);
 
@@ -227,7 +227,7 @@ class NacosRouteDefinitionRepositoryUnitTest {
 
 		@Test
 		@DisplayName("Test syncRouter throws SystemException when Nacos throws exception")
-		void testSyncRouter_nacosException() throws NacosException {
+		void test_syncRouter_nacosException_throwsSystemException() throws NacosException {
 			// Given
 			Mockito.when(configService.getConfig("router.json", "DEFAULT_GROUP", 5000))
 				.thenThrow(new NacosException(500, "Nacos server error"));
@@ -238,7 +238,7 @@ class NacosRouteDefinitionRepositoryUnitTest {
 
 		@Test
 		@DisplayName("Test syncRouter handles invalid JSON")
-		void testSyncRouter_invalidJson() throws NacosException {
+		void test_syncRouter_invalidJson_throwsSystemException() throws NacosException {
 			// Given
 			Mockito.when(configService.getConfig("router.json", "DEFAULT_GROUP", 5000))
 				.thenReturn("invalid json content");
@@ -255,7 +255,7 @@ class NacosRouteDefinitionRepositoryUnitTest {
 
 		@Test
 		@DisplayName("Test listenRouter registers listener successfully")
-		void testListenRouter_success() throws NacosException {
+		void test_listenRouter_registersListenerSuccessfully() throws NacosException {
 			// When & Then - should not throw exception
 			Assertions.assertThatCode(() -> repository.listenRouter()).doesNotThrowAnyException();
 
@@ -266,7 +266,7 @@ class NacosRouteDefinitionRepositoryUnitTest {
 
 		@Test
 		@DisplayName("Test listenRouter handles NacosException")
-		void testListenRouter_nacosException() throws NacosException {
+		void test_listenRouter_nacosException_throwsException() throws NacosException {
 			// Given
 			Mockito.doThrow(new NacosException(500, "Failed to add listener"))
 				.when(configService)

@@ -54,7 +54,7 @@ class ExceptionHandlerTest {
 
 	@Test
 	@DisplayName("Test NotFoundException returns SERVICE_UNAVAILABLE")
-	void testNotFoundException() {
+	void test_handle_notFoundException_returnsServiceUnavailable() {
 		// Given
 		MockServerHttpRequest request = MockServerHttpRequest.get("/api/v1/service").build();
 		MockServerWebExchange exchange = MockServerWebExchange.from(request);
@@ -70,7 +70,7 @@ class ExceptionHandlerTest {
 
 	@Test
 	@DisplayName("Test ResponseStatusException 404 returns NOT_FOUND")
-	void testResponseStatusException_NotFound() {
+	void test_handle_responseStatusException_notFound() {
 		// Given
 		MockServerHttpRequest request = MockServerHttpRequest.get("/api/v1/notfound").build();
 		MockServerWebExchange exchange = MockServerWebExchange.from(request);
@@ -86,7 +86,7 @@ class ExceptionHandlerTest {
 
 	@Test
 	@DisplayName("Test ResponseStatusException 400 returns BAD_REQUEST")
-	void testResponseStatusException_BadRequest() {
+	void test_handle_responseStatusException_badRequest() {
 		// Given
 		MockServerHttpRequest request = MockServerHttpRequest.get("/api/v1/bad").build();
 		MockServerWebExchange exchange = MockServerWebExchange.from(request);
@@ -102,7 +102,7 @@ class ExceptionHandlerTest {
 
 	@Test
 	@DisplayName("Test ResponseStatusException 500 returns INTERNAL_SERVER_ERROR")
-	void testResponseStatusException_InternalServerError() {
+	void test_handle_responseStatusException_internalServerError() {
 		// Given
 		MockServerHttpRequest request = MockServerHttpRequest.get("/api/v1/error").build();
 		MockServerWebExchange exchange = MockServerWebExchange.from(request);
@@ -119,7 +119,7 @@ class ExceptionHandlerTest {
 
 	@Test
 	@DisplayName("Test BlockException returns TOO_MANY_REQUESTS")
-	void testBlockException() {
+	void test_handle_blockException_returnsTooManyRequests() {
 		// Given
 		MockServerHttpRequest request = MockServerHttpRequest.get("/api/v1/limited").build();
 		MockServerWebExchange exchange = MockServerWebExchange.from(request);
@@ -135,7 +135,7 @@ class ExceptionHandlerTest {
 
 	@Test
 	@DisplayName("Test unknown exception returns BAD_GATEWAY")
-	void testUnknownException() {
+	void test_handle_unknownException_returnsBadGateway() {
 		// Given
 		MockServerHttpRequest request = MockServerHttpRequest.get("/api/v1/unknown").build();
 		MockServerWebExchange exchange = MockServerWebExchange.from(request);
@@ -151,7 +151,7 @@ class ExceptionHandlerTest {
 
 	@Test
 	@DisplayName("Test getOrder returns highest precedence")
-	void testGetOrder() {
+	void test_getOrder_returnsHighestPrecedence() {
 		// When
 		int order = exceptionHandler.getOrder();
 
@@ -161,7 +161,7 @@ class ExceptionHandlerTest {
 
 	@Test
 	@DisplayName("Test ResponseStatusException with other status codes")
-	void testResponseStatusException_OtherStatusCode() {
+	void test_handle_responseStatusException_otherStatusCode() {
 		// Given
 		MockServerHttpRequest request = MockServerHttpRequest.get("/api/v1/forbidden").build();
 		MockServerWebExchange exchange = MockServerWebExchange.from(request);
@@ -185,7 +185,7 @@ class ExceptionHandlerTest {
 
 		@Test
 		@DisplayName("Test DegradeException returns TOO_MANY_REQUESTS")
-		void testDegradeException() {
+		void test_handle_degradeException_returnsTooManyRequests() {
 			// Given
 			MockServerHttpRequest request = MockServerHttpRequest.get("/api/v1/degraded").build();
 			MockServerWebExchange exchange = MockServerWebExchange.from(request);
@@ -201,7 +201,7 @@ class ExceptionHandlerTest {
 
 		@Test
 		@DisplayName("Test AuthorityException returns TOO_MANY_REQUESTS")
-		void testAuthorityException() {
+		void test_handle_authorityException_returnsTooManyRequests() {
 			// Given
 			MockServerHttpRequest request = MockServerHttpRequest.get("/api/v1/unauthorized").build();
 			MockServerWebExchange exchange = MockServerWebExchange.from(request);
@@ -217,7 +217,7 @@ class ExceptionHandlerTest {
 
 		@Test
 		@DisplayName("Test SystemBlockException returns TOO_MANY_REQUESTS")
-		void testSystemBlockException() {
+		void test_handle_systemBlockException_returnsTooManyRequests() {
 			// Given
 			MockServerHttpRequest request = MockServerHttpRequest.get("/api/v1/system-blocked").build();
 			MockServerWebExchange exchange = MockServerWebExchange.from(request);
@@ -233,7 +233,7 @@ class ExceptionHandlerTest {
 
 		@Test
 		@DisplayName("Test ParamFlowException returns TOO_MANY_REQUESTS")
-		void testParamFlowException() {
+		void test_handle_paramFlowException_returnsTooManyRequests() {
 			// Given
 			MockServerHttpRequest request = MockServerHttpRequest.get("/api/v1/param-limited").build();
 			MockServerWebExchange exchange = MockServerWebExchange.from(request);
@@ -251,7 +251,7 @@ class ExceptionHandlerTest {
 
 	@Test
 	@DisplayName("Test exception with null message")
-	void testExceptionWithNullMessage() {
+	void test_handle_exceptionWithNullMessage_handlesGracefully() {
 		// Given
 		MockServerHttpRequest request = MockServerHttpRequest.get("/api/v1/null-message").build();
 		MockServerWebExchange exchange = MockServerWebExchange.from(request);
@@ -267,7 +267,7 @@ class ExceptionHandlerTest {
 
 	@Test
 	@DisplayName("Test nested exception")
-	void testNestedException() {
+	void test_handle_nestedException_handlesCorrectly() {
 		// Given
 		MockServerHttpRequest request = MockServerHttpRequest.get("/api/v1/nested").build();
 		MockServerWebExchange exchange = MockServerWebExchange.from(request);

@@ -96,14 +96,14 @@ class NacosRouteDefinitionRepositoryTest {
 
 	@Test
 	@DisplayName("Test Redis and Nacos containers started successfully")
-	void testContainersStarted() {
+	void test_containers_started_areRunning() {
 		Assertions.assertThat(redisContainer.isRunning()).isTrue();
 		Assertions.assertThat(nacosContainer.isRunning()).isTrue();
 	}
 
 	@Test
 	@DisplayName("Test publish route config to Nacos")
-	void testPublishRouteConfigToNacos() throws NacosException {
+	void test_publishConfig_nacos_publishesSuccessfully() throws NacosException {
 		// Given
 		List<RouteDefinition> routes = createTestRoutes();
 		String routesJson = JacksonUtils.toJsonStr(routes);
@@ -122,7 +122,7 @@ class NacosRouteDefinitionRepositoryTest {
 
 	@Test
 	@DisplayName("Test store route definitions to Redis")
-	void testStoreRouteDefinitionsToRedis() {
+	void test_routeMap_storeToRedis_savesSuccessfully() {
 		// Given
 		String routeKey = RedisKeyUtils.getRouteDefinitionHashKey();
 		RMapReactive<String, RouteDefinition> routeMap = redissonReactiveClient.getMap(routeKey);
@@ -144,7 +144,7 @@ class NacosRouteDefinitionRepositoryTest {
 
 	@Test
 	@DisplayName("Test sync routes from Nacos to Redis")
-	void testSyncRoutesFromNacosToRedis() throws NacosException {
+	void test_sync_nacosToRedis_syncsAllRoutes() throws NacosException {
 		// Given - publish routes to Nacos first
 		List<RouteDefinition> routes = createTestRoutes();
 		String routesJson = JacksonUtils.toJsonStr(routes);
@@ -174,7 +174,7 @@ class NacosRouteDefinitionRepositoryTest {
 
 	@Test
 	@DisplayName("Test get route definitions from Redis")
-	void testGetRouteDefinitionsFromRedis() {
+	void test_routeMap_getFromRedis_retrievesAllRoutes() {
 		// Given
 		String routeKey = "gateway:route:get-test";
 		RMapReactive<String, RouteDefinition> routeMap = redissonReactiveClient.getMap(routeKey);
@@ -192,7 +192,7 @@ class NacosRouteDefinitionRepositoryTest {
 
 	@Test
 	@DisplayName("Test delete route from Redis")
-	void testDeleteRouteFromRedis() {
+	void test_routeMap_deleteFromRedis_removesRoute() {
 		// Given
 		String routeKey = "gateway:route:delete-test";
 		RMapReactive<String, RouteDefinition> routeMap = redissonReactiveClient.getMap(routeKey);
@@ -211,7 +211,7 @@ class NacosRouteDefinitionRepositoryTest {
 
 	@Test
 	@DisplayName("Test delete all routes from Redis")
-	void testDeleteAllRoutesFromRedis() {
+	void test_routeMap_deleteAllFromRedis_clearsAll() {
 		// Given
 		String routeKey = "gateway:route:clear-test";
 		RMapReactive<String, RouteDefinition> routeMap = redissonReactiveClient.getMap(routeKey);
@@ -232,7 +232,7 @@ class NacosRouteDefinitionRepositoryTest {
 
 	@Test
 	@DisplayName("Test Nacos config listener callback")
-	void testNacosConfigListenerCallback() throws NacosException, InterruptedException {
+	void test_configListener_nacos_receivesCallback() throws NacosException, InterruptedException {
 		// Given
 		List<String> receivedConfigs = new ArrayList<>();
 		String testDataId = "test-listener-" + System.currentTimeMillis() + ".json";
@@ -265,7 +265,7 @@ class NacosRouteDefinitionRepositoryTest {
 
 	@Test
 	@DisplayName("Test route definition with predicates and filters")
-	void testRouteDefinitionWithPredicatesAndFilters() {
+	void test_routeDefinition_withPredicatesAndFilters_storesCorrectly() {
 		// Given
 		String routeKey = "gateway:route:full-test";
 		RMapReactive<String, RouteDefinition> routeMap = redissonReactiveClient.getMap(routeKey);

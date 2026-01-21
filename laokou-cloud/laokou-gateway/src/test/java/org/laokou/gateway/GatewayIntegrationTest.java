@@ -71,14 +71,14 @@ class GatewayIntegrationTest {
 
 	@Test
 	@DisplayName("Test Redis container started successfully")
-	void testRedisContainerStarted() {
+	void test_container_redisStarted_isRunning() {
 		// Then
 		Assertions.assertThat(redisContainer.isRunning()).isTrue();
 	}
 
 	@Test
 	@DisplayName("Test Redis connection is normal")
-	void testRedisConnection() {
+	void test_redis_connection_isNormal() {
 		// When
 		String result = reactiveClient.getBucket("test-key")
 			.set("test-value")
@@ -91,7 +91,7 @@ class GatewayIntegrationTest {
 
 	@Test
 	@DisplayName("Test route definition storage to Redis")
-	void testRouteDefinitionStorage() {
+	void test_routeMap_put_storesRouteDefinition() {
 		// Given
 		String routeKey = "gateway:route:definitions";
 		RMapReactive<String, RouteDefinition> routeMap = reactiveClient.getMap(routeKey);
@@ -114,7 +114,7 @@ class GatewayIntegrationTest {
 
 	@Test
 	@DisplayName("Test multiple route definitions storage")
-	void testMultipleRouteDefinitionsStorage() {
+	void test_routeMap_putMultiple_storesAllRoutes() {
 		// Given
 		String routeKey = "gateway:route:multi";
 		RMapReactive<String, RouteDefinition> routeMap = reactiveClient.getMap(routeKey);
@@ -139,7 +139,7 @@ class GatewayIntegrationTest {
 
 	@Test
 	@DisplayName("Test delete route definition")
-	void testDeleteRouteDefinition() {
+	void test_routeMap_remove_deletesRouteDefinition() {
 		// Given
 		String routeKey = "gateway:route:delete";
 		RMapReactive<String, RouteDefinition> routeMap = reactiveClient.getMap(routeKey);
@@ -159,7 +159,7 @@ class GatewayIntegrationTest {
 
 	@Test
 	@DisplayName("Test clear all route definitions")
-	void testClearAllRouteDefinitions() {
+	void test_routeMap_delete_clearsAllRoutes() {
 		// Given
 		String routeKey = "gateway:route:clear";
 		RMapReactive<String, RouteDefinition> routeMap = reactiveClient.getMap(routeKey);
@@ -186,7 +186,7 @@ class GatewayIntegrationTest {
 
 	@Test
 	@DisplayName("Test route definition iterator")
-	void testRouteDefinitionIterator() {
+	void test_routeMap_iterator_returnsAllEntries() {
 		// Given
 		String routeKey = "gateway:route:iterator";
 		RMapReactive<String, RouteDefinition> routeMap = reactiveClient.getMap(routeKey);

@@ -42,7 +42,8 @@ class ArchitectureTest {
 	 * 过滤器类应该在 filter 包中.
 	 */
 	@ArchTest
-	static final ArchRule filters_should_be_in_filter_package = ArchRuleDefinition.classes().that()
+	static final ArchRule filters_should_be_in_filter_package = ArchRuleDefinition.classes()
+		.that()
 		.haveNameMatching(".*Filter")
 		.should()
 		.resideInAPackage("..filter..");
@@ -51,7 +52,8 @@ class ArchitectureTest {
 	 * 配置类应该在 config 包中.
 	 */
 	@ArchTest
-	static final ArchRule config_classes_should_be_in_config_package = ArchRuleDefinition.classes().that()
+	static final ArchRule config_classes_should_be_in_config_package = ArchRuleDefinition.classes()
+		.that()
 		.haveNameMatching(".*Config")
 		.or()
 		.haveNameMatching(".*Properties")
@@ -62,7 +64,8 @@ class ArchitectureTest {
 	 * 异常处理器应该在 exception.handler 包中.
 	 */
 	@ArchTest
-	static final ArchRule exception_handlers_should_be_in_exception_package = ArchRuleDefinition.classes().that()
+	static final ArchRule exception_handlers_should_be_in_exception_package = ArchRuleDefinition.classes()
+		.that()
 		.haveNameMatching(".*ExceptionHandler")
 		.should()
 		.resideInAPackage("..exception.handler..");
@@ -71,7 +74,8 @@ class ArchitectureTest {
 	 * 仓储类应该在 repository 包中.
 	 */
 	@ArchTest
-	static final ArchRule repositories_should_be_in_repository_package = ArchRuleDefinition.classes().that()
+	static final ArchRule repositories_should_be_in_repository_package = ArchRuleDefinition.classes()
+		.that()
 		.haveNameMatching(".*Repository")
 		.should()
 		.resideInAPackage("..repository..");
@@ -80,7 +84,8 @@ class ArchitectureTest {
 	 * 工具类应该在 util 包中.
 	 */
 	@ArchTest
-	static final ArchRule utils_should_be_in_util_package = ArchRuleDefinition.classes().that()
+	static final ArchRule utils_should_be_in_util_package = ArchRuleDefinition.classes()
+		.that()
 		.haveNameMatching(".*Utils")
 		.should()
 		.resideInAPackage("..util..");
@@ -89,7 +94,8 @@ class ArchitectureTest {
 	 * 常量类应该在 constant 包中.
 	 */
 	@ArchTest
-	static final ArchRule constants_should_be_in_constant_package = ArchRuleDefinition.classes().that()
+	static final ArchRule constants_should_be_in_constant_package = ArchRuleDefinition.classes()
+		.that()
 		.haveNameMatching(".*Constants")
 		.should()
 		.resideInAPackage("..constant..");
@@ -98,7 +104,8 @@ class ArchitectureTest {
 	 * 过滤器不应该直接依赖仓储实现.
 	 */
 	@ArchTest
-	static final ArchRule filters_should_not_depend_on_repositories = ArchRuleDefinition.noClasses().that()
+	static final ArchRule filters_should_not_depend_on_repositories = ArchRuleDefinition.noClasses()
+		.that()
 		.resideInAPackage("..filter..")
 		.should()
 		.dependOnClassesThat()
@@ -108,7 +115,8 @@ class ArchitectureTest {
 	 * 配置类不应该依赖过滤器.
 	 */
 	@ArchTest
-	static final ArchRule config_should_not_depend_on_filters = ArchRuleDefinition.noClasses().that()
+	static final ArchRule config_should_not_depend_on_filters = ArchRuleDefinition.noClasses()
+		.that()
 		.resideInAPackage("..config..")
 		.should()
 		.dependOnClassesThat()
@@ -118,7 +126,8 @@ class ArchitectureTest {
 	 * 工具类不应该依赖业务类.
 	 */
 	@ArchTest
-	static final ArchRule utils_should_not_depend_on_business_classes = ArchRuleDefinition.noClasses().that()
+	static final ArchRule utils_should_not_depend_on_business_classes = ArchRuleDefinition.noClasses()
+		.that()
 		.resideInAPackage("..util..")
 		.should()
 		.dependOnClassesThat()
@@ -128,7 +137,8 @@ class ArchitectureTest {
 	 * 分层架构验证.
 	 */
 	@ArchTest
-	static final ArchRule layer_dependencies_are_respected = Architectures.layeredArchitecture().consideringAllDependencies()
+	static final ArchRule layer_dependencies_are_respected = Architectures.layeredArchitecture()
+		.consideringAllDependencies()
 		.layer("Config")
 		.definedBy("..config..")
 		.layer("Filter")
@@ -152,7 +162,8 @@ class ArchitectureTest {
 	 * 无循环依赖.
 	 */
 	@ArchTest
-	static final ArchRule no_cycles_in_packages = SlicesRuleDefinition.slices().matching("org.laokou.gateway.(*)..")
+	static final ArchRule no_cycles_in_packages = SlicesRuleDefinition.slices()
+		.matching("org.laokou.gateway.(*)..")
 		.should()
 		.beFreeOfCycles();
 
@@ -160,7 +171,8 @@ class ArchitectureTest {
 	 * 公共类应该有 Javadoc.
 	 */
 	@ArchTest
-	static final ArchRule public_classes_should_be_documented = ArchRuleDefinition.classes().that()
+	static final ArchRule public_classes_should_be_documented = ArchRuleDefinition.classes()
+		.that()
 		.arePublic()
 		.and()
 		.areNotAnonymousClasses()
@@ -173,7 +185,8 @@ class ArchitectureTest {
 	 * 过滤器应该实现 GlobalFilter 或 WebFilter 接口.
 	 */
 	@ArchTest
-	static final ArchRule filters_should_implement_filter_interface = ArchRuleDefinition.classes().that()
+	static final ArchRule filters_should_implement_filter_interface = ArchRuleDefinition.classes()
+		.that()
 		.haveNameMatching(".*Filter")
 		.and()
 		.areNotInterfaces()
@@ -186,7 +199,8 @@ class ArchitectureTest {
 	 * 仓储应该实现 RouteDefinitionRepository 接口.
 	 */
 	@ArchTest
-	static final ArchRule repositories_should_implement_repository_interface = ArchRuleDefinition.classes().that()
+	static final ArchRule repositories_should_implement_repository_interface = ArchRuleDefinition.classes()
+		.that()
 		.haveNameMatching(".*RouteDefinitionRepository")
 		.and()
 		.areNotInterfaces()
