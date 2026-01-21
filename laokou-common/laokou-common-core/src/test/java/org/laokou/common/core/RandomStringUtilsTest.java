@@ -47,13 +47,13 @@ class RandomStringUtilsTest {
 	@Test
 	void test_randomNumeric_withZeroLength_throwsException() {
 		Assertions.assertThatThrownBy(() -> RandomStringUtils.randomNumeric(0))
-				.isInstanceOf(org.laokou.common.i18n.common.exception.SystemException.class);
+			.isInstanceOf(org.laokou.common.i18n.common.exception.SystemException.class);
 	}
 
 	@Test
 	void test_randomNumeric_withNegativeLength_throwsException() {
 		Assertions.assertThatThrownBy(() -> RandomStringUtils.randomNumeric(-1))
-				.isInstanceOf(org.laokou.common.i18n.common.exception.SystemException.class);
+			.isInstanceOf(org.laokou.common.i18n.common.exception.SystemException.class);
 	}
 
 }

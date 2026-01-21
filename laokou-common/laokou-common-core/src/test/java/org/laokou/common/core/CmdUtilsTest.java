@@ -34,9 +34,10 @@ class CmdUtilsTest {
 		if (!SystemUtils.isWindows()) {
 			Assertions.assertThat(CmdUtils.execute("echo", "hello world!").getFirst()).isEqualTo("hello world!");
 			Assertions.assertThatNoException().isThrownBy(() -> CmdUtils.executeVoid("top"));
-		} else {
+		}
+		else {
 			Assertions.assertThat(CmdUtils.execute("cmd", "/c", "echo hello world!").getFirst())
-					.isEqualTo("hello world!");
+				.isEqualTo("hello world!");
 			Assertions.assertThatNoException().isThrownBy(() -> CmdUtils.executeVoid("cmd", "/c", "cd", "c:/"));
 		}
 	}

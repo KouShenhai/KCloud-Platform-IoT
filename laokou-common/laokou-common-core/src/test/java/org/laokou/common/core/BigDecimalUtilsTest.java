@@ -57,8 +57,8 @@ class BigDecimalUtilsTest {
 	@Test
 	void test_divide_withNegativeScale_throwsException() {
 		Assertions.assertThatThrownBy(() -> BigDecimalUtils.divide(10.0, 3.0, -1))
-				.isInstanceOf(IllegalArgumentException.class)
-				.hasMessageContaining("scale");
+			.isInstanceOf(IllegalArgumentException.class)
+			.hasMessageContaining("scale");
 	}
 
 	@Test
@@ -71,8 +71,8 @@ class BigDecimalUtilsTest {
 	@Test
 	void test_round_withNegativeScale_throwsException() {
 		Assertions.assertThatThrownBy(() -> BigDecimalUtils.round(3.118, -1))
-				.isInstanceOf(IllegalArgumentException.class)
-				.hasMessageContaining("scale");
+			.isInstanceOf(IllegalArgumentException.class)
+			.hasMessageContaining("scale");
 	}
 
 	@Test

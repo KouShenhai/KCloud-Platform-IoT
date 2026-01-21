@@ -61,7 +61,7 @@ class MapUtilsTest {
 		m.put("a", "哈哈哈");
 		m.put("b", "嘻嘻");
 		Assertions.assertThat(MapUtils.parseParamterString(m))
-				.isEqualTo("a=%E5%93%88%E5%93%88%E5%93%88&b=%E5%98%BB%E5%98%BB");
+			.isEqualTo("a=%E5%93%88%E5%93%88%E5%93%88&b=%E5%98%BB%E5%98%BB");
 		Assertions.assertThat(MapUtils.parseParamterString(m, false)).isEqualTo("a=哈哈哈&b=嘻嘻");
 		MultiValueMap<String, String> multiValueMap = MapUtils.getParameterMap(Map.of("a", new String[] { "1", "2" }));
 		Assertions.assertThat(multiValueMap).hasSize(1);

@@ -68,17 +68,17 @@ class CollectionUtilsTest {
 	@Test
 	void test_anyMatch_withMatchingElements_returnsTrue() {
 		Assertions.assertThat(CollectionExtUtils.anyMatch(Arrays.asList("a", "b", "c"), Arrays.asList("c", "d", "e")))
-				.isTrue();
+			.isTrue();
 		Assertions.assertThat(CollectionExtUtils.anyMatch(Arrays.asList("c", "d", "e"), Arrays.asList("x", "y", "z")))
-				.isFalse();
+			.isFalse();
 	}
 
 	@Test
 	void test_containsAll_withAllMatchingElements_returnsTrue() {
 		Assertions.assertThat(CollectionExtUtils.containsAll(Arrays.asList("a", "b"), Arrays.asList("a", "b", "c")))
-				.isTrue();
+			.isTrue();
 		Assertions.assertThat(CollectionExtUtils.containsAll(Arrays.asList("x", "y"), Arrays.asList("a", "b", "c")))
-				.isFalse();
+			.isFalse();
 	}
 
 }

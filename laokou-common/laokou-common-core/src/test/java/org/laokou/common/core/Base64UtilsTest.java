@@ -56,7 +56,7 @@ class Base64UtilsTest {
 	@Test
 	void test_decode_withInvalidBase64_throwsException() {
 		Assertions.assertThatThrownBy(() -> Base64Utils.decode("!@#$%^&*()"))
-				.isInstanceOf(IllegalArgumentException.class);
+			.isInstanceOf(IllegalArgumentException.class);
 	}
 
 }
