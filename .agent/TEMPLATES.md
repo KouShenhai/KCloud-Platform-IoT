@@ -28,21 +28,21 @@ import org.laokou.common.core.util.IdGenerator;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class XxxAggregate extends AggregateRoot<Long> {
+public class XxxA extends AggregateRoot {
 
     /** 名称 */
     private String name;
-    
+
     /** 状态 */
     private Integer status;
-    
+
     /** 描述 */
     private String description;
 
     /**
      * 创建聚合
      */
-    public static XxxAggregate create(String name, String description) {
+    public static XxxA create(String name, String description) {
         XxxAggregate aggregate = new XxxAggregate();
         aggregate.setId(IdGenerator.defaultSnowflakeId());
         aggregate.setName(name);
@@ -91,7 +91,7 @@ import org.laokou.common.domain.event.DomainEvent;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class XxxCreatedEvent extends DomainEvent<Long> {
+public class XxxCreatedEvent extends DomainEvent {
 
     private Long xxxId;
     private String name;
@@ -118,7 +118,7 @@ public class Address {
     String city;
     String district;
     String detail;
-    
+
     public String getFullAddress() {
         return province + city + district + detail;
     }
@@ -154,16 +154,16 @@ public class XxxCreateCmdExe {
     public void execute(XxxCmd cmd) {
         // 1. 创建聚合
         XxxAggregate aggregate = XxxAggregate.create(cmd.getName(), cmd.getDescription());
-        
+
         // 2. 校验
         aggregate.validate();
-        
+
         // 3. 保存
         gateway.save(aggregate);
-        
+
         // 4. 发布领域事件
         eventPublisher.publish(aggregate.getEvents());
-        
+
         log.info("创建成功，ID: {}", aggregate.getId());
     }
 }
@@ -348,7 +348,7 @@ public interface XxxMapper extends BaseMapper<XxxDO> {
      * 根据名称查询
      */
     XxxDO selectByName(@Param("name") String name);
-    
+
     /**
      * 批量插入
      */
@@ -359,7 +359,7 @@ public interface XxxMapper extends BaseMapper<XxxDO> {
 ### Mapper XML
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.{模块名}.gatewayimpl.database.XxxMapper">
 
@@ -422,9 +422,9 @@ public class XxxEventHandler {
 ```java
 package org.laokou.{模块名}.exception;
 
-import org.laokou.common.core.exception.BusinessException;
+import org.laokou.common.core.exception.BizException;
 
-public class XxxNotFoundException extends BusinessException {
+public class XxxNotFoundException extends BizException {
 
     public XxxNotFoundException(Long id) {
         super("Xxx not found: " + id);
@@ -450,8 +450,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.laokou.{模块名}.command.XxxCreateCmdExe;
 import org.laokou.{模块名}.dto.XxxCmd;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import org.assertj.core.api.Assertions;
 
 @ExtendWith(MockitoExtension.class)
 class XxxServiceTest {
@@ -478,7 +477,7 @@ class XxxServiceTest {
         xxxService.create(cmd);
 
         // Then
-        verify(createCmdExe, times(1)).execute(cmd);
+		Mockito.verify(createCmdExe, times(1)).execute(cmd);
     }
 }
 ```
@@ -496,7 +495,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import static org.assertj.core.api.Assertions.*;
+import org.assertj.core.api.Assertions;
 
 @Testcontainers
 @SpringBootTest

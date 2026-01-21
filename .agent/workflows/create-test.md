@@ -56,7 +56,7 @@ class XxxTest {
 
     @Test
     @DisplayName("Test method description")
-    void testMethodName() {
+    void test_methodName() {
         // Given
         String input = "test";
 		Mockito.when(dependency.method(ArgumentMatchers.any())).thenReturn("result");
@@ -72,7 +72,7 @@ class XxxTest {
 
     @Test
     @DisplayName("Test for exceptions")
-    void testException() {
+    void test_exception() {
         // Given
 		Mockito.when(dependency.method(ArgumentMatchers.any())).thenThrow(new RuntimeException());
 
@@ -85,7 +85,7 @@ class XxxTest {
     @ParameterizedTest
     @ValueSource(strings = {"a", "b", "c"})
     @DisplayName("Parametric testing")
-    void testParameterized(String input) {
+    void test_parameterized(String input) {
         // Parametric testing
 		Assertions.assertThat(xxx.validate(input)).isTrue();
     }
@@ -227,24 +227,31 @@ class IntegrationTest {
 
 #### 使用 ArchUnit
 ```java
+import com.tngtech.archunit.lang.syntax.ArchRuleDefinition;
+import com.tngtech.archunit.library.Architectures;
+import com.tngtech.archunit.library.dependencies.SlicesRuleDefinition;
+
+/**
+ * @author laokou
+ */
 @AnalyzeClasses(packages = "org.laokou")
 class ArchitectureTest {
 
     @ArchTest
     static final ArchRule controllers_should_be_in_web_package =
-        classes()
+		ArchRuleDefinition.classes()
             .that().haveNameMatching(".*Controller")
             .should().resideInAPackage("..web..");
 
     @ArchTest
     static final ArchRule services_should_not_depend_on_controllers =
-        noClasses()
+		ArchRuleDefinition.noClasses()
             .that().resideInAPackage("..service..")
             .should().dependOnClassesThat().resideInAPackage("..web..");
 
     @ArchTest
     static final ArchRule domain_should_not_depend_on_infrastructure =
-        noClasses()
+		ArchRuleDefinition.noClasses()
             .that().resideInAPackage("..domain..")
             .should().dependOnClassesThat().resideInAPackage("..infrastructure..");
 }
@@ -256,4 +263,4 @@ class ArchitectureTest {
 - 遵循 Given-When-Then 模式
 - 测试覆盖正常路径和异常路径
 - 避免测试私有方法
-- 测试命名：`test{方法名}_{场景}_{期望结果}`
+- 测试命名：`test_{方法名}_{场景}_{期望结果}`

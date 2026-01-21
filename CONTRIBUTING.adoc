@@ -29,5 +29,5 @@ https://koushenhai.github.io/pages/59afe2[COLA代码规范]
 
 == 测试用例
 - 测试用例的类名必须以Test结尾
-- 测试用例的方法名必须以test开头的驼峰命名法，并且使用下划线连接，比如test_getUser
+- 测试用例的方法名必须test_{方法名}_{场景}_{期望结果}命名
 - 强制使用 `org.assertj.core.api.Assertions` 断言，禁止使用 `org.junit.jupiter.api.Assertions` 断言

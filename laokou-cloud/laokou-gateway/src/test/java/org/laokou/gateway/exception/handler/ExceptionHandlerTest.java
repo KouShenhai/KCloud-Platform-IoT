@@ -17,11 +17,16 @@
 
 package org.laokou.gateway.exception.handler;
 
+import com.alibaba.csp.sentinel.slots.block.authority.AuthorityException;
+import com.alibaba.csp.sentinel.slots.block.degrade.DegradeException;
 import com.alibaba.csp.sentinel.slots.block.flow.FlowException;
+import com.alibaba.csp.sentinel.slots.block.flow.param.ParamFlowException;
+import com.alibaba.csp.sentinel.slots.system.SystemBlockException;
 import org.assertj.core.api.Assertions;
 import org.jspecify.annotations.NonNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.cloud.gateway.support.NotFoundException;
 import org.springframework.core.Ordered;
@@ -168,6 +173,112 @@ class ExceptionHandlerTest {
 		// Then
 		StepVerifier.create(result).verifyComplete();
 		// 其他状态码走默认 BAD_GATEWAY 逻辑
+		Assertions.assertThat(exchange.getResponse().getStatusCode()).isEqualTo(HttpStatus.OK);
+	}
+
+	/**
+	 * Sentinel 异常处理测试组.
+	 */
+	@Nested
+	@DisplayName("Sentinel Exception Tests")
+	class SentinelExceptionTests {
+
+		@Test
+		@DisplayName("Test DegradeException returns TOO_MANY_REQUESTS")
+		void testDegradeException() {
+			// Given
+			MockServerHttpRequest request = MockServerHttpRequest.get("/api/v1/degraded").build();
+			MockServerWebExchange exchange = MockServerWebExchange.from(request);
+			DegradeException exception = new DegradeException("service degraded");
+
+			// When
+			Mono<@NonNull Void> result = exceptionHandler.handle(exchange, exception);
+
+			// Then
+			StepVerifier.create(result).verifyComplete();
+			Assertions.assertThat(exchange.getResponse().getStatusCode()).isEqualTo(HttpStatus.OK);
+		}
+
+		@Test
+		@DisplayName("Test AuthorityException returns TOO_MANY_REQUESTS")
+		void testAuthorityException() {
+			// Given
+			MockServerHttpRequest request = MockServerHttpRequest.get("/api/v1/unauthorized").build();
+			MockServerWebExchange exchange = MockServerWebExchange.from(request);
+			AuthorityException exception = new AuthorityException("authority check failed");
+
+			// When
+			Mono<@NonNull Void> result = exceptionHandler.handle(exchange, exception);
+
+			// Then
+			StepVerifier.create(result).verifyComplete();
+			Assertions.assertThat(exchange.getResponse().getStatusCode()).isEqualTo(HttpStatus.OK);
+		}
+
+		@Test
+		@DisplayName("Test SystemBlockException returns TOO_MANY_REQUESTS")
+		void testSystemBlockException() {
+			// Given
+			MockServerHttpRequest request = MockServerHttpRequest.get("/api/v1/system-blocked").build();
+			MockServerWebExchange exchange = MockServerWebExchange.from(request);
+			SystemBlockException exception = new SystemBlockException("system_rule", "system protection triggered");
+
+			// When
+			Mono<@NonNull Void> result = exceptionHandler.handle(exchange, exception);
+
+			// Then
+			StepVerifier.create(result).verifyComplete();
+			Assertions.assertThat(exchange.getResponse().getStatusCode()).isEqualTo(HttpStatus.OK);
+		}
+
+		@Test
+		@DisplayName("Test ParamFlowException returns TOO_MANY_REQUESTS")
+		void testParamFlowException() {
+			// Given
+			MockServerHttpRequest request = MockServerHttpRequest.get("/api/v1/param-limited").build();
+			MockServerWebExchange exchange = MockServerWebExchange.from(request);
+			ParamFlowException exception = new ParamFlowException("param_flow", "param flow limit exceeded");
+
+			// When
+			Mono<@NonNull Void> result = exceptionHandler.handle(exchange, exception);
+
+			// Then
+			StepVerifier.create(result).verifyComplete();
+			Assertions.assertThat(exchange.getResponse().getStatusCode()).isEqualTo(HttpStatus.OK);
+		}
+
+	}
+
+	@Test
+	@DisplayName("Test exception with null message")
+	void testExceptionWithNullMessage() {
+		// Given
+		MockServerHttpRequest request = MockServerHttpRequest.get("/api/v1/null-message").build();
+		MockServerWebExchange exchange = MockServerWebExchange.from(request);
+		RuntimeException exception = new RuntimeException((String) null);
+
+		// When
+		Mono<@NonNull Void> result = exceptionHandler.handle(exchange, exception);
+
+		// Then
+		StepVerifier.create(result).verifyComplete();
+		Assertions.assertThat(exchange.getResponse().getStatusCode()).isEqualTo(HttpStatus.OK);
+	}
+
+	@Test
+	@DisplayName("Test nested exception")
+	void testNestedException() {
+		// Given
+		MockServerHttpRequest request = MockServerHttpRequest.get("/api/v1/nested").build();
+		MockServerWebExchange exchange = MockServerWebExchange.from(request);
+		RuntimeException cause = new RuntimeException("root cause");
+		RuntimeException exception = new RuntimeException("wrapper exception", cause);
+
+		// When
+		Mono<@NonNull Void> result = exceptionHandler.handle(exchange, exception);
+
+		// Then
+		StepVerifier.create(result).verifyComplete();
 		Assertions.assertThat(exchange.getResponse().getStatusCode()).isEqualTo(HttpStatus.OK);
 	}
 
