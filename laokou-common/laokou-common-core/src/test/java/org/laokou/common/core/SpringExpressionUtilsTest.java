@@ -27,10 +27,11 @@ import org.laokou.common.core.util.SpringExpressionUtils;
 class SpringExpressionUtilsTest {
 
 	@Test
-	void test_springExpression() {
+	void test_parse_withValidExpression_returnsExpectedValue() {
 		Assertions
-			.assertThat(SpringExpressionUtils.parse("#id", new String[] { "id" }, new String[] { "1" }, String.class))
-			.isEqualTo("1");
+				.assertThat(
+						SpringExpressionUtils.parse("#id", new String[] { "id" }, new String[] { "1" }, String.class))
+				.isEqualTo("1");
 	}
 
 }

@@ -29,7 +29,7 @@ import org.mockito.Mockito;
 class I18nUtilsTest {
 
 	@Test
-	void test_i18n() {
+	void test_setAndReset_withMockRequest_noExceptionThrown() {
 		Assertions.assertThatNoException().isThrownBy(() -> I18nUtils.set(Mockito.mock(HttpServletRequest.class)));
 		Assertions.assertThatNoException().isThrownBy(I18nUtils::reset);
 	}

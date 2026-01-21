@@ -27,8 +27,36 @@ import org.laokou.common.core.util.UUIDGenerator;
 class UUIDGeneratorTest {
 
 	@Test
-	void test_generateUUID() {
+	void test_generateUUID_returnsNonBlankString() {
 		Assertions.assertThat(UUIDGenerator.generateUUID()).isNotBlank();
+	}
+
+	@Test
+	void test_generateUUID_returns32CharString() {
+		String uuid = UUIDGenerator.generateUUID();
+		Assertions.assertThat(uuid.length()).isEqualTo(32);
+	}
+
+	@Test
+	void test_generateUUID_containsNoHyphens() {
+		String uuid = UUIDGenerator.generateUUID();
+		Assertions.assertThat(uuid).doesNotContain("-");
+	}
+
+	@Test
+	void test_generateUUID_returnsValidHexString() {
+		String uuid = UUIDGenerator.generateUUID();
+		Assertions.assertThat(uuid.matches("[a-f0-9]{32}")).isTrue();
+	}
+
+	@Test
+	void test_generateUUID_multipleInvocations_returnsUniqueIds() {
+		String uuid1 = UUIDGenerator.generateUUID();
+		String uuid2 = UUIDGenerator.generateUUID();
+		String uuid3 = UUIDGenerator.generateUUID();
+		Assertions.assertThat(uuid1).isNotEqualTo(uuid2);
+		Assertions.assertThat(uuid2).isNotEqualTo(uuid3);
+		Assertions.assertThat(uuid1).isNotEqualTo(uuid3);
 	}
 
 }

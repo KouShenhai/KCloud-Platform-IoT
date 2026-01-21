@@ -48,34 +48,35 @@ class FileUtilsTest {
 	}
 
 	@Test
-	void test_baseApi() throws IOException, NoSuchAlgorithmException, KeyManagementException {
+	void test_getFileExt_withValidFile_returnsExtension()
+			throws IOException, NoSuchAlgorithmException, KeyManagementException {
 		SslUtils.ignoreSSLTrust();
 		Assertions.assertThat(FileUtils.getFileExt("test.png")).isEqualTo(".png");
 		Assertions.assertThat(FileUtils.getBytesByUrl(
 				"https://i11.hoopchina.com.cn/hupuapp/bbs/0/0/thread_0_20190620145828_s_64509_o_w_387_h_600_20991.png"))
-			.isNotEmpty();
+				.isNotEmpty();
 		Assertions.assertThatNoException()
-			.isThrownBy(() -> FileUtils.walkFileTree(Path.of(testPath), new SimpleFileVisitor<>() {
-			}));
+				.isThrownBy(() -> FileUtils.walkFileTree(Path.of(testPath), new SimpleFileVisitor<>() {
+				}));
 		Path testFilePath = Path.of(testPath, "upload22", "test.txt");
 		Assertions.assertThatNoException().isThrownBy(() -> FileUtils.createDirAndFile(testFilePath));
 		Assertions.assertThat(FileUtils.exists(testFilePath)).isTrue();
 		Assertions.assertThatNoException()
-			.isThrownBy(() -> FileUtils.write(testFilePath, "dsdfsd,343,erew".getBytes()));
+				.isThrownBy(() -> FileUtils.write(testFilePath, "dsdfsd,343,erew".getBytes()));
 		try (InputStream inputStream = FileUtils.newInputStream(testFilePath)) {
 			Assertions.assertThat(inputStream).isNotNull();
 			Assertions.assertThat(inputStream.readAllBytes()).isEqualTo("dsdfsd,343,erew".getBytes());
 		}
 		Assertions.assertThatNoException()
-			.isThrownBy(() -> FileUtils.replaceFirstFromEnd(testFilePath.toString(), ',', '!'));
+				.isThrownBy(() -> FileUtils.replaceFirstFromEnd(testFilePath.toString(), ',', '!'));
 		try (InputStream inputStream = FileUtils.newInputStream(testFilePath)) {
 			Assertions.assertThat(inputStream).isNotNull();
 			Assertions.assertThat(inputStream.readAllBytes()).isEqualTo("dsdfsd,343!erew".getBytes());
 		}
 		Assertions.assertThatNoException()
-			.isThrownBy(() -> FileUtils.write(testFilePath, "dsdfsd,343,erew".getBytes()));
+				.isThrownBy(() -> FileUtils.write(testFilePath, "dsdfsd,343,erew".getBytes()));
 		Assertions.assertThatNoException()
-			.isThrownBy(() -> FileUtils.replaceAllFromEnd(testFilePath.toString(), ',', '!'));
+				.isThrownBy(() -> FileUtils.replaceAllFromEnd(testFilePath.toString(), ',', '!'));
 		try (InputStream inputStream = FileUtils.newInputStream(testFilePath)) {
 			Assertions.assertThat(inputStream).isNotNull();
 			Assertions.assertThat(inputStream.readAllBytes()).isEqualTo("dsdfsd!343!erew".getBytes());
@@ -85,7 +86,7 @@ class FileUtilsTest {
 	}
 
 	@Test
-	void test_createAndDeleteFile() throws IOException {
+	void test_createDirAndFile_withValidPath_createsAndDeletesFile() throws IOException {
 		Path testFilePath = Path.of(testPath, "upload", "test.txt");
 
 		// 创建文件
@@ -94,22 +95,22 @@ class FileUtilsTest {
 
 		// 数据写入文件
 		Assertions.assertThatNoException()
-			.isThrownBy(() -> FileUtils.write(testFilePath, "test content".getBytes(StandardCharsets.UTF_8)));
+				.isThrownBy(() -> FileUtils.write(testFilePath, "test content".getBytes(StandardCharsets.UTF_8)));
 		Assertions.assertThat(FileUtils.readString(testFilePath)).isEqualTo("test content");
 		Assertions.assertThatNoException()
-			.isThrownBy(() -> FileUtils.write(Path.of(testPath, "upload", "test2.txt_a"),
-					new ByteArrayInputStream("a".getBytes()), "a".getBytes().length));
+				.isThrownBy(() -> FileUtils.write(Path.of(testPath, "upload", "test2.txt_a"),
+						new ByteArrayInputStream("a".getBytes()), "a".getBytes().length));
 		Assertions.assertThatNoException()
-			.isThrownBy(() -> FileUtils.write(Path.of(testPath, "upload", "test2.txt_b"),
-					new ByteArrayInputStream("b".getBytes()), "b".getBytes().length));
+				.isThrownBy(() -> FileUtils.write(Path.of(testPath, "upload", "test2.txt_b"),
+						new ByteArrayInputStream("b".getBytes()), "b".getBytes().length));
 		Assertions.assertThatNoException()
-			.isThrownBy(() -> FileUtils.write(Path.of(testPath, "upload", "test2.txt_c"),
-					new ByteArrayInputStream("c".getBytes()), "c".getBytes().length));
+				.isThrownBy(() -> FileUtils.write(Path.of(testPath, "upload", "test2.txt_c"),
+						new ByteArrayInputStream("c".getBytes()), "c".getBytes().length));
 		Assertions.assertThatNoException()
-			.isThrownBy(() -> FileUtils.chunkWrite(Path.of(testPath, "upload", "test2.txt").toFile(),
-					List.of(new FileUtils.Chunk(Path.of(testPath, "upload", "test2.txt_a").toFile(), 0, 1),
-							new FileUtils.Chunk(Path.of(testPath, "upload", "test2.txt_b").toFile(), 1, 1),
-							new FileUtils.Chunk(Path.of(testPath, "upload", "test2.txt_c").toFile(), 2, 1))));
+				.isThrownBy(() -> FileUtils.chunkWrite(Path.of(testPath, "upload", "test2.txt").toFile(),
+						List.of(new FileUtils.Chunk(Path.of(testPath, "upload", "test2.txt_a").toFile(), 0, 1),
+								new FileUtils.Chunk(Path.of(testPath, "upload", "test2.txt_b").toFile(), 1, 1),
+								new FileUtils.Chunk(Path.of(testPath, "upload", "test2.txt_c").toFile(), 2, 1))));
 		Assertions.assertThat(FileUtils.exists(Path.of(testPath, "upload", "test2.txt"))).isTrue();
 		Assertions.assertThat(FileUtils.readString((Path.of(testPath, "upload", "test2.txt")))).isEqualTo("abc");
 
@@ -119,8 +120,7 @@ class FileUtilsTest {
 			if (SystemUtils.isWindows()) {
 				path = FileUtils.createTempFile(Path.of(testPath), "12222", "txt");
 				path2 = FileUtils.createTempDirectory(Path.of(testPath), "test1231");
-			}
-			else {
+			} else {
 				path = FileUtils.createTempFile(Path.of(testPath), "12222", "txt", new FileAttribute[] {});
 				path2 = FileUtils.createTempDirectory(Path.of(testPath), "test1231", new FileAttribute[] {});
 			}
@@ -136,11 +136,11 @@ class FileUtilsTest {
 		Assertions.assertThatNoException().isThrownBy(() -> FileUtils.delete(testFilePath));
 		Assertions.assertThatNoException().isThrownBy(() -> FileUtils.delete(Path.of(testPath, "upload", "test2.txt")));
 		Assertions.assertThatNoException()
-			.isThrownBy(() -> FileUtils.delete(Path.of(testPath, "upload", "test2.txt_a")));
+				.isThrownBy(() -> FileUtils.delete(Path.of(testPath, "upload", "test2.txt_a")));
 		Assertions.assertThatNoException()
-			.isThrownBy(() -> FileUtils.delete(Path.of(testPath, "upload", "test2.txt_b")));
+				.isThrownBy(() -> FileUtils.delete(Path.of(testPath, "upload", "test2.txt_b")));
 		Assertions.assertThatNoException()
-			.isThrownBy(() -> FileUtils.delete(Path.of(testPath, "upload", "test2.txt_c")));
+				.isThrownBy(() -> FileUtils.delete(Path.of(testPath, "upload", "test2.txt_c")));
 		Assertions.assertThat(FileUtils.exists(testFilePath)).isFalse();
 		Assertions.assertThat(FileUtils.exists(Path.of(testPath, "upload", "test2.txt"))).isFalse();
 		Assertions.assertThat(FileUtils.exists(Path.of(testPath, "upload", "test2.txt_a"))).isFalse();
@@ -158,7 +158,7 @@ class FileUtilsTest {
 	}
 
 	@Test
-	void test_checkPathExists() {
+	void test_exists_withExistingFile_returnsTrue() {
 		Path existingFile = Path.of(testPath, "upload", "existing.txt");
 		// 创建文件
 		Assertions.assertThatNoException().isThrownBy(() -> {
@@ -173,9 +173,10 @@ class FileUtilsTest {
 	}
 
 	@Test
-	void test_fileStreamOperations() throws IOException {
+	void test_readAndWrite_withValidContent_returnsCorrectBytes() throws IOException {
 		Path streamFile = Path.of(testPath, "upload", "stream.txt");
 		byte[] content = "stream data".getBytes(StandardCharsets.UTF_8);
+		Assertions.assertThatNoException().isThrownBy(() -> FileUtils.createDirAndFile(streamFile));
 		Assertions.assertThatNoException().isThrownBy(() -> FileUtils.write(streamFile, content));
 		byte[] readContent = FileUtils.getBytes(streamFile);
 		Assertions.assertThat(readContent).isEqualTo(content);
@@ -185,7 +186,7 @@ class FileUtilsTest {
 	}
 
 	@Test
-	void test_zipOperations() throws IOException {
+	void test_zipAndUnzip_withValidFiles_compressesAndExtracts() throws IOException {
 		// 测试多文件压缩场景
 		Path srcFile1 = Path.of(testPath, "upload", "file1.txt");
 		Path srcFile2 = Path.of(testPath, "upload", "file2.log");
@@ -200,7 +201,7 @@ class FileUtilsTest {
 		Assertions.assertThatNoException().isThrownBy(() -> FileUtils.zip(Path.of(testPath, "upload"), multiZip));
 		try (OutputStream outputStream = FileUtils.newOutputStream(multiZip)) {
 			Assertions.assertThatNoException()
-				.isThrownBy(() -> FileUtils.zip(Path.of(testPath, "upload"), outputStream));
+					.isThrownBy(() -> FileUtils.zip(Path.of(testPath, "upload"), outputStream));
 		}
 
 		// 执行解压操作

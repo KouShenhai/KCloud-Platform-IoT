@@ -27,7 +27,7 @@ import org.laokou.common.core.util.RegexUtils;
 class RegexUtilsTest {
 
 	@Test
-	void test_regex() {
+	void test_regexMethods_withValidInputs_returnsExpectedResults() {
 		Assertions.assertThat(RegexUtils.mailRegex("2413176044@qq.com")).isTrue();
 		Assertions.assertThat(RegexUtils.mailRegex("123")).isFalse();
 		Assertions.assertThat(RegexUtils.ipv4Regex("127.0.0.1")).isTrue();
@@ -45,7 +45,7 @@ class RegexUtilsTest {
 		Assertions.assertThat(RegexUtils.mobileRegex("1888888888x")).isFalse();
 		Assertions.assertThat(RegexUtils.matches("^[A-Za-z]+$|^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z0-9]+$", "哈哈哈")).isFalse();
 		Assertions.assertThat(RegexUtils.matches("^[A-Za-z]+$|^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z0-9]+$", "admin123"))
-			.isTrue();
+				.isTrue();
 		Assertions.assertThat(RegexUtils.getRegexValue("/v1/test", "/(v\\d+)/")).isEqualTo("v1");
 		Assertions.assertThat(RegexUtils.matches("%X\\{(traceId|spanId)\\}", "%X{traceId}")).isTrue();
 		Assertions.assertThat(RegexUtils.matches("%X\\{(traceId|spanId)\\}", "%X{spanId}")).isTrue();

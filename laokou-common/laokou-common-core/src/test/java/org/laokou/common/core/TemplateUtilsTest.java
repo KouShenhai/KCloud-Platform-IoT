@@ -29,7 +29,7 @@ import java.util.Map;
 class TemplateUtilsTest {
 
 	@Test
-	void test_template() {
+	void test_getContent_withValidTemplate_returnsInterpolatedContent() {
 		Assertions.assertThat(TemplateUtils.getContent("123${code}", Map.of("code", "4"))).isEqualTo("1234");
 	}
 

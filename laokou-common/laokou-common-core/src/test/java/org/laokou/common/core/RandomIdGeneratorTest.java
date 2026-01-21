@@ -27,11 +27,39 @@ import org.laokou.common.core.util.RandomIdGenerator;
 class RandomIdGeneratorTest {
 
 	@Test
-	void test_generateRandomId() {
-		Assertions.assertThat(RandomIdGenerator.generateRandomId()).isNotBlank();
-		Assertions.assertThat(RandomIdGenerator.generateRandomId(16)).isNotBlank();
-		Assertions.assertThat(RandomIdGenerator.generateBase64RandomId()).isNotBlank();
-		Assertions.assertThat(RandomIdGenerator.generateBase64RandomId(16)).isNotBlank();
+	void test_generateRandomId_withDefaultLength_returns16CharString() {
+		String id = RandomIdGenerator.generateRandomId();
+		Assertions.assertThat(id).isNotBlank();
+		Assertions.assertThat(id.length()).isEqualTo(16);
+	}
+
+	@Test
+	void test_generateRandomId_withCustomLength_returnsCorrectLength() {
+		Assertions.assertThat(RandomIdGenerator.generateRandomId(8).length()).isEqualTo(8);
+		Assertions.assertThat(RandomIdGenerator.generateRandomId(32).length()).isEqualTo(32);
+		Assertions.assertThat(RandomIdGenerator.generateRandomId(1).length()).isEqualTo(1);
+	}
+
+	@Test
+	void test_generateRandomId_multipleInvocations_returnsUniqueIds() {
+		String id1 = RandomIdGenerator.generateRandomId();
+		String id2 = RandomIdGenerator.generateRandomId();
+		String id3 = RandomIdGenerator.generateRandomId();
+		Assertions.assertThat(id1).isNotEqualTo(id2);
+		Assertions.assertThat(id2).isNotEqualTo(id3);
+		Assertions.assertThat(id1).isNotEqualTo(id3);
+	}
+
+	@Test
+	void test_generateBase64RandomId_withDefaultLength_returnsValidString() {
+		String id = RandomIdGenerator.generateBase64RandomId();
+		Assertions.assertThat(id).isNotBlank();
+	}
+
+	@Test
+	void test_generateBase64RandomId_withCustomLength_returnsValidString() {
+		String id = RandomIdGenerator.generateBase64RandomId(16);
+		Assertions.assertThat(id).isNotBlank();
 	}
 
 }

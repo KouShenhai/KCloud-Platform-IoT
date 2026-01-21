@@ -42,7 +42,7 @@ import java.io.IOException;
 class PropertyUtilsTest {
 
 	@Test
-	void test_bindProperties() throws IOException {
+	void test_bindOrCreate_withValidConfig_returnsProperties() throws IOException {
 		SpringDisruptorProperties properties = PropertyUtils.bindOrCreate("spring.disruptor",
 				SpringDisruptorProperties.class, "application.yml", "yaml");
 		Assertions.assertThat(properties).isNotNull();
