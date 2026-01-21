@@ -21,7 +21,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.laokou.admin.menu.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.admin.menu.model.MenuE;
-import org.laokou.admin.menu.model.MenuTypeEnum;
+import org.laokou.admin.menu.model.enums.MenuType;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.laokou.common.i18n.util.StringExtUtils;
@@ -37,7 +37,7 @@ final class MenuParamValidator {
 	public static ParamValidator.Validate validatePermission(MenuE menuE, MenuMapper menuMapper, boolean isSave) {
 		Integer type = menuE.getType();
 		String permission = menuE.getPermission();
-		if (MenuTypeEnum.BUTTON.getCode() == type) {
+		if (MenuType.BUTTON.getCode() == type) {
 			if (StringExtUtils.isEmpty(permission)) {
 				return ParamValidator.invalidate("菜单权限标识不能为空");
 			}
@@ -73,7 +73,7 @@ final class MenuParamValidator {
 	public static ParamValidator.Validate validatePath(MenuE menuE, MenuMapper menuMapper, boolean isSave) {
 		Integer type = menuE.getType();
 		String path = menuE.getPath();
-		if (MenuTypeEnum.MENU.getCode() == type) {
+		if (MenuType.MENU.getCode() == type) {
 			if (StringExtUtils.isEmpty(path)) {
 				return ParamValidator.invalidate("菜单路径不能为空");
 			}
@@ -103,7 +103,7 @@ final class MenuParamValidator {
 	public static ParamValidator.Validate validateStatus(MenuE menuE) {
 		Integer type = menuE.getType();
 		Integer status = menuE.getStatus();
-		if (MenuTypeEnum.MENU.getCode() == type && ObjectUtils.isNull(status)) {
+		if (MenuType.MENU.getCode() == type && ObjectUtils.isNull(status)) {
 			return ParamValidator.invalidate("菜单状态不能为空");
 		}
 		return ParamValidator.validate();
@@ -123,7 +123,7 @@ final class MenuParamValidator {
 		if (StringExtUtils.isEmpty(name)) {
 			return ParamValidator.invalidate("菜单名称不能为空");
 		}
-		if (MenuTypeEnum.MENU.getCode() == type) {
+		if (MenuType.MENU.getCode() == type) {
 			if (isSave && menuMapper.selectCount(Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getName, name)) > 0) {
 				return ParamValidator.invalidate("菜单名称已存在");
 			}

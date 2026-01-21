@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.admin.dept.model;
+package org.laokou.admin.user.model.enums;
 
 import lombok.Getter;
 
@@ -23,17 +23,21 @@ import lombok.Getter;
  * @author laokou
  */
 @Getter
-public enum DeptOperateTypeEnum {
+public enum OperateType {
 
-	SAVE("save", "保存部门"),
+	SAVE("save", "保存用户"),
 
-	MODIFY("modify", "修改部门");
+	MODIFY("modify", "修改用户"),
+
+	RESET_PWD("rest_pwd", "重置用户密码"),
+
+	MODIFY_AUTHORITY("modify_authority", "修改用户权限");
 
 	private final String code;
 
 	private final String desc;
 
-	DeptOperateTypeEnum(String code, String desc) {
+	OperateType(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}

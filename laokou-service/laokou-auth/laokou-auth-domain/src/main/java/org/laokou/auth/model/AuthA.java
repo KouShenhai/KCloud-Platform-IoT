@@ -24,7 +24,7 @@ import org.laokou.auth.model.constant.OAuth2Constants;
 import org.laokou.auth.model.entity.UserE;
 import org.laokou.auth.model.enums.DataScope;
 import org.laokou.auth.model.enums.GrantType;
-import org.laokou.auth.model.enums.SendCaptchaTypeEnum;
+import org.laokou.auth.model.enums.SendCaptchaType;
 import org.laokou.auth.model.enums.UserStatus;
 import org.laokou.auth.model.exception.CaptchaErrorException;
 import org.laokou.auth.model.exception.CaptchaExpiredException;
@@ -90,7 +90,7 @@ public class AuthA extends AggregateRoot implements ValidateName {
 	/**
 	 * 发送验证码类型.
 	 */
-	private SendCaptchaTypeEnum sendCaptchaTypeEnum;
+	private SendCaptchaType sendCaptchaType;
 
 	/**
 	 * 用户值对象.
@@ -228,7 +228,7 @@ public class AuthA extends AggregateRoot implements ValidateName {
 	}
 
 	public AuthA createCaptchaVBySend(String uuid, String tag, String tenantCode) {
-		this.sendCaptchaTypeEnum = SendCaptchaTypeEnum.getByCode(tag);
+		this.sendCaptchaType = SendCaptchaType.getByCode(tag);
 		this.captchaV = CaptchaV.builder().uuid(uuid).build();
 		this.userV = UserV.builder().tenantCode(tenantCode).build();
 		return init();
@@ -240,7 +240,7 @@ public class AuthA extends AggregateRoot implements ValidateName {
 	}
 
 	public String getCaptchaCacheKeyBySend() {
-		return sendCaptchaTypeEnum.getCaptchaCacheKey(this.captchaV.uuid());
+		return sendCaptchaType.getCaptchaCacheKey(this.captchaV.uuid());
 	}
 
 	public void getTenantId(Supplier<Long> supplier) {
@@ -284,7 +284,7 @@ public class AuthA extends AggregateRoot implements ValidateName {
 	}
 
 	public void checkCaptchaParam() {
-		switch (sendCaptchaTypeEnum) {
+		switch (sendCaptchaType) {
 			case SEND_MAIL_CAPTCHA -> this.mailCaptchaParamValidator.validateCaptcha(this);
 			case SEND_MOBILE_CAPTCHA -> this.mobileCaptchaParamValidator.validateCaptcha(this);
 			default -> throw new UnsupportedOperationException("Unsupported captcha type");

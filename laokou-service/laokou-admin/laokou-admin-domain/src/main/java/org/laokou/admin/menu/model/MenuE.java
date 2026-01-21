@@ -19,6 +19,7 @@ package org.laokou.admin.menu.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.laokou.admin.menu.model.enums.OperateType;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.dto.IdGenerator;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -93,7 +94,7 @@ public class MenuE {
 
 	@Setter
 	@Getter
-	private MenuOperateTypeEnum menuOperateTypeEnum;
+	private OperateType operateType;
 
 	private final MenuParamValidator saveMenuParamValidator;
 
@@ -115,7 +116,7 @@ public class MenuE {
 	}
 
 	public void checkMenuParam() {
-		switch (menuOperateTypeEnum) {
+		switch (operateType) {
 			case SAVE -> saveMenuParamValidator.validateMenu(this);
 			case MODIFY -> modifyMenuParamValidator.validateMenu(this);
 			default -> throw new UnsupportedOperationException("Unsupported operation");

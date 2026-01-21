@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.auth.api.CaptchasServiceI;
 import org.laokou.auth.dto.CaptchaGetQry;
 import org.laokou.auth.dto.CaptchaSendCmd;
-import org.laokou.auth.model.enums.SendCaptchaTypeEnum;
+import org.laokou.auth.model.enums.SendCaptchaType;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.ratelimiter.annotation.RateLimiter;
@@ -58,7 +58,7 @@ public class CaptchasController {
 	@RateLimiter(key = "SEND_MOBILE_CAPTCHA", type = Type.IP)
 	@Operation(summary = "根据UUID发送手机验证码", description = "根据UUID发送手机验证码")
 	public void sendMobileCaptchaByUuid(@RequestBody CaptchaSendCmd cmd) {
-		cmd.getCo().setTag(SendCaptchaTypeEnum.SEND_MOBILE_CAPTCHA.getCode());
+		cmd.getCo().setTag(SendCaptchaType.SEND_MOBILE_CAPTCHA.getCode());
 		captchasServiceI.sendCaptchaByUuid(cmd);
 	}
 
@@ -67,7 +67,7 @@ public class CaptchasController {
 	@RateLimiter(key = "SEND_MAIL_CAPTCHA", type = Type.IP)
 	@Operation(summary = "根据UUID发送邮箱验证码", description = "根据UUID发送邮箱验证码")
 	public void sendMailCaptchaByUuid(@RequestBody CaptchaSendCmd cmd) {
-		cmd.getCo().setTag(SendCaptchaTypeEnum.SEND_MAIL_CAPTCHA.getCode());
+		cmd.getCo().setTag(SendCaptchaType.SEND_MAIL_CAPTCHA.getCode());
 		captchasServiceI.sendCaptchaByUuid(cmd);
 	}
 

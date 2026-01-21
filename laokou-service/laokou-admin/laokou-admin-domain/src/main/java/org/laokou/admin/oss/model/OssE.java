@@ -19,6 +19,7 @@ package org.laokou.admin.oss.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.laokou.admin.oss.model.enums.OperateType;
 import org.laokou.common.i18n.annotation.Entity;
 
 /**
@@ -66,7 +67,7 @@ public class OssE {
 	 */
 	@Setter
 	@Getter
-	private OssOperateTypeEnum ossOperateTypeEnum;
+	private OperateType operateType;
 
 	public OssE() {
 		super();

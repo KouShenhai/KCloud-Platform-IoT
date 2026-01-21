@@ -35,7 +35,7 @@ import org.mockito.Mockito;
 import org.mockito.ArgumentMatchers;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("{类名}测试")
+@DisplayName("{class name} test")
 class XxxTest {
 
     @Mock
@@ -55,11 +55,11 @@ class XxxTest {
     }
 
     @Test
-    @DisplayName("测试方法描述")
+    @DisplayName("Test method description")
     void testMethodName() {
         // Given
         String input = "test";
-        when(dependency.method(any())).thenReturn("result");
+		Mockito.when(dependency.method(ArgumentMatchers.any())).thenReturn("result");
 
         // When
         String result = xxx.method(input);
@@ -67,35 +67,35 @@ class XxxTest {
         // Then
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result).isEqualTo("expected");
-        verify(dependency).method(input);
+		Mockito.verify(dependency).method(input);
     }
 
     @Test
-    @DisplayName("测试异常情况")
+    @DisplayName("Test for exceptions")
     void testException() {
         // Given
-        when(dependency.method(any())).thenThrow(new RuntimeException());
+		Mockito.when(dependency.method(ArgumentMatchers.any())).thenThrow(new RuntimeException());
 
         // When & Then
-        assertThatThrownBy(() -> xxx.method("input"))
+		Assertions.assertThatThrownBy(() -> xxx.method("input"))
             .isInstanceOf(RuntimeException.class)
             .hasMessage("expected message");
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"a", "b", "c"})
-    @DisplayName("参数化测试")
+    @DisplayName("Parametric testing")
     void testParameterized(String input) {
-        // 参数化测试
-        assertThat(xxx.validate(input)).isTrue();
+        // Parametric testing
+		Assertions.assertThat(xxx.validate(input)).isTrue();
     }
 
     @Nested
-    @DisplayName("嵌套测试组")
+    @DisplayName("Nested test groups")
     class NestedTests {
         @Test
         void nestedTest() {
-            // 嵌套测试
+            // Nested test groups
         }
     }
 }
@@ -144,26 +144,26 @@ Assertions.assertThat(obj)
 #### Mock 设置
 ```java
 // 返回值
-when(mock.method(any())).thenReturn(result);
-when(mock.method(anyString())).thenReturn(result);
-when(mock.method(eq("specific"))).thenReturn(result);
+Mockito.when(mock.method(ArgumentMatchers.any())).thenReturn(result);
+Mockito.when(mock.method(ArgumentMatchers.any().anyString())).thenReturn(result);
+Mockito.when(mock.method(ArgumentMatchers.any().eq("specific"))).thenReturn(result);
 
 // 抛出异常
-when(mock.method(any())).thenThrow(new Exception());
+Mockito.when(mock.method(ArgumentMatchers.any())).thenThrow(new Exception());
 
 // 多次调用不同返回值
-when(mock.method(any()))
+Mockito.when(mock.method(ArgumentMatchers.any()))
     .thenReturn(first)
     .thenReturn(second);
 
 // void 方法
-doNothing().when(mock).voidMethod(any());
-doThrow(new Exception()).when(mock).voidMethod(any());
+Mockito.doNothing().when(mock).voidMethod(ArgumentMatchers.any());
+Mockito.doThrow(new Exception()).when(mock).voidMethod(ArgumentMatchers.any());
 
 // 参数捕获
 ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
 Mockito.verify(mock).method(captor.capture());
-assertThat(captor.getValue()).isEqualTo("expected");
+Assertions.assertThat(captor.getValue()).isEqualTo("expected");
 ```
 
 #### 验证调用

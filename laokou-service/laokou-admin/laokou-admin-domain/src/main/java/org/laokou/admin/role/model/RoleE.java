@@ -19,6 +19,7 @@ package org.laokou.admin.role.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.laokou.admin.role.model.enums.OperateType;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.dto.IdGenerator;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -95,7 +96,7 @@ public class RoleE {
 
 	@Setter
 	@Getter
-	private RoleOperateTypeEnum roleOperateTypeEnum;
+	private OperateType operateType;
 
 	private final IdGenerator idGenerator;
 
@@ -126,7 +127,7 @@ public class RoleE {
 	}
 
 	public void checkRoleParam() {
-		switch (roleOperateTypeEnum) {
+		switch (operateType) {
 			case SAVE -> saveRoleParamValidator.validateRole(this);
 			case MODIFY -> modifyRoleParamValidator.validateRole(this);
 			case MODIFY_AUTHORITY -> modifyRoleAuthorityParamValidator.validateRole(this);

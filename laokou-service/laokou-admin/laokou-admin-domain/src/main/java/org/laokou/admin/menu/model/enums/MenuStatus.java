@@ -15,32 +15,27 @@
  *
  */
 
-package org.laokou.admin.menu.model;
+package org.laokou.admin.menu.model.enums;
 
 import lombok.Getter;
-import org.laokou.common.i18n.util.EnumParser;
 
 /**
  * @author laokou
  */
 @Getter
-public enum MenuTypeTreeEnum {
+public enum MenuStatus {
 
-	USER(0, "用户菜单"),
+	ENABLE(0, "启用"),
 
-	SYSTEM(1, "系统菜单");
+	DISABLE(1, "禁用");
 
 	private final int code;
 
 	private final String desc;
 
-	MenuTypeTreeEnum(int code, String desc) {
+	MenuStatus(int code, String desc) {
 		this.code = code;
 		this.desc = desc;
-	}
-
-	public static MenuTypeTreeEnum getByCode(int code) {
-		return EnumParser.parse(MenuTypeTreeEnum.class, MenuTypeTreeEnum::getCode, code);
 	}
 
 }
