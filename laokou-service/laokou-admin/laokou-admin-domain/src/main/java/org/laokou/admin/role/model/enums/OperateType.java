@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.admin.menu.model;
+package org.laokou.admin.role.model.enums;
 
 import lombok.Getter;
 
@@ -23,21 +23,21 @@ import lombok.Getter;
  * @author laokou
  */
 @Getter
-public enum MenuStatusEnum {
+public enum OperateType {
 
-	// @formatter:off
-	ENABLE(0, "启用"),
+	SAVE("save", "保存角色"),
 
-	DISABLE(1, "禁用");
+	MODIFY("modify", "修改角色"),
 
-	private final int code;
+	MODIFY_AUTHORITY("modify_authority", "修改角色权限");
+
+	private final String code;
 
 	private final String desc;
 
-	MenuStatusEnum(int code, String desc) {
+	OperateType(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}
-	// @formatter:on
 
 }

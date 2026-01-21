@@ -50,7 +50,7 @@ class CorsConfigTest {
 
 	@Test
 	@DisplayName("Test non-CORS request forwards normally")
-	void testNonCorsRequest() {
+	void test_filter_nonCorsRequest_forwardsNormally() {
 		// Given - non-CORS request without Origin header
 		MockServerHttpRequest request = MockServerHttpRequest.get("http://localhost:8080/api/v1/users").build();
 		MockServerWebExchange exchange = MockServerWebExchange.from(request);
@@ -69,7 +69,7 @@ class CorsConfigTest {
 
 	@Test
 	@DisplayName("Test CORS request adds correct Access-Control headers")
-	void testCorsRequest() {
+	void test_filter_corsRequest_addsCorsHeaders() {
 		// Given
 		String origin = "http://localhost:3000";
 		MockServerHttpRequest request = MockServerHttpRequest.get("http://localhost:8080/api/v1/users")
@@ -92,7 +92,7 @@ class CorsConfigTest {
 
 	@Test
 	@DisplayName("Test CORS preflight request returns 200 OK")
-	void testCorsPreflightRequest() {
+	void test_filter_corsPreflightRequest_returnsOk() {
 		// Given
 		String origin = "http://localhost:3000";
 		MockServerHttpRequest request = MockServerHttpRequest.options("http://localhost:8080/api/v1/users")
@@ -118,7 +118,7 @@ class CorsConfigTest {
 
 	@Test
 	@DisplayName("Test CORS request with multiple headers")
-	void testCorsRequestWithMultipleHeaders() {
+	void test_filter_corsRequestWithMultipleHeaders_handlesCorrectly() {
 		// Given
 		String origin = "http://example.com";
 		MockServerHttpRequest request = MockServerHttpRequest.get("http://localhost:8080/api/v1/data")
@@ -142,7 +142,7 @@ class CorsConfigTest {
 
 	@Test
 	@DisplayName("Test corsFilter Bean is not null")
-	void testCorsFilterBeanNotNull() {
+	void test_corsFilter_beanCreation_isNotNull() {
 		// Then
 		Assertions.assertThat(corsFilter).isNotNull();
 	}

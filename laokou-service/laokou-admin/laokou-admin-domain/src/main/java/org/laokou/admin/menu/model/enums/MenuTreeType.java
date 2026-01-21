@@ -15,29 +15,32 @@
  *
  */
 
-package org.laokou.admin.menu.model;
+package org.laokou.admin.menu.model.enums;
 
 import lombok.Getter;
+import org.laokou.common.i18n.util.EnumParser;
 
 /**
  * @author laokou
  */
 @Getter
-public enum MenuTypeEnum {
+public enum MenuTreeType {
 
-	// @formatter:off
-	MENU(0, "菜单"),
+	USER(0, "用户菜单"),
 
-	BUTTON(1, "按钮");
+	SYSTEM(1, "系统菜单");
 
 	private final int code;
 
 	private final String desc;
 
-	MenuTypeEnum(int code, String desc) {
+	MenuTreeType(int code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}
-	// @formatter:on
+
+	public static MenuTreeType getByCode(int code) {
+		return EnumParser.parse(MenuTreeType.class, MenuTreeType::getCode, code);
+	}
 
 }

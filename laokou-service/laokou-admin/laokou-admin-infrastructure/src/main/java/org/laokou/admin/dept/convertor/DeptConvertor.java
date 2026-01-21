@@ -22,7 +22,7 @@ import org.laokou.admin.dept.dto.clientobject.DeptTreeCO;
 import org.laokou.admin.dept.factory.DeptDomainFactory;
 import org.laokou.admin.dept.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.admin.dept.model.DeptE;
-import org.laokou.admin.dept.model.DeptOperateTypeEnum;
+import org.laokou.admin.dept.model.enums.OperateType;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ public class DeptConvertor {
 
 	public static DeptDO toDataObject(DeptE deptE) {
 		DeptDO deptDO = new DeptDO();
-		switch (deptE.getDeptOperateTypeEnum()) {
+		switch (deptE.getOperateType()) {
 			case SAVE -> deptDO.setId(deptE.getPrimaryKey());
 			case MODIFY -> deptDO.setId(deptE.getId());
 		}
@@ -65,7 +65,7 @@ public class DeptConvertor {
 		deptE.setPid(deptCO.getPid());
 		deptE.setName(deptCO.getName());
 		deptE.setSort(deptCO.getSort());
-		deptE.setDeptOperateTypeEnum(isInsert ? DeptOperateTypeEnum.SAVE : DeptOperateTypeEnum.MODIFY);
+		deptE.setOperateType(isInsert ? OperateType.SAVE : OperateType.MODIFY);
 		return deptE;
 	}
 

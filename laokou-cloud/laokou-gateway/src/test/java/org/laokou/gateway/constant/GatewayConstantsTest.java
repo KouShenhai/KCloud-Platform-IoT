@@ -31,14 +31,14 @@ class GatewayConstantsTest {
 
 	@Test
 	@DisplayName("Test ROUTER_NOT_EXIST constant value")
-	void testRouterNotExistConstant() {
+	void test_ROUTER_NOT_EXIST_value_equalsExpected() {
 		// Then
 		Assertions.assertThat(GatewayConstants.ROUTER_NOT_EXIST).isEqualTo("S_Gateway_RouterNotExist");
 	}
 
 	@Test
 	@DisplayName("Test ROUTER_NOT_EXIST constant is not empty")
-	void testRouterNotExistConstantNotEmpty() {
+	void test_ROUTER_NOT_EXIST_notEmpty_isTrue() {
 		// Then
 		Assertions.assertThat(GatewayConstants.ROUTER_NOT_EXIST).isNotNull();
 		Assertions.assertThat(GatewayConstants.ROUTER_NOT_EXIST).isNotEmpty();
@@ -46,7 +46,7 @@ class GatewayConstantsTest {
 
 	@Test
 	@DisplayName("Test ROUTER_NOT_EXIST constant starts with S_Gateway_ prefix")
-	void testRouterNotExistConstantPrefix() {
+	void test_ROUTER_NOT_EXIST_prefix_startsWithSGateway() {
 		// Then
 		Assertions.assertThat(GatewayConstants.ROUTER_NOT_EXIST).startsWith("S_Gateway_");
 	}

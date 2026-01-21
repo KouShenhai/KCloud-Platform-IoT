@@ -18,7 +18,7 @@
 package org.laokou.admin.user.model;
 
 import lombok.Getter;
-import org.laokou.admin.user.model.enums.UserOperateType;
+import org.laokou.admin.user.model.enums.OperateType;
 import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.constant.StringConstants;
@@ -122,7 +122,7 @@ public class UserE {
 	/**
 	 * 用户操作类型.
 	 */
-	private UserOperateType userOperateType;
+	private OperateType operateType;
 
 	private final IdGenerator idGenerator;
 
@@ -169,7 +169,7 @@ public class UserE {
 	}
 
 	public void checkUserParam() throws Exception {
-		switch (userOperateType) {
+		switch (operateType) {
 			case SAVE -> saveUserParamValidator.validateUser(this);
 			case MODIFY -> modifyUserParamValidator.validateUser(this);
 			case RESET_PWD -> resetUserPwdParamValidator.validateUser(this);

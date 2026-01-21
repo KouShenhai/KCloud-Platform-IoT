@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.admin.oss.model;
+package org.laokou.admin.menu.model.enums;
 
 import lombok.Getter;
 
@@ -23,17 +23,17 @@ import lombok.Getter;
  * @author laokou
  */
 @Getter
-public enum OssOperateTypeEnum {
+public enum MenuType {
 
-	SAVE("save", "保存OSS"),
+	MENU(0, "菜单"),
 
-	MODIFY("modify", "修改OSS");
+	BUTTON(1, "按钮");
 
-	private final String code;
+	private final int code;
 
 	private final String desc;
 
-	OssOperateTypeEnum(String code, String desc) {
+	MenuType(int code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}

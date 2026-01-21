@@ -25,7 +25,7 @@ import org.laokou.common.i18n.util.RedisKeyUtils;
  * @author laokou
  */
 @Getter
-public enum SendCaptchaTypeEnum {
+public enum SendCaptchaType {
 
 	// @formatter:off
 	SEND_MAIL_CAPTCHA("send_mail_captcha", "发送邮箱验证码") {
@@ -54,13 +54,13 @@ public enum SendCaptchaTypeEnum {
 
 	private final String desc;
 
-	SendCaptchaTypeEnum(String code, String desc) {
+	SendCaptchaType(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}
 
-	public static SendCaptchaTypeEnum getByCode(String code) {
-		return EnumParser.parse(SendCaptchaTypeEnum.class, SendCaptchaTypeEnum::getCode, code);
+	public static SendCaptchaType getByCode(String code) {
+		return EnumParser.parse(SendCaptchaType.class, SendCaptchaType::getCode, code);
 	}
 
 	public abstract String getCaptchaCacheKey(String uuid);

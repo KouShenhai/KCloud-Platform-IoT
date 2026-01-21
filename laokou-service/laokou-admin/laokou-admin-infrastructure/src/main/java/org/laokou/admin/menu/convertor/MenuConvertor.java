@@ -22,7 +22,7 @@ import org.laokou.admin.menu.dto.clientobject.MenuTreeCO;
 import org.laokou.admin.menu.factory.MenuDomainFactory;
 import org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.admin.menu.model.MenuE;
-import org.laokou.admin.menu.model.MenuOperateTypeEnum;
+import org.laokou.admin.menu.model.enums.OperateType;
 
 import java.util.List;
 
@@ -38,7 +38,7 @@ public final class MenuConvertor {
 
 	public static MenuDO toDataObject(MenuE menuE) {
 		MenuDO menuDO = new MenuDO();
-		switch (menuE.getMenuOperateTypeEnum()) {
+		switch (menuE.getOperateType()) {
 			case SAVE -> menuDO.setId(menuE.getPrimaryKey());
 			case MODIFY -> menuDO.setId(menuE.getId());
 		}
@@ -103,7 +103,7 @@ public final class MenuConvertor {
 		menuE.setIcon(menuCO.getIcon());
 		menuE.setSort(menuCO.getSort());
 		menuE.setStatus(menuCO.getStatus());
-		menuE.setMenuOperateTypeEnum(isInsert ? MenuOperateTypeEnum.SAVE : MenuOperateTypeEnum.MODIFY);
+		menuE.setOperateType(isInsert ? OperateType.SAVE : OperateType.MODIFY);
 		return menuE;
 	}
 

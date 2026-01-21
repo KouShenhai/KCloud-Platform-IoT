@@ -93,7 +93,7 @@ public final class UserConvertor {
 
 	public static UserDO toDataObject(UserE userE) {
 		UserDO userDO = new UserDO();
-		switch (userE.getUserOperateType()) {
+		switch (userE.getOperateType()) {
 			case SAVE -> {
 				userDO.setId(userE.getPrimaryKey());
 				userDO.setPassword(userE.getDefaultEncodedPassword());

@@ -43,7 +43,7 @@ class RequestMatcherPropertiesTest {
 
 	@Test
 	@DisplayName("Test default ignorePatterns is empty Map")
-	void testDefaultIgnorePatternsIsEmpty() {
+	void test_getIgnorePatterns_default_isEmpty() {
 		// Then
 		Assertions.assertThat(properties.getIgnorePatterns()).isNotNull();
 		Assertions.assertThat(properties.getIgnorePatterns()).isEmpty();
@@ -51,7 +51,7 @@ class RequestMatcherPropertiesTest {
 
 	@Test
 	@DisplayName("Test set ignorePatterns")
-	void testSetIgnorePatterns() {
+	void test_setIgnorePatterns_withPatterns_setsCorrectly() {
 		// Given
 		Map<String, Set<String>> ignorePatterns = new HashMap<>();
 		ignorePatterns.put("GET", Set.of("/actuator/**=laokou-gateway", "/public/**=laokou-gateway"));
@@ -68,7 +68,7 @@ class RequestMatcherPropertiesTest {
 
 	@Test
 	@DisplayName("Test ignorePatterns contains correct GET paths")
-	void testIgnorePatternsContainsGetPaths() {
+	void test_getIgnorePatterns_withGetPaths_containsCorrectPaths() {
 		// Given
 		Map<String, Set<String>> ignorePatterns = new HashMap<>();
 		ignorePatterns.put("GET", Set.of("/actuator/**=laokou-gateway"));
@@ -80,7 +80,7 @@ class RequestMatcherPropertiesTest {
 
 	@Test
 	@DisplayName("Test ignorePatterns contains correct POST paths")
-	void testIgnorePatternsContainsPostPaths() {
+	void test_getIgnorePatterns_withPostPaths_containsCorrectPaths() {
 		// Given
 		Map<String, Set<String>> ignorePatterns = new HashMap<>();
 		ignorePatterns.put("POST", Set.of("/api/v1/oauth2/token=laokou-gateway"));
@@ -93,7 +93,7 @@ class RequestMatcherPropertiesTest {
 
 	@Test
 	@DisplayName("Test ignorePatterns supports DELETE method")
-	void testIgnorePatternsSupportsDeleteMethod() {
+	void test_getIgnorePatterns_withDeleteMethod_supportsDeleteMethod() {
 		// Given
 		Map<String, Set<String>> ignorePatterns = new HashMap<>();
 		ignorePatterns.put("DELETE", Set.of("/api/v1/tokens=laokou-gateway"));
@@ -105,7 +105,7 @@ class RequestMatcherPropertiesTest {
 
 	@Test
 	@DisplayName("Test empty ignorePatterns does not throw exception")
-	void testEmptyIgnorePatternsNoException() {
+	void test_setIgnorePatterns_emptyMap_noException() {
 		// When
 		properties.setIgnorePatterns(new HashMap<>());
 

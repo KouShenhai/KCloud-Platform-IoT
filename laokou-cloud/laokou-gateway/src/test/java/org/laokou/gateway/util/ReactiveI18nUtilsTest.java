@@ -44,7 +44,7 @@ class ReactiveI18nUtilsTest {
 
 	@Test
 	@DisplayName("Test set Locale from lang parameter - Chinese")
-	void testSetLocaleFromLangParam_chinese() {
+	void test_set_langParamChinese_setsChineseLocale() {
 		// Given
 		MockServerHttpRequest request = MockServerHttpRequest.get("/api/v1/users")
 			.queryParam("Language", "zh-CN")
@@ -62,7 +62,7 @@ class ReactiveI18nUtilsTest {
 
 	@Test
 	@DisplayName("Test set Locale from lang parameter - English")
-	void testSetLocaleFromLangParam_english() {
+	void test_set_langParamEnglish_setsEnglishLocale() {
 		// Given
 		MockServerHttpRequest request = MockServerHttpRequest.get("/api/v1/users")
 			.queryParam("Language", "en-US")
@@ -80,7 +80,7 @@ class ReactiveI18nUtilsTest {
 
 	@Test
 	@DisplayName("Test set Locale from Accept-Language header")
-	void testSetLocaleFromAcceptLanguageHeader() {
+	void test_set_acceptLanguageHeader_setsLocale() {
 		// Given
 		MockServerHttpRequest request = MockServerHttpRequest.get("/api/v1/users")
 			.header(HttpHeaders.ACCEPT_LANGUAGE, "zh-CN")
@@ -97,7 +97,7 @@ class ReactiveI18nUtilsTest {
 
 	@Test
 	@DisplayName("Test lang parameter has priority over Accept-Language header")
-	void testLangParamHasPriority() {
+	void test_set_langParamAndHeader_langParamHasPriority() {
 		// Given
 		MockServerHttpRequest request = MockServerHttpRequest.get("/api/v1/users")
 			.queryParam("Language", "en-US")
@@ -116,7 +116,7 @@ class ReactiveI18nUtilsTest {
 
 	@Test
 	@DisplayName("Test reset clears LocaleContext")
-	void testResetClearsLocaleContext() {
+	void test_reset_afterSet_clearsLocaleContext() {
 		// Given
 		MockServerHttpRequest request = MockServerHttpRequest.get("/api/v1/users")
 			.queryParam("Language", "zh-CN")
@@ -135,7 +135,7 @@ class ReactiveI18nUtilsTest {
 
 	@Test
 	@DisplayName("Test uses default Locale when no language parameter")
-	void testNoLanguageParam() {
+	void test_set_noLanguageParam_usesDefaultLocale() {
 		// Given
 		MockServerHttpRequest request = MockServerHttpRequest.get("/api/v1/users").build();
 		MockServerWebExchange exchange = MockServerWebExchange.from(request);
@@ -150,7 +150,7 @@ class ReactiveI18nUtilsTest {
 
 	@Test
 	@DisplayName("Test lang parameter with language code only")
-	void testLangParamWithLanguageOnly() {
+	void test_set_langParamWithLanguageOnly_setsLocale() {
 		// Given
 		MockServerHttpRequest request = MockServerHttpRequest.get("/api/v1/users").queryParam("Language", "en").build();
 		MockServerWebExchange exchange = MockServerWebExchange.from(request);

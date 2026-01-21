@@ -78,6 +78,8 @@
     <spring-boot-maven-plugin.version>${spring-boot.version}</spring-boot-maven-plugin.version>
     <!--maven-surefire-plugin版本-->
     <maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
+    <!--maven-failsafe-plugin版本-->
+    <maven-failsafe-plugin.version>3.5.4</maven-failsafe-plugin.version>
     <!--maven-enforcer-plugin版本-->
     <maven-enforcer-plugin.version>3.6.2</maven-enforcer-plugin.version>
     <!--docker-maven-plugin版本-->
@@ -1203,6 +1205,26 @@
           <skip>false</skip>
           <testFailureIgnore>false</testFailureIgnore>
         </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>test</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <version>${maven-failsafe-plugin.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>integration-test</goal>
+              <goal>verify</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.jacoco</groupId>

@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.admin.role.model;
+package org.laokou.admin.menu.model.enums;
 
 import lombok.Getter;
 
@@ -23,19 +23,17 @@ import lombok.Getter;
  * @author laokou
  */
 @Getter
-public enum RoleOperateTypeEnum {
+public enum OperateType {
 
-	SAVE("save", "保存角色"),
+	SAVE("save", "保存菜单"),
 
-	MODIFY("modify", "修改角色"),
-
-	MODIFY_AUTHORITY("modify_authority", "修改角色权限");
+	MODIFY("modify", "修改菜单");
 
 	private final String code;
 
 	private final String desc;
 
-	RoleOperateTypeEnum(String code, String desc) {
+	OperateType(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}

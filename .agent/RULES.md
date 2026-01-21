@@ -79,12 +79,12 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的�
 
 ### 命名规范
 - **包名**: `org.laokou.模块名.分层名`，如 `org.laokou.admin.domain`
-- **类名**: 使用大驼峰命名，如 `UserAggregate`、`MenuController`
+- **类名**: 使用大驼峰命名，如 `UserA`、`MenuController`
 - **方法名**: 使用小驼峰命名
 - **常量**: 使用全大写下划线分隔
 
 ### DDD 领域驱动设计
-- **聚合根**: 以 `Aggregate` 或 `Entity` 结尾
+- **聚合根**: 以 `A` 或 `E` 结尾
 - **值对象**: 使用不可变对象
 - **领域事件**: 以 `Event` 结尾
 - **领域服务**: 以 `DomainService` 结尾
@@ -93,7 +93,8 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的�
 ### CQRS 模式
 - **Command**: 修改数据的操作，以 `Cmd` 结尾
 - **Query**: 查询数据的操作，以 `Qry` 结尾
-- **Executor**: 执行器，以 `Executor` 或 `Handler` 结尾
+- **Executor**: 执行器，以 `Exe` 结尾
+- **Handler**: 处理器， 以 `Handler` 结尾
 
 ### REST API 规范
 - 遵循 RESTFul 设计风格

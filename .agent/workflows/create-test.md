@@ -35,7 +35,7 @@ import org.mockito.Mockito;
 import org.mockito.ArgumentMatchers;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("{类名}测试")
+@DisplayName("{class name} test")
 class XxxTest {
 
     @Mock
@@ -55,11 +55,11 @@ class XxxTest {
     }
 
     @Test
-    @DisplayName("测试方法描述")
-    void testMethodName() {
+    @DisplayName("Test method description")
+    void test_methodName() {
         // Given
         String input = "test";
-        when(dependency.method(any())).thenReturn("result");
+		Mockito.when(dependency.method(ArgumentMatchers.any())).thenReturn("result");
 
         // When
         String result = xxx.method(input);
@@ -67,35 +67,35 @@ class XxxTest {
         // Then
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result).isEqualTo("expected");
-        verify(dependency).method(input);
+		Mockito.verify(dependency).method(input);
     }
 
     @Test
-    @DisplayName("测试异常情况")
-    void testException() {
+    @DisplayName("Test for exceptions")
+    void test_exception() {
         // Given
-        when(dependency.method(any())).thenThrow(new RuntimeException());
+		Mockito.when(dependency.method(ArgumentMatchers.any())).thenThrow(new RuntimeException());
 
         // When & Then
-        assertThatThrownBy(() -> xxx.method("input"))
+		Assertions.assertThatThrownBy(() -> xxx.method("input"))
             .isInstanceOf(RuntimeException.class)
             .hasMessage("expected message");
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"a", "b", "c"})
-    @DisplayName("参数化测试")
-    void testParameterized(String input) {
-        // 参数化测试
-        assertThat(xxx.validate(input)).isTrue();
+    @DisplayName("Parametric testing")
+    void test_parameterized(String input) {
+        // Parametric testing
+		Assertions.assertThat(xxx.validate(input)).isTrue();
     }
 
     @Nested
-    @DisplayName("嵌套测试组")
+    @DisplayName("Nested test groups")
     class NestedTests {
         @Test
         void nestedTest() {
-            // 嵌套测试
+            // Nested test groups
         }
     }
 }
@@ -144,26 +144,26 @@ Assertions.assertThat(obj)
 #### Mock 设置
 ```java
 // 返回值
-when(mock.method(any())).thenReturn(result);
-when(mock.method(anyString())).thenReturn(result);
-when(mock.method(eq("specific"))).thenReturn(result);
+Mockito.when(mock.method(ArgumentMatchers.any())).thenReturn(result);
+Mockito.when(mock.method(ArgumentMatchers.any().anyString())).thenReturn(result);
+Mockito.when(mock.method(ArgumentMatchers.any().eq("specific"))).thenReturn(result);
 
 // 抛出异常
-when(mock.method(any())).thenThrow(new Exception());
+Mockito.when(mock.method(ArgumentMatchers.any())).thenThrow(new Exception());
 
 // 多次调用不同返回值
-when(mock.method(any()))
+Mockito.when(mock.method(ArgumentMatchers.any()))
     .thenReturn(first)
     .thenReturn(second);
 
 // void 方法
-doNothing().when(mock).voidMethod(any());
-doThrow(new Exception()).when(mock).voidMethod(any());
+Mockito.doNothing().when(mock).voidMethod(ArgumentMatchers.any());
+Mockito.doThrow(new Exception()).when(mock).voidMethod(ArgumentMatchers.any());
 
 // 参数捕获
 ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
 Mockito.verify(mock).method(captor.capture());
-assertThat(captor.getValue()).isEqualTo("expected");
+Assertions.assertThat(captor.getValue()).isEqualTo("expected");
 ```
 
 #### 验证调用
@@ -227,24 +227,31 @@ class IntegrationTest {
 
 #### 使用 ArchUnit
 ```java
+import com.tngtech.archunit.lang.syntax.ArchRuleDefinition;
+import com.tngtech.archunit.library.Architectures;
+import com.tngtech.archunit.library.dependencies.SlicesRuleDefinition;
+
+/**
+ * @author laokou
+ */
 @AnalyzeClasses(packages = "org.laokou")
 class ArchitectureTest {
 
     @ArchTest
     static final ArchRule controllers_should_be_in_web_package =
-        classes()
+		ArchRuleDefinition.classes()
             .that().haveNameMatching(".*Controller")
             .should().resideInAPackage("..web..");
 
     @ArchTest
     static final ArchRule services_should_not_depend_on_controllers =
-        noClasses()
+		ArchRuleDefinition.noClasses()
             .that().resideInAPackage("..service..")
             .should().dependOnClassesThat().resideInAPackage("..web..");
 
     @ArchTest
     static final ArchRule domain_should_not_depend_on_infrastructure =
-        noClasses()
+		ArchRuleDefinition.noClasses()
             .that().resideInAPackage("..domain..")
             .should().dependOnClassesThat().resideInAPackage("..infrastructure..");
 }
@@ -256,4 +263,4 @@ class ArchitectureTest {
 - 遵循 Given-When-Then 模式
 - 测试覆盖正常路径和异常路径
 - 避免测试私有方法
-- 测试命名：`test{方法名}_{场景}_{期望结果}`
+- 测试命名：`test_{方法名}_{场景}_{期望结果}`

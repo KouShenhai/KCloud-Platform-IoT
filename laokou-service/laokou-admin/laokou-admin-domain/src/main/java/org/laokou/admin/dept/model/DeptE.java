@@ -19,6 +19,7 @@ package org.laokou.admin.dept.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.laokou.admin.dept.model.enums.OperateType;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.dto.IdGenerator;
 import org.laokou.common.i18n.dto.ValidateName;
@@ -58,7 +59,7 @@ public class DeptE implements ValidateName {
 
 	@Setter
 	@Getter
-	private DeptOperateTypeEnum deptOperateTypeEnum;
+	private OperateType operateType;
 
 	private final DeptParamValidator saveDeptParamValidator;
 
@@ -78,7 +79,7 @@ public class DeptE implements ValidateName {
 	}
 
 	public void checkDeptParam() {
-		switch (deptOperateTypeEnum) {
+		switch (operateType) {
 			case SAVE -> saveDeptParamValidator.validateDept(this);
 			case MODIFY -> modifyDeptParamValidator.validateDept(this);
 			default -> throw new UnsupportedOperationException("Unsupported operation type");
