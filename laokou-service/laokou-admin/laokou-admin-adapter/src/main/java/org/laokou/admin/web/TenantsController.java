@@ -31,7 +31,7 @@ import org.laokou.admin.tenant.dto.TenantSaveCmd;
 import org.laokou.admin.tenant.dto.clientobject.TenantCO;
 import org.laokou.common.data.cache.annotation.DistributedCache;
 import org.laokou.common.data.cache.constant.NameConstants;
-import org.laokou.common.data.cache.model.OperateTypeEnum;
+import org.laokou.common.data.cache.model.OperateType;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
@@ -75,7 +75,7 @@ public class TenantsController {
 	@PreAuthorize("hasAuthority('sys:tenant:modify')")
 	@OperateLog(module = "租户管理", operation = "修改租户")
 	@Operation(summary = "修改租户", description = "修改租户")
-	@DistributedCache(name = NameConstants.TENANTS, key = "#cmd.co.id", operateType = OperateTypeEnum.DEL)
+	@DistributedCache(name = NameConstants.TENANTS, key = "#cmd.co.id", operateType = OperateType.DEL)
 	public void modifyTenant(@RequestBody TenantModifyCmd cmd) {
 		tenantsServiceI.modifyTenant(cmd);
 	}

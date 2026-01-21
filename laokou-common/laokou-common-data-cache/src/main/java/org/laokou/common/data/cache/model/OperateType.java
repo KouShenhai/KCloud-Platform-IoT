@@ -33,7 +33,7 @@ import org.springframework.cache.CacheManager;
  */
 @Slf4j
 @Getter
-public enum OperateTypeEnum {
+public enum OperateType {
 
 	GET("get", "查看") {
 		@Override
@@ -84,7 +84,7 @@ public enum OperateTypeEnum {
 
 	private final String desc;
 
-	OperateTypeEnum(String code, String desc) {
+	OperateType(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}

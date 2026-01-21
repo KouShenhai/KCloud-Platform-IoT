@@ -17,7 +17,7 @@
 
 package org.laokou.common.data.cache.annotation;
 
-import org.laokou.common.data.cache.model.OperateTypeEnum;
+import org.laokou.common.data.cache.model.OperateType;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -48,6 +48,6 @@ public @interface DistributedCache {
 	/**
 	 * 操作类型.
 	 */
-	OperateTypeEnum operateType() default OperateTypeEnum.GET;
+	OperateType operateType() default OperateType.GET;
 
 }

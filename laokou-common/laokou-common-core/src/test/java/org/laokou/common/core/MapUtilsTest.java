@@ -18,6 +18,7 @@
 package org.laokou.common.core;
 
 import org.assertj.core.api.Assertions;
+import org.jspecify.annotations.NonNull;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
@@ -63,7 +64,8 @@ class MapUtilsTest {
 		Assertions.assertThat(MapUtils.parseParamterString(m))
 			.isEqualTo("a=%E5%93%88%E5%93%88%E5%93%88&b=%E5%98%BB%E5%98%BB");
 		Assertions.assertThat(MapUtils.parseParamterString(m, false)).isEqualTo("a=哈哈哈&b=嘻嘻");
-		MultiValueMap<String, String> multiValueMap = MapUtils.getParameterMap(Map.of("a", new String[] { "1", "2" }));
+		MultiValueMap<@NonNull String, String> multiValueMap = MapUtils
+			.getParameterMap(Map.of("a", new String[] { "1", "2" }));
 		Assertions.assertThat(multiValueMap).hasSize(1);
 		Assertions.assertThat(multiValueMap.get("a")).hasSize(2);
 		Assertions.assertThat(multiValueMap.getFirst("a")).isEqualTo("1");
