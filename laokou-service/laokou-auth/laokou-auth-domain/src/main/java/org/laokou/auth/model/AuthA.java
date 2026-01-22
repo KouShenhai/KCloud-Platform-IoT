@@ -201,27 +201,27 @@ public class AuthA extends AggregateRoot implements ValidateName {
 		return init();
 	}
 
-	public AuthA createUserVByMobileAuth() throws Exception {
+	public AuthA createMobileAuth() throws Exception {
 		this.grantType = GrantType.MOBILE;
 		this.captchaV = getCaptchaVByMobileAuth();
 		this.userV = getUserVByMobileAuth();
 		return init();
 	}
 
-	public AuthA createUserVByMailAuth() throws Exception {
+	public AuthA createMailAuth() throws Exception {
 		this.grantType = GrantType.MAIL;
 		this.captchaV = getCaptchaVByMailAuth();
 		this.userV = getUserVByMailAuth();
 		return init();
 	}
 
-	public AuthA createUserVByAuthorizationCodeAuth() throws Exception {
+	public AuthA createAuthorizationCodeAuth() throws Exception {
 		this.grantType = GrantType.AUTHORIZATION_CODE;
 		this.userV = getUserVByAuthorizationCodeAuth();
 		return init();
 	}
 
-	public AuthA createUserVByTestAuth() throws Exception {
+	public AuthA createTestAuth() throws Exception {
 		this.grantType = GrantType.TEST;
 		this.userV = getUserVByTestAuth();
 		return init();
