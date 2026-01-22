@@ -116,6 +116,10 @@ class DomainServiceTest {
 	@MockitoBean("mobileCaptchaParamValidator")
 	private CaptchaParamValidator mobileCaptchaParamValidator;
 
+	private final String uuid = "070d5f1650ea4832951ded2cce5b4386";
+
+	private final String captcha = "1234";
+
 	@Test
 	@DisplayName("Test username password auth success")
 	void test_auth_usernamePassword_success() throws Exception {
@@ -126,8 +130,7 @@ class DomainServiceTest {
 		Mockito.verify(tenantGateway, Mockito.times(1)).getTenantId("laokou");
 		Mockito.verify(httpRequest, Mockito.times(1)).getParameterMap();
 		Mockito.verify(captchaValidator, Mockito.times(1))
-			.validateCaptcha(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey("070d5f1650ea4832951ded2cce5b4386"),
-					"1234");
+			.validateCaptcha(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey(this.uuid), this.captcha);
 		Mockito.verify(passwordValidator, Mockito.times(1)).validatePassword("admin123", "admin123");
 		Mockito.verify(userGateway, Mockito.times(1)).getUserProfile(getUserV());
 		Mockito.verify(menuGateway, Mockito.times(1)).getMenuPermissions(getUserE());
@@ -157,19 +160,31 @@ class DomainServiceTest {
 
 	}
 
-	private void createMailAuthInfo() {
+	private void createMailAuthInfo(MailAuthParam mailAuthParam) {
+		Mockito.when(idGenerator.getId()).thenReturn(1L);
+		Mockito.doAnswer(invocation -> {
+			AuthA authA = invocation.getArgument(0);
+			UserV userV = authA.getUserV();
+			CaptchaV captchaV = authA.getCaptchaV();
+			if (StringExtUtils.isEmpty(userV.tenantCode())) {
+				throw new IllegalArgumentException("tenant code must not be empty");
+			}
+			if (StringExtUtils.isEmpty(captchaV.captcha())) {
+				throw new IllegalArgumentException("captcha must not be empty");
+			}
+			return null;
+		}).when(usernamePasswordAuthParamValidator).validateAuth(Mockito.any());
+	}
+
+	private void createMobileAuthInfo(MobileAuthParam mobileAuthParam) {
 
 	}
 
-	private void createMobileAuthInfo() {
+	private void createTestAuthInfo(TestAuthParam testAuthParam) {
 
 	}
 
-	private void createTestAuthInfo() {
-
-	}
-
-	private void createAuthorizationCodeAuthInfo() {
+	private void createAuthorizationCodeAuthInfo(AuthorizationCodAuthParam authorizationCodeAuthParam) {
 
 	}
 
@@ -215,11 +230,8 @@ class DomainServiceTest {
 	private UsernamePasswordAuthParam createUsernamePasswordAuthParam() {
 		String username = RSAUtils.encryptByPublicKey("admin");
 		String password = RSAUtils.encryptByPublicKey("admin123");
-		String tenantCode = "laokou";
-		String uuid = "070d5f1650ea4832951ded2cce5b4386";
-		String captcha = "1234";
-		String grantType = GrantType.USERNAME_PASSWORD.getCode();
-		return new UsernamePasswordAuthParam(uuid, captcha, username, password, tenantCode, grantType);
+		return new UsernamePasswordAuthParam(this.uuid, this.captcha, username, password, "laokou",
+				GrantType.USERNAME_PASSWORD.getCode());
 	}
 
 	private UsernamePasswordAuthParam createUsernamePasswordEmptyAuthParam() {
