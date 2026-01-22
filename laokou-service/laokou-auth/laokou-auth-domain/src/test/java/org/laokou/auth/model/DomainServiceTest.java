@@ -231,7 +231,7 @@ class DomainServiceTest {
 	}
 
 	private UserE getUserE() {
-		return DomainFactory.getUser()
+		return DomainFactory.createUser()
 			.toBuilder()
 			.id(1L)
 			.username("admin")
@@ -247,7 +247,7 @@ class DomainServiceTest {
 	}
 
 	private AuthA createAuth() {
-		return DomainFactory.getAuth();
+		return DomainFactory.createAuth();
 	}
 
 	@SpringBootConfiguration

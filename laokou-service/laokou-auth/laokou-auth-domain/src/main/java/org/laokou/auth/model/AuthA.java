@@ -181,7 +181,7 @@ public class AuthA extends AggregateRoot implements ValidateName {
 				 @Qualifier("mobileCaptchaParamValidator") CaptchaParamValidator mobileCaptchaParamValidator) {
 		this.idGenerator = idGenerator;
 		this.parameterMap = httpRequest.getParameterMap();
-		this.userE = DomainFactory.getUser();
+		this.userE = DomainFactory.createUser();
 		this.passwordValidator = passwordValidator;
 		this.captchaValidator = captchaValidator;
 		this.authorizationCodeAuthParamValidator = authorizationCodeAuthParamValidator;
