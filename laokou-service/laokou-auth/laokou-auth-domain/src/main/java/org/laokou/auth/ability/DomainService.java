@@ -19,7 +19,6 @@ package org.laokou.auth.ability;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.gateway.CaptchaGateway;
-import org.laokou.auth.gateway.DeptGateway;
 import org.laokou.auth.gateway.MenuGateway;
 import org.laokou.auth.gateway.OssLogGateway;
 import org.laokou.auth.gateway.TenantGateway;
@@ -40,8 +39,6 @@ public class DomainService {
 	private final UserGateway userGateway;
 
 	private final MenuGateway menuGateway;
-
-	private final DeptGateway deptGateway;
 
 	private final TenantGateway tenantGateway;
 

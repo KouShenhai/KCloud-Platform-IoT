@@ -168,7 +168,7 @@ public class AuthA extends AggregateRoot implements ValidateName {
 	private final CaptchaParamValidator mobileCaptchaParamValidator;
 
 	// @formatter:off
-	private AuthA(IdGenerator idGenerator,
+	AuthA(IdGenerator idGenerator,
 				 HttpRequest httpRequest,
                  PasswordValidator passwordValidator,
                  CaptchaValidator captchaValidator,
@@ -194,7 +194,7 @@ public class AuthA extends AggregateRoot implements ValidateName {
 	}
 	// @formatter:on
 
-	public AuthA createUserVByUsernamePasswordAuth() throws Exception {
+	public AuthA createUsernamePasswordAuth() throws Exception {
 		this.grantType = GrantType.USERNAME_PASSWORD;
 		this.captchaV = getCaptchaVByUsernamePasswordAuth();
 		this.userV = getUserVByUsernamePasswordAuth();
