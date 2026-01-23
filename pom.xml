@@ -117,7 +117,7 @@
     <!--maven-gpg-plugin版本-->
     <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
     <!--spring-boot版本-->
-    <spring-boot.version>4.0.1</spring-boot.version>
+    <spring-boot.version>4.0.2</spring-boot.version>
     <!--spring-cloud版本-->
     <spring-cloud.version>2025.1.0</spring-cloud.version>
     <!--cloud-alibaba版本-->
