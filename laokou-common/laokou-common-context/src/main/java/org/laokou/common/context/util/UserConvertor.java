@@ -26,7 +26,7 @@ public final class UserConvertor {
 	}
 
 	public static UserExtDetails toUserDetails(User user) {
-		return DomainFactory.getUserDetails()
+		return DomainFactory.createUserDetails()
 			.toBuilder()
 			.id(user.id())
 			.username(user.username())

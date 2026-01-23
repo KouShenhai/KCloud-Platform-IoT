@@ -28,6 +28,7 @@ import org.laokou.auth.gateway.MenuGateway;
 import org.laokou.auth.gateway.OssLogGateway;
 import org.laokou.auth.gateway.TenantGateway;
 import org.laokou.auth.gateway.UserGateway;
+import org.laokou.auth.model.constant.Constants;
 import org.laokou.auth.model.entity.UserE;
 import org.laokou.auth.model.enums.GrantType;
 import org.laokou.auth.model.enums.SuperAdmin;
@@ -39,6 +40,7 @@ import org.laokou.auth.model.validator.CaptchaValidator;
 import org.laokou.auth.model.validator.PasswordValidator;
 import org.laokou.auth.model.valueobject.CaptchaV;
 import org.laokou.auth.model.valueobject.UserV;
+import org.laokou.common.core.util.RegexUtils;
 import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.crypto.util.RSAUtils;
 import org.laokou.common.i18n.dto.IdGenerator;
@@ -120,6 +122,18 @@ class DomainServiceTest {
 
 	private final String captcha = "1234";
 
+	private final String username = "admin";
+
+	private final String password = "admin123";
+
+	private final String tenantCode = "laokou";
+
+	private final String mail = "2413176044@qq.com";
+
+	private final String mobile = "18888888888";
+
+	private final Long tenantId = 1L;
+
 	@Test
 	@DisplayName("Test username password auth success")
 	void test_auth_usernamePassword_success() throws Exception {
@@ -127,14 +141,16 @@ class DomainServiceTest {
 		AuthA usernamePasswordAuth = createAuth().createUsernamePasswordAuth();
 		Assertions.assertThat(usernamePasswordAuth).isNotNull();
 		Assertions.assertThatCode(() -> domainService.auth(usernamePasswordAuth)).doesNotThrowAnyException();
-		Mockito.verify(tenantGateway, Mockito.times(1)).getTenantId("laokou");
+		Mockito.verify(tenantGateway, Mockito.times(1)).getTenantId(this.tenantCode);
 		Mockito.verify(httpRequest, Mockito.times(1)).getParameterMap();
 		Mockito.verify(captchaValidator, Mockito.times(1))
 			.validateCaptcha(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey(this.uuid), this.captcha);
-		Mockito.verify(passwordValidator, Mockito.times(1)).validatePassword("admin123", "admin123");
-		Mockito.verify(userGateway, Mockito.times(1)).getUserProfile(getUserV());
+		Mockito.verify(passwordValidator, Mockito.times(1)).validatePassword(this.password, this.password);
+		Mockito.verify(userGateway, Mockito.times(1)).getUserProfile(getUserVByUsernamePassword());
 		Mockito.verify(menuGateway, Mockito.times(1)).getMenuPermissions(getUserE());
 		Mockito.verify(ossLogGateway, Mockito.times(1)).getOssUrl(1L);
+		Assertions.assertThat(usernamePasswordAuth.getUserV().avatar()).isEqualTo("https://1.png");
+		Assertions.assertThat(usernamePasswordAuth.getUserE().getDeptId()).isEqualTo(1L);
 	}
 
 	@Test
@@ -150,14 +166,21 @@ class DomainServiceTest {
 
 	@Test
 	@DisplayName("Test mail auth success")
-	void test_auth_mail_auth_success() {
-
+	void test_auth_mail_auth_success() throws Exception {
+		createMailAuthInfo(createMailAuthParam());
+		AuthA mailAuth = createAuth().createMailAuth();
+		Assertions.assertThat(mailAuth).isNotNull();
+		Assertions.assertThatCode(() -> domainService.auth(mailAuth)).doesNotThrowAnyException();
 	}
 
 	@Test
 	@DisplayName("Test mail validate empty value")
-	void test_auth_mail_validateEmptyValue() {
-
+	void test_auth_mail_validateEmptyValue() throws Exception {
+		createMailAuthInfo(createMailEmptyAuthParam());
+		AuthA mailAuth = createAuth().createMailAuth();
+		Assertions.assertThat(mailAuth).isNotNull();
+		Assertions.assertThatCode(() -> domainService.auth(mailAuth)).isInstanceOf(IllegalArgumentException.class);
+		Mockito.verify(mailAuthParamValidator, Mockito.times(1)).validateAuth(mailAuth);
 	}
 
 	private void createMailAuthInfo(MailAuthParam mailAuthParam) {
@@ -172,8 +195,25 @@ class DomainServiceTest {
 			if (StringExtUtils.isEmpty(captchaV.captcha())) {
 				throw new IllegalArgumentException("captcha must not be empty");
 			}
+			if (StringExtUtils.isEmpty(captchaV.uuid())) {
+				throw new IllegalArgumentException("mail must not be empty");
+			}
+			else if (!RegexUtils.mailRegex(captchaV.uuid())) {
+				throw new IllegalArgumentException("mail must match");
+			}
 			return null;
-		}).when(usernamePasswordAuthParamValidator).validateAuth(Mockito.any());
+		}).when(mailAuthParamValidator).validateAuth(Mockito.any());
+		Mockito.when(captchaValidator.validateCaptcha(Mockito.anyString(), Mockito.anyString())).thenReturn(true);
+		Mockito.when(tenantGateway.getTenantId(Mockito.anyString())).thenReturn(1L);
+		Mockito.when(userGateway.getUserProfile(Mockito.any())).thenReturn(getUserE());
+		Mockito.when(menuGateway.getMenuPermissions(Mockito.any())).thenReturn(Set.of("sys:user:save"));
+		Mockito.when(ossLogGateway.getOssUrl(Mockito.anyLong())).thenReturn("https://1.png");
+		Map<String, String[]> params = new HashMap<>(4);
+		params.put(Constants.MAIL, new String[] { mailAuthParam.mail() });
+		params.put(Constants.CODE, new String[] { mailAuthParam.code() });
+		params.put(Constants.TENANT_CODE, new String[] { mailAuthParam.tenantCode() });
+		params.put(Constants.GRANT_TYPE, new String[] { mailAuthParam.grantType() });
+		Mockito.when(httpRequest.getParameterMap()).thenReturn(params);
 	}
 
 	private void createMobileAuthInfo(MobileAuthParam mobileAuthParam) {
@@ -218,19 +258,19 @@ class DomainServiceTest {
 		Mockito.when(menuGateway.getMenuPermissions(Mockito.any())).thenReturn(Set.of("sys:user:save"));
 		Mockito.when(ossLogGateway.getOssUrl(Mockito.anyLong())).thenReturn("https://1.png");
 		Map<String, String[]> params = new HashMap<>(6);
-		params.put("username", new String[] { usernamePasswordAuthParam.username() });
-		params.put("password", new String[] { usernamePasswordAuthParam.password() });
-		params.put("tenant_code", new String[] { usernamePasswordAuthParam.tenantCode() });
-		params.put("uuid", new String[] { usernamePasswordAuthParam.uuid() });
-		params.put("captcha", new String[] { usernamePasswordAuthParam.captcha() });
-		params.put("grant_type", new String[] { usernamePasswordAuthParam.grantType() });
+		params.put(Constants.USERNAME, new String[] { usernamePasswordAuthParam.username() });
+		params.put(Constants.PASSWORD, new String[] { usernamePasswordAuthParam.password() });
+		params.put(Constants.TENANT_CODE, new String[] { usernamePasswordAuthParam.tenantCode() });
+		params.put(Constants.UUID, new String[] { usernamePasswordAuthParam.uuid() });
+		params.put(Constants.CAPTCHA, new String[] { usernamePasswordAuthParam.captcha() });
+		params.put(Constants.GRANT_TYPE, new String[] { usernamePasswordAuthParam.grantType() });
 		Mockito.when(httpRequest.getParameterMap()).thenReturn(params);
 	}
 
 	private UsernamePasswordAuthParam createUsernamePasswordAuthParam() {
-		String username = RSAUtils.encryptByPublicKey("admin");
-		String password = RSAUtils.encryptByPublicKey("admin123");
-		return new UsernamePasswordAuthParam(this.uuid, this.captcha, username, password, "laokou",
+		String username = RSAUtils.encryptByPublicKey(this.username);
+		String password = RSAUtils.encryptByPublicKey(this.password);
+		return new UsernamePasswordAuthParam(this.uuid, this.captcha, username, password, this.tenantCode,
 				GrantType.USERNAME_PASSWORD.getCode());
 	}
 
@@ -238,20 +278,28 @@ class DomainServiceTest {
 		return new UsernamePasswordAuthParam(null, null, null, null, null, GrantType.USERNAME_PASSWORD.getCode());
 	}
 
-	private UserV getUserV() throws Exception {
-		return new UserV(AESUtils.encrypt("admin"), "admin123", null, "", "", "laokou", 1L, null);
+	private MailAuthParam createMailAuthParam() {
+		return new MailAuthParam(this.mail, this.captcha, this.tenantCode, GrantType.MAIL.getCode());
+	}
+
+	private MailAuthParam createMailEmptyAuthParam() {
+		return new MailAuthParam(null, null, null, GrantType.MAIL.getCode());
+	}
+
+	private UserV getUserVByUsernamePassword() throws Exception {
+		return new UserV(AESUtils.encrypt(this.username), this.password, null, "", "", this.tenantCode, tenantId, null);
 	}
 
 	private UserE getUserE() {
 		return DomainFactory.createUser()
 			.toBuilder()
 			.id(1L)
-			.username("admin")
-			.password("admin123")
+			.username(this.username)
+			.password(this.password)
 			.avatar(1L)
-			.tenantId(1L)
-			.mail("2413176044@qq.com")
-			.mobile("18888888888")
+			.tenantId(tenantId)
+			.mail(this.mail)
+			.mobile(this.mobile)
 			.deptId(1L)
 			.superAdmin(SuperAdmin.YES.getCode())
 			.status(UserStatus.ENABLE.getCode())

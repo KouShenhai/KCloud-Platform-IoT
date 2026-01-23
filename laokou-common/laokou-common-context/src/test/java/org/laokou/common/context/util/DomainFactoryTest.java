@@ -57,7 +57,7 @@ class DomainFactoryTest {
 			.thenReturn(expectedUserExtDetails);
 
 		// When
-		UserExtDetails result = DomainFactory.getUserDetails();
+		UserExtDetails result = DomainFactory.createUserDetails();
 
 		// Then
 		Assertions.assertThat(result).isEqualTo(expectedUserExtDetails);
@@ -75,7 +75,7 @@ class DomainFactoryTest {
 			.thenReturn(null);
 
 		// When
-		UserExtDetails result = DomainFactory.getUserDetails();
+		UserExtDetails result = DomainFactory.createUserDetails();
 
 		// Then
 		Assertions.assertThat(result).isNull();
@@ -90,7 +90,7 @@ class DomainFactoryTest {
 			.thenReturn(UserExtDetails.builder().build());
 
 		// When
-		DomainFactory.getUserDetails();
+		DomainFactory.createUserDetails();
 
 		// Then
 		springContextUtilsMockedStatic.verify(() -> SpringContextUtils.getBeanProvider(UserExtDetails.class),

@@ -27,7 +27,7 @@ public final class DomainFactory {
 	private DomainFactory() {
 	}
 
-	public static UserExtDetails getUserDetails() {
+	public static UserExtDetails createUserDetails() {
 		return SpringContextUtils.getBeanProvider(UserExtDetails.class);
 	}
 
