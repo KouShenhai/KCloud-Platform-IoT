@@ -11,7 +11,7 @@
     "start": "npm run dev"
   },
   "dependencies": {
-    "@ant-design/icons": "^5.0.1",
+    "@ant-design/icons": "^6.0.0",
     "@ant-design/pro-components": "^2.4.4",
     "@umijs/max": "^4.6.24",
     "antd": "^5.4.0"
