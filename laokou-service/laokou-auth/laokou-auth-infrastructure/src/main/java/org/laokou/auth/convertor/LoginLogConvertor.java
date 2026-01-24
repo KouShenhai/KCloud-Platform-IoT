@@ -46,7 +46,7 @@ public final class LoginLogConvertor {
 	}
 
 	public static LoginLogE toEntity(LoginLogCO co) {
-		return DomainFactory.getLoginLog()
+		return DomainFactory.createLoginLog()
 			.toBuilder()
 			.id(co.getId())
 			.username(co.getUsername())

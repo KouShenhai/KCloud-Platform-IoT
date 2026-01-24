@@ -27,7 +27,7 @@ import org.laokou.common.core.util.RegexUtils;
 class RegexUtilsTest {
 
 	@Test
-	void test_regex() {
+	void test_regexMethods_withValidInputs_returnsExpectedResults() {
 		Assertions.assertThat(RegexUtils.mailRegex("2413176044@qq.com")).isTrue();
 		Assertions.assertThat(RegexUtils.mailRegex("123")).isFalse();
 		Assertions.assertThat(RegexUtils.ipv4Regex("127.0.0.1")).isTrue();

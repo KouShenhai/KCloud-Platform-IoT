@@ -46,14 +46,22 @@ public final class LocaleUtils {
 	}
 
 	private static String[] filterLanguage(String language) {
-		int idx = language.indexOf('-');
+		String[] arr;
+		if ((arr = filterCountry(language.indexOf('-'), language)).length > 0
+				|| (arr = filterCountry(language.indexOf('_'), language)).length > 0) {
+			return arr;
+		}
+		throw new IllegalArgumentException("language not found: " + language);
+	}
+
+	private static String[] filterCountry(int idx, String language) {
 		if (idx > 0) {
 			String[] arr = new String[2];
 			arr[0] = language.substring(idx - 2, idx);
 			arr[1] = language.substring(idx + 1, idx + 3);
 			return arr;
 		}
-		throw new IllegalArgumentException("language not found: " + language);
+		return new String[0];
 	}
 
 }

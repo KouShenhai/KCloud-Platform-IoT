@@ -42,8 +42,8 @@ public class CaptchaSendCmdExe {
 	@CommandLog
 	public void executeVoid(CaptchaSendCmd cmd) {
 		CaptchaCO co = cmd.getCo();
-		domainService
-			.createCaptcha(DomainFactory.getAuth().createCaptchaVBySend(co.getUuid(), co.getTag(), co.getTenantCode()));
+		domainService.createCaptcha(
+				DomainFactory.createAuth().createCaptchaVBySend(co.getUuid(), co.getTag(), co.getTenantCode()));
 		// 发布领域事件
 		// kafkaDomainEventPublisher.publish(authA.getSendCaptchaTypeEnum().getMqTopic(),
 		// AuthConvertor.toDomainEvent(authA));

@@ -66,7 +66,7 @@ public final class NoticeLogConvertor {
 	}
 
 	public static NoticeLogE toEntity(NoticeLogCO noticeLogCO) {
-		return DomainFactory.getNoticeLog()
+		return DomainFactory.createNoticeLog()
 			.toBuilder()
 			.id(noticeLogCO.getId())
 			.code(noticeLogCO.getCode())

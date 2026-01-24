@@ -48,7 +48,8 @@ class FileUtilsTest {
 	}
 
 	@Test
-	void test_baseApi() throws IOException, NoSuchAlgorithmException, KeyManagementException {
+	void test_getFileExt_withValidFile_returnsExtension()
+			throws IOException, NoSuchAlgorithmException, KeyManagementException {
 		SslUtils.ignoreSSLTrust();
 		Assertions.assertThat(FileUtils.getFileExt("test.png")).isEqualTo(".png");
 		Assertions.assertThat(FileUtils.getBytesByUrl(
@@ -85,7 +86,7 @@ class FileUtilsTest {
 	}
 
 	@Test
-	void test_createAndDeleteFile() throws IOException {
+	void test_createDirAndFile_withValidPath_createsAndDeletesFile() throws IOException {
 		Path testFilePath = Path.of(testPath, "upload", "test.txt");
 
 		// 创建文件
@@ -158,7 +159,7 @@ class FileUtilsTest {
 	}
 
 	@Test
-	void test_checkPathExists() {
+	void test_exists_withExistingFile_returnsTrue() {
 		Path existingFile = Path.of(testPath, "upload", "existing.txt");
 		// 创建文件
 		Assertions.assertThatNoException().isThrownBy(() -> {
@@ -173,9 +174,10 @@ class FileUtilsTest {
 	}
 
 	@Test
-	void test_fileStreamOperations() throws IOException {
+	void test_readAndWrite_withValidContent_returnsCorrectBytes() throws IOException {
 		Path streamFile = Path.of(testPath, "upload", "stream.txt");
 		byte[] content = "stream data".getBytes(StandardCharsets.UTF_8);
+		Assertions.assertThatNoException().isThrownBy(() -> FileUtils.createDirAndFile(streamFile));
 		Assertions.assertThatNoException().isThrownBy(() -> FileUtils.write(streamFile, content));
 		byte[] readContent = FileUtils.getBytes(streamFile);
 		Assertions.assertThat(readContent).isEqualTo(content);
@@ -185,7 +187,7 @@ class FileUtilsTest {
 	}
 
 	@Test
-	void test_zipOperations() throws IOException {
+	void test_zipAndUnzip_withValidFiles_compressesAndExtracts() throws IOException {
 		// 测试多文件压缩场景
 		Path srcFile1 = Path.of(testPath, "upload", "file1.txt");
 		Path srcFile2 = Path.of(testPath, "upload", "file2.log");

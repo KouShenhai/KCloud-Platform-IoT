@@ -168,7 +168,7 @@ public class AuthA extends AggregateRoot implements ValidateName {
 	private final CaptchaParamValidator mobileCaptchaParamValidator;
 
 	// @formatter:off
-	private AuthA(IdGenerator idGenerator,
+	AuthA(IdGenerator idGenerator,
 				 HttpRequest httpRequest,
                  PasswordValidator passwordValidator,
                  CaptchaValidator captchaValidator,
@@ -181,7 +181,7 @@ public class AuthA extends AggregateRoot implements ValidateName {
 				 @Qualifier("mobileCaptchaParamValidator") CaptchaParamValidator mobileCaptchaParamValidator) {
 		this.idGenerator = idGenerator;
 		this.parameterMap = httpRequest.getParameterMap();
-		this.userE = DomainFactory.getUser();
+		this.userE = DomainFactory.createUser();
 		this.passwordValidator = passwordValidator;
 		this.captchaValidator = captchaValidator;
 		this.authorizationCodeAuthParamValidator = authorizationCodeAuthParamValidator;
@@ -194,34 +194,34 @@ public class AuthA extends AggregateRoot implements ValidateName {
 	}
 	// @formatter:on
 
-	public AuthA createUserVByUsernamePasswordAuth() throws Exception {
+	public AuthA createUsernamePasswordAuth() throws Exception {
 		this.grantType = GrantType.USERNAME_PASSWORD;
 		this.captchaV = getCaptchaVByUsernamePasswordAuth();
 		this.userV = getUserVByUsernamePasswordAuth();
 		return init();
 	}
 
-	public AuthA createUserVByMobileAuth() throws Exception {
+	public AuthA createMobileAuth() throws Exception {
 		this.grantType = GrantType.MOBILE;
 		this.captchaV = getCaptchaVByMobileAuth();
 		this.userV = getUserVByMobileAuth();
 		return init();
 	}
 
-	public AuthA createUserVByMailAuth() throws Exception {
+	public AuthA createMailAuth() throws Exception {
 		this.grantType = GrantType.MAIL;
 		this.captchaV = getCaptchaVByMailAuth();
 		this.userV = getUserVByMailAuth();
 		return init();
 	}
 
-	public AuthA createUserVByAuthorizationCodeAuth() throws Exception {
+	public AuthA createAuthorizationCodeAuth() throws Exception {
 		this.grantType = GrantType.AUTHORIZATION_CODE;
 		this.userV = getUserVByAuthorizationCodeAuth();
 		return init();
 	}
 
-	public AuthA createUserVByTestAuth() throws Exception {
+	public AuthA createTestAuth() throws Exception {
 		this.grantType = GrantType.TEST;
 		this.userV = getUserVByTestAuth();
 		return init();

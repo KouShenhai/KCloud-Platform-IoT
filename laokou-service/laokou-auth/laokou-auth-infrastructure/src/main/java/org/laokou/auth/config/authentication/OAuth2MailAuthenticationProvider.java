@@ -51,7 +51,7 @@ final class OAuth2MailAuthenticationProvider extends AbstractOAuth2Authenticatio
 
 	@Override
 	Authentication getPrincipal(HttpServletRequest request) throws Exception {
-		return authentication(DomainFactory.getAuth().createUserVByMailAuth(), request);
+		return authentication(DomainFactory.createAuth().createMailAuth(), request);
 	}
 
 	@Override

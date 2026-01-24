@@ -33,7 +33,7 @@ import org.laokou.admin.dept.dto.clientobject.DeptCO;
 import org.laokou.admin.dept.dto.clientobject.DeptTreeCO;
 import org.laokou.common.data.cache.annotation.DistributedCache;
 import org.laokou.common.data.cache.constant.NameConstants;
-import org.laokou.common.data.cache.model.OperateTypeEnum;
+import org.laokou.common.data.cache.model.OperateType;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
@@ -79,7 +79,7 @@ public class DeptsController {
 	@PreAuthorize("hasAuthority('sys:dept:modify')")
 	@OperateLog(module = "部门管理", operation = "修改部门")
 	@Operation(summary = "修改部门", description = "修改部门")
-	@DistributedCache(name = NameConstants.DEPTS, key = "#cmd.co.id", operateType = OperateTypeEnum.DEL)
+	@DistributedCache(name = NameConstants.DEPTS, key = "#cmd.co.id", operateType = OperateType.DEL)
 	public void modifyDept(@RequestBody DeptModifyCmd cmd) {
 		deptsServiceI.modifyDept(cmd);
 	}

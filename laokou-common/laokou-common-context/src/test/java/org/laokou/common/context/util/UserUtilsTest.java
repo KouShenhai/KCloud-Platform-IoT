@@ -68,7 +68,7 @@ class UserUtilsTest {
 
 		// Mock DomainFactory
 		domainFactoryMockedStatic = Mockito.mockStatic(DomainFactory.class);
-		domainFactoryMockedStatic.when(DomainFactory::getUserDetails).thenReturn(mockUserExtDetails);
+		domainFactoryMockedStatic.when(DomainFactory::createUserDetails).thenReturn(mockUserExtDetails);
 	}
 
 	@AfterEach
@@ -218,7 +218,7 @@ class UserUtilsTest {
 			.deptId(20L)
 			.build();
 
-		domainFactoryMockedStatic.when(DomainFactory::getUserDetails).thenReturn(nonSuperAdmin);
+		domainFactoryMockedStatic.when(DomainFactory::createUserDetails).thenReturn(nonSuperAdmin);
 
 		SecurityContext context = SecurityContextHolder.createEmptyContext();
 		Authentication auth = new UsernamePasswordAuthenticationToken(nonSuperAdmin, null);

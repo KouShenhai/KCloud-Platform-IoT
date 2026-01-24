@@ -27,24 +27,52 @@ import org.laokou.common.core.util.ArrayUtils;
 class ArrayUtilsTest {
 
 	@Test
-	void test_byteArray() {
+	void test_isNotEmpty_withByteArray_returnsTrue() {
 		byte[] bytes = { 1 };
 		Assertions.assertThat(ArrayUtils.isNotEmpty(bytes)).isTrue();
 		Assertions.assertThat(ArrayUtils.isEmpty(bytes)).isFalse();
 	}
 
 	@Test
-	void test_strArray() {
+	void test_isNotEmpty_withStringArray_returnsTrue() {
 		String[] str = { "1" };
 		Assertions.assertThat(ArrayUtils.isNotEmpty(str)).isTrue();
 		Assertions.assertThat(ArrayUtils.isEmpty(str)).isFalse();
 	}
 
 	@Test
-	void test_objArray() {
+	void test_isNotEmpty_withObjectArray_returnsTrue() {
 		Object[] obj = { "1" };
 		Assertions.assertThat(ArrayUtils.isNotEmpty(obj)).isTrue();
 		Assertions.assertThat(ArrayUtils.isEmpty(obj)).isFalse();
+	}
+
+	@Test
+	void test_isEmpty_withEmptyByteArray_returnsTrue() {
+		byte[] emptyBytes = new byte[0];
+		Assertions.assertThat(ArrayUtils.isEmpty(emptyBytes)).isTrue();
+		Assertions.assertThat(ArrayUtils.isNotEmpty(emptyBytes)).isFalse();
+	}
+
+	@Test
+	void test_isEmpty_withNullByteArray_returnsTrue() {
+		byte[] nullBytes = null;
+		Assertions.assertThat(ArrayUtils.isEmpty(nullBytes)).isTrue();
+		Assertions.assertThat(ArrayUtils.isNotEmpty(nullBytes)).isFalse();
+	}
+
+	@Test
+	void test_isEmpty_withNullObjectArray_returnsTrue() {
+		Object[] nullArray = null;
+		Assertions.assertThat(ArrayUtils.isEmpty(nullArray)).isTrue();
+		Assertions.assertThat(ArrayUtils.isNotEmpty(nullArray)).isFalse();
+	}
+
+	@Test
+	void test_isEmpty_withEmptyObjectArray_returnsTrue() {
+		Object[] emptyArray = new Object[0];
+		Assertions.assertThat(ArrayUtils.isEmpty(emptyArray)).isTrue();
+		Assertions.assertThat(ArrayUtils.isNotEmpty(emptyArray)).isFalse();
 	}
 
 }

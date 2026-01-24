@@ -31,19 +31,19 @@ public final class DomainFactory {
 	private DomainFactory() {
 	}
 
-	public static AuthA getAuth() {
+	public static AuthA createAuth() {
 		return SpringContextUtils.getBeanProvider(AuthA.class);
 	}
 
-	public static UserE getUser() {
+	public static UserE createUser() {
 		return SpringContextUtils.getBeanProvider(UserE.class);
 	}
 
-	public static LoginLogE getLoginLog() {
+	public static LoginLogE createLoginLog() {
 		return SpringContextUtils.getBeanProvider(LoginLogE.class);
 	}
 
-	public static NoticeLogE getNoticeLog() {
+	public static NoticeLogE createNoticeLog() {
 		return SpringContextUtils.getBeanProvider(NoticeLogE.class);
 	}
 

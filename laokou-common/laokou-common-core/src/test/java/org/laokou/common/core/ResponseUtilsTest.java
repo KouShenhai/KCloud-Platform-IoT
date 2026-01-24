@@ -36,7 +36,7 @@ import org.springframework.test.context.TestConstructor;
 class ResponseUtilsTest {
 
 	@Test
-	void test_response() {
+	void test_getHttpServletResponse_withSpringContext_returnsValidResponse() {
 		HttpServletResponse response = ResponseUtils.getHttpServletResponse();
 		Assertions.assertThat(response).isNotNull();
 		Assertions.assertThatNoException().isThrownBy(() -> ResponseUtils.responseOk(response, "ok"));
