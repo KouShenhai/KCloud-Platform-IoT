@@ -19,18 +19,80 @@ package org.laokou.common.core;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.I18nUtils;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.mockito.Mockito;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpHeaders;
+
+import java.util.Locale;
 
 /**
  * @author laokou
  */
 class I18nUtilsTest {
 
+	@AfterEach
+	void tearDown() {
+		I18nUtils.reset();
+	}
+
 	@Test
-	void test_i18n() {
-		Assertions.assertThatNoException().isThrownBy(() -> I18nUtils.set(Mockito.mock(HttpServletRequest.class)));
+	void test_set_withLanguageHeader_setsLocale() {
+		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
+		Mockito.when(request.getHeader("Language")).thenReturn("zh_CN");
+		I18nUtils.set(request);
+		Assertions.assertThat(LocaleContextHolder.getLocale().getLanguage()).isEqualTo("zh");
+	}
+
+	@Test
+	void test_set_withAcceptLanguageHeader_fallbackToAcceptLanguage() {
+		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
+		Mockito.when(request.getHeader("Language")).thenReturn(null);
+		Mockito.when(request.getHeader(HttpHeaders.ACCEPT_LANGUAGE)).thenReturn("en_US");
+		I18nUtils.set(request);
+		Assertions.assertThat(LocaleContextHolder.getLocale().getLanguage()).isEqualTo("en");
+	}
+
+	@Test
+	void test_set_withEmptyLanguageHeader_fallbackToAcceptLanguage() {
+		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
+		Mockito.when(request.getHeader("Language")).thenReturn("");
+		Mockito.when(request.getHeader(HttpHeaders.ACCEPT_LANGUAGE)).thenReturn("ja_JP");
+		I18nUtils.set(request);
+		Assertions.assertThat(LocaleContextHolder.getLocale().getLanguage()).isEqualTo("ja");
+	}
+
+	@Test
+	void test_set_withBothHeadersNull_noExceptionThrown() {
+		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
+		Mockito.when(request.getHeader("Language")).thenReturn(null);
+		Mockito.when(request.getHeader(HttpHeaders.ACCEPT_LANGUAGE)).thenReturn(null);
+		Assertions.assertThatNoException().isThrownBy(() -> I18nUtils.set(request));
+	}
+
+	@Test
+	void test_reset_afterSet_clearsLocaleContext() {
+		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
+		Mockito.when(request.getHeader("Language")).thenReturn("fr_FR");
+		I18nUtils.set(request);
+		Locale localeBeforeReset = LocaleContextHolder.getLocale();
+		Assertions.assertThat(localeBeforeReset.getLanguage()).isEqualTo("fr");
+		I18nUtils.reset();
+		Locale locale = LocaleContextHolder.getLocale();
+		if (ObjectUtils.equals("zh", locale.getLanguage())) {
+			Assertions.assertThat(LocaleContextHolder.getLocale().getLanguage()).isEqualTo("zh");
+		}
+		else {
+			Assertions.assertThat(LocaleContextHolder.getLocale().getLanguage()).isEqualTo("en");
+		}
+		// After reset, locale should be reset to default
+	}
+
+	@Test
+	void test_reset_withoutPriorSet_noExceptionThrown() {
 		Assertions.assertThatNoException().isThrownBy(I18nUtils::reset);
 	}
 

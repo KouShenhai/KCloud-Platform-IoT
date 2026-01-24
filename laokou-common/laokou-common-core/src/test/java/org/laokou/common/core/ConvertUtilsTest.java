@@ -33,17 +33,40 @@ import java.util.List;
 class ConvertUtilsTest {
 
 	@Test
-	void test_convert() {
+	void test_sourceToTarget_withValidObject_returnsConvertedObject() {
 		User testUser = new User(1L, "laokou");
 		User user = ConvertUtils.sourceToTarget(testUser, User.class);
 		Assertions.assertThat(user).isNotNull();
 		Assertions.assertThat(user.getId()).isEqualTo(testUser.getId());
 		Assertions.assertThat(user.getName()).isEqualTo(testUser.getName());
+	}
+
+	@Test
+	void test_sourceToTarget_withNullSource_returnsNull() {
+		User user = ConvertUtils.sourceToTarget((Object) null, User.class);
+		Assertions.assertThat(user).isNull();
+	}
+
+	@Test
+	void test_sourceToTarget_withCollection_returnsConvertedList() {
+		User testUser1 = new User(1L, "laokou");
 		User testUser2 = new User(2L, "老寇");
-		List<User> userList = ConvertUtils.sourceToTarget(List.of(testUser2), User.class);
-		Assertions.assertThat(userList.size()).isEqualTo(1);
-		Assertions.assertThat(userList.getFirst().getId()).isEqualTo(testUser2.getId());
-		Assertions.assertThat(userList.getFirst().getName()).isEqualTo(testUser2.getName());
+		List<User> userList = ConvertUtils.sourceToTarget(List.of(testUser1, testUser2), User.class);
+		Assertions.assertThat(userList).hasSize(2);
+		Assertions.assertThat(userList.getFirst().getId()).isEqualTo(testUser1.getId());
+		Assertions.assertThat(userList.get(1).getName()).isEqualTo(testUser2.getName());
+	}
+
+	@Test
+	void test_sourceToTarget_withEmptyCollection_returnsEmptyList() {
+		List<User> userList = ConvertUtils.sourceToTarget(List.of(), User.class);
+		Assertions.assertThat(userList).isEmpty();
+	}
+
+	@Test
+	void test_sourceToTarget_withNullCollection_returnsEmptyList() {
+		List<User> userList = ConvertUtils.sourceToTarget((java.util.Collection<User>) null, User.class);
+		Assertions.assertThat(userList).isEmpty();
 	}
 
 	@Data

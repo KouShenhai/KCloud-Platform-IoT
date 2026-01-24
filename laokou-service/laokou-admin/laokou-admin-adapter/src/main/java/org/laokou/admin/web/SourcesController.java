@@ -31,7 +31,7 @@ import org.laokou.admin.source.dto.SourceSaveCmd;
 import org.laokou.admin.source.dto.clientobject.SourceCO;
 import org.laokou.common.data.cache.annotation.DistributedCache;
 import org.laokou.common.data.cache.constant.NameConstants;
-import org.laokou.common.data.cache.model.OperateTypeEnum;
+import org.laokou.common.data.cache.model.OperateType;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
@@ -75,7 +75,7 @@ public class SourcesController {
 	@PreAuthorize("hasAuthority('sys:source:modify')")
 	@OperateLog(module = "数据源管理", operation = "修改数据源")
 	@Operation(summary = "修改数据源", description = "修改数据源")
-	@DistributedCache(name = NameConstants.SOURCES, key = "#cmd.co.id", operateType = OperateTypeEnum.DEL)
+	@DistributedCache(name = NameConstants.SOURCES, key = "#cmd.co.id", operateType = OperateType.DEL)
 	public void modifySource(@RequestBody SourceModifyCmd cmd) {
 		sourcesServiceI.modifySource(cmd);
 	}

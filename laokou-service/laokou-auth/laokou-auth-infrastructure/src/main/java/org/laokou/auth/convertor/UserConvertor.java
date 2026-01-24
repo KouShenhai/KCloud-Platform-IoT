@@ -51,7 +51,7 @@ public final class UserConvertor {
 	}
 
 	public static UserE toEntity(UserDO userDO) {
-		return DomainFactory.getUser()
+		return DomainFactory.createUser()
 			.toBuilder()
 			.id(userDO.getId())
 			.username(userDO.getUsername())

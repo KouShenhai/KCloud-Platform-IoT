@@ -27,14 +27,33 @@ import org.laokou.common.core.util.RandomStringUtils;
 class RandomStringUtilsTest {
 
 	@Test
-	void test_randomNumeric() {
-		Assertions.assertThat(RandomStringUtils.randomNumeric(6)).isNotBlank();
+	void test_randomNumeric_withDefaultLength_returns6CharString() {
 		Assertions.assertThat(RandomStringUtils.randomNumeric()).isNotBlank();
-		// 验证长度正确
 		Assertions.assertThat(RandomStringUtils.randomNumeric().length()).isEqualTo(6);
+	}
+
+	@Test
+	void test_randomNumeric_withCustomLength_returnsCorrectLength() {
 		Assertions.assertThat(RandomStringUtils.randomNumeric(7).length()).isEqualTo(7);
-		// 验证字符串仅包含数字
-		Assertions.assertThat(RandomStringUtils.randomNumeric().matches("\\d+")).isTrue();
+		Assertions.assertThat(RandomStringUtils.randomNumeric(10).length()).isEqualTo(10);
+	}
+
+	@Test
+	void test_randomNumeric_returnsOnlyDigits() {
+		String result = RandomStringUtils.randomNumeric();
+		Assertions.assertThat(result.matches("\\d+")).isTrue();
+	}
+
+	@Test
+	void test_randomNumeric_withZeroLength_throwsException() {
+		Assertions.assertThatThrownBy(() -> RandomStringUtils.randomNumeric(0))
+			.isInstanceOf(org.laokou.common.i18n.common.exception.SystemException.class);
+	}
+
+	@Test
+	void test_randomNumeric_withNegativeLength_throwsException() {
+		Assertions.assertThatThrownBy(() -> RandomStringUtils.randomNumeric(-1))
+			.isInstanceOf(org.laokou.common.i18n.common.exception.SystemException.class);
 	}
 
 }

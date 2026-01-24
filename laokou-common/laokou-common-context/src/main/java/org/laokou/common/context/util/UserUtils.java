@@ -17,10 +17,9 @@
 
 package org.laokou.common.context.util;
 
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-
-import java.util.Optional;
 
 /**
  * @author laokou
@@ -31,12 +30,12 @@ public final class UserUtils {
 	}
 
 	public static UserExtDetails userDetail() {
-		return Optional.ofNullable(getAuthentication()).map(authentication -> {
-			if (authentication.getPrincipal() instanceof UserExtDetails userExtDetails) {
-				return userExtDetails;
-			}
-			return DomainFactory.getUserDetails();
-		}).orElse(DomainFactory.getUserDetails());
+		Authentication authentication = getAuthentication();
+		if (ObjectUtils.isNotNull(authentication)
+				&& authentication.getPrincipal() instanceof UserExtDetails userExtDetails) {
+			return userExtDetails;
+		}
+		return DomainFactory.createUserDetails();
 	}
 
 	/**
@@ -79,6 +78,10 @@ public final class UserUtils {
 		return userDetail().getSuperAdmin();
 	}
 
+	/**
+	 * 认证上下文.
+	 * @return Authentication
+	 */
 	private static Authentication getAuthentication() {
 		return SecurityContextHolder.getContext().getAuthentication();
 	}

@@ -51,7 +51,7 @@ final class OAuth2UsernamePasswordAuthenticationProvider extends AbstractOAuth2A
 
 	@Override
 	Authentication getPrincipal(HttpServletRequest request) throws Exception {
-		return authentication(DomainFactory.getAuth().createUserVByUsernamePasswordAuth(), request);
+		return authentication(DomainFactory.createAuth().createUsernamePasswordAuth(), request);
 	}
 
 	@Override

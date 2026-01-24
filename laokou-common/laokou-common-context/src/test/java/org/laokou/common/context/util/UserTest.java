@@ -37,11 +37,9 @@ class UserTest {
 
 	private User user;
 
-	private Set<String> permissions;
-
 	@BeforeEach
 	void setUp() {
-		permissions = new HashSet<>();
+		Set<String> permissions = new HashSet<>();
 		permissions.add("sys:user:query");
 		permissions.add("sys:user:add");
 		permissions.add("sys:role:query");
@@ -62,8 +60,8 @@ class UserTest {
 	}
 
 	@Test
-	@DisplayName("Test User record basic properties")
-	void test_user_basic_properties() {
+	@DisplayName("Test builder creates User with all properties")
+	void test_builder_allProperties_createsUser() {
 		// Then
 		Assertions.assertThat(user.id()).isEqualTo(1L);
 		Assertions.assertThat(user.username()).isEqualTo("admin");
@@ -81,8 +79,8 @@ class UserTest {
 	}
 
 	@Test
-	@DisplayName("Test getName returns username")
-	void test_getName_returns_username() {
+	@DisplayName("Test getName with valid username returns username")
+	void test_getName_withValidUsername_returnsUsername() {
 		// When
 		String name = user.getName();
 
@@ -91,8 +89,8 @@ class UserTest {
 	}
 
 	@Test
-	@DisplayName("Test getAuthorities returns correct authorities from permissions")
-	void test_getAuthorities_returns_correct_authorities() {
+	@DisplayName("Test getAuthorities with valid permissions returns correct authorities")
+	void test_getAuthorities_withValidPermissions_returnsAuthorities() {
 		// When
 		Collection<GrantedAuthority> authorities = user.getAuthorities();
 
@@ -105,8 +103,8 @@ class UserTest {
 	}
 
 	@Test
-	@DisplayName("Test getCredentials returns username")
-	void test_getCredentials_returns_username() {
+	@DisplayName("Test getCredentials with valid user returns username")
+	void test_getCredentials_withValidUser_returnsUsername() {
 		// When
 		Object credentials = user.getCredentials();
 
@@ -115,8 +113,8 @@ class UserTest {
 	}
 
 	@Test
-	@DisplayName("Test getDetails returns username")
-	void test_getDetails_returns_username() {
+	@DisplayName("Test getDetails with valid user returns username")
+	void test_getDetails_withValidUser_returnsUsername() {
 		// When
 		Object details = user.getDetails();
 
@@ -125,8 +123,8 @@ class UserTest {
 	}
 
 	@Test
-	@DisplayName("Test getPrincipal returns username")
-	void test_getPrincipal_returns_username() {
+	@DisplayName("Test getPrincipal with valid user returns username")
+	void test_getPrincipal_withValidUser_returnsUsername() {
 		// When
 		Object principal = user.getPrincipal();
 
@@ -136,7 +134,7 @@ class UserTest {
 
 	@Test
 	@DisplayName("Test isAuthenticated always returns true")
-	void test_isAuthenticated_returns_true() {
+	void test_isAuthenticated_always_returnsTrue() {
 		// When
 		boolean authenticated = user.isAuthenticated();
 
@@ -145,8 +143,8 @@ class UserTest {
 	}
 
 	@Test
-	@DisplayName("Test setAuthenticated throws UnsupportedOperationException")
-	void test_setAuthenticated_throws_exception() {
+	@DisplayName("Test setAuthenticated always throws UnsupportedOperationException")
+	void test_setAuthenticated_always_throwsUnsupportedOperationException() {
 		// When & Then
 		Assertions.assertThatThrownBy(() -> user.setAuthenticated(false))
 			.isInstanceOf(UnsupportedOperationException.class)
@@ -154,8 +152,8 @@ class UserTest {
 	}
 
 	@Test
-	@DisplayName("Test User with null optional fields")
-	void test_user_with_null_optional_fields() {
+	@DisplayName("Test builder with null values creates User with nulls")
+	void test_builder_nullValues_createsUserWithNulls() {
 		// Given
 		User userWithNulls = User.builder()
 			.id(2L)
@@ -186,8 +184,8 @@ class UserTest {
 	}
 
 	@Test
-	@DisplayName("Test User with empty permissions")
-	void test_user_with_empty_permissions() {
+	@DisplayName("Test getAuthorities with empty permissions returns empty collection")
+	void test_getAuthorities_emptyPermissions_returnsEmptyCollection() {
 		// Given
 		User userWithEmptyPerms = User.builder().id(3L).username("user3").permissions(new HashSet<>()).build();
 
@@ -199,8 +197,8 @@ class UserTest {
 	}
 
 	@Test
-	@DisplayName("Test User implements Authentication interface")
-	void test_user_implements_authentication() {
+	@DisplayName("Test class type is Authentication implementation")
+	void test_classType_always_implementsAuthentication() {
 		// Then
 		Assertions.assertThat(user).isInstanceOf(org.springframework.security.core.Authentication.class);
 	}

@@ -63,8 +63,8 @@ class UserExtDetailsTest {
 	}
 
 	@Test
-	@DisplayName("Test UserExtDetails basic properties via getters")
-	void test_userExtDetails_basic_properties() {
+	@DisplayName("Test builder creates UserExtDetails with all properties")
+	void test_builder_allProperties_createsUserExtDetails() {
 		// Then
 		Assertions.assertThat(userExtDetails.getId()).isEqualTo(1L);
 		Assertions.assertThat(userExtDetails.getUsername()).isEqualTo("testuser");
@@ -82,8 +82,8 @@ class UserExtDetailsTest {
 	}
 
 	@Test
-	@DisplayName("Test getAuthorities returns correct authorities")
-	void test_getAuthorities_returns_correct_authorities() {
+	@DisplayName("Test getAuthorities with valid permissions returns correct authorities")
+	void test_getAuthorities_withValidPermissions_returnsAuthorities() {
 		// When
 		Collection<? extends GrantedAuthority> authorities = userExtDetails.getAuthorities();
 
@@ -96,8 +96,8 @@ class UserExtDetailsTest {
 	}
 
 	@Test
-	@DisplayName("Test getAttributes returns empty map")
-	void test_getAttributes_returns_empty_map() {
+	@DisplayName("Test getAttributes always returns empty map")
+	void test_getAttributes_always_returnsEmptyMap() {
 		// When
 		Map<String, Object> attributes = userExtDetails.getAttributes();
 
@@ -106,8 +106,8 @@ class UserExtDetailsTest {
 	}
 
 	@Test
-	@DisplayName("Test getName returns username")
-	void test_getName_returns_username() {
+	@DisplayName("Test getName with valid username returns username")
+	void test_getName_withValidUsername_returnsUsername() {
 		// When
 		String name = userExtDetails.getName();
 
@@ -116,8 +116,8 @@ class UserExtDetailsTest {
 	}
 
 	@Test
-	@DisplayName("Test toBuilder creates modifiable copy")
-	void test_toBuilder_creates_modifiable_copy() {
+	@DisplayName("Test toBuilder modifying properties creates new instance")
+	void test_toBuilder_modifyProperties_createsNewInstance() {
 		// When
 		UserExtDetails modified = userExtDetails.toBuilder().id(999L).username("newuser").build();
 
@@ -130,22 +130,22 @@ class UserExtDetailsTest {
 	}
 
 	@Test
-	@DisplayName("Test UserExtDetails implements UserDetails interface")
-	void test_userExtDetails_implements_userDetails() {
+	@DisplayName("Test class type is UserDetails implementation")
+	void test_classType_always_implementsUserDetails() {
 		// Then
 		Assertions.assertThat(userExtDetails).isInstanceOf(UserDetails.class);
 	}
 
 	@Test
-	@DisplayName("Test UserExtDetails implements OAuth2AuthenticatedPrincipal interface")
-	void test_userExtDetails_implements_oauth2AuthenticatedPrincipal() {
+	@DisplayName("Test class type is OAuth2AuthenticatedPrincipal implementation")
+	void test_classType_always_implementsOAuth2AuthenticatedPrincipal() {
 		// Then
 		Assertions.assertThat(userExtDetails).isInstanceOf(OAuth2AuthenticatedPrincipal.class);
 	}
 
 	@Test
-	@DisplayName("Test equals and hashCode based on id, username, tenantId, deptId")
-	void test_equals_and_hashCode() {
+	@DisplayName("Test equals with same key fields returns true")
+	void test_equals_sameKeyFields_returnsTrue() {
 		// Given
 		UserExtDetails sameUser = UserExtDetails.builder()
 			.id(1L)
@@ -175,8 +175,8 @@ class UserExtDetailsTest {
 	}
 
 	@Test
-	@DisplayName("Test UserExtDetails with null values")
-	void test_userExtDetails_with_null_values() {
+	@DisplayName("Test builder with null values creates UserExtDetails with nulls")
+	void test_builder_nullValues_createsUserExtDetailsWithNulls() {
 		// Given
 		UserExtDetails nullUser = UserExtDetails.builder()
 			.id(null)
@@ -207,8 +207,8 @@ class UserExtDetailsTest {
 	}
 
 	@Test
-	@DisplayName("Test decryptUsername with encrypted username")
-	void test_decryptUsername_with_encrypted_username() throws Exception {
+	@DisplayName("Test decryptUsername with encrypted username returns decrypted")
+	void test_decryptUsername_encryptedUsername_returnsDecrypted() throws Exception {
 		// Given
 		String originalUsername = "admin";
 		String encryptedUsername = AESUtils.encrypt(originalUsername);
@@ -223,8 +223,8 @@ class UserExtDetailsTest {
 	}
 
 	@Test
-	@DisplayName("Test decryptMail with encrypted mail")
-	void test_decryptMail_with_encrypted_mail() throws Exception {
+	@DisplayName("Test decryptMail with encrypted mail returns decrypted")
+	void test_decryptMail_encryptedMail_returnsDecrypted() throws Exception {
 		// Given
 		String originalMail = "test@example.com";
 		String encryptedMail = AESUtils.encrypt(originalMail);
@@ -239,8 +239,8 @@ class UserExtDetailsTest {
 	}
 
 	@Test
-	@DisplayName("Test decryptMobile with encrypted mobile")
-	void test_decryptMobile_with_encrypted_mobile() throws Exception {
+	@DisplayName("Test decryptMobile with encrypted mobile returns decrypted")
+	void test_decryptMobile_encryptedMobile_returnsDecrypted() throws Exception {
 		// Given
 		String originalMobile = "13800138000";
 		String encryptedMobile = AESUtils.encrypt(originalMobile);
@@ -255,8 +255,8 @@ class UserExtDetailsTest {
 	}
 
 	@Test
-	@DisplayName("Test decryptUsername with null username returns this")
-	void test_decryptUsername_with_null_username() {
+	@DisplayName("Test decryptUsername with null username returns same instance")
+	void test_decryptUsername_nullUsername_returnsSameInstance() {
 		// Given
 		UserExtDetails userWithNullUsername = UserExtDetails.builder().id(1L).username(null).build();
 
@@ -269,8 +269,8 @@ class UserExtDetailsTest {
 	}
 
 	@Test
-	@DisplayName("Test decryptUsername with empty username returns this")
-	void test_decryptUsername_with_empty_username() {
+	@DisplayName("Test decryptUsername with empty username returns same instance")
+	void test_decryptUsername_emptyUsername_returnsSameInstance() {
 		// Given
 		UserExtDetails userWithEmptyUsername = UserExtDetails.builder().id(1L).username("").build();
 
@@ -282,8 +282,8 @@ class UserExtDetailsTest {
 	}
 
 	@Test
-	@DisplayName("Test chained decrypt methods")
-	void test_chained_decrypt_methods() throws Exception {
+	@DisplayName("Test chained decrypt methods returns fully decrypted instance")
+	void test_decryptChain_allFieldsEncrypted_returnsFullyDecrypted() throws Exception {
 		// Given
 		String originalUsername = "admin";
 		String originalMail = "admin@example.com";

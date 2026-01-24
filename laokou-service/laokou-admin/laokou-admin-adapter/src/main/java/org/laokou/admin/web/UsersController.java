@@ -37,7 +37,7 @@ import org.laokou.admin.user.dto.clientobject.UserCO;
 import org.laokou.admin.user.dto.clientobject.UserProfileCO;
 import org.laokou.common.data.cache.annotation.DistributedCache;
 import org.laokou.common.data.cache.constant.NameConstants;
-import org.laokou.common.data.cache.model.OperateTypeEnum;
+import org.laokou.common.data.cache.model.OperateType;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
@@ -82,7 +82,7 @@ public class UsersController {
 	@PreAuthorize("hasAuthority('sys:user:modify')")
 	@OperateLog(module = "用户管理", operation = "修改用户")
 	@Operation(summary = "修改用户", description = "修改用户")
-	@DistributedCache(name = NameConstants.USERS, key = "#cmd.co.id", operateType = OperateTypeEnum.DEL)
+	@DistributedCache(name = NameConstants.USERS, key = "#cmd.co.id", operateType = OperateType.DEL)
 	public void modifyUser(@RequestBody UserModifyCmd cmd) throws Exception {
 		usersServiceI.modifyUser(cmd);
 	}
@@ -121,7 +121,7 @@ public class UsersController {
 
 	@PutMapping("/v1/users/authority")
 	@PreAuthorize("hasAuthority('sys:user:modify')")
-	@DistributedCache(name = NameConstants.USERS, key = "#cmd.co.id", operateType = OperateTypeEnum.DEL)
+	@DistributedCache(name = NameConstants.USERS, key = "#cmd.co.id", operateType = OperateType.DEL)
 	@OperateLog(module = "用户管理", operation = "修改用户权限")
 	@Operation(summary = "修改用户权限", description = "修改用户权限")
 	public void modifyUserAuthority(@RequestBody UserModifyAuthorityCmd cmd) throws Exception {

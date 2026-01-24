@@ -30,7 +30,7 @@ import java.io.IOException;
 class CmdUtilsTest {
 
 	@Test
-	void test() throws IOException, InterruptedException {
+	void test_execute_withValidCommand_returnsExpectedOutput() throws IOException, InterruptedException {
 		if (!SystemUtils.isWindows()) {
 			Assertions.assertThat(CmdUtils.execute("echo", "hello world!").getFirst()).isEqualTo("hello world!");
 			Assertions.assertThatNoException().isThrownBy(() -> CmdUtils.executeVoid("top"));

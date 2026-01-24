@@ -45,7 +45,7 @@ class UserConvertorTest {
 		UserExtDetails templateUserExtDetails = UserExtDetails.builder().build();
 
 		domainFactoryMockedStatic = Mockito.mockStatic(DomainFactory.class);
-		domainFactoryMockedStatic.when(DomainFactory::getUserDetails).thenReturn(templateUserExtDetails);
+		domainFactoryMockedStatic.when(DomainFactory::createUserDetails).thenReturn(templateUserExtDetails);
 	}
 
 	@AfterEach
@@ -188,7 +188,7 @@ class UserConvertorTest {
 		UserConvertor.toUserDetails(user);
 
 		// Then
-		domainFactoryMockedStatic.verify(DomainFactory::getUserDetails, Mockito.times(1));
+		domainFactoryMockedStatic.verify(DomainFactory::createUserDetails, Mockito.times(1));
 	}
 
 }

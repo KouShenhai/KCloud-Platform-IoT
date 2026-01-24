@@ -85,4 +85,9 @@ public final class Constants {
 	 */
 	public static final String DEFAULT_TENANT = "laokouyun";
 
+	/**
+	 * 认证类型.
+	 */
+	public static final String GRANT_TYPE = "grant_type";
+
 }

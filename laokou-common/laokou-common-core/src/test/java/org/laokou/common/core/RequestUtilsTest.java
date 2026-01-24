@@ -47,7 +47,7 @@ class RequestUtilsTest {
 	}
 
 	@Test
-	void test_request() throws Exception {
+	void test_getHttpServletRequest_withSpringContext_returnsValidRequest() throws Exception {
 		HttpServletRequest request = RequestUtils.getHttpServletRequest();
 		Assertions.assertThat(request).isNotNull();
 		Assertions.assertThat(handlerMapping).isNotNull();

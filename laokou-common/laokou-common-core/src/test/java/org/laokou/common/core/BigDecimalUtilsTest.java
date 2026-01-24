@@ -27,19 +27,73 @@ import org.laokou.common.core.util.BigDecimalUtils;
 class BigDecimalUtilsTest {
 
 	@Test
-	void test_BigDecimal() {
-		double a = 2.0;
-		double b = 1.0;
-		Assertions.assertThat(BigDecimalUtils.add(a, b)).isEqualTo(3.0);
-		Assertions.assertThat(BigDecimalUtils.subtract(a, b)).isEqualTo(1.0);
-		Assertions.assertThat(BigDecimalUtils.multiply(a, b)).isEqualTo(2.0);
-		Assertions.assertThat(BigDecimalUtils.divide(a, b)).isEqualTo(2.0);
-		Assertions.assertThat(BigDecimalUtils.divide(a, b, 0)).isEqualTo(2.0);
+	void test_add_withTwoDoubles_returnsSum() {
+		Assertions.assertThat(BigDecimalUtils.add(2.0, 1.0)).isEqualTo(3.0);
+		Assertions.assertThat(BigDecimalUtils.add(0.1, 0.2)).isEqualTo(0.3);
+		Assertions.assertThat(BigDecimalUtils.add(-1.0, 1.0)).isEqualTo(0.0);
+	}
+
+	@Test
+	void test_subtract_withTwoDoubles_returnsDifference() {
+		Assertions.assertThat(BigDecimalUtils.subtract(2.0, 1.0)).isEqualTo(1.0);
+		Assertions.assertThat(BigDecimalUtils.subtract(1.0, 2.0)).isEqualTo(-1.0);
+		Assertions.assertThat(BigDecimalUtils.subtract(1.0, 1.0)).isEqualTo(0.0);
+	}
+
+	@Test
+	void test_multiply_withTwoDoubles_returnsProduct() {
+		Assertions.assertThat(BigDecimalUtils.multiply(2.0, 3.0)).isEqualTo(6.0);
+		Assertions.assertThat(BigDecimalUtils.multiply(2.0, 0.0)).isEqualTo(0.0);
+		Assertions.assertThat(BigDecimalUtils.multiply(-2.0, 3.0)).isEqualTo(-6.0);
+	}
+
+	@Test
+	void test_divide_withTwoDoubles_returnsQuotient() {
+		Assertions.assertThat(BigDecimalUtils.divide(6.0, 2.0)).isEqualTo(3.0);
+		Assertions.assertThat(BigDecimalUtils.divide(6.0, 2.0, 0)).isEqualTo(3.0);
+		Assertions.assertThat(BigDecimalUtils.divide(10.0, 3.0, 2)).isEqualTo(3.33);
+	}
+
+	@Test
+	void test_divide_withNegativeScale_throwsException() {
+		Assertions.assertThatThrownBy(() -> BigDecimalUtils.divide(10.0, 3.0, -1))
+			.isInstanceOf(IllegalArgumentException.class)
+			.hasMessageContaining("scale");
+	}
+
+	@Test
+	void test_round_withValidScale_returnsRoundedValue() {
 		Assertions.assertThat(BigDecimalUtils.round(3.118, 2)).isEqualTo(3.12);
-		Assertions.assertThat(BigDecimalUtils.returnMax(a, b)).isEqualTo(a);
-		Assertions.assertThat(BigDecimalUtils.returnMin(a, b)).isEqualTo(b);
-		Assertions.assertThat(BigDecimalUtils.compareTo(a, b) > 0).isTrue();
-		Assertions.assertThat(BigDecimalUtils.compareTo(a, b) < 0).isFalse();
+		Assertions.assertThat(BigDecimalUtils.round(3.115, 2)).isEqualTo(3.12);
+		Assertions.assertThat(BigDecimalUtils.round(3.114, 2)).isEqualTo(3.11);
+	}
+
+	@Test
+	void test_round_withNegativeScale_throwsException() {
+		Assertions.assertThatThrownBy(() -> BigDecimalUtils.round(3.118, -1))
+			.isInstanceOf(IllegalArgumentException.class)
+			.hasMessageContaining("scale");
+	}
+
+	@Test
+	void test_returnMax_withTwoDoubles_returnsLargerValue() {
+		Assertions.assertThat(BigDecimalUtils.returnMax(2.0, 1.0)).isEqualTo(2.0);
+		Assertions.assertThat(BigDecimalUtils.returnMax(1.0, 2.0)).isEqualTo(2.0);
+		Assertions.assertThat(BigDecimalUtils.returnMax(-1.0, -2.0)).isEqualTo(-1.0);
+	}
+
+	@Test
+	void test_returnMin_withTwoDoubles_returnsSmallerValue() {
+		Assertions.assertThat(BigDecimalUtils.returnMin(2.0, 1.0)).isEqualTo(1.0);
+		Assertions.assertThat(BigDecimalUtils.returnMin(1.0, 2.0)).isEqualTo(1.0);
+		Assertions.assertThat(BigDecimalUtils.returnMin(-1.0, -2.0)).isEqualTo(-2.0);
+	}
+
+	@Test
+	void test_compareTo_withTwoDoubles_returnsComparisonResult() {
+		Assertions.assertThat(BigDecimalUtils.compareTo(2.0, 1.0)).isGreaterThan(0);
+		Assertions.assertThat(BigDecimalUtils.compareTo(1.0, 2.0)).isLessThan(0);
+		Assertions.assertThat(BigDecimalUtils.compareTo(1.0, 1.0)).isEqualTo(0);
 	}
 
 }
