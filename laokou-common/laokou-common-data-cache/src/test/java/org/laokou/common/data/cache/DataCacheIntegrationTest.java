@@ -78,7 +78,6 @@ class DataCacheIntegrationTest {
 
 		@Test
 		@DisplayName("Test getCache with existing cache returns cache")
-		@SuppressWarnings("unchecked")
 		void test_getCache_existingCache_returnsCache() throws Exception {
 			// Given
 			RedisUtils redisUtils = Mockito.mock(RedisUtils.class);
@@ -104,7 +103,6 @@ class DataCacheIntegrationTest {
 
 		@Test
 		@DisplayName("Test getCache with dynamic cache creates new cache")
-		@SuppressWarnings("unchecked")
 		void test_getCache_dynamicCache_createsNewCache() throws Exception {
 			// Given
 			RedisUtils redisUtils = Mockito.mock(RedisUtils.class);
@@ -159,7 +157,6 @@ class DataCacheIntegrationTest {
 
 		@Test
 		@DisplayName("Test getCache returns cache instance")
-		@SuppressWarnings("unchecked")
 		void test_getCache_validName_returnsCache() throws Exception {
 			// Given
 			RedisUtils redisUtils = Mockito.mock(RedisUtils.class);
@@ -186,7 +183,6 @@ class DataCacheIntegrationTest {
 
 		@Test
 		@DisplayName("Test getCache with non-configured name creates cache with defaults")
-		@SuppressWarnings("unchecked")
 		void test_getCache_nonConfiguredName_createsCacheWithDefaults() throws Exception {
 			// Given
 			RedisUtils redisUtils = Mockito.mock(RedisUtils.class);

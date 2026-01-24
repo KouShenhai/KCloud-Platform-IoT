@@ -124,7 +124,6 @@ class DistributedCacheAspectjTest {
 		// Given
 		String cacheName = "userCache";
 		String userId = "123";
-		String expectedKey = userId;
 		Object expectedResult = "user";
 
 		Mockito.when(distributedCache.name()).thenReturn(cacheName);
@@ -134,16 +133,16 @@ class DistributedCacheAspectjTest {
 		Mockito.when(methodSignature.getParameterNames()).thenReturn(new String[] { "userId" });
 		Mockito.when(point.getArgs()).thenReturn(new Object[] { userId });
 		Mockito.when(distributedCacheManager.getCache(cacheName)).thenReturn(cache);
-		Mockito.when(cache.get(expectedKey)).thenReturn(null);
+		Mockito.when(cache.get(userId)).thenReturn(null);
 		Mockito.when(point.proceed()).thenReturn(expectedResult);
-		Mockito.when(cache.putIfAbsent(expectedKey, expectedResult)).thenReturn(null);
+		Mockito.when(cache.putIfAbsent(userId, expectedResult)).thenReturn(null);
 
 		// When
 		Object result = aspectj.doAround(point, distributedCache);
 
 		// Then
 		Assertions.assertThat(result).isEqualTo(expectedResult);
-		Mockito.verify(cache).get(expectedKey);
+		Mockito.verify(cache).get(userId);
 	}
 
 }
