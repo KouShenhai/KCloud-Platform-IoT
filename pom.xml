@@ -219,7 +219,7 @@
     <!--caffeine版本-->
     <caffeine.version>3.2.3</caffeine.version>
     <!--objenesis版本-->
-    <objenesis.version>3.4</objenesis.version>
+    <objenesis.version>3.5</objenesis.version>
     <!--influxdb-client-java版本-->
     <influxdb-client-java.version>7.5.0</influxdb-client-java.version>
     <!--reactor-core版本-->
