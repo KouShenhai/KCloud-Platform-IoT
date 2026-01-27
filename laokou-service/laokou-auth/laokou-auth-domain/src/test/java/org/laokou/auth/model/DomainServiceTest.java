@@ -24,8 +24,10 @@ import org.junit.jupiter.api.Test;
 import org.laokou.auth.ability.DomainService;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.gateway.CaptchaGateway;
+import org.laokou.auth.gateway.DeptGateway;
 import org.laokou.auth.gateway.MenuGateway;
 import org.laokou.auth.gateway.OssLogGateway;
+import org.laokou.auth.gateway.RoleGateway;
 import org.laokou.auth.gateway.TenantGateway;
 import org.laokou.auth.gateway.UserGateway;
 import org.laokou.auth.model.constant.Constants;
@@ -99,6 +101,12 @@ class DomainServiceTest {
 
 	@MockitoBean
 	private OssLogGateway ossLogGateway;
+
+	@MockitoBean
+	private RoleGateway roleGateway;
+
+	@MockitoBean
+	private DeptGateway deptGateway;
 
 	@MockitoBean("authorizationCodeAuthParamValidator")
 	private AuthParamValidator authorizationCodeAuthParamValidator;
@@ -522,32 +530,32 @@ class DomainServiceTest {
 
 	private UserV createUserVByUsernamePassword() throws Exception {
 		return new UserV(AESUtils.encrypt(this.username), this.password, null, StringConstants.EMPTY,
-				StringConstants.EMPTY, this.tenantCode, tenantId, null);
+				StringConstants.EMPTY, this.tenantCode, tenantId, null, null);
 	}
 
 	private UserV createUserVByUsernamePasswordWithUsernameNotFound() throws Exception {
 		return new UserV(AESUtils.encrypt("test"), this.password, null, StringConstants.EMPTY, StringConstants.EMPTY,
-				this.tenantCode, tenantId, null);
+				this.tenantCode, tenantId, null, null);
 	}
 
 	private UserV createUserVByMail() throws Exception {
 		return new UserV(StringConstants.EMPTY, null, null, AESUtils.encrypt(this.mail), StringConstants.EMPTY,
-				this.tenantCode, tenantId, null);
+				this.tenantCode, tenantId, null, null);
 	}
 
 	private UserV createUserVByMobile() throws Exception {
 		return new UserV(StringConstants.EMPTY, null, null, StringConstants.EMPTY, AESUtils.encrypt(this.mobile),
-				this.tenantCode, tenantId, null);
+				this.tenantCode, tenantId, null, null);
 	}
 
 	private UserV createUserVByTest() throws Exception {
 		return new UserV(AESUtils.encrypt(this.username), this.password, null, StringConstants.EMPTY,
-				StringConstants.EMPTY, this.tenantCode, tenantId, null);
+				StringConstants.EMPTY, this.tenantCode, tenantId, null, null);
 	}
 
 	private UserV createUserVByAuthorizationCode() throws Exception {
 		return new UserV(AESUtils.encrypt(this.username), this.password, null, StringConstants.EMPTY,
-				StringConstants.EMPTY, this.tenantCode, tenantId, null);
+				StringConstants.EMPTY, this.tenantCode, tenantId, null, null);
 	}
 
 	private UserE createUserE() {

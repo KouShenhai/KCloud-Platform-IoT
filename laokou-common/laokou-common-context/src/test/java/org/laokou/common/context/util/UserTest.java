@@ -23,9 +23,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.core.GrantedAuthority;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 /**
  * User record test class.
@@ -39,7 +39,7 @@ class UserTest {
 
 	@BeforeEach
 	void setUp() {
-		Set<String> permissions = new HashSet<>();
+		List<String> permissions = new ArrayList<>();
 		permissions.add("sys:user:query");
 		permissions.add("sys:user:add");
 		permissions.add("sys:role:query");
@@ -187,7 +187,7 @@ class UserTest {
 	@DisplayName("Test getAuthorities with empty permissions returns empty collection")
 	void test_getAuthorities_emptyPermissions_returnsEmptyCollection() {
 		// Given
-		User userWithEmptyPerms = User.builder().id(3L).username("user3").permissions(new HashSet<>()).build();
+		User userWithEmptyPerms = User.builder().id(3L).username("user3").permissions(new ArrayList<>()).build();
 
 		// When
 		Collection<GrantedAuthority> authorities = userWithEmptyPerms.getAuthorities();
