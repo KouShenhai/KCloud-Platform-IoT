@@ -15,30 +15,29 @@
  *
  */
 
-package org.laokou.common.rpc;
+package org.laokou.auth.gatewayimpl;
 
-import org.laokou.common.i18n.dto.IdGenerator;
+import lombok.RequiredArgsConstructor;
+import org.laokou.auth.convertor.UserConvertor;
+import org.laokou.auth.gateway.RoleGateway;
+import org.laokou.auth.gatewayimpl.database.RoleMapper;
+import org.laokou.auth.model.entity.UserE;
+import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author laokou
  */
-public class DefaultIdGenerator implements IdGenerator {
+@Component
+@RequiredArgsConstructor
+public class RoleGatewayImpl implements RoleGateway {
+
+	private final RoleMapper roleMapper;
 
 	@Override
-	public Long getId() {
-		return System.currentTimeMillis();
-	}
-
-	@Override
-	public List<Long> getIds(int num) {
-		List<Long> ids = new ArrayList<>(num);
-		for (int i = 0; i < num; i++) {
-			ids.add(System.currentTimeMillis());
-		}
-		return ids;
+	public List<String> getDataScopes(UserE userE) {
+		return roleMapper.selectDataScopes(UserConvertor.toDataObject(userE));
 	}
 
 }

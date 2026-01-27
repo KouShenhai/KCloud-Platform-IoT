@@ -15,27 +15,17 @@
  *
  */
 
-package org.laokou.common.mybatisplus.context;
+package org.laokou.auth.gateway;
 
-import com.alibaba.ttl.TransmittableThreadLocal;
+import org.laokou.auth.model.entity.UserE;
+
+import java.util.List;
 
 /**
  * @author laokou
  */
-public class DynamicTableSuffixContextHolder {
+public interface RoleGateway {
 
-	private static final ThreadLocal<String> LOCAL = new TransmittableThreadLocal<>();
-
-	public static void set(String suffix) {
-		LOCAL.set(suffix);
-	}
-
-	public static void clear() {
-		LOCAL.remove();
-	}
-
-	public static String get() {
-		return LOCAL.get();
-	}
+	List<String> getDataScopes(UserE userE);
 
 }

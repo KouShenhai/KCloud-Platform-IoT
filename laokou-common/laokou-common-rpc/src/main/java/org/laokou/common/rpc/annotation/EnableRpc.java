@@ -15,13 +15,25 @@
  *
  */
 
-package org.laokou.common.mybatisplus.support;
+package org.laokou.common.rpc.annotation;
 
-public class Self implements DataScope {
+import org.laokou.common.rpc.IdGeneratorRpc;
+import org.laokou.common.rpc.OssStorageRpc;
+import org.springframework.context.annotation.Import;
 
-	@Override
-	public String getName() {
-		return DataScopeEnum.SELF.getCode();
-	}
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+/**
+ * @author laokou
+ */
+@Documented
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Import({ IdGeneratorRpc.class, OssStorageRpc.class })
+public @interface EnableRpc {
 
 }

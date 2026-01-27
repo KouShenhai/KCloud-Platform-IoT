@@ -75,4 +75,19 @@ public final class UserConvertor {
 		return userDO;
 	}
 
+	public static UserDO toDataObject(UserE userE) {
+		UserDO userDO = new UserDO();
+		userDO.setId(userE.getId());
+		userDO.setUsername(userE.getUsername());
+		userDO.setPassword(userE.getPassword());
+		userDO.setSuperAdmin(userE.getSuperAdmin());
+		userDO.setAvatar(userE.getAvatar());
+		userDO.setMail(userE.getMail());
+		userDO.setStatus(userE.getStatus());
+		userDO.setMobile(userE.getMobile());
+		userDO.setDeptId(userE.getDeptId());
+		userDO.setTenantId(userE.getTenantId());
+		return userDO;
+	}
+
 }

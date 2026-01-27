@@ -60,7 +60,6 @@ import java.io.Serial;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.Supplier;
 
 /**
@@ -256,26 +255,32 @@ public class AuthA extends AggregateRoot implements ValidateName {
 		this.userE = userE;
 	}
 
-	public void getMenuPermissions(Set<String> permissions) {
+	public void getMenuPermissions(List<String> permissions) {
 		this.userV = this.userV.toBuilder().permissions(permissions).build();
 	}
 
-	public void getDataFilter(Set<String> dataScopes, Supplier<Set<Long>> deptIdsSupplier) {
-		if (CollectionUtils.isEmpty(dataScopes)) {
+	public void getDataFilter(Supplier<List<String>> dataScopesSupper, Supplier<List<Long>> deptIdsSupplier) {
+		if (userE.isSuperAdministrator()) {
+			this.dataFilterV = DataFilterV.builder().deptIds(Collections.emptyList()).creator(null).build();
+			return;
+		}
+		this.userV = this.userV.toBuilder().dataScopes(dataScopesSupper.get()).build();
+		if (CollectionUtils.isEmpty(this.userV.dataScopes())) {
 			this.dataFilterV = null;
 			return;
 		}
-		if (dataScopes.contains(DataScope.ALL.getCode()) || userE.isSuperAdministrator()) {
-			this.dataFilterV = DataFilterV.builder().deptIds(Collections.emptySet()).creator(null).build();
+		if (this.userV.dataScopes().contains(DataScope.ALL.getCode())) {
+			this.dataFilterV = DataFilterV.builder().deptIds(Collections.emptyList()).creator(null).build();
 			return;
 		}
-		Set<Long> deptIds = Collections.emptySet();
+		List<Long> deptIds = Collections.emptyList();
 		Long creator = null;
-		if (dataScopes.contains(DataScope.BELOW_DEPT.getCode()) || dataScopes.contains(DataScope.SELF_DEPT.getCode())
-				|| dataScopes.contains(DataScope.CUSTOM.getCode())) {
+		if (this.userV.dataScopes().contains(DataScope.BELOW_DEPT.getCode())
+				|| this.userV.dataScopes().contains(DataScope.SELF_DEPT.getCode())
+				|| this.userV.dataScopes().contains(DataScope.CUSTOM.getCode())) {
 			deptIds = deptIdsSupplier.get();
 		}
-		if (dataScopes.contains(DataScope.SELF.getCode())) {
+		if (this.userV.dataScopes().contains(DataScope.SELF.getCode())) {
 			creator = this.userE.getId();
 		}
 		this.dataFilterV = DataFilterV.builder().deptIds(deptIds).creator(creator).build();

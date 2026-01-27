@@ -15,25 +15,38 @@
  *
  */
 
-package org.laokou.common.rpc.annotation;
+package org.laokou.auth.gatewayimpl.database.dataobject;
 
-import org.laokou.common.rpc.IdGeneratorRpc;
-import org.laokou.common.rpc.OssStorageRpc;
-import org.springframework.context.annotation.Import;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+import org.laokou.common.mybatisplus.mapper.BaseDO;
+import org.laokou.common.tenant.constant.DSConstants;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.io.Serial;
 
 /**
  * @author laokou
  */
-@Documented
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Import({ IdGeneratorRpc.class, OssStorageRpc.class })
-public @interface MicroService {
+@Data
+@TableName(DSConstants.Master.ROLE_TABLE)
+public class RoleDO extends BaseDO {
+
+	@Serial
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * 角色名称.
+	 */
+	private String name;
+
+	/**
+	 * 角色排序.
+	 */
+	private Integer sort;
+
+	/**
+	 * 数据范围 all全部 custom自定义 self_dept仅本部门 below_dept部门及以下 self仅本人.
+	 */
+	private String dataScope;
 
 }

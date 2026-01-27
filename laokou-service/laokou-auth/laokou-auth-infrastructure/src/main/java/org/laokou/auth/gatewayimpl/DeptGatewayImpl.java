@@ -19,9 +19,13 @@ package org.laokou.auth.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.auth.convertor.UserConvertor;
 import org.laokou.auth.gateway.DeptGateway;
 import org.laokou.auth.gatewayimpl.database.DeptMapper;
+import org.laokou.auth.model.entity.UserE;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * 部门.
@@ -34,5 +38,10 @@ import org.springframework.stereotype.Component;
 public class DeptGatewayImpl implements DeptGateway {
 
 	private final DeptMapper deptMapper;
+
+	@Override
+	public List<Long> getDeptIds(UserE userE, List<String> dataScopes) {
+		return deptMapper.selectDeptIds(UserConvertor.toDataObject(userE), dataScopes);
+	}
 
 }

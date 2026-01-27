@@ -23,6 +23,4 @@ select distinct id from (
 
 );
 
-select distinct data_scope from sys_role r
-join sys_user_role ur on ur.role_id = r.id
-where ur.user_id = 1
+

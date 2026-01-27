@@ -30,7 +30,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Set;
+import java.util.List;
 
 /**
  * @param id 用户ID.
@@ -54,7 +54,7 @@ import java.util.Set;
 		isGetterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
 public record User(Long id, String username, String password, String avatar, Boolean superAdmin, Integer status,
 		String mail, String mobile, Long tenantId, Long deptId,
-		Set<String> permissions) implements Authentication, Serializable {
+		List<String> permissions) implements Authentication, Serializable {
 
 	@Override
 	@NullMarked

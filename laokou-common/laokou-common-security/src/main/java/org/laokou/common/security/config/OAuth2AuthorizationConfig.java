@@ -22,7 +22,6 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import org.laokou.common.crypto.util.RSAUtils;
-import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.security.config.convertor.BytesToClaimsHolderConverter;
 import org.laokou.common.security.config.convertor.BytesToOAuth2AuthorizationRequestConverter;
 import org.laokou.common.security.config.convertor.BytesToUsernamePasswordAuthenticationTokenConverter;
@@ -61,10 +60,6 @@ import java.util.Arrays;
 @Configuration(proxyBeanMethods = false)
 @EnableRedisRepositories(basePackages = { "org.laokou.common.security.config.repository" })
 public class OAuth2AuthorizationConfig {
-
-	static {
-		ForyFactory.INSTANCE.register(org.laokou.common.context.util.User.class);
-	}
 
 	/**
 	 * 认证配置.

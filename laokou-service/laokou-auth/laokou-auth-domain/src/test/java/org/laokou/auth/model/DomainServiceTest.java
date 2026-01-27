@@ -57,8 +57,8 @@ import org.springframework.test.context.TestConstructor;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * 领域服务测试.
@@ -324,7 +324,7 @@ class DomainServiceTest {
 		Mockito.when(captchaValidator.validateCaptcha(Mockito.anyString(), Mockito.anyString())).thenReturn(true);
 		Mockito.when(tenantGateway.getTenantId(Mockito.anyString())).thenReturn(1L);
 		Mockito.when(userGateway.getUserProfile(Mockito.any())).thenReturn(createUserE());
-		Mockito.when(menuGateway.getMenuPermissions(Mockito.any())).thenReturn(Set.of("sys:user:save"));
+		Mockito.when(menuGateway.getMenuPermissions(Mockito.any())).thenReturn(List.of("sys:user:save"));
 		Mockito.when(ossLogGateway.getOssUrl(Mockito.anyLong())).thenReturn("https://1.png");
 		Map<String, String[]> params = new HashMap<>(4);
 		params.put(Constants.MAIL, new String[] { mailAuthParam.mail() });
@@ -357,7 +357,7 @@ class DomainServiceTest {
 		Mockito.when(captchaValidator.validateCaptcha(Mockito.anyString(), Mockito.anyString())).thenReturn(true);
 		Mockito.when(tenantGateway.getTenantId(Mockito.anyString())).thenReturn(1L);
 		Mockito.when(userGateway.getUserProfile(Mockito.any())).thenReturn(createUserE());
-		Mockito.when(menuGateway.getMenuPermissions(Mockito.any())).thenReturn(Set.of("sys:user:save"));
+		Mockito.when(menuGateway.getMenuPermissions(Mockito.any())).thenReturn(List.of("sys:user:save"));
 		Mockito.when(ossLogGateway.getOssUrl(Mockito.anyLong())).thenReturn("https://1.png");
 		Map<String, String[]> params = new HashMap<>(4);
 		params.put(Constants.MOBILE, new String[] { mobileAuthParam.mobile() });
@@ -386,7 +386,7 @@ class DomainServiceTest {
 		Mockito.when(passwordValidator.validatePassword(Mockito.anyString(), Mockito.anyString())).thenReturn(true);
 		Mockito.when(tenantGateway.getTenantId(Mockito.anyString())).thenReturn(1L);
 		Mockito.when(userGateway.getUserProfile(Mockito.any())).thenReturn(createUserE());
-		Mockito.when(menuGateway.getMenuPermissions(Mockito.any())).thenReturn(Set.of("sys:user:save"));
+		Mockito.when(menuGateway.getMenuPermissions(Mockito.any())).thenReturn(List.of("sys:user:save"));
 		Mockito.when(ossLogGateway.getOssUrl(Mockito.anyLong())).thenReturn("https://1.png");
 		Map<String, String[]> params = new HashMap<>(4);
 		params.put(Constants.USERNAME, new String[] { testAuthParam.username() });
@@ -415,7 +415,7 @@ class DomainServiceTest {
 		Mockito.when(passwordValidator.validatePassword(Mockito.anyString(), Mockito.anyString())).thenReturn(true);
 		Mockito.when(tenantGateway.getTenantId(Mockito.anyString())).thenReturn(1L);
 		Mockito.when(userGateway.getUserProfile(Mockito.any())).thenReturn(createUserE());
-		Mockito.when(menuGateway.getMenuPermissions(Mockito.any())).thenReturn(Set.of("sys:user:save"));
+		Mockito.when(menuGateway.getMenuPermissions(Mockito.any())).thenReturn(List.of("sys:user:save"));
 		Mockito.when(ossLogGateway.getOssUrl(Mockito.anyLong())).thenReturn("https://1.png");
 		Map<String, String[]> params = new HashMap<>(4);
 		params.put(Constants.USERNAME, new String[] { authorizationCodeAuthParam.username() });
@@ -457,7 +457,7 @@ class DomainServiceTest {
 		else {
 			Mockito.when(userGateway.getUserProfile(Mockito.any())).thenReturn(null);
 		}
-		Mockito.when(menuGateway.getMenuPermissions(Mockito.any())).thenReturn(Set.of("sys:user:save"));
+		Mockito.when(menuGateway.getMenuPermissions(Mockito.any())).thenReturn(List.of("sys:user:save"));
 		Mockito.when(ossLogGateway.getOssUrl(Mockito.anyLong())).thenReturn("https://1.png");
 		Map<String, String[]> params = new HashMap<>(6);
 		params.put(Constants.USERNAME, new String[] { usernamePasswordAuthParam.username() });
