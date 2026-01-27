@@ -227,7 +227,7 @@
     <!--opencsv版本-->
     <opencsv.version>5.12.0</opencsv.version>
     <!--wiremock版本-->
-    <wiremock.version>4.0.0-beta.25</wiremock.version>
+    <wiremock.version>4.0.0-beta.26</wiremock.version>
     <!--jsch版本-->
     <jsch.version>2.27.7</jsch.version>
     <!--jSerialComm版本-->
