@@ -95,9 +95,9 @@ systemctl restart NetworkManager
 local ssid=$2
 local pwd=$3
 sudo nmcli con add type wifi con-name "default-wlan0" ssid "$ssid" wifi-sec.key-mgmt wpa-psk wifi-sec.psk "$pwd"
-# nmcli con mod "default-wlan0" ipv4.route-metric 80
-# nmcli connection up "default-wlan0"
-# nmcli connection reload
+# sudo nmcli con mod "default-wlan0" ipv4.route-metric 80
+# sudo nmcli connection up "default-wlan0"
+# sudo nmcli connection reload
 }
 
 # 连接WIFI
@@ -182,6 +182,36 @@ if pgrep -a dhclient | grep -q "$ETH0"; then
 else
   echo "static"
 fi
+}
+
+# 使用路由【以太网】
+use_route_eth0() {
+sudo nmcli con mod "default-wlan0" ipv4.route-metric 110
+sudo nmcli connection up "default-wlan0"
+sudo nmcli connection modify "Wired connection 2" ipv4.route-metric 120
+sudo nmcli connection up "Wired connection 2"
+sudo nmcli connection reload
+systemctl restart NetworkManager
+}
+
+# 使用路由【WIFI】
+use_route_wlan0() {
+sudo nmcli con mod "default-wlan0" ipv4.route-metric 50
+sudo nmcli connection up "default-wlan0"
+sudo nmcli connection modify "Wired connection 2" ipv4.route-metric 120
+sudo nmcli connection up "Wired connection 2"
+sudo nmcli connection reload
+systemctl restart NetworkManager
+}
+
+# 使用路由【4G】
+use_route_usb0() {
+sudo nmcli con mod "default-wlan0" ipv4.route-metric 110
+sudo nmcli connection up "default-wlan0"
+sudo nmcli connection modify "Wired connection 2" ipv4.route-metric 50
+sudo nmcli connection up "Wired connection 2"
+sudo nmcli connection reload
+systemctl restart NetworkManager
 }
 
 case "$1" in
@@ -272,6 +302,15 @@ case "$1" in
   show_eth0_type)
     show_eth0_type
     ;;
+  use_route_eth0)
+  	use_route_eth0
+  	;;
+  use_route_usb0)
+  	use_route_usb0
+  	;;
+  use_route_wlan0)
+  	use_route_wlan0
+  	;;
   *)
     exit 1
     ;;
