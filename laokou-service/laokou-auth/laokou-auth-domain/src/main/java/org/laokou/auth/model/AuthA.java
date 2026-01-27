@@ -265,22 +265,20 @@ public class AuthA extends AggregateRoot implements ValidateName {
 			this.dataFilterV = null;
 			return;
 		}
-		if (dataScopes.contains(DataScope.ALL.getCode())) {
+		if (dataScopes.contains(DataScope.ALL.getCode()) || userE.isSuperAdministrator()) {
 			this.dataFilterV = DataFilterV.builder().deptIds(Collections.emptySet()).creator(null).build();
+			return;
 		}
-		else {
-			Set<Long> deptIds = Collections.emptySet();
-			Long creator = null;
-			if (dataScopes.contains(DataScope.BELOW_DEPT.getCode())
-					|| dataScopes.contains(DataScope.SELF_DEPT.getCode())
-					|| dataScopes.contains(DataScope.CUSTOM.getCode())) {
-				deptIds = deptIdsSupplier.get();
-			}
-			if (dataScopes.contains(DataScope.SELF.getCode())) {
-				creator = this.userE.getId();
-			}
-			this.dataFilterV = DataFilterV.builder().deptIds(deptIds).creator(creator).build();
+		Set<Long> deptIds = Collections.emptySet();
+		Long creator = null;
+		if (dataScopes.contains(DataScope.BELOW_DEPT.getCode()) || dataScopes.contains(DataScope.SELF_DEPT.getCode())
+				|| dataScopes.contains(DataScope.CUSTOM.getCode())) {
+			deptIds = deptIdsSupplier.get();
 		}
+		if (dataScopes.contains(DataScope.SELF.getCode())) {
+			creator = this.userE.getId();
+		}
+		this.dataFilterV = DataFilterV.builder().deptIds(deptIds).creator(creator).build();
 	}
 
 	public void checkCaptchaParam() {
