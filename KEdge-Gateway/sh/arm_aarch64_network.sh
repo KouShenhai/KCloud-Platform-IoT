@@ -91,7 +91,6 @@ connect_wlan0_to_save() {
 # /etc/NetworkManager/system-connections/default-wlan0.nmconnection
 # 删除配置文件
 sudo rm -f /etc/NetworkManager/system-connections/*wlan*
-systemctl restart NetworkManager
 local ssid=$2
 local pwd=$3
 sudo nmcli con add type wifi con-name "default-wlan0" ssid "$ssid" wifi-sec.key-mgmt wpa-psk wifi-sec.psk "$pwd"
@@ -191,7 +190,6 @@ sudo nmcli connection up "default-wlan0"
 sudo nmcli connection modify "Wired connection 2" ipv4.route-metric 120
 sudo nmcli connection up "Wired connection 2"
 sudo nmcli connection reload
-systemctl restart NetworkManager
 }
 
 # 使用路由【WIFI】
@@ -201,7 +199,6 @@ sudo nmcli connection up "default-wlan0"
 sudo nmcli connection modify "Wired connection 2" ipv4.route-metric 120
 sudo nmcli connection up "Wired connection 2"
 sudo nmcli connection reload
-systemctl restart NetworkManager
 }
 
 # 使用路由【4G】
@@ -211,7 +208,6 @@ sudo nmcli connection up "default-wlan0"
 sudo nmcli connection modify "Wired connection 2" ipv4.route-metric 50
 sudo nmcli connection up "Wired connection 2"
 sudo nmcli connection reload
-systemctl restart NetworkManager
 }
 
 case "$1" in
