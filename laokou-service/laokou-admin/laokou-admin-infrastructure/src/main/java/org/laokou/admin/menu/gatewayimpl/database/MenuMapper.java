@@ -18,9 +18,12 @@
 package org.laokou.admin.menu.gatewayimpl.database;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * 菜单数据库映射.
@@ -30,5 +33,9 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface MenuMapper extends CrudMapper<Long, Integer, MenuDO> {
+
+	List<MenuDO> selectAllMenuList();
+
+	List<MenuDO> selectMenuListByUserId(@Param("userId") Long userId);
 
 }

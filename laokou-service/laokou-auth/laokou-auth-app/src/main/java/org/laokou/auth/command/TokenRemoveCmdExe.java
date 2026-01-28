@@ -20,7 +20,7 @@ package org.laokou.auth.command;
 import org.laokou.auth.dto.TokenRemoveCmd;
 import org.laokou.common.context.util.User;
 import org.laokou.common.data.cache.constant.NameConstants;
-import org.laokou.common.data.cache.model.OperateType;
+import org.laokou.common.data.cache.aspectj.OperateType;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
@@ -74,7 +74,7 @@ public class TokenRemoveCmdExe {
 
 	private void evictCache(OAuth2Authorization authorization) {
 		if (authorization.getAttribute(Principal.class.getName()) instanceof User user) {
-			OperateType.getCache(distributedCacheManager, NameConstants.USER_MENU).evict(user.id());
+			OperateType.getCache(distributedCacheManager, NameConstants.USER_MENU).evictIfPresent(user.id());
 		}
 	}
 

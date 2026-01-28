@@ -22,14 +22,14 @@
   <select id="selectAllPermissions" resultType="string">
     SELECT distinct permission
     FROM sys_menu
-    WHERE "type" = 1 AND del_flag = 0 and tenant_id = #{user.tenantId}
+    WHERE "type" = 1 and status = 0 AND del_flag = 0 and tenant_id = 0
   </select>
 
   <select id="selectPermissions" resultType="string">
     select distinct me.permission from sys_menu me
     join sys_role_menu rm on rm.menu_id = me."id"
     join sys_user_role ur on ur.role_id = rm.role_id
-    where ur.user_id = #{user.id} and me."type" = 1 and me.del_flag = 0 and me.tenant_id = #{user.tenantId}
+    where ur.user_id = #{user.id} and me."type" = 1 and me.status = 0 and me.del_flag = 0 and me.tenant_id = 0
   </select>
 
 </mapper>

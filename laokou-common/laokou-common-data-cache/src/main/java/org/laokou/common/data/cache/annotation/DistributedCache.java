@@ -17,7 +17,7 @@
 
 package org.laokou.common.data.cache.annotation;
 
-import org.laokou.common.data.cache.model.OperateType;
+import org.laokou.common.data.cache.aspectj.OperateType;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -30,9 +30,9 @@ import java.lang.annotation.Target;
  *
  * @author laokou
  */
+@Documented
 @Target({ ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
-@Documented
 public @interface DistributedCache {
 
 	/**

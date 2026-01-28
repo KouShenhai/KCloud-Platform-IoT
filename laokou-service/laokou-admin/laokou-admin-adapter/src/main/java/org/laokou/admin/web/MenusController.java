@@ -33,7 +33,7 @@ import org.laokou.admin.menu.dto.clientobject.MenuCO;
 import org.laokou.admin.menu.dto.clientobject.MenuTreeCO;
 import org.laokou.common.data.cache.annotation.DistributedCache;
 import org.laokou.common.data.cache.constant.NameConstants;
-import org.laokou.common.data.cache.model.OperateType;
+import org.laokou.common.data.cache.aspectj.OperateType;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;

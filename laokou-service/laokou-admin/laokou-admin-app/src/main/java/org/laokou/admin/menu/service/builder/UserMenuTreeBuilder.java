@@ -23,12 +23,11 @@ import org.laokou.admin.menu.dto.MenuTreeListQry;
 import org.laokou.admin.menu.dto.clientobject.MenuTreeCO;
 import org.laokou.admin.menu.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO;
-import org.laokou.admin.menu.model.enums.MenuStatus;
-import org.laokou.admin.menu.model.enums.MenuType;
+import org.laokou.common.context.util.UserUtils;
 import org.laokou.common.core.util.TreeUtils;
 import org.laokou.common.data.cache.annotation.DistributedCache;
 import org.laokou.common.data.cache.constant.NameConstants;
-import org.laokou.common.data.cache.model.OperateType;
+import org.laokou.common.data.cache.aspectj.OperateType;
 import org.laokou.common.fory.config.ForyFactory;
 import org.springframework.stereotype.Component;
 
@@ -50,9 +49,13 @@ public class UserMenuTreeBuilder implements MenuTreeBuilder {
 	@Override
 	@DistributedCache(name = NameConstants.USER_MENU, key = "#userId", operateType = OperateType.GET)
 	public MenuTreeCO buildMenuTree(MenuTreeListQry qry, Long userId) {
-		qry.setStatus(MenuStatus.ENABLE.getCode());
-		qry.setType(MenuType.MENU.getCode());
-		List<MenuDO> list = menuMapper.selectObjectList(qry);
+		List<MenuDO> list;
+		if (UserUtils.isSuperAdmin()) {
+			list = menuMapper.selectAllMenuList();
+		}
+		else {
+			list = menuMapper.selectMenuListByUserId(userId);
+		}
 		return TreeUtils.buildTreeNode(MenuConvertor.toClientObjs(list), MenuTreeCO.class);
 	}
 
