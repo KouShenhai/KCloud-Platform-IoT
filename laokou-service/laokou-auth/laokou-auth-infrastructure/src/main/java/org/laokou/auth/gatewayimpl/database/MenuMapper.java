@@ -20,6 +20,7 @@ package org.laokou.auth.gatewayimpl.database;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.laokou.auth.gatewayimpl.database.dataobject.MenuDO;
+import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.springframework.stereotype.Repository;
 
@@ -38,13 +39,13 @@ public interface MenuMapper extends CrudMapper<Long, Integer, MenuDO> {
 	 * 获取菜单权限标识集合.
 	 * @return 菜单权限标识集合
 	 */
-	List<String> selectPermissions();
+	List<String> selectAllPermissions(@Param("user") UserDO user);
 
 	/**
-	 * 根据用户ID查看菜单权限标识集合.
-	 * @param userId 用户ID
+	 * 查看菜单权限标识集合.
+	 * @param user 用户
 	 * @return 菜单权限标识集合
 	 */
-	List<String> selectPermissionsByUserId(@Param("userId") Long userId);
+	List<String> selectPermissions(@Param("user") UserDO user);
 
 }

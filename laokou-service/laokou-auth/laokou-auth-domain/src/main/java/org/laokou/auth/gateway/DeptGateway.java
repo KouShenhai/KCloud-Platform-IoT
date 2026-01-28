@@ -17,11 +17,17 @@
 
 package org.laokou.auth.gateway;
 
+import org.laokou.auth.model.entity.UserE;
+
+import java.util.List;
+
 /**
  * 部门.
  *
  * @author laokou
  */
 public interface DeptGateway {
+
+	List<Long> getDeptIds(UserE userE, List<String> dataScopes);
 
 }

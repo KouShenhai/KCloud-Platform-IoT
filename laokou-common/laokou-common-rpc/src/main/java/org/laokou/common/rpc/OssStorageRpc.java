@@ -17,7 +17,7 @@
 
 package org.laokou.common.rpc;
 
-import org.laokou.common.i18n.dto.OssStorage;
+import org.laokou.common.i18n.common.OssStorage;
 
 /**
  * @author laokou

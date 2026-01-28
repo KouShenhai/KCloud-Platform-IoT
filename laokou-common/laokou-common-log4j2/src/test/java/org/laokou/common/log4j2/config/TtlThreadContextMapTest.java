@@ -24,7 +24,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * TtlThreadContextMap test class.
@@ -165,14 +164,8 @@ class TtlThreadContextMapTest {
 	void testThreadLocalIsolation() {
 		contextMap.put("mainKey", "mainValue");
 
-		AtomicReference<String> childValue = new AtomicReference<>();
-		AtomicReference<String> parentValueInChild = new AtomicReference<>();
-
 		CompletableFuture.runAsync(() -> {
-			// TTL should transmit values to child thread
-			parentValueInChild.set(contextMap.get("mainKey"));
 			contextMap.put("childKey", "childValue");
-			childValue.set(contextMap.get("childKey"));
 		}).join();
 
 		// Main thread should have its value (TTL transmits to child)

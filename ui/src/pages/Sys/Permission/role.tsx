@@ -112,11 +112,11 @@ export default () => {
 						label: '自定义',
 					},
 					{
-						value: 'dept_self',
+						value: 'self_dept',
 						label: '仅本部门',
 					},
 					{
-						value: 'dept',
+						value: 'below_dept',
 						label: '部门及以下',
 					},
 					{

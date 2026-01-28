@@ -21,6 +21,8 @@ import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.util.List;
+
 /**
  * @author laokou
  */
@@ -76,6 +78,22 @@ public final class UserUtils {
 	 */
 	public static Boolean isSuperAdmin() {
 		return userDetail().getSuperAdmin();
+	}
+
+	/**
+	 * 部门IDS.
+	 * @return List<Long>
+	 */
+	public static List<Long> getDeptIds() {
+		return userDetail().getDeptIds();
+	}
+
+	/**
+	 * 创建者.
+	 * @return Long
+	 */
+	public static Long getCreator() {
+		return userDetail().getCreator();
 	}
 
 	/**

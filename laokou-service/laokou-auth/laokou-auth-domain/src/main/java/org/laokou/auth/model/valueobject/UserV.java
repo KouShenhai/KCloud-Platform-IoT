@@ -19,7 +19,7 @@ package org.laokou.auth.model.valueobject;
 
 import lombok.Builder;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * 用户值对象.
@@ -36,5 +36,5 @@ import java.util.Set;
  */
 @Builder(toBuilder = true)
 public record UserV(String username, String password, String avatar, String mail, String mobile, String tenantCode,
-		Long tenantId, Set<String> permissions) {
+		Long tenantId, List<String> permissions, List<String> dataScopes) {
 }

@@ -15,11 +15,17 @@
  *
  */
 
-package org.laokou.common.i18n.dto;
+package org.laokou.auth.gateway;
+
+import org.laokou.auth.model.entity.UserE;
+
+import java.util.List;
 
 /**
  * @author laokou
  */
-public interface OssStorage {
+public interface RoleGateway {
+
+	List<String> getDataScopes(UserE userE);
 
 }

@@ -20,7 +20,7 @@ package org.laokou.common.rpc;
 import io.grpc.StatusException;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.grpc.annotation.GrpcClient;
-import org.laokou.common.i18n.dto.IdGenerator;
+import org.laokou.common.i18n.common.IdGenerator;
 import org.laokou.common.rpc.exception.GrpcNotFoundException;
 import org.laokou.distributed.id.proto.DistributedIdServiceIGrpc;
 import org.laokou.distributed.id.proto.GenerateBatchIdRequest;

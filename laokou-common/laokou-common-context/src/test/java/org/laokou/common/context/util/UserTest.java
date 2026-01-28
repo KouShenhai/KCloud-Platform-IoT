@@ -23,9 +23,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.core.GrantedAuthority;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 /**
  * User record test class.
@@ -39,7 +39,7 @@ class UserTest {
 
 	@BeforeEach
 	void setUp() {
-		Set<String> permissions = new HashSet<>();
+		List<String> permissions = new ArrayList<>();
 		permissions.add("sys:user:query");
 		permissions.add("sys:user:add");
 		permissions.add("sys:role:query");
@@ -55,6 +55,8 @@ class UserTest {
 			.mobile("13800138000")
 			.tenantId(100L)
 			.deptId(10L)
+			.deptIds(List.of(1L))
+			.creator(1L)
 			.permissions(permissions)
 			.build();
 	}
@@ -73,6 +75,8 @@ class UserTest {
 		Assertions.assertThat(user.mobile()).isEqualTo("13800138000");
 		Assertions.assertThat(user.tenantId()).isEqualTo(100L);
 		Assertions.assertThat(user.deptId()).isEqualTo(10L);
+		Assertions.assertThat(user.deptIds()).isEqualTo(List.of(1L));
+		Assertions.assertThat(user.creator()).isEqualTo(1L);
 		Assertions.assertThat(user.permissions())
 			.hasSize(3)
 			.containsExactlyInAnyOrder("sys:user:query", "sys:user:add", "sys:role:query");
@@ -166,6 +170,8 @@ class UserTest {
 			.mobile(null)
 			.tenantId(null)
 			.deptId(null)
+			.deptIds(null)
+			.creator(null)
 			.permissions(null)
 			.build();
 
@@ -181,13 +187,15 @@ class UserTest {
 		Assertions.assertThat(userWithNulls.tenantId()).isNull();
 		Assertions.assertThat(userWithNulls.deptId()).isNull();
 		Assertions.assertThat(userWithNulls.permissions()).isNull();
+		Assertions.assertThat(userWithNulls.deptIds()).isNull();
+		Assertions.assertThat(userWithNulls.creator()).isNull();
 	}
 
 	@Test
 	@DisplayName("Test getAuthorities with empty permissions returns empty collection")
 	void test_getAuthorities_emptyPermissions_returnsEmptyCollection() {
 		// Given
-		User userWithEmptyPerms = User.builder().id(3L).username("user3").permissions(new HashSet<>()).build();
+		User userWithEmptyPerms = User.builder().id(3L).username("user3").permissions(new ArrayList<>()).build();
 
 		// When
 		Collection<GrantedAuthority> authorities = userWithEmptyPerms.getAuthorities();

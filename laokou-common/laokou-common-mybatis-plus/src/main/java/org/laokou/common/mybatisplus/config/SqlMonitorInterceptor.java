@@ -56,7 +56,7 @@ public record SqlMonitorInterceptor(MybatisPlusExtProperties mybatisPlusExtPrope
 		stopWatch.stop();
 		long costTime = stopWatch.getTotalTimeMillis();
         MybatisPlusExtProperties.SqlMonitor sqlMonitor = mybatisPlusExtProperties.getSqlMonitor();
-        if (sqlMonitor.isEnabled() && costTime >= sqlMonitor.getInterval() && invocation.getArgs()[0] instanceof StatementHandler statementHandler) {
+        if (sqlMonitor.isEnabled() && costTime >= sqlMonitor.getInterval() && invocation.getTarget() instanceof StatementHandler statementHandler) {
 			String sql = SqlUtils.getCompleteSql(statementHandler.getBoundSql());
             log.info("Consume Time：{} ms，Execute SQL：{}", costTime, sql);
         }

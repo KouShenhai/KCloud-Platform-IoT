@@ -26,8 +26,8 @@ import org.laokou.common.crypto.util.AESUtils;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * UserConvertor test class.
@@ -59,7 +59,7 @@ class UserConvertorTest {
 	@DisplayName("Test toUserDetails converts User to UserExtDetails with all properties")
 	void test_toUserDetails_converts_all_properties() throws Exception {
 		// Given
-		Set<String> permissions = new HashSet<>();
+		List<String> permissions = new ArrayList<>();
 		permissions.add("sys:user:query");
 		permissions.add("sys:user:add");
 
@@ -169,7 +169,7 @@ class UserConvertorTest {
 	@DisplayName("Test toUserDetails with empty permissions set")
 	void test_toUserDetails_with_empty_permissions() throws Exception {
 		// Given
-		User user = User.builder().id(4L).username(AESUtils.encrypt("user4")).permissions(new HashSet<>()).build();
+		User user = User.builder().id(4L).username(AESUtils.encrypt("user4")).permissions(new ArrayList<>()).build();
 
 		// When
 		UserExtDetails result = UserConvertor.toUserDetails(user);

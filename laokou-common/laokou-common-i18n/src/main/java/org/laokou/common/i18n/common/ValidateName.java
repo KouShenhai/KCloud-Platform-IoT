@@ -15,25 +15,13 @@
  *
  */
 
-package org.laokou.common.rpc.annotation;
-
-import org.laokou.common.rpc.IdGeneratorRpc;
-import org.laokou.common.rpc.OssStorageRpc;
-import org.springframework.context.annotation.Import;
-
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+package org.laokou.common.i18n.common;
 
 /**
  * @author laokou
  */
-@Documented
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Import({ IdGeneratorRpc.class, OssStorageRpc.class })
-public @interface MicroService {
+public interface ValidateName {
+
+	String getValidateName();
 
 }

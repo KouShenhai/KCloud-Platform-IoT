@@ -15,25 +15,30 @@
  *
  */
 
-package org.laokou.common.rpc.annotation;
+package org.laokou.admin.role.model.enums;
 
-import org.laokou.common.rpc.DefaultIdGenerator;
-import org.laokou.common.rpc.DefaultOssStorage;
-import org.springframework.context.annotation.Import;
+import lombok.Getter;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+@Getter
+public enum DataScope {
 
-/**
- * @author laokou
- */
-@Documented
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Import({ DefaultIdGenerator.class, DefaultOssStorage.class })
-public @interface SingleService {
+	ALL("all", "全部"),
+
+	CUSTOM("custom", "自定义"),
+
+	SELF_DEPT("self_dept", "仅本部门"),
+
+	BELOW_DEPT("below_dept", "部门及以下"),
+
+	SELF("self", "仅本人");
+
+	private final String code;
+
+	private final String desc;
+
+	DataScope(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
 
 }
