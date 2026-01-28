@@ -43,6 +43,7 @@ import org.laokou.admin.user.dto.UserSaveCmd;
 import org.laokou.admin.user.dto.UserUploadAvatarCmd;
 import org.laokou.admin.user.dto.clientobject.UserCO;
 import org.laokou.admin.user.dto.clientobject.UserProfileCO;
+import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
@@ -77,6 +78,11 @@ public class UsersServiceImpl implements UsersServiceI {
 	private final UserProfileGetQryExe userProfileGetQryExe;
 
 	private final UserUploadCmdExe userUploadCmdEx;
+
+	static {
+		ForyFactory.INSTANCE.register(org.laokou.common.i18n.dto.Result.class);
+		ForyFactory.INSTANCE.register(org.laokou.admin.user.dto.clientobject.UserCO.class);
+	}
 
 	@Override
 	public void saveUser(UserSaveCmd cmd) throws Exception {

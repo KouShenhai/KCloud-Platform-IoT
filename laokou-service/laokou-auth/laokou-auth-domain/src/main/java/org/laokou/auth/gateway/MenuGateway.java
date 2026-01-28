@@ -19,7 +19,7 @@ package org.laokou.auth.gateway;
 
 import org.laokou.auth.model.entity.UserE;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * 菜单.
@@ -33,6 +33,6 @@ public interface MenuGateway {
 	 * @param user 用户对象
 	 * @return 菜单权限标识集合
 	 */
-	Set<String> getMenuPermissions(UserE user);
+	List<String> getMenuPermissions(UserE user);
 
 }

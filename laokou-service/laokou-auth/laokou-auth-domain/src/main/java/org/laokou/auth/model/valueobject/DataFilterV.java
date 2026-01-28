@@ -19,7 +19,7 @@ package org.laokou.auth.model.valueobject;
 
 import lombok.Builder;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author laokou
@@ -27,5 +27,5 @@ import java.util.Set;
  * @param creator 创建者
  */
 @Builder(toBuilder = true)
-public record DataFilterV(Set<Long> deptIds, Long creator) {
+public record DataFilterV(List<Long> deptIds, Long creator) {
 }

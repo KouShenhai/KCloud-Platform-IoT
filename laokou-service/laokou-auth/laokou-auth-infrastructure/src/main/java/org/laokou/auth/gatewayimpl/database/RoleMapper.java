@@ -15,16 +15,24 @@
  *
  */
 
-package org.laokou.common.mybatisplus.mapper;
+package org.laokou.auth.gatewayimpl.database;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.laokou.auth.gatewayimpl.database.dataobject.RoleDO;
+import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
+import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @author laokou
  */
 @Mapper
 @Repository
-public interface SqlLogMapper extends CrudMapper<Long, Integer, SqlLogDO> {
+public interface RoleMapper extends CrudMapper<Long, Integer, RoleDO> {
+
+	List<String> selectDataScopes(@Param("user") UserDO user);
 
 }

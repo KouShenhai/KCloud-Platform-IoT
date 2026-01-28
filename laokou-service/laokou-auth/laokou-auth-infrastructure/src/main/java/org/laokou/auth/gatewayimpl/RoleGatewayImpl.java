@@ -15,25 +15,29 @@
  *
  */
 
-package org.laokou.auth.convertor;
+package org.laokou.auth.gatewayimpl;
 
-import org.laokou.auth.dto.domainevent.SendCaptchaEvent;
-import org.laokou.auth.model.AuthA;
+import lombok.RequiredArgsConstructor;
+import org.laokou.auth.convertor.UserConvertor;
+import org.laokou.auth.gateway.RoleGateway;
+import org.laokou.auth.gatewayimpl.database.RoleMapper;
+import org.laokou.auth.model.entity.UserE;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @author laokou
  */
-public final class AuthConvertor {
+@Component
+@RequiredArgsConstructor
+public class RoleGatewayImpl implements RoleGateway {
 
-	private AuthConvertor() {
-	}
+	private final RoleMapper roleMapper;
 
-	public static SendCaptchaEvent toDomainEvent(AuthA authA) {
-		return SendCaptchaEvent.builder()
-			.id(authA.getId())
-			.uuid(authA.getCaptchaV().uuid())
-			.tenantId(authA.getUserV().tenantId())
-			.build();
+	@Override
+	public List<String> getDataScopes(UserE userE) {
+		return roleMapper.selectDataScopes(UserConvertor.toDataObject(userE));
 	}
 
 }

@@ -15,27 +15,35 @@
  *
  */
 
-package org.laokou.common.mybatisplus.context;
+package org.laokou.common.mybatisplus.annotation;
 
-import com.alibaba.ttl.TransmittableThreadLocal;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * @author laokou
  */
-public class DynamicTableSuffixContextHolder {
+@Documented
+@Target({ ElementType.METHOD })
+@Retention(RetentionPolicy.RUNTIME)
+public @interface DataFilter {
 
-	private static final ThreadLocal<String> LOCAL = new TransmittableThreadLocal<>();
+	/**
+	 * 表别名.
+	 */
+	String tableAlias() default "";
 
-	public static void set(String suffix) {
-		LOCAL.set(suffix);
-	}
+	/**
+	 * 用户ID.
+	 */
+	String userId() default "creator";
 
-	public static void clear() {
-		LOCAL.remove();
-	}
-
-	public static String get() {
-		return LOCAL.get();
-	}
+	/**
+	 * 部门ID.
+	 */
+	String deptId() default "dept_id";
 
 }

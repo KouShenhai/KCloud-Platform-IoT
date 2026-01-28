@@ -20,4 +20,36 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.auth.gatewayimpl.database.DeptMapper">
 
+  <select id="selectDeptIds" resultType="long">
+      select distinct dept.id from (
+        <if test="dataScopes != null and dataScopes.size() > 0">
+          <foreach collection="dataScopes" item="dataScope" separator=" union all ">
+            <choose>
+              <when test="dataScope != null and dataScope == 'below_dept'">
+                WITH recursive dept_tree as (
+                  select
+                  id, pid
+                  from sys_dept
+                  where id = #{user.deptId} and tenant_id = #{user.tenantId}
+                  union all
+                  select d.id, d.pid
+                  from sys_dept d
+                  join dept_tree dt on d.pid = dt.id
+                )
+                select id from dept_tree
+              </when>
+              <when test="dataScope != null and dataScope == 'self_dept'">
+                select #{user.deptId}
+              </when>
+              <when test="dataScope != null and dataScope == 'custom'">
+                select rd.dept_id from sys_role_dept rd
+                join sys_user_role ur on ur.role_id = rd.role_id
+                where ur.user_id = #{user.id} and rd.tenant_id = #{user.tenantId}
+              </when>
+            </choose>
+          </foreach>
+        </if>
+      ) dept
+  </select>
+
 </mapper>

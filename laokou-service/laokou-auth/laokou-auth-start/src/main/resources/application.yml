@@ -252,10 +252,10 @@ mybatis-plus:
     db-config:
       column-format: "\"%s\""
   tenant:
+    enabled: false
+  sql-monitor:
     enabled: true
-    ignore-tables:
-      - sys_source
-      - sys_tenant
+    interval: 0
   mapper-locations: classpath*:/mapper/**/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl

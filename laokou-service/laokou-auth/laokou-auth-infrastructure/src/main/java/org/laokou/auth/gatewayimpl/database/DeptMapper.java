@@ -18,9 +18,13 @@
 package org.laokou.auth.gatewayimpl.database;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.laokou.auth.gatewayimpl.database.dataobject.DeptDO;
+import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * 部门.
@@ -30,5 +34,7 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface DeptMapper extends CrudMapper<Long, Integer, DeptDO> {
+
+	List<Long> selectDeptIds(@Param("user") UserDO user, @Param("dataScopes") List<String> dataScopes);
 
 }

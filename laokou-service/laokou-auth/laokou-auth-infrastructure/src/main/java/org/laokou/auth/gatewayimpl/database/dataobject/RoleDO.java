@@ -15,7 +15,38 @@
  *
  */
 
+package org.laokou.auth.gatewayimpl.database.dataobject;
+
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+import org.laokou.common.mybatisplus.mapper.BaseDO;
+import org.laokou.common.tenant.constant.DSConstants;
+
+import java.io.Serial;
+
 /**
  * @author laokou
  */
-package org.laokou.common.mybatisplus.context;
+@Data
+@TableName(DSConstants.Master.ROLE_TABLE)
+public class RoleDO extends BaseDO {
+
+	@Serial
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * 角色名称.
+	 */
+	private String name;
+
+	/**
+	 * 角色排序.
+	 */
+	private Integer sort;
+
+	/**
+	 * 数据范围 all全部 custom自定义 self_dept仅本部门 below_dept部门及以下 self仅本人.
+	 */
+	private String dataScope;
+
+}

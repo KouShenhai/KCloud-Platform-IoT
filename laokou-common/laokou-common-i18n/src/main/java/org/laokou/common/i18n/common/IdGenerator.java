@@ -15,13 +15,17 @@
  *
  */
 
-package org.laokou.common.mybatisplus.support;
+package org.laokou.common.i18n.common;
 
-public class All implements DataScope {
+import java.util.List;
 
-	@Override
-	public String getName() {
-		return DataScopeEnum.ALL.getCode();
-	}
+/**
+ * @author laokou
+ */
+public interface IdGenerator {
+
+	Long getId();
+
+	List<Long> getIds(int num);
 
 }

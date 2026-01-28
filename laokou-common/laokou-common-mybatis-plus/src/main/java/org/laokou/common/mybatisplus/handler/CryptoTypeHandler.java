@@ -28,7 +28,6 @@ import org.springframework.stereotype.Component;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 /**
  * @author laokou
@@ -83,7 +82,7 @@ public class CryptoTypeHandler implements TypeHandler<String> {
 	}
 
 	@Override
-	public String getResult(CallableStatement callableStatement, int columnIndex) throws SQLException {
+	public String getResult(CallableStatement callableStatement, int columnIndex) {
 		try {
 			String data = callableStatement.getString(columnIndex);
 			if (StringExtUtils.isEmpty(data)) {

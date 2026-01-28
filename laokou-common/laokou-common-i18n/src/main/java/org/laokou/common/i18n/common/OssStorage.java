@@ -15,30 +15,11 @@
  *
  */
 
-package org.laokou.common.rpc;
-
-import org.laokou.common.i18n.dto.IdGenerator;
-
-import java.util.ArrayList;
-import java.util.List;
+package org.laokou.common.i18n.common;
 
 /**
  * @author laokou
  */
-public class DefaultIdGenerator implements IdGenerator {
-
-	@Override
-	public Long getId() {
-		return System.currentTimeMillis();
-	}
-
-	@Override
-	public List<Long> getIds(int num) {
-		List<Long> ids = new ArrayList<>(num);
-		for (int i = 0; i < num; i++) {
-			ids.add(System.currentTimeMillis());
-		}
-		return ids;
-	}
+public interface OssStorage {
 
 }

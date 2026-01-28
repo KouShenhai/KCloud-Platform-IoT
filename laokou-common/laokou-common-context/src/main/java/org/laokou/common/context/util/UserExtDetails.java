@@ -37,8 +37,8 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author laokou
@@ -111,7 +111,17 @@ public final class UserExtDetails implements UserDetails, OAuth2AuthenticatedPri
 	/**
 	 * 菜单权限标识集合.
 	 */
-	private Set<String> permissions;
+	private List<String> permissions;
+
+	/**
+	 * 部门IDS.
+	 */
+	private List<Long> deptIds;
+
+	/**
+	 * 创建者.
+	 */
+	private Long creator;
 
 	@Override
 	@NullMarked

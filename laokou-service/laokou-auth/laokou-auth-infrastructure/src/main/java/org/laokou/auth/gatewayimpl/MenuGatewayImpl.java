@@ -19,12 +19,13 @@ package org.laokou.auth.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.auth.convertor.UserConvertor;
 import org.laokou.auth.gateway.MenuGateway;
 import org.laokou.auth.gatewayimpl.database.MenuMapper;
 import org.laokou.auth.model.entity.UserE;
 import org.springframework.stereotype.Component;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * 菜单.
@@ -40,15 +41,15 @@ public class MenuGatewayImpl implements MenuGateway {
 
 	/**
 	 * 查看菜单权限标识集合.
-	 * @param user 用户对象
+	 * @param userE 用户对象
 	 * @return 菜单权限标识集合
 	 */
 	@Override
-	public Set<String> getMenuPermissions(UserE user) {
-		if (user.isSuperAdministrator()) {
-			return Set.copyOf(menuMapper.selectPermissions());
+	public List<String> getMenuPermissions(UserE userE) {
+		if (userE.isSuperAdministrator()) {
+			return menuMapper.selectAllPermissions(UserConvertor.toDataObject(userE));
 		}
-		return Set.copyOf(menuMapper.selectPermissionsByUserId(user.getId()));
+		return menuMapper.selectPermissions(UserConvertor.toDataObject(userE));
 	}
 
 }

@@ -15,13 +15,27 @@
  *
  */
 
-package org.laokou.common.mybatisplus.support;
+package org.laokou.common.mybatisplus.config;
 
-public class Self implements DataScope {
+import com.alibaba.ttl.TransmittableThreadLocal;
 
-	@Override
-	public String getName() {
-		return DataScopeEnum.SELF.getCode();
+/**
+ * @author laokou
+ */
+public class DynamicTableNameContextHolder {
+
+	private static final ThreadLocal<String> LOCAL = new TransmittableThreadLocal<>();
+
+	public static void set(String suffix) {
+		LOCAL.set(suffix);
+	}
+
+	public static void clear() {
+		LOCAL.remove();
+	}
+
+	public static String get() {
+		return LOCAL.get();
 	}
 
 }

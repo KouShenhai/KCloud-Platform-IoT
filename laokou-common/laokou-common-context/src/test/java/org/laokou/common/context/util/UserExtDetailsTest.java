@@ -26,10 +26,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * UserExtDetails test class.
@@ -43,7 +43,7 @@ class UserExtDetailsTest {
 
 	@BeforeEach
 	void setUp() {
-		Set<String> permissions = new HashSet<>();
+		List<String> permissions = new ArrayList<>();
 		permissions.add("sys:user:query");
 		permissions.add("sys:user:add");
 
@@ -158,7 +158,7 @@ class UserExtDetailsTest {
 			.mobile("different_mobile")
 			.tenantId(100L)
 			.deptId(10L)
-			.permissions(new HashSet<>())
+			.permissions(new ArrayList<>())
 			.build();
 
 		UserExtDetails differentUser = UserExtDetails.builder()
