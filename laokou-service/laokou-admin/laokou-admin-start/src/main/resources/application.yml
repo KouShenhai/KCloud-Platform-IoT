@@ -168,6 +168,7 @@ mybatis-plus:
     ignore-tables:
       - sys_tenant
       - sys_source
+      - sys_menu
       - sys_package_menu
       - sys_package
   sql-monitor:
