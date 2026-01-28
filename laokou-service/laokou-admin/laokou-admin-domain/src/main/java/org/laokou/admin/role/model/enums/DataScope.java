@@ -26,9 +26,9 @@ public enum DataScope {
 
 	CUSTOM("custom", "自定义"),
 
-	DEPT_SELF("dept_self", "仅本部门"),
+	SELF_DEPT("self_dept", "仅本部门"),
 
-	DEPT("dept", "部门及以下"),
+	BELOW_DEPT("below_dept", "部门及以下"),
 
 	SELF("self", "仅本人");
 
