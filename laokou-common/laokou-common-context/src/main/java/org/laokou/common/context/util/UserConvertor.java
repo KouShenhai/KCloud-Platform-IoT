@@ -39,6 +39,8 @@ public final class UserConvertor {
 			.mail(user.mail())
 			.mobile(user.mobile())
 			.deptId(user.deptId())
+			.deptIds(user.deptIds())
+			.creator(user.creator())
 			.build()
 			.decryptUsername()
 			.decryptMail()

@@ -113,6 +113,16 @@ public final class UserExtDetails implements UserDetails, OAuth2AuthenticatedPri
 	 */
 	private List<String> permissions;
 
+	/**
+	 * 部门IDS.
+	 */
+	private List<Long> deptIds;
+
+	/**
+	 * 创建者.
+	 */
+	private Long creator;
+
 	@Override
 	@NullMarked
 	public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -22,7 +22,7 @@
   <select id="selectAllPermissions" resultType="string">
     SELECT distinct permission
     FROM sys_menu
-    WHERE "type" = 1 AND del_flag = 0
+    WHERE "type" = 1 AND del_flag = 0 and tenant_id = #{user.tenantId}
   </select>
 
   <select id="selectPermissions" resultType="string">

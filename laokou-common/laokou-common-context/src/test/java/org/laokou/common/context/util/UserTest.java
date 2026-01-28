@@ -55,6 +55,8 @@ class UserTest {
 			.mobile("13800138000")
 			.tenantId(100L)
 			.deptId(10L)
+			.deptIds(List.of(1L))
+			.creator(1L)
 			.permissions(permissions)
 			.build();
 	}
@@ -73,6 +75,8 @@ class UserTest {
 		Assertions.assertThat(user.mobile()).isEqualTo("13800138000");
 		Assertions.assertThat(user.tenantId()).isEqualTo(100L);
 		Assertions.assertThat(user.deptId()).isEqualTo(10L);
+		Assertions.assertThat(user.deptIds()).isEqualTo(List.of(1L));
+		Assertions.assertThat(user.creator()).isEqualTo(1L);
 		Assertions.assertThat(user.permissions())
 			.hasSize(3)
 			.containsExactlyInAnyOrder("sys:user:query", "sys:user:add", "sys:role:query");
@@ -166,6 +170,8 @@ class UserTest {
 			.mobile(null)
 			.tenantId(null)
 			.deptId(null)
+			.deptIds(null)
+			.creator(null)
 			.permissions(null)
 			.build();
 
@@ -181,6 +187,8 @@ class UserTest {
 		Assertions.assertThat(userWithNulls.tenantId()).isNull();
 		Assertions.assertThat(userWithNulls.deptId()).isNull();
 		Assertions.assertThat(userWithNulls.permissions()).isNull();
+		Assertions.assertThat(userWithNulls.deptIds()).isNull();
+		Assertions.assertThat(userWithNulls.creator()).isNull();
 	}
 
 	@Test

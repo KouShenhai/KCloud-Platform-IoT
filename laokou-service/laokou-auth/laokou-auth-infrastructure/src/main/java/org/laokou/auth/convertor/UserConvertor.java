@@ -21,6 +21,7 @@ import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.entity.UserE;
+import org.laokou.auth.model.valueobject.DataFilterV;
 import org.laokou.auth.model.valueobject.UserV;
 import org.laokou.common.context.util.User;
 
@@ -35,6 +36,7 @@ public final class UserConvertor {
 	public static User toUser(AuthA auth) {
 		UserE userE = auth.getUserE();
 		UserV userV = auth.getUserV();
+		DataFilterV dataFilterV = auth.getDataFilterV();
 		return User.builder()
 			.id(userE.getId())
 			.username(userE.getUsername())
@@ -47,6 +49,8 @@ public final class UserConvertor {
 			.status(userE.getStatus())
 			.mail(userE.getMail())
 			.mobile(userE.getMobile())
+			.deptIds(dataFilterV.deptIds())
+			.creator(dataFilterV.creator())
 			.build();
 	}
 
@@ -78,13 +82,6 @@ public final class UserConvertor {
 	public static UserDO toDataObject(UserE userE) {
 		UserDO userDO = new UserDO();
 		userDO.setId(userE.getId());
-		userDO.setUsername(userE.getUsername());
-		userDO.setPassword(userE.getPassword());
-		userDO.setSuperAdmin(userE.getSuperAdmin());
-		userDO.setAvatar(userE.getAvatar());
-		userDO.setMail(userE.getMail());
-		userDO.setStatus(userE.getStatus());
-		userDO.setMobile(userE.getMobile());
 		userDO.setDeptId(userE.getDeptId());
 		userDO.setTenantId(userE.getTenantId());
 		return userDO;

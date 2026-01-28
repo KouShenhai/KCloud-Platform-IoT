@@ -94,6 +94,7 @@ sudo rm -f /etc/NetworkManager/system-connections/*wlan*
 local ssid=$2
 local pwd=$3
 sudo nmcli con add type wifi con-name "default-wlan0" ssid "$ssid" wifi-sec.key-mgmt wpa-psk wifi-sec.psk "$pwd"
+# sudo nmcli dev wifi connect "$ssid" password "$pwd" name "default-wlan0"
 # sudo nmcli con mod "default-wlan0" ipv4.route-metric 80
 # sudo nmcli connection up "default-wlan0"
 # sudo nmcli connection reload
@@ -210,6 +211,11 @@ sudo nmcli connection up "Wired connection 2"
 sudo nmcli connection reload
 }
 
+# 删除WIFI
+delete_wifi() {
+sudo nmcli con del "default-wlan0"
+}
+
 case "$1" in
   connect_eth0_dhcp)
     connect_eth0_dhcp
@@ -306,6 +312,9 @@ case "$1" in
   	;;
   use_route_wlan0)
   	use_route_wlan0
+  	;;
+  delete_wifi)
+  	delete_wifi
   	;;
   *)
     exit 1

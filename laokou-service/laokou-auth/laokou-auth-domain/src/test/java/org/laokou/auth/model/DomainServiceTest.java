@@ -569,7 +569,7 @@ class DomainServiceTest {
 			.mail(this.mail)
 			.mobile(this.mobile)
 			.deptId(1L)
-			.superAdmin(SuperAdmin.YES.getCode())
+			.superAdmin(SuperAdmin.NO.getCode())
 			.status(UserStatus.ENABLE.getCode())
 			.build();
 	}

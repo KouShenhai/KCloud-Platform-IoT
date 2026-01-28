@@ -54,7 +54,7 @@ import java.util.List;
 		isGetterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
 public record User(Long id, String username, String password, String avatar, Boolean superAdmin, Integer status,
 		String mail, String mobile, Long tenantId, Long deptId,
-		List<String> permissions) implements Authentication, Serializable {
+		List<String> permissions, List<Long> deptIds, Long creator) implements Authentication, Serializable {
 
 	@Override
 	@NullMarked

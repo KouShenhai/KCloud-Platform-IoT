@@ -39,7 +39,7 @@ public interface MenuMapper extends CrudMapper<Long, Integer, MenuDO> {
 	 * 获取菜单权限标识集合.
 	 * @return 菜单权限标识集合
 	 */
-	List<String> selectAllPermissions();
+	List<String> selectAllPermissions(@Param("user") UserDO user);
 
 	/**
 	 * 查看菜单权限标识集合.
