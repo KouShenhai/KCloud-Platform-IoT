@@ -53,8 +53,8 @@ import java.util.List;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
 		isGetterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
 public record User(Long id, String username, String password, String avatar, Boolean superAdmin, Integer status,
-		String mail, String mobile, Long tenantId, Long deptId,
-		List<String> permissions, List<Long> deptIds, Long creator) implements Authentication, Serializable {
+		String mail, String mobile, Long tenantId, Long deptId, List<String> permissions, List<Long> deptIds,
+		Long creator) implements Authentication, Serializable {
 
 	@Override
 	@NullMarked

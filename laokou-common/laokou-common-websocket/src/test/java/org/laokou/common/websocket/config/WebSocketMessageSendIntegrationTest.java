@@ -224,7 +224,7 @@ class WebSocketMessageSendIntegrationTest {
 		OAuth2UsernamePasswordGrantAuthorization authorization = new OAuth2UsernamePasswordGrantAuthorization(
 				"auth-test-1", TEST_CLIENT_ID, TEST_USER, scopes, accessToken, refreshToken,
 				new User(1L, TEST_USER, "laokou", "https://baidu.com/avatar.png", true, 0, "2413176044@qq.com",
-						"18888888888", 0L, 1L, List.of("sys:user:list")));
+						"18888888888", 0L, 1L, List.of("sys:user:list"), List.of(1L), null));
 
 		authorizationRepository.save(authorization);
 	}

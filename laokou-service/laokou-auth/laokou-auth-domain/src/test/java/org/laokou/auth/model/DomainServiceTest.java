@@ -160,6 +160,9 @@ class DomainServiceTest {
 		Mockito.verify(userGateway, Mockito.times(1)).getUserProfile(createUserVByUsernamePassword());
 		Mockito.verify(menuGateway, Mockito.times(1)).getMenuPermissions(createUserE());
 		Mockito.verify(ossLogGateway, Mockito.times(1)).getOssUrl(1L);
+		Mockito.verify(roleGateway, Mockito.times(1)).getDataScopes(createUserE());
+		Mockito.verify(deptGateway, Mockito.times(1)).getDeptIds(createUserE(), List.of("self", "custom"));
+		Assertions.assertThat(usernamePasswordAuth.getDataFilterV().deptIds()).isEqualTo(List.of(1L));
 		Assertions.assertThat(usernamePasswordAuth.getUserV().avatar()).isEqualTo("https://1.png");
 		Assertions.assertThat(usernamePasswordAuth.getUserE().getDeptId()).isEqualTo(1L);
 		Mockito.verify(usernamePasswordAuthParamValidator, Mockito.times(1)).validateAuth(usernamePasswordAuth);
@@ -208,6 +211,9 @@ class DomainServiceTest {
 		Mockito.verify(userGateway, Mockito.times(1)).getUserProfile(createUserVByMail());
 		Mockito.verify(menuGateway, Mockito.times(1)).getMenuPermissions(createUserE());
 		Mockito.verify(ossLogGateway, Mockito.times(1)).getOssUrl(1L);
+		Mockito.verify(roleGateway, Mockito.times(1)).getDataScopes(createUserE());
+		Mockito.verify(deptGateway, Mockito.times(1)).getDeptIds(createUserE(), List.of("self", "custom"));
+		Assertions.assertThat(mailAuth.getDataFilterV().deptIds()).isEqualTo(List.of(1L));
 		Assertions.assertThat(mailAuth.getUserV().avatar()).isEqualTo("https://1.png");
 		Assertions.assertThat(mailAuth.getUserE().getDeptId()).isEqualTo(1L);
 		Mockito.verify(mailAuthParamValidator, Mockito.times(1)).validateAuth(mailAuth);
@@ -237,6 +243,9 @@ class DomainServiceTest {
 		Mockito.verify(userGateway, Mockito.times(1)).getUserProfile(createUserVByMobile());
 		Mockito.verify(menuGateway, Mockito.times(1)).getMenuPermissions(createUserE());
 		Mockito.verify(ossLogGateway, Mockito.times(1)).getOssUrl(1L);
+		Mockito.verify(roleGateway, Mockito.times(1)).getDataScopes(createUserE());
+		Mockito.verify(deptGateway, Mockito.times(1)).getDeptIds(createUserE(), List.of("self", "custom"));
+		Assertions.assertThat(mobileAuth.getDataFilterV().deptIds()).isEqualTo(List.of(1L));
 		Assertions.assertThat(mobileAuth.getUserV().avatar()).isEqualTo("https://1.png");
 		Assertions.assertThat(mobileAuth.getUserE().getDeptId()).isEqualTo(1L);
 		Mockito.verify(mobileAuthParamValidator, Mockito.times(1)).validateAuth(mobileAuth);
@@ -263,7 +272,7 @@ class DomainServiceTest {
 	}
 
 	@Test
-	@DisplayName("Test username password auth success")
+	@DisplayName("Test test auth success")
 	void test_auth_test_success() throws Exception {
 		createTestAuthInfo(createTestAuthParam());
 		AuthA testAuth = createAuth().createTestAuth();
@@ -275,6 +284,9 @@ class DomainServiceTest {
 		Mockito.verify(userGateway, Mockito.times(1)).getUserProfile(createUserVByTest());
 		Mockito.verify(menuGateway, Mockito.times(1)).getMenuPermissions(createUserE());
 		Mockito.verify(ossLogGateway, Mockito.times(1)).getOssUrl(1L);
+		Mockito.verify(roleGateway, Mockito.times(1)).getDataScopes(createUserE());
+		Mockito.verify(deptGateway, Mockito.times(1)).getDeptIds(createUserE(), List.of("self", "custom"));
+		Assertions.assertThat(testAuth.getDataFilterV().deptIds()).isEqualTo(List.of(1L));
 		Assertions.assertThat(testAuth.getUserV().avatar()).isEqualTo("https://1.png");
 		Assertions.assertThat(testAuth.getUserE().getDeptId()).isEqualTo(1L);
 		Mockito.verify(testAuthParamValidator, Mockito.times(1)).validateAuth(testAuth);
@@ -293,6 +305,9 @@ class DomainServiceTest {
 		Mockito.verify(userGateway, Mockito.times(1)).getUserProfile(createUserVByAuthorizationCode());
 		Mockito.verify(menuGateway, Mockito.times(1)).getMenuPermissions(createUserE());
 		Mockito.verify(ossLogGateway, Mockito.times(1)).getOssUrl(1L);
+		Mockito.verify(roleGateway, Mockito.times(1)).getDataScopes(createUserE());
+		Mockito.verify(deptGateway, Mockito.times(1)).getDeptIds(createUserE(), List.of("self", "custom"));
+		Assertions.assertThat(authorizationCodeAuth.getDataFilterV().deptIds()).isEqualTo(List.of(1L));
 		Assertions.assertThat(authorizationCodeAuth.getUserV().avatar()).isEqualTo("https://1.png");
 		Assertions.assertThat(authorizationCodeAuth.getUserE().getDeptId()).isEqualTo(1L);
 		Mockito.verify(authorizationCodeAuthParamValidator, Mockito.times(1)).validateAuth(authorizationCodeAuth);
@@ -331,6 +346,8 @@ class DomainServiceTest {
 		}).when(mailAuthParamValidator).validateAuth(Mockito.any());
 		Mockito.when(captchaValidator.validateCaptcha(Mockito.anyString(), Mockito.anyString())).thenReturn(true);
 		Mockito.when(tenantGateway.getTenantId(Mockito.anyString())).thenReturn(1L);
+		Mockito.when(roleGateway.getDataScopes(Mockito.any())).thenReturn(List.of("self", "custom"));
+		Mockito.when(deptGateway.getDeptIds(Mockito.any(), Mockito.any())).thenReturn(List.of(1L));
 		Mockito.when(userGateway.getUserProfile(Mockito.any())).thenReturn(createUserE());
 		Mockito.when(menuGateway.getMenuPermissions(Mockito.any())).thenReturn(List.of("sys:user:save"));
 		Mockito.when(ossLogGateway.getOssUrl(Mockito.anyLong())).thenReturn("https://1.png");
@@ -364,6 +381,8 @@ class DomainServiceTest {
 		}).when(mobileAuthParamValidator).validateAuth(Mockito.any());
 		Mockito.when(captchaValidator.validateCaptcha(Mockito.anyString(), Mockito.anyString())).thenReturn(true);
 		Mockito.when(tenantGateway.getTenantId(Mockito.anyString())).thenReturn(1L);
+		Mockito.when(roleGateway.getDataScopes(Mockito.any())).thenReturn(List.of("self", "custom"));
+		Mockito.when(deptGateway.getDeptIds(Mockito.any(), Mockito.any())).thenReturn(List.of(1L));
 		Mockito.when(userGateway.getUserProfile(Mockito.any())).thenReturn(createUserE());
 		Mockito.when(menuGateway.getMenuPermissions(Mockito.any())).thenReturn(List.of("sys:user:save"));
 		Mockito.when(ossLogGateway.getOssUrl(Mockito.anyLong())).thenReturn("https://1.png");
@@ -393,6 +412,8 @@ class DomainServiceTest {
 		}).when(testAuthParamValidator).validateAuth(Mockito.any());
 		Mockito.when(passwordValidator.validatePassword(Mockito.anyString(), Mockito.anyString())).thenReturn(true);
 		Mockito.when(tenantGateway.getTenantId(Mockito.anyString())).thenReturn(1L);
+		Mockito.when(roleGateway.getDataScopes(Mockito.any())).thenReturn(List.of("self", "custom"));
+		Mockito.when(deptGateway.getDeptIds(Mockito.any(), Mockito.any())).thenReturn(List.of(1L));
 		Mockito.when(userGateway.getUserProfile(Mockito.any())).thenReturn(createUserE());
 		Mockito.when(menuGateway.getMenuPermissions(Mockito.any())).thenReturn(List.of("sys:user:save"));
 		Mockito.when(ossLogGateway.getOssUrl(Mockito.anyLong())).thenReturn("https://1.png");
@@ -422,6 +443,8 @@ class DomainServiceTest {
 		}).when(authorizationCodeAuthParamValidator).validateAuth(Mockito.any());
 		Mockito.when(passwordValidator.validatePassword(Mockito.anyString(), Mockito.anyString())).thenReturn(true);
 		Mockito.when(tenantGateway.getTenantId(Mockito.anyString())).thenReturn(1L);
+		Mockito.when(roleGateway.getDataScopes(Mockito.any())).thenReturn(List.of("self", "custom"));
+		Mockito.when(deptGateway.getDeptIds(Mockito.any(), Mockito.any())).thenReturn(List.of(1L));
 		Mockito.when(userGateway.getUserProfile(Mockito.any())).thenReturn(createUserE());
 		Mockito.when(menuGateway.getMenuPermissions(Mockito.any())).thenReturn(List.of("sys:user:save"));
 		Mockito.when(ossLogGateway.getOssUrl(Mockito.anyLong())).thenReturn("https://1.png");
@@ -459,6 +482,8 @@ class DomainServiceTest {
 		Mockito.when(passwordValidator.validatePassword(Mockito.anyString(), Mockito.anyString())).thenReturn(true);
 		Mockito.when(captchaValidator.validateCaptcha(Mockito.anyString(), Mockito.anyString())).thenReturn(true);
 		Mockito.when(tenantGateway.getTenantId(Mockito.anyString())).thenReturn(1L);
+		Mockito.when(roleGateway.getDataScopes(Mockito.any())).thenReturn(List.of("self", "custom"));
+		Mockito.when(deptGateway.getDeptIds(Mockito.any(), Mockito.any())).thenReturn(List.of(1L));
 		if (ObjectUtils.equals(this.username, RSAUtils.decryptByPrivateKey(usernamePasswordAuthParam.username()))) {
 			Mockito.when(userGateway.getUserProfile(Mockito.any())).thenReturn(createUserE());
 		}
