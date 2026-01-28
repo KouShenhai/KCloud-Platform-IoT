@@ -29,7 +29,6 @@ import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
-import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
@@ -46,35 +45,25 @@ public class DataFilterInterceptor implements InnerInterceptor {
 	@Override
 	public void beforeQuery(Executor executor, MappedStatement ms, Object parameter, RowBounds rowBounds,
 			ResultHandler resultHandler, BoundSql boundSql) {
-		if (parameter instanceof Map<?, ?> map) {
-			try {
-				Object obj = map.get(PageQuery.PAGE_QUERY);
-				if (ObjectUtils.isNotNull(obj)) {
-					// 获取aop拼接的sql
-					PageQuery pageQuery = (PageQuery) obj;
-					String sqlFilter = pageQuery.getSqlFilter();
-					if (StringExtUtils.isEmpty(sqlFilter)) {
-						return;
-					}
-					// 获取select查询语句
-					PlainSelect plainSelect = SqlUtils.plainSelect(boundSql.getSql());
-					// 获取where
-					Expression expression = plainSelect.getWhere();
-					if (ObjectUtils.isNull(expression)) {
-						plainSelect.setWhere(new StringValue(sqlFilter));
-					}
-					else {
-						AndExpression andExpression = new AndExpression(expression, new StringValue(sqlFilter));
-						plainSelect.setWhere(andExpression);
-					}
-					String newSql = plainSelect.toString()
-						.replaceAll(StringConstants.SINGLE_QUOT, StringConstants.EMPTY);
-					// 新sql写入
-					PluginUtils.mpBoundSql(boundSql).sql(newSql);
-				}
+		if (parameter instanceof Map<?, ?> map && map.get(PageQuery.PAGE_QUERY) instanceof PageQuery pageQuery) {
+			// 获取aop拼接的sql
+			String sqlFilter = pageQuery.getSqlFilter();
+			if (StringExtUtils.isEmpty(sqlFilter)) {
+				return;
 			}
-			catch (Exception ignored) {
+			// 获取select查询语句
+			PlainSelect plainSelect = SqlUtils.plainSelect(boundSql.getSql());
+			// 获取where
+			Expression expression = plainSelect.getWhere();
+			if (ObjectUtils.isNull(expression)) {
+				plainSelect.setWhere(new StringValue(sqlFilter));
 			}
+			else {
+				AndExpression andExpression = new AndExpression(expression, new StringValue(sqlFilter));
+				plainSelect.setWhere(andExpression);
+			}
+			// 新sql写入
+			PluginUtils.mpBoundSql(boundSql).sql(plainSelect.toString());
 		}
 	}
 

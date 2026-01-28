@@ -20,7 +20,7 @@ package org.laokou.iot.productCategory.model;
 import lombok.Getter;
 import lombok.Setter;
 import org.laokou.common.i18n.annotation.Entity;
-import org.laokou.common.i18n.dto.IdGenerator;
+import org.laokou.common.i18n.common.IdGenerator;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 /**

@@ -95,6 +95,11 @@ public final class StringConstants {
 	public static final String SPACE = " ";
 
 	/**
+	 * IN.
+	 */
+	public static final String IN_ = "in";
+
+	/**
 	 * 等于.
 	 */
 	public static final String EQUAL = "=";
@@ -113,6 +118,11 @@ public final class StringConstants {
 	 * 分割参数.
 	 */
 	public static final String AND = "&";
+
+	/**
+	 * AND.
+	 */
+	public static final String AND_ = "and";
 
 	/**
 	 * 分割参数.

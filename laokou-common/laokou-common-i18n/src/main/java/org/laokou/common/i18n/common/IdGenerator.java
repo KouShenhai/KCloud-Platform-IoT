@@ -15,13 +15,17 @@
  *
  */
 
-package org.laokou.common.i18n.dto;
+package org.laokou.common.i18n.common;
+
+import java.util.List;
 
 /**
  * @author laokou
  */
-public interface ValidateName {
+public interface IdGenerator {
 
-	String getValidateName();
+	Long getId();
+
+	List<Long> getIds(int num);
 
 }

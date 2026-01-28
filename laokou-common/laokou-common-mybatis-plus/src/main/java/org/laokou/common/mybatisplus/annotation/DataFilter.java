@@ -15,13 +15,35 @@
  *
  */
 
-package org.laokou.common.rpc;
+package org.laokou.common.mybatisplus.annotation;
 
-import org.laokou.common.i18n.common.OssStorage;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * @author laokou
  */
-public class OssStorageRpc implements OssStorage {
+@Documented
+@Target({ ElementType.METHOD })
+@Retention(RetentionPolicy.RUNTIME)
+public @interface DataFilter {
+
+	/**
+	 * 表别名.
+	 */
+	String tableAlias() default "";
+
+	/**
+	 * 用户ID.
+	 */
+	String userId() default "creator";
+
+	/**
+	 * 部门ID.
+	 */
+	String deptId() default "dept_id";
 
 }

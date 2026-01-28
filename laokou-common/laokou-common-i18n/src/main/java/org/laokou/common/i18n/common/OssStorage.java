@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.i18n.dto;
+package org.laokou.common.i18n.common;
 
 /**
  * @author laokou

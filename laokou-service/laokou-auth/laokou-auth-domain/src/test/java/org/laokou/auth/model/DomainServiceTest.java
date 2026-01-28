@@ -47,7 +47,7 @@ import org.laokou.common.core.util.RegexUtils;
 import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.crypto.util.RSAUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
-import org.laokou.common.i18n.dto.IdGenerator;
+import org.laokou.common.i18n.common.IdGenerator;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.laokou.common.i18n.util.StringExtUtils;

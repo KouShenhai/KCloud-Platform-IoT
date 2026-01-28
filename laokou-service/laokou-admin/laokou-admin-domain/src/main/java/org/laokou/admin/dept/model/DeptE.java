@@ -21,8 +21,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.laokou.admin.dept.model.enums.OperateType;
 import org.laokou.common.i18n.annotation.Entity;
-import org.laokou.common.i18n.dto.IdGenerator;
-import org.laokou.common.i18n.dto.ValidateName;
+import org.laokou.common.i18n.common.IdGenerator;
+import org.laokou.common.i18n.common.ValidateName;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
