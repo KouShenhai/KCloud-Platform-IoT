@@ -17,7 +17,6 @@
 
 package org.laokou.common.mybatisplus.aspectj;
 
-import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -36,7 +35,6 @@ import java.util.stream.Stream;
 
 @Aspect
 @Component
-@RequiredArgsConstructor
 public class DataFilterAspectj {
 
 	@Before("@annotation(dataFilter)")
