@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.mybatisplus.context;
+package org.laokou.common.mybatisplus.config;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
 

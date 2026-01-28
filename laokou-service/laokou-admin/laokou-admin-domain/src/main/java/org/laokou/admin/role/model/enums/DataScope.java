@@ -15,7 +15,30 @@
  *
  */
 
-/**
- * @author laokou
- */
-package org.laokou.common.mybatisplus.context;
+package org.laokou.admin.role.model.enums;
+
+import lombok.Getter;
+
+@Getter
+public enum DataScope {
+
+	ALL("all", "全部"),
+
+	CUSTOM("custom", "自定义"),
+
+	DEPT_SELF("dept_self", "仅本部门"),
+
+	DEPT("dept", "部门及以下"),
+
+	SELF("self", "仅本人");
+
+	private final String code;
+
+	private final String desc;
+
+	DataScope(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
+
+}

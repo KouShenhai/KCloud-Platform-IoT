@@ -18,7 +18,6 @@
 package org.laokou.common.mybatisplus.config;
 
 import com.baomidou.mybatisplus.extension.plugins.handler.TableNameHandler;
-import org.laokou.common.mybatisplus.context.DynamicTableNameContextHolder;
 
 /**
  * @author laokou
