@@ -54,6 +54,7 @@ const refreshToken =  async (refreshToken: string | null) => {
 				// 存储令牌
 				setToken(res.data?.access_token, res.data?.refresh_token, res.data?.expires_in * 1000 + new Date().getTime());
 				// 定时刷新令牌
+				// eslint-disable-next-line @typescript-eslint/no-use-before-define
 				scheduleRefreshToken().catch(console.log)
 			}
 		}).finally(() => {

@@ -22,7 +22,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.data.cache.annotation.DistributedCache;
 import org.laokou.common.data.cache.constant.NameConstants;
-import org.laokou.common.data.cache.model.OperateType;
+import org.laokou.common.data.cache.aspectj.OperateType;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.tenant.constant.DSConstants;
 import org.laokou.oss.convertor.OssConvertor;

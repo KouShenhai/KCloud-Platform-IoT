@@ -33,7 +33,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.io.ClassPathResource;
-import static com.alibaba.nacos.sys.env.Constants.STANDALONE_MODE_PROPERTY_NAME;
 
 /**
  * Nacos starter.
@@ -57,9 +56,9 @@ class NacosApp {
 		// -Dcom.google.protobuf.use_unsafe_pre22_gencode
 		// @formatter:on
 		System.setProperty("com.google.protobuf.use_unsafe_pre22_gencode", "true");
-		String standalone = System.getProperty(STANDALONE_MODE_PROPERTY_NAME, "");
+		String standalone = System.getProperty(Constants.STANDALONE_MODE_PROPERTY_NAME, "");
 		if (StringUtils.isBlank(standalone)) {
-			System.setProperty(STANDALONE_MODE_PROPERTY_NAME, "true");
+			System.setProperty(Constants.STANDALONE_MODE_PROPERTY_NAME, "true");
 		}
 
 		String type = System.getProperty(Constants.NACOS_DEPLOYMENT_TYPE, Constants.NACOS_DEPLOYMENT_TYPE_MERGED);

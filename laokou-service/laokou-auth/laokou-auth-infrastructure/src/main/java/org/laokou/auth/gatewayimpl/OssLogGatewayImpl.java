@@ -24,7 +24,7 @@ import org.laokou.auth.gatewayimpl.database.OssLogMapper;
 import org.laokou.auth.gatewayimpl.database.dataobject.OssLogDO;
 import org.laokou.common.data.cache.annotation.DistributedCache;
 import org.laokou.common.data.cache.constant.NameConstants;
-import org.laokou.common.data.cache.model.OperateType;
+import org.laokou.common.data.cache.aspectj.OperateType;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.tenant.constant.DSConstants;
 import org.springframework.stereotype.Component;

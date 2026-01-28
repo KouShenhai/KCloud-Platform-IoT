@@ -23,6 +23,7 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.laokou.auth.model.constant.Constants;
 import org.laokou.auth.model.enums.SuperAdmin;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -94,6 +95,10 @@ public class UserE implements Serializable {
 
 	public boolean isSuperAdministrator() {
 		return ObjectUtils.equals(SuperAdmin.YES.getCode(), this.superAdmin);
+	}
+
+	public boolean isDefaultTenant() {
+		return ObjectUtils.equals(Constants.DEFAULT_TENANT, this.tenantId);
 	}
 
 }

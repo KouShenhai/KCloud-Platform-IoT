@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.data.cache.model;
+package org.laokou.common.data.cache.aspectj;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;

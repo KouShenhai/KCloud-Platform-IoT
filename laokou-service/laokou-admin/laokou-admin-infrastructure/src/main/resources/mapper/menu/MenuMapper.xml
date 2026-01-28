@@ -78,4 +78,28 @@
     <include refid="selectObjectList"/>
   </select>
 
+  <select id="selectAllMenuList" resultType="org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO">
+    SELECT id,
+           "name",
+           pid,
+           "path",
+           icon
+    from sys_menu
+    where del_flag = 0 AND "type" = 0 AND status = 0
+    order by "sort" desc
+  </select>
+
+  <select id="selectMenuListByUserId" resultType="org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO">
+    SELECT m.id,
+           m."name",
+           m.pid,
+           m."path",
+           m.icon
+    from sys_menu m
+    join sys_role_menu rm on m.id = rm.menu_id
+    join sys_user_role ur on rm.role_id = ur.role_id
+    where m.del_flag = 0 AND m."type" = 0 AND m.status = 0 and ur.user_id = #{userId}
+    order by m."sort" desc
+  </select>
+
 </mapper>
