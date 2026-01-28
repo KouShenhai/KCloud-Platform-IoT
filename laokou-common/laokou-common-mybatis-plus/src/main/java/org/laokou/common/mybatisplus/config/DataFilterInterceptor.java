@@ -45,7 +45,8 @@ public class DataFilterInterceptor implements InnerInterceptor {
 	@Override
 	public void beforeQuery(Executor executor, MappedStatement ms, Object parameter, RowBounds rowBounds,
 			ResultHandler resultHandler, BoundSql boundSql) {
-		if (parameter instanceof Map<?, ?> map && map.get(PageQuery.PAGE_QUERY) instanceof PageQuery pageQuery) {
+		if (parameter instanceof Map<?, ?> map && map.containsKey(PageQuery.PAGE_QUERY)
+				&& map.get(PageQuery.PAGE_QUERY) instanceof PageQuery pageQuery) {
 			// 获取aop拼接的sql
 			String sqlFilter = pageQuery.getSqlFilter();
 			if (StringExtUtils.isEmpty(sqlFilter)) {
