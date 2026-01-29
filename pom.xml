@@ -239,7 +239,7 @@
     <!--minio版本-->
     <minio.version>8.6.0</minio.version>
     <!--mysql版本-->
-    <mysql-connector-j.version>9.5.0</mysql-connector-j.version>
+    <mysql-connector-j.version>9.6.0</mysql-connector-j.version>
     <!--modbus4j版本-->
     <modbus4j.version>v3.1.0</modbus4j.version>
     <!--swagger-annotations-jakarta版本-->
