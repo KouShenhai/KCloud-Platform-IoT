@@ -185,6 +185,11 @@
         <groupId>org.graalvm.buildtools</groupId>
         <artifactId>native-maven-plugin</artifactId>
         <version>${native-maven-plugin.version}</version>
+        <configuration>
+          <metadataRepository>
+            <enabled>false</enabled>
+          </metadataRepository>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>io.fabric8</groupId>
