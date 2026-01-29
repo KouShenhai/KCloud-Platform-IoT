@@ -1,4 +1,3 @@
 ```shell
-mvn clean install -DskipTests spring-boot:process-aot
-mvn native:build -Pnative
+mvn clean install -DskipTests spring-boot:process-aot -Pnative native:build -U
 ```

@@ -30,7 +30,6 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.context.annotation.ImportRuntimeHints;
 import org.springframework.util.StopWatch;
 import reactor.core.publisher.Hooks;
 import reactor.core.scheduler.Schedulers;
@@ -53,7 +52,6 @@ import java.util.concurrent.ExecutorService;
 @EnableConfigurationProperties
 @RequiredArgsConstructor
 @EnableAspectJAutoProxy
-@ImportRuntimeHints(GatewayRuntimeHints.class)
 @SpringBootApplication(scanBasePackages = "org.laokou")
 class GatewayApp implements CommandLineRunner {
 

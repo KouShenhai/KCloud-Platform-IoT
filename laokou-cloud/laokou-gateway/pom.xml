@@ -186,10 +186,20 @@
         <artifactId>native-maven-plugin</artifactId>
         <version>${native-maven-plugin.version}</version>
         <configuration>
-          <metadataRepository>
-            <enabled>false</enabled>
-          </metadataRepository>
+          <buildArgs combine.children="append">
+            <buildArg>--bundle-create</buildArg>
+          </buildArgs>
         </configuration>
+        <extensions>true</extensions>
+        <executions>
+          <execution>
+            <id>build-native</id>
+            <goals>
+              <goal>compile-no-fork</goal>
+            </goals>
+            <phase>package</phase>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>io.fabric8</groupId>
