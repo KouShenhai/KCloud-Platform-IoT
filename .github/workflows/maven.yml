@@ -90,10 +90,15 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Build Native Image with GraalVM
         run: |
+          # 登录阿里云镜像仓库
           docker login --username=${{ secrets.DOCKER_USERNAME }} --password=${{ secrets.DOCKER_PASSWORD }} registry.cn-shenzhen.aliyuncs.com
+          # ========== 构建laokou-gateway-native ==========
           cd /home/runner/work/KCloud-Platform-IoT/KCloud-Platform-IoT/laokou-cloud/laokou-gateway
+          # AOT处理
           mvnd spring-boot:process-aot
+          # 构建本地镜像
           mvnd spring-boot:build-image -DskipTests
+          # 推送镜像到镜像仓库
           docker push registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-gateway-native:4.0.1-SNAPSHOT
       - name: Build Docker Image
         run: |
