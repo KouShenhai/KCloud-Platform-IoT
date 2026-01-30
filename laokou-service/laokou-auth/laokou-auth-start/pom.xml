@@ -26,6 +26,7 @@
     </dependency>
   </dependencies>
   <build>
+    <finalName>${project.artifactId}</finalName>
     <plugins>
       <!-- 打包插件，将 Java 源代码编译为字节码（.class 文件） -->
       <plugin>
@@ -39,9 +40,10 @@
         <artifactId>spring-boot-maven-plugin</artifactId>
         <version>${spring-boot-maven-plugin.version}</version>
         <configuration>
-          <finalName>${project.artifactId}</finalName>
           <!-- main方法的地址 只需要修改这个地址-->
           <mainClass>org.laokou.auth.AuthApp</mainClass>
+          <!-- Docker镜像名称 -->
+          <imageName>${docker.registry}/${docker.namespace}/${project.artifactId}-native:${project.version}</imageName>
         </configuration>
         <executions>
           <execution>
@@ -55,27 +57,6 @@
         <groupId>org.graalvm.buildtools</groupId>
         <artifactId>native-maven-plugin</artifactId>
         <version>${native-maven-plugin.version}</version>
-        <extensions>true</extensions>
-        <executions>
-          <execution>
-            <id>build-native</id>
-            <phase>package</phase>
-          </execution>
-          <execution>
-            <id>test-native</id>
-            <phase>test</phase>
-          </execution>
-        </executions>
-        <configuration>
-          <imageName>${project.parent.artifactId}</imageName>
-          <mainClass>org.laokou.auth.AuthApp</mainClass>
-          <fallback>false</fallback>
-          <!-- 快速构建 -->
-          <quickBuild>true</quickBuild>
-          <buildArgs>
-            <buildArg>--verbose</buildArg>
-          </buildArgs>
-        </configuration>
       </plugin>
       <plugin>
         <groupId>io.fabric8</groupId>
