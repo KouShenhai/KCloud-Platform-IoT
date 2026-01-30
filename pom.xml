@@ -238,8 +238,6 @@
     <jsoup.version>1.22.1</jsoup.version>
     <!--minio版本-->
     <minio.version>8.6.0</minio.version>
-    <!--mysql版本-->
-    <mysql-connector-j.version>9.5.0</mysql-connector-j.version>
     <!--modbus4j版本-->
     <modbus4j.version>v3.1.0</modbus4j.version>
     <!--swagger-annotations-jakarta版本-->
@@ -492,11 +490,6 @@
         <groupId>com.github.infiniteautomation</groupId>
         <artifactId>modbus4j</artifactId>
         <version>${modbus4j.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.mysql</groupId>
-        <artifactId>mysql-connector-j</artifactId>
-        <version>${mysql-connector-j.version}</version>
       </dependency>
       <dependency>
         <groupId>io.minio</groupId>

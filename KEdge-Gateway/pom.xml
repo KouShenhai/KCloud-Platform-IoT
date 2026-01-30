@@ -29,6 +29,7 @@
   <properties>
     <quarkus.version>3.31.1</quarkus.version>
     <vertx.version>5.0.7</vertx.version>
+    <quarkus-jdbc-sqlite4j.version>0.0.8</quarkus-jdbc-sqlite4j.version>
     <maven-compiler-plugin.version>3.14.1</maven-compiler-plugin.version>
   </properties>
 
@@ -44,6 +45,10 @@
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-rest</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkiverse.jdbc</groupId>
+      <artifactId>quarkus-jdbc-sqlite4j</artifactId>
     </dependency>
   </dependencies>
 

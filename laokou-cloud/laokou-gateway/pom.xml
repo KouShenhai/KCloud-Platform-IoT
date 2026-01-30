@@ -28,6 +28,7 @@
   <artifactId>laokou-gateway</artifactId>
   <description>API网关</description>
   <version>4.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
 
   <dependencies>
     <dependency>
@@ -153,8 +154,15 @@
       <scope>test</scope>
       <optional>true</optional>
     </dependency>
+    <dependency>
+      <groupId>org.glassfish</groupId>
+      <artifactId>jakarta.el</artifactId>
+      <version>5.0.0-M1</version>
+      <scope>compile</scope>
+    </dependency>
   </dependencies>
   <build>
+    <finalName>${project.artifactId}</finalName>
     <plugins>
       <!-- 专门用于 Spring Boot 应用的打包和运行，提供打包为可执行 JAR/WAR 文件的功能，还可以在开发过程中直接运行应用 -->
       <plugin>
@@ -162,9 +170,10 @@
         <artifactId>spring-boot-maven-plugin</artifactId>
         <version>${spring-boot-maven-plugin.version}</version>
         <configuration>
-          <finalName>${project.artifactId}</finalName>
           <!-- main方法的地址 只需要修改这个地址-->
           <mainClass>org.laokou.gateway.GatewayApp</mainClass>
+          <!-- Docker镜像名称 -->
+          <imageName>${project.artifactId}-native:${project.version}</imageName>
         </configuration>
         <executions>
           <execution>
@@ -173,6 +182,11 @@
             </goals>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.graalvm.buildtools</groupId>
+        <artifactId>native-maven-plugin</artifactId>
+        <version>${native-maven-plugin.version}</version>
       </plugin>
       <plugin>
         <groupId>io.fabric8</groupId>
