@@ -173,7 +173,7 @@
           <!-- main方法的地址 只需要修改这个地址-->
           <mainClass>org.laokou.gateway.GatewayApp</mainClass>
           <!-- Docker镜像名称 -->
-          <imageName>${project.artifactId}-native:${project.version}</imageName>
+          <imageName>${docker.registry}/${docker.namespace}/${project.artifactId}-native:${project.version}</imageName>
         </configuration>
         <executions>
           <execution>
