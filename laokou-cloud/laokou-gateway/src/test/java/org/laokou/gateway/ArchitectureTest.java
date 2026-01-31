@@ -17,11 +17,10 @@
 
 package org.laokou.gateway;
 
+import com.tngtech.archunit.core.domain.JavaClasses;
 import com.tngtech.archunit.core.importer.ImportOption;
-import com.tngtech.archunit.base.DescribedPredicate;
 import com.tngtech.archunit.junit.AnalyzeClasses;
 import com.tngtech.archunit.junit.ArchTest;
-import com.tngtech.archunit.lang.ArchRule;
 import com.tngtech.archunit.lang.syntax.ArchRuleDefinition;
 import com.tngtech.archunit.library.Architectures;
 import com.tngtech.archunit.library.dependencies.SlicesRuleDefinition;
@@ -38,175 +37,183 @@ import org.junit.jupiter.api.DisplayName;
 @DisplayName("Gateway Architecture Tests")
 class ArchitectureTest {
 
-	/**
-	 * 过滤器类应该在 filter 包中.
-	 */
 	@ArchTest
-	static final ArchRule filters_should_be_in_filter_package = ArchRuleDefinition.classes()
-		.that()
-		.haveNameMatching(".*Filter")
-		.should()
-		.resideInAPackage("..filter..");
+	void test_filters_should_be_in_filter_package(JavaClasses classes) {
+		// 过滤器类应该在 filter 包中
+		ArchRuleDefinition.classes()
+			.that()
+			.haveNameMatching(".*Filter")
+			.should()
+			.resideInAPackage("..filter..")
+			.check(classes);
+	}
 
-	/**
-	 * 配置类应该在 config 包中.
-	 */
 	@ArchTest
-	static final ArchRule config_classes_should_be_in_config_package = ArchRuleDefinition.classes()
-		.that()
-		.haveNameMatching(".*Config")
-		.or()
-		.haveNameMatching(".*Properties")
-		.should()
-		.resideInAPackage("..config..");
+	void test_config_classes_should_be_in_config_package(JavaClasses classes) {
+		// 配置类应该在 config 包中
+		ArchRuleDefinition.classes()
+			.that()
+			.haveNameMatching(".*Config")
+			.or()
+			.haveNameMatching(".*Properties")
+			.should()
+			.resideInAPackage("..config..")
+			.check(classes);
+	}
 
-	/**
-	 * 异常处理器应该在 exception.handler 包中.
-	 */
 	@ArchTest
-	static final ArchRule exception_handlers_should_be_in_exception_package = ArchRuleDefinition.classes()
-		.that()
-		.haveNameMatching(".*ExceptionHandler")
-		.should()
-		.resideInAPackage("..exception.handler..");
+	void test_exception_handlers_should_be_in_exception_package(JavaClasses classes) {
+		// 异常处理器应该在 exception.handler 包中
+		ArchRuleDefinition.classes()
+			.that()
+			.haveNameMatching(".*ExceptionHandler")
+			.should()
+			.resideInAPackage("..exception.handler..")
+			.check(classes);
+	}
 
-	/**
-	 * 仓储类应该在 repository 包中.
-	 */
 	@ArchTest
-	static final ArchRule repositories_should_be_in_repository_package = ArchRuleDefinition.classes()
-		.that()
-		.haveNameMatching(".*Repository")
-		.should()
-		.resideInAPackage("..repository..");
+	void test_repositories_should_be_in_repository_package(JavaClasses classes) {
+		// 仓储类应该在 repository 包中
+		ArchRuleDefinition.classes()
+			.that()
+			.haveNameMatching(".*Repository")
+			.should()
+			.resideInAPackage("..repository..")
+			.check(classes);
+	}
 
-	/**
-	 * 工具类应该在 util 包中.
-	 */
 	@ArchTest
-	static final ArchRule utils_should_be_in_util_package = ArchRuleDefinition.classes()
-		.that()
-		.haveNameMatching(".*Utils")
-		.should()
-		.resideInAPackage("..util..");
+	void test_utils_should_be_in_util_package(JavaClasses classes) {
+		// 工具类应该在 util 包中
+		ArchRuleDefinition.classes()
+			.that()
+			.haveNameMatching(".*Utils")
+			.should()
+			.resideInAPackage("..util..")
+			.check(classes);
+	}
 
-	/**
-	 * 常量类应该在 constant 包中.
-	 */
 	@ArchTest
-	static final ArchRule constants_should_be_in_constant_package = ArchRuleDefinition.classes()
-		.that()
-		.haveNameMatching(".*Constants")
-		.should()
-		.resideInAPackage("..constant..");
+	void test_constants_should_be_in_constant_package(JavaClasses classes) {
+		// 常量类应该在 constant 包中
+		ArchRuleDefinition.classes()
+			.that()
+			.haveNameMatching(".*Constants")
+			.should()
+			.resideInAPackage("..constant..")
+			.check(classes);
+	}
 
-	/**
-	 * 过滤器不应该直接依赖仓储实现.
-	 */
 	@ArchTest
-	static final ArchRule filters_should_not_depend_on_repositories = ArchRuleDefinition.noClasses()
-		.that()
-		.resideInAPackage("..filter..")
-		.should()
-		.dependOnClassesThat()
-		.resideInAPackage("..repository..");
+	void test_filters_should_not_depend_on_repositories(JavaClasses classes) {
+		// 过滤器不应该直接依赖仓储实现
+		ArchRuleDefinition.noClasses()
+			.that()
+			.resideInAPackage("..filter..")
+			.should()
+			.dependOnClassesThat()
+			.resideInAPackage("..repository..")
+			.check(classes);
+	}
 
-	/**
-	 * 配置类不应该依赖过滤器.
-	 */
 	@ArchTest
-	static final ArchRule config_should_not_depend_on_filters = ArchRuleDefinition.noClasses()
-		.that()
-		.resideInAPackage("..config..")
-		.should()
-		.dependOnClassesThat()
-		.resideInAPackage("..filter..");
+	void test_config_should_not_depend_on_filters(JavaClasses classes) {
+		// 配置类不应该依赖过滤器
+		ArchRuleDefinition.noClasses()
+			.that()
+			.resideInAPackage("..config..")
+			.should()
+			.dependOnClassesThat()
+			.resideInAPackage("..filter..")
+			.check(classes);
+	}
 
-	/**
-	 * 工具类不应该依赖业务类.
-	 */
 	@ArchTest
-	static final ArchRule utils_should_not_depend_on_business_classes = ArchRuleDefinition.noClasses()
-		.that()
-		.resideInAPackage("..util..")
-		.should()
-		.dependOnClassesThat()
-		.resideInAPackage("..filter..");
+	void test_utils_should_not_depend_on_business_classes(JavaClasses classes) {
+		// 工具类不应该依赖业务类
+		ArchRuleDefinition.noClasses()
+			.that()
+			.resideInAPackage("..util..")
+			.should()
+			.dependOnClassesThat()
+			.resideInAPackage("..filter..")
+			.check(classes);
+	}
 
-	/**
-	 * 分层架构验证.
-	 */
 	@ArchTest
-	static final ArchRule layer_dependencies_are_respected = Architectures.layeredArchitecture()
-		.consideringAllDependencies()
-		.ignoreDependency(DescribedPredicate.describe("GatewayRunTimeHints",
-				clazz -> clazz.getName().endsWith("GatewayRunTimeHints")), DescribedPredicate.alwaysTrue())
-		.layer("Config")
-		.definedBy("..config..")
-		.layer("Filter")
-		.definedBy("..filter..")
-		.layer("Repository")
-		.definedBy("..repository..")
-		.layer("Util")
-		.definedBy("..util..")
-		.layer("Constant")
-		.definedBy("..constant..")
-		.layer("Exception")
-		.definedBy("..exception..")
-		.whereLayer("Filter")
-		.mayOnlyBeAccessedByLayers("Config")
-		.whereLayer("Util")
-		.mayOnlyBeAccessedByLayers("Filter", "Exception", "Repository", "Config")
-		.whereLayer("Constant")
-		.mayOnlyBeAccessedByLayers("Repository", "Filter", "Exception", "Config");
+	void test_layer_dependencies_are_respected(JavaClasses classes) {
+		// 分层架构验证
+		Architectures.layeredArchitecture()
+			.consideringAllDependencies()
+			.layer("Config")
+			.definedBy("..config..")
+			.layer("Filter")
+			.definedBy("..filter..")
+			.layer("Repository")
+			.definedBy("..repository..")
+			.layer("Util")
+			.definedBy("..util..")
+			.layer("Constant")
+			.definedBy("..constant..")
+			.layer("Exception")
+			.definedBy("..exception..")
+			.whereLayer("Filter")
+			.mayOnlyBeAccessedByLayers("Config")
+			.whereLayer("Util")
+			.mayOnlyBeAccessedByLayers("Filter", "Exception", "Repository", "Config")
+			.whereLayer("Constant")
+			.mayOnlyBeAccessedByLayers("Repository", "Filter", "Exception", "Config")
+			.check(classes);
+	}
 
-	/**
-	 * 无循环依赖.
-	 */
 	@ArchTest
-	static final ArchRule no_cycles_in_packages = SlicesRuleDefinition.slices()
-		.matching("org.laokou.gateway.(*)..")
-		.should()
-		.beFreeOfCycles();
+	void test_no_cycles_in_packages(JavaClasses classes) {
+		// 无循环依赖
+		SlicesRuleDefinition.slices().matching("org.laokou.gateway.(*)..").should().beFreeOfCycles().check(classes);
+	}
 
-	/**
-	 * 公共类应该有 Javadoc.
-	 */
 	@ArchTest
-	static final ArchRule public_classes_should_be_documented = ArchRuleDefinition.classes()
-		.that()
-		.arePublic()
-		.and()
-		.areNotAnonymousClasses()
-		.and()
-		.doNotHaveSimpleName("package-info")
-		.should()
-		.bePublic();
+	void test_public_classes_should_be_documented(JavaClasses classes) {
+		// 公共类应该可以被公开访问
+		ArchRuleDefinition.classes()
+			.that()
+			.arePublic()
+			.and()
+			.areNotAnonymousClasses()
+			.and()
+			.doNotHaveSimpleName("package-info")
+			.should()
+			.bePublic()
+			.check(classes);
+	}
 
-	/**
-	 * 过滤器应该实现 GlobalFilter 或 WebFilter 接口.
-	 */
 	@ArchTest
-	static final ArchRule filters_should_implement_filter_interface = ArchRuleDefinition.classes()
-		.that()
-		.haveNameMatching(".*Filter")
-		.and()
-		.areNotInterfaces()
-		.and()
-		.resideInAPackage("..filter..")
-		.should()
-		.beAssignableTo(org.springframework.cloud.gateway.filter.GlobalFilter.class);
+	void test_filters_should_implement_filter_interface(JavaClasses classes) {
+		// 过滤器应该实现 GlobalFilter 或 WebFilter 接口
+		ArchRuleDefinition.classes()
+			.that()
+			.haveNameMatching(".*Filter")
+			.and()
+			.areNotInterfaces()
+			.and()
+			.resideInAPackage("..filter..")
+			.should()
+			.beAssignableTo(org.springframework.cloud.gateway.filter.GlobalFilter.class)
+			.check(classes);
+	}
 
-	/**
-	 * 仓储应该实现 RouteDefinitionRepository 接口.
-	 */
 	@ArchTest
-	static final ArchRule repositories_should_implement_repository_interface = ArchRuleDefinition.classes()
-		.that()
-		.haveNameMatching(".*RouteDefinitionRepository")
-		.and()
-		.areNotInterfaces()
-		.should()
-		.beAssignableTo(org.springframework.cloud.gateway.route.RouteDefinitionRepository.class);
+	void test_repositories_should_implement_repository_interface(JavaClasses classes) {
+		// 仓储应该实现 RouteDefinitionRepository 接口
+		ArchRuleDefinition.classes()
+			.that()
+			.haveNameMatching(".*RouteDefinitionRepository")
+			.and()
+			.areNotInterfaces()
+			.should()
+			.beAssignableTo(org.springframework.cloud.gateway.route.RouteDefinitionRepository.class)
+			.check(classes);
+	}
 
 }
