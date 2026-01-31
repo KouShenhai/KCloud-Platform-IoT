@@ -137,7 +137,6 @@
         <artifactId>spring-boot-maven-plugin</artifactId>
         <version>${spring-boot-old.version}</version>
         <configuration>
-          <finalName>${project.artifactId}</finalName>
           <!-- main方法的地址 只需要修改这个地址-->
           <mainClass>org.laokou.nacos.NacosApp</mainClass>
         </configuration>
@@ -174,27 +173,6 @@
         <groupId>org.graalvm.buildtools</groupId>
         <artifactId>native-maven-plugin</artifactId>
         <version>${native-maven-plugin.version}</version>
-        <extensions>true</extensions>
-        <executions>
-          <execution>
-            <id>build-native</id>
-            <phase>package</phase>
-          </execution>
-          <execution>
-            <id>test-native</id>
-            <phase>test</phase>
-          </execution>
-        </executions>
-        <configuration>
-          <imageName>${project.parent.artifactId}</imageName>
-          <mainClass>org.laokou.nacos.NacosApp</mainClass>
-          <fallback>false</fallback>
-          <!-- 快速构建 -->
-          <quickBuild>true</quickBuild>
-          <buildArgs>
-            <buildArg>--verbose</buildArg>
-          </buildArgs>
-        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
