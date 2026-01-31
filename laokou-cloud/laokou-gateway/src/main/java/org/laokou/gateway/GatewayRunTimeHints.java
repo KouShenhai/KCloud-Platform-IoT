@@ -41,7 +41,7 @@ import org.springframework.cloud.gateway.route.RouteDefinition;
  *
  * @author laokou
  */
-final class GatewayRunTimeHints implements RuntimeHintsRegistrar {
+public final class GatewayRunTimeHints implements RuntimeHintsRegistrar {
 
 	@Override
 	public void registerHints(@NonNull RuntimeHints hints, ClassLoader classLoader) {

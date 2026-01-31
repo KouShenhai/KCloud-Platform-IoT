@@ -20,14 +20,12 @@ package org.laokou.common.idempotent.aspectj;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.util.StringExtUtils;
-import org.laokou.common.idempotent.util.IdempotentUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.common.redis.util.RedisUtils;
 import org.springframework.stereotype.Component;
 
@@ -42,12 +40,12 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class IdempotentAspectj {
 
-	public static final String REQUEST_ID = "request-id";
-
 	private final RedisUtils redisUtils;
 
-	@Around("@annotation(org.laokou.common.idempotent.annotation.Idempotent)")
-	public Object doAround(ProceedingJoinPoint point) throws Throwable {
+	private static final String REQUEST_ID = "request-id";
+
+	@Before("@annotation(org.laokou.common.idempotent.annotation.Idempotent)")
+	public void doBefore() {
 		String requestId = getRequestId();
 		if (StringExtUtils.isEmpty(requestId)) {
 			throw new SystemException("S_Idempotent_RequestIDIsNull", "请求ID不能为空");
@@ -56,21 +54,6 @@ public class IdempotentAspectj {
 		if (!redisUtils.setIfAbsent(apiIdempotentKey, 0, RedisUtils.FIVE_MINUTE_EXPIRE)) {
 			throw new SystemException("S_Idempotent_RequestRepeatedSubmit", "不可重复提交请求");
 		}
-		try {
-			doBefore();
-			return point.proceed();
-		}
-		finally {
-			doAfter();
-		}
-	}
-
-	public void doBefore() {
-		IdempotentUtils.openIdempotent();
-	}
-
-	public void doAfter() {
-		IdempotentUtils.cleanIdempotent();
 	}
 
 	private String getRequestId() {
