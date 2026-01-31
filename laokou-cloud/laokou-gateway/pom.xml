@@ -187,28 +187,6 @@
         <groupId>org.graalvm.buildtools</groupId>
         <artifactId>native-maven-plugin</artifactId>
         <version>${native-maven-plugin.version}</version>
-        <configuration>
-          <buildArgs>
-            <!-- 资源包含配置 -->
-            <buildArg>-H:IncludeResources=log4j2-dev\.xml</buildArg>
-            <buildArg>-H:IncludeResources=log4j2-prod\.xml</buildArg>
-            <buildArg>-H:IncludeResources=log4j2-test\.xml</buildArg>
-            <buildArg>-H:IncludeResources=log4j2\.component\.properties</buildArg>
-            <buildArg>-H:IncludeResources=application.*\.yml</buildArg>
-            <buildArg>-H:IncludeResources=router\.json</buildArg>
-            <buildArg>-H:IncludeResources=gateway-flow\.json</buildArg>
-            <buildArg>-H:IncludeResources=banner\.txt</buildArg>
-            <buildArg>-H:IncludeResources=scg-keystore\.p12</buildArg>
-            <buildArg>-H:IncludeResources=i18n/.*\.properties</buildArg>
-            <buildArg>-H:IncludeResources=static/.*</buildArg>
-            <buildArg>-H:IncludeResources=META-INF/org/apache/logging/log4j/core/config/plugins/Log4j2Plugins\.dat</buildArg>
-            <buildArg>-H:IncludeResources=META-INF/spring/.*</buildArg>
-            <buildArg>-H:IncludeResources=META-INF/services/.*</buildArg>
-            <!-- Log4j2 Native Image 支持 -->
-            <buildArg>--initialize-at-build-time=org.apache.logging.log4j</buildArg>
-            <buildArg>--initialize-at-run-time=io.netty</buildArg>
-          </buildArgs>
-        </configuration>
       </plugin>
       <plugin>
         <groupId>io.fabric8</groupId>
