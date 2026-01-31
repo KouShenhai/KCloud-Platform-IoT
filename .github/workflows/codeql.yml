@@ -72,6 +72,6 @@ jobs:
         </settings>
         EOF
     - name: Build with Maven
-      run: mvn clean package -P test -DskipTests -U
+      run: mvn clean package -Ptest -DskipTests -U
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v4.32.0
