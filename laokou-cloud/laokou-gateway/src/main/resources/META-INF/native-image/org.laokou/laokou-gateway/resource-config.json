@@ -1,0 +1,69 @@
+{
+    "resources": {
+        "includes": [
+            {
+                "pattern": "\\Qlog4j2-dev.xml\\E"
+            },
+            {
+                "pattern": "\\Qlog4j2-prod.xml\\E"
+            },
+            {
+                "pattern": "\\Qlog4j2-test.xml\\E"
+            },
+            {
+                "pattern": "\\Qapplication.yml\\E"
+            },
+            {
+                "pattern": "\\Qapplication-dev.yml\\E"
+            },
+            {
+                "pattern": "\\Qapplication-prod.yml\\E"
+            },
+            {
+                "pattern": "\\Qapplication-test.yml\\E"
+            },
+            {
+                "pattern": "\\Qlog4j2.component.properties\\E"
+            },
+            {
+                "pattern": "\\Qrouter.json\\E"
+            },
+            {
+                "pattern": "\\Qgateway-flow.json\\E"
+            },
+            {
+                "pattern": "\\Qbanner.txt\\E"
+            },
+            {
+                "pattern": "\\Qscg-keystore.p12\\E"
+            },
+            {
+                "pattern": "i18n/gateway_message.properties"
+            },
+            {
+                "pattern": "i18n/gateway_message_en.properties"
+            },
+            {
+                "pattern": "i18n/gateway_message_en_US.properties"
+            },
+            {
+                "pattern": "i18n/gateway_message_zh_CN.properties"
+            },
+            {
+                "pattern": "static/favicon.ico"
+            },
+            {
+                "pattern": "META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
+            },
+            {
+                "pattern": "META-INF/services/.*"
+            },
+            {
+                "pattern": "META-INF/org/apache/logging/log4j/core/config/plugins/Log4j2Plugins.dat"
+            },
+            {
+                "pattern": "META-INF/native-image/.*"
+            }
+        ]
+    }
+}

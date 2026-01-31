@@ -61,26 +61,39 @@ public final class GatewayRunTimeHints implements RuntimeHintsRegistrar {
 	 */
 	private void registerResources(@NonNull RuntimeHints hints) {
 		// yaml 配置文件
-		hints.resources().registerPattern("application*.yml");
+		hints.resources().registerPattern("application.yml");
+		hints.resources().registerPattern("application-dev.yml");
+		hints.resources().registerPattern("application-test.yml");
+		hints.resources().registerPattern("application-prod.yml");
 		// log4j2 配置文件
-		hints.resources().registerPattern("log4j2*.xml");
+		hints.resources().registerPattern("log4j2-dev.xml");
+		hints.resources().registerPattern("log4j2-prod.xml");
+		hints.resources().registerPattern("log4j2-test.xml");
+		// Log4j2 核心插件配置
+		hints.resources().registerPattern("META-INF/org/apache/logging/log4j/core/config/plugins/Log4j2Plugins.dat");
+		hints.resources().registerPattern("log4j2.component.properties");
 		// 静态配置
-		hints.resources().registerPattern("static/*.ico");
+		hints.resources().registerPattern("static/favicon.ico");
 		// i18n 国际化资源文件
-		hints.resources().registerPattern("i18n/*.properties");
+		hints.resources().registerPattern("i18n/gateway_message.properties");
+		hints.resources().registerPattern("i18n/gateway_message_en.properties");
+		hints.resources().registerPattern("i18n/gateway_message_en_US.properties");
+		hints.resources().registerPattern("i18n/gateway_message_zh_CN.properties");
 		// 动态路由配置文件
 		hints.resources().registerPattern("router.json");
 		// Sentinel 网关流控规则配置
 		hints.resources().registerPattern("gateway-flow.json");
 		// SSL 证书
-		hints.resources().registerPattern("*.p12");
+		hints.resources().registerPattern("scg-keystore.p12");
 		// Banner
 		hints.resources().registerPattern("banner.txt");
-		// 自动装配 相关配置
-		hints.resources().registerPattern("META-INF/spring/*.imports");
-		hints.resources().registerPattern("META-INF/spring/*.factories");
+		// 自动装配相关配置
+		hints.resources()
+			.registerPattern("META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports");
 		// Native Image 配置
 		hints.resources().registerPattern("META-INF/native-image/**");
+		// Spring 服务配置
+		hints.resources().registerPattern("META-INF/services/*");
 	}
 
 	/**
@@ -107,6 +120,33 @@ public final class GatewayRunTimeHints implements RuntimeHintsRegistrar {
 		registerReflectionType(hints, ReactiveI18nUtils.class);
 		// Gateway 本地类 - 应用启动类
 		registerReflectionType(hints, GatewayApp.class);
+
+		// Sentinel 相关类
+		registerReflectionTypeByName(hints, "com.alibaba.csp.sentinel.slots.block.BlockException");
+		registerReflectionTypeByName(hints, "com.alibaba.csp.sentinel.slots.block.flow.FlowException");
+		registerReflectionTypeByName(hints, "com.alibaba.csp.sentinel.slots.block.degrade.DegradeException");
+
+		// Nacos 相关类
+		registerReflectionTypeByName(hints, "com.alibaba.cloud.nacos.NacosConfigManager");
+		registerReflectionTypeByName(hints, "com.alibaba.nacos.api.config.ConfigService");
+		registerReflectionTypeByName(hints, "com.alibaba.nacos.client.config.NacosConfigService");
+
+		// Spring 事件相关类
+		registerReflectionTypeByName(hints, "org.springframework.cloud.gateway.event.RefreshRoutesEvent");
+
+		// Log4j2 相关类
+		registerReflectionTypeByName(hints, "org.apache.logging.log4j.core.config.xml.XmlConfiguration");
+		registerReflectionTypeByName(hints, "org.apache.logging.log4j.core.config.json.JsonConfiguration");
+		registerReflectionTypeByName(hints, "org.apache.logging.log4j.core.appender.ConsoleAppender");
+		registerReflectionTypeByName(hints, "org.apache.logging.log4j.core.appender.AsyncAppender");
+		registerReflectionTypeByName(hints, "org.apache.logging.log4j.core.layout.PatternLayout");
+
+		// Redisson 相关类
+		registerReflectionTypeByName(hints, "org.redisson.api.RMapReactive");
+		registerReflectionTypeByName(hints, "org.redisson.RedissonMap");
+
+		// Jackson 相关类
+		registerReflectionTypeByName(hints, "com.fasterxml.jackson.databind.ObjectMapper");
 	}
 
 	/**
@@ -124,8 +164,15 @@ public final class GatewayRunTimeHints implements RuntimeHintsRegistrar {
 		hints.serialization().registerType(TypeReference.of(java.util.HashMap.class));
 		hints.serialization().registerType(TypeReference.of(java.util.HashSet.class));
 		hints.serialization().registerType(TypeReference.of(java.util.LinkedHashSet.class));
+		hints.serialization().registerType(TypeReference.of(java.util.LinkedList.class));
+		hints.serialization().registerType(TypeReference.of(java.util.TreeMap.class));
+		hints.serialization().registerType(TypeReference.of(java.util.TreeSet.class));
+		hints.serialization().registerType(TypeReference.of(java.util.concurrent.ConcurrentHashMap.class));
 		// URI 序列化支持
 		hints.serialization().registerType(TypeReference.of(java.net.URI.class));
+		// Redisson 编解码相关
+		hints.serialization().registerType(TypeReference.of("org.redisson.codec.Kryo5Codec"));
+		hints.serialization().registerType(TypeReference.of("org.redisson.codec.JsonJacksonCodec"));
 	}
 
 	/**
@@ -140,6 +187,12 @@ public final class GatewayRunTimeHints implements RuntimeHintsRegistrar {
 		hints.proxies().registerJdkProxy(org.springframework.boot.webflux.error.ErrorWebExceptionHandler.class);
 		// Nacos 配置监听器代理
 		hints.proxies().registerJdkProxy(com.alibaba.nacos.api.config.listener.Listener.class);
+		// Spring 生命周期接口代理
+		hints.proxies().registerJdkProxy(org.springframework.beans.factory.InitializingBean.class);
+		hints.proxies().registerJdkProxy(org.springframework.core.Ordered.class);
+		hints.proxies().registerJdkProxy(org.springframework.beans.factory.DisposableBean.class);
+		// Reactive 相关代理
+		hints.proxies().registerJdkProxy(org.redisson.api.RMapReactive.class);
 	}
 
 	/**
@@ -150,6 +203,20 @@ public final class GatewayRunTimeHints implements RuntimeHintsRegistrar {
 	private void registerReflectionType(RuntimeHints hints, Class<?> type) {
 		hints.reflection()
 			.registerType(type,
+					builder -> builder.withMembers(MemberCategory.INVOKE_DECLARED_CONSTRUCTORS,
+							MemberCategory.INVOKE_DECLARED_METHODS, MemberCategory.INVOKE_PUBLIC_CONSTRUCTORS,
+							MemberCategory.INVOKE_PUBLIC_METHODS, MemberCategory.ACCESS_DECLARED_FIELDS,
+							MemberCategory.ACCESS_PUBLIC_FIELDS));
+	}
+
+	/**
+	 * 按类名注册反射类型.
+	 * @param hints 运行时提示
+	 * @param className 类完全限定名
+	 */
+	private void registerReflectionTypeByName(RuntimeHints hints, String className) {
+		hints.reflection()
+			.registerType(TypeReference.of(className),
 					builder -> builder.withMembers(MemberCategory.INVOKE_DECLARED_CONSTRUCTORS,
 							MemberCategory.INVOKE_DECLARED_METHODS, MemberCategory.INVOKE_PUBLIC_CONSTRUCTORS,
 							MemberCategory.INVOKE_PUBLIC_METHODS, MemberCategory.ACCESS_DECLARED_FIELDS,
