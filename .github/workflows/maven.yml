@@ -48,7 +48,7 @@ jobs:
           </settings>
           EOF
       - name: Build with Maven Mvnd
-        run: mvnd clean install -P dev -U
+        run: mvnd clean install -P test -U
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5.5.2
         env:
@@ -141,7 +141,7 @@ jobs:
           # ========== 构建laokou-gateway-native ==========
           cd /home/runner/work/KCloud-Platform-IoT/KCloud-Platform-IoT/laokou-cloud/laokou-gateway
           # AOT处理
-          mvnd clean install -DskipTests -Ptest spring-boot:process-aot
+          mvnd spring-boot:process-aot
           # 构建本地镜像
           mvnd spring-boot:build-image -DskipTests
           # 推送镜像到镜像仓库
