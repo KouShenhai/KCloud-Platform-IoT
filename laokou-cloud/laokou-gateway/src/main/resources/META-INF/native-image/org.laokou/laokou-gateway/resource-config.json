@@ -53,7 +53,7 @@
                 "pattern": "static/favicon.ico"
             },
             {
-                "pattern": "META-INF/spring/.*"
+                "pattern": "META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"
             },
             {
                 "pattern": "META-INF/services/.*"
