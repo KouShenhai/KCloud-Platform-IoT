@@ -205,7 +205,7 @@
     <!--knife4j版本-->
     <knife4j.version>4.5.0</knife4j.version>
     <!--taos-jdbcdriver版本-->
-    <taos-jdbcdriver.version>3.8.0</taos-jdbcdriver.version>
+    <taos-jdbcdriver.version>3.8.1</taos-jdbcdriver.version>
     <!--fory-core版本-->
     <fory-core.version>0.13.2</fory-core.version>
     <!--browscap-java版本-->
@@ -227,7 +227,7 @@
     <!--opencsv版本-->
     <opencsv.version>5.12.0</opencsv.version>
     <!--wiremock版本-->
-    <wiremock.version>4.0.0-beta.27</wiremock.version>
+    <wiremock.version>4.0.0-beta.28</wiremock.version>
     <!--jsch版本-->
     <jsch.version>2.27.7</jsch.version>
     <!--jSerialComm版本-->
