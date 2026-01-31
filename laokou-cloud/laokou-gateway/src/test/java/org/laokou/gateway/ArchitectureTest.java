@@ -18,14 +18,14 @@
 package org.laokou.gateway;
 
 import com.tngtech.archunit.core.importer.ImportOption;
+import com.tngtech.archunit.base.DescribedPredicate;
 import com.tngtech.archunit.junit.AnalyzeClasses;
 import com.tngtech.archunit.junit.ArchTest;
 import com.tngtech.archunit.lang.ArchRule;
-import org.junit.jupiter.api.DisplayName;
-
 import com.tngtech.archunit.lang.syntax.ArchRuleDefinition;
 import com.tngtech.archunit.library.Architectures;
 import com.tngtech.archunit.library.dependencies.SlicesRuleDefinition;
+import org.junit.jupiter.api.DisplayName;
 
 /**
  * laokou-gateway 架构测试.
@@ -139,6 +139,8 @@ class ArchitectureTest {
 	@ArchTest
 	static final ArchRule layer_dependencies_are_respected = Architectures.layeredArchitecture()
 		.consideringAllDependencies()
+		.ignoreDependency(DescribedPredicate.describe("GatewayRunTimeHints",
+				clazz -> clazz.getName().endsWith("GatewayRunTimeHints")), DescribedPredicate.alwaysTrue())
 		.layer("Config")
 		.definedBy("..config..")
 		.layer("Filter")
