@@ -361,7 +361,7 @@ services:
     ports:
       - "8848:8848"
       - "9848:9848"
-      - "9849:9849"
+      - "8048:8048"
     volumes:
       - ./nacos/logs:/opt/nacos/logs
     env_file:
