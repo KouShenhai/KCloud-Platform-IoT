@@ -19,7 +19,7 @@ package org.laokou.admin.menu.ability;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.menu.gateway.MenuGateway;
-import org.laokou.admin.menu.model.MenuE;
+import org.laokou.admin.menu.model.MenuA;
 import org.springframework.stereotype.Component;
 
 /**
@@ -33,12 +33,12 @@ public class MenuDomainService {
 
 	private final MenuGateway menuGateway;
 
-	public void createMenu(MenuE menuE) {
-		menuGateway.createMenu(menuE);
+	public void createMenu(MenuA menuA) {
+		menuGateway.createMenu(menuA);
 	}
 
-	public void updateMenu(MenuE menuE) {
-		menuGateway.updateMenu(menuE);
+	public void updateMenu(MenuA menuA) {
+		menuGateway.updateMenu(menuA);
 	}
 
 	public void deleteMenu(Long[] ids) {

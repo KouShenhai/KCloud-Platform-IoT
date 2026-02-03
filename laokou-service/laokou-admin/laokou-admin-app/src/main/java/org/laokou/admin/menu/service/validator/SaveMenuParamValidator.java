@@ -19,8 +19,8 @@ package org.laokou.admin.menu.service.validator;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.menu.gatewayimpl.database.MenuMapper;
-import org.laokou.admin.menu.model.MenuE;
-import org.laokou.admin.menu.model.MenuParamValidator;
+import org.laokou.admin.menu.model.MenuA;
+import org.laokou.admin.menu.model.validator.MenuParamValidator;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.springframework.stereotype.Component;
 
@@ -34,22 +34,22 @@ public class SaveMenuParamValidator implements MenuParamValidator {
 	private final MenuMapper menuMapper;
 
 	@Override
-	public void validateMenu(MenuE menuE) {
+	public void validateMenu(MenuA menuA) {
 		ParamValidator.validate(
 				// 校验父级ID
-				org.laokou.admin.menu.service.validator.MenuParamValidator.validateParentId(menuE),
+				org.laokou.admin.menu.service.validator.MenuParamValidator.validateParentId(menuA),
 				// 校验类型
-				org.laokou.admin.menu.service.validator.MenuParamValidator.validateType(menuE),
+				org.laokou.admin.menu.service.validator.MenuParamValidator.validateType(menuA),
 				// 校验名称
-				org.laokou.admin.menu.service.validator.MenuParamValidator.validateName(menuE, menuMapper, true),
+				org.laokou.admin.menu.service.validator.MenuParamValidator.validateName(menuA, menuMapper),
 				// 校验路径
-				org.laokou.admin.menu.service.validator.MenuParamValidator.validatePath(menuE, menuMapper, true),
+				org.laokou.admin.menu.service.validator.MenuParamValidator.validatePath(menuA, menuMapper),
 				// 校验权限标识
-				org.laokou.admin.menu.service.validator.MenuParamValidator.validatePermission(menuE, menuMapper, true),
+				org.laokou.admin.menu.service.validator.MenuParamValidator.validatePermission(menuA, menuMapper),
 				// 校验状态
-				org.laokou.admin.menu.service.validator.MenuParamValidator.validateStatus(menuE),
+				org.laokou.admin.menu.service.validator.MenuParamValidator.validateStatus(menuA),
 				// 校验排序
-				org.laokou.admin.menu.service.validator.MenuParamValidator.validateSort(menuE));
+				org.laokou.admin.menu.service.validator.MenuParamValidator.validateSort(menuA));
 	}
 
 }

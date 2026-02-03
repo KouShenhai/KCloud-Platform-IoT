@@ -22,7 +22,7 @@ import org.laokou.admin.menu.convertor.MenuConvertor;
 import org.laokou.admin.menu.gateway.MenuGateway;
 import org.laokou.admin.menu.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO;
-import org.laokou.admin.menu.model.MenuE;
+import org.laokou.admin.menu.model.MenuA;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -39,14 +39,14 @@ public class MenuGatewayImpl implements MenuGateway {
 	private final MenuMapper menuMapper;
 
 	@Override
-	public void createMenu(MenuE menuE) {
-		menuMapper.insert(MenuConvertor.toDataObject(menuE));
+	public void createMenu(MenuA menuA) {
+		menuMapper.insert(MenuConvertor.toDataObject(menuA));
 	}
 
 	@Override
-	public void updateMenu(MenuE menuE) {
-		MenuDO menuDO = MenuConvertor.toDataObject(menuE);
-		menuDO.setVersion(menuMapper.selectVersion(menuE.getId()));
+	public void updateMenu(MenuA menuA) {
+		MenuDO menuDO = MenuConvertor.toDataObject(menuA);
+		menuDO.setVersion(menuMapper.selectVersion(menuA.getId()));
 		menuMapper.updateById(menuDO);
 	}
 

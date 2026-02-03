@@ -31,21 +31,21 @@ final class OAuth2ParamValidator {
 	private OAuth2ParamValidator() {
 	}
 
-	public static ParamValidator.Validate validateUsername(String username) {
+	static ParamValidator.Validate validateUsername(String username) {
 		if (StringExtUtils.isEmpty(username)) {
 			return ParamValidator.invalidate(ValidatorUtils.getMessage(OAuth2Constants.USERNAME_REQUIRE));
 		}
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validatePassword(String password) {
+	static ParamValidator.Validate validatePassword(String password) {
 		if (StringExtUtils.isEmpty(password)) {
 			return ParamValidator.invalidate(ValidatorUtils.getMessage(OAuth2Constants.PASSWORD_REQUIRE));
 		}
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateMail(String mail) {
+	static ParamValidator.Validate validateMail(String mail) {
 		if (StringExtUtils.isEmpty(mail)) {
 			return ParamValidator.invalidate(ValidatorUtils.getMessage(OAuth2Constants.MAIL_REQUIRE));
 		}
@@ -55,7 +55,7 @@ final class OAuth2ParamValidator {
 		return ParamValidator.invalidate(ValidatorUtils.getMessage(OAuth2Constants.MAIL_ERROR));
 	}
 
-	public static ParamValidator.Validate validateMobile(String mobile) {
+	static ParamValidator.Validate validateMobile(String mobile) {
 		if (StringExtUtils.isEmpty(mobile)) {
 			return ParamValidator.invalidate(ValidatorUtils.getMessage(OAuth2Constants.MOBILE_REQUIRE));
 		}
@@ -65,21 +65,21 @@ final class OAuth2ParamValidator {
 		return ParamValidator.invalidate(ValidatorUtils.getMessage(OAuth2Constants.MOBILE_ERROR));
 	}
 
-	public static ParamValidator.Validate validateUuid(String uuid) {
+	static ParamValidator.Validate validateUuid(String uuid) {
 		if (StringExtUtils.isEmpty(uuid)) {
 			return ParamValidator.invalidate(ValidatorUtils.getMessage(OAuth2Constants.UUID_REQUIRE));
 		}
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateTenantCode(String tenantCode) {
+	static ParamValidator.Validate validateTenantCode(String tenantCode) {
 		if (StringExtUtils.isEmpty(tenantCode)) {
 			return ParamValidator.invalidate(ValidatorUtils.getMessage(OAuth2Constants.TENANT_CODE_REQUIRE));
 		}
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateCaptcha(String captcha) {
+	static ParamValidator.Validate validateCaptcha(String captcha) {
 		if (StringExtUtils.isEmpty(captcha)) {
 			return ParamValidator.invalidate(ValidatorUtils.getMessage(OAuth2Constants.CAPTCHA_REQUIRE));
 		}

@@ -17,7 +17,8 @@
 
 package org.laokou.admin.menu.factory;
 
-import org.laokou.admin.menu.model.MenuE;
+import org.laokou.admin.menu.model.MenuA;
+import org.laokou.admin.menu.model.entity.MenuE;
 import org.laokou.common.i18n.util.SpringContextUtils;
 
 public final class MenuDomainFactory {
@@ -25,7 +26,11 @@ public final class MenuDomainFactory {
 	private MenuDomainFactory() {
 	}
 
-	public static MenuE getMenu() {
+	public static MenuA createMenuA() {
+		return SpringContextUtils.getBeanProvider(MenuA.class);
+	}
+
+	public static MenuE createMenuE() {
 		return SpringContextUtils.getBeanProvider(MenuE.class);
 	}
 

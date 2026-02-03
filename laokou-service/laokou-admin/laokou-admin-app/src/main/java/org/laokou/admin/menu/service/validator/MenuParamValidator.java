@@ -20,8 +20,8 @@ package org.laokou.admin.menu.service.validator;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.laokou.admin.menu.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO;
-import org.laokou.admin.menu.model.MenuE;
-import org.laokou.admin.menu.model.enums.MenuType;
+import org.laokou.admin.menu.model.MenuA;
+import org.laokou.admin.menu.model.entity.MenuE;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.laokou.common.i18n.util.StringExtUtils;
@@ -34,63 +34,57 @@ final class MenuParamValidator {
 	private MenuParamValidator() {
 	}
 
-	public static ParamValidator.Validate validatePermission(MenuE menuE, MenuMapper menuMapper, boolean isSave) {
-		Integer type = menuE.getType();
-		String permission = menuE.getPermission();
-		if (MenuType.BUTTON.getCode() == type) {
-			if (StringExtUtils.isEmpty(permission)) {
-				return ParamValidator.invalidate("菜单权限标识不能为空");
-			}
-			if (isSave && menuMapper
-				.selectCount(Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getPermission, permission)) > 0) {
-				return ParamValidator.invalidate("菜单权限标识已存在");
-			}
-			if (!isSave && menuMapper.selectCount(Wrappers.lambdaQuery(MenuDO.class)
-				.eq(MenuDO::getPermission, permission)
-				.ne(MenuDO::getId, menuE.getId())) > 0) {
-				return ParamValidator.invalidate("菜单权限标识已存在");
-			}
+	static ParamValidator.Validate validatePermission(MenuA menuA, MenuMapper menuMapper) {
+		String permission = menuA.getMenuE().getPermission();
+		if (menuA.isMenu() && StringExtUtils.isEmpty(permission)) {
+			return org.laokou.common.i18n.util.ParamValidator.invalidate("菜单权限标识不能为空");
+		}
+		if (menuA.isMenu() && menuA.isSave() && menuMapper
+			.selectCount(Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getPermission, permission)) > 0) {
+			return org.laokou.common.i18n.util.ParamValidator.invalidate("菜单权限标识已存在");
+		}
+		if (menuA.isMenu() && menuA.isModify()
+				&& menuMapper.selectCount(Wrappers.lambdaQuery(MenuDO.class)
+					.eq(MenuDO::getPermission, permission)
+					.ne(MenuDO::getId, menuA.getId())) > 0) {
+			return ParamValidator.invalidate("菜单权限标识已存在");
 		}
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateParentId(MenuE menuE) {
-		Long pid = menuE.getPid();
+	static ParamValidator.Validate validateParentId(MenuA menuA) {
+		Long pid = menuA.getMenuE().getPid();
 		if (ObjectUtils.isNull(pid)) {
 			return ParamValidator.invalidate("菜单父级ID不能为空");
 		}
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateType(MenuE menuE) {
-		Integer type = menuE.getType();
-		if (ObjectUtils.isNull(type)) {
+	static ParamValidator.Validate validateType(MenuA menuA) {
+		if (ObjectUtils.isNull(menuA.getMenuE().getType())) {
 			return ParamValidator.invalidate("菜单类型不能为空");
 		}
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validatePath(MenuE menuE, MenuMapper menuMapper, boolean isSave) {
-		Integer type = menuE.getType();
-		String path = menuE.getPath();
-		if (MenuType.MENU.getCode() == type) {
-			if (StringExtUtils.isEmpty(path)) {
-				return ParamValidator.invalidate("菜单路径不能为空");
-			}
-			if (isSave && menuMapper.selectCount(Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getPath, path)) > 0) {
-				return ParamValidator.invalidate("菜单路径已存在");
-			}
-			if (!isSave && menuMapper.selectCount(Wrappers.lambdaQuery(MenuDO.class)
-				.eq(MenuDO::getPath, path)
-				.ne(MenuDO::getId, menuE.getId())) > 0) {
-				return ParamValidator.invalidate("菜单路径已存在");
-			}
+	static ParamValidator.Validate validatePath(MenuA menuA, MenuMapper menuMapper) {
+		String path = menuA.getMenuE().getPath();
+		if (menuA.isMenu() && StringExtUtils.isEmpty(path)) {
+			return ParamValidator.invalidate("菜单路径不能为空");
+		}
+		if (menuA.isMenu() && menuA.isSave()
+				&& menuMapper.selectCount(Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getPath, path)) > 0) {
+			return ParamValidator.invalidate("菜单路径已存在");
+		}
+		if (menuA.isMenu() && menuA.isModify() && menuMapper.selectCount(
+				Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getPath, path).ne(MenuDO::getId, menuA.getId())) > 0) {
+			return ParamValidator.invalidate("菜单路径已存在");
 		}
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateSort(MenuE menuE) {
-		Integer sort = menuE.getSort();
+	static ParamValidator.Validate validateSort(MenuA menuA) {
+		Integer sort = menuA.getMenuE().getSort();
 		if (ObjectUtils.isNull(sort)) {
 			return ParamValidator.invalidate("菜单排序不能为空");
 		}
@@ -100,38 +94,38 @@ final class MenuParamValidator {
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateStatus(MenuE menuE) {
-		Integer type = menuE.getType();
-		Integer status = menuE.getStatus();
-		if (MenuType.MENU.getCode() == type && ObjectUtils.isNull(status)) {
+	static ParamValidator.Validate validateStatus(MenuA menuA) {
+		Integer status = menuA.getMenuE().getStatus();
+		if (menuA.isMenu() && ObjectUtils.isNull(status)) {
 			return ParamValidator.invalidate("菜单状态不能为空");
+		}
+		if (menuA.statusNotExist()) {
+			return ParamValidator.invalidate("菜单状态不存在");
 		}
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateId(MenuE menuE) {
-		Long id = menuE.getId();
+	static ParamValidator.Validate validateId(MenuA menuA) {
+		Long id = menuA.getId();
 		if (ObjectUtils.isNull(id)) {
 			return ParamValidator.invalidate("菜单ID不能为空");
 		}
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateName(MenuE menuE, MenuMapper menuMapper, boolean isSave) {
+	static ParamValidator.Validate validateName(MenuA menuA, MenuMapper menuMapper) {
+		MenuE menuE = menuA.getMenuE();
 		String name = menuE.getName();
-		Integer type = menuE.getType();
 		if (StringExtUtils.isEmpty(name)) {
 			return ParamValidator.invalidate("菜单名称不能为空");
 		}
-		if (MenuType.MENU.getCode() == type) {
-			if (isSave && menuMapper.selectCount(Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getName, name)) > 0) {
-				return ParamValidator.invalidate("菜单名称已存在");
-			}
-			if (!isSave && menuMapper.selectCount(Wrappers.lambdaQuery(MenuDO.class)
-				.eq(MenuDO::getName, name)
-				.ne(MenuDO::getId, menuE.getId())) > 0) {
-				return ParamValidator.invalidate("菜单名称已存在");
-			}
+		if (menuA.isMenu() && menuA.isSave()
+				&& menuMapper.selectCount(Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getName, name)) > 0) {
+			return ParamValidator.invalidate("菜单名称已存在");
+		}
+		if (menuA.isMenu() && menuA.isModify() && menuMapper.selectCount(
+				Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getName, name).ne(MenuDO::getId, menuA.getId())) > 0) {
+			return ParamValidator.invalidate("菜单名称已存在");
 		}
 		return ParamValidator.validate();
 	}

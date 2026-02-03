@@ -21,8 +21,8 @@ import org.laokou.admin.menu.dto.clientobject.MenuCO;
 import org.laokou.admin.menu.dto.clientobject.MenuTreeCO;
 import org.laokou.admin.menu.factory.MenuDomainFactory;
 import org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO;
-import org.laokou.admin.menu.model.MenuE;
-import org.laokou.admin.menu.model.enums.OperateType;
+import org.laokou.admin.menu.model.MenuA;
+import org.laokou.admin.menu.model.entity.MenuE;
 
 import java.util.List;
 
@@ -36,12 +36,10 @@ public final class MenuConvertor {
 	private MenuConvertor() {
 	}
 
-	public static MenuDO toDataObject(MenuE menuE) {
+	public static MenuDO toDataObject(MenuA menuA) {
+		MenuE menuE = menuA.getMenuE();
 		MenuDO menuDO = new MenuDO();
-		switch (menuE.getOperateType()) {
-			case SAVE -> menuDO.setId(menuE.getPrimaryKey());
-			case MODIFY -> menuDO.setId(menuE.getId());
-		}
+		menuDO.setId(menuA.getId());
 		menuDO.setPid(menuE.getPid());
 		menuDO.setPermission(menuE.getPermission());
 		menuDO.setType(menuE.getType());
@@ -92,19 +90,19 @@ public final class MenuConvertor {
 		return list.stream().map(MenuConvertor::toClientObj).toList();
 	}
 
-	public static MenuE toEntity(MenuCO menuCO, boolean isInsert) {
-		MenuE menuE = MenuDomainFactory.getMenu();
-		menuE.setId(menuCO.getId());
-		menuE.setPid(menuCO.getPid());
-		menuE.setPermission(menuCO.getPermission());
-		menuE.setType(menuCO.getType());
-		menuE.setName(menuCO.getName());
-		menuE.setPath(menuCO.getPath());
-		menuE.setIcon(menuCO.getIcon());
-		menuE.setSort(menuCO.getSort());
-		menuE.setStatus(menuCO.getStatus());
-		menuE.setOperateType(isInsert ? OperateType.SAVE : OperateType.MODIFY);
-		return menuE;
+	public static MenuE toEntity(MenuCO menuCO) {
+		return MenuDomainFactory.createMenuE()
+			.toBuilder()
+			.id(menuCO.getId())
+			.pid(menuCO.getPid())
+			.permission(menuCO.getPermission())
+			.type(menuCO.getType())
+			.name(menuCO.getName())
+			.path(menuCO.getPath())
+			.icon(menuCO.getIcon())
+			.sort(menuCO.getSort())
+			.status(menuCO.getStatus())
+			.build();
 	}
 
 }
