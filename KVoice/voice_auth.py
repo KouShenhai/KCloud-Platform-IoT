@@ -218,14 +218,14 @@ class VoiceAuthSystem:
 
         print("\n" + "=" * 50)
         print("🎤 语音认证系统已启动")
-        print(f"   唤醒词: 你好小寇")
+        print(f"   唤醒词: 你好世界")
         print(f"   已注册用户: {self.user_manager.user_count} 人")
         print("   按 Ctrl+C 停止")
         print("=" * 50 + "\n")
 
         try:
             while self._running:
-                print("\n📢 请说话 (说\"你好小寇\"来唤醒)...")
+                print("\n📢 请说话 (说\"你好世界\"来唤醒)...")
 
                 try:
                     # 录制音频

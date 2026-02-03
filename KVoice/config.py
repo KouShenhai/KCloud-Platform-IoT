@@ -37,12 +37,12 @@ RECORD_SECONDS = 3  # 默认录音时长 (秒)
 FORMAT_BITS = 16  # 位深度
 
 # ============ 唤醒词配置 ============
-WAKE_WORD = "你好小寇"  # 唤醒词
+WAKE_WORD = "你好世界"  # 唤醒词
 WAKE_WORD_VARIANTS = [
-    "你好小寇",
-    "你好 小寇",
-    "你好，小寇",
-    "你好,小寇",
+    "你好世界",
+    "你好 世界",
+    "你好，世界",
+    "你好,世界",
     "nihao xiaokou",
     "ni hao xiao kou",
 ]

@@ -128,7 +128,7 @@ class UserManager:
         try:
             for i in range(num_samples):
                 print(f"\n🎙️ 第 {i + 1}/{num_samples} 段录音")
-                print("   请朗读：你好小寇，我是{}".format(name))
+                print("   请朗读：你好世界，我是{}".format(name))
                 input("   按 Enter 开始录音...")
 
                 # 录制音频

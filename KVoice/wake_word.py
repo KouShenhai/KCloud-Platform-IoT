@@ -17,7 +17,7 @@
 
 """
 唤醒词检测模块
-使用 Whisper ASR 进行语音识别，检测"你好小寇"唤醒词
+使用 Whisper ASR 进行语音识别，检测"你好世界"唤醒词
 """
 
 import re
@@ -57,7 +57,7 @@ class WakeWordDetector:
         初始化唤醒词检测器
 
         Args:
-            wake_word: 唤醒词 (默认 "你好小寇")
+            wake_word: 唤醒词 (默认 "你好世界")
         """
         self.wake_word = wake_word
         self.model = get_whisper_model()
@@ -170,7 +170,7 @@ class WakeWordDetector:
 
         # 模糊匹配 - 计算编辑距离
         best_similarity = 0.0
-        primary_pattern = self._normalize_text(WAKE_WORD)  # 你好小寇
+        primary_pattern = self._normalize_text(WAKE_WORD)  # 你好世界
 
         # 使用滑动窗口检查相似度
         window_size = len(primary_pattern)
@@ -269,9 +269,9 @@ if __name__ == "__main__":
     # 测试文本匹配
     print("1. 测试文本匹配")
     test_cases = [
-        "你好小寇",
-        "你好，小寇",
-        "小寇你好",
+        "你好世界",
+        "你好，世界",
+        "世界你好",
         "你好小明",
         "今天天气很好",
         "ni hao xiao yun",
