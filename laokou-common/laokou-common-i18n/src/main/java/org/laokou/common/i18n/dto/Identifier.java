@@ -18,8 +18,6 @@
 package org.laokou.common.i18n.dto;
 
 import lombok.Getter;
-import lombok.Setter;
-
 import java.io.Serializable;
 
 /**
@@ -28,7 +26,6 @@ import java.io.Serializable;
  * @author laokou
  */
 @Getter
-@Setter
 public abstract class Identifier implements Serializable {
 
 	/**

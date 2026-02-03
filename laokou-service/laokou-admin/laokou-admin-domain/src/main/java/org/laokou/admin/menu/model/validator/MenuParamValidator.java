@@ -15,13 +15,15 @@
  *
  */
 
-package org.laokou.admin.menu.model;
+package org.laokou.admin.menu.model.validator;
+
+import org.laokou.admin.menu.model.MenuA;
 
 /**
  * @author laokou
  */
 public interface MenuParamValidator {
 
-	void validateMenu(MenuE menuE);
+	void validateMenu(MenuA menuA);
 
 }

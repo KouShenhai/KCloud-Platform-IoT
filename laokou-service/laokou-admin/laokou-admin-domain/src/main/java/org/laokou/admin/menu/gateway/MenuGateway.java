@@ -17,7 +17,7 @@
 
 package org.laokou.admin.menu.gateway;
 
-import org.laokou.admin.menu.model.MenuE;
+import org.laokou.admin.menu.model.MenuA;
 
 /**
  * 菜单网关【防腐】.
@@ -29,12 +29,12 @@ public interface MenuGateway {
 	/**
 	 * 新增菜单.
 	 */
-	void createMenu(MenuE menuE);
+	void createMenu(MenuA menuA);
 
 	/**
 	 * 修改菜单.
 	 */
-	void updateMenu(MenuE menuE);
+	void updateMenu(MenuA menuA);
 
 	/**
 	 * 删除菜单.
