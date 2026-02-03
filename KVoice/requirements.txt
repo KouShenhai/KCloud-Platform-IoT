@@ -15,18 +15,13 @@
 #  *
 #  */
 
-# 深度学习库
-tensorflow
-
-# 科学计算库
-numpy
-scipy
-
-# 音频处理
-soundfile
-librosa
-
-pyaudio
-
 # 预训练声纹模型 (高准确率)
 resemblyzer
+
+# 音频录制和处理
+pyaudio
+numpy
+soundfile
+
+# VAD 语音活动检测 (可选)
+webrtcvad
