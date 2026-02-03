@@ -26,7 +26,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.i18n.util.StringExtUtils;
 import org.springframework.core.env.Environment;
 
 import java.net.InetAddress;
@@ -37,6 +36,7 @@ import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
+import java.util.stream.LongStream;
 
 /**
  * 基于 Nacos 的雪花算法生成器.
@@ -338,25 +338,28 @@ public class NacosSnowflakeGenerator implements SnowflakeGenerator {
 			.map(Instance::getMetadata)
 			.filter(MapUtils::isNotEmpty)
 			.map(metadata -> {
-				String machineIdStr = metadata.get(MACHINE_ID_KEY);
-				String datacenterIdStr = metadata.get(DATACENTER_ID_KEY);
-				if (StringExtUtils.isNotEmpty(datacenterIdStr) && StringExtUtils.isNotEmpty(machineIdStr)) {
-					long wid = Long.parseLong(metadata.get(MACHINE_ID_KEY));
-					long did = Long.parseLong(metadata.get(DATACENTER_ID_KEY));
-					return did * (maxMachineId + 1) + wid;
-				}
-				return 0L;
+				String machineIdStr = metadata.getOrDefault(MACHINE_ID_KEY, "0");
+				String datacenterIdStr = metadata.getOrDefault(DATACENTER_ID_KEY, "0");
+				long mi = Long.parseLong(machineIdStr);
+				long di = Long.parseLong(datacenterIdStr);
+				return mi * (maxMachineId + 1) + di;
 			})
 			.collect(Collectors.toSet());
 		// 分配新的 datacenterId 和 machineId
+		// mi=0,di=0,0
+		// m1=0,di=31,31
+		// ...
+		// ...
+		// ...
+		// mi=31,di=31,1023
 		long maxCombinedId = (maxDatacenterId + 1) * (maxMachineId + 1);
-		long foundCombinedId = java.util.stream.LongStream.range(0, maxCombinedId)
+		long foundCombinedId = LongStream.range(0, maxCombinedId)
 			.filter(id -> !usedIds.contains(id))
 			.findFirst()
 			.orElseThrow(() -> new RuntimeException(
 					String.format("No available ID slot. All %d slots are in use.", maxCombinedId)));
-		this.datacenterId = foundCombinedId / maxDatacenterId;
-		this.machineId = foundCombinedId % maxMachineId;
+		this.datacenterId = foundCombinedId / (maxMachineId + 1);
+		this.machineId = foundCombinedId % (maxMachineId + 1);
 	}
 
 	private void registerMetadata() throws NacosException {
