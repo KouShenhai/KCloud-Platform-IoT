@@ -26,7 +26,6 @@ import com.alibaba.nacos.sys.env.DeploymentType;
 import com.alibaba.nacos.sys.env.EnvUtil;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.ResourceBanner;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -49,18 +48,8 @@ import org.springframework.core.io.ClassPathResource;
 class NacosApp {
 
 	static void main(String[] args) {
-		// @formatter:off
 		// -Dnacos.home => Nacos的根目录
-		// Nacos控制台 => http://【ip:8848】/nacos
-		// -Dnacos.standalone=true
-		// -Dcom.google.protobuf.use_unsafe_pre22_gencode
-		// @formatter:on
-		System.setProperty("com.google.protobuf.use_unsafe_pre22_gencode", "true");
-		String standalone = System.getProperty(Constants.STANDALONE_MODE_PROPERTY_NAME, "");
-		if (StringUtils.isBlank(standalone)) {
-			System.setProperty(Constants.STANDALONE_MODE_PROPERTY_NAME, "true");
-		}
-
+		// Nacos控制台 => http://【ip:8048】/nacos
 		String type = System.getProperty(Constants.NACOS_DEPLOYMENT_TYPE, Constants.NACOS_DEPLOYMENT_TYPE_MERGED);
 		DeploymentType deploymentType = DeploymentType.getType(type);
 		EnvUtil.setDeploymentType(deploymentType);
