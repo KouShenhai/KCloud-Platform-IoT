@@ -49,7 +49,7 @@ importers:
         version: 5.29.3(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       antd-img-crop:
         specifier: ^4.24.0
-        version: 4.27.0(antd@5.29.3(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 4.28.0(antd@5.29.3(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       axios:
         specifier: ^1.12.0
         version: 1.13.4
@@ -1678,6 +1678,9 @@ packages:
   '@types/react@19.2.11':
     resolution: {integrity: sha512-tORuanb01iEzWvMGVGv2ZDhYZVeRMrw453DCSAIn/5yvcSVnMoUMTyf33nQJLahYEnv9xqrTNbgz4qY5EfSh0g==}
 
+  '@types/react@19.2.13':
+    resolution: {integrity: sha512-KkiJeU6VbYbUOp5ITMIc7kBfqlYkKA5KhEHVrGMmUUMt7NeaZg65ojdPk+FtNrBAOXNVM5QM72jnADjM+XVRAQ==}
+
   '@types/resolve@1.20.6':
     resolution: {integrity: sha512-A4STmOXPhMUtHH+S6ymgE2GiBSMqf4oTvcQZMcHzokuTLVYzXTB8ttjcgxOVaAp2lGwEdzZ0J+cRbbeevQj1UQ==}
 
@@ -2261,8 +2264,8 @@ packages:
     peerDependencies:
       dayjs: '*'
 
-  antd-img-crop@4.27.0:
-    resolution: {integrity: sha512-NcFxEBex/8HSs6I43mYHfwD7+l7XqGXR88oIhtO17abBEdmgDVdTNjApRJAez7HCBZeBhPIMQkA4HfFzR0ouGQ==}
+  antd-img-crop@4.28.0:
+    resolution: {integrity: sha512-WOpmph4rFO7E3SY0+O8Iw76YHLpnMj1xDspCp4T1qKlmAQrCWt948BpxWlXNNUmXI64rTLg3AqJi55v35JgQqA==}
     peerDependencies:
       antd: '>=4.0.0'
       react: '>=16.8.0'
@@ -9309,22 +9312,26 @@ snapshots:
   '@types/react-router-dom@4.3.5':
     dependencies:
       '@types/history': 5.0.0
-      '@types/react': 19.2.11
+      '@types/react': 19.2.13
       '@types/react-router': 5.1.20
 
   '@types/react-router-redux@5.0.27':
     dependencies:
       '@types/history': 4.7.11
-      '@types/react': 19.2.11
+      '@types/react': 19.2.13
       '@types/react-router': 5.1.20
       redux: 3.7.2
 
   '@types/react-router@5.1.20':
     dependencies:
       '@types/history': 4.7.11
-      '@types/react': 19.2.11
+      '@types/react': 19.2.13
 
   '@types/react@19.2.11':
+    dependencies:
+      csstype: 3.2.3
+
+  '@types/react@19.2.13':
     dependencies:
       csstype: 3.2.3
 
@@ -10327,7 +10334,7 @@ snapshots:
     dependencies:
       dayjs: 1.11.19
 
-  antd-img-crop@4.27.0(antd@5.29.3(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  antd-img-crop@4.28.0(antd@5.29.3(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       antd: 5.29.3(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
