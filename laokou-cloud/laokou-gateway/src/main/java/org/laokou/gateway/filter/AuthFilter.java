@@ -30,7 +30,7 @@ import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.common.reactor.util.ReactiveRequestUtils;
 import org.laokou.common.reactor.util.ReactiveResponseUtils;
 import org.laokou.gateway.config.RequestMatcherProperties;
-import org.laokou.gateway.util.Reactive18nUtils;
+import org.laokou.gateway.util.ReactiveI18nUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -67,7 +67,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 	public Mono<@NonNull Void> filter(@NonNull ServerWebExchange exchange, @NonNull GatewayFilterChain chain) {
 		// 国际化
 		return Mono.deferContextual(context -> {
-			Locale locale = Reactive18nUtils.getLocale(context);
+			Locale locale = ReactiveI18nUtils.getLocale(context);
 			// 获取request对象
 			ServerHttpRequest request = exchange.getRequest();
 			// 获取uri
@@ -83,7 +83,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 			}
 			// 增加令牌
 			return chain.filter(exchange);
-		}).contextWrite(Reactive18nUtils.set(exchange));
+		}).contextWrite(ReactiveI18nUtils.set(exchange));
 	}
 
 	@Override

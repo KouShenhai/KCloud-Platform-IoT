@@ -34,11 +34,11 @@ import java.util.Locale;
  *
  * @author laokou
  */
-public final class Reactive18nUtils {
+public final class ReactiveI18nUtils {
 
 	private static final String LOCALE_CONTEXT_KEY = "locale";
 
-	private Reactive18nUtils() {
+	private ReactiveI18nUtils() {
 	}
 
 	/**

@@ -24,7 +24,7 @@ import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.util.MessageUtils;
 import org.laokou.common.reactor.util.ReactiveResponseUtils;
-import org.laokou.gateway.util.Reactive18nUtils;
+import org.laokou.gateway.util.ReactiveI18nUtils;
 import org.springframework.boot.webflux.error.ErrorWebExceptionHandler;
 import org.springframework.cloud.gateway.support.NotFoundException;
 import org.springframework.core.Ordered;
@@ -56,7 +56,7 @@ public class ExceptionHandler implements ErrorWebExceptionHandler, Ordered {
 	public Mono<@NonNull Void> handle(@NonNull ServerWebExchange exchange, @NonNull Throwable e) {
 		// 国际化
 		return Mono.deferContextual(context -> {
-			Locale locale = Reactive18nUtils.getLocale(context);
+			Locale locale = ReactiveI18nUtils.getLocale(context);
 			if (e instanceof NotFoundException) {
 				log.error("服务正在维护，请联系管理员，错误信息：{}", e.getMessage());
 				return ReactiveResponseUtils.responseOk(exchange, Result.fail(StatusCode.SERVICE_UNAVAILABLE,
@@ -90,7 +90,7 @@ public class ExceptionHandler implements ErrorWebExceptionHandler, Ordered {
 			log.error("错误网关，错误信息：{}", e.getMessage());
 			return ReactiveResponseUtils.responseOk(exchange,
 					Result.fail(StatusCode.BAD_GATEWAY, MessageUtils.getMessage(StatusCode.BAD_GATEWAY, locale)));
-		}).contextWrite(Reactive18nUtils.set(exchange));
+		}).contextWrite(ReactiveI18nUtils.set(exchange));
 	}
 
 	@Override

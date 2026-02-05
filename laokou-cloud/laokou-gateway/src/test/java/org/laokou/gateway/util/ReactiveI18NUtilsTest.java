@@ -36,7 +36,7 @@ import java.util.Locale;
 import java.util.NoSuchElementException;
 
 @ExtendWith(MockitoExtension.class)
-class Reactive18nUtilsTest {
+class ReactiveI18NUtilsTest {
 
 	@Mock
 	private ServerWebExchange exchange;
@@ -55,7 +55,7 @@ class Reactive18nUtilsTest {
 				.when(() -> ReactiveRequestUtils.getParamValue(request, HttpHeaders.ACCEPT_LANGUAGE))
 				.thenReturn("en-US"); // Should not be used if Language is present
 
-			Context context = Reactive18nUtils.set(exchange);
+			Context context = ReactiveI18nUtils.set(exchange);
 			Assertions.assertThat(context).isNotNull();
 			Assertions.assertThat(context.hasKey("locale")).isTrue();
 			Assertions.assertThat((Locale) context.get("locale")).isEqualTo(Locale.SIMPLIFIED_CHINESE);
@@ -73,7 +73,7 @@ class Reactive18nUtilsTest {
 				.when(() -> ReactiveRequestUtils.getParamValue(request, HttpHeaders.ACCEPT_LANGUAGE))
 				.thenReturn("en-US");
 
-			Context context = Reactive18nUtils.set(exchange);
+			Context context = ReactiveI18nUtils.set(exchange);
 			Assertions.assertThat(context).isNotNull();
 			Assertions.assertThat(context.hasKey("locale")).isTrue();
 			Assertions.assertThat((Locale) context.get("locale")).isEqualTo(Locale.US);
@@ -91,7 +91,7 @@ class Reactive18nUtilsTest {
 				.when(() -> ReactiveRequestUtils.getParamValue(request, HttpHeaders.ACCEPT_LANGUAGE))
 				.thenReturn("");
 
-			Context context = Reactive18nUtils.set(exchange);
+			Context context = ReactiveI18nUtils.set(exchange);
 			Assertions.assertThat(context).isNotNull();
 			Assertions.assertThat(context.hasKey("locale")).isTrue();
 			// Default locale should be returned if no language is specified
@@ -104,7 +104,7 @@ class Reactive18nUtilsTest {
 		Locale expectedLocale = Locale.JAPANESE;
 		ContextView contextView = Context.of("locale", expectedLocale);
 
-		Locale actualLocale = Reactive18nUtils.getLocale(contextView);
+		Locale actualLocale = ReactiveI18nUtils.getLocale(contextView);
 		Assertions.assertThat(actualLocale).isNotNull();
 		Assertions.assertThat(actualLocale).isEqualTo(expectedLocale);
 	}
@@ -114,7 +114,7 @@ class Reactive18nUtilsTest {
 		ContextView contextView = Context.empty();
 		// Expecting an exception if the key is not found, as per ContextView.get(key)
 		// behavior
-		Assertions.assertThatCode(() -> Reactive18nUtils.getLocale(contextView))
+		Assertions.assertThatCode(() -> ReactiveI18nUtils.getLocale(contextView))
 			.isInstanceOf(NoSuchElementException.class);
 	}
 
