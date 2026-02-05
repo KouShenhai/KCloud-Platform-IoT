@@ -28,7 +28,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.redis.util.ReactiveRedisUtils;
 import org.mockito.Mock;
@@ -104,11 +103,10 @@ class NacosRouteDefinitionRepositoryUnitTest {
 			Flux<@NonNull RouteDefinition> result = repository.getRouteDefinitions();
 
 			// Then
-			StepVerifier.create(result).assertNext(route -> {
-				Assertions.assertThat(route.getId()).isEqualTo("route-1");
-			}).assertNext(route -> {
-				Assertions.assertThat(route.getId()).isEqualTo("route-2");
-			}).verifyComplete();
+			StepVerifier.create(result)
+				.assertNext(route -> Assertions.assertThat(route.getId()).isEqualTo("route-1"))
+				.assertNext(route -> Assertions.assertThat(route.getId()).isEqualTo("route-2"))
+				.verifyComplete();
 		}
 
 		@Test
@@ -222,7 +220,8 @@ class NacosRouteDefinitionRepositoryUnitTest {
 			Mockito.when(configService.getConfig("router.json", "DEFAULT_GROUP", 5000)).thenReturn(null);
 
 			// When & Then
-			Assertions.assertThatThrownBy(() -> repository.syncRouter().block()).isInstanceOf(SystemException.class);
+			Assertions.assertThatThrownBy(() -> repository.syncRouter().block())
+				.isInstanceOf(IllegalArgumentException.class);
 		}
 
 		@Test
@@ -233,7 +232,8 @@ class NacosRouteDefinitionRepositoryUnitTest {
 				.thenThrow(new NacosException(500, "Nacos server error"));
 
 			// When & Then
-			Assertions.assertThatThrownBy(() -> repository.syncRouter().block()).isInstanceOf(SystemException.class);
+			Assertions.assertThatThrownBy(() -> repository.syncRouter().block())
+				.isInstanceOf(IllegalArgumentException.class);
 		}
 
 		@Test
@@ -244,7 +244,8 @@ class NacosRouteDefinitionRepositoryUnitTest {
 				.thenReturn("invalid json content");
 
 			// When & Then
-			Assertions.assertThatThrownBy(() -> repository.syncRouter().block()).isInstanceOf(SystemException.class);
+			Assertions.assertThatThrownBy(() -> repository.syncRouter().block())
+				.isInstanceOf(IllegalArgumentException.class);
 		}
 
 	}

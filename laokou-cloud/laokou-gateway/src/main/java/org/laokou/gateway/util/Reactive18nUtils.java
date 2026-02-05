@@ -21,39 +21,41 @@ import org.jspecify.annotations.NonNull;
 import org.laokou.common.i18n.util.LocaleUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.common.reactor.util.ReactiveRequestUtils;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.web.server.ServerWebExchange;
+import reactor.util.context.Context;
+import reactor.util.context.ContextView;
+
+import java.util.Locale;
 
 /**
- * I18n工具类.
+ * Reactor Context I18n工具类.
  *
  * @author laokou
  */
-public class ReactiveI18nUtils {
+public final class Reactive18nUtils {
 
-	private ReactiveI18nUtils() {
+	private static final String LOCALE_CONTEXT_KEY = "locale";
 
+	private Reactive18nUtils() {
 	}
 
 	/**
-	 * 请求头数据写入本地线程.
+	 * 将请求头中的语言信息写入Reactor Context.
 	 * @param exchange 服务网络交换机
+	 * @return 包含语言信息的Reactor Context
 	 */
-	public static void set(@NonNull ServerWebExchange exchange) {
+	public static Context set(@NonNull ServerWebExchange exchange) {
 		ServerHttpRequest request = exchange.getRequest();
 		String language = ReactiveRequestUtils.getParamValue(request, "Language");
 		language = StringExtUtils.isNotEmpty(language) ? language
 				: ReactiveRequestUtils.getParamValue(request, HttpHeaders.ACCEPT_LANGUAGE);
-		LocaleContextHolder.setLocale(LocaleUtils.toLocale(language), true);
+		return Context.of(LOCALE_CONTEXT_KEY, LocaleUtils.toLocale(language));
 	}
 
-	/**
-	 * 清空本地线程，防止内存溢出.
-	 */
-	public static void reset() {
-		LocaleContextHolder.resetLocaleContext();
+	public static Locale getLocale(ContextView contextView) {
+		return contextView.get(LOCALE_CONTEXT_KEY);
 	}
 
 }
