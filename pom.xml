@@ -121,7 +121,7 @@
     <!--spring-cloud版本-->
     <spring-cloud.version>2025.1.1</spring-cloud.version>
     <!--cloud-alibaba版本-->
-    <spring-cloud-alibaba.version>2025.1.0.0-SNAPSHOT</spring-cloud-alibaba.version>
+    <spring-cloud-alibaba.version>2025.1.0.0</spring-cloud-alibaba.version>
     <!--spring-framework版本-->
     <spring-framework.version>7.0.3</spring-framework.version>
     <!--spring-data版本-->
