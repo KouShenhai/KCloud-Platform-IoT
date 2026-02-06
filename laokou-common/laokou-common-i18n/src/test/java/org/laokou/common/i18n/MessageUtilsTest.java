@@ -24,6 +24,8 @@ import org.laokou.common.i18n.util.LocaleUtils;
 import org.laokou.common.i18n.util.MessageUtils;
 import org.springframework.context.i18n.LocaleContextHolder;
 
+import java.util.Locale;
+
 /**
  * @author laokou
  */
@@ -32,9 +34,11 @@ class MessageUtilsTest {
 	@Test
 	void test_zh() {
 		try {
-			LocaleContextHolder.setLocale(LocaleUtils.toLocale("zh-CN,zh"), true);
+			Locale locale = LocaleUtils.toLocale("zh-CN,zh");
+			LocaleContextHolder.setLocale(locale, true);
 			Assertions.assertThat(MessageUtils.getMessage(StatusCode.OK)).isEqualTo("请求成功");
-			Assertions.assertThat(MessageUtils.getMessage(StatusCode.OK, null)).isEqualTo("请求成功");
+			Assertions.assertThat(MessageUtils.getMessage(StatusCode.OK, new Object[0])).isEqualTo("请求成功");
+			Assertions.assertThat(MessageUtils.getMessage(StatusCode.OK, new Object[0], locale)).isEqualTo("请求成功");
 		}
 		finally {
 			LocaleContextHolder.resetLocaleContext();
@@ -44,9 +48,13 @@ class MessageUtilsTest {
 	@Test
 	void test_en() {
 		try {
-			LocaleContextHolder.setLocale(LocaleUtils.toLocale("en-US,en"), true);
+			Locale locale = LocaleUtils.toLocale("en-US,en");
+			LocaleContextHolder.setLocale(locale, true);
 			Assertions.assertThat(MessageUtils.getMessage(StatusCode.OK)).isEqualTo("Request successful");
-			Assertions.assertThat(MessageUtils.getMessage(StatusCode.OK, null)).isEqualTo("Request successful");
+			Assertions.assertThat(MessageUtils.getMessage(StatusCode.OK, new Object[0]))
+				.isEqualTo("Request successful");
+			Assertions.assertThat(MessageUtils.getMessage(StatusCode.OK, new Object[0], locale))
+				.isEqualTo("Request successful");
 		}
 		finally {
 			LocaleContextHolder.resetLocaleContext();

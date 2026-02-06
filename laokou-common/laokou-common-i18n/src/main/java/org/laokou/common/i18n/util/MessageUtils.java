@@ -21,6 +21,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 
 /**
  * 国际化消息工具类. <a href=
@@ -36,18 +37,26 @@ public final class MessageUtils {
 		RESOURCE_BUNDLE_MESSAGE_SOURCE = new ReloadableResourceBundleMessageSource();
 		RESOURCE_BUNDLE_MESSAGE_SOURCE.setDefaultEncoding(StandardCharsets.UTF_8.name());
 		RESOURCE_BUNDLE_MESSAGE_SOURCE.setBasenames("classpath:i18n/base_message", "classpath:i18n/auth_message",
-				"classpath:i18n/gateway_message", "classpath:i18n/sentinel_message", "classpath:i18n/message");
+				"classpath:i18n/sentinel_message", "classpath:i18n/message");
 	}
 
 	private MessageUtils() {
 	}
 
 	public static String getMessage(String code) {
-		return getMessage(code, null);
+		return getMessage(code, new Object[0], LocaleContextHolder.getLocale());
+	}
+
+	public static String getMessage(String code, Locale locale) {
+		return getMessage(code, new Object[0], locale);
 	}
 
 	public static String getMessage(String code, Object[] args) {
-		return RESOURCE_BUNDLE_MESSAGE_SOURCE.getMessage(code, args, LocaleContextHolder.getLocale());
+		return getMessage(code, args, LocaleContextHolder.getLocale());
+	}
+
+	public static String getMessage(String code, Object[] args, Locale locale) {
+		return RESOURCE_BUNDLE_MESSAGE_SOURCE.getMessage(code, args, locale);
 	}
 
 }

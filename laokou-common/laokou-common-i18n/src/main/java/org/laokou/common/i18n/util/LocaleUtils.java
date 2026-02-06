@@ -17,8 +17,6 @@
 
 package org.laokou.common.i18n.util;
 
-import org.springframework.context.i18n.LocaleContextHolder;
-
 import java.util.Locale;
 
 /**
@@ -34,27 +32,27 @@ public final class LocaleUtils {
 	public static Locale toLocale(String language) {
 		try {
 			if (StringExtUtils.isEmpty(language)) {
-				return LocaleContextHolder.getLocale();
+				return Locale.getDefault();
 			}
 			String[] arr = filterLanguage(language);
 			// 语言 国家
 			return Locale.of(arr[0], arr[1]);
 		}
 		catch (Exception e) {
-			return LocaleContextHolder.getLocale();
+			return Locale.getDefault();
 		}
 	}
 
 	private static String[] filterLanguage(String language) {
 		String[] arr;
-		if ((arr = filterCountry(language.indexOf('-'), language)).length > 0
-				|| (arr = filterCountry(language.indexOf('_'), language)).length > 0) {
+		if ((arr = filter(language.indexOf('-'), language)).length > 0
+				|| (arr = filter(language.indexOf('_'), language)).length > 0) {
 			return arr;
 		}
 		throw new IllegalArgumentException("language not found: " + language);
 	}
 
-	private static String[] filterCountry(int idx, String language) {
+	private static String[] filter(int idx, String language) {
 		if (idx > 0) {
 			String[] arr = new String[2];
 			arr[0] = language.substring(idx - 2, idx);

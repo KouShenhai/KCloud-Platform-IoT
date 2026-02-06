@@ -26,13 +26,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.i18n.common.constant.StringConstants;
-import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.laokou.common.i18n.util.SpringContextUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.common.redis.util.ReactiveRedisUtils;
-import org.laokou.gateway.constant.GatewayConstants;
 import org.redisson.api.RMapReactive;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
 import org.springframework.cloud.gateway.route.RouteDefinition;
@@ -98,8 +96,8 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 			@Override
 			public void receiveConfigInfo(String routes) {
 				log.info("监听路由配置信息，开始同步路由配置：{}", routes);
-				// 10s后自动释放内存
-				virtualThreadExecutor.execute(() -> syncRouter(getRoutes(routes)).take(Duration.ofSeconds(10))
+				// 15s后自动释放内存
+				virtualThreadExecutor.execute(() -> syncRouter(getRoutes(routes)).take(Duration.ofSeconds(15))
 					.subscribeOn(Schedulers.boundedElastic())
 					.subscribe());
 			}
@@ -193,7 +191,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 		}
 		catch (Exception ex) {
 			log.error("动态路由【API网关】不存在，错误信息：{}", ex.getMessage(), ex);
-			throw new SystemException(GatewayConstants.ROUTER_NOT_EXIST);
+			throw new IllegalArgumentException("Router does not exist");
 		}
 	}
 

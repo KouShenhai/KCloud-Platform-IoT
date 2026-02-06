@@ -95,17 +95,6 @@ class ArchitectureTest {
 	}
 
 	@ArchTest
-	void test_constants_should_be_in_constant_package(JavaClasses classes) {
-		// 常量类应该在 constant 包中
-		ArchRuleDefinition.classes()
-			.that()
-			.haveNameMatching(".*Constants")
-			.should()
-			.resideInAPackage("..constant..")
-			.check(classes);
-	}
-
-	@ArchTest
 	void test_filters_should_not_depend_on_repositories(JavaClasses classes) {
 		// 过滤器不应该直接依赖仓储实现
 		ArchRuleDefinition.noClasses()

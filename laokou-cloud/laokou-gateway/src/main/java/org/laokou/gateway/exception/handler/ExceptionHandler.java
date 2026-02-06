@@ -22,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.i18n.util.MessageUtils;
 import org.laokou.common.reactor.util.ReactiveResponseUtils;
 import org.laokou.gateway.util.ReactiveI18nUtils;
 import org.springframework.boot.webflux.error.ErrorWebExceptionHandler;
@@ -32,6 +33,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+
+import java.util.Locale;
 
 /**
  * 全局异常处理器.
@@ -50,41 +53,44 @@ public class ExceptionHandler implements ErrorWebExceptionHandler, Ordered {
 	 */
 	@NonNull
 	@Override
-	public Mono<Void> handle(@NonNull ServerWebExchange exchange, @NonNull Throwable e) {
-		try {
-			// 国际化
-			ReactiveI18nUtils.set(exchange);
+	public Mono<@NonNull Void> handle(@NonNull ServerWebExchange exchange, @NonNull Throwable e) {
+		// 国际化
+		return Mono.deferContextual(context -> {
+			Locale locale = ReactiveI18nUtils.getLocale(context);
 			if (e instanceof NotFoundException) {
 				log.error("服务正在维护，请联系管理员，错误信息：{}", e.getMessage());
-				return ReactiveResponseUtils.responseOk(exchange, Result.fail(StatusCode.SERVICE_UNAVAILABLE));
+				return ReactiveResponseUtils.responseOk(exchange, Result.fail(StatusCode.SERVICE_UNAVAILABLE,
+						MessageUtils.getMessage(StatusCode.SERVICE_UNAVAILABLE, locale)));
 			}
 			if (e instanceof ResponseStatusException responseStatusException) {
 				int statusCode = responseStatusException.getStatusCode().value();
 				if (statusCode == HttpStatus.NOT_FOUND.value()) {
 					log.error("状态码：{}，无法找到请求URL为{}的资源，错误信息：{}", statusCode,
 							exchange.getRequest().getPath().pathWithinApplication().value(), e.getMessage());
-					return ReactiveResponseUtils.responseOk(exchange, Result.fail(StatusCode.NOT_FOUND));
+					return ReactiveResponseUtils.responseOk(exchange,
+							Result.fail(StatusCode.NOT_FOUND, MessageUtils.getMessage(StatusCode.NOT_FOUND, locale)));
 				}
 				else if (statusCode == HttpStatus.BAD_REQUEST.value()) {
 					log.error("状态码：{}，错误请求，错误信息：{}", statusCode, e.getMessage());
-					return ReactiveResponseUtils.responseOk(exchange, Result.fail(StatusCode.BAD_REQUEST));
+					return ReactiveResponseUtils.responseOk(exchange, Result.fail(StatusCode.BAD_REQUEST,
+							MessageUtils.getMessage(StatusCode.BAD_REQUEST, locale)));
 				}
 				else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
 					log.error("状态码：{}，服务器内部错误，无法完成请求，错误信息：{}", statusCode, e.getMessage());
-					return ReactiveResponseUtils.responseOk(exchange, Result.fail(StatusCode.INTERNAL_SERVER_ERROR));
+					return ReactiveResponseUtils.responseOk(exchange, Result.fail(StatusCode.INTERNAL_SERVER_ERROR,
+							MessageUtils.getMessage(StatusCode.INTERNAL_SERVER_ERROR, locale)));
 				}
 			}
 			if (BlockException.isBlockException(e)) {
 				// 思路来源于SentinelGatewayBlockExceptionHandler
 				log.error("请求太频繁，错误信息：{}", e.getMessage());
-				return ReactiveResponseUtils.responseOk(exchange, Result.fail(StatusCode.TOO_MANY_REQUESTS));
+				return ReactiveResponseUtils.responseOk(exchange, Result.fail(StatusCode.TOO_MANY_REQUESTS,
+						MessageUtils.getMessage(StatusCode.TOO_MANY_REQUESTS, locale)));
 			}
 			log.error("错误网关，错误信息：{}", e.getMessage());
-			return ReactiveResponseUtils.responseOk(exchange, Result.fail(StatusCode.BAD_GATEWAY));
-		}
-		finally {
-			ReactiveI18nUtils.reset();
-		}
+			return ReactiveResponseUtils.responseOk(exchange,
+					Result.fail(StatusCode.BAD_GATEWAY, MessageUtils.getMessage(StatusCode.BAD_GATEWAY, locale)));
+		}).contextWrite(ReactiveI18nUtils.set(exchange));
 	}
 
 	@Override
