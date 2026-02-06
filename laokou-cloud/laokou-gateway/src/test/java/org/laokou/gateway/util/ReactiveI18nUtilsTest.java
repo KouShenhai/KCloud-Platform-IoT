@@ -36,7 +36,7 @@ import java.util.Locale;
 import java.util.NoSuchElementException;
 
 @ExtendWith(MockitoExtension.class)
-class ReactiveI18NUtilsTest {
+class ReactiveI18nUtilsTest {
 
 	@Mock
 	private ServerWebExchange exchange;
@@ -49,10 +49,10 @@ class ReactiveI18NUtilsTest {
 		Mockito.when(exchange.getRequest()).thenReturn(request);
 		try (MockedStatic<ReactiveRequestUtils> mockedReactiveRequestUtils = Mockito
 			.mockStatic(ReactiveRequestUtils.class)) {
-			mockedReactiveRequestUtils.when(() -> ReactiveRequestUtils.getParamValue(request, "Language"))
+			mockedReactiveRequestUtils.when(() -> ReactiveRequestUtils.getHeaderValue(request, "Language"))
 				.thenReturn("zh-CN");
 			mockedReactiveRequestUtils
-				.when(() -> ReactiveRequestUtils.getParamValue(request, HttpHeaders.ACCEPT_LANGUAGE))
+				.when(() -> ReactiveRequestUtils.getHeaderValue(request, HttpHeaders.ACCEPT_LANGUAGE))
 				.thenReturn("en-US"); // Should not be used if Language is present
 
 			Context context = ReactiveI18nUtils.set(exchange);
@@ -67,10 +67,10 @@ class ReactiveI18NUtilsTest {
 		Mockito.when(exchange.getRequest()).thenReturn(request);
 		try (MockedStatic<ReactiveRequestUtils> mockedReactiveRequestUtils = Mockito
 			.mockStatic(ReactiveRequestUtils.class)) {
-			mockedReactiveRequestUtils.when(() -> ReactiveRequestUtils.getParamValue(request, "Language"))
+			mockedReactiveRequestUtils.when(() -> ReactiveRequestUtils.getHeaderValue(request, "Language"))
 				.thenReturn(""); // No Language header
 			mockedReactiveRequestUtils
-				.when(() -> ReactiveRequestUtils.getParamValue(request, HttpHeaders.ACCEPT_LANGUAGE))
+				.when(() -> ReactiveRequestUtils.getHeaderValue(request, HttpHeaders.ACCEPT_LANGUAGE))
 				.thenReturn("en-US");
 
 			Context context = ReactiveI18nUtils.set(exchange);
@@ -85,10 +85,10 @@ class ReactiveI18NUtilsTest {
 		Mockito.when(exchange.getRequest()).thenReturn(request);
 		try (MockedStatic<ReactiveRequestUtils> mockedReactiveRequestUtils = Mockito
 			.mockStatic(ReactiveRequestUtils.class)) {
-			mockedReactiveRequestUtils.when(() -> ReactiveRequestUtils.getParamValue(request, "Language"))
+			mockedReactiveRequestUtils.when(() -> ReactiveRequestUtils.getHeaderValue(request, "Language"))
 				.thenReturn("");
 			mockedReactiveRequestUtils
-				.when(() -> ReactiveRequestUtils.getParamValue(request, HttpHeaders.ACCEPT_LANGUAGE))
+				.when(() -> ReactiveRequestUtils.getHeaderValue(request, HttpHeaders.ACCEPT_LANGUAGE))
 				.thenReturn("");
 
 			Context context = ReactiveI18nUtils.set(exchange);

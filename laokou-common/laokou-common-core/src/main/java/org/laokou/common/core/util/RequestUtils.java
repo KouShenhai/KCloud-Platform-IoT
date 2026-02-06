@@ -109,17 +109,13 @@ public final class RequestUtils {
 	}
 
 	/**
-	 * 获取参数值.
+	 * 获取请求头值.
 	 * @param request 请求对象
-	 * @param paramName 参数名称
+	 * @param headerName 请求头名称
 	 */
-	public static String getParamValue(HttpServletRequest request, String paramName) {
-		String paramValue = request.getHeader(paramName);
-		// 从参数中获取
-		if (StringExtUtils.isEmpty(paramValue)) {
-			paramValue = request.getParameter(paramName);
-		}
-		return StringExtUtils.isEmpty(paramValue) ? StringConstants.EMPTY : paramValue.trim();
+	public static String getHeaderValue(HttpServletRequest request, String headerName) {
+		String headerValue = request.getHeader(headerName);
+		return StringExtUtils.isEmpty(headerValue) ? StringConstants.EMPTY : headerValue.trim();
 	}
 
 	/**

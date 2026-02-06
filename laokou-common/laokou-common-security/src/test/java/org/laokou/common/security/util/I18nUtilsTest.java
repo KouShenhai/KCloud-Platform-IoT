@@ -15,13 +15,12 @@
  *
  */
 
-package org.laokou.common.core;
+package org.laokou.common.security.util;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.core.util.I18nUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.mockito.Mockito;
 import org.springframework.context.i18n.LocaleContextHolder;

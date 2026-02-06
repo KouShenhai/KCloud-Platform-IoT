@@ -15,9 +15,10 @@
  *
  */
 
-package org.laokou.common.core.util;
+package org.laokou.common.security.util;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.util.LocaleUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -36,8 +37,9 @@ public final class I18nUtils {
 	 * @param request 请求对象
 	 */
 	public static void set(HttpServletRequest request) {
-		String language = request.getHeader("Language");
-		language = StringExtUtils.isNotEmpty(language) ? language : request.getHeader(HttpHeaders.ACCEPT_LANGUAGE);
+		String language = RequestUtils.getHeaderValue(request, "Language");
+		language = StringExtUtils.isNotEmpty(language) ? language
+				: RequestUtils.getHeaderValue(request, HttpHeaders.ACCEPT_LANGUAGE);
 		LocaleContextHolder.setLocale(LocaleUtils.toLocale(language), true);
 	}
 

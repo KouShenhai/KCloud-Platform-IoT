@@ -48,9 +48,9 @@ public final class ReactiveI18nUtils {
 	 */
 	public static Context set(@NonNull ServerWebExchange exchange) {
 		ServerHttpRequest request = exchange.getRequest();
-		String language = ReactiveRequestUtils.getParamValue(request, "Language");
+		String language = ReactiveRequestUtils.getHeaderValue(request, "Language");
 		language = StringExtUtils.isNotEmpty(language) ? language
-				: ReactiveRequestUtils.getParamValue(request, HttpHeaders.ACCEPT_LANGUAGE);
+				: ReactiveRequestUtils.getHeaderValue(request, HttpHeaders.ACCEPT_LANGUAGE);
 		return Context.of(LOCALE_CONTEXT_KEY, LocaleUtils.toLocale(language));
 	}
 
