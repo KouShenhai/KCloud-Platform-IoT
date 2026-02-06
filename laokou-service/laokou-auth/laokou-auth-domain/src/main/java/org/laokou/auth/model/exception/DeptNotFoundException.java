@@ -24,8 +24,8 @@ import org.laokou.common.i18n.common.exception.BizException;
  */
 public final class DeptNotFoundException extends BizException {
 
-	public DeptNotFoundException(String code) {
-		super(code);
+	public DeptNotFoundException(String code, String msg) {
+		super(code, msg);
 	}
 
 }

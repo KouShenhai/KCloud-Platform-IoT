@@ -78,7 +78,6 @@ class RequestUtilsTest {
 		Assertions.assertThat(capabilities.getValue(BrowsCapField.RENDERING_ENGINE_NAME)).isEqualTo("Unknown");
 		Assertions.assertThat(capabilities.getValue(BrowsCapField.RENDERING_ENGINE_VERSION)).isEqualTo("Unknown");
 		Assertions.assertThat(capabilities.getValue(BrowsCapField.RENDERING_ENGINE_MAKER)).isEqualTo("Unknown");
-		Assertions.assertThat(RequestUtils.getHeaderValue(request, "test")).isEqualTo("");
 		byte[] body = RequestUtils.getRequestBody(request);
 		Assertions.assertThat(body.length).isZero();
 		Assertions.assertThat(RequestUtils.getInputStream(body)).isNotNull();

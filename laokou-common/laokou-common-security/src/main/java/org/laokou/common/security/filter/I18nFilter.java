@@ -22,7 +22,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.jspecify.annotations.NonNull;
-import org.laokou.common.security.util.I18nUtils;
+import org.laokou.common.i18n.util.I18nUtils;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -41,14 +41,15 @@ public class I18nFilter extends OncePerRequestFilter {
 
 	@Override
 	protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
-			@NonNull FilterChain chain) throws ServletException, IOException {
-		try {
-			I18nUtils.set(request);
-			chain.doFilter(request, response);
-		}
-		finally {
-			I18nUtils.reset();
-		}
+			@NonNull FilterChain chain) {
+		ScopedValue.where(I18nUtils.LOCALE, I18nUtils.getLocale(request)).run(() -> {
+			try {
+				chain.doFilter(request, response);
+			}
+			catch (IOException | ServletException e) {
+				throw new RuntimeException(e);
+			}
+		});
 	}
 
 }
