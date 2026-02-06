@@ -10,14 +10,14 @@ importers:
     dependencies:
       umi:
         specifier: ^4.4.4
-        version: 4.6.26(@babel/core@7.29.0)(@types/node@25.2.0)(@types/react@19.2.9)(@types/webpack@5.28.5)(eslint@8.57.1)(less-loader@12.3.0(less@4.5.1)(webpack@5.104.1))(less@4.5.1)(lightningcss@1.22.1)(prettier@3.5.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(resolve-url-loader@5.0.0)(rollup@3.29.5)(sass-loader@16.0.6(sass@1.54.0)(webpack@5.104.1))(sass@1.54.0)(stylelint@14.16.1)(terser@5.46.0)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.104.1)
+        version: 4.6.26(@babel/core@7.29.0)(@types/node@25.2.0)(@types/react@19.2.13)(@types/webpack@5.28.5)(eslint@8.57.1)(less-loader@12.3.0(less@4.5.1)(webpack@5.105.0))(less@4.5.1)(lightningcss@1.22.1)(prettier@3.5.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(resolve-url-loader@5.0.0)(rollup@3.29.5)(sass-loader@16.0.6(sass@1.54.0)(webpack@5.105.0))(sass@1.54.0)(stylelint@14.16.1)(terser@5.46.0)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.105.0)
     devDependencies:
       '@types/react':
         specifier: ^19.0.0
-        version: 19.2.9
+        version: 19.2.13
       '@types/react-dom':
         specifier: ^19.0.0
-        version: 19.2.3(@types/react@19.2.9)
+        version: 19.2.3(@types/react@19.2.13)
       typescript:
         specifier: ^5.0.3
         version: 5.9.3
@@ -1004,8 +1004,8 @@ packages:
     peerDependencies:
       '@types/react': ^19.2.0
 
-  '@types/react@19.2.9':
-    resolution: {integrity: sha512-Lpo8kgb/igvMIPeNV2rsYKTgaORYdO1XGVZ4Qz3akwOj0ySGYMPlQWa8BaLn0G63D1aSaAQ5ldR06wCpChQCjA==}
+  '@types/react@19.2.13':
+    resolution: {integrity: sha512-KkiJeU6VbYbUOp5ITMIc7kBfqlYkKA5KhEHVrGMmUUMt7NeaZg65ojdPk+FtNrBAOXNVM5QM72jnADjM+XVRAQ==}
 
   '@types/resolve@1.20.6':
     resolution: {integrity: sha512-A4STmOXPhMUtHH+S6ymgE2GiBSMqf4oTvcQZMcHzokuTLVYzXTB8ttjcgxOVaAp2lGwEdzZ0J+cRbbeevQj1UQ==}
@@ -2614,6 +2614,7 @@ packages:
 
   glob@10.5.0:
     resolution: {integrity: sha512-DfXN8DfhJ7NH3Oe7cFmu3NCu1wKbkReJ8TorzSAFbSKrlNaQSKfIzqYqVY8zlbs2NLBbWpRiU52GX2PbaBVNkg==}
+    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
     hasBin: true
 
   glob@7.2.3:
@@ -4903,8 +4904,8 @@ packages:
     resolution: {integrity: sha512-yd1RBzSGanHkitROoPFd6qsrxt+oFhg/129YzheDGqeustzX0vTZJZsSsQjVQC4yzBQ56K55XU8gaNCtIzOnTg==}
     engines: {node: '>=10.13.0'}
 
-  webpack@5.104.1:
-    resolution: {integrity: sha512-Qphch25abbMNtekmEGJmeRUhLDbe+QfiWTiqpKYkpCOWY64v9eyl+KRRLmqOFA2AvKPpc9DC6+u2n76tQLBoaA==}
+  webpack@5.105.0:
+    resolution: {integrity: sha512-gX/dMkRQc7QOMzgTe6KsYFM7DxeIONQSui1s0n/0xht36HvrgbxtM1xBlgx596NbpHuQU8P7QpKwrZYwUX48nw==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     peerDependencies:
@@ -5527,23 +5528,23 @@ snapshots:
     dependencies:
       '@floating-ui/core': 0.6.2
 
-  '@floating-ui/react-dom-interactions@0.3.1(@types/react@19.2.9)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@floating-ui/react-dom-interactions@0.3.1(@types/react@19.2.13)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@floating-ui/react-dom': 0.6.3(@types/react@19.2.9)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@floating-ui/react-dom': 0.6.3(@types/react@19.2.13)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       aria-hidden: 1.2.6
       point-in-polygon: 1.1.0
-      use-isomorphic-layout-effect: 1.2.1(@types/react@19.2.9)(react@18.3.1)
+      use-isomorphic-layout-effect: 1.2.1(@types/react@19.2.13)(react@18.3.1)
     transitivePeerDependencies:
       - '@types/react'
       - react
       - react-dom
 
-  '@floating-ui/react-dom@0.6.3(@types/react@19.2.9)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@floating-ui/react-dom@0.6.3(@types/react@19.2.13)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@floating-ui/dom': 0.4.5
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
-      use-isomorphic-layout-effect: 1.2.1(@types/react@19.2.9)(react@18.3.1)
+      use-isomorphic-layout-effect: 1.2.1(@types/react@19.2.13)(react@18.3.1)
     transitivePeerDependencies:
       - '@types/react'
 
@@ -5957,11 +5958,11 @@ snapshots:
 
   '@types/parse-json@4.0.2': {}
 
-  '@types/react-dom@19.2.3(@types/react@19.2.9)':
+  '@types/react-dom@19.2.3(@types/react@19.2.13)':
     dependencies:
-      '@types/react': 19.2.9
+      '@types/react': 19.2.13
 
-  '@types/react@19.2.9':
+  '@types/react@19.2.13':
     dependencies:
       csstype: 3.2.3
 
@@ -5973,7 +5974,7 @@ snapshots:
     dependencies:
       '@types/node': 25.2.0
       tapable: 2.3.0
-      webpack: 5.104.1
+      webpack: 5.105.0
     transitivePeerDependencies:
       - '@swc/core'
       - esbuild
@@ -6106,10 +6107,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@umijs/bundler-mako@0.11.10(postcss@8.5.6)(sass@1.54.0)(typescript@5.9.3)(webpack@5.104.1)':
+  '@umijs/bundler-mako@0.11.10(postcss@8.5.6)(sass@1.54.0)(typescript@5.9.3)(webpack@5.105.0)':
     dependencies:
       '@umijs/bundler-utils': 4.6.26
-      '@umijs/mako': 0.11.10(postcss@8.5.6)(sass@1.54.0)(typescript@5.9.3)(webpack@5.104.1)
+      '@umijs/mako': 0.11.10(postcss@8.5.6)(sass@1.54.0)(typescript@5.9.3)(webpack@5.105.0)
       chalk: 4.1.2
       compression: 1.8.1
       connect-history-api-fallback: 2.0.0
@@ -6140,11 +6141,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@umijs/bundler-utoopack@4.6.26(@types/webpack@5.28.5)(less-loader@12.3.0(less@4.5.1)(webpack@5.104.1))(less@4.5.1)(postcss@8.5.6)(resolve-url-loader@5.0.0)(sass-loader@16.0.6(sass@1.54.0)(webpack@5.104.1))(sass@1.54.0)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.104.1)':
+  '@umijs/bundler-utoopack@4.6.26(@types/webpack@5.28.5)(less-loader@12.3.0(less@4.5.1)(webpack@5.105.0))(less@4.5.1)(postcss@8.5.6)(resolve-url-loader@5.0.0)(sass-loader@16.0.6(sass@1.54.0)(webpack@5.105.0))(sass@1.54.0)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.105.0)':
     dependencies:
       '@umijs/bundler-utils': 4.6.26
-      '@umijs/bundler-webpack': 4.6.26(@types/webpack@5.28.5)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.104.1)
-      '@utoo/pack': 1.2.5(less-loader@12.3.0(less@4.5.1)(webpack@5.104.1))(less@4.5.1)(postcss@8.5.6)(resolve-url-loader@5.0.0)(sass-loader@16.0.6(sass@1.54.0)(webpack@5.104.1))(sass@1.54.0)
+      '@umijs/bundler-webpack': 4.6.26(@types/webpack@5.28.5)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.105.0)
+      '@utoo/pack': 1.2.5(less-loader@12.3.0(less@4.5.1)(webpack@5.105.0))(less@4.5.1)(postcss@8.5.6)(resolve-url-loader@5.0.0)(sass-loader@16.0.6(sass@1.54.0)(webpack@5.105.0))(sass@1.54.0)
       compression: 1.8.1
       connect-history-api-fallback: 2.0.0
       cors: 2.8.6
@@ -6192,7 +6193,7 @@ snapshots:
       - supports-color
       - terser
 
-  '@umijs/bundler-webpack@4.6.26(@types/webpack@5.28.5)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.104.1)':
+  '@umijs/bundler-webpack@4.6.26(@types/webpack@5.28.5)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.105.0)':
     dependencies:
       '@svgr/core': 6.5.1
       '@svgr/plugin-jsx': 6.5.1(@svgr/core@6.5.1)
@@ -6202,12 +6203,12 @@ snapshots:
       '@umijs/bundler-utils': 4.6.26
       '@umijs/case-sensitive-paths-webpack-plugin': 1.0.1
       '@umijs/mfsu': 4.6.26
-      '@umijs/react-refresh-webpack-plugin': 0.5.11(@types/webpack@5.28.5)(react-refresh@0.14.0)(type-fest@0.20.2)(webpack@5.104.1)
+      '@umijs/react-refresh-webpack-plugin': 0.5.11(@types/webpack@5.28.5)(react-refresh@0.14.0)(type-fest@0.20.2)(webpack@5.105.0)
       '@umijs/utils': 4.6.26
       cors: 2.8.6
-      css-loader: 6.7.1(webpack@5.104.1)
+      css-loader: 6.7.1(webpack@5.105.0)
       es5-imcompatible-versions: 0.1.90
-      fork-ts-checker-webpack-plugin: 8.0.0(typescript@5.9.3)(webpack@5.104.1)
+      fork-ts-checker-webpack-plugin: 8.0.0(typescript@5.9.3)(webpack@5.105.0)
       jest-worker: 29.4.3
       lightningcss: 1.22.1
       node-libs-browser: 2.2.1
@@ -6331,7 +6332,7 @@ snapshots:
   '@umijs/mako-win32-x64-msvc@0.11.10':
     optional: true
 
-  '@umijs/mako@0.11.10(postcss@8.5.6)(sass@1.54.0)(typescript@5.9.3)(webpack@5.104.1)':
+  '@umijs/mako@0.11.10(postcss@8.5.6)(sass@1.54.0)(typescript@5.9.3)(webpack@5.105.0)':
     dependencies:
       '@module-federation/webpack-bundler-runtime': 0.8.12
       '@swc/helpers': 0.5.1
@@ -6339,17 +6340,17 @@ snapshots:
       chalk: 4.1.2
       enhanced-resolve: 5.19.0
       less: 4.5.1
-      less-loader: 12.3.0(less@4.5.1)(webpack@5.104.1)
+      less-loader: 12.3.0(less@4.5.1)(webpack@5.105.0)
       loader-runner: 4.3.1
       loader-utils: 3.3.1
       lodash: 4.17.23
       node-libs-browser-okam: 2.2.5
       piscina: 4.9.2
-      postcss-loader: 8.2.0(postcss@8.5.6)(typescript@5.9.3)(webpack@5.104.1)
+      postcss-loader: 8.2.0(postcss@8.5.6)(typescript@5.9.3)(webpack@5.105.0)
       react-error-overlay: 6.0.9
       react-refresh: 0.14.2
       resolve: 1.22.11
-      sass-loader: 16.0.6(sass@1.54.0)(webpack@5.104.1)
+      sass-loader: 16.0.6(sass@1.54.0)(webpack@5.105.0)
       semver: 7.7.3
       yargs-parser: 21.1.1
     optionalDependencies:
@@ -6384,7 +6385,7 @@ snapshots:
     dependencies:
       tsx: 3.12.2
 
-  '@umijs/preset-umi@4.6.26(@types/node@25.2.0)(@types/react@19.2.9)(@types/webpack@5.28.5)(less-loader@12.3.0(less@4.5.1)(webpack@5.104.1))(less@4.5.1)(lightningcss@1.22.1)(resolve-url-loader@5.0.0)(rollup@3.29.5)(sass-loader@16.0.6(sass@1.54.0)(webpack@5.104.1))(sass@1.54.0)(terser@5.46.0)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.104.1)':
+  '@umijs/preset-umi@4.6.26(@types/node@25.2.0)(@types/react@19.2.13)(@types/webpack@5.28.5)(less-loader@12.3.0(less@4.5.1)(webpack@5.105.0))(less@4.5.1)(lightningcss@1.22.1)(resolve-url-loader@5.0.0)(rollup@3.29.5)(sass-loader@16.0.6(sass@1.54.0)(webpack@5.105.0))(sass@1.54.0)(terser@5.46.0)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.105.0)':
     dependencies:
       '@iconify/utils': 2.1.1
       '@stagewise/toolbar': 0.6.2
@@ -6392,11 +6393,11 @@ snapshots:
       '@umijs/ast': 4.6.26
       '@umijs/babel-preset-umi': 4.6.26
       '@umijs/bundler-esbuild': 4.6.26
-      '@umijs/bundler-mako': 0.11.10(postcss@8.5.6)(sass@1.54.0)(typescript@5.9.3)(webpack@5.104.1)
+      '@umijs/bundler-mako': 0.11.10(postcss@8.5.6)(sass@1.54.0)(typescript@5.9.3)(webpack@5.105.0)
       '@umijs/bundler-utils': 4.6.26
-      '@umijs/bundler-utoopack': 4.6.26(@types/webpack@5.28.5)(less-loader@12.3.0(less@4.5.1)(webpack@5.104.1))(less@4.5.1)(postcss@8.5.6)(resolve-url-loader@5.0.0)(sass-loader@16.0.6(sass@1.54.0)(webpack@5.104.1))(sass@1.54.0)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.104.1)
+      '@umijs/bundler-utoopack': 4.6.26(@types/webpack@5.28.5)(less-loader@12.3.0(less@4.5.1)(webpack@5.105.0))(less@4.5.1)(postcss@8.5.6)(resolve-url-loader@5.0.0)(sass-loader@16.0.6(sass@1.54.0)(webpack@5.105.0))(sass@1.54.0)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.105.0)
       '@umijs/bundler-vite': 4.6.26(@types/node@25.2.0)(lightningcss@1.22.1)(postcss@8.5.6)(rollup@3.29.5)(sass@1.54.0)(terser@5.46.0)
-      '@umijs/bundler-webpack': 4.6.26(@types/webpack@5.28.5)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.104.1)
+      '@umijs/bundler-webpack': 4.6.26(@types/webpack@5.28.5)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.105.0)
       '@umijs/core': 4.6.26
       '@umijs/did-you-know': 1.0.4
       '@umijs/es-module-parser': 0.0.7
@@ -6410,12 +6411,12 @@ snapshots:
       '@umijs/zod2ts': 4.6.26
       babel-plugin-dynamic-import-node: 2.3.3
       babel-plugin-react-compiler: 0.0.0-experimental-c23de8d-20240515
-      click-to-react-component: 1.1.0(@types/react@19.2.9)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      click-to-react-component: 1.1.0(@types/react@19.2.13)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       core-js: 3.34.0
       current-script-polyfill: 1.0.0
       enhanced-resolve: 5.9.3
       fast-glob: 3.2.12
-      html-webpack-plugin: 5.5.0(webpack@5.104.1)
+      html-webpack-plugin: 5.5.0(webpack@5.105.0)
       less-plugin-resolve: 1.0.2
       path-to-regexp: 1.7.0
       postcss: 8.5.6
@@ -6453,7 +6454,7 @@ snapshots:
       - webpack-hot-middleware
       - webpack-plugin-serve
 
-  '@umijs/react-refresh-webpack-plugin@0.5.11(@types/webpack@5.28.5)(react-refresh@0.14.0)(type-fest@0.20.2)(webpack@5.104.1)':
+  '@umijs/react-refresh-webpack-plugin@0.5.11(@types/webpack@5.28.5)(react-refresh@0.14.0)(type-fest@0.20.2)(webpack@5.105.0)':
     dependencies:
       ansi-html-community: 0.0.8
       common-path-prefix: 3.0.0
@@ -6465,7 +6466,7 @@ snapshots:
       react-refresh: 0.14.0
       schema-utils: 3.3.0
       source-map: 0.7.6
-      webpack: 5.104.1
+      webpack: 5.105.0
     optionalDependencies:
       '@types/webpack': 5.28.5
       type-fest: 0.20.2
@@ -6541,7 +6542,7 @@ snapshots:
   '@utoo/pack-win32-x64-msvc@1.2.5':
     optional: true
 
-  '@utoo/pack@1.2.5(less-loader@12.3.0(less@4.5.1)(webpack@5.104.1))(less@4.5.1)(postcss@8.5.6)(resolve-url-loader@5.0.0)(sass-loader@16.0.6(sass@1.54.0)(webpack@5.104.1))(sass@1.54.0)':
+  '@utoo/pack@1.2.5(less-loader@12.3.0(less@4.5.1)(webpack@5.105.0))(less@4.5.1)(postcss@8.5.6)(resolve-url-loader@5.0.0)(sass-loader@16.0.6(sass@1.54.0)(webpack@5.105.0))(sass@1.54.0)':
     dependencies:
       '@babel/code-frame': 7.22.5
       '@swc/helpers': 0.5.15
@@ -6550,13 +6551,13 @@ snapshots:
       domparser-rs: 0.0.5
       find-up: 4.1.0
       less: 4.5.1
-      less-loader: 12.3.0(less@4.5.1)(webpack@5.104.1)
+      less-loader: 12.3.0(less@4.5.1)(webpack@5.105.0)
       nanoid: 3.3.11
       picocolors: 1.1.1
       postcss: 8.5.6
       resolve-url-loader: 5.0.0
       sass: 1.54.0
-      sass-loader: 16.0.6(sass@1.54.0)(webpack@5.104.1)
+      sass-loader: 16.0.6(sass@1.54.0)(webpack@5.105.0)
       send: 0.17.1
       ws: 8.19.0
     optionalDependencies:
@@ -7123,9 +7124,9 @@ snapshots:
     dependencies:
       source-map: 0.6.1
 
-  click-to-react-component@1.1.0(@types/react@19.2.9)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  click-to-react-component@1.1.0(@types/react@19.2.13)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@floating-ui/react-dom-interactions': 0.3.1(@types/react@19.2.9)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@floating-ui/react-dom-interactions': 0.3.1(@types/react@19.2.13)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       htm: 3.1.1
       react: 18.3.1
       react-merge-refs: 1.1.0
@@ -7286,7 +7287,7 @@ snapshots:
       postcss: 8.5.6
       postcss-selector-parser: 6.1.2
 
-  css-loader@6.7.1(webpack@5.104.1):
+  css-loader@6.7.1(webpack@5.105.0):
     dependencies:
       icss-utils: 5.1.0(postcss@8.5.6)
       postcss: 8.5.6
@@ -7296,7 +7297,7 @@ snapshots:
       postcss-modules-values: 4.0.0(postcss@8.5.6)
       postcss-value-parser: 4.2.0
       semver: 7.7.3
-      webpack: 5.104.1
+      webpack: 5.105.0
 
   css-prefers-color-scheme@6.0.3(postcss@8.5.6):
     dependencies:
@@ -8039,7 +8040,7 @@ snapshots:
       cross-spawn: 7.0.6
       signal-exit: 4.1.0
 
-  fork-ts-checker-webpack-plugin@8.0.0(typescript@5.9.3)(webpack@5.104.1):
+  fork-ts-checker-webpack-plugin@8.0.0(typescript@5.9.3)(webpack@5.105.0):
     dependencies:
       '@babel/code-frame': 7.29.0
       chalk: 4.1.2
@@ -8054,7 +8055,7 @@ snapshots:
       semver: 7.7.3
       tapable: 2.3.0
       typescript: 5.9.3
-      webpack: 5.104.1
+      webpack: 5.105.0
 
   formdata-polyfill@4.0.10:
     dependencies:
@@ -8300,14 +8301,14 @@ snapshots:
 
   html-tags@3.3.1: {}
 
-  html-webpack-plugin@5.5.0(webpack@5.104.1):
+  html-webpack-plugin@5.5.0(webpack@5.105.0):
     dependencies:
       '@types/html-minifier-terser': 6.1.0
       html-minifier-terser: 6.1.0
       lodash: 4.17.23
       pretty-error: 4.0.0
       tapable: 2.3.0
-      webpack: 5.104.1
+      webpack: 5.105.0
 
   htmlparser2@6.1.0:
     dependencies:
@@ -8721,11 +8722,11 @@ snapshots:
 
   kolorist@1.8.0: {}
 
-  less-loader@12.3.0(less@4.5.1)(webpack@5.104.1):
+  less-loader@12.3.0(less@4.5.1)(webpack@5.105.0):
     dependencies:
       less: 4.5.1
     optionalDependencies:
-      webpack: 5.104.1
+      webpack: 5.105.0
 
   less-plugin-resolve@1.0.2:
     dependencies:
@@ -9401,14 +9402,14 @@ snapshots:
       postcss: 8.5.6
       postcss-value-parser: 4.2.0
 
-  postcss-loader@8.2.0(postcss@8.5.6)(typescript@5.9.3)(webpack@5.104.1):
+  postcss-loader@8.2.0(postcss@8.5.6)(typescript@5.9.3)(webpack@5.105.0):
     dependencies:
       cosmiconfig: 9.0.0(typescript@5.9.3)
       jiti: 2.6.1
       postcss: 8.5.6
       semver: 7.7.3
     optionalDependencies:
-      webpack: 5.104.1
+      webpack: 5.105.0
     transitivePeerDependencies:
       - typescript
 
@@ -9883,12 +9884,12 @@ snapshots:
 
   safer-buffer@2.1.2: {}
 
-  sass-loader@16.0.6(sass@1.54.0)(webpack@5.104.1):
+  sass-loader@16.0.6(sass@1.54.0)(webpack@5.105.0):
     dependencies:
       neo-async: 2.6.2
     optionalDependencies:
       sass: 1.54.0
-      webpack: 5.104.1
+      webpack: 5.105.0
 
   sass@1.54.0:
     dependencies:
@@ -10341,14 +10342,14 @@ snapshots:
 
   tapable@2.3.0: {}
 
-  terser-webpack-plugin@5.3.16(webpack@5.104.1):
+  terser-webpack-plugin@5.3.16(webpack@5.105.0):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
       jest-worker: 27.5.1
       schema-utils: 4.3.3
       serialize-javascript: 6.0.2
       terser: 5.46.0
-      webpack: 5.104.1
+      webpack: 5.105.0
 
   terser@5.46.0:
     dependencies:
@@ -10468,14 +10469,14 @@ snapshots:
 
   typescript@5.9.3: {}
 
-  umi@4.6.26(@babel/core@7.29.0)(@types/node@25.2.0)(@types/react@19.2.9)(@types/webpack@5.28.5)(eslint@8.57.1)(less-loader@12.3.0(less@4.5.1)(webpack@5.104.1))(less@4.5.1)(lightningcss@1.22.1)(prettier@3.5.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(resolve-url-loader@5.0.0)(rollup@3.29.5)(sass-loader@16.0.6(sass@1.54.0)(webpack@5.104.1))(sass@1.54.0)(stylelint@14.16.1)(terser@5.46.0)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.104.1):
+  umi@4.6.26(@babel/core@7.29.0)(@types/node@25.2.0)(@types/react@19.2.13)(@types/webpack@5.28.5)(eslint@8.57.1)(less-loader@12.3.0(less@4.5.1)(webpack@5.105.0))(less@4.5.1)(lightningcss@1.22.1)(prettier@3.5.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(resolve-url-loader@5.0.0)(rollup@3.29.5)(sass-loader@16.0.6(sass@1.54.0)(webpack@5.105.0))(sass@1.54.0)(stylelint@14.16.1)(terser@5.46.0)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.105.0):
     dependencies:
       '@babel/runtime': 7.23.6
       '@umijs/bundler-utils': 4.6.26
-      '@umijs/bundler-webpack': 4.6.26(@types/webpack@5.28.5)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.104.1)
+      '@umijs/bundler-webpack': 4.6.26(@types/webpack@5.28.5)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.105.0)
       '@umijs/core': 4.6.26
       '@umijs/lint': 4.6.26(eslint@8.57.1)(stylelint@14.16.1)(typescript@5.9.3)
-      '@umijs/preset-umi': 4.6.26(@types/node@25.2.0)(@types/react@19.2.9)(@types/webpack@5.28.5)(less-loader@12.3.0(less@4.5.1)(webpack@5.104.1))(less@4.5.1)(lightningcss@1.22.1)(resolve-url-loader@5.0.0)(rollup@3.29.5)(sass-loader@16.0.6(sass@1.54.0)(webpack@5.104.1))(sass@1.54.0)(terser@5.46.0)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.104.1)
+      '@umijs/preset-umi': 4.6.26(@types/node@25.2.0)(@types/react@19.2.13)(@types/webpack@5.28.5)(less-loader@12.3.0(less@4.5.1)(webpack@5.105.0))(less@4.5.1)(lightningcss@1.22.1)(resolve-url-loader@5.0.0)(rollup@3.29.5)(sass-loader@16.0.6(sass@1.54.0)(webpack@5.105.0))(sass@1.54.0)(terser@5.46.0)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.105.0)
       '@umijs/renderer-react': 4.6.26(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@umijs/server': 4.6.26
       '@umijs/test': 4.6.26(@babel/core@7.29.0)
@@ -10561,11 +10562,11 @@ snapshots:
       punycode: 1.4.1
       qs: 6.14.1
 
-  use-isomorphic-layout-effect@1.2.1(@types/react@19.2.9)(react@18.3.1):
+  use-isomorphic-layout-effect@1.2.1(@types/react@19.2.13)(react@18.3.1):
     dependencies:
       react: 18.3.1
     optionalDependencies:
-      '@types/react': 19.2.9
+      '@types/react': 19.2.13
 
   util-deprecate@1.0.2: {}
 
@@ -10635,7 +10636,7 @@ snapshots:
 
   webpack-sources@3.3.3: {}
 
-  webpack@5.104.1:
+  webpack@5.105.0:
     dependencies:
       '@types/eslint-scope': 3.7.7
       '@types/estree': 1.0.8
@@ -10659,7 +10660,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 4.3.3
       tapable: 2.3.0
-      terser-webpack-plugin: 5.3.16(webpack@5.104.1)
+      terser-webpack-plugin: 5.3.16(webpack@5.105.0)
       watchpack: 2.5.1
       webpack-sources: 3.3.3
     transitivePeerDependencies:
