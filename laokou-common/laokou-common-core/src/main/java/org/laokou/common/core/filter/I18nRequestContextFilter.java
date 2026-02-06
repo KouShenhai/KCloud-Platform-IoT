@@ -21,6 +21,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.util.I18nUtils;
 import org.springframework.boot.servlet.filter.OrderedRequestContextFilter;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -36,8 +37,8 @@ import java.io.IOException;
 public final class I18nRequestContextFilter extends OrderedRequestContextFilter {
 
 	@Override
-	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-			throws ServletException, IOException {
+	protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
+			FilterChain filterChain) throws ServletException, IOException {
 		ServletRequestAttributes attributes = new ServletRequestAttributes(request, response);
 		initContextHolders(request, attributes);
 		try {
