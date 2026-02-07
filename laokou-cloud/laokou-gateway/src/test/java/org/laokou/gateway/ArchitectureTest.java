@@ -143,16 +143,12 @@ class ArchitectureTest {
 			.definedBy("..repository..")
 			.layer("Util")
 			.definedBy("..util..")
-			.layer("Constant")
-			.definedBy("..constant..")
 			.layer("Exception")
 			.definedBy("..exception..")
 			.whereLayer("Filter")
 			.mayOnlyBeAccessedByLayers("Config")
 			.whereLayer("Util")
 			.mayOnlyBeAccessedByLayers("Filter", "Exception", "Repository", "Config")
-			.whereLayer("Constant")
-			.mayOnlyBeAccessedByLayers("Repository", "Filter", "Exception", "Config")
 			.check(classes);
 	}
 

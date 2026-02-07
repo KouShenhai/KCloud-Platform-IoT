@@ -21,6 +21,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.laokou.common.core.util.ResponseUtils;
 import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.i18n.util.I18nUtils;
 import org.laokou.common.i18n.util.MessageUtils;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
@@ -40,22 +41,18 @@ public final class OAuth2ExceptionHandler {
 
 	public static final String ERROR_URL = "https://datatracker.ietf.org/doc/html/rfc6749#section-5.2";
 
-	public static OAuth2AuthenticationException getOAuth2AuthenticationException(String code, String message,
-			String uri) {
-		return new OAuth2AuthenticationException(new OAuth2Error(code, message, uri));
-	}
-
-	public static OAuth2AuthenticationException getException(String code, String uri) {
-		return getOAuth2AuthenticationException(code, MessageUtils.getMessage(code), uri);
+	public static OAuth2AuthenticationException getOAuth2AuthenticationException(String code, String message) {
+		return new OAuth2AuthenticationException(new OAuth2Error(code, message, ERROR_URL));
 	}
 
 	public static OAuth2AuthenticationException getException(String code) {
-		return getOAuth2AuthenticationException(code, MessageUtils.getMessage(code), ERROR_URL);
+		return getOAuth2AuthenticationException(code, MessageUtils.getMessage(code, I18nUtils.getLocale()));
 	}
 
 	public static void handleAccessDenied(HttpServletResponse response, Throwable ex) throws IOException {
 		if (ex instanceof AccessDeniedException) {
-			ResponseUtils.responseOk(response, Result.fail(StatusCode.FORBIDDEN));
+			ResponseUtils.responseOk(response, Result.fail(StatusCode.FORBIDDEN,
+					MessageUtils.getMessage(StatusCode.FORBIDDEN, I18nUtils.getLocale())));
 		}
 	}
 
@@ -68,7 +65,8 @@ public final class OAuth2ExceptionHandler {
 			return;
 		}
 		if (ex instanceof InsufficientAuthenticationException) {
-			ResponseUtils.responseOk(response, Result.fail(StatusCode.UNAUTHORIZED));
+			ResponseUtils.responseOk(response, Result.fail(StatusCode.UNAUTHORIZED,
+					MessageUtils.getMessage(StatusCode.UNAUTHORIZED, I18nUtils.getLocale())));
 		}
 	}
 

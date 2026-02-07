@@ -18,14 +18,16 @@
 package org.laokou.auth.model.exception;
 
 import org.laokou.common.i18n.common.exception.BizException;
+import org.laokou.common.i18n.util.I18nUtils;
+import org.laokou.common.i18n.util.MessageUtils;
 
 /**
  * @author laokou
  */
 public final class DeptNotFoundException extends BizException {
 
-	public DeptNotFoundException(String code, String msg) {
-		super(code, msg);
+	public DeptNotFoundException(String code) {
+		super(code, MessageUtils.getMessage(code, I18nUtils.getLocale()));
 	}
 
 }

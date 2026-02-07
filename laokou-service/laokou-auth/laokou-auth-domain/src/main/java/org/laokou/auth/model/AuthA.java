@@ -45,14 +45,12 @@ import org.laokou.common.core.util.RandomStringUtils;
 import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.crypto.util.RSAUtils;
 import org.laokou.common.i18n.annotation.Entity;
+import org.laokou.common.i18n.common.IdGenerator;
+import org.laokou.common.i18n.common.ValidateName;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.dto.AggregateRoot;
-import org.laokou.common.i18n.common.IdGenerator;
-import org.laokou.common.i18n.common.ValidateName;
-import org.laokou.common.i18n.util.I18nUtils;
 import org.laokou.common.i18n.util.InstantUtils;
-import org.laokou.common.i18n.util.MessageUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -315,8 +313,7 @@ public class AuthA extends AggregateRoot implements ValidateName {
 
 	public void checkDeptId() {
 		if (ObjectUtils.isNull(this.userE.getDeptId())) {
-			throw new DeptNotFoundException(OAuth2Constants.DEPT_NOT_FOUND,
-					MessageUtils.getMessage(OAuth2Constants.DEPT_NOT_FOUND, I18nUtils.getLocale()));
+			throw new DeptNotFoundException(OAuth2Constants.DEPT_NOT_FOUND);
 		}
 	}
 

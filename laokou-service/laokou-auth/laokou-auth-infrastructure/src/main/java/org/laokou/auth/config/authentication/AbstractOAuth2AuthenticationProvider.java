@@ -97,8 +97,7 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 		}
 		catch (GlobalException e) {
 			// 抛出OAuth2认证异常，SpringSecurity全局异常处理并响应前端
-			throw OAuth2ExceptionHandler.getOAuth2AuthenticationException(e.getCode(), e.getMsg(),
-					OAuth2ExceptionHandler.ERROR_URL);
+			throw OAuth2ExceptionHandler.getOAuth2AuthenticationException(e.getCode(), e.getMsg());
 		}
 		catch (OAuth2AuthenticationException e) {
 			throw e;

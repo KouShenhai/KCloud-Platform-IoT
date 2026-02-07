@@ -29,7 +29,6 @@ import org.hibernate.validator.constraints.Range;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.ValidatorUtils;
-import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.util.Locale;
 import java.util.Set;
@@ -161,7 +160,7 @@ class ValidatorUtilsTest {
 	void test_getMessage_withValidCode() {
 		// Test getMessage with valid code
 		String message = ValidatorUtils.getMessage("test.message");
-		Locale locale = LocaleContextHolder.getLocale();
+		Locale locale = Locale.getDefault();
 		if (ObjectUtils.equals("zh", locale.getLanguage())) {
 			Assertions.assertThat(message).isEqualTo("测试");
 		}
@@ -173,8 +172,8 @@ class ValidatorUtilsTest {
 	@Test
 	void test_getMessage_withNullArgs() {
 		// Test getMessage with null args
-		String message = ValidatorUtils.getMessage("test.message", null);
-		Locale locale = LocaleContextHolder.getLocale();
+		String message = ValidatorUtils.getMessage("test.message");
+		Locale locale = Locale.getDefault();
 		if (ObjectUtils.equals("zh", locale.getLanguage())) {
 			Assertions.assertThat(message).isEqualTo("测试");
 		}
@@ -187,7 +186,7 @@ class ValidatorUtilsTest {
 	void test_getMessage_withArgs() {
 		// Test getMessage with arguments
 		Object[] args = new Object[] { "John", 25 };
-		String message = ValidatorUtils.getMessage("test.message", args);
+		String message = ValidatorUtils.getMessage("test.message", args, Locale.getDefault());
 		Assertions.assertThat(message).isNotNull();
 	}
 

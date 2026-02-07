@@ -59,11 +59,11 @@ public final class Result<T> implements Serializable {
 	}
 
 	public static <T> Result<T> ok(T data) {
-		return new Result<>(StatusCode.OK, MessageUtils.getMessage(StatusCode.OK), data);
+		return fail(StatusCode.OK, MessageUtils.getMessage(StatusCode.OK), data);
 	}
 
 	public static <T> Result<T> fail(String code) {
-		return new Result<>(code, MessageUtils.getMessage(code), null);
+		return fail(code, MessageUtils.getMessage(code), null);
 	}
 
 	public static <T> Result<T> fail(String code, String msg) {

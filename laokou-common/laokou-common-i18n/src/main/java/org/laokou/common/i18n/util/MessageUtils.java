@@ -17,7 +17,6 @@
 
 package org.laokou.common.i18n.util;
 
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
 import java.nio.charset.StandardCharsets;
@@ -44,15 +43,11 @@ public final class MessageUtils {
 	}
 
 	public static String getMessage(String code) {
-		return getMessage(code, new Object[0], LocaleContextHolder.getLocale());
+		return getMessage(code, new Object[0], Locale.getDefault());
 	}
 
 	public static String getMessage(String code, Locale locale) {
 		return getMessage(code, new Object[0], locale);
-	}
-
-	public static String getMessage(String code, Object[] args) {
-		return getMessage(code, args, LocaleContextHolder.getLocale());
 	}
 
 	public static String getMessage(String code, Object[] args, Locale locale) {

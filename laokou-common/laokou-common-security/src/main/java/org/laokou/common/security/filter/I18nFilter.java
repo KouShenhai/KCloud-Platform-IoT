@@ -25,7 +25,6 @@ import org.jspecify.annotations.NonNull;
 import org.laokou.common.i18n.util.I18nUtils;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -35,7 +34,6 @@ import java.io.IOException;
  *
  * @author laokou
  */
-@Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class I18nFilter extends OncePerRequestFilter {
 

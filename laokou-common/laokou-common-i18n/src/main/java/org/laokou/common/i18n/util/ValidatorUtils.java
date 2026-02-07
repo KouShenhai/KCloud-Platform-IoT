@@ -23,11 +23,11 @@ import jakarta.validation.Validator;
 import org.hibernate.validator.HibernateValidator;
 import org.hibernate.validator.HibernateValidatorFactory;
 import org.hibernate.validator.messageinterpolation.ParameterMessageInterpolator;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
+import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -53,11 +53,15 @@ public final class ValidatorUtils {
 	}
 
 	public static String getMessage(String code) {
-		return getMessage(code, null);
+		return getMessage(code, new Object[0], Locale.getDefault());
 	}
 
-	public static String getMessage(String code, Object[] args) {
-		return VALIDATE_BUNDLE_MESSAGE_SOURCE.getMessage(code, args, LocaleContextHolder.getLocale());
+	public static String getMessage(String code, Locale locale) {
+		return getMessage(code, new Object[0], locale);
+	}
+
+	public static String getMessage(String code, Object[] args, Locale locale) {
+		return VALIDATE_BUNDLE_MESSAGE_SOURCE.getMessage(code, args, locale);
 	}
 
 	/**

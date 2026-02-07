@@ -40,49 +40,30 @@ class OAuth2ExceptionHandlerTest {
 		// Given
 		String code = "invalid_token";
 		String message = "Token expired";
-		String uri = "https://example.com/error";
 
 		// When
-		OAuth2AuthenticationException exception = OAuth2ExceptionHandler.getOAuth2AuthenticationException(code, message,
-				uri);
+		OAuth2AuthenticationException exception = OAuth2ExceptionHandler.getOAuth2AuthenticationException(code,
+				message);
 
 		// Then
 		Assertions.assertThat(exception).isNotNull();
 		Assertions.assertThat(exception.getError()).isNotNull();
 		Assertions.assertThat(exception.getError().getErrorCode()).isEqualTo(code);
 		Assertions.assertThat(exception.getError().getDescription()).isEqualTo(message);
-		Assertions.assertThat(exception.getError().getUri()).isEqualTo(uri);
 	}
 
 	@Test
 	void test_getOAuth2AuthenticationException_with_null_message() {
 		// Given
 		String code = "invalid_token";
-		String uri = "https://example.com/error";
 
 		// When
-		OAuth2AuthenticationException exception = OAuth2ExceptionHandler.getOAuth2AuthenticationException(code, null,
-				uri);
+		OAuth2AuthenticationException exception = OAuth2ExceptionHandler.getOAuth2AuthenticationException(code, null);
 
 		// Then
 		Assertions.assertThat(exception).isNotNull();
 		Assertions.assertThat(exception.getError().getErrorCode()).isEqualTo(code);
 		Assertions.assertThat(exception.getError().getDescription()).isNull();
-	}
-
-	@Test
-	void test_getOAuth2AuthenticationException_with_different_uri() {
-		// Given
-		String code = "access_denied";
-		String message = "Access denied";
-		String customUri = "https://custom.com/error";
-
-		// When
-		OAuth2AuthenticationException exception = OAuth2ExceptionHandler.getOAuth2AuthenticationException(code, message,
-				customUri);
-
-		// Then
-		Assertions.assertThat(exception.getError().getUri()).isEqualTo(customUri);
 	}
 
 }

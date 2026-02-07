@@ -150,14 +150,12 @@ class AuthFilterTest {
 			.build();
 		MockServerWebExchange exchange = MockServerWebExchange.from(request);
 
-		Mockito.when(chain.filter(Mockito.any())).thenReturn(Mono.empty());
-
 		// When
 		Mono<@NonNull Void> result = authFilter.filter(exchange, chain);
 
 		// Then
 		StepVerifier.create(result).verifyComplete();
-		Mockito.verify(chain).filter(Mockito.any());
+		Mockito.verify(chain, Mockito.never()).filter(Mockito.any());
 	}
 
 	@Test
