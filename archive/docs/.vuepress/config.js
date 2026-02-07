@@ -13,9 +13,7 @@ module.exports = {
 	head: [ // 注入到页面<head> 中的标签，格式[tagName, { attrName: attrValue }, innerHTML?]
 		['link', {rel: 'icon', href: '/img/favicon.ico'}], //favicons，资源放在public文件夹
 		['meta', {name: 'keywords', content: 'vuepress,theme,blog,vdoing'}],
-		['meta', {name: 'theme-color', content: '#11a8cd'}], // 移动浏览器主题颜色
-		// ['meta', { name: 'wwads-cn-verify', content: '6c4b761a28b734fe93831e3fb400ce87' }], // 广告相关，你可以去掉
-		// ['script', { src: 'https://cdn.wwads.cn/js/makemoney.js', type: 'text/javascript' }], // 广告相关，你可以去掉
+		['meta', {name: 'theme-color', content: '#11a8cd'}] // 移动浏览器主题颜色
 	],
 
 	// 主题配置
@@ -23,134 +21,7 @@ module.exports = {
 		nav: [
 			{text: '首页', link: '/'},
 			{
-				text: '指南', link: '/pages/a2f161/', items: [
-					{
-						text: '开发手册', items: [
-							{ text: '组件【ai】', link: '/pages/zj00/'},
-							{ text: '组件【algorithm】', link: '/pages/zj01/'},
-							{ text: '组件【banner】', link: '/pages/zj02/'},
-							{ text: '组件【core】', link: '/pages/zj04/'},
-							{ text: '组件【bom】', link: '/pages/zj05/'},
-							{ text: '组件【cors】', link: '/pages/zj06/'},
-							{ text: '组件【domain】', link: '/pages/zj07/'},
-							{ text: '组件【crypto】', link: '/pages/zj08/'},
-							{ text: '组件【data-cache】', link: '/pages/zj09/'},
-							{ text: '组件【elasticsearch】', link: '/pages/zj11/'},
-							{ text: '组件【excel】', link: '/pages/zj12/'},
-							{ text: '组件【i18n】', link: '/pages/zj16/'},
-							{ text: '组件【idempotent】', link: '/pages/zj17/'},
-							{ text: '组件【influxdb】', link: '/pages/zj18/'},
-							{ text: '组件【kafka】', link: '/pages/zj19/'},
-							{ text: '组件【log】', link: '/pages/zj20/'},
-							{ text: '组件【lock】', link: '/pages/zj21/'},
-							{ text: '组件【mail】', link: '/pages/zj22/'},
-							{ text: '组件【log4j2】', link: '/pages/zj23/'},
-							{ text: '组件【mqtt】', link: '/pages/zj24/'},
-							{ text: '组件【mybatis-plus】', link: '/pages/zj26/'},
-							{ text: '组件【nacos】', link: '/pages/zj27/'},
-							{ text: '组件【netty】', link: '/pages/zj28/'},
-							{ text: '组件【openapi-doc】', link: '/pages/zj29/'},
-							{ text: '组件【oss】', link: '/pages/zj31/'},
-							{ text: '组件【prometheus】', link: '/pages/zj32/'},
-							{ text: '组件【rate-limiter】', link: '/pages/zj34/'},
-							{ text: '组件【reactor】', link: '/pages/zj35/'},
-							{ text: '组件【redis】', link: '/pages/zj36/'},
-							{ text: '组件【secret】', link: '/pages/zj39/'},
-							{ text: '组件【security】', link: '/pages/zj40/'},
-							{ text: '组件【sensitive】', link: '/pages/zj41/'},
-							{ text: '组件【sms】', link: '/pages/zj43/'},
-							{ text: '组件【snail-job】', link: '/pages/zj44/'},
-							{ text: '组件【storage】', link: '/pages/zj48/'},
-							{ text: '组件【tdengine】', link: '/pages/zj49/'},
-							{ text: '组件【tenant】', link: '/pages/zj50/'},
-							{ text: '组件【test】', link: '/pages/zj51/'},
-							{ text: '组件【trace】', link: '/pages/zj52/'},
-							{ text: '组件【xss】', link: '/pages/zj53/'}
-						]
-					},
-					{
-						text: '环境搭建', items: [
-							{text: 'Centos7安装Mysql 8.0.33', link: '/pages/a2f161/'},
-							{text: 'Centos7安装Redis 7.0.11', link: '/pages/90401a/'},
-							{text: 'Centos7安装RocketMQ 5.1.1', link: '/pages/0fb88c/'},
-							{text: 'Centos7安装Jdk 17.0.7', link: '/pages/65acfd/'},
-							{text: 'Centos7安装Docker 23.0.6', link: '/pages/65acff/'},
-							{text: 'Centos7安装Elasticsearch 8.6.2', link: '/pages/d715cf/'},
-							{text: 'Docker安装RabbitMQ 3.12.2', link: '/pages/552b64/'},
-							{text: 'Docker安装Postgresql 16.1', link: '/pages/d715cb/'},
-							{text: 'Ubuntu20.04安装Docker', link: '/pages/fade19/'},
-							{text: 'Ubuntu20.04忘记密码或指纹错误', link: '/pages/d0b936/'},
-							{text: 'Linux搭建Go开发环境', link: '/pages/b580fb/'},
-							{text: 'Ubuntu20.04去掉SSH登录提示', link: '/pages/b71995/'}
-						]
-					},
-					{
-						text: '常用命令', items: [
-							{text: 'Linux常用命令', link: '/pages/76bfa2/'},
-							{text: 'Docker常用命令', link: '/pages/2f475f/'}
-						]
-					},
-					{
-						text: '快速上手', link: '/pages/10bfa7/', items: [
-							{text: '项目启动【dev环境】', link: '/pages/10bfa7/'},
-							{text: '项目启动【test环境】', link: '/pages/9fade8/'},
-							{text: '项目启动【prod环境】', link: '/pages/7be29e/'},
-							{text: '更新日志', link: '/pages/b04951/'},
-						]
-					},
-					{
-						text: '前端指南', link: '/pages/a5d759/', items: [
-							{text: '前端启动', link: '/pages/a5d759/'},
-						]
-					},
-					{
-						text: '后端指南', link: '/pages/59afe2/', items: [
-							{text: 'COLA代码规范', link: '/pages/59afe2/'},
-							{text: 'SSL证书', link: '/pages/10bfa8/'},
-							{text: '一键修改项目模块', link: '/pages/10bfa9/'},
-							{text: '一键生成项目骨架', link: '/pages/1e1e32/'},
-							{text: '一键修改项目版本号', link: '/pages/77f103/'},
-							{text: '一键跳过测试用例', link: '/pages/843853/'},
-							{text: '一键生成后端COLA代码', link: '/pages/889fdb/'},
-							{text: '分布式链路跟踪之ELK日志', link: '/pages/fe2754/'},
-							{text: '一键检查代码规范', link: '/pages/cf6984/'},
-							{text: 'Spring Cloud Gateway+Redis+Nacos之动态路由和负载均衡', link: '/pages/4bce44/'}
-						]
-					},
-					{
-						text: '项目部署', link: '/pages/61389d/', items: [
-							{text: '项目部署之镜像打包与推送', link: '/pages/61389d/'}
-						]
-					},
-					{
-						text: '其他', link: '/pages/643da2/', items: [
-							{text: 'Java如何快速转Go', link: '/pages/643da2/'},
-							{text: 'Go快速开发API', link: '/pages/b4322a/'},
-							{text: 'Vue快速开发Api', link: '/pages/52f121/'},
-							{text: 'React快速开发Api', link: '/pages/3de3af/'},
-						]
-					},
-					{
-						text: '文章', link: '/pages/330c83/', items: [
-							{text: '物联网之对接MQTT最佳实践', link: '/pages/330c83/'},
-							{text: '物联网之使用Vertx实现MQTT-Server最佳实践【响应式】', link: '/pages/ca4ed7/'},
-							{text: 'vue3+lime-echart各种图表使用【懒人专用，建议收藏】', link: '/pages/0aa18d/'},
-							{text: '物联网之使用Vertx实现TCP最佳实践【响应式】', link: '/pages/6da49d/'},
-							{text: '物联网之使用Vertx实现HTTPWebSocket最佳实践【响应式】', link: '/pages/04e661/'},
-							{text: '物联网之使用Vertx实现UDP最佳实践【响应式】', link: '/pages/3e4283/'},
-							{text: 'Spring Cloud Gateway实现分布式限流和熔断降级', link: '/pages/4b37fa/'},
-							{text: '物联网之常见网络配置', link: '/pages/9d20f6/'},
-							{text: 'Go之封装Http请求和日志', link: '/pages/673aba/'},
-							{text: '物联网之小白调试网关设备', link: '/pages/7a9112/'},
-							{text: '微服务之注册中心与ShardingSphere关于分库分表的那些事', link: '/pages/b69179/'},
-							{text: 'Fory序列化与反序列化', link: '/pages/6acecd/'}
-						]
-					},
-					{
-						text: '文章', link: '/pages/a438ae/', items: [
-							{text: 'IntelliJ IDEA插件推荐', link: '/pages/a438ae/'},
-						]
-					},
+				text: '二开指南', link: '/pages/a438ap/', items: [
 					{
 						text: '活动', link: '/pages/a438ap/', items: [
 							{text: 'KCloud-Platform-IoT 开源三周年快乐&父亲节快乐', link: '/pages/a438ap/'},
@@ -158,62 +29,7 @@ module.exports = {
 					},
 				]
 			},
-			{
-				text: '摘抄',link: '/pages/85233a/', items: [
-					{
-						text: '儒学', link: '', items: [
-							{text: '儒学摘抄（一）', link: '/pages/85233a/'}
-						]
-					},
-					{
-						text: '禅语',link: '/pages/59b0b4/', items: [
-							{text: '禅语摘抄（一）', link: '/pages/59b0b4/'},
-						]
-					},
-					{
-						text: '诗词', link: '/pages/f8adf5/', items: [
-							{text: '诗词摘抄（一）', link: '/pages/f8adf5/'}
-						]
-					},
-                    {
-                        text: '道法', link: '/pages/e03540/', items: [
-                            {text: '道法摘抄（一）', link: '/pages/e03540/'}
-                        ]
-                    },
-					{
-						text: '养生', link: '/pages/e03541/', items: [
-							{text: '养生摘抄（一）', link: '/pages/e03541/'}
-						]
-					},
-					{
-						text: '法律', items: [
-							{text: '法律知识', link: '/pages/2c54d5/'}
-						]
-					}
-				]
-			},
-			{
-				text: '感悟', link: '/pages/623577/', items: [
-					{
-						text: '读后感', items: [
-							{text: '读《强者，都是含泪奔跑的人》读后感', link: '/pages/623577/'}
-						]
-					},
-					{
-						text: '修行', items: [
-							{text: '修身/养生/情感', link: '/pages/623578/'},
-							{text: '老实人_直男脱单【老寇总结】', link: '/pages/d2fd30/'}
-						]
-					},
-					{
-						text: '觉悟', items: [
-							{text: '觉悟日记（一）', link: '/pages/b5ee4c/'}
-						]
-					}
-				]
-			},
 			{text: '赞助', link: '/pages/1b12ed/'},
-			{text: '项目课程', link: 'https://koushenhai.github.io/KCloud-Platform-IoT'}
 		],
 		sidebarDepth: 2, // 侧边栏显示深度，默认1，最大2（显示到h3标题）
 		logo: '/img/logo.png', // 导航栏logo
