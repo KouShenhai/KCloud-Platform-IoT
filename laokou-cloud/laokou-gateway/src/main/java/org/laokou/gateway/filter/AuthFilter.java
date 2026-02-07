@@ -77,7 +77,7 @@ public class AuthFilter implements GlobalFilter, Ordered, InitializingBean {
 				return chain.filter(exchange);
 			}
 			// 获取令牌
-			String token = ReactiveRequestUtils.getParamValue(request, HttpHeaders.AUTHORIZATION);
+			String token = ReactiveRequestUtils.getHeaderValue(request, HttpHeaders.AUTHORIZATION);
 			if (StringExtUtils.isEmpty(token)) {
 				return ReactiveResponseUtils.responseOk(exchange, Result.fail(StatusCode.UNAUTHORIZED, MessageUtils.getMessage(StatusCode.UNAUTHORIZED, locale)));
 			}

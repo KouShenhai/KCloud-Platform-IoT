@@ -18,11 +18,12 @@
 package org.laokou.common.reactor.util;
 
 import org.laokou.common.core.util.CollectionExtUtils;
-import org.laokou.common.i18n.util.StringExtUtils;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.util.AntPathMatcher;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -36,19 +37,16 @@ public class ReactiveRequestUtils {
 	private static final AntPathMatcher ANT_PATH_MATCHER = new AntPathMatcher();
 
 	/**
-	 * 获取参数值.
+	 * 获取请求头值.
 	 * @param request 请求对象
-	 * @param paramName 请求参数名称
+	 * @param headerName 请求头名称
 	 * @return 参数值
 	 */
-	public static String getParamValue(ServerHttpRequest request, String paramName) {
+	public static String getHeaderValue(ServerHttpRequest request, String headerName) {
 		// 从header中获取
-		String paramValue = request.getHeaders().getFirst(paramName);
-		// 从参数中获取
-		if (StringExtUtils.isEmpty(paramValue)) {
-			paramValue = request.getQueryParams().getFirst(paramName);
-		}
-		return StringExtUtils.isEmpty(paramValue) ? "" : paramValue.trim();
+		List<String> headerValues = request.getHeaders().get(headerName);
+		return CollectionExtUtils.isEmpty(headerValues) ? StringConstants.EMPTY
+				: String.join(StringConstants.COMMA, headerValues).trim();
 	}
 
 	/**

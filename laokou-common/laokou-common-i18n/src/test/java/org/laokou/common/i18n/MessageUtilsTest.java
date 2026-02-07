@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test;
 import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.util.LocaleUtils;
 import org.laokou.common.i18n.util.MessageUtils;
-import org.springframework.context.i18n.LocaleContextHolder;
+import org.laokou.common.i18n.util.ObjectUtils;
 
 import java.util.Locale;
 
@@ -33,32 +33,27 @@ class MessageUtilsTest {
 
 	@Test
 	void test_zh() {
-		try {
-			Locale locale = LocaleUtils.toLocale("zh-CN,zh");
-			LocaleContextHolder.setLocale(locale, true);
+		Locale locale = LocaleUtils.toLocale("zh-CN,zh");
+		if (ObjectUtils.equals("zh", Locale.getDefault().getLanguage())) {
 			Assertions.assertThat(MessageUtils.getMessage(StatusCode.OK)).isEqualTo("请求成功");
-			Assertions.assertThat(MessageUtils.getMessage(StatusCode.OK, new Object[0])).isEqualTo("请求成功");
-			Assertions.assertThat(MessageUtils.getMessage(StatusCode.OK, new Object[0], locale)).isEqualTo("请求成功");
 		}
-		finally {
-			LocaleContextHolder.resetLocaleContext();
+		else {
+			Assertions.assertThat(MessageUtils.getMessage(StatusCode.OK)).isEqualTo("Request successful");
 		}
+		Assertions.assertThat(MessageUtils.getMessage(StatusCode.OK, new Object[0], locale)).isEqualTo("请求成功");
 	}
 
 	@Test
 	void test_en() {
-		try {
-			Locale locale = LocaleUtils.toLocale("en-US,en");
-			LocaleContextHolder.setLocale(locale, true);
+		Locale locale = LocaleUtils.toLocale("en-US,en");
+		if (ObjectUtils.equals("zh", Locale.getDefault().getLanguage())) {
+			Assertions.assertThat(MessageUtils.getMessage(StatusCode.OK)).isEqualTo("请求成功");
+		}
+		else {
 			Assertions.assertThat(MessageUtils.getMessage(StatusCode.OK)).isEqualTo("Request successful");
-			Assertions.assertThat(MessageUtils.getMessage(StatusCode.OK, new Object[0]))
-				.isEqualTo("Request successful");
-			Assertions.assertThat(MessageUtils.getMessage(StatusCode.OK, new Object[0], locale))
-				.isEqualTo("Request successful");
 		}
-		finally {
-			LocaleContextHolder.resetLocaleContext();
-		}
+		Assertions.assertThat(MessageUtils.getMessage(StatusCode.OK, new Object[0], locale))
+			.isEqualTo("Request successful");
 	}
 
 }

@@ -39,7 +39,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 @Slf4j
 @RestControllerAdvice
 @ConditionalOnClass(ResponseBodyAdvice.class)
-public class ResponseBodyHandler implements ResponseBodyAdvice<Object> {
+public class ResponseBodyHandler implements ResponseBodyAdvice<@NonNull Object> {
 
 	@Override
 	public boolean supports(@NonNull MethodParameter returnType,

@@ -29,34 +29,33 @@ public final class LocaleUtils {
 	private LocaleUtils() {
 	}
 
-	public static Locale toLocale(String language) {
+	public static Locale toLocale(String str) {
 		try {
-			if (StringExtUtils.isEmpty(language)) {
+			if (StringExtUtils.isEmpty(str)) {
 				return Locale.getDefault();
 			}
-			String[] arr = filterLanguage(language);
-			// 语言 国家
-			return Locale.of(arr[0], arr[1]);
+			return getLocale(str);
 		}
 		catch (Exception e) {
 			return Locale.getDefault();
 		}
 	}
 
-	private static String[] filterLanguage(String language) {
+	private static Locale getLocale(String str) {
 		String[] arr;
-		if ((arr = filter(language.indexOf('-'), language)).length > 0
-				|| (arr = filter(language.indexOf('_'), language)).length > 0) {
-			return arr;
+		if ((arr = substring(str.indexOf('-'), str)).length > 0
+				|| (arr = substring(str.indexOf('_'), str)).length > 0) {
+			// 【语言】【国家】
+			return Locale.of(arr[0], arr[1]);
 		}
-		throw new IllegalArgumentException("language not found: " + language);
+		throw new IllegalArgumentException("language not found: " + str);
 	}
 
-	private static String[] filter(int idx, String language) {
+	private static String[] substring(int idx, String str) {
 		if (idx > 0) {
 			String[] arr = new String[2];
-			arr[0] = language.substring(idx - 2, idx);
-			arr[1] = language.substring(idx + 1, idx + 3);
+			arr[0] = str.substring(idx - 2, idx);
+			arr[1] = str.substring(idx + 1, idx + 3);
 			return arr;
 		}
 		return new String[0];

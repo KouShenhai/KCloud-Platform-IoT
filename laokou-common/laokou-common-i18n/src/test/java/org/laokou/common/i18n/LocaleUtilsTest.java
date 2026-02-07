@@ -75,21 +75,18 @@ class LocaleUtilsTest {
 
 	@Test
 	void test_toLocale_withNullLanguage() {
-		// Should return default locale from LocaleContextHolder
 		Locale locale = LocaleUtils.toLocale(null);
 		Assertions.assertThat(locale).isNotNull();
 	}
 
 	@Test
 	void test_toLocale_withEmptyString() {
-		// Should return default locale from LocaleContextHolder
 		Locale locale = LocaleUtils.toLocale("");
 		Assertions.assertThat(locale).isNotNull();
 	}
 
 	@Test
 	void test_toLocale_withBlankString() {
-		// Should return default locale from LocaleContextHolder
 		Locale locale = LocaleUtils.toLocale("   ");
 		Assertions.assertThat(locale).isNotNull();
 	}

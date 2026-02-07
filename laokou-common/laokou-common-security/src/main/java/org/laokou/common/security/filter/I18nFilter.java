@@ -15,31 +15,39 @@
  *
  */
 
-package org.laokou.common.core.config;
+package org.laokou.common.security.filter;
 
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.jspecify.annotations.NonNull;
-import org.jspecify.annotations.Nullable;
-import org.laokou.common.core.util.I18nUtils;
-import org.springframework.web.servlet.AsyncHandlerInterceptor;
+import org.laokou.common.i18n.util.I18nUtils;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import java.io.IOException;
 
 /**
+ * I18n过滤器.
+ *
  * @author laokou
  */
-public class I18nInterceptor implements AsyncHandlerInterceptor {
+@Order(Ordered.HIGHEST_PRECEDENCE)
+public class I18nFilter extends OncePerRequestFilter {
 
 	@Override
-	public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
-			@NonNull Object handler) {
-		I18nUtils.set(request);
-		return true;
-	}
-
-	@Override
-	public void afterCompletion(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
-			@NonNull Object handler, @Nullable Exception ex) {
-		I18nUtils.reset();
+	protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
+			@NonNull FilterChain chain) {
+		ScopedValue.where(I18nUtils.LOCALE, I18nUtils.getLocale(request)).run(() -> {
+			try {
+				chain.doFilter(request, response);
+			}
+			catch (IOException | ServletException e) {
+				throw new RuntimeException(e);
+			}
+		});
 	}
 
 }

@@ -19,6 +19,7 @@ package org.laokou.auth.service.validator;
 
 import org.laokou.auth.model.constant.OAuth2Constants;
 import org.laokou.common.core.util.RegexUtils;
+import org.laokou.common.i18n.util.I18nUtils;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.common.i18n.util.ValidatorUtils;
@@ -33,55 +34,63 @@ final class OAuth2ParamValidator {
 
 	static ParamValidator.Validate validateUsername(String username) {
 		if (StringExtUtils.isEmpty(username)) {
-			return ParamValidator.invalidate(ValidatorUtils.getMessage(OAuth2Constants.USERNAME_REQUIRE));
+			return ParamValidator
+				.invalidate(ValidatorUtils.getMessage(OAuth2Constants.USERNAME_REQUIRE, I18nUtils.getLocale()));
 		}
 		return ParamValidator.validate();
 	}
 
 	static ParamValidator.Validate validatePassword(String password) {
 		if (StringExtUtils.isEmpty(password)) {
-			return ParamValidator.invalidate(ValidatorUtils.getMessage(OAuth2Constants.PASSWORD_REQUIRE));
+			return ParamValidator
+				.invalidate(ValidatorUtils.getMessage(OAuth2Constants.PASSWORD_REQUIRE, I18nUtils.getLocale()));
 		}
 		return ParamValidator.validate();
 	}
 
 	static ParamValidator.Validate validateMail(String mail) {
 		if (StringExtUtils.isEmpty(mail)) {
-			return ParamValidator.invalidate(ValidatorUtils.getMessage(OAuth2Constants.MAIL_REQUIRE));
+			return ParamValidator
+				.invalidate(ValidatorUtils.getMessage(OAuth2Constants.MAIL_REQUIRE, I18nUtils.getLocale()));
 		}
 		else if (RegexUtils.mailRegex(mail)) {
 			return ParamValidator.validate();
 		}
-		return ParamValidator.invalidate(ValidatorUtils.getMessage(OAuth2Constants.MAIL_ERROR));
+		return ParamValidator.invalidate(ValidatorUtils.getMessage(OAuth2Constants.MAIL_ERROR, I18nUtils.getLocale()));
 	}
 
 	static ParamValidator.Validate validateMobile(String mobile) {
 		if (StringExtUtils.isEmpty(mobile)) {
-			return ParamValidator.invalidate(ValidatorUtils.getMessage(OAuth2Constants.MOBILE_REQUIRE));
+			return ParamValidator
+				.invalidate(ValidatorUtils.getMessage(OAuth2Constants.MOBILE_REQUIRE, I18nUtils.getLocale()));
 		}
 		else if (RegexUtils.mobileRegex(mobile)) {
 			return ParamValidator.validate();
 		}
-		return ParamValidator.invalidate(ValidatorUtils.getMessage(OAuth2Constants.MOBILE_ERROR));
+		return ParamValidator
+			.invalidate(ValidatorUtils.getMessage(OAuth2Constants.MOBILE_ERROR, I18nUtils.getLocale()));
 	}
 
 	static ParamValidator.Validate validateUuid(String uuid) {
 		if (StringExtUtils.isEmpty(uuid)) {
-			return ParamValidator.invalidate(ValidatorUtils.getMessage(OAuth2Constants.UUID_REQUIRE));
+			return ParamValidator
+				.invalidate(ValidatorUtils.getMessage(OAuth2Constants.UUID_REQUIRE, I18nUtils.getLocale()));
 		}
 		return ParamValidator.validate();
 	}
 
 	static ParamValidator.Validate validateTenantCode(String tenantCode) {
 		if (StringExtUtils.isEmpty(tenantCode)) {
-			return ParamValidator.invalidate(ValidatorUtils.getMessage(OAuth2Constants.TENANT_CODE_REQUIRE));
+			return ParamValidator
+				.invalidate(ValidatorUtils.getMessage(OAuth2Constants.TENANT_CODE_REQUIRE, I18nUtils.getLocale()));
 		}
 		return ParamValidator.validate();
 	}
 
 	static ParamValidator.Validate validateCaptcha(String captcha) {
 		if (StringExtUtils.isEmpty(captcha)) {
-			return ParamValidator.invalidate(ValidatorUtils.getMessage(OAuth2Constants.CAPTCHA_REQUIRE));
+			return ParamValidator
+				.invalidate(ValidatorUtils.getMessage(OAuth2Constants.CAPTCHA_REQUIRE, I18nUtils.getLocale()));
 		}
 		return ParamValidator.validate();
 	}

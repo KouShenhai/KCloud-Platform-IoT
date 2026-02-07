@@ -40,15 +40,8 @@ class ReactiveRequestUtilsTest {
 		MockServerHttpRequest request = MockServerHttpRequest.get("/api/test")
 			.header("Authorization", "Bearer token123")
 			.build();
-		String paramValue = ReactiveRequestUtils.getParamValue(request, "Authorization");
-		Assertions.assertThat(paramValue).isEqualTo("Bearer token123");
-	}
-
-	@Test
-	void test_getParamValue_from_queryParams() {
-		MockServerHttpRequest request = MockServerHttpRequest.get("/api/test").queryParam("page", "1").build();
-		String paramValue = ReactiveRequestUtils.getParamValue(request, "page");
-		Assertions.assertThat(paramValue).isEqualTo("1");
+		String headerValue = ReactiveRequestUtils.getHeaderValue(request, "Authorization");
+		Assertions.assertThat(headerValue).isEqualTo("Bearer token123");
 	}
 
 	@Test
@@ -58,21 +51,14 @@ class ReactiveRequestUtilsTest {
 			.queryParam("token", "queryValue")
 			.build();
 		// Header should have priority
-		String paramValue = ReactiveRequestUtils.getParamValue(request, "token");
+		String paramValue = ReactiveRequestUtils.getHeaderValue(request, "token");
 		Assertions.assertThat(paramValue).isEqualTo("headerValue");
-	}
-
-	@Test
-	void test_getParamValue_empty() {
-		MockServerHttpRequest request = MockServerHttpRequest.get("/api/test").build();
-		String paramValue = ReactiveRequestUtils.getParamValue(request, "nonExistent");
-		Assertions.assertThat(paramValue).isEmpty();
 	}
 
 	@Test
 	void test_getParamValue_trim() {
 		MockServerHttpRequest request = MockServerHttpRequest.get("/api/test").header("name", "  value  ").build();
-		String paramValue = ReactiveRequestUtils.getParamValue(request, "name");
+		String paramValue = ReactiveRequestUtils.getHeaderValue(request, "name");
 		Assertions.assertThat(paramValue).isEqualTo("value");
 	}
 

@@ -18,6 +18,8 @@
 package org.laokou.auth.model.exception;
 
 import org.laokou.common.i18n.common.exception.BizException;
+import org.laokou.common.i18n.util.I18nUtils;
+import org.laokou.common.i18n.util.MessageUtils;
 
 /**
  * @author laokou
@@ -25,7 +27,7 @@ import org.laokou.common.i18n.common.exception.BizException;
 public final class UserDisabledException extends BizException {
 
 	public UserDisabledException(String code) {
-		super(code);
+		super(code, MessageUtils.getMessage(code, I18nUtils.getLocale()));
 	}
 
 }
