@@ -43,6 +43,9 @@ public final class LocaleUtils {
 
 	private static Locale getLocale(String str) {
 		String[] arr;
+		if (str.indexOf(',') == 2) {
+			return Locale.of(str.substring(0, 2));
+		}
 		if ((arr = substring(str.indexOf('-'), str)).length > 0
 				|| (arr = substring(str.indexOf('_'), str)).length > 0) {
 			// 【语言】【国家】
