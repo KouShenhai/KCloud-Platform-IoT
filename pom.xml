@@ -121,7 +121,7 @@
     <!--spring-cloud版本-->
     <spring-cloud.version>2025.1.1</spring-cloud.version>
     <!--cloud-alibaba版本-->
-    <spring-cloud-alibaba.version>2025.1.0.0-SNAPSHOT</spring-cloud-alibaba.version>
+    <spring-cloud-alibaba.version>2025.1.0.0</spring-cloud-alibaba.version>
     <!--spring-framework版本-->
     <spring-framework.version>7.0.3</spring-framework.version>
     <!--spring-data版本-->
@@ -147,7 +147,7 @@
     <!--micrometer-tracing-bom版本-->
     <micrometer-tracing.version>1.6.2</micrometer-tracing.version>
     <!--opentelemetry版本-->
-    <opentelemetry.version>1.58.0</opentelemetry.version>
+    <opentelemetry.version>1.59.0</opentelemetry.version>
     <!--netty版本-->
     <netty.version>4.2.10.Final</netty.version>
     <!--grpc版本-->
