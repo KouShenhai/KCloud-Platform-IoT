@@ -30,10 +30,17 @@ spring:
           max-idle: 500 #连接池最大空闲连接
           min-idle: 200 #连接池最小空间连接
   redisson:
+    nettyThreads: 64
+    threads: 32
     node:
       type: single
       single:
         address: redis://${spring.data.redis.host}:${spring.data.redis.port}
+        timeout: 10000
+        retryAttempts: 5
+        connectTimeout: 10000
+        connectionMinimumIdleSize: 32
+        connectionPoolSize: 128
     password: ${spring.data.redis.password}
   config:
     import:

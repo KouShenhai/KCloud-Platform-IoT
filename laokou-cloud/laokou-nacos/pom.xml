@@ -64,6 +64,11 @@
     </dependency>
     <dependency>
       <groupId>io.github.pig-mesh.nacos</groupId>
+      <artifactId>nacos-mcp-registry-adaptor</artifactId>
+      <version>${pig-nacos.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.github.pig-mesh.nacos</groupId>
       <artifactId>nacos-server</artifactId>
       <version>${pig-nacos.version}</version>
     </dependency>
