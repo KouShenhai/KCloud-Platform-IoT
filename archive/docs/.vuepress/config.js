@@ -27,6 +27,15 @@ module.exports = {
 							{text: 'KCloud-Platform-IoT 开源三周年快乐&父亲节快乐', link: '/pages/a438ap/'},
 						]
 					},
+					{
+						text: '指南', link: '/pages/caff79/', items: [
+							{text: '后端项目启动', link: '/pages/caff79/'},
+							{text: '前端项目启动', link: '/pages/d38008/'},
+							{text: 'Docker安装', link: '/pages/511812/'},
+							{text: 'Linux常用命令', link: '/pages/d55f5f/'},
+							{text: 'Docker常用命令', link: '/pages/8300d6/'}
+						]
+					}
 				]
 			},
 			{text: '赞助', link: '/pages/1b12ed/'},

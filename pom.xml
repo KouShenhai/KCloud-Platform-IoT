@@ -816,7 +816,7 @@
         需要在 settings.xml 配置
 
        <server>
-           <id>github</id>
+           <id>spring-cloud-alibaba-github</id>
            <username>Your GitHub Username</username>
            <password>Your GitHub Token (requires read:packages permission)</password>
        </server>
