@@ -18,7 +18,7 @@
 package org.laokou.common.log4j2.config;
 
 import org.apache.kafka.clients.admin.NewTopic;
-import org.laokou.common.log4j2.model.MqEnum;
+import org.enums.Mq;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.KafkaAdmin;
@@ -31,18 +31,15 @@ public class Log4j2Config {
 
 	@Bean("traceLogNewTopics")
 	public KafkaAdmin.NewTopics newTopics() {
-		return new KafkaAdmin.NewTopics(new NewTopic(MqEnum.GATEWAY_TRACE_LOG_TOPIC, 3, (short) 1),
-				new NewTopic(MqEnum.AUTH_TRACE_LOG_TOPIC, 3, (short) 1),
-				new NewTopic(MqEnum.ADMIN_TRACE_LOG_TOPIC, 3, (short) 1),
-				new NewTopic(MqEnum.IOT_TRACE_LOG_TOPIC, 3, (short) 1),
-				new NewTopic(MqEnum.OSS_TRACE_LOG_TOPIC, 3, (short) 1),
-				new NewTopic(MqEnum.GENERATOR_TRACE_LOG_TOPIC, 3, (short) 1),
-				new NewTopic(MqEnum.MQTT_TRACE_LOG_TOPIC, 3, (short) 1),
-				new NewTopic(MqEnum.UDP_TRACE_LOG_TOPIC, 3, (short) 1),
-				new NewTopic(MqEnum.HTTP_TRACE_LOG_TOPIC, 3, (short) 1),
-				new NewTopic(MqEnum.TCP_TRACE_LOG_TOPIC, 3, (short) 1),
-				new NewTopic(MqEnum.REPORT_TRACE_LOG_TOPIC, 3, (short) 1),
-				new NewTopic(MqEnum.DISTRIBUTED_IDENTIFIER_TRACE_LOG_TOPIC, 3, (short) 1));
+		return new KafkaAdmin.NewTopics(new NewTopic(Mq.GATEWAY_TRACE_LOG_TOPIC, 3, (short) 1),
+				new NewTopic(Mq.AUTH_TRACE_LOG_TOPIC, 3, (short) 1),
+				new NewTopic(Mq.ADMIN_TRACE_LOG_TOPIC, 3, (short) 1),
+				new NewTopic(Mq.IOT_TRACE_LOG_TOPIC, 3, (short) 1), new NewTopic(Mq.OSS_TRACE_LOG_TOPIC, 3, (short) 1),
+				new NewTopic(Mq.GENERATOR_TRACE_LOG_TOPIC, 3, (short) 1),
+				new NewTopic(Mq.MQTT_TRACE_LOG_TOPIC, 3, (short) 1), new NewTopic(Mq.UDP_TRACE_LOG_TOPIC, 3, (short) 1),
+				new NewTopic(Mq.HTTP_TRACE_LOG_TOPIC, 3, (short) 1), new NewTopic(Mq.TCP_TRACE_LOG_TOPIC, 3, (short) 1),
+				new NewTopic(Mq.REPORT_TRACE_LOG_TOPIC, 3, (short) 1),
+				new NewTopic(Mq.DISTRIBUTED_IDENTIFIER_TRACE_LOG_TOPIC, 3, (short) 1));
 	}
 
 }

@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.log4j2.model;
+package org.enums;
 
 import lombok.Getter;
 
@@ -23,7 +23,7 @@ import lombok.Getter;
  * @author laokou
  */
 @Getter
-public enum MqEnum {
+public enum Mq {
 
 	;
 
