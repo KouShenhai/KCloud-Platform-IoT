@@ -33,6 +33,7 @@ import java.util.List;
  * @param avatar 头像.
  * @param permissions 权限标识集合.
  * @param tenantCode 租户编码.
+ * @param dataScopes 数据权限.
  */
 @Builder(toBuilder = true)
 public record UserV(String username, String password, String avatar, String mail, String mobile, String tenantCode,

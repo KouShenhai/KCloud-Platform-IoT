@@ -25,7 +25,7 @@
 - ci		=>  【名称】脚本文件配置
 
 == 代码规范
-https://koushenhai.github.io/pages/59afe2[COLA代码规范]
+https://koushenhai.github.io/pages/d29eab[COLA代码规范]
 
 == 测试用例
 - 测试用例的类名必须以Test结尾

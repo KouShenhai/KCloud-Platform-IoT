@@ -22,9 +22,9 @@ import org.laokou.common.i18n.common.exception.BizException;
 /**
  * @author laokou
  */
-public class GrpcNotFoundException extends BizException {
+public class ServiceNotFoundException extends BizException {
 
-	public GrpcNotFoundException(String code, String msg, Object data) {
+	public ServiceNotFoundException(String code, String msg, Object data) {
 		super(code, msg, data);
 	}
 

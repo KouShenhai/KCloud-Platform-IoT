@@ -34,7 +34,12 @@ module.exports = {
 							{text: 'Docker安装', link: '/pages/511812/'},
 							{text: 'Linux常用命令', link: '/pages/d55f5f/'},
 							{text: 'Docker常用命令', link: '/pages/8300d6/'},
-							{text: 'JVM性能优化', link: '/pages/dafd11/'}
+							{text: 'JVM性能优化', link: '/pages/dafd11/'},
+							{text: '项目配置', link: '/pages/9cd6a1/'},
+							{text: 'COLA代码规范', link: '/pages/d29eab/'},
+							{text: 'OAuth2.1 授权服务器配置', link: '/pages/029878/'},
+							{text: 'OAuth2.1 资源服务器配置', link: '/pages/029879/'},
+							{text: 'OAuth2.1 认证API配置', link: '/pages/029879/'}
 						]
 					}
 				]
