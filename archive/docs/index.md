@@ -46,7 +46,7 @@ postList: none
   <tbody>
     <tr>
       <td align="center" valign="middle">
-        <img :src="$withBase('/img/二维码/gzh.jpg')" alt="群号: 465450496" class="no-zoom" style="width:200px;margin: 10px;">
+        <img :src="$withBase('/img/二维码/gzh.png')" alt="公众号" class="no-zoom" style="width:200px;margin: 10px;">
       </td>
     </tr>
   </tbody>

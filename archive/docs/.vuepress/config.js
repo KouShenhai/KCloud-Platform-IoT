@@ -33,7 +33,8 @@ module.exports = {
 							{text: '前端项目启动', link: '/pages/d38008/'},
 							{text: 'Docker安装', link: '/pages/511812/'},
 							{text: 'Linux常用命令', link: '/pages/d55f5f/'},
-							{text: 'Docker常用命令', link: '/pages/8300d6/'}
+							{text: 'Docker常用命令', link: '/pages/8300d6/'},
+							{text: 'JVM性能优化', link: '/pages/dafd11/'}
 						]
 					}
 				]
