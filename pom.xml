@@ -189,7 +189,7 @@
     <!--httpclient5版本-->
     <httpclient5.version>5.6</httpclient5.version>
     <!--httpcore5版本-->
-    <httpcore5.version>5.4</httpcore5.version>
+    <httpcore5.version>5.4.1</httpcore5.version>
     <!--hibernate-validator版本-->
     <hibernate-validator.version>9.1.0.Final</hibernate-validator.version>
     <!--ip2region版本-->
