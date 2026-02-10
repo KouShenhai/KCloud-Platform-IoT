@@ -43,7 +43,7 @@ import org.laokou.common.elasticsearch.annotation.Setting;
 import org.laokou.common.elasticsearch.annotation.SubField;
 import org.laokou.common.elasticsearch.annotation.Type;
 import org.laokou.common.elasticsearch.config.ElasticsearchAutoConfig;
-import org.laokou.common.elasticsearch.model.Search;
+import org.laokou.common.elasticsearch.template.Search;
 import org.laokou.common.elasticsearch.template.ElasticsearchDocumentTemplate;
 import org.laokou.common.elasticsearch.template.ElasticsearchIndexTemplate;
 import org.laokou.common.elasticsearch.template.ElasticsearchSearchTemplate;

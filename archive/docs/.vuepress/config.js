@@ -41,9 +41,10 @@ module.exports = {
 							{text: 'OAuth2.1 资源服务器配置', link: '/pages/029879/'},
 							{text: 'OAuth2.1 认证API配置', link: '/pages/3c002a/'},
 							{text: 'Nacos配置', link: '/pages/bb6aae/'},
-							{text: '网关路由配置', link: '/pages/a0f8a0/'}
+							{text: '网关路由配置', link: '/pages/a0f8a0/'},
+							{text: '项目常用注解', link: '/pages/2e0e5f/'},
 						]
-					}
+					},
 				]
 			},
 			{text: '赞助', link: '/pages/1b12ed/'},

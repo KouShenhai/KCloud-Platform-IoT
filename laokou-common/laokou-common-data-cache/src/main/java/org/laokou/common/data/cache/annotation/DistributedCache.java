@@ -26,7 +26,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 分布式缓存(强一致性).
+ * 分布式缓存.
  *
  * @author laokou
  */
