@@ -37,12 +37,13 @@ module.exports = {
 							{text: 'JVM性能优化', link: '/pages/dafd11/'},
 							{text: '项目配置', link: '/pages/9cd6a1/'},
 							{text: 'COLA代码规范', link: '/pages/d29eab/'},
-							{text: 'OAuth2.1 授权服务器配置', link: '/pages/029878/'},
-							{text: 'OAuth2.1 资源服务器配置', link: '/pages/029879/'},
-							{text: 'OAuth2.1 认证API配置', link: '/pages/3c002a/'},
+							{text: 'OAuth2.1授权服务器配置', link: '/pages/029878/'},
+							{text: 'OAuth2.1资源服务器配置', link: '/pages/029879/'},
+							{text: 'OAuth2.1认证API配置', link: '/pages/3c002a/'},
 							{text: 'Nacos配置', link: '/pages/bb6aae/'},
 							{text: '网关路由配置', link: '/pages/a0f8a0/'},
 							{text: '项目常用注解', link: '/pages/2e0e5f/'},
+							{text: 'Elasticsearch注解', link: '/pages/409dff/'},
 						]
 					},
 				]
