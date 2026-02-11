@@ -78,12 +78,6 @@
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-nacos</artifactId>
       <version>${project.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.laokou</groupId>
-          <artifactId>laokou-common-core</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
