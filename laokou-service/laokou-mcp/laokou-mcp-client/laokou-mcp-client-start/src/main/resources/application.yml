@@ -1,6 +1,6 @@
 jasypt:
   encryptor:
-    password: @SECRET-KEY@
+    password: ${SECRET_KEY:laokou}
 
 server:
   # 端口
@@ -68,11 +68,11 @@ spring:
       mcp:
         nacos:
           server-addr: @NACOS-DISCOVERY-ADDRESS@
-          username: @NACOS-USERNAME@
-          password: @NACOS-PASSWORD@
+          username: ${NACOS_USERNAME:nacos}
+          password: ${NACOS_PASSWORD:nacos}
           namespace: @NACOS-NAMESPACE@
           register:
-            service-group: @NACOS-GROUP@
+            service-group: ${NACOS_GROUP:IOT_GROUP}
             service-name: ${spring.application.name}
           client:
             enabled: true

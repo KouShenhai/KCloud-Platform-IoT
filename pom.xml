@@ -839,19 +839,6 @@
       <id>dev</id>
       <properties>
         <PROFILE-ACTIVE>dev</PROFILE-ACTIVE>
-        <SSL-ENABLED>false</SSL-ENABLED>
-        <DS-HOST>postgresql</DS-HOST>
-        <DS-PORT>5432</DS-PORT>
-        <DS-DRIVER>org.postgresql.Driver</DS-DRIVER>
-        <DS-PLATFORM>postgresql</DS-PLATFORM>
-        <NACOS-NAMESPACE>0dac1a68-2f01-40df-bd26-bf0cb199057a</NACOS-NAMESPACE>
-        <NACOS-DISCOVERY-ADDRESS>nacos:8848,nacos:8858,nacos:8868</NACOS-DISCOVERY-ADDRESS>
-        <NACOS-CONFIG-ADDRESS>nacos:8848,nacos:8858,nacos:8868</NACOS-CONFIG-ADDRESS>
-        <NACOS-GROUP>IOT_GROUP</NACOS-GROUP>
-        <NACOS-USERNAME>nacos</NACOS-USERNAME>
-        <NACOS-PASSWORD>nacos</NACOS-PASSWORD>
-        <NACOS-CLUSTER-NAME>iot-cluster</NACOS-CLUSTER-NAME>
-        <SECRET-KEY>laokou</SECRET-KEY>
       </properties>
       <activation>
         <activeByDefault>true</activeByDefault>
@@ -862,19 +849,6 @@
       <id>test</id>
       <properties>
         <PROFILE-ACTIVE>test</PROFILE-ACTIVE>
-        <SSL-ENABLED>false</SSL-ENABLED>
-        <DS-HOST>postgresql</DS-HOST>
-        <DS-PORT>5432</DS-PORT>
-        <DS-DRIVER>org.postgresql.Driver</DS-DRIVER>
-        <DS-PLATFORM>postgresql</DS-PLATFORM>
-        <NACOS-NAMESPACE>a61abd4c-ef96-42a5-99a1-616adee531f3</NACOS-NAMESPACE>
-        <NACOS-DISCOVERY-ADDRESS>nacos:8848,nacos:8858,nacos:8868</NACOS-DISCOVERY-ADDRESS>
-        <NACOS-CONFIG-ADDRESS>nacos:8848,nacos:8858,nacos:8868</NACOS-CONFIG-ADDRESS>
-        <NACOS-GROUP>IOT_GROUP</NACOS-GROUP>
-        <NACOS-USERNAME>nacos</NACOS-USERNAME>
-        <NACOS-PASSWORD>nacos</NACOS-PASSWORD>
-        <NACOS-CLUSTER-NAME>iot-cluster</NACOS-CLUSTER-NAME>
-        <SECRET-KEY>laokou</SECRET-KEY>
       </properties>
       <activation>
         <activeByDefault>false</activeByDefault>
@@ -885,31 +859,6 @@
       <id>prod</id>
       <properties>
         <PROFILE-ACTIVE>prod</PROFILE-ACTIVE>
-        <SSL-ENABLED>false</SSL-ENABLED>
-        <!--suppress UnresolvedMavenProperty -->
-        <DS-HOST>${DS_HOST:postgresql}</DS-HOST>
-        <!--suppress UnresolvedMavenProperty -->
-        <DS-PORT>${DS_PORT:5432}</DS-PORT>
-        <!--suppress UnresolvedMavenProperty -->
-        <DS-DRIVER>${DS_DRIVER:org.postgresql.Driver}</DS-DRIVER>
-        <!--suppress UnresolvedMavenProperty -->
-        <DS-PLATFORM>${DS_PLATFORM:postgresql}</DS-PLATFORM>
-        <!--suppress UnresolvedMavenProperty -->
-        <NACOS-NAMESPACE>${NACOS_NAMESPACE:8140e92b-fb43-48f5-b63b-7506185206a5}</NACOS-NAMESPACE>
-        <!--suppress UnresolvedMavenProperty -->
-        <NACOS-DISCOVERY-ADDRESS>${NACOS_DISCOVERY_ADDRESS:nacos:8848,nacos:8858,nacos:8868}</NACOS-DISCOVERY-ADDRESS>
-        <!--suppress UnresolvedMavenProperty -->
-        <NACOS-CONFIG-ADDRESS>${NACOS_CONFIG_ADDRESS:nacos:8848,nacos:8858,nacos:8868}</NACOS-CONFIG-ADDRESS>
-        <!--suppress UnresolvedMavenProperty -->
-        <NACOS-GROUP>${NACOS_GROUP:IOT_GROUP}</NACOS-GROUP>
-        <!--suppress UnresolvedMavenProperty -->
-        <NACOS-USERNAME>${NACOS_USERNAME:nacos}</NACOS-USERNAME>
-        <!--suppress UnresolvedMavenProperty -->
-        <NACOS-PASSWORD>${NACOS_PASSWORD:nacos}</NACOS-PASSWORD>
-        <!--suppress UnresolvedMavenProperty -->
-        <NACOS-CLUSTER-NAME>${NACOS_CLUSTER_NAME:iot-cluster}</NACOS-CLUSTER-NAME>
-        <!--suppress UnresolvedMavenProperty -->
-        <SECRET-KEY>${SECRET_KEY:laokou}</SECRET-KEY>
       </properties>
       <activation>
         <activeByDefault>false</activeByDefault>
@@ -1367,10 +1316,9 @@
         <directory>src/main/resources</directory>
         <excludes>
           <exclude>application*.yml</exclude>
-          <exclude>bootstrap*.yml</exclude>
+          <exclude>*.properties</exclude>
           <exclude>log4j2*.xml</exclude>
           <exclude>*.json</exclude>
-          <exclude>*.properties</exclude>
         </excludes>
       </resource>
       <!-- 添加需要包含的文件 -->
@@ -1386,9 +1334,6 @@
           <include>application.properties</include>
           <!--suppress UnresolvedMavenProperty -->
           <include>application-${PROFILE-ACTIVE}.properties</include>
-          <include>bootstrap.yml</include>
-          <!--suppress UnresolvedMavenProperty -->
-          <include>bootstrap-${PROFILE-ACTIVE}.yml</include>
           <include>log4j2.xml</include>
           <!--suppress UnresolvedMavenProperty -->
           <include>log4j2-${PROFILE-ACTIVE}.xml</include>

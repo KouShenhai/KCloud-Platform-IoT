@@ -8,8 +8,8 @@ spring:
       datasource:
         master:
           type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: @DS-DRIVER@
-          url: jdbc:@DS-PLATFORM@://@DS-HOST@:@DS-PORT@/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false
+          driver-class-name: ${DS_DRIVER:org.postgresql.Driver}
+          url: jdbc:${DS_PLATFORM:postgresql}://${DS_HOST:postgresql}:${DS_PORT:5432}/kcloud_platform?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false
           username: ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)
           password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -23,8 +23,8 @@ spring:
             is-read-only: false
         domain:
           type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: @DS-DRIVER@
-          url: jdbc:@DS-PLATFORM@://@DS-HOST@:@DS-PORT@/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false
+          driver-class-name: ${DS_DRIVER:org.postgresql.Driver}
+          url: jdbc:${DS_PLATFORM:postgresql}://${DS_HOST:postgresql}:${DS_PORT:5432}/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-admin&useSSL=false
           username: ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)
           password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -105,22 +105,34 @@ spring:
   config:
     import:
       # 临时配置文件【解决拉取nacos配置文件时，group默认为DEFAULT_GROUP问题】
-      - optional:nacos:laokou-admin.yaml?refreshEnabled=true&group=${NACOS-GROUP}
+      - optional:nacos:laokou-admin.yaml?refreshEnabled=true&group=${NACOS_GROUP:IOT_GROUP}
   cloud:
+    sentinel:
+      datasource:
+        db0:
+          nacos:
+            server-addr: ${NACOS_CONFIG_ADDRESS:nacos:8848,nacos:8858,nacos:8868}
+            namespace: ${NACOS_NAMESPACE:8140e92b-fb43-48f5-b63b-7506185206a5}
+            group-id: ${NACOS_GROUP:IOT_GROUP}
+            data-id: admin-flow.json
+            data-type: json
+            username: ${NACOS_USERNAME:nacos}
+            password: ${NACOS_PASSWORD:nacos}
+            rule-type: flow
     nacos:
       discovery:
         # 开启服务注册&发现
         enabled: true
-        server-addr: ${NACOS-DISCOVERY-ADDRESS}
-        namespace: ${NACOS-NAMESPACE}
-        username: ${NACOS-USERNAME}
-        password: ${NACOS-PASSWORD}
-        group: ${NACOS-GROUP}
+        server-addr: ${NACOS_DISCOVERY_ADDRESS:nacos:8848,nacos:8858,nacos:8868}
+        namespace: ${NACOS_NAMESPACE:8140e92b-fb43-48f5-b63b-7506185206a5}
+        username: ${NACOS_USERNAME:nacos}
+        password: ${NACOS_PASSWORD:nacos}
+        group: ${NACOS_GROUP:IOT_GROUP}
         # https
-        secure: @SSL-ENABLED@
+        secure: false
         # true 临时 false 持久
         ephemeral: true
-        cluster-name: ${NACOS-CLUSTER-NAME}
+        cluster-name: ${NACOS_CLUSTER_NAME:iot-cluster}
         heart-beat:
           # 开启心跳检测
           enabled: true
@@ -131,15 +143,15 @@ spring:
       config:
         # 开启配置中心
         enabled: true
-        server-addr: ${NACOS-CONFIG-ADDRESS}
-        namespace: ${NACOS-NAMESPACE}
-        username: ${NACOS-USERNAME}
-        password: ${NACOS-PASSWORD}
-        cluster-name: ${NACOS-CLUSTER-NAME}
+        server-addr: ${NACOS_CONFIG_ADDRESS:nacos:8848,nacos:8858,nacos:8868}
+        namespace: ${NACOS_NAMESPACE:8140e92b-fb43-48f5-b63b-7506185206a5}
+        username: ${NACOS_USERNAME:nacos}
+        password: ${NACOS_PASSWORD:nacos}
+        cluster-name: ${NACOS_CLUSTER_NAME:iot-cluster}
         # https://github.com/alibaba/spring-cloud-alibaba/blob/2021.x/spring-cloud-alibaba-docs/src/main/asciidoc-zh/nacos-config.adoc
         # 指定读取的文件格式
         file-extension: yaml
-        group: ${NACOS-GROUP}
+        group: ${NACOS_GROUP:IOT_GROUP}
         refresh-enabled: true
         import-check:
           enabled: false

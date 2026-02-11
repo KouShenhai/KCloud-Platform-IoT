@@ -44,6 +44,8 @@ module.exports = {
 							{text: '网关路由配置', link: '/pages/a0f8a0/'},
 							{text: '项目常用注解', link: '/pages/2e0e5f/'},
 							{text: 'Elasticsearch注解', link: '/pages/409dff/'},
+							{text: 'Spring Cloud Alibaba配置', link: '/pages/3cc49d/'},
+							{text: 'Spring Cloud Gateway配置', link: '/pages/4953b0/'},
 						]
 					},
 				]
