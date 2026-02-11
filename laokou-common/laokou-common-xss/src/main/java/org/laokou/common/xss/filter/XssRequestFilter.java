@@ -45,7 +45,7 @@ public final class XssRequestFilter extends OncePerRequestFilter {
 
 	@Override
 	protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
-			FilterChain chain) {
+			@NonNull FilterChain chain) {
 		try {
 			HandlerMethod handlerMethod = RequestUtils.getHandlerMethod(request, handlerMapping);
 			if (handlerMethod != null && handlerMethod.getMethod().isAnnotationPresent(Xss.class)) {

@@ -20,6 +20,7 @@ package org.laokou.common.xss.annotation;
 import org.laokou.common.core.annotation.AbstractContextualSerializer;
 import org.laokou.common.xss.util.XssUtils;
 import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonGenerator;
 import tools.jackson.databind.SerializationContext;
 
 /**
@@ -28,8 +29,7 @@ import tools.jackson.databind.SerializationContext;
 public class XssSerializer extends AbstractContextualSerializer {
 
 	@Override
-	public void serialize(String value, tools.jackson.core.JsonGenerator generator, SerializationContext context)
-			throws JacksonException {
+	public void serialize(String value, JsonGenerator generator, SerializationContext context) throws JacksonException {
 		generator.writeString(XssUtils.clearSql(value));
 	}
 
