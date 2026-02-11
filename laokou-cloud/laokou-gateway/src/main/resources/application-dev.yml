@@ -45,28 +45,49 @@ spring:
   config:
     import:
       # 临时配置文件【解决拉取nacos配置文件时，group默认为DEFAULT_GROUP问题】
-      - optional:nacos:laokou-gateway.yaml?refreshEnabled=true&group=${NACOS-GROUP}
+      - optional:nacos:laokou-gateway.yaml?refreshEnabled=true&group=${NACOS_GROUP:IOT_GROUP}
   cloud:
+    sentinel:
+      datasource:
+        # key可以自定义
+        db0:
+          nacos:
+            # 服务注册&发现-地址
+            server-addr: ${NACOS_CONFIG_ADDRESS:nacos:8848,nacos:8858,nacos:8868}
+            # 服务注册&发现-命名空间
+            namespace: ${NACOS_NAMESPACE:0dac1a68-2f01-40df-bd26-bf0cb199057a}
+            # 服务注册&发现-数据ID
+            data-id: gateway-flow.json
+            # 服务注册&发现-规则类型【网关规则】
+            rule-type: gw_flow
+            # 服务注册&发现-分组ID
+            group-id: ${NACOS_GROUP:IOT_GROUP}
+            # 服务注册&发现-用户名
+            username: ${NACOS_USERNAME:nacos}
+            # 服务注册&发现-密码
+            password: ${NACOS_PASSWORD:nacos}
+            # 服务注册&发现-数据类型
+            data-type: json
     nacos:
       discovery:
         # 开启服务注册&发现
         enabled: true
         # 服务注册&发现-地址
-        server-addr: ${NACOS-DISCOVERY-ADDRESS}
+        server-addr: ${NACOS_DISCOVERY_ADDRESS:nacos:8848,nacos:8858,nacos:8868}
         # 服务注册&发现-命名空间
-        namespace: ${NACOS-NAMESPACE}
+        namespace: ${NACOS_NAMESPACE:0dac1a68-2f01-40df-bd26-bf0cb199057a}
         # 服务注册&发现-用户名
-        username: ${NACOS-USERNAME}
+        username: ${NACOS_USERNAME:nacos}
         # 服务注册&发现-密码
-        password: ${NACOS-PASSWORD}
+        password: ${NACOS_PASSWORD:nacos}
         # 服务注册&发现-分组
-        group: ${NACOS-GROUP}
+        group: ${NACOS_GROUP:IOT_GROUP}
         # true支持https，false不支持https
-        secure: @SSL-ENABLED@
+        secure: false
         # true 临时 false 持久
         ephemeral: true
         # 服务注册&发现-集群名称
-        cluster-name: ${NACOS-CLUSTER-NAME}
+        cluster-name: ${NACOS_CLUSTER_NAME:iot-cluster}
         heart-beat:
           # 开启心跳检测
           enabled: true
@@ -78,17 +99,17 @@ spring:
         # 开启配置中心
         enabled: true
         # 配置中心-地址
-        server-addr: ${NACOS-CONFIG-ADDRESS}
+        server-addr: ${NACOS_CONFIG_ADDRESS:nacos:8848,nacos:8858,nacos:8868}
         # 配置中心-命名空间
-        namespace: ${NACOS-NAMESPACE}
+        namespace: ${NACOS_NAMESPACE:0dac1a68-2f01-40df-bd26-bf0cb199057a}
         # 配置中心-用户名
-        username: ${NACOS-USERNAME}
+        username: ${NACOS_USERNAME:nacos}
         # 配置中心-密码
-        password: ${NACOS-PASSWORD}
+        password: ${NACOS_PASSWORD:nacos}
         # 配置中心-分组
-        group: ${NACOS-GROUP}
+        group: ${NACOS_GROUP:IOT_GROUP}
         # 配置中心-集群名称
-        cluster-name: ${NACOS-CLUSTER-NAME}
+        cluster-name: ${NACOS_CLUSTER_NAME:iot-cluster}
         # 配置中心-开启自动刷新
         refresh-enabled: true
         # 配置中心-配置文件格式

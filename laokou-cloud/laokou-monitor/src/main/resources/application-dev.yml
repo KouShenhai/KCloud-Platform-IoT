@@ -20,16 +20,16 @@ spring:
       discovery:
         # 开启服务注册&发现
         enabled: true
-        server-addr: ${NACOS-DISCOVERY-ADDRESS}
+        server-addr: ${NACOS_DISCOVERY_ADDRESS:nacos:8848,nacos:8858,nacos:8868}
         namespace: ${NACOS-NAMESPACE}
-        username: ${NACOS-USERNAME}
-        password: ${NACOS-PASSWORD}
-        group: ${NACOS-GROUP}
+        username: ${NACOS_USERNAME:nacos}
+        password: ${NACOS_PASSWORD:nacos}
+        group: ${NACOS_GROUP:IOT_GROUP}
         # https
-        secure: @SSL-ENABLED@
+        secure: false
         # true 临时 false 持久
         ephemeral: true
-        cluster-name: ${NACOS-CLUSTER-NAME}
+        cluster-name: ${NACOS_CLUSTER_NAME:iot-cluster}
         heart-beat:
           # 开启心跳检测
           enabled: true
@@ -40,11 +40,11 @@ spring:
       config:
         # 开启配置中心
         enabled: true
-        server-addr: ${NACOS-CONFIG-ADDRESS}
+        server-addr: ${NACOS_CONFIG_ADDRESS:nacos:8848,nacos:8858,nacos:8868}
         namespace: ${NACOS-NAMESPACE}
-        username: ${NACOS-USERNAME}
-        password: ${NACOS-PASSWORD}
-        cluster-name: ${NACOS-CLUSTER-NAME}
+        username: ${NACOS_USERNAME:nacos}
+        password: ${NACOS_PASSWORD:nacos}
+        cluster-name: ${NACOS_CLUSTER_NAME:iot-cluster}
         file-extension: yaml
-        group: ${NACOS-GROUP}
+        group: ${NACOS_GROUP:IOT_GROUP}
         refresh-enabled: true

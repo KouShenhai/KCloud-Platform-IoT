@@ -17,7 +17,7 @@
 
 jasypt:
   encryptor:
-    password: @SECRET-KEY@
+    password: ${SECRET_KEY:laokou}
 
 server:
   # 端口
@@ -27,7 +27,7 @@ server:
     enabled: true
   ssl:
     # 开启证书
-    enabled: @SSL-ENABLED@
+    enabled: false
     # 证书位置
     key-store: classpath:scg-keystore.p12
     # 证书别名
@@ -39,7 +39,7 @@ server:
     # 证书密码
     key-password: laokou
   http2:
-    enabled: @SSL-ENABLED@
+    enabled: false
   forward-headers-strategy: native
   # 优雅停机
   shutdown: graceful
@@ -91,7 +91,7 @@ spring:
           httpclient:
             ssl:
               # 信任所有下游证书
-              use-insecure-trust-manager: @SSL-ENABLED@
+              use-insecure-trust-manager: false
             # 关闭netty日志
             wiretap: false
             pool:
@@ -121,26 +121,6 @@ spring:
               enabled: true
     # sentinel配置
     sentinel:
-      datasource:
-        # key可以自定义
-        db0:
-          nacos:
-            # 服务注册&发现-地址
-            server-addr: @NACOS-DISCOVERY-ADDRESS@
-            # 服务注册&发现-命名空间
-            namespace: @NACOS-NAMESPACE@
-            # 服务注册&发现-数据ID
-            data-id: gateway-flow.json
-            # 服务注册&发现-规则类型【网关规则】
-            rule-type: gw_flow
-            # 服务注册&发现-分组ID
-            group-id: @NACOS-GROUP@
-            # 服务注册&发现-用户名
-            username: @NACOS-USERNAME@
-            # 服务注册&发现-密码
-            password: @NACOS-PASSWORD@
-            # 服务注册&发现-数据类型
-            data-type: json
       filter:
         enabled: true
       web-context-unify: false

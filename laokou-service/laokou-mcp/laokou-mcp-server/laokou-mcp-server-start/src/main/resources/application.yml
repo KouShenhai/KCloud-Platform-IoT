@@ -19,11 +19,11 @@ spring:
         nacos:
           server-addr: @NACOS-DISCOVERY-ADDRESS@
           namespace: @NACOS-NAMESPACE@
-          username: @NACOS-USERNAME@
-          password: @NACOS-PASSWORD@
+          username: ${NACOS_USERNAME:nacos}
+          password: ${NACOS_PASSWORD:nacos}
           register:
             enabled: true
-            service-group: @NACOS-GROUP@
+            service-group: ${NACOS_GROUP:IOT_GROUP}
             service-name: ${spring.application.name}
     mcp:
       server:

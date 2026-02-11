@@ -16,14 +16,14 @@
 #    */
 jasypt:
   encryptor:
-    password: @SECRET-KEY@
+    password: ${SECRET_KEY:laokou}
 
 server:
   compression:
     enabled: true
   ssl:
     # 开启证书
-    enabled: @SSL-ENABLED@
+    enabled: false
     # 证书位置
     key-store: classpath:scg-keystore.p12
     # 证书别名
@@ -33,7 +33,7 @@ server:
     # 证书密码
     key-store-password: laokou
   http2:
-    enabled: @SSL-ENABLED@
+    enabled: false
   forward-headers-strategy: native
   shutdown: graceful
   port: ${SERVER_PORT:1111}
@@ -170,18 +170,6 @@ spring:
         - veth.*
     # Sentinel配置
     sentinel:
-      datasource:
-        # 自定义名称
-        db0:
-          nacos:
-            server-addr: @NACOS-CONFIG-ADDRESS@
-            namespace: @NACOS-NAMESPACE@
-            data-id: auth-flow.json
-            data-type: json
-            group-id: @NACOS-GROUP@
-            username: @NACOS-USERNAME@
-            password: @NACOS-PASSWORD@
-            rule-type: flow
       web-context-unify: false
       eager: true #开启饥饿加载，直接初始化
       transport:
