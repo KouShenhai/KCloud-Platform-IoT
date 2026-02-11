@@ -15,7 +15,7 @@
  *
  */
 
-package org.enums;
+package org.laokou.common.log4j2.config;
 
 import lombok.Getter;
 

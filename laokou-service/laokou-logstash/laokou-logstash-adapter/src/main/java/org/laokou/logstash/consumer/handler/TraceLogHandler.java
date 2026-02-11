@@ -20,7 +20,7 @@ package org.laokou.logstash.consumer.handler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.enums.Mq;
+import org.laokou.common.log4j2.config.Mq;
 import org.laokou.logstash.api.TraceLogServiceI;
 import org.laokou.logstash.dto.TraceLogSaveCmd;
 import org.springframework.kafka.annotation.KafkaListener;
