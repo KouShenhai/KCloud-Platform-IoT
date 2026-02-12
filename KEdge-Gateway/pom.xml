@@ -27,7 +27,7 @@
   <name>KEdge-Gateway</name>
 
   <properties>
-    <quarkus.version>3.31.2</quarkus.version>
+    <quarkus.version>3.31.3</quarkus.version>
     <vertx.version>5.0.7</vertx.version>
     <quarkus-jdbc-sqlite4j.version>0.0.8</quarkus-jdbc-sqlite4j.version>
     <maven-compiler-plugin.version>3.15.0</maven-compiler-plugin.version>
