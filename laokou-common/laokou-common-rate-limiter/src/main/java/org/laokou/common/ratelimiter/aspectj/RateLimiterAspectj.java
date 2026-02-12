@@ -18,7 +18,6 @@
 package org.laokou.common.ratelimiter.aspectj;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -38,16 +37,10 @@ import java.time.Duration;
  *
  * @author laokou
  */
-@Slf4j
 @Aspect
 @Component
 @RequiredArgsConstructor
 public class RateLimiterAspectj {
-
-	/**
-	 * 限流Key.
-	 */
-	private static final String RATE_LIMITER_KEY = "___%s_KEY___";
 
 	private final RedisUtils redisUtils;
 
@@ -67,7 +60,7 @@ public class RateLimiterAspectj {
 	}
 
 	private String getKey(String key) {
-		return "rate_limiter.{" + String.format(RATE_LIMITER_KEY, key) + "}.tokens";
+		return "rate_limiter.{" + String.format("___%s_KEY___", key) + "}.tokens";
 	}
 
 }

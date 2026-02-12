@@ -24,7 +24,7 @@
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-security</artifactId>
+      <artifactId>laokou-common-context</artifactId>
       <version>${project.version}</version>
     </dependency>
   </dependencies>
