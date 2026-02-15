@@ -64,7 +64,7 @@ public class SourcesController {
 
 	@Idempotent
 	@PostMapping("/v1/sources")
-	@PreAuthorize("hasAuthority('sys:source:save')")
+	@PreAuthorize("@permissionService.has('sys:source:save')")
 	@OperateLog(module = "数据源管理", operation = "保存数据源")
 	@Operation(summary = "保存数据源", description = "保存数据源")
 	public void saveSource(@RequestBody SourceSaveCmd cmd) {
@@ -72,7 +72,7 @@ public class SourcesController {
 	}
 
 	@PutMapping("/v1/sources")
-	@PreAuthorize("hasAuthority('sys:source:modify')")
+	@PreAuthorize("@permissionService.has('sys:source:modify')")
 	@OperateLog(module = "数据源管理", operation = "修改数据源")
 	@Operation(summary = "修改数据源", description = "修改数据源")
 	@DistributedCache(name = NameConstants.SOURCES, key = "#cmd.co.id", operateType = OperateType.DEL)
@@ -81,7 +81,7 @@ public class SourcesController {
 	}
 
 	@DeleteMapping("/v1/sources")
-	@PreAuthorize("hasAuthority('sys:source:remove')")
+	@PreAuthorize("@permissionService.has('sys:source:remove')")
 	@OperateLog(module = "数据源管理", operation = "删除数据源")
 	@Operation(summary = "删除数据源", description = "删除数据源")
 	public void removeSource(@RequestBody Long[] ids) {
@@ -89,7 +89,7 @@ public class SourcesController {
 	}
 
 	@PostMapping(value = "/v1/sources/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@PreAuthorize("hasAuthority('sys:source:import')")
+	@PreAuthorize("@permissionService.has('sys:source:import')")
 	@OperateLog(module = "数据源管理", operation = "导入数据源")
 	@Operation(summary = "导入数据源", description = "导入数据源")
 	public void importSource(@RequestPart("files") MultipartFile[] files) {
@@ -97,7 +97,7 @@ public class SourcesController {
 	}
 
 	@PostMapping("/v1/sources/export")
-	@PreAuthorize("hasAuthority('sys:source:export')")
+	@PreAuthorize("@permissionService.has('sys:source:export')")
 	@OperateLog(module = "数据源管理", operation = "导出数据源")
 	@Operation(summary = "导出数据源", description = "导出数据源")
 	public void exportSource(@RequestBody SourceExportCmd cmd) {
@@ -106,7 +106,7 @@ public class SourcesController {
 
 	@TraceLog
 	@PostMapping("/v1/sources/page")
-	@PreAuthorize("hasAuthority('sys:source:page')")
+	@PreAuthorize("@permissionService.has('sys:source:page')")
 	@Operation(summary = "分页查询数据源列表", description = "分页查询数据源列表")
 	public Result<Page<SourceCO>> pageSource(@Validated @RequestBody SourcePageQry qry) {
 		return sourcesServiceI.pageSource(qry);
@@ -115,7 +115,7 @@ public class SourcesController {
 	@TraceLog
 	@GetMapping("/v1/sources/{id}")
 	@DistributedCache(name = NameConstants.SOURCES, key = "#id")
-	@PreAuthorize("hasAuthority('sys:source:detail')")
+	@PreAuthorize("@permissionService.has('sys:source:detail')")
 	@Operation(summary = "查看数据源详情", description = "查看数据源详情")
 	public Result<SourceCO> getSourceById(@PathVariable("id") Long id) {
 		return sourcesServiceI.getSourceById(new SourceGetQry(id));

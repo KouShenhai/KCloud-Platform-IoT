@@ -63,7 +63,7 @@ public class NoticeLogsController {
 	@ApiSecret
 	@Idempotent
 	@PostMapping("/v1/notice-logs")
-	@PreAuthorize("hasAuthority('sys:notice-log:save')")
+	@PreAuthorize("@permissionService.has('sys:notice-log:save')")
 	@OperateLog(module = "通知日志管理", operation = "保存通知日志")
 	@Operation(summary = "保存通知日志", description = "保存通知日志")
 	public void saveNoticeLog(@RequestBody NoticeLogSaveCmd cmd) {
@@ -72,7 +72,7 @@ public class NoticeLogsController {
 
 	@ApiSecret
 	@PutMapping("/v1/notice-logs")
-	@PreAuthorize("hasAuthority('sys:notice-log:modify')")
+	@PreAuthorize("@permissionService.has('sys:notice-log:modify')")
 	@OperateLog(module = "通知日志管理", operation = "修改通知日志")
 	@Operation(summary = "修改通知日志", description = "修改通知日志")
 	public void modifyNoticeLog(@RequestBody NoticeLogModifyCmd cmd) {
@@ -80,7 +80,7 @@ public class NoticeLogsController {
 	}
 
 	@DeleteMapping("/v1/notice-logs")
-	@PreAuthorize("hasAuthority('sys:notice-log:remove')")
+	@PreAuthorize("@permissionService.has('sys:notice-log:remove')")
 	@OperateLog(module = "通知日志管理", operation = "删除通知日志")
 	@Operation(summary = "删除通知日志", description = "删除通知日志")
 	public void removeNoticeLog(@RequestBody Long[] ids) {
@@ -89,7 +89,7 @@ public class NoticeLogsController {
 
 	@ApiSecret
 	@PostMapping(value = "/v1/notice-logs/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@PreAuthorize("hasAuthority('sys:notice-log:import')")
+	@PreAuthorize("@permissionService.has('sys:notice-log:import')")
 	@OperateLog(module = "通知日志管理", operation = "导入通知日志")
 	@Operation(summary = "导入通知日志", description = "导入通知日志")
 	public void importNoticeLog(@RequestPart("files") MultipartFile[] files) {
@@ -97,7 +97,7 @@ public class NoticeLogsController {
 	}
 
 	@PostMapping("/v1/notice-logs/export")
-	@PreAuthorize("hasAuthority('sys:notice-log:export')")
+	@PreAuthorize("@permissionService.has('sys:notice-log:export')")
 	@OperateLog(module = "通知日志管理", operation = "导出通知日志")
 	@Operation(summary = "导出通知日志", description = "导出通知日志")
 	public void exportNoticeLog(@RequestBody NoticeLogExportCmd cmd) {
@@ -106,7 +106,7 @@ public class NoticeLogsController {
 
 	@TraceLog
 	@PostMapping("/v1/notice-logs/page")
-	@PreAuthorize("hasAuthority('sys:notice-log:page')")
+	@PreAuthorize("@permissionService.has('sys:notice-log:page')")
 	@Operation(summary = "分页查询通知日志列表", description = "分页查询通知日志列表")
 	public Result<Page<NoticeLogCO>> pageNoticeLog(@Validated @RequestBody NoticeLogPageQry qry) {
 		return noticeLogsServiceI.pageNoticeLog(qry);
@@ -114,7 +114,7 @@ public class NoticeLogsController {
 
 	@TraceLog
 	@GetMapping("/v1/notice-logs/{id}")
-	@PreAuthorize("hasAuthority('sys:notice-log:detail')")
+	@PreAuthorize("@permissionService.has('sys:notice-log:detail')")
 	@Operation(summary = "查看通知日志详情", description = "查看通知日志详情")
 	public Result<NoticeLogCO> getNoticeLogById(@PathVariable("id") Long id) {
 		return noticeLogsServiceI.getNoticeLogById(new NoticeLogGetQry(id));

@@ -64,7 +64,7 @@ public class TenantsController {
 
 	@Idempotent
 	@PostMapping("/v1/tenants")
-	@PreAuthorize("hasAuthority('sys:tenant:save')")
+	@PreAuthorize("@permissionService.has('sys:tenant:save')")
 	@OperateLog(module = "租户管理", operation = "保存租户")
 	@Operation(summary = "保存租户", description = "保存租户")
 	public void saveTenant(@RequestBody TenantSaveCmd cmd) {
@@ -72,7 +72,7 @@ public class TenantsController {
 	}
 
 	@PutMapping("/v1/tenants")
-	@PreAuthorize("hasAuthority('sys:tenant:modify')")
+	@PreAuthorize("@permissionService.has('sys:tenant:modify')")
 	@OperateLog(module = "租户管理", operation = "修改租户")
 	@Operation(summary = "修改租户", description = "修改租户")
 	@DistributedCache(name = NameConstants.TENANTS, key = "#cmd.co.id", operateType = OperateType.DEL)
@@ -81,7 +81,7 @@ public class TenantsController {
 	}
 
 	@DeleteMapping("/v1/tenants")
-	@PreAuthorize("hasAuthority('sys:tenant:remove')")
+	@PreAuthorize("@permissionService.has('sys:tenant:remove')")
 	@OperateLog(module = "租户管理", operation = "删除租户")
 	@Operation(summary = "删除租户", description = "删除租户")
 	public void removeTenant(@RequestBody Long[] ids) {
@@ -89,7 +89,7 @@ public class TenantsController {
 	}
 
 	@PostMapping(value = "/v1/tenants/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@PreAuthorize("hasAuthority('sys:tenant:import')")
+	@PreAuthorize("@permissionService.has('sys:tenant:import')")
 	@OperateLog(module = "租户管理", operation = "导入租户")
 	@Operation(summary = "导入租户", description = "导入租户")
 	public void importTenant(@RequestPart("files") MultipartFile[] files) {
@@ -97,7 +97,7 @@ public class TenantsController {
 	}
 
 	@PostMapping("/v1/tenants/export")
-	@PreAuthorize("hasAuthority('sys:tenant:export')")
+	@PreAuthorize("@permissionService.has('sys:tenant:export')")
 	@OperateLog(module = "租户管理", operation = "导出租户")
 	@Operation(summary = "导出租户", description = "导出租户")
 	public void exportTenant(@RequestBody TenantExportCmd cmd) {
@@ -106,7 +106,7 @@ public class TenantsController {
 
 	@TraceLog
 	@PostMapping("/v1/tenants/page")
-	@PreAuthorize("hasAuthority('sys:tenant:page')")
+	@PreAuthorize("@permissionService.has('sys:tenant:page')")
 	@Operation(summary = "分页查询租户列表", description = "分页查询租户列表")
 	public Result<Page<TenantCO>> pageTenant(@Validated @RequestBody TenantPageQry qry) {
 		return tenantsServiceI.pageTenant(qry);
@@ -115,7 +115,7 @@ public class TenantsController {
 	@TraceLog
 	@GetMapping("/v1/tenants/{id}")
 	@DistributedCache(name = NameConstants.TENANTS, key = "#id")
-	@PreAuthorize("hasAuthority('sys:tenant:detail')")
+	@PreAuthorize("@permissionService.has('sys:tenant:detail')")
 	@Operation(summary = "查看租户详情", description = "查看租户详情")
 	public Result<TenantCO> getTenantById(@PathVariable("id") Long id) {
 		return tenantsServiceI.getTenantById(new TenantGetQry(id));

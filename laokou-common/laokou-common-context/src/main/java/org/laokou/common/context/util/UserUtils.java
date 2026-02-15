@@ -97,6 +97,20 @@ public final class UserUtils {
 	}
 
 	/**
+	 * 菜单权限标识集合.
+	 */
+	public static List<String> getPermissions() {
+		return userDetail().getPermissions();
+	}
+
+	/**
+	 * 授权范围集合.
+	 */
+	public static List<String> getScopes() {
+		return userDetail().getScopes();
+	}
+
+	/**
 	 * 认证上下文.
 	 * @return Authentication
 	 */

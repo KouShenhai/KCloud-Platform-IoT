@@ -62,7 +62,7 @@ public class ClustersController {
 
 	@Idempotent
 	@PostMapping("/v1/clusters")
-	@PreAuthorize("hasAuthority('sys:cluster:save')")
+	@PreAuthorize("@permissionService.has('sys:cluster:save')")
 	@OperateLog(module = "集群管理", operation = "保存集群")
 	@Operation(summary = "保存集群", description = "保存集群")
 	public void saveCluster(@RequestBody ClusterSaveCmd cmd) {
@@ -70,7 +70,7 @@ public class ClustersController {
 	}
 
 	@PutMapping("/v1/clusters")
-	@PreAuthorize("hasAuthority('sys:cluster:modify')")
+	@PreAuthorize("@permissionService.has('sys:cluster:modify')")
 	@OperateLog(module = "集群管理", operation = "修改集群")
 	@Operation(summary = "修改集群", description = "修改集群")
 	public void modifyCluster(@RequestBody ClusterModifyCmd cmd) {
@@ -78,7 +78,7 @@ public class ClustersController {
 	}
 
 	@DeleteMapping("/v1/clusters")
-	@PreAuthorize("hasAuthority('sys:cluster:remove')")
+	@PreAuthorize("@permissionService.has('sys:cluster:remove')")
 	@OperateLog(module = "集群管理", operation = "删除集群")
 	@Operation(summary = "删除集群", description = "删除集群")
 	public void removeCluster(@RequestBody Long[] ids) {
@@ -86,7 +86,7 @@ public class ClustersController {
 	}
 
 	@PostMapping(value = "/v1/clusters/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@PreAuthorize("hasAuthority('sys:cluster:import')")
+	@PreAuthorize("@permissionService.has('sys:cluster:import')")
 	@OperateLog(module = "集群管理", operation = "导入集群")
 	@Operation(summary = "导入集群", description = "导入集群")
 	public void importCluster(@RequestPart("files") MultipartFile[] files) {
@@ -94,7 +94,7 @@ public class ClustersController {
 	}
 
 	@PostMapping("/v1/clusters/export")
-	@PreAuthorize("hasAuthority('sys:cluster:export')")
+	@PreAuthorize("@permissionService.has('sys:cluster:export')")
 	@OperateLog(module = "集群管理", operation = "导出集群")
 	@Operation(summary = "导出集群", description = "导出集群")
 	public void exportCluster(@RequestBody ClusterExportCmd cmd) {
@@ -103,7 +103,7 @@ public class ClustersController {
 
 	@TraceLog
 	@PostMapping("/v1/clusters/page")
-	@PreAuthorize("hasAuthority('sys:cluster:page')")
+	@PreAuthorize("@permissionService.has('sys:cluster:page')")
 	@Operation(summary = "分页查询集群列表", description = "分页查询集群列表")
 	public Result<Page<ClusterCO>> pageCluster(@Validated @RequestBody ClusterPageQry qry) {
 		return clustersServiceI.pageCluster(qry);
@@ -111,7 +111,7 @@ public class ClustersController {
 
 	@TraceLog
 	@GetMapping("/v1/clusters/{id}")
-	@PreAuthorize("hasAuthority('sys:cluster:detail')")
+	@PreAuthorize("@permissionService.has('sys:cluster:detail')")
 	@Operation(summary = "查看集群详情", description = "查看集群详情")
 	public Result<ClusterCO> getClusterById(@PathVariable("id") Long id) {
 		return clustersServiceI.getClusterById(new ClusterGetQry(id));

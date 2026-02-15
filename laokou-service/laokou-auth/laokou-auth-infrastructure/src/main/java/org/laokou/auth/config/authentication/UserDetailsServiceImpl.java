@@ -30,6 +30,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
+
 /**
  * 用户认证.
  *
@@ -55,7 +57,7 @@ record UserDetailsServiceImpl(
 						RequestUtils.getHttpServletRequest())
 				.getPrincipal();
 			if (principal instanceof User user) {
-				return UserConvertor.toUserDetails(user);
+				return UserConvertor.toUserDetails(user, Collections::emptyList);
 			}
 			throw new BizException("B_OAuth2_UserNotExist", "用户不存在");
 		}
