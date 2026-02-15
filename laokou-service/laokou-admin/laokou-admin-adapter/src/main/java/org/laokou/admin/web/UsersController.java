@@ -130,7 +130,7 @@ public class UsersController {
 
 	@TraceLog
 	@PostMapping("/v1/users/page")
-	@PreAuthorize("hasAuthority('sys:user:page')")
+	@PreAuthorize("hasAuthority('sys:user:page') and hasAuthority('read')")
 	@Operation(summary = "分页查询用户列表", description = "分页查询用户列表")
 	public Result<Page<UserCO>> pageUser(@Validated @RequestBody UserPageQry qry) {
 		return usersServiceI.pageUser(qry);

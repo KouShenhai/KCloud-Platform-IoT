@@ -30,6 +30,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -65,7 +66,7 @@ public record User(Long id, String username, String password, String avatar, Boo
 	@Override
 	@NullMarked
 	public Collection<GrantedAuthority> getAuthorities() {
-		return AuthorityUtils.createAuthorityList(this.permissions());
+		return AuthorityUtils.createAuthorityList(Collections.emptyList());
 	}
 
 	@Override
