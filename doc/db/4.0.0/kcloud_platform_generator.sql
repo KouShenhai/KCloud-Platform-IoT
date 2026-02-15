@@ -215,7 +215,7 @@ public class ${className}sController {
 
 	@Idempotent
 	@PostMapping("/v1/${moduleName}s")
-	@PreAuthorize("hasAuthority(${dsName}:${moduleName}:save'')")
+	@PreAuthorize("@permissionService.has(${dsName}:${moduleName}:save'')")
 	@OperateLog(module = "${comment}管理", operation = "保存${comment}")
 	@Operation(summary = "保存${comment}", description = "保存${comment}")
 	public void save${className}(@RequestBody ${className}SaveCmd cmd) {
@@ -223,7 +223,7 @@ public class ${className}sController {
 	}
 
 	@PutMapping("/v1/${moduleName}s")
-	@PreAuthorize("hasAuthority(${dsName}:${moduleName}:modify'')")
+	@PreAuthorize("@permissionService.has(${dsName}:${moduleName}:modify'')")
 	@OperateLog(module = "${comment}管理", operation = "修改${comment}")
 	@Operation(summary = "修改${comment}", description = "修改${comment}")
 	@DistributedCache(name = ${(className)?upper_case}S, key = "#cmd.co.id", operateType = DEL)
@@ -232,7 +232,7 @@ public class ${className}sController {
 	}
 
 	@DeleteMapping("/v1/${moduleName}s")
-	@PreAuthorize("hasAuthority(${dsName}:${moduleName}:remove'')")
+	@PreAuthorize("@permissionService.has(${dsName}:${moduleName}:remove'')")
 	@OperateLog(module = "${comment}管理", operation = "删除${comment}")
 	@Operation(summary = "删除${comment}", description = "删除${comment}")
 	public void remove${className}(@RequestBody Long[] ids) {
@@ -240,7 +240,7 @@ public class ${className}sController {
 	}
 
 	@PostMapping(value = "/v1/${moduleName}s/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@PreAuthorize("hasAuthority(${dsName}:${moduleName}:import'')")
+	@PreAuthorize("@permissionService.has(${dsName}:${moduleName}:import'')")
 	@OperateLog(module = "${comment}管理", operation = "导入${comment}")
 	@Operation(summary = "导入${comment}", description = "导入${comment}")
 	public void import${className}(@RequestPart("files") MultipartFile[] files) {
@@ -248,7 +248,7 @@ public class ${className}sController {
 	}
 
 	@PostMapping("/v1/${moduleName}s/export")
-	@PreAuthorize("hasAuthority(${dsName}:${moduleName}:export'')")
+	@PreAuthorize("@permissionService.has(${dsName}:${moduleName}:export'')")
 	@OperateLog(module = "${comment}管理", operation = "导出${comment}")
 	@Operation(summary = "导出${comment}", description = "导出${comment}")
 	public void export${className}(@RequestBody ${className}ExportCmd cmd) {
@@ -257,7 +257,7 @@ public class ${className}sController {
 
 	@TraceLog
 	@PostMapping("/v1/${moduleName}s/page")
-	@PreAuthorize("hasAuthority(${dsName}:${moduleName}:page'')")
+	@PreAuthorize("@permissionService.has(${dsName}:${moduleName}:page'')")
 	@Operation(summary = "分页查询${comment}列表", description = "分页查询${comment}列表")
 	public Result<Page<${className}CO>> page${className}(@RequestBody ${className}PageQry qry) {
 		return ${moduleName}sServiceI.page${className}(qry);

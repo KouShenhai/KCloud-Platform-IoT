@@ -71,7 +71,7 @@ public class UsersController {
 
 	@Idempotent
 	@PostMapping("/v1/users")
-	@PreAuthorize("hasAuthority('sys:user:save')")
+	@PreAuthorize("@permissionService.has('sys:user:save')")
 	@OperateLog(module = "用户管理", operation = "保存用户")
 	@Operation(summary = "保存用户", description = "保存用户")
 	public void saveUser(@RequestBody UserSaveCmd cmd) throws Exception {
@@ -79,7 +79,7 @@ public class UsersController {
 	}
 
 	@PutMapping("/v1/users")
-	@PreAuthorize("hasAuthority('sys:user:modify')")
+	@PreAuthorize("@permissionService.has('sys:user:modify')")
 	@OperateLog(module = "用户管理", operation = "修改用户")
 	@Operation(summary = "修改用户", description = "修改用户")
 	@DistributedCache(name = NameConstants.USERS, key = "#cmd.co.id", operateType = OperateType.DEL)
@@ -88,7 +88,7 @@ public class UsersController {
 	}
 
 	@DeleteMapping("/v1/users")
-	@PreAuthorize("hasAuthority('sys:user:remove')")
+	@PreAuthorize("@permissionService.has('sys:user:remove')")
 	@OperateLog(module = "用户管理", operation = "删除用户")
 	@Operation(summary = "删除用户", description = "删除用户")
 	public void removeUser(@RequestBody Long[] ids) throws InterruptedException {
@@ -96,7 +96,7 @@ public class UsersController {
 	}
 
 	@PostMapping(value = "/v1/users/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@PreAuthorize("hasAuthority('sys:user:import')")
+	@PreAuthorize("@permissionService.has('sys:user:import')")
 	@OperateLog(module = "用户管理", operation = "导入用户")
 	@Operation(summary = "导入用户", description = "导入用户")
 	public void importUser(@RequestPart("files") MultipartFile[] files) {
@@ -104,7 +104,7 @@ public class UsersController {
 	}
 
 	@PostMapping("/v1/users/export")
-	@PreAuthorize("hasAuthority('sys:user:export')")
+	@PreAuthorize("@permissionService.has('sys:user:export')")
 	@OperateLog(module = "用户管理", operation = "导出用户")
 	@Operation(summary = "导出用户", description = "导出用户")
 	public void exportUser(@RequestBody UserExportCmd cmd) {
@@ -112,7 +112,7 @@ public class UsersController {
 	}
 
 	@PutMapping("/v1/users/reset-pwd")
-	@PreAuthorize("hasAuthority('sys:user:modify')")
+	@PreAuthorize("@permissionService.has('sys:user:modify')")
 	@OperateLog(module = "用户管理", operation = "重置用户密码")
 	@Operation(summary = "重置用户密码", description = "重置用户密码")
 	public void resetUserPwd(@RequestBody UserResetPwdCmd cmd) throws Exception {
@@ -120,7 +120,7 @@ public class UsersController {
 	}
 
 	@PutMapping("/v1/users/authority")
-	@PreAuthorize("hasAuthority('sys:user:modify')")
+	@PreAuthorize("@permissionService.has('sys:user:modify')")
 	@DistributedCache(name = NameConstants.USERS, key = "#cmd.co.id", operateType = OperateType.DEL)
 	@OperateLog(module = "用户管理", operation = "修改用户权限")
 	@Operation(summary = "修改用户权限", description = "修改用户权限")
@@ -130,7 +130,7 @@ public class UsersController {
 
 	@TraceLog
 	@PostMapping("/v1/users/page")
-	@PreAuthorize("hasAuthority('sys:user:page') and hasAuthority('read')")
+		@PreAuthorize("@scopeService.has('read') and @permissionService.has('sys:user:page')")
 	@Operation(summary = "分页查询用户列表", description = "分页查询用户列表")
 	public Result<Page<UserCO>> pageUser(@Validated @RequestBody UserPageQry qry) {
 		return usersServiceI.pageUser(qry);
@@ -139,7 +139,7 @@ public class UsersController {
 	@TraceLog
 	@GetMapping("/v1/users/{id}")
 	@DistributedCache(name = NameConstants.USERS, key = "#id")
-	@PreAuthorize("hasAuthority('sys:user:detail')")
+	@PreAuthorize("@permissionService.has('sys:user:detail')")
 	@Operation(summary = "查看用户详情", description = "查看用户详情")
 	public Result<UserCO> getUserById(@PathVariable("id") Long id) throws Exception {
 		return usersServiceI.getUserById(new UserGetQry(id));
@@ -154,7 +154,7 @@ public class UsersController {
 
 	@TraceLog
 	@PostMapping(value = "/v1/users/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@PreAuthorize("(hasAuthority('sys:oss:upload') or hasAuthority('sys:oss:save')) and hasAuthority('sys:user:modify')")
+	@PreAuthorize("(@permissionService.has('sys:oss:upload') or @permissionService.has('sys:oss:save')) and @permissionService.has('sys:user:modify')")
 	@Operation(summary = "上传用户头像", description = "上传用户头像")
 	@OperateLog(module = "用户管理", operation = "上传用户头像")
 	public Result<OssUploadCO> uploadUserAvatar(@RequestPart("file") MultipartFile file) throws Exception {

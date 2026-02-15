@@ -61,7 +61,7 @@ public class DictItemsController {
 
 	@Idempotent
 	@PostMapping("/v1/dict-items")
-	@PreAuthorize("hasAuthority('sys:dict-item:save')")
+	@PreAuthorize("@permissionService.has('sys:dict-item:save')")
 	@OperateLog(module = "字典项管理", operation = "保存字典项")
 	@Operation(summary = "保存字典项", description = "保存字典项")
 	public void saveDictItem(@RequestBody DictItemSaveCmd cmd) {
@@ -69,7 +69,7 @@ public class DictItemsController {
 	}
 
 	@PutMapping("/v1/dict-items")
-	@PreAuthorize("hasAuthority('sys:dict-item:modify')")
+	@PreAuthorize("@permissionService.has('sys:dict-item:modify')")
 	@OperateLog(module = "字典项管理", operation = "修改字典项")
 	@Operation(summary = "修改字典项", description = "修改字典项")
 	public void modifyDictItem(@RequestBody DictItemModifyCmd cmd) {
@@ -77,7 +77,7 @@ public class DictItemsController {
 	}
 
 	@DeleteMapping("/v1/dict-items")
-	@PreAuthorize("hasAuthority('sys:dict-item:remove')")
+	@PreAuthorize("@permissionService.has('sys:dict-item:remove')")
 	@OperateLog(module = "字典项管理", operation = "删除字典项")
 	@Operation(summary = "删除字典项", description = "删除字典项")
 	public void removeDictItem(@RequestBody Long[] ids) {
@@ -85,7 +85,7 @@ public class DictItemsController {
 	}
 
 	@PostMapping(value = "/v1/dict-items/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@PreAuthorize("hasAuthority('sys:dict-item:import')")
+	@PreAuthorize("@permissionService.has('sys:dict-item:import')")
 	@OperateLog(module = "字典项管理", operation = "导入字典项")
 	@Operation(summary = "导入字典项", description = "导入字典项")
 	public void importDictItem(@RequestPart("files") MultipartFile[] files) {
@@ -93,7 +93,7 @@ public class DictItemsController {
 	}
 
 	@PostMapping("/v1/dict-items/export")
-	@PreAuthorize("hasAuthority('sys:dict-item:export')")
+	@PreAuthorize("@permissionService.has('sys:dict-item:export')")
 	@OperateLog(module = "字典项管理", operation = "导出字典项")
 	@Operation(summary = "导出字典项", description = "导出字典项")
 	public void exportDictItem(@RequestBody DictItemExportCmd cmd) {
@@ -102,7 +102,7 @@ public class DictItemsController {
 
 	@TraceLog
 	@PostMapping("/v1/dict-items/page")
-	@PreAuthorize("hasAuthority('sys:dict-item:page')")
+	@PreAuthorize("@permissionService.has('sys:dict-item:page')")
 	@Operation(summary = "分页查询字典项列表", description = "分页查询字典项列表")
 	public Result<Page<DictItemCO>> pageDictItem(@Validated @RequestBody DictItemPageQry qry) {
 		return dictItemsServiceI.pageDictItem(qry);
@@ -110,7 +110,7 @@ public class DictItemsController {
 
 	@TraceLog
 	@GetMapping("/v1/dict-items/{id}")
-	@PreAuthorize("hasAuthority('sys:dict-item:detail')")
+	@PreAuthorize("@permissionService.has('sys:dict-item:detail')")
 	@Operation(summary = "查看字典项详情", description = "查看字典项详情")
 	public Result<DictItemCO> getDictItemById(@PathVariable("id") Long id) {
 		return dictItemsServiceI.getDictItemById(new DictItemGetQry(id));

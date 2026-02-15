@@ -62,7 +62,7 @@ public class ProductsController {
 
 	@Idempotent
 	@PostMapping("/v1/products")
-	@PreAuthorize("hasAuthority('iot:product:save')")
+	@PreAuthorize("@permissionService.has('iot:product:save')")
 	@OperateLog(module = "产品管理", operation = "保存产品")
 	@Operation(summary = "保存产品", description = "保存产品")
 	public void saveProduct(@RequestBody ProductSaveCmd cmd) {
@@ -70,7 +70,7 @@ public class ProductsController {
 	}
 
 	@PutMapping("/v1/products")
-	@PreAuthorize("hasAuthority('iot:product:modify')")
+	@PreAuthorize("@permissionService.has('iot:product:modify')")
 	@OperateLog(module = "产品管理", operation = "修改产品")
 	@Operation(summary = "修改产品", description = "修改产品")
 	public void modifyProduct(@RequestBody ProductModifyCmd cmd) {
@@ -78,7 +78,7 @@ public class ProductsController {
 	}
 
 	@DeleteMapping("/v1/products")
-	@PreAuthorize("hasAuthority('iot:product:remove')")
+	@PreAuthorize("@permissionService.has('iot:product:remove')")
 	@OperateLog(module = "产品管理", operation = "删除产品")
 	@Operation(summary = "删除产品", description = "删除产品")
 	public void removeProduct(@RequestBody Long[] ids) {
@@ -86,7 +86,7 @@ public class ProductsController {
 	}
 
 	@PostMapping(value = "/v1/products/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@PreAuthorize("hasAuthority('iot:product:import')")
+	@PreAuthorize("@permissionService.has('iot:product:import')")
 	@OperateLog(module = "产品管理", operation = "导入产品")
 	@Operation(summary = "导入产品", description = "导入产品")
 	public void importProduct(@RequestPart("files") MultipartFile[] files) {
@@ -94,7 +94,7 @@ public class ProductsController {
 	}
 
 	@PostMapping("/v1/products/export")
-	@PreAuthorize("hasAuthority('iot:product:export')")
+	@PreAuthorize("@permissionService.has('iot:product:export')")
 	@OperateLog(module = "产品管理", operation = "导出产品")
 	@Operation(summary = "导出产品", description = "导出产品")
 	public void exportProduct(@RequestBody ProductExportCmd cmd) {
@@ -103,7 +103,7 @@ public class ProductsController {
 
 	@TraceLog
 	@PostMapping("/v1/products/page")
-	@PreAuthorize("hasAuthority('iot:product:page')")
+	@PreAuthorize("@permissionService.has('iot:product:page')")
 	@Operation(summary = "分页查询产品列表", description = "分页查询产品列表")
 	public Result<Page<ProductCO>> pageProduct(@Validated @RequestBody ProductPageQry qry) {
 		return productsServiceI.pageProduct(qry);
@@ -111,7 +111,7 @@ public class ProductsController {
 
 	@TraceLog
 	@GetMapping("/v1/products/{id}")
-	@PreAuthorize("hasAuthority('iot:product:detail')")
+	@PreAuthorize("@permissionService.has('iot:product:detail')")
 	@Operation(summary = "查看产品详情", description = "查看产品详情")
 	public Result<ProductCO> getProductById(@PathVariable("id") Long id) {
 		return productsServiceI.getProductById(new ProductGetQry(id));

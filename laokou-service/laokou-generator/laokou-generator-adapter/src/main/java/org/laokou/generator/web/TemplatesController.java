@@ -62,7 +62,7 @@ public class TemplatesController {
 
 	@Idempotent
 	@PostMapping("/v1/templates")
-	@PreAuthorize("hasAuthority('generator:template:save')")
+	@PreAuthorize("@permissionService.has('generator:template:save')")
 	@OperateLog(module = "代码生成器模板管理", operation = "保存代码生成器模板")
 	@Operation(summary = "保存代码生成器模板", description = "保存代码生成器模板")
 	public void saveTemplate(@RequestBody TemplateSaveCmd cmd) {
@@ -70,7 +70,7 @@ public class TemplatesController {
 	}
 
 	@PutMapping("/v1/templates")
-	@PreAuthorize("hasAuthority('generator:template:modify')")
+	@PreAuthorize("@permissionService.has('generator:template:modify')")
 	@OperateLog(module = "代码生成器模板管理", operation = "修改代码生成器模板")
 	@Operation(summary = "修改代码生成器模板", description = "修改代码生成器模板")
 	public void modifyTemplate(@RequestBody TemplateModifyCmd cmd) {
@@ -78,7 +78,7 @@ public class TemplatesController {
 	}
 
 	@DeleteMapping("/v1/templates")
-	@PreAuthorize("hasAuthority('generator:template:remove')")
+	@PreAuthorize("@permissionService.has('generator:template:remove')")
 	@OperateLog(module = "代码生成器模板管理", operation = "删除代码生成器模板")
 	@Operation(summary = "删除代码生成器模板", description = "删除代码生成器模板")
 	public void removeTemplate(@RequestBody Long[] ids) {
@@ -86,7 +86,7 @@ public class TemplatesController {
 	}
 
 	@PostMapping(value = "/v1/templates/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@PreAuthorize("hasAuthority('generator:template:import')")
+	@PreAuthorize("@permissionService.has('generator:template:import')")
 	@OperateLog(module = "代码生成器模板管理", operation = "导入代码生成器模板")
 	@Operation(summary = "导入代码生成器模板", description = "导入代码生成器模板")
 	public void importTemplate(@RequestPart("files") MultipartFile[] files) {
@@ -94,7 +94,7 @@ public class TemplatesController {
 	}
 
 	@PostMapping("/v1/templates/export")
-	@PreAuthorize("hasAuthority('generator:template:export')")
+	@PreAuthorize("@permissionService.has('generator:template:export')")
 	@OperateLog(module = "代码生成器模板管理", operation = "导出代码生成器模板")
 	@Operation(summary = "导出代码生成器模板", description = "导出代码生成器模板")
 	public void exportTemplate(@RequestBody TemplateExportCmd cmd) {
@@ -103,7 +103,7 @@ public class TemplatesController {
 
 	@TraceLog
 	@PostMapping("/v1/templates/page")
-	@PreAuthorize("hasAuthority('generator:template:page')")
+	@PreAuthorize("@permissionService.has('generator:template:page')")
 	@Operation(summary = "分页查询代码生成器模板列表", description = "分页查询代码生成器模板列表")
 	public Result<Page<TemplateCO>> pageTemplate(@Validated @RequestBody TemplatePageQry qry) {
 		return templatesServiceI.pageTemplate(qry);

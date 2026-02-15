@@ -63,7 +63,7 @@ public class OssLogsController {
 	@ApiSecret
 	@Idempotent
 	@PostMapping("/v1/oss-logs")
-	@PreAuthorize("hasAuthority('sys:oss-log:save')")
+	@PreAuthorize("@permissionService.has('sys:oss-log:save')")
 	@OperateLog(module = "OSS日志管理", operation = "保存OSS日志")
 	@Operation(summary = "保存OSS日志", description = "保存OSS日志")
 	public void saveOssLog(@RequestBody OssLogSaveCmd cmd) {
@@ -72,7 +72,7 @@ public class OssLogsController {
 
 	@ApiSecret
 	@PutMapping("/v1/oss-logs")
-	@PreAuthorize("hasAuthority('sys:oss-log:modify')")
+	@PreAuthorize("@permissionService.has('sys:oss-log:modify')")
 	@OperateLog(module = "OSS日志管理", operation = "修改OSS日志")
 	@Operation(summary = "修改OSS日志", description = "修改OSS日志")
 	public void modifyOssLog(@RequestBody OssLogModifyCmd cmd) {
@@ -81,7 +81,7 @@ public class OssLogsController {
 
 	@ApiSecret
 	@DeleteMapping("/v1/oss-logs")
-	@PreAuthorize("hasAuthority('sys:oss-log:remove')")
+	@PreAuthorize("@permissionService.has('sys:oss-log:remove')")
 	@OperateLog(module = "OSS日志管理", operation = "删除OSS日志")
 	@Operation(summary = "删除OSS日志", description = "删除OSS日志")
 	public void removeOssLog(@RequestBody Long[] ids) {
@@ -90,7 +90,7 @@ public class OssLogsController {
 
 	@ApiSecret
 	@PostMapping(value = "/v1/oss-logs/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@PreAuthorize("hasAuthority('sys:oss-log:import')")
+	@PreAuthorize("@permissionService.has('sys:oss-log:import')")
 	@OperateLog(module = "OSS日志管理", operation = "导入OSS日志")
 	@Operation(summary = "导入OSS日志", description = "导入OSS日志")
 	public void importOssLog(@RequestPart("files") MultipartFile[] files) {
@@ -98,7 +98,7 @@ public class OssLogsController {
 	}
 
 	@PostMapping("/v1/oss-logs/export")
-	@PreAuthorize("hasAuthority('sys:oss-log:export')")
+	@PreAuthorize("@permissionService.has('sys:oss-log:export')")
 	@OperateLog(module = "OSS日志管理", operation = "导出OSS日志")
 	@Operation(summary = "导出OSS日志", description = "导出OSS日志")
 	public void exportOssLog(@RequestBody OssLogExportCmd cmd) {
@@ -107,7 +107,7 @@ public class OssLogsController {
 
 	@TraceLog
 	@PostMapping("/v1/oss-logs/page")
-	@PreAuthorize("hasAuthority('sys:oss-log:page')")
+	@PreAuthorize("@permissionService.has('sys:oss-log:page')")
 	@Operation(summary = "分页查询OSS日志列表", description = "分页查询OSS日志列表")
 	public Result<Page<OssLogCO>> pageOssLog(@Validated @RequestBody OssLogPageQry qry) {
 		return ossLogsServiceI.pageOssLog(qry);
@@ -115,7 +115,7 @@ public class OssLogsController {
 
 	@TraceLog
 	@GetMapping("/v1/oss-logs/{id}")
-	@PreAuthorize("hasAuthority('sys:oss-log:detail')")
+	@PreAuthorize("@permissionService.has('sys:oss-log:detail')")
 	@Operation(summary = "查看OSS日志详情", description = "查看OSS日志详情")
 	public Result<OssLogCO> getByIdOssLog(@PathVariable("id") Long id) {
 		return ossLogsServiceI.getByIdOssLog(new OssLogGetQry(id));

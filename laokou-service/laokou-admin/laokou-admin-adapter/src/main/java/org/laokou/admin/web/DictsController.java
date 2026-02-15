@@ -61,7 +61,7 @@ public class DictsController {
 
 	@Idempotent
 	@PostMapping("/v1/dicts")
-	@PreAuthorize("hasAuthority('sys:dict:save')")
+	@PreAuthorize("@permissionService.has('sys:dict:save')")
 	@OperateLog(module = "字典管理", operation = "保存字典")
 	@Operation(summary = "保存字典", description = "保存字典")
 	public void saveDict(@RequestBody DictSaveCmd cmd) {
@@ -69,7 +69,7 @@ public class DictsController {
 	}
 
 	@PutMapping("/v1/dicts")
-	@PreAuthorize("hasAuthority('sys:dict:modify')")
+	@PreAuthorize("@permissionService.has('sys:dict:modify')")
 	@OperateLog(module = "字典管理", operation = "修改字典")
 	@Operation(summary = "修改字典", description = "修改字典")
 	public void modifyDict(@RequestBody DictModifyCmd cmd) {
@@ -77,7 +77,7 @@ public class DictsController {
 	}
 
 	@DeleteMapping("/v1/dicts")
-	@PreAuthorize("hasAuthority('sys:dict:remove')")
+	@PreAuthorize("@permissionService.has('sys:dict:remove')")
 	@OperateLog(module = "字典管理", operation = "删除字典")
 	@Operation(summary = "删除字典", description = "删除字典")
 	public void removeDict(@RequestBody Long[] ids) {
@@ -85,7 +85,7 @@ public class DictsController {
 	}
 
 	@PostMapping(value = "/v1/dicts/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@PreAuthorize("hasAuthority('sys:dict:import')")
+	@PreAuthorize("@permissionService.has('sys:dict:import')")
 	@OperateLog(module = "字典管理", operation = "导入字典")
 	@Operation(summary = "导入字典", description = "导入字典")
 	public void importDict(@RequestPart("files") MultipartFile[] files) {
@@ -93,7 +93,7 @@ public class DictsController {
 	}
 
 	@PostMapping("/v1/dicts/export")
-	@PreAuthorize("hasAuthority('sys:dict:export')")
+	@PreAuthorize("@permissionService.has('sys:dict:export')")
 	@OperateLog(module = "字典管理", operation = "导出字典")
 	@Operation(summary = "导出字典", description = "导出字典")
 	public void exportDict(@RequestBody DictExportCmd cmd) {
@@ -102,7 +102,7 @@ public class DictsController {
 
 	@TraceLog
 	@PostMapping("/v1/dicts/page")
-	@PreAuthorize("hasAuthority('sys:dict:page')")
+	@PreAuthorize("@permissionService.has('sys:dict:page')")
 	@Operation(summary = "分页查询字典列表", description = "分页查询字典列表")
 	public Result<Page<DictCO>> pageDict(@Validated @RequestBody DictPageQry qry) {
 		return dictsServiceI.pageDict(qry);
@@ -110,7 +110,7 @@ public class DictsController {
 
 	@TraceLog
 	@GetMapping("/v1/dicts/{id}")
-	@PreAuthorize("hasAuthority('sys:dict:detail')")
+	@PreAuthorize("@permissionService.has('sys:dict:detail')")
 	@Operation(summary = "查看字典详情", description = "查看字典详情")
 	public Result<DictCO> getDictById(@PathVariable("id") Long id) {
 		return dictsServiceI.getDictById(new DictGetQry(id));

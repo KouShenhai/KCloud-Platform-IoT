@@ -43,7 +43,7 @@ public class McpController {
 	private final DeviceServiceI deviceServiceI;
 
 	@GetMapping("/v1/mcps/device/property/{sn}")
-	@PreAuthorize("hasAuthority('mcp:device:property')")
+	@PreAuthorize("@permissionService.has('mcp:device:property')")
 	@Operation(summary = "根据设备序列号查看设备属性", description = "根据设备序列号查看设备属性")
 	public Result<String> getDevicePropertyBySn(@PathVariable("sn") String sn) {
 		return deviceServiceI.getDevicePropertyBySn(new DevicePropertyGetQry(sn));
