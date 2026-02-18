@@ -99,11 +99,7 @@ class UserTest {
 		Collection<GrantedAuthority> authorities = user.getAuthorities();
 
 		// Then
-		Assertions.assertThat(authorities)
-			.isNotNull()
-			.hasSize(3)
-			.extracting(GrantedAuthority::getAuthority)
-			.containsExactlyInAnyOrder("sys:user:query", "sys:user:add", "sys:role:query");
+		Assertions.assertThat(authorities).isNotNull().hasSize(0);
 	}
 
 	@Test

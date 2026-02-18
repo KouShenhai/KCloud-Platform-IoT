@@ -26,7 +26,6 @@ import org.laokou.common.security.handler.OAuth2ExceptionHandler;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.security.oauth2.core.OAuth2RefreshToken;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
@@ -38,8 +37,8 @@ import java.security.Principal;
  * @author laokou
  */
 @Slf4j
-public record OAuth2OpaqueTokenIntrospector(OAuth2AuthorizationService authorizationService,
-		JwtDecoder jwtDecoder) implements OpaqueTokenIntrospector {
+public record OAuth2OpaqueTokenIntrospector(
+		OAuth2AuthorizationService authorizationService) implements OpaqueTokenIntrospector {
 
 	// @formatter:off
 	@Override
