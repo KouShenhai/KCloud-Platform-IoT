@@ -70,7 +70,7 @@ export const RoleDrawer: React.FC<RoleDrawerProps> = ({ modalVisit, setModalVisi
 				if (value.id === undefined) {
 					saveRole({co: co}, requestId).then(res => {
 						if (res.code === 'OK') {
-							message.success("新增成功").then()
+							message.success("保存成功").then()
 							setModalVisit(false)
 							onComponent()
 						}

@@ -66,7 +66,7 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({ modalVisit, setModalVisi
 				if (value.id === undefined) {
 					saveMenu({co: value}, requestId).then(res => {
 						if (res.code === 'OK') {
-							message.success("新增成功").then()
+							message.success("保存成功").then()
 							setModalVisit(false)
 							onComponent()
 						}
