@@ -97,6 +97,9 @@ final class OAuth2AuthorizationServerProperties implements InitializingBean {
 		if (CollectionExtUtils.isEmpty(client.getRegistration().getAuthorizationGrantTypes())) {
 			throw new IllegalStateException("Authorization grant types must not be empty.");
 		}
+		if (CollectionExtUtils.isEmpty(client.getRegistration().getScopes())) {
+			throw new IllegalStateException("Scopes must not be empty.");
+		}
 	}
 
 	/**
