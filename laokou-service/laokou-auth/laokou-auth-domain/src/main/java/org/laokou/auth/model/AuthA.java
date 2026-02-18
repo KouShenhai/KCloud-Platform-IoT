@@ -18,6 +18,7 @@
 package org.laokou.auth.model;
 
 import lombok.Getter;
+import org.jspecify.annotations.NonNull;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.constant.Constants;
 import org.laokou.auth.model.constant.OAuth2Constants;
@@ -168,7 +169,7 @@ public class AuthA extends AggregateRoot implements ValidateName {
 
 	// @formatter:off
 	AuthA(IdGenerator idGenerator,
-				 HttpRequest httpRequest,
+				 @NonNull HttpRequest httpRequest,
                  PasswordValidator passwordValidator,
                  CaptchaValidator captchaValidator,
                  @Qualifier("authorizationCodeAuthParamValidator") AuthParamValidator authorizationCodeAuthParamValidator,

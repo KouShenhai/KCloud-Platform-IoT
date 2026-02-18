@@ -62,7 +62,7 @@ public class InfosController {
 
 	@Idempotent
 	@PostMapping("/v1/infos")
-	@PreAuthorize("hasAuthority('generator:info:save')")
+	@PreAuthorize("@permissionService.has('generator:info:save')")
 	@OperateLog(module = "代码生成器信息管理", operation = "保存代码生成器信息")
 	@Operation(summary = "保存代码生成器信息", description = "保存代码生成器信息")
 	public void saveInfo(@RequestBody InfoSaveCmd cmd) {
@@ -70,7 +70,7 @@ public class InfosController {
 	}
 
 	@PutMapping("/v1/infos")
-	@PreAuthorize("hasAuthority('generator:info:modify')")
+	@PreAuthorize("@permissionService.has('generator:info:modify')")
 	@OperateLog(module = "代码生成器信息管理", operation = "修改代码生成器信息")
 	@Operation(summary = "修改代码生成器信息", description = "修改代码生成器信息")
 	public void modifyInfo(@RequestBody InfoModifyCmd cmd) {
@@ -78,7 +78,7 @@ public class InfosController {
 	}
 
 	@DeleteMapping("/v1/infos")
-	@PreAuthorize("hasAuthority('generator:info:remove')")
+	@PreAuthorize("@permissionService.has('generator:info:remove')")
 	@OperateLog(module = "代码生成器信息管理", operation = "删除代码生成器信息")
 	@Operation(summary = "删除代码生成器信息", description = "删除代码生成器信息")
 	public void removeInfo(@RequestBody Long[] ids) {
@@ -86,7 +86,7 @@ public class InfosController {
 	}
 
 	@PostMapping(value = "/v1/infos/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@PreAuthorize("hasAuthority('generator:info:import')")
+	@PreAuthorize("@permissionService.has('generator:info:import')")
 	@OperateLog(module = "代码生成器信息管理", operation = "导入代码生成器信息")
 	@Operation(summary = "导入代码生成器信息", description = "导入代码生成器信息")
 	public void importInfo(@RequestPart("files") MultipartFile[] files) {
@@ -94,7 +94,7 @@ public class InfosController {
 	}
 
 	@PostMapping("/v1/infos/export")
-	@PreAuthorize("hasAuthority('generator:info:export')")
+	@PreAuthorize("@permissionService.has('generator:info:export')")
 	@OperateLog(module = "代码生成器信息管理", operation = "导出代码生成器信息")
 	@Operation(summary = "导出代码生成器信息", description = "导出代码生成器信息")
 	public void exportInfo(@RequestBody InfoExportCmd cmd) {
@@ -103,7 +103,7 @@ public class InfosController {
 
 	@TraceLog
 	@PostMapping("/v1/infos/page")
-	@PreAuthorize("hasAuthority('generator:info:page')")
+	@PreAuthorize("@permissionService.has('generator:info:page')")
 	@Operation(summary = "分页查询代码生成器信息列表", description = "分页查询代码生成器信息列表")
 	public Result<Page<InfoCO>> pageInfo(@Validated @RequestBody InfoPageQry qry) {
 		return infosServiceI.pageInfo(qry);

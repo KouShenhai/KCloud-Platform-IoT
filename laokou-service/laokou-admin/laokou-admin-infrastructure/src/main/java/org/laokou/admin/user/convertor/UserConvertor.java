@@ -128,6 +128,7 @@ public final class UserConvertor {
 		userProfileCO.setUsername(userExtDetails.getUsername());
 		userProfileCO.setAvatar(userExtDetails.getAvatar());
 		userProfileCO.setPermissions(userExtDetails.getPermissions());
+		userProfileCO.setScopes(userExtDetails.getScopes());
 		return userProfileCO;
 	}
 

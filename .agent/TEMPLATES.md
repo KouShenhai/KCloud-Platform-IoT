@@ -273,7 +273,7 @@ public class XxxController {
     private final XxxService xxxService;
 
     @PostMapping
-    @PreAuthorize("hasAuthority('xxx:create')")
+    @PreAuthorize("@permissionService.has('xxx:create')")
     @OperateLog(module = "Xxx管理", operation = "创建Xxx")
     @Operation(summary = "创建Xxx")
     public Result<Void> create(@Validated @RequestBody XxxCmd cmd) {
@@ -282,7 +282,7 @@ public class XxxController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('xxx:update')")
+    @PreAuthorize("@permissionService.has('xxx:update')")
     @OperateLog(module = "Xxx管理", operation = "修改Xxx")
     @Operation(summary = "修改Xxx")
     public Result<Void> update(
@@ -294,7 +294,7 @@ public class XxxController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('xxx:delete')")
+    @PreAuthorize("@permissionService.has('xxx:delete')")
     @OperateLog(module = "Xxx管理", operation = "删除Xxx")
     @Operation(summary = "删除Xxx")
     public Result<Void> delete(@Parameter(description = "ID", required = true) @PathVariable Long id) {
@@ -303,14 +303,14 @@ public class XxxController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('xxx:view')")
+    @PreAuthorize("@permissionService.has('xxx:view')")
     @Operation(summary = "查询Xxx详情")
     public Result<XxxCO> getById(@Parameter(description = "ID", required = true) @PathVariable Long id) {
         return Result.ok(xxxService.getById(id));
     }
 
     @GetMapping("/page")
-    @PreAuthorize("hasAuthority('xxx:view')")
+    @PreAuthorize("@permissionService.has('xxx:view')")
     @Operation(summary = "分页查询Xxx")
     public Result<Page<XxxCO>> page(@Validated XxxQry qry) {
         return Result.ok(xxxService.page(qry));

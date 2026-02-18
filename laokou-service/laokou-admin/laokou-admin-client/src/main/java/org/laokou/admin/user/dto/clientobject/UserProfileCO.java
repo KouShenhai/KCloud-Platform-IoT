@@ -46,4 +46,7 @@ public class UserProfileCO extends ClientObject {
 	@Schema(name = "菜单权限标识集合", description = "菜单权限标识集合")
 	private List<String> permissions;
 
+	@Schema(name = "授权范围集合", description = "授权范围集合")
+	private List<String> scopes;
+
 }
