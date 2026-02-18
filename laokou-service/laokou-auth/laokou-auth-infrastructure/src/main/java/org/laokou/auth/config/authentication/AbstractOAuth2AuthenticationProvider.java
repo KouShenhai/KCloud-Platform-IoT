@@ -192,7 +192,8 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 			authorizationBuilder.refreshToken(refreshToken);
 		}
 		// 存储认证信息
-		authorizationBuilder.attribute(Principal.class.getName(), principal.getPrincipal());
+		authorizationBuilder.attribute(Principal.class.getName(), principal.getPrincipal())
+			.attribute("scopes", authorizedScopes.stream().toList());
 		authorizationService.save(authorizationBuilder.build());
 		return new OAuth2AccessTokenAuthenticationToken(registeredClient, clientPrincipal, accessToken, refreshToken);
 	}
