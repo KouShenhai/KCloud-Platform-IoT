@@ -85,7 +85,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 				if (value.id === undefined) {
 					saveThingModel({co: value}, requestId).then(res => {
 						if (res.code === 'OK') {
-							message.success("新增成功").then()
+							message.success("保存成功").then()
 							setModalVisit(false)
 							onComponent()
 						}

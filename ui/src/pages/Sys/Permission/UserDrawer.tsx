@@ -78,7 +78,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 					// @ts-ignore
 					saveUser({co: co}, requestId).then(res => {
 						if (res.code === 'OK') {
-							message.success("新增成功").then()
+							message.success("保存成功").then()
 							setModalVisit(false)
 							onComponent();
 						}

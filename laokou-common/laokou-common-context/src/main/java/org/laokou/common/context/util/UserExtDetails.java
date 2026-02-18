@@ -39,6 +39,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 /**
  * @author laokou
@@ -131,7 +132,9 @@ public final class UserExtDetails implements UserDetails, OAuth2AuthenticatedPri
 	@Override
 	@NullMarked
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return AuthorityUtils.createAuthorityList(Collections.emptyList());
+		return AuthorityUtils.createAuthorityList(Stream.concat(this.permissions.stream(), this.scopes.stream())
+			.filter(StringExtUtils::isNotEmpty)
+			.toList());
 	}
 
 	/**

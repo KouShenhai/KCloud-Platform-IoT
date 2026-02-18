@@ -51,6 +51,7 @@ class UserExtDetailsTest {
 			.id(1L)
 			.username("testuser")
 			.password("password123")
+			.scopes(List.of("read", "write"))
 			.avatar("https://example.com/avatar.png")
 			.superAdmin(true)
 			.status(0)
@@ -90,9 +91,9 @@ class UserExtDetailsTest {
 		// Then
 		Assertions.assertThat(authorities)
 			.isNotNull()
-			.hasSize(2)
+			.hasSize(4)
 			.extracting(GrantedAuthority::getAuthority)
-			.containsExactlyInAnyOrder("sys:user:query", "sys:user:add");
+			.containsExactlyInAnyOrder("sys:user:query", "sys:user:add", "read", "write");
 	}
 
 	@Test
