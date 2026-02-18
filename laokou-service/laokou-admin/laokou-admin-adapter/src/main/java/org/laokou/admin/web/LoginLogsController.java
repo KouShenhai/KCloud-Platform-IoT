@@ -63,7 +63,7 @@ public class LoginLogsController {
 	@ApiSecret
 	@Idempotent
 	@PostMapping("/v1/login-logs")
-	@PreAuthorize("hasAuthority('sys:login-log:save')")
+	@PreAuthorize("@permissionService.has('sys:login-log:save')")
 	@OperateLog(module = "登录日志管理", operation = "保存登录日志")
 	@Operation(summary = "保存登录日志", description = "保存登录日志")
 	public void saveLoginLog(@RequestBody LoginLogSaveCmd cmd) {
@@ -72,7 +72,7 @@ public class LoginLogsController {
 
 	@ApiSecret
 	@PutMapping("/v1/login-logs")
-	@PreAuthorize("hasAuthority('sys:login-log:modify')")
+	@PreAuthorize("@permissionService.has('sys:login-log:modify')")
 	@OperateLog(module = "登录日志管理", operation = "修改登录日志")
 	@Operation(summary = "修改登录日志", description = "修改登录日志")
 	public void modifyLoginLog(@RequestBody LoginLogModifyCmd cmd) {
@@ -80,7 +80,7 @@ public class LoginLogsController {
 	}
 
 	@DeleteMapping("/v1/login-logs")
-	@PreAuthorize("hasAuthority('sys:login-log:remove')")
+	@PreAuthorize("@permissionService.has('sys:login-log:remove')")
 	@OperateLog(module = "登录日志管理", operation = "删除登录日志")
 	@Operation(summary = "删除登录日志", description = "删除登录日志")
 	public void removeLoginLog(@RequestBody Long[] ids) {
@@ -89,7 +89,7 @@ public class LoginLogsController {
 
 	@ApiSecret
 	@PostMapping(value = "/v1/login-logs/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@PreAuthorize("hasAuthority('sys:login-log:import')")
+	@PreAuthorize("@permissionService.has('sys:login-log:import')")
 	@OperateLog(module = "登录日志管理", operation = "导入登录日志")
 	@Operation(summary = "导入登录日志", description = "导入登录日志")
 	public void importLoginLog(@RequestPart("files") MultipartFile[] files) {
@@ -97,7 +97,7 @@ public class LoginLogsController {
 	}
 
 	@PostMapping("/v1/login-logs/export")
-	@PreAuthorize("hasAuthority('sys:login-log:export')")
+	@PreAuthorize("@permissionService.has('sys:login-log:export')")
 	@OperateLog(module = "登录日志管理", operation = "导出登录日志")
 	@Operation(summary = "导出登录日志", description = "导出登录日志")
 	public void exportLoginLog(@RequestBody LoginLogExportCmd cmd) {
@@ -106,7 +106,7 @@ public class LoginLogsController {
 
 	@TraceLog
 	@PostMapping("/v1/login-logs/page")
-	@PreAuthorize("hasAuthority('sys:login-log:page')")
+	@PreAuthorize("@permissionService.has('sys:login-log:page')")
 	@Operation(summary = "分页查询登录日志列表", description = "分页查询登录日志列表")
 	public Result<Page<LoginLogCO>> pageLoginLog(@Validated @RequestBody LoginLogPageQry qry) {
 		return loginLogsServiceI.pageLoginLog(qry);
@@ -115,7 +115,7 @@ public class LoginLogsController {
 	@TraceLog
 	@ApiSecret
 	@GetMapping("/v1/login-logs/{id}")
-	@PreAuthorize("hasAuthority('sys:login-log:detail')")
+	@PreAuthorize("@permissionService.has('sys:login-log:detail')")
 	@Operation(summary = "查看登录日志详情", description = "查看登录日志详情")
 	public Result<LoginLogCO> getLoginLogById(@PathVariable("id") Long id) {
 		return loginLogsServiceI.getLoginLogById(new LoginLogGetQry(id));

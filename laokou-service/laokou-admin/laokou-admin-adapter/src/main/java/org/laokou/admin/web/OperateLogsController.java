@@ -63,7 +63,7 @@ public class OperateLogsController {
 	@ApiSecret
 	@Idempotent
 	@PostMapping("/v1/operate-logs")
-	@PreAuthorize("hasAuthority('sys:operate-log:save')")
+	@PreAuthorize("@permissionService.has('sys:operate-log:save')")
 	@OperateLog(module = "操作日志管理", operation = "保存操作日志")
 	@Operation(summary = "保存操作日志", description = "保存操作日志")
 	public void saveOperateLog(@RequestBody OperateLogSaveCmd cmd) {
@@ -72,7 +72,7 @@ public class OperateLogsController {
 
 	@ApiSecret
 	@PutMapping("/v1/operate-logs")
-	@PreAuthorize("hasAuthority('sys:operate-log:modify')")
+	@PreAuthorize("@permissionService.has('sys:operate-log:modify')")
 	@OperateLog(module = "操作日志管理", operation = "修改操作日志")
 	@Operation(summary = "修改操作日志", description = "修改操作日志")
 	public void modifyOperateLog(@RequestBody OperateLogModifyCmd cmd) {
@@ -81,7 +81,7 @@ public class OperateLogsController {
 
 	@ApiSecret
 	@DeleteMapping("/v1/operate-logs")
-	@PreAuthorize("hasAuthority('sys:operate-log:remove')")
+	@PreAuthorize("@permissionService.has('sys:operate-log:remove')")
 	@OperateLog(module = "操作日志管理", operation = "删除操作日志")
 	@Operation(summary = "删除操作日志", description = "删除操作日志")
 	public void removeOperateLog(@RequestBody Long[] ids) {
@@ -90,7 +90,7 @@ public class OperateLogsController {
 
 	@ApiSecret
 	@PostMapping(value = "/v1/operate-logs/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@PreAuthorize("hasAuthority('sys:operate-log:import')")
+	@PreAuthorize("@permissionService.has('sys:operate-log:import')")
 	@OperateLog(module = "操作日志管理", operation = "导入操作日志")
 	@Operation(summary = "导入操作日志", description = "导入操作日志")
 	public void importOperateLog(@RequestPart("files") MultipartFile[] files) {
@@ -98,7 +98,7 @@ public class OperateLogsController {
 	}
 
 	@PostMapping("/v1/operate-logs/export")
-	@PreAuthorize("hasAuthority('sys:operate-log:export')")
+	@PreAuthorize("@permissionService.has('sys:operate-log:export')")
 	@OperateLog(module = "操作日志管理", operation = "导出操作日志")
 	@Operation(summary = "导出操作日志", description = "导出操作日志")
 	public void exportOperateLog(@RequestBody OperateLogExportCmd cmd) {
@@ -107,7 +107,7 @@ public class OperateLogsController {
 
 	@TraceLog
 	@PostMapping("/v1/operate-logs/page")
-	@PreAuthorize("hasAuthority('sys:operate-log:page')")
+	@PreAuthorize("@permissionService.has('sys:operate-log:page')")
 	@Operation(summary = "分页查询操作日志列表", description = "分页查询操作日志列表")
 	public Result<Page<OperateLogCO>> pageOperateLog(@Validated @RequestBody OperateLogPageQry qry) {
 		return operateLogsServiceI.pageOperateLog(qry);
@@ -115,7 +115,7 @@ public class OperateLogsController {
 
 	@TraceLog
 	@GetMapping("/v1/operate-logs/{id}")
-	@PreAuthorize("hasAuthority('sys:operate-log:detail')")
+	@PreAuthorize("@permissionService.has('sys:operate-log:detail')")
 	@Operation(summary = "查看操作日志详情", description = "查看操作日志详情")
 	public Result<OperateLogCO> getOperateLogById(@PathVariable("id") Long id) {
 		return operateLogsServiceI.getOperateLogById(new OperateLogGetQry(id));

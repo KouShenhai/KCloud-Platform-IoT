@@ -62,7 +62,7 @@ public class ColumnsController {
 
 	@Idempotent
 	@PostMapping("/v1/columns")
-	@PreAuthorize("hasAuthority('generator:column:save')")
+	@PreAuthorize("@permissionService.has('generator:column:save')")
 	@OperateLog(module = "代码生成器字段管理", operation = "保存代码生成器字段")
 	@Operation(summary = "保存代码生成器字段", description = "保存代码生成器字段")
 	public void saveColumn(@RequestBody ColumnSaveCmd cmd) {
@@ -70,7 +70,7 @@ public class ColumnsController {
 	}
 
 	@PutMapping("/v1/columns")
-	@PreAuthorize("hasAuthority('generator:column:modify')")
+	@PreAuthorize("@permissionService.has('generator:column:modify')")
 	@OperateLog(module = "代码生成器字段管理", operation = "修改代码生成器字段")
 	@Operation(summary = "修改代码生成器字段", description = "修改代码生成器字段")
 	public void modifyColumn(@RequestBody ColumnModifyCmd cmd) {
@@ -78,7 +78,7 @@ public class ColumnsController {
 	}
 
 	@DeleteMapping("/v1/columns/")
-	@PreAuthorize("hasAuthority('generator:column:remove')")
+	@PreAuthorize("@permissionService.has('generator:column:remove')")
 	@OperateLog(module = "代码生成器字段管理", operation = "删除代码生成器字段")
 	@Operation(summary = "删除代码生成器字段", description = "删除代码生成器字段")
 	public void removeColumn(@RequestBody Long[] ids) {
@@ -86,7 +86,7 @@ public class ColumnsController {
 	}
 
 	@PostMapping(value = "/v1/columns/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@PreAuthorize("hasAuthority('generator:column:import')")
+	@PreAuthorize("@permissionService.has('generator:column:import')")
 	@OperateLog(module = "代码生成器字段管理", operation = "导入代码生成器字段")
 	@Operation(summary = "导入代码生成器字段", description = "导入代码生成器字段")
 	public void importColumn(@RequestPart("files") MultipartFile[] files) {
@@ -94,7 +94,7 @@ public class ColumnsController {
 	}
 
 	@PostMapping("/v1/columns/export")
-	@PreAuthorize("hasAuthority('generator:column:export')")
+	@PreAuthorize("@permissionService.has('generator:column:export')")
 	@OperateLog(module = "代码生成器字段管理", operation = "导出代码生成器字段")
 	@Operation(summary = "导出代码生成器字段", description = "导出代码生成器字段")
 	public void exportColumn(@RequestBody ColumnExportCmd cmd) {
@@ -103,7 +103,7 @@ public class ColumnsController {
 
 	@TraceLog
 	@PostMapping("/v1/columns/page")
-	@PreAuthorize("hasAuthority('generator:column:page')")
+	@PreAuthorize("@permissionService.has('generator:column:page')")
 	@Operation(summary = "分页查询代码生成器字段列表", description = "分页查询代码生成器字段列表")
 	public Result<Page<ColumnCO>> pageColumn(@Validated @RequestBody ColumnPageQry qry) {
 		return columnsServiceI.pageColumn(qry);

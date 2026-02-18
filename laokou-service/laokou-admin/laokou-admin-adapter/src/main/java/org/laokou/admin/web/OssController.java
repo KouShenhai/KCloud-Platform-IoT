@@ -61,7 +61,7 @@ public class OssController {
 
 	@Idempotent
 	@PostMapping("/v1/oss")
-	@PreAuthorize("hasAuthority('sys:oss:save')")
+	@PreAuthorize("@permissionService.has('sys:oss:save')")
 	@OperateLog(module = "OSS管理", operation = "保存OSS")
 	@Operation(summary = "保存OSS", description = "保存OSS")
 	public void saveOss(@RequestBody OssSaveCmd cmd) {
@@ -69,7 +69,7 @@ public class OssController {
 	}
 
 	@PutMapping("/v1/oss")
-	@PreAuthorize("hasAuthority('sys:oss:modify')")
+	@PreAuthorize("@permissionService.has('sys:oss:modify')")
 	@OperateLog(module = "OSS管理", operation = "修改OSS")
 	@Operation(summary = "修改OSS", description = "修改OSS")
 	public void modifyOss(@RequestBody OssModifyCmd cmd) {
@@ -77,7 +77,7 @@ public class OssController {
 	}
 
 	@DeleteMapping
-	@PreAuthorize("hasAuthority('sys:oss:remove')")
+	@PreAuthorize("@permissionService.has('sys:oss:remove')")
 	@OperateLog(module = "OSS管理", operation = "删除OSS")
 	@Operation(summary = "删除OSS", description = "删除OSS")
 	public void removeOss(@RequestBody Long[] ids) {
@@ -85,7 +85,7 @@ public class OssController {
 	}
 
 	@PostMapping(value = "/v1/oss/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@PreAuthorize("hasAuthority('sys:oss:import')")
+	@PreAuthorize("@permissionService.has('sys:oss:import')")
 	@OperateLog(module = "OSS管理", operation = "导入OSS")
 	@Operation(summary = "导入OSS", description = "导入OSS")
 	public void importOss(@RequestPart("files") MultipartFile[] files) {
@@ -93,7 +93,7 @@ public class OssController {
 	}
 
 	@PostMapping("/v1/oss/export")
-	@PreAuthorize("hasAuthority('sys:oss:export')")
+	@PreAuthorize("@permissionService.has('sys:oss:export')")
 	@OperateLog(module = "OSS管理", operation = "导出OSS")
 	@Operation(summary = "导出OSS", description = "导出OSS")
 	public void exportOss(@RequestBody OssExportCmd cmd) {
@@ -102,7 +102,7 @@ public class OssController {
 
 	@TraceLog
 	@PostMapping("/v1/oss/page")
-	@PreAuthorize("hasAuthority('sys:oss:page')")
+	@PreAuthorize("@permissionService.has('sys:oss:page')")
 	@Operation(summary = "分页查询OSS列表", description = "分页查询OSS列表")
 	public Result<Page<OssCO>> pageOss(@Validated @RequestBody OssPageQry qry) {
 		return ossServiceI.pageOss(qry);
@@ -110,7 +110,7 @@ public class OssController {
 
 	@TraceLog
 	@GetMapping("/v1/oss/{id}")
-	@PreAuthorize("hasAuthority('sys:oss:detail')")
+	@PreAuthorize("@permissionService.has('sys:oss:detail')")
 	@Operation(summary = "查看OSS详情", description = "查看OSS详情")
 	public Result<OssCO> getOssById(@PathVariable("id") Long id) {
 		return ossServiceI.getOssById(new OssGetQry(id));

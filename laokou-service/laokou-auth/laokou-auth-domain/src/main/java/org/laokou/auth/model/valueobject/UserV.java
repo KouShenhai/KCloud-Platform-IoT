@@ -26,14 +26,14 @@ import java.util.List;
  *
  * @author laokou
  * @param username 用户名.
+ * @param password 密码.
  * @param mail 邮箱.
  * @param mobile 手机号.
- * @param tenantId 租户ID.
- * @param password 密码.
  * @param avatar 头像.
- * @param permissions 权限标识集合.
+ * @param tenantId 租户ID.
  * @param tenantCode 租户编码.
- * @param dataScopes 数据权限.
+ * @param permissions 权限标识集合.
+ * @param dataScopes 数据权限集合.
  */
 @Builder(toBuilder = true)
 public record UserV(String username, String password, String avatar, String mail, String mobile, String tenantCode,

@@ -62,7 +62,7 @@ public class DevicesController {
 
 	@Idempotent
 	@PostMapping("/v1/devices")
-	@PreAuthorize("hasAuthority('iot:device:save')")
+	@PreAuthorize("@permissionService.has('iot:device:save')")
 	@OperateLog(module = "设备管理", operation = "保存设备")
 	@Operation(summary = "保存设备", description = "保存设备")
 	public void saveDevice(@RequestBody DeviceSaveCmd cmd) {
@@ -70,7 +70,7 @@ public class DevicesController {
 	}
 
 	@PutMapping("/v1/devices")
-	@PreAuthorize("hasAuthority('iot:device:modify')")
+	@PreAuthorize("@permissionService.has('iot:device:modify')")
 	@OperateLog(module = "设备管理", operation = "修改设备")
 	@Operation(summary = "修改设备", description = "修改设备")
 	public void modifyDevice(@RequestBody DeviceModifyCmd cmd) {
@@ -78,7 +78,7 @@ public class DevicesController {
 	}
 
 	@DeleteMapping("/v1/devices")
-	@PreAuthorize("hasAuthority('iot:device:remove')")
+	@PreAuthorize("@permissionService.has('iot:device:remove')")
 	@OperateLog(module = "设备管理", operation = "删除设备")
 	@Operation(summary = "删除设备", description = "删除设备")
 	public void removeDevice(@RequestBody Long[] ids) {
@@ -86,7 +86,7 @@ public class DevicesController {
 	}
 
 	@PostMapping(value = "/v1/devices/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@PreAuthorize("hasAuthority('iot:device:import')")
+	@PreAuthorize("@permissionService.has('iot:device:import')")
 	@OperateLog(module = "设备管理", operation = "导入设备")
 	@Operation(summary = "导入设备", description = "导入设备")
 	public void importDevice(@RequestPart("files") MultipartFile[] files) {
@@ -94,7 +94,7 @@ public class DevicesController {
 	}
 
 	@PostMapping("/v1/devices/export")
-	@PreAuthorize("hasAuthority('iot:device:export')")
+	@PreAuthorize("@permissionService.has('iot:device:export')")
 	@OperateLog(module = "设备管理", operation = "导出设备")
 	@Operation(summary = "导出设备", description = "导出设备")
 	public void exportDevice(@RequestBody DeviceExportCmd cmd) {
@@ -103,7 +103,7 @@ public class DevicesController {
 
 	@TraceLog
 	@PostMapping("/v1/devices/page")
-	@PreAuthorize("hasAuthority('iot:device:page')")
+	@PreAuthorize("@permissionService.has('iot:device:page')")
 	@Operation(summary = "分页查询设备列表", description = "分页查询设备列表")
 	public Result<Page<DeviceCO>> pageDevice(@Validated @RequestBody DevicePageQry qry) {
 		return devicesServiceI.pageDevice(qry);
@@ -111,7 +111,7 @@ public class DevicesController {
 
 	@TraceLog
 	@GetMapping("/v1/devices/{id}")
-	@PreAuthorize("hasAuthority('iot:device:detail')")
+	@PreAuthorize("@permissionService.has('iot:device:detail')")
 	@Operation(summary = "查看设备详情", description = "查看设备详情")
 	public Result<DeviceCO> getDeviceById(@PathVariable("id") Long id) {
 		return devicesServiceI.getDeviceById(new DeviceGetQry(id));

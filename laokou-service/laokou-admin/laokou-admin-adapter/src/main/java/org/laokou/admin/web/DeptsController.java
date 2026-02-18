@@ -68,7 +68,7 @@ public class DeptsController {
 
 	@Idempotent
 	@PostMapping("/v1/depts")
-	@PreAuthorize("hasAuthority('sys:dept:save')")
+	@PreAuthorize("@permissionService.has('sys:dept:save')")
 	@OperateLog(module = "部门管理", operation = "保存部门")
 	@Operation(summary = "保存部门", description = "保存部门")
 	public void saveDept(@RequestBody DeptSaveCmd cmd) {
@@ -76,7 +76,7 @@ public class DeptsController {
 	}
 
 	@PutMapping("/v1/depts")
-	@PreAuthorize("hasAuthority('sys:dept:modify')")
+	@PreAuthorize("@permissionService.has('sys:dept:modify')")
 	@OperateLog(module = "部门管理", operation = "修改部门")
 	@Operation(summary = "修改部门", description = "修改部门")
 	@DistributedCache(name = NameConstants.DEPTS, key = "#cmd.co.id", operateType = OperateType.DEL)
@@ -85,7 +85,7 @@ public class DeptsController {
 	}
 
 	@DeleteMapping("/v1/depts")
-	@PreAuthorize("hasAuthority('sys:dept:remove')")
+	@PreAuthorize("@permissionService.has('sys:dept:remove')")
 	@OperateLog(module = "部门管理", operation = "删除部门")
 	@Operation(summary = "删除部门", description = "删除部门")
 	public void removeDept(@RequestBody Long[] ids) {
@@ -93,7 +93,7 @@ public class DeptsController {
 	}
 
 	@PostMapping(value = "/v1/depts/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@PreAuthorize("hasAuthority('sys:dept:import')")
+	@PreAuthorize("@permissionService.has('sys:dept:import')")
 	@OperateLog(module = "部门管理", operation = "导入部门")
 	@Operation(summary = "导入部门", description = "导入部门")
 	public void importDept(@RequestPart("files") MultipartFile[] files) {
@@ -101,7 +101,7 @@ public class DeptsController {
 	}
 
 	@PostMapping("/v1/depts/export")
-	@PreAuthorize("hasAuthority('sys:dept:export')")
+	@PreAuthorize("@permissionService.has('sys:dept:export')")
 	@OperateLog(module = "部门管理", operation = "导出部门")
 	@Operation(summary = "导出部门", description = "导出部门")
 	public void exportDept(@RequestBody DeptExportCmd cmd) {
@@ -110,7 +110,7 @@ public class DeptsController {
 
 	@TraceLog
 	@PostMapping("/v1/depts/page")
-	@PreAuthorize("hasAuthority('sys:dept:page')")
+	@PreAuthorize("@permissionService.has('sys:dept:page')")
 	@Operation(summary = "分页查询部门列表", description = "分页查询部门列表")
 	public Result<Page<DeptCO>> pageDept(@Validated @RequestBody DeptPageQry qry) {
 		return deptsServiceI.pageDept(qry);
@@ -118,7 +118,7 @@ public class DeptsController {
 
 	@TraceLog
 	@PostMapping("/v1/depts/list-tree")
-	@PreAuthorize("hasAuthority('sys:dept:list-tree')")
+	@PreAuthorize("@permissionService.has('sys:dept:list-tree')")
 	@Operation(summary = "查询部门树列表", description = "查询部门树列表")
 	public Result<List<DeptTreeCO>> listTreeDept(@RequestBody DeptTreeListQry qry) {
 		return deptsServiceI.listTreeDept(qry);
@@ -127,7 +127,7 @@ public class DeptsController {
 	@TraceLog
 	@GetMapping("/v1/depts/{id}")
 	@DistributedCache(name = NameConstants.DEPTS, key = "#id")
-	@PreAuthorize("hasAuthority('sys:dept:detail')")
+	@PreAuthorize("@permissionService.has('sys:dept:detail')")
 	@Operation(summary = "查看部门详情", description = "查看部门详情")
 	public Result<DeptCO> getDeptById(@PathVariable("id") Long id) {
 		return deptsServiceI.getDeptById(new DeptGetQry(id));

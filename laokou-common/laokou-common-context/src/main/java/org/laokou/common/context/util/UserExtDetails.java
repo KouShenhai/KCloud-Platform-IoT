@@ -114,6 +114,11 @@ public final class UserExtDetails implements UserDetails, OAuth2AuthenticatedPri
 	private List<String> permissions;
 
 	/**
+	 * 授权范围集合.
+	 */
+	private List<String> scopes;
+
+	/**
 	 * 部门IDS.
 	 */
 	private List<Long> deptIds;
@@ -126,7 +131,7 @@ public final class UserExtDetails implements UserDetails, OAuth2AuthenticatedPri
 	@Override
 	@NullMarked
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return AuthorityUtils.createAuthorityList(this.permissions);
+		return AuthorityUtils.createAuthorityList(Collections.emptyList());
 	}
 
 	/**

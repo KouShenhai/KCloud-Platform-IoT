@@ -26,19 +26,23 @@ import org.laokou.common.security.handler.OAuth2ExceptionHandler;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.security.oauth2.core.OAuth2RefreshToken;
+import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
 
 import java.security.Principal;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author laokou
  */
 @Slf4j
-public record OAuth2OpaqueTokenIntrospector(
-		OAuth2AuthorizationService authorizationService) implements OpaqueTokenIntrospector {
+public record OAuth2OpaqueTokenIntrospector(OAuth2AuthorizationService authorizationService,
+		JwtDecoder jwtDecoder) implements OpaqueTokenIntrospector {
 
 	// @formatter:off
 	@Override
@@ -53,7 +57,7 @@ public record OAuth2OpaqueTokenIntrospector(
 			throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED);
 		}
 		if (accessToken.isActive() && refreshToken.isActive() && authorization.getAttribute(Principal.class.getName()) instanceof User user) {
-			return UserConvertor.toUserDetails(user);
+			return UserConvertor.toUserDetails(user, () -> (List<String>) jwtDecoder.decode(token).getClaims().getOrDefault(OAuth2ParameterNames.SCOPE, Collections.emptyList()));
 		}
 		authorizationService.remove(authorization);
 		throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED);
