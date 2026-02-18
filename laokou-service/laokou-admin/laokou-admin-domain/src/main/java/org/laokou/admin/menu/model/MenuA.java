@@ -45,7 +45,7 @@ public class MenuA extends AggregateRoot implements ValidateName {
 	private MenuE menuE;
 
 	/**
-	 * 操作类型【新增/修改】.
+	 * 操作类型【保存/修改】.
 	 */
 	private OperateType operateType;
 

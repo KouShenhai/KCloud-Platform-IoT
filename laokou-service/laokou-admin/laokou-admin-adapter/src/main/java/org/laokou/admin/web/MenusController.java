@@ -68,7 +68,7 @@ public class MenusController {
 
 	@Idempotent
 	@PostMapping("/v1/menus")
-	@PreAuthorize("@permissionService.has('sys:menu:save')")
+	@PreAuthorize("hasAuthority('write') and hasAuthority('sys:menu:save')")
 	@OperateLog(module = "菜单管理", operation = "保存菜单")
 	@Operation(summary = "保存菜单", description = "保存菜单")
 	public void saveMenu(@RequestBody MenuSaveCmd cmd) {
@@ -76,7 +76,7 @@ public class MenusController {
 	}
 
 	@PutMapping("/v1/menus")
-	@PreAuthorize("@permissionService.has('sys:menu:modify')")
+	@PreAuthorize("hasAuthority('write') and hasAuthority('sys:menu:modify')")
 	@OperateLog(module = "菜单管理", operation = "修改菜单")
 	@Operation(summary = "修改菜单", description = "修改菜单")
 	@DistributedCache(name = NameConstants.MENUS, key = "#cmd.co.id", operateType = OperateType.DEL)
@@ -85,7 +85,7 @@ public class MenusController {
 	}
 
 	@DeleteMapping("/v1/menus")
-	@PreAuthorize("@permissionService.has('sys:menu:remove')")
+	@PreAuthorize("hasAuthority('write') and hasAuthority('sys:menu:remove')")
 	@OperateLog(module = "菜单管理", operation = "删除菜单")
 	@Operation(summary = "删除菜单", description = "删除菜单")
 	public void removeMenu(@RequestBody Long[] ids) {
@@ -93,7 +93,7 @@ public class MenusController {
 	}
 
 	@PostMapping(value = "/v1/menus/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@PreAuthorize("@permissionService.has('sys:menu:import')")
+	@PreAuthorize("hasAuthority('write') and hasAuthority('sys:menu:import')")
 	@OperateLog(module = "菜单管理", operation = "导入菜单")
 	@Operation(summary = "导入菜单", description = "导入菜单")
 	public void importMenu(@RequestPart("files") MultipartFile[] files) {
@@ -101,7 +101,7 @@ public class MenusController {
 	}
 
 	@PostMapping("/v1/menus/export")
-	@PreAuthorize("@permissionService.has('sys:menu:export')")
+	@PreAuthorize("hasAuthority('write') and hasAuthority('sys:menu:export')")
 	@OperateLog(module = "菜单管理", operation = "导出菜单")
 	@Operation(summary = "导出菜单", description = "导出菜单")
 	public void exportMenu(@RequestBody MenuExportCmd cmd) {
@@ -110,7 +110,7 @@ public class MenusController {
 
 	@TraceLog
 	@PostMapping("/v1/menus/page")
-	@PreAuthorize("@permissionService.has('sys:menu:page')")
+	@PreAuthorize("hasAuthority('read') and hasAuthority('sys:menu:page')")
 	@Operation(summary = "分页查询菜单列表", description = "分页查询菜单列表")
 	public Result<Page<MenuCO>> pageMenu(@Validated @RequestBody MenuPageQry qry) {
 		return menusServiceI.pageMenu(qry);
@@ -118,7 +118,7 @@ public class MenusController {
 
 	@TraceLog
 	@PostMapping("/v1/menus/list-tree")
-	@PreAuthorize("@permissionService.has('sys:menu:list-tree')")
+	@PreAuthorize("hasAuthority('read') and hasAuthority('sys:menu:list-tree')")
 	@Operation(summary = "查询菜单树列表", description = "查询菜单树列表")
 	public Result<List<MenuTreeCO>> listTreeMenu(@RequestBody MenuTreeListQry qry) {
 		return menusServiceI.listTreeMenu(qry);
@@ -134,7 +134,7 @@ public class MenusController {
 	@TraceLog
 	@GetMapping("/v1/menus/{id}")
 	@DistributedCache(name = NameConstants.MENUS, key = "#id")
-	@PreAuthorize("@permissionService.has('sys:menu:detail')")
+	@PreAuthorize("hasAuthority('read') and hasAuthority('sys:menu:detail')")
 	@Operation(summary = "查看菜单详情", description = "查看菜单详情")
 	public Result<MenuCO> getMenuById(@PathVariable("id") Long id) {
 		return menusServiceI.getMenuById(new MenuGetQry(id));
