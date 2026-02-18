@@ -54,7 +54,7 @@ public record OAuth2OpaqueTokenIntrospector(OAuth2AuthorizationService authoriza
 			throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED);
 		}
 		if (accessToken.isActive() && refreshToken.isActive() && authorization.getAttribute(Principal.class.getName()) instanceof User user) {
-			return UserConvertor.toUserDetails(user, () -> authorization.getAuthorizedScopes().stream().toList());
+			return UserConvertor.toUserDetails(user, authorization.getAuthorizedScopes().stream().toList());
 		}
 		authorizationService.remove(authorization);
 		throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED);

@@ -83,7 +83,7 @@ class UserConvertorTest {
 			.build();
 
 		// When
-		UserExtDetails result = UserConvertor.toUserDetails(user, Collections::emptyList);
+		UserExtDetails result = UserConvertor.toUserDetails(user, Collections.emptyList());
 
 		// Then
 		Assertions.assertThat(result).isNotNull();
@@ -122,7 +122,7 @@ class UserConvertorTest {
 			.build();
 
 		// When
-		UserExtDetails result = UserConvertor.toUserDetails(user, Collections::emptyList);
+		UserExtDetails result = UserConvertor.toUserDetails(user, Collections.emptyList());
 
 		// Then
 		Assertions.assertThat(result.getUsername()).isEqualTo(originalUsername);
@@ -149,7 +149,7 @@ class UserConvertorTest {
 			.build();
 
 		// When
-		UserExtDetails result = UserConvertor.toUserDetails(user, Collections::emptyList);
+		UserExtDetails result = UserConvertor.toUserDetails(user, Collections.emptyList());
 
 		// Then
 		Assertions.assertThat(result).isNotNull();
@@ -173,7 +173,7 @@ class UserConvertorTest {
 		User user = User.builder().id(4L).username(AESUtils.encrypt("user4")).permissions(new ArrayList<>()).build();
 
 		// When
-		UserExtDetails result = UserConvertor.toUserDetails(user, Collections::emptyList);
+		UserExtDetails result = UserConvertor.toUserDetails(user, Collections.emptyList());
 
 		// Then
 		Assertions.assertThat(result.getPermissions()).isNotNull().isEmpty();
@@ -186,7 +186,7 @@ class UserConvertorTest {
 		User user = User.builder().id(5L).username(AESUtils.encrypt("user5")).build();
 
 		// When
-		UserConvertor.toUserDetails(user, Collections::emptyList);
+		UserConvertor.toUserDetails(user, Collections.emptyList());
 
 		// Then
 		domainFactoryMockedStatic.verify(DomainFactory::createUserDetails, Mockito.times(1));

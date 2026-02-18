@@ -18,7 +18,6 @@
 package org.laokou.common.context.util;
 
 import java.util.List;
-import java.util.function.Supplier;
 
 /**
  * @author laokou
@@ -28,7 +27,7 @@ public final class UserConvertor {
 	private UserConvertor() {
 	}
 
-	public static UserExtDetails toUserDetails(User user, Supplier<List<String>> scopesSupplier) {
+	public static UserExtDetails toUserDetails(User user, List<String> scopes) {
 		return DomainFactory.createUserDetails()
 			.toBuilder()
 			.id(user.id())
@@ -38,7 +37,7 @@ public final class UserConvertor {
 			.superAdmin(user.superAdmin())
 			.tenantId(user.tenantId())
 			.permissions(user.permissions())
-			.scopes(scopesSupplier.get())
+			.scopes(scopes)
 			.status(user.status())
 			.mail(user.mail())
 			.mobile(user.mobile())
