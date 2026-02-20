@@ -20,7 +20,7 @@ package org.laokou.iot;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.annotation.EnableWarmUp;
 import org.laokou.common.i18n.util.SslUtils;
-import org.laokou.common.nacos.annotation.EnableRouter;
+import org.laokou.common.nacos.annotation.EnablePrintRouter;
 import org.laokou.common.security.annotation.EnableSecurity;
 import org.laokou.common.websocket.annotation.EnableWebSocketServer;
 import org.mybatis.spring.annotation.MapperScan;
@@ -47,7 +47,7 @@ import java.security.NoSuchAlgorithmException;
 @Slf4j
 @EnablePulsar
 @EnableWarmUp
-@EnableRouter
+@EnablePrintRouter
 @EnableSecurity
 @EnableScheduling
 @EnableWebSocketServer

@@ -20,7 +20,7 @@ package org.laokou.generator;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.annotation.EnableWarmUp;
 import org.laokou.common.i18n.util.SslUtils;
-import org.laokou.common.nacos.annotation.EnableRouter;
+import org.laokou.common.nacos.annotation.EnablePrintRouter;
 import org.laokou.common.security.annotation.EnableSecurity;
 import org.laokou.common.security.config.TransmittableThreadLocalSecurityContextHolderStrategy;
 import org.mybatis.spring.annotation.MapperScan;
@@ -44,7 +44,7 @@ import java.security.NoSuchAlgorithmException;
  */
 @Slf4j
 @EnableWarmUp
-@EnableRouter
+@EnablePrintRouter
 @EnableSecurity
 @EnableScheduling
 @EnableDiscoveryClient

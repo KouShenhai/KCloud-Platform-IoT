@@ -30,6 +30,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Import({ RouterHandler.class })
-public @interface EnableRouter {
+public @interface EnablePrintRouter {
 
 }
