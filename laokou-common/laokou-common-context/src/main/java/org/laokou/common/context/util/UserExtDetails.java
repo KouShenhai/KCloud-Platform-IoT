@@ -132,9 +132,8 @@ public final class UserExtDetails implements UserDetails, OAuth2AuthenticatedPri
 	@Override
 	@NullMarked
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return AuthorityUtils.createAuthorityList(Stream.concat(this.permissions.stream(), this.scopes.stream())
-			.filter(StringExtUtils::isNotEmpty)
-			.toList());
+		return AuthorityUtils
+			.createAuthorityList(Stream.concat(this.permissions.stream(), this.scopes.stream()).toList());
 	}
 
 	/**

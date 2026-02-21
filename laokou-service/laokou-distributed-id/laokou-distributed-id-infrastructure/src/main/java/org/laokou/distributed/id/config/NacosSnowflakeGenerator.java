@@ -172,17 +172,31 @@ public class NacosSnowflakeGenerator implements SnowflakeGenerator {
 		}
 		this.currentIp = InetAddress.getLocalHost().getHostAddress();
 		this.currentPort = getServerPort();
-		// 获取所有实例列表
-		List<Instance> allInstances = namingService.getAllInstances(serviceId, groupName);
+
 		// 分配 datacenterId 和 machineId
-		allocateIds(allInstances);
-		// 注册当前实例及其元数据
-		registerMetadata();
-		// 订阅实例变更事件
-		namingService.subscribe(serviceId, groupName,
-				_ -> log.debug("NacosSnowflakeGenerator received instance change event."));
-		initialized.set(true);
-		log.info("NacosSnowflakeGenerator initialized with datacenterId: {}, machineId: {}", datacenterId, machineId);
+		int maxRetry = 10;
+		for (int attempt = 1; attempt <= maxRetry; attempt++) {
+			// 获取所有实例列表
+			List<Instance> allInstances = namingService.getAllInstances(serviceId, groupName);
+			allocateIds(allInstances);
+			// 注册当前实例及其元数据
+			if (tryRegisterMetadata()) {
+				// 判断是否冲突
+				if (!hasConflict()) {
+					log.info("NacosSnowflakeGenerator successfully registered with datacenterId: {}, machineId: {}",
+							datacenterId, machineId);
+					// 订阅实例变更事件
+					namingService.subscribe(serviceId, groupName,
+							_ -> log.debug("NacosSnowflakeGenerator received instance change event."));
+					initialized.set(true);
+					log.info("NacosSnowflakeGenerator initialized with datacenterId: {}, machineId: {}", datacenterId,
+							machineId);
+					return;
+				}
+				// 冲突则注销
+				unregisterMetadata();
+			}
+		}
 	}
 
 	@Override
@@ -333,6 +347,9 @@ public class NacosSnowflakeGenerator implements SnowflakeGenerator {
 	}
 
 	private void allocateIds(List<Instance> allInstances) {
+		long maxDatacenterId = this.maxDatacenterId + 1;
+		long maxMachineId = this.maxMachineId + 1;
+		long maxCombinedId = maxDatacenterId * maxMachineId;
 		Set<Long> usedIds = allInstances.stream()
 			.filter(instance -> !isCurrentInstance(instance))
 			.map(Instance::getMetadata)
@@ -342,41 +359,69 @@ public class NacosSnowflakeGenerator implements SnowflakeGenerator {
 				String datacenterIdStr = metadata.getOrDefault(DATACENTER_ID_KEY, "0");
 				long mi = Long.parseLong(machineIdStr);
 				long di = Long.parseLong(datacenterIdStr);
-				return mi * (maxMachineId + 1) + di;
+				return di * maxMachineId + mi;
 			})
 			.collect(Collectors.toSet());
 		// 分配新的 datacenterId 和 machineId
-		// mi=0,di=0,0
-		// m1=0,di=31,31
+		// di=0,mi=0,0
+		// di=0,mi=31,31
 		// ...
 		// ...
 		// ...
-		// mi=31,di=31,1023
-		long maxCombinedId = (maxDatacenterId + 1) * (maxMachineId + 1);
+		// di=31,mi=31,1023
+		// 0 ~ 1023【不包含1024】
 		long foundCombinedId = LongStream.range(0, maxCombinedId)
 			.filter(id -> !usedIds.contains(id))
 			.findFirst()
 			.orElseThrow(() -> new RuntimeException(
 					String.format("No available ID slot. All %d slots are in use.", maxCombinedId)));
-		this.datacenterId = foundCombinedId / (maxMachineId + 1);
-		this.machineId = foundCombinedId % (maxMachineId + 1);
+		this.datacenterId = foundCombinedId / maxMachineId;
+		this.machineId = foundCombinedId % maxMachineId;
 	}
 
-	private void registerMetadata() throws NacosException {
-		Map<String, String> metadata = Map.of(DATACENTER_ID_KEY, String.valueOf(this.datacenterId), MACHINE_ID_KEY,
-				String.valueOf(this.machineId), GRPC_PORT_KEY, String.valueOf(getGrpcServerPort()));
-		Instance instance = new Instance();
-		instance.setIp(currentIp);
-		instance.setPort(currentPort);
-		instance.setMetadata(metadata);
-		instance.setWeight(1.0);
-		instance.setHealthy(true);
-		instance.setEnabled(true);
-		instance.setClusterName(getClusterName());
-		// CP强一致性【永久实例】
-		instance.setEphemeral(false);
-		namingService.registerInstance(serviceId, groupName, instance);
-		log.info("Registered instance with metadata: {}", metadata);
+	private boolean tryRegisterMetadata() {
+		try {
+			Map<String, String> metadata = Map.of(DATACENTER_ID_KEY, String.valueOf(this.datacenterId), MACHINE_ID_KEY,
+					String.valueOf(this.machineId), GRPC_PORT_KEY, String.valueOf(getGrpcServerPort()));
+			Instance instance = new Instance();
+			instance.setIp(currentIp);
+			instance.setPort(currentPort);
+			instance.setMetadata(metadata);
+			instance.setWeight(1.0);
+			instance.setHealthy(true);
+			instance.setEnabled(true);
+			instance.setClusterName(getClusterName());
+			instance.setEphemeral(true);
+			namingService.registerInstance(serviceId, groupName, instance);
+			log.info("Registered instance with metadata: {}", metadata);
+			return true;
+		}
+		catch (Exception ex) {
+			log.error("Registered instance failed", ex);
+			return false;
+		}
+	}
+
+	private boolean hasConflict() throws NacosException {
+		List<Instance> instances = namingService.getAllInstances(serviceId, groupName);
+		long count = instances.stream()
+			.map(Instance::getMetadata)
+			.filter(MapUtils::isNotEmpty)
+			.filter(meta -> ObjectUtils.equals(String.valueOf(this.datacenterId),
+					meta.getOrDefault(DATACENTER_ID_KEY, "0"))
+					&& ObjectUtils.equals(String.valueOf(this.machineId), meta.getOrDefault(MACHINE_ID_KEY, "0")))
+			.count();
+		return count > 1;
+	}
+
+	private void unregisterMetadata() {
+		try {
+			namingService.deregisterInstance(serviceId, groupName, currentIp, currentPort);
+			log.info("Deregistered instance with IP: {}, Port: {}", currentIp, currentPort);
+		}
+		catch (Exception ex) {
+			log.error("Deregistered instance failed", ex);
+		}
 	}
 
 	private boolean isCurrentInstance(Instance instance) {
