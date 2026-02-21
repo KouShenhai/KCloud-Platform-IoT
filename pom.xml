@@ -77,9 +77,9 @@
     <!--spring-boot-maven-plugin版本-->
     <spring-boot-maven-plugin.version>${spring-boot.version}</spring-boot-maven-plugin.version>
     <!--maven-surefire-plugin版本-->
-    <maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
+    <maven-surefire-plugin.version>3.5.5</maven-surefire-plugin.version>
     <!--maven-failsafe-plugin版本-->
-    <maven-failsafe-plugin.version>3.5.4</maven-failsafe-plugin.version>
+    <maven-failsafe-plugin.version>3.5.5</maven-failsafe-plugin.version>
     <!--maven-enforcer-plugin版本-->
     <maven-enforcer-plugin.version>3.6.2</maven-enforcer-plugin.version>
     <!--docker-maven-plugin版本-->
