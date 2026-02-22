@@ -21,19 +21,19 @@ import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.util.MessageUtils;
+import org.laokou.distributed.id.config.SnowflakeGenerator;
+import org.laokou.distributed.id.config.SpringSnowflakeProperties;
 import org.laokou.distributed.id.proto.DistributedIdServiceIGrpc;
 import org.laokou.distributed.id.proto.GenerateBatchIdRequest;
 import org.laokou.distributed.id.proto.GenerateBatchIdsResponse;
 import org.laokou.distributed.id.proto.GenerateIdRequest;
 import org.laokou.distributed.id.proto.GenerateIdResponse;
-import org.laokou.distributed.id.config.SnowflakeGenerator;
-import org.laokou.distributed.id.config.SpringSnowflakeProperties;
-import org.springframework.stereotype.Service;
+import org.springframework.grpc.server.service.GrpcService;
 
 /**
  * @author laokou
  */
-@Service
+@GrpcService
 @RequiredArgsConstructor
 public class DistributedIdServiceImpl extends DistributedIdServiceIGrpc.DistributedIdServiceIImplBase {
 
