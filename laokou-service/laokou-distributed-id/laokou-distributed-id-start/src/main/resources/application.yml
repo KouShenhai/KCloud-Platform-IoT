@@ -53,7 +53,7 @@ spring:
     server:
       servlet:
         enabled: false
-      port: 10111
+      port: ${GRPC_PORT:10111}
 
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml
