@@ -17,7 +17,7 @@
 
 package org.laokou.admin.dept.service.validator;
 
-import org.laokou.admin.dept.model.DeptE;
+import org.laokou.admin.dept.model.DeptA;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.laokou.common.i18n.util.StringExtUtils;
@@ -30,16 +30,16 @@ final class DeptParamValidator {
 	private DeptParamValidator() {
 	}
 
-	public static ParamValidator.Validate validateParentId(DeptE deptE) {
-		Long pid = deptE.getPid();
+	public static ParamValidator.Validate validateParentId(DeptA deptA) {
+		Long pid = deptA.getDeptE().getPid();
 		if (ObjectUtils.isNull(pid)) {
 			return ParamValidator.invalidate("部门父级ID不能为空");
 		}
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateSort(DeptE deptE) {
-		Integer sort = deptE.getSort();
+	public static ParamValidator.Validate validateSort(DeptA deptA) {
+		Integer sort = deptA.getDeptE().getSort();
 		if (ObjectUtils.isNull(sort)) {
 			return ParamValidator.invalidate("部门排序不能为空");
 		}
@@ -49,16 +49,16 @@ final class DeptParamValidator {
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateId(DeptE deptE) {
-		Long id = deptE.getId();
-		if (ObjectUtils.isNull(id)) {
+	public static ParamValidator.Validate validateId(DeptA deptA) {
+		Long id = deptA.getDeptE().getId();
+		if (deptA.isModify() && ObjectUtils.isNull(id)) {
 			return ParamValidator.invalidate("部门ID不能为空");
 		}
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateName(DeptE deptE) {
-		String name = deptE.getName();
+	public static ParamValidator.Validate validateName(DeptA deptA) {
+		String name = deptA.getDeptE().getName();
 		if (StringExtUtils.isEmpty(name)) {
 			return ParamValidator.invalidate("部门名称不能为空");
 		}

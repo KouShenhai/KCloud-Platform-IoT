@@ -15,13 +15,15 @@
  *
  */
 
-package org.laokou.admin.dept.model;
+package org.laokou.admin.dept.model.validator;
+
+import org.laokou.admin.dept.model.DeptA;
 
 /**
  * @author laokou
  */
 public interface DeptParamValidator {
 
-	void validateDept(DeptE deptE);
+	void validateDept(DeptA deptA);
 
 }

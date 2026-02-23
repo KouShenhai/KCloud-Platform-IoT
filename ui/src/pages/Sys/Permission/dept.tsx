@@ -82,12 +82,6 @@ export default () => {
 			}
 		},
 		{
-			title: '部门路径',
-			dataIndex: 'path',
-			ellipsis: true,
-			hideInSearch: true,
-		},
-		{
 			title: '部门排序',
 			dataIndex: 'sort',
 			hideInSearch: true,

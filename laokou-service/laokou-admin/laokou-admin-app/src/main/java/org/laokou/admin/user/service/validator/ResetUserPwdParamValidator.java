@@ -38,7 +38,7 @@ public class ResetUserPwdParamValidator implements UserParamValidator {
 
 	@Override
 	public void validateUser(UserE userE) {
-		ParamValidator.validate(
+		ParamValidator.validate("System",
 				// 校验ID
 				org.laokou.admin.user.service.validator.UserParamValidator.validateId(userE),
 				// 校验密码

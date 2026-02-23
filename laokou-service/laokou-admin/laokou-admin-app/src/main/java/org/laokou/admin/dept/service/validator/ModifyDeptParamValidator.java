@@ -17,8 +17,8 @@
 
 package org.laokou.admin.dept.service.validator;
 
-import org.laokou.admin.dept.model.DeptE;
-import org.laokou.admin.dept.model.DeptParamValidator;
+import org.laokou.admin.dept.model.DeptA;
+import org.laokou.admin.dept.model.validator.DeptParamValidator;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.springframework.stereotype.Component;
 
@@ -29,16 +29,16 @@ import org.springframework.stereotype.Component;
 public class ModifyDeptParamValidator implements DeptParamValidator {
 
 	@Override
-	public void validateDept(DeptE deptE) {
-		ParamValidator.validate(
+	public void validateDept(DeptA deptA) {
+		ParamValidator.validate(deptA.getValidateName(),
 				// 校验ID
-				org.laokou.admin.dept.service.validator.DeptParamValidator.validateId(deptE),
+				org.laokou.admin.dept.service.validator.DeptParamValidator.validateId(deptA),
 				// 校验父级ID
-				org.laokou.admin.dept.service.validator.DeptParamValidator.validateParentId(deptE),
+				org.laokou.admin.dept.service.validator.DeptParamValidator.validateParentId(deptA),
 				// 校验名称
-				org.laokou.admin.dept.service.validator.DeptParamValidator.validateName(deptE),
+				org.laokou.admin.dept.service.validator.DeptParamValidator.validateName(deptA),
 				// 校验排序
-				org.laokou.admin.dept.service.validator.DeptParamValidator.validateSort(deptE));
+				org.laokou.admin.dept.service.validator.DeptParamValidator.validateSort(deptA));
 	}
 
 }

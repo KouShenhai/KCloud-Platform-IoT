@@ -22,7 +22,7 @@ import org.laokou.admin.dept.convertor.DeptConvertor;
 import org.laokou.admin.dept.gateway.DeptGateway;
 import org.laokou.admin.dept.gatewayimpl.database.DeptMapper;
 import org.laokou.admin.dept.gatewayimpl.database.dataobject.DeptDO;
-import org.laokou.admin.dept.model.DeptE;
+import org.laokou.admin.dept.model.DeptA;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -39,14 +39,14 @@ public class DeptGatewayImpl implements DeptGateway {
 	private final DeptMapper deptMapper;
 
 	@Override
-	public void createDept(DeptE deptE) {
-		deptMapper.insert(DeptConvertor.toDataObject(deptE));
+	public void createDept(DeptA deptA) {
+		deptMapper.insert(DeptConvertor.toDataObject(deptA));
 	}
 
 	@Override
-	public void updateDept(DeptE deptE) {
-		DeptDO deptDO = DeptConvertor.toDataObject(deptE);
-		deptDO.setVersion(deptMapper.selectVersion(deptE.getId()));
+	public void updateDept(DeptA deptA) {
+		DeptDO deptDO = DeptConvertor.toDataObject(deptA);
+		deptDO.setVersion(deptMapper.selectVersion(deptA.getId()));
 		deptMapper.updateById(deptDO);
 	}
 

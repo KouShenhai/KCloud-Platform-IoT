@@ -36,7 +36,7 @@ public class SaveThingModelParamValidator implements ThingModelParamValidator {
 
 	@Override
 	public void validateThingModel(ThingModelE thingModelE) throws JsonProcessingException {
-		ParamValidator.validate(
+		ParamValidator.validate("System",
 				org.laokou.iot.thingModel.service.validator.ThingModelParamValidator.validateCodeAndName(thingModelE,
 						true, thingModelMapper),
 				org.laokou.iot.thingModel.service.validator.ThingModelParamValidator.validateCategory(thingModelE),

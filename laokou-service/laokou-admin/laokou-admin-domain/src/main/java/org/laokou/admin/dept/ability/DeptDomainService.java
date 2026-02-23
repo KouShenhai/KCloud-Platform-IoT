@@ -19,7 +19,7 @@ package org.laokou.admin.dept.ability;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dept.gateway.DeptGateway;
-import org.laokou.admin.dept.model.DeptE;
+import org.laokou.admin.dept.model.DeptA;
 import org.springframework.stereotype.Component;
 
 /**
@@ -33,12 +33,12 @@ public class DeptDomainService {
 
 	private final DeptGateway deptGateway;
 
-	public void createDept(DeptE deptE) {
-		deptGateway.createDept(deptE);
+	public void createDept(DeptA deptA) {
+		deptGateway.createDept(deptA);
 	}
 
-	public void updateDept(DeptE deptE) {
-		deptGateway.updateDept(deptE);
+	public void updateDept(DeptA deptA) {
+		deptGateway.updateDept(deptA);
 	}
 
 	public void deleteDept(Long[] ids) {

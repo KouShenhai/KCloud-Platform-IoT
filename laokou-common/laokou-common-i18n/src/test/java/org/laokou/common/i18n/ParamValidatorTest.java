@@ -34,14 +34,14 @@ class ParamValidatorTest {
 		// Test with all valid validations (should not throw exception)
 		ParamValidator.Validate valid1 = ParamValidator.validate();
 		ParamValidator.Validate valid2 = ParamValidator.validate();
-		Assertions.assertThatCode(() -> ParamValidator.validate(valid1, valid2)).doesNotThrowAnyException();
+		Assertions.assertThatCode(() -> ParamValidator.validate("System", valid1, valid2)).doesNotThrowAnyException();
 	}
 
 	@Test
 	void test_validate_withSingleError() {
 		// Test with single validation error (should throw ParamException)
 		ParamValidator.Validate invalid = ParamValidator.invalidate("用户名不能为空");
-		Assertions.assertThatThrownBy(() -> ParamValidator.validate(invalid))
+		Assertions.assertThatThrownBy(() -> ParamValidator.validate("System", invalid))
 			.isInstanceOf(ParamException.class)
 			.hasMessageContaining("用户名不能为空");
 	}
@@ -51,7 +51,7 @@ class ParamValidatorTest {
 		// Test with multiple validation errors
 		ParamValidator.Validate invalid1 = ParamValidator.invalidate("用户名不能为空");
 		ParamValidator.Validate invalid2 = ParamValidator.invalidate("密码不能为空");
-		Assertions.assertThatThrownBy(() -> ParamValidator.validate(invalid1, invalid2))
+		Assertions.assertThatThrownBy(() -> ParamValidator.validate("System", invalid1, invalid2))
 			.isInstanceOf(ParamException.class);
 	}
 
@@ -60,7 +60,7 @@ class ParamValidatorTest {
 		// Test with mixed valid and invalid validations
 		ParamValidator.Validate valid = ParamValidator.validate();
 		ParamValidator.Validate invalid = ParamValidator.invalidate("邮箱格式不正确");
-		Assertions.assertThatThrownBy(() -> ParamValidator.validate(valid, invalid))
+		Assertions.assertThatThrownBy(() -> ParamValidator.validate("System", valid, invalid))
 			.isInstanceOf(ParamException.class)
 			.hasMessageContaining("邮箱格式不正确");
 	}
@@ -148,14 +148,14 @@ class ParamValidatorTest {
 	void test_validate_withNullErrorMessage() {
 		// Test with null error message (should be treated as empty)
 		ParamValidator.Validate invalid = ParamValidator.invalidate(null);
-		Assertions.assertThatCode(() -> ParamValidator.validate(invalid)).doesNotThrowAnyException();
+		Assertions.assertThatCode(() -> ParamValidator.validate("System", invalid)).doesNotThrowAnyException();
 	}
 
 	@Test
 	void test_validate_withEmptyErrorMessage() {
 		// Test with empty error message (should be treated as valid)
 		ParamValidator.Validate invalid = ParamValidator.invalidate("");
-		Assertions.assertThatCode(() -> ParamValidator.validate(invalid)).doesNotThrowAnyException();
+		Assertions.assertThatCode(() -> ParamValidator.validate("System", invalid)).doesNotThrowAnyException();
 	}
 
 	@Test
@@ -171,7 +171,7 @@ class ParamValidatorTest {
 		// Test that ParamException has correct error code
 		ParamValidator.Validate invalid = ParamValidator.invalidate("测试错误");
 		try {
-			ParamValidator.validate(invalid);
+			ParamValidator.validate("System", invalid);
 		}
 		catch (ParamException ex) {
 			Assertions.assertThat(ex.getCode()).isEqualTo("P_System_ValidateFailed");
@@ -187,7 +187,8 @@ class ParamValidatorTest {
 		ParamValidator.Validate invalid2 = ParamValidator.invalidate("密码强度不够");
 		ParamValidator.Validate invalid3 = ParamValidator.invalidate("邮箱已被注册");
 
-		Assertions.assertThatThrownBy(() -> ParamValidator.validate(valid1, invalid1, valid2, invalid2, invalid3))
+		Assertions
+			.assertThatThrownBy(() -> ParamValidator.validate("System", valid1, invalid1, valid2, invalid2, invalid3))
 			.isInstanceOf(ParamException.class);
 
 		Set<String> errors = ParamValidator.validates(valid1, invalid1, valid2, invalid2, invalid3);
@@ -199,7 +200,7 @@ class ParamValidatorTest {
 		// Test with long error message
 		String longMessage = "这是一个非常长的错误消息，用于测试系统是否能够正确处理较长的验证错误信息，包括各种特殊字符和标点符号！@#￥%……&*（）";
 		ParamValidator.Validate invalid = ParamValidator.invalidate(longMessage);
-		Assertions.assertThatThrownBy(() -> ParamValidator.validate(invalid))
+		Assertions.assertThatThrownBy(() -> ParamValidator.validate("System", invalid))
 			.isInstanceOf(ParamException.class)
 			.hasMessageContaining(longMessage);
 	}

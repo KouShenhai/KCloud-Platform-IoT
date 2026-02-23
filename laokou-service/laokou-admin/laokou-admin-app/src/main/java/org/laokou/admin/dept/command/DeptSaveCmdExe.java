@@ -21,7 +21,8 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dept.ability.DeptDomainService;
 import org.laokou.admin.dept.convertor.DeptConvertor;
 import org.laokou.admin.dept.dto.DeptSaveCmd;
-import org.laokou.admin.dept.model.DeptE;
+import org.laokou.admin.dept.factory.DeptDomainFactory;
+import org.laokou.admin.dept.model.DeptA;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.stereotype.Component;
@@ -41,10 +42,10 @@ public class DeptSaveCmdExe {
 
 	@CommandLog
 	public void executeVoid(DeptSaveCmd cmd) {
-		DeptE deptE = DeptConvertor.toEntity(cmd.getCo(), true);
+		DeptA deptA = DeptDomainFactory.createDeptA().create(DeptConvertor.toEntity(cmd.getCo()));
 		// 校验参数
-		deptE.checkDeptParam();
-		transactionalUtils.executeInTransaction(() -> deptDomainService.createDept(deptE));
+		deptA.checkDeptParam();
+		transactionalUtils.executeInTransaction(() -> deptDomainService.createDept(deptA));
 	}
 
 }
