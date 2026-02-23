@@ -35,7 +35,7 @@ public class ModifyUserParamValidator implements UserParamValidator {
 
 	@Override
 	public void validateUser(UserE userE) throws Exception {
-		ParamValidator.validate(
+		ParamValidator.validate("System",
 				// 校验ID
 				org.laokou.admin.user.service.validator.UserParamValidator.validateId(userE),
 				// 校验邮箱

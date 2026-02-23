@@ -35,7 +35,7 @@ public class SaveUserParamValidator implements UserParamValidator {
 
 	@Override
 	public void validateUser(UserE userE) throws Exception {
-		ParamValidator.validate(
+		ParamValidator.validate("System",
 				// 校验用户名
 				org.laokou.admin.user.service.validator.UserParamValidator.validateUsername(userE, userMapper, true),
 				// 校验邮箱

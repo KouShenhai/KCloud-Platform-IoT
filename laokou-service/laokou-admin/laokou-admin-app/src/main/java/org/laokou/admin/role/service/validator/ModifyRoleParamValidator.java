@@ -35,7 +35,7 @@ public class ModifyRoleParamValidator implements RoleParamValidator {
 
 	@Override
 	public void validateRole(RoleE roleE) {
-		ParamValidator.validate(
+		ParamValidator.validate("System",
 				// 校验ID
 				org.laokou.admin.role.service.validator.RoleParamValidator.validateId(roleE),
 				// 校验名称

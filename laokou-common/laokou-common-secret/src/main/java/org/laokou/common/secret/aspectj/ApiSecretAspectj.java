@@ -85,7 +85,7 @@ public class ApiSecretAspectj {
 		String appKey = request.getHeader(APP_KEY);
 		String appSecret = request.getHeader(APP_SECRET);
 		Map<String, String> parameterMap = getParameterMap(request);
-		ParamValidator.validate(ApiSecretParamValidator.validateAppKey(appKey),
+		ParamValidator.validate("System", ApiSecretParamValidator.validateAppKey(appKey),
 				ApiSecretParamValidator.validateAppSecret(appSecret), ApiSecretParamValidator.validateNonce(nonce),
 				ApiSecretParamValidator.validateTimestamp(timestamp),
 				ApiSecretParamValidator.validateSign(appKey, appSecret, sign, nonce, timestamp, parameterMap));

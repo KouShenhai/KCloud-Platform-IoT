@@ -21,8 +21,8 @@ import org.laokou.admin.dept.dto.clientobject.DeptCO;
 import org.laokou.admin.dept.dto.clientobject.DeptTreeCO;
 import org.laokou.admin.dept.factory.DeptDomainFactory;
 import org.laokou.admin.dept.gatewayimpl.database.dataobject.DeptDO;
-import org.laokou.admin.dept.model.DeptE;
-import org.laokou.admin.dept.model.enums.OperateType;
+import org.laokou.admin.dept.model.DeptA;
+import org.laokou.admin.dept.model.entity.DeptE;
 
 import java.util.List;
 
@@ -33,12 +33,10 @@ import java.util.List;
  */
 public class DeptConvertor {
 
-	public static DeptDO toDataObject(DeptE deptE) {
+	public static DeptDO toDataObject(DeptA deptA) {
+		DeptE deptE = deptA.getDeptE();
 		DeptDO deptDO = new DeptDO();
-		switch (deptE.getOperateType()) {
-			case SAVE -> deptDO.setId(deptE.getPrimaryKey());
-			case MODIFY -> deptDO.setId(deptE.getId());
-		}
+		deptDO.setId(deptA.getId());
 		deptDO.setPid(deptE.getPid());
 		deptDO.setName(deptE.getName());
 		deptDO.setSort(deptE.getSort());
@@ -59,16 +57,6 @@ public class DeptConvertor {
 		return list.stream().map(DeptConvertor::toClientObject).toList();
 	}
 
-	public static DeptE toEntity(DeptCO deptCO, boolean isInsert) {
-		DeptE deptE = DeptDomainFactory.getDept();
-		// deptE.setId(deptCO.getId());
-		deptE.setPid(deptCO.getPid());
-		deptE.setName(deptCO.getName());
-		deptE.setSort(deptCO.getSort());
-		deptE.setOperateType(isInsert ? OperateType.SAVE : OperateType.MODIFY);
-		return deptE;
-	}
-
 	public static DeptTreeCO toClientObject0(DeptDO deptDO) {
 		DeptTreeCO co = new DeptTreeCO();
 		co.setId(deptDO.getId());
@@ -82,6 +70,16 @@ public class DeptConvertor {
 
 	public static List<DeptTreeCO> toClientObjectList0(List<DeptDO> list) {
 		return list.stream().map(DeptConvertor::toClientObject0).toList();
+	}
+
+	public static DeptE toEntity(DeptCO deptCO) {
+		return DeptDomainFactory.createDeptE()
+			.toBuilder()
+			.id(deptCO.getId())
+			.sort(deptCO.getSort())
+			.pid(deptCO.getPid())
+			.name(deptCO.getName())
+			.build();
 	}
 
 }

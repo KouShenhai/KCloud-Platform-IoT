@@ -35,7 +35,7 @@ public class ModifyMenuParamValidator implements MenuParamValidator {
 
 	@Override
 	public void validateMenu(MenuA menuA) {
-		ParamValidator.validate(
+		ParamValidator.validate(menuA.getValidateName(),
 				// 校验ID
 				org.laokou.admin.menu.service.validator.MenuParamValidator.validateId(menuA),
 				// 校验父级ID

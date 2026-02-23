@@ -18,13 +18,14 @@
 package org.laokou.admin.dept.command;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.dept.ability.DeptDomainService;
+import org.laokou.admin.dept.convertor.DeptConvertor;
 import org.laokou.admin.dept.dto.DeptModifyCmd;
-import org.laokou.admin.dept.model.DeptE;
+import org.laokou.admin.dept.factory.DeptDomainFactory;
+import org.laokou.admin.dept.model.DeptA;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.stereotype.Component;
-import org.laokou.admin.dept.convertor.DeptConvertor;
-import org.laokou.admin.dept.ability.DeptDomainService;
 
 /**
  * 修改部门命令执行器.
@@ -41,10 +42,10 @@ public class DeptModifyCmdExe {
 
 	@CommandLog
 	public void executeVoid(DeptModifyCmd cmd) {
-		DeptE deptE = DeptConvertor.toEntity(cmd.getCo(), false);
+		DeptA deptA = DeptDomainFactory.createDeptA().create(DeptConvertor.toEntity(cmd.getCo()));
 		// 校验参数
-		deptE.checkDeptParam();
-		transactionalUtils.executeInTransaction(() -> deptDomainService.updateDept(deptE));
+		deptA.checkDeptParam();
+		transactionalUtils.executeInTransaction(() -> deptDomainService.updateDept(deptA));
 	}
 
 }

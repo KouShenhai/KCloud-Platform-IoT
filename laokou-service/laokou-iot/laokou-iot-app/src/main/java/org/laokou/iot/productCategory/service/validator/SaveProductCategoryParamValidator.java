@@ -35,7 +35,7 @@ public class SaveProductCategoryParamValidator implements ProductCategoryParamVa
 
 	@Override
 	public void validateProductCategory(ProductCategoryE productCategoryE) {
-		ParamValidator.validate(
+		ParamValidator.validate("System",
 				org.laokou.iot.productCategory.service.validator.ProductCategoryParamValidator
 					.validateName(productCategoryE, true, productCategoryMapper),
 				org.laokou.iot.productCategory.service.validator.ProductCategoryParamValidator

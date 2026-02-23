@@ -18,11 +18,15 @@
 package org.laokou.admin.dept.model;
 
 import lombok.Getter;
-import lombok.Setter;
+import org.laokou.admin.dept.model.entity.DeptE;
 import org.laokou.admin.dept.model.enums.OperateType;
+import org.laokou.admin.dept.model.validator.DeptParamValidator;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.IdGenerator;
 import org.laokou.common.i18n.common.ValidateName;
+import org.laokou.common.i18n.dto.AggregateRoot;
+import org.laokou.common.i18n.util.InstantUtils;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
@@ -32,50 +36,36 @@ import org.springframework.beans.factory.annotation.Qualifier;
  */
 @Entity
 @Getter
-public class DeptE implements ValidateName {
+public class DeptA extends AggregateRoot implements ValidateName {
 
-	private Long id;
-
-	/**
-	 * 部门父节点ID.
-	 */
-	@Setter
-	@Getter
-	private Long pid;
+	private DeptE deptE;
 
 	/**
-	 * 部门名称.
+	 * 操作类型【保存/修改】.
 	 */
-	@Setter
-	@Getter
-	private String name;
-
-	/**
-	 * 部门排序.
-	 */
-	@Setter
-	@Getter
-	private Integer sort;
-
-	@Setter
-	@Getter
 	private OperateType operateType;
+
+	private final IdGenerator idGenerator;
 
 	private final DeptParamValidator saveDeptParamValidator;
 
 	private final DeptParamValidator modifyDeptParamValidator;
 
-	private final IdGenerator idGenerator;
-
-	public DeptE(@Qualifier("modifyDeptParamValidator") DeptParamValidator saveDeptParamValidator,
-			@Qualifier("saveDeptParamValidator") DeptParamValidator modifyDeptParamValidator, IdGenerator idGenerator) {
+	public DeptA(IdGenerator idGenerator,
+			@Qualifier("modifyDeptParamValidator") DeptParamValidator saveDeptParamValidator,
+			@Qualifier("saveDeptParamValidator") DeptParamValidator modifyDeptParamValidator) {
+		this.idGenerator = idGenerator;
 		this.saveDeptParamValidator = saveDeptParamValidator;
 		this.modifyDeptParamValidator = modifyDeptParamValidator;
-		this.idGenerator = idGenerator;
 	}
 
-	public Long getPrimaryKey() {
-		return idGenerator.getId();
+	public DeptA create(DeptE deptE) {
+		this.deptE = deptE;
+		Long primaryKey = this.deptE.getId();
+		super.createTime = InstantUtils.now();
+		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : idGenerator.getId();
+		this.operateType = ObjectUtils.isNotNull(primaryKey) ? OperateType.MODIFY : OperateType.SAVE;
+		return this;
 	}
 
 	public void checkDeptParam() {
@@ -84,6 +74,10 @@ public class DeptE implements ValidateName {
 			case MODIFY -> modifyDeptParamValidator.validateDept(this);
 			default -> throw new UnsupportedOperationException("Unsupported operation type");
 		}
+	}
+
+	public boolean isModify() {
+		return ObjectUtils.equals(OperateType.MODIFY, this.operateType);
 	}
 
 	@Override

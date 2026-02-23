@@ -17,7 +17,7 @@
 
 package org.laokou.admin.dept.gateway;
 
-import org.laokou.admin.dept.model.DeptE;
+import org.laokou.admin.dept.model.DeptA;
 
 /**
  * 部门网关【防腐】.
@@ -29,12 +29,12 @@ public interface DeptGateway {
 	/**
 	 * 新增部门.
 	 */
-	void createDept(DeptE deptE);
+	void createDept(DeptA deptA);
 
 	/**
 	 * 修改部门.
 	 */
-	void updateDept(DeptE deptE);
+	void updateDept(DeptA deptA);
 
 	/**
 	 * 删除部门.

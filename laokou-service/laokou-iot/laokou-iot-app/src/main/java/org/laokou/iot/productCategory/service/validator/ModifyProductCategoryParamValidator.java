@@ -35,7 +35,7 @@ public class ModifyProductCategoryParamValidator implements ProductCategoryParam
 
 	@Override
 	public void validateProductCategory(ProductCategoryE productCategoryE) {
-		ParamValidator.validate(
+		ParamValidator.validate("System",
 				org.laokou.iot.productCategory.service.validator.ProductCategoryParamValidator
 					.validateId(productCategoryE),
 				org.laokou.iot.productCategory.service.validator.ProductCategoryParamValidator

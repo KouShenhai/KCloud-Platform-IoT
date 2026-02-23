@@ -32,10 +32,6 @@ public final class ParamValidator {
 	private ParamValidator() {
 	}
 
-	public static void validate(Validate... validates) {
-		validate("System", validates);
-	}
-
 	public static void validate(String name, Validate... validates) {
 		String validateString = StringExtUtils.collectionToDelimitedString(validates(validates), StringConstants.DROP);
 		if (StringExtUtils.isNotEmpty(validateString)) {

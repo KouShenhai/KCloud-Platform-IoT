@@ -17,7 +17,8 @@
 
 package org.laokou.admin.dept.factory;
 
-import org.laokou.admin.dept.model.DeptE;
+import org.laokou.admin.dept.model.DeptA;
+import org.laokou.admin.dept.model.entity.DeptE;
 import org.laokou.common.i18n.util.SpringContextUtils;
 
 /**
@@ -28,8 +29,12 @@ public final class DeptDomainFactory {
 	private DeptDomainFactory() {
 	}
 
-	public static DeptE getDept() {
+	public static DeptE createDeptE() {
 		return SpringContextUtils.getBeanProvider(DeptE.class);
+	}
+
+	public static DeptA createDeptA() {
+		return SpringContextUtils.getBeanProvider(DeptA.class);
 	}
 
 }
