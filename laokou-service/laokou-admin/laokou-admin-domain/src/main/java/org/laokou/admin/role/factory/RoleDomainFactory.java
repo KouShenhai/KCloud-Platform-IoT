@@ -17,7 +17,8 @@
 
 package org.laokou.admin.role.factory;
 
-import org.laokou.admin.role.model.RoleE;
+import org.laokou.admin.role.model.RoleA;
+import org.laokou.admin.role.model.entity.RoleE;
 import org.laokou.common.i18n.util.SpringContextUtils;
 
 /**
@@ -28,7 +29,11 @@ public final class RoleDomainFactory {
 	private RoleDomainFactory() {
 	}
 
-	public static RoleE getRole() {
+	public static RoleA createRoleA() {
+		return SpringContextUtils.getBeanProvider(RoleA.class);
+	}
+
+	public static RoleE createRoleE() {
 		return SpringContextUtils.getBeanProvider(RoleE.class);
 	}
 

@@ -31,6 +31,7 @@ import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import java.time.Instant;
 import java.util.List;
 
 /**
@@ -112,6 +113,10 @@ public class MenuA extends AggregateRoot implements ValidateName {
 
 	public boolean statusNotExist() {
 		return !List.of(MenuStatus.DISABLE.getCode(), MenuStatus.ENABLE.getCode()).contains(this.menuE.getStatus());
+	}
+
+	public Instant getCreateTime() {
+		return isSave() ? super.createTime : null;
 	}
 
 }

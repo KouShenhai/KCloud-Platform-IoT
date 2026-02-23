@@ -18,6 +18,7 @@ interface RoleDrawerProps {
 	dataSource: TableColumns;
 	onComponent: () => void;
 	menuTreeList: any[]
+	deptTreeList: any[]
 	requestId: string
 	setRequestId: (requestId: string) => void
 }
@@ -34,7 +35,7 @@ type TableColumns = {
 
 
 
-export const RoleDrawer: React.FC<RoleDrawerProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent, menuTreeList, requestId, setRequestId }) => {
+export const RoleDrawer: React.FC<RoleDrawerProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent, menuTreeList, deptTreeList, requestId, setRequestId }) => {
 
 	const [loading, setLoading] = useState(false)
 
@@ -157,6 +158,30 @@ export const RoleDrawer: React.FC<RoleDrawerProps> = ({ modalVisit, setModalVisi
 				}}
 			/>
 			)}
+
+			{
+				readOnly && dataSource.dataScope === 'custom' && (
+					<ProFormTreeSelect
+						disabled={loading}
+						name="deptIds"
+						label="部门权限"
+						readonly={readOnly}
+						allowClear={true}
+						placeholder={'请选择部门权限'}
+						rules={[{ required: true, message: '请选择部门权限' }]}
+						fieldProps={{
+							fieldNames: {
+								label: 'name',
+								value: 'id',
+								children: 'children'
+							}
+						}}
+						request={async () => {
+							return deptTreeList
+						}}
+					/>
+				)
+			}
 
 			{ readOnly && (
 				<ProFormText

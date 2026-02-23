@@ -238,6 +238,7 @@ export default () => {
 					// @ts-ignore
 					actionRef?.current?.reload();
 				}}
+				deptTreeList={deptTreeList}
 				menuTreeList={menuTreeList}
 				requestId={requestId}
 				setRequestId={setRequestId}
