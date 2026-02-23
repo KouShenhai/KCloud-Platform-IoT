@@ -20,7 +20,7 @@ package org.laokou.admin.user.service.validator;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.laokou.admin.user.gatewayimpl.database.UserMapper;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDO;
-import org.laokou.admin.user.model.UserE;
+import org.laokou.admin.user.model.UserA;
 import org.laokou.common.core.util.CollectionExtUtils;
 import org.laokou.common.core.util.RegexUtils;
 import org.laokou.common.crypto.util.AESUtils;
@@ -40,24 +40,24 @@ final class UserParamValidator {
 
 	}
 
-	public static ParamValidator.Validate validateId(UserE userE) {
-		Long id = userE.getId();
+	public static ParamValidator.Validate validateId(UserA userA) {
+		Long id = userA.getId();
 		if (ObjectUtils.isNull(id)) {
 			return ParamValidator.invalidate("用户ID不能为空");
 		}
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validatePassword(UserE userE, PasswordEncoder passwordEncoder,
+	public static ParamValidator.Validate validatePassword(UserA userA, PasswordEncoder passwordEncoder,
 			UserMapper userMapper) {
-		String password = userE.getPassword();
+		String password = userA.getUserE().getPassword();
 		if (StringExtUtils.isEmpty(password)) {
 			return ParamValidator.invalidate("用户密码不能为空");
 		}
 		if (password.length() < 6 || password.length() > 30) {
 			return ParamValidator.invalidate("用户密码长度为6-30个字符");
 		}
-		UserDO userDO = userMapper.selectById(userE.getId());
+		UserDO userDO = userMapper.selectById(userA.getId());
 		if (ObjectUtils.isNull(userDO)) {
 			return ParamValidator.invalidate("用户不存在");
 		}
@@ -67,10 +67,10 @@ final class UserParamValidator {
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateUsername(UserE userE, UserMapper userMapper, boolean isSave)
+	public static ParamValidator.Validate validateUsername(UserA userA, UserMapper userMapper, boolean isSave)
 			throws Exception {
-		String username = userE.getUsername();
-		Long id = userE.getId();
+		String username = userA.getUserE().getUsername();
+		Long id = userA.getId();
 		String encryptUsername = AESUtils.encrypt(username);
 		if (StringExtUtils.isEmpty(username)) {
 			return ParamValidator.invalidate("用户名不能为空");
@@ -93,9 +93,9 @@ final class UserParamValidator {
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateMail(UserE userE, UserMapper userMapper, boolean isSave)
+	public static ParamValidator.Validate validateMail(UserA userA, UserMapper userMapper, boolean isSave)
 			throws Exception {
-		String mail = userE.getMail();
+		String mail = userA.getUserE().getMail();
 		if (StringExtUtils.isNotEmpty(mail)) {
 			if (!RegexUtils.mailRegex(mail)) {
 				return ParamValidator.invalidate("用户邮箱错误");
@@ -103,7 +103,7 @@ final class UserParamValidator {
 			if (mail.length() > 30) {
 				return ParamValidator.invalidate("用户邮箱不能超过30个字符");
 			}
-			Long id = userE.getId();
+			Long id = userA.getId();
 			String encryptMail = AESUtils.encrypt(mail);
 			if (isSave && userMapper
 				.selectCount(Wrappers.lambdaQuery(UserDO.class).eq(UserDO::getMail, encryptMail)) > 0) {
@@ -117,20 +117,19 @@ final class UserParamValidator {
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateMobile(UserE userE, UserMapper userMapper, boolean isSave)
-			throws Exception {
-		String mobile = userE.getMobile();
+	public static ParamValidator.Validate validateMobile(UserA userA, UserMapper userMapper) throws Exception {
+		String mobile = userA.getUserE().getMobile();
 		if (StringExtUtils.isNotEmpty(mobile)) {
 			if (!RegexUtils.mobileRegex(mobile)) {
 				return ParamValidator.invalidate("用户手机号错误");
 			}
-			Long id = userE.getId();
+			Long id = userA.getId();
 			String encryptMobile = AESUtils.encrypt(mobile);
-			if (isSave && userMapper
+			if (userA.isSave() && userMapper
 				.selectCount(Wrappers.lambdaQuery(UserDO.class).eq(UserDO::getMobile, encryptMobile)) > 0) {
 				return ParamValidator.invalidate("用户手机号已存在");
 			}
-			if (!isSave && userMapper.selectCount(Wrappers.lambdaQuery(UserDO.class)
+			if (userA.isModify() && userMapper.selectCount(Wrappers.lambdaQuery(UserDO.class)
 				.eq(UserDO::getMobile, encryptMobile)
 				.ne(UserDO::getId, id)) > 0) {
 				return ParamValidator.invalidate("用户手机号已存在");
@@ -139,16 +138,16 @@ final class UserParamValidator {
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateRoleIds(UserE userE) {
-		List<String> roleIds = userE.getRoleIds();
+	public static ParamValidator.Validate validateRoleIds(UserA userA) {
+		List<String> roleIds = userA.getUserE().getRoleIds();
 		if (CollectionExtUtils.isEmpty(roleIds)) {
 			return ParamValidator.invalidate("用户角色IDS不能为空");
 		}
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateDeptIds(UserE userE) {
-		List<String> deptIds = userE.getDeptIds();
+	public static ParamValidator.Validate validateDeptIds(UserA userA) {
+		List<String> deptIds = userA.getUserE().getDeptIds();
 		if (CollectionExtUtils.isEmpty(deptIds)) {
 			return ParamValidator.invalidate("用户部门IDS不能为空");
 		}

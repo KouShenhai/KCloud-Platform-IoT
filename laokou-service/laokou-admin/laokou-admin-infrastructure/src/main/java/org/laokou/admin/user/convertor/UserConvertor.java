@@ -23,7 +23,8 @@ import org.laokou.admin.user.factory.UserDomainFactory;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDeptDO;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserRoleDO;
-import org.laokou.admin.user.model.UserE;
+import org.laokou.admin.user.model.UserA;
+import org.laokou.admin.user.model.entity.UserE;
 import org.laokou.common.context.util.UserExtDetails;
 import org.laokou.common.context.util.UserUtils;
 import org.laokou.common.crypto.util.AESUtils;
@@ -31,6 +32,7 @@ import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.common.sensitive.util.SensitiveUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -43,13 +45,13 @@ public final class UserConvertor {
 	private UserConvertor() {
 	}
 
-	public static List<UserRoleDO> toDataObjects(UserE userE) {
-		List<String> roleIds = userE.getRoleIds();
-		Long userId = userE.getId();
-		int size = roleIds.size();
-		List<Long> primaryKeys = userE.getPrimaryKeys(size);
-		List<UserRoleDO> list = new ArrayList<>(size);
-		for (int i = 0; i < size; i++) {
+	public static List<UserRoleDO> toDataObjects(UserA userA) {
+		List<String> roleIds = userA.getUserE().getRoleIds();
+		Long userId = userA.getId();
+		int num = roleIds.size();
+		List<Long> primaryKeys = userA.getIdsBatch(num);
+		List<UserRoleDO> list = new ArrayList<>(num);
+		for (int i = 0; i < num; i++) {
 			UserRoleDO userRoleDO = new UserRoleDO();
 			userRoleDO.setId(primaryKeys.get(i));
 			userRoleDO.setRoleId(Long.valueOf(roleIds.get(i)));
@@ -59,13 +61,13 @@ public final class UserConvertor {
 		return list;
 	}
 
-	public static List<UserDeptDO> toDataObjs(UserE userE) {
-		List<String> deptIds = userE.getDeptIds();
-		Long userId = userE.getId();
-		int size = deptIds.size();
-		List<Long> primaryKeys = userE.getPrimaryKeys(size);
-		List<UserDeptDO> list = new ArrayList<>(size);
-		for (int i = 0; i < size; i++) {
+	public static List<UserDeptDO> toDataObjs(UserA userA) {
+		List<String> deptIds = userA.getUserE().getDeptIds();
+		Long userId = userA.getId();
+		int num = deptIds.size();
+		List<Long> primaryKeys = userA.getIdsBatch(num);
+		List<UserDeptDO> list = new ArrayList<>(num);
+		for (int i = 0; i < num; i++) {
 			UserDeptDO userDeptDO = new UserDeptDO();
 			userDeptDO.setId(primaryKeys.get(i));
 			userDeptDO.setDeptId(Long.valueOf(deptIds.get(i)));
@@ -91,33 +93,21 @@ public final class UserConvertor {
 		}).toList();
 	}
 
-	public static UserDO toDataObject(UserE userE) {
+	public static UserDO toDataObject(UserA userA) {
 		UserDO userDO = new UserDO();
-		switch (userE.getOperateType()) {
-			case SAVE -> {
-				userDO.setId(userE.getPrimaryKey());
-				userDO.setPassword(userE.getDefaultEncodedPassword());
-				userDO.setUsername(userE.getUsername());
-				userDO.setUsernamePhrase(userE.getUsernamePhrase());
-			}
-			case MODIFY, MODIFY_AUTHORITY -> userDO.setId(userE.getId());
-			case RESET_PWD -> {
-				userDO.setId(userE.getId());
-				String password = userE.getPassword();
-				if (StringExtUtils.isNotEmpty(password)) {
-					userDO.setPassword(userE.getEncodedPassword());
-				}
-			}
-		}
-		String mobile = userE.getMobile();
-		String mail = userE.getMail();
+		UserE userE = userA.getUserE();
+		userDO.setId(userA.getId());
+		userDO.setUsername(userE.getUsername());
+		userDO.setUsernamePhrase(userE.getUsernamePhrase());
+		userDO.setPassword(userE.getPassword());
 		userDO.setSuperAdmin(userE.getSuperAdmin());
 		userDO.setStatus(userE.getStatus());
 		userDO.setAvatar(userE.getAvatar());
-		userDO.setMail(StringExtUtils.isEmpty(mail) ? null : mail);
+		userDO.setMail(userE.getMail());
 		userDO.setMailPhrase(userE.getMailPhrase());
-		userDO.setMobile(StringExtUtils.isEmpty(mobile) ? null : mobile);
+		userDO.setMobile(userE.getMobile());
 		userDO.setMobilePhrase(userE.getMobilePhrase());
+		userDO.setCreateTime(userA.getCreateTime());
 		return userDO;
 	}
 
@@ -171,36 +161,24 @@ public final class UserConvertor {
 		}).toList();
 	}
 
-	public static UserE toEntity(UserCO userCO, boolean isInsert) {
-		UserE user = UserDomainFactory.getUser();
-		// user.setId(userCO.getId());
-		// user.setUsername(userCO.getUsername());
-		// user.setSuperAdmin(userCO.getSuperAdmin());
-		// user.setMail(userCO.getMail());
-		// user.setMobile(userCO.getMobile());
-		// user.setStatus(userCO.getStatus());
-		// user.setAvatar(userCO.getAvatar());
-		// user.setUserOperateTypeEnum(isInsert ? UserOperateTypeEnum.SAVE :
-		// UserOperateTypeEnum.MODIFY);
-		return user;
-	}
-
 	public static UserE toEntity(UserCO userCO) {
-		UserE userE = UserDomainFactory.getUser();
-		// userE.setId(userCO.getId());
-		// userE.setUserIds(Collections.singletonList(userCO.getId()));
-		// userE.setRoleIds(userCO.getRoleIds());
-		// userE.setDeptIds(userCO.getDeptIds());
-		// userE.setUserOperateTypeEnum(UserOperateTypeEnum.MODIFY_AUTHORITY);
-		return userE;
+		return UserDomainFactory.createUserE()
+			.toBuilder()
+			.id(userCO.getId())
+			.username(userCO.getUsername())
+			.superAdmin(userCO.getSuperAdmin())
+			.mail(userCO.getMail())
+			.mobile(userCO.getMobile())
+			.status(userCO.getStatus())
+			.avatar(userCO.getAvatar())
+			.userIds(Collections.singletonList(userCO.getId()))
+			.roleIds(userCO.getRoleIds())
+			.deptIds(userCO.getDeptIds())
+			.build();
 	}
 
 	public static UserE toEntity(Long id, String password) {
-		UserE userE = UserDomainFactory.getUser();
-		// userE.setId(id);
-		// userE.setPassword(password);
-		// userE.setUserOperateTypeEnum(UserOperateTypeEnum.RESET_PWD);
-		return userE;
+		return UserDomainFactory.createUserE().toBuilder().id(id).password(password).build();
 	}
 
 }

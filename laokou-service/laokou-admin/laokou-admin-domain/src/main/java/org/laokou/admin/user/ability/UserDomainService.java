@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.user.gateway.UserDeptGateway;
 import org.laokou.admin.user.gateway.UserGateway;
 import org.laokou.admin.user.gateway.UserRoleGateway;
-import org.laokou.admin.user.model.UserE;
+import org.laokou.admin.user.model.UserA;
 import org.laokou.common.core.util.ThreadUtils;
 import org.springframework.stereotype.Component;
 
@@ -45,32 +45,24 @@ public class UserDomainService {
 
 	private final UserDeptGateway userDeptGateway;
 
-	public void createUser(UserE userE) throws Exception {
-		// 用户名加密
-		userE.encryptUsername();
-		// 邮箱加密
-		userE.encryptMail();
-		// 手机号加密
-		userE.encryptMobile();
-		userGateway.createUser(userE);
+	public void createUser(UserA userA) throws Exception {
+		// 加密
+		userGateway.createUser(userA.encryptByCreate());
 	}
 
-	public void updateUser(UserE userE) throws Exception {
-		// 邮箱加密
-		userE.encryptMail();
-		// 手机号加密
-		userE.encryptMobile();
-		userGateway.updateUser(userE);
+	public void updateUser(UserA userA) throws Exception {
+		// 加密
+		userGateway.updateUser(userA.encryptByUpdate());
 	}
 
-	public void updateAuthorityUser(UserE userE) throws Exception {
+	public void updateAuthorityUser(UserA userA) throws Exception {
 		List<Callable<Boolean>> futures = new ArrayList<>(2);
 		futures.add(() -> {
-			userRoleGateway.updateUserRole(userE);
+			userRoleGateway.updateUserRole(userA);
 			return true;
 		});
 		futures.add(() -> {
-			userDeptGateway.updateUserDept(userE);
+			userDeptGateway.updateUserDept(userA);
 			return true;
 		});
 		try (ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor()) {

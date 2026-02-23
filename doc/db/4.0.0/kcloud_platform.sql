@@ -737,18 +737,6 @@ COMMENT ON TABLE "public"."sys_user" IS '用户';
 
 ALTER TABLE "public"."sys_user" ADD CONSTRAINT "sys_user_pkey" PRIMARY KEY ("id");
 
-CREATE UNIQUE INDEX "sys_user_mail_tenantId_idx" ON "public"."sys_user" USING btree (
-	"mail",
-	"tenant_id"
-);
-COMMENT ON INDEX "public"."sys_user_mail_tenantId_idx" IS '邮箱_租户ID_唯一索引';
-
-CREATE UNIQUE INDEX "sys_user_mobile_tenantId_idx" ON "public"."sys_user" USING btree (
-	"mobile",
-	"tenant_id"
-);
-COMMENT ON INDEX "public"."sys_user_mobile_tenantId_idx" IS '手机号_租户ID_唯一索引';
-
 CREATE UNIQUE INDEX "sys_user_username_tenantId_idx" ON "public"."sys_user" USING btree (
 	"username",
 	"tenant_id"

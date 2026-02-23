@@ -23,7 +23,7 @@ import org.laokou.admin.user.convertor.UserConvertor;
 import org.laokou.admin.user.gateway.UserDeptGateway;
 import org.laokou.admin.user.gatewayimpl.database.UserDeptMapper;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDeptDO;
-import org.laokou.admin.user.model.UserE;
+import org.laokou.admin.user.model.UserA;
 import org.laokou.common.core.util.CollectionExtUtils;
 import org.laokou.common.mybatisplus.util.MybatisUtils;
 import org.springframework.stereotype.Component;
@@ -43,9 +43,9 @@ public class UserDeptGatewayImpl implements UserDeptGateway {
 	private final UserDeptMapper userDeptMapper;
 
 	@Override
-	public void updateUserDept(UserE userE) {
-		deleteUserDept(getUserDeptIds(userE.getUserIds()));
-		insertUserDept(userE);
+	public void updateUserDept(UserA userA) {
+		deleteUserDept(getUserDeptIds(userA.getUserE().getUserIds()));
+		insertUserDept(userA);
 	}
 
 	@Override
@@ -53,9 +53,9 @@ public class UserDeptGatewayImpl implements UserDeptGateway {
 		deleteUserDept(getUserDeptIds(Arrays.asList(userIds)));
 	}
 
-	private void insertUserDept(UserE userE) {
+	private void insertUserDept(UserA userA) {
 		// 新增用户部门关联表
-		List<UserDeptDO> list = UserConvertor.toDataObjs(userE);
+		List<UserDeptDO> list = UserConvertor.toDataObjs(userA);
 		if (CollectionExtUtils.isNotEmpty(list)) {
 			mybatisUtils.batch(list, UserDeptMapper.class, UserDeptMapper::insert);
 		}
