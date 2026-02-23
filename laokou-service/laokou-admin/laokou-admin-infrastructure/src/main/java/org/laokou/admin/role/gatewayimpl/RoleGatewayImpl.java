@@ -23,7 +23,7 @@ import org.laokou.admin.role.convertor.RoleConvertor;
 import org.laokou.admin.role.gateway.RoleGateway;
 import org.laokou.admin.role.gatewayimpl.database.RoleMapper;
 import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDO;
-import org.laokou.admin.role.model.RoleE;
+import org.laokou.admin.role.model.RoleA;
 import org.springframework.stereotype.Component;
 import java.util.Arrays;
 
@@ -40,15 +40,15 @@ public class RoleGatewayImpl implements RoleGateway {
 	private final RoleMapper roleMapper;
 
 	@Override
-	public void createRole(RoleE roleE) {
-		RoleDO roleDO = RoleConvertor.toDataObject(roleE);
+	public void createRole(RoleA roleA) {
+		RoleDO roleDO = RoleConvertor.toDataObject(roleA);
 		roleMapper.insert(roleDO);
 	}
 
 	@Override
-	public void updateRole(RoleE roleE) {
-		RoleDO roleDO = RoleConvertor.toDataObject(roleE);
-		roleDO.setVersion(getVersion(roleE.getId()));
+	public void updateRole(RoleA roleA) {
+		RoleDO roleDO = RoleConvertor.toDataObject(roleA);
+		roleDO.setVersion(getVersion(roleA.getId()));
 		roleMapper.updateById(roleDO);
 	}
 

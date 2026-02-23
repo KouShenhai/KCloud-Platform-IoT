@@ -48,6 +48,7 @@ public final class MenuConvertor {
 		menuDO.setIcon(menuE.getIcon());
 		menuDO.setSort(menuE.getSort());
 		menuDO.setStatus(menuE.getStatus());
+		menuDO.setCreateTime(menuA.getCreateTime());
 		return menuDO;
 	}
 

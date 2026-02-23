@@ -18,12 +18,18 @@
 package org.laokou.admin.role.model;
 
 import lombok.Getter;
-import lombok.Setter;
+import org.laokou.admin.role.model.entity.RoleE;
 import org.laokou.admin.role.model.enums.OperateType;
+import org.laokou.admin.role.model.validator.RoleParamValidator;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.IdGenerator;
+import org.laokou.common.i18n.common.ValidateName;
+import org.laokou.common.i18n.dto.AggregateRoot;
+import org.laokou.common.i18n.util.InstantUtils;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import java.time.Instant;
 import java.util.List;
 
 /**
@@ -33,69 +39,10 @@ import java.util.List;
  */
 @Entity
 @Getter
-@Setter
-public class RoleE {
+public class RoleA extends AggregateRoot implements ValidateName {
 
-	private Long id;
+	private RoleE roleE;
 
-	/**
-	 * 角色名称.
-	 */
-	@Setter
-	@Getter
-	private String name;
-
-	/**
-	 * 角色排序.
-	 */
-	@Setter
-	@Getter
-	private Integer sort;
-
-	/**
-	 * 数据范围 all全部 custom自定义 self_dept仅本部门 below_dept部门及以下 self仅本人.
-	 */
-	@Setter
-	@Getter
-	private String dataScope;
-
-	/**
-	 * 菜单IDS.
-	 */
-	@Setter
-	@Getter
-	private List<String> menuIds;
-
-	/**
-	 * 部门IDS.
-	 */
-	@Setter
-	@Getter
-	private List<String> deptIds;
-
-	/**
-	 * 角色菜单IDS.
-	 */
-	@Setter
-	@Getter
-	private List<Long> roleMenuIds;
-
-	/**
-	 * 角色部门IDS.
-	 */
-	@Setter
-	@Getter
-	private List<Long> roleDeptIds;
-
-	/**
-	 * 角色IDS.
-	 */
-	@Setter
-	@Getter
-	private List<Long> roleIds;
-
-	@Setter
-	@Getter
 	private OperateType operateType;
 
 	private final IdGenerator idGenerator;
@@ -106,24 +53,23 @@ public class RoleE {
 
 	private final RoleParamValidator modifyRoleAuthorityParamValidator;
 
-	public RoleE(IdGenerator idGenerator,
+	public RoleA(IdGenerator idGenerator,
 			@Qualifier("saveRoleParamValidator") RoleParamValidator saveRoleParamValidator,
 			@Qualifier("modifyRoleParamValidator") RoleParamValidator modifyRoleParamValidator,
 			@Qualifier("modifyRoleAuthorityParamValidator") RoleParamValidator modifyRoleAuthorityParamValidator) {
-		super();
 		this.idGenerator = idGenerator;
 		this.saveRoleParamValidator = saveRoleParamValidator;
 		this.modifyRoleParamValidator = modifyRoleParamValidator;
 		this.modifyRoleAuthorityParamValidator = modifyRoleAuthorityParamValidator;
 	}
 
-	public Long getPrimaryKey() {
-		return idGenerator.getId();
-	}
-
-	public List<Long> getPrimaryKeys(int num) {
-		return null;
-		// return idGeneratorBatch.getIds(num);
+	public RoleA create(RoleE roleE, OperateType operateType) {
+		this.roleE = roleE;
+		Long primaryKey = this.roleE.getId();
+		super.createTime = InstantUtils.now();
+		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : idGenerator.getId();
+		this.operateType = operateType;
+		return this;
 	}
 
 	public void checkRoleParam() {
@@ -133,6 +79,27 @@ public class RoleE {
 			case MODIFY_AUTHORITY -> modifyRoleAuthorityParamValidator.validateRole(this);
 			default -> throw new UnsupportedOperationException("Unsupported operation");
 		}
+	}
+
+	public List<Long> getIdsBatch(int num) {
+		return idGenerator.getIds(num);
+	}
+
+	@Override
+	public String getValidateName() {
+		return "Role";
+	}
+
+	public boolean isSave() {
+		return ObjectUtils.equals(OperateType.SAVE, this.operateType);
+	}
+
+	public boolean isModify() {
+		return ObjectUtils.equals(OperateType.MODIFY, this.operateType);
+	}
+
+	public Instant getCreateTime() {
+		return isSave() ? super.createTime : null;
 	}
 
 }

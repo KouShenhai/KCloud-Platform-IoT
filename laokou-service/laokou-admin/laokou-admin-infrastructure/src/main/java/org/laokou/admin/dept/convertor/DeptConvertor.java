@@ -40,6 +40,7 @@ public class DeptConvertor {
 		deptDO.setPid(deptE.getPid());
 		deptDO.setName(deptE.getName());
 		deptDO.setSort(deptE.getSort());
+		deptDO.setCreateTime(deptA.getCreateTime());
 		return deptDO;
 	}
 

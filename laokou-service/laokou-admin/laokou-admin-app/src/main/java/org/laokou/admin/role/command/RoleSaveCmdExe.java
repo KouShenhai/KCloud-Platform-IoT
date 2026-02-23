@@ -21,7 +21,9 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.role.ability.RoleDomainService;
 import org.laokou.admin.role.convertor.RoleConvertor;
 import org.laokou.admin.role.dto.RoleSaveCmd;
-import org.laokou.admin.role.model.RoleE;
+import org.laokou.admin.role.factory.RoleDomainFactory;
+import org.laokou.admin.role.model.RoleA;
+import org.laokou.admin.role.model.enums.OperateType;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.stereotype.Component;
@@ -41,9 +43,9 @@ public class RoleSaveCmdExe {
 
 	@CommandLog
 	public void executeVoid(RoleSaveCmd cmd) {
-		RoleE roleE = RoleConvertor.toEntity(cmd.getCo(), true);
-		roleE.checkRoleParam();
-		transactionalUtils.executeInTransaction(() -> roleDomainService.createRole(roleE));
+		RoleA roleA = RoleDomainFactory.createRoleA().create(RoleConvertor.toEntity(cmd.getCo()), OperateType.SAVE);
+		roleA.checkRoleParam();
+		transactionalUtils.executeInTransaction(() -> roleDomainService.createRole(roleA));
 	}
 
 }

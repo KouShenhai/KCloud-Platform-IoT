@@ -17,14 +17,14 @@
 
 package org.laokou.admin.role.gateway;
 
-import org.laokou.admin.role.model.RoleE;
+import org.laokou.admin.role.model.RoleA;
 
 /**
  * @author laokou
  */
 public interface RoleMenuGateway {
 
-	void updateRoleMenu(RoleE roleE);
+	void updateRoleMenu(RoleA roleA);
 
 	void deleteRoleMenu(Long[] roleIds);
 

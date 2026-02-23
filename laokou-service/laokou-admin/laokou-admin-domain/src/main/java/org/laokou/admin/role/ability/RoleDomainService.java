@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.role.gateway.RoleDeptGateway;
 import org.laokou.admin.role.gateway.RoleGateway;
 import org.laokou.admin.role.gateway.RoleMenuGateway;
-import org.laokou.admin.role.model.RoleE;
+import org.laokou.admin.role.model.RoleA;
 import org.laokou.common.core.util.ThreadUtils;
 import org.springframework.stereotype.Component;
 
@@ -45,27 +45,27 @@ public class RoleDomainService {
 
 	private final RoleDeptGateway roleDeptGateway;
 
-	public void createRole(RoleE roleE) {
-		roleGateway.createRole(roleE);
+	public void createRole(RoleA roleA) {
+		roleGateway.createRole(roleA);
 	}
 
-	public void updateRole(RoleE roleE) {
-		roleGateway.updateRole(roleE);
+	public void updateRole(RoleA roleA) {
+		roleGateway.updateRole(roleA);
 	}
 
-	public void updateAuthorityRole(RoleE roleE) throws InterruptedException {
-		roleE.checkRoleParam();
+	public void updateAuthorityRole(RoleA roleA) throws InterruptedException {
+		roleA.checkRoleParam();
 		List<Callable<Boolean>> futures = new ArrayList<>(3);
 		futures.add(() -> {
-			roleGateway.updateRole(roleE);
+			roleGateway.updateRole(roleA);
 			return true;
 		});
 		futures.add(() -> {
-			roleMenuGateway.updateRoleMenu(roleE);
+			roleMenuGateway.updateRoleMenu(roleA);
 			return true;
 		});
 		futures.add(() -> {
-			roleDeptGateway.updateRoleDept(roleE);
+			roleDeptGateway.updateRoleDept(roleA);
 			return true;
 		});
 		try (ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor()) {

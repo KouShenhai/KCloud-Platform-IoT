@@ -22,8 +22,8 @@ import org.laokou.admin.role.factory.RoleDomainFactory;
 import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDeptDO;
 import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleMenuDO;
-import org.laokou.admin.role.model.RoleE;
-import org.laokou.admin.role.model.enums.OperateType;
+import org.laokou.admin.role.model.RoleA;
+import org.laokou.admin.role.model.entity.RoleE;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,25 +36,24 @@ import java.util.List;
  */
 public class RoleConvertor {
 
-	public static RoleDO toDataObject(RoleE roleE) {
+	public static RoleDO toDataObject(RoleA roleA) {
+		RoleE roleE = roleA.getRoleE();
 		RoleDO roleDO = new RoleDO();
-		switch (roleE.getOperateType()) {
-			case SAVE -> roleDO.setId(roleE.getPrimaryKey());
-			case MODIFY, MODIFY_AUTHORITY -> roleDO.setId(roleE.getId());
-		}
+		roleDO.setId(roleA.getId());
 		roleDO.setName(roleE.getName());
 		roleDO.setSort(roleE.getSort());
 		roleDO.setDataScope(roleE.getDataScope());
+		roleDO.setCreateTime(roleA.getCreateTime());
 		return roleDO;
 	}
 
-	public static List<RoleMenuDO> toDataObjects(RoleE roleE) {
-		Long roleId = roleE.getId();
-		List<String> menuIds = roleE.getMenuIds();
-		int size = menuIds.size();
-		List<Long> primaryKeys = roleE.getPrimaryKeys(size);
-		List<RoleMenuDO> list = new ArrayList<>(size);
-		for (int i = 0; i < size; i++) {
+	public static List<RoleMenuDO> toDataObjects(RoleA roleA) {
+		Long roleId = roleA.getId();
+		List<String> menuIds = roleA.getRoleE().getMenuIds();
+		int num = menuIds.size();
+		List<Long> primaryKeys = roleA.getIdsBatch(num);
+		List<RoleMenuDO> list = new ArrayList<>(num);
+		for (int i = 0; i < num; i++) {
 			RoleMenuDO roleMenuDO = new RoleMenuDO();
 			roleMenuDO.setId(primaryKeys.get(i));
 			roleMenuDO.setRoleId(roleId);
@@ -72,13 +71,13 @@ public class RoleConvertor {
 		}).toList();
 	}
 
-	public static List<RoleDeptDO> toDataObjs(RoleE roleE) {
-		Long roleId = roleE.getId();
-		List<String> deptIds = roleE.getDeptIds();
-		int size = deptIds.size();
-		List<Long> primaryKeys = roleE.getPrimaryKeys(size);
-		List<RoleDeptDO> list = new ArrayList<>(size);
-		for (int i = 0; i < size; i++) {
+	public static List<RoleDeptDO> toDataObjs(RoleA roleA) {
+		Long roleId = roleA.getId();
+		List<String> deptIds = roleA.getRoleE().getDeptIds();
+		int num = deptIds.size();
+		List<Long> primaryKeys = roleA.getIdsBatch(num);
+		List<RoleDeptDO> list = new ArrayList<>(num);
+		for (int i = 0; i < num; i++) {
 			RoleDeptDO roleDeptDO = new RoleDeptDO();
 			roleDeptDO.setId(primaryKeys.get(i));
 			roleDeptDO.setRoleId(roleId);
@@ -110,24 +109,17 @@ public class RoleConvertor {
 		return roleCO;
 	}
 
-	public static RoleE toEntity(RoleCO roleCO, boolean isInsert) {
-		RoleE roleE = RoleDomainFactory.getRole();
-		roleE.setId(roleCO.getId());
-		roleE.setName(roleCO.getName());
-		roleE.setSort(roleCO.getSort());
-		roleE.setOperateType(isInsert ? OperateType.SAVE : OperateType.MODIFY);
-		return roleE;
-	}
-
 	public static RoleE toEntity(RoleCO roleCO) {
-		RoleE roleE = RoleDomainFactory.getRole();
-		roleE.setId(roleCO.getId());
-		roleE.setMenuIds(roleCO.getMenuIds());
-		roleE.setDataScope(roleCO.getDataScope());
-		roleE.setDeptIds(roleCO.getDeptIds());
-		roleE.setRoleIds(Collections.singletonList(roleCO.getId()));
-		roleE.setOperateType(OperateType.MODIFY_AUTHORITY);
-		return roleE;
+		return RoleDomainFactory.createRoleE()
+			.toBuilder()
+			.id(roleCO.getId())
+			.name(roleCO.getName())
+			.sort(roleCO.getSort())
+			.menuIds(roleCO.getMenuIds())
+			.dataScope(roleCO.getDataScope())
+			.deptIds(roleCO.getDeptIds())
+			.roleIds(Collections.singletonList(roleCO.getId()))
+			.build();
 	}
 
 }

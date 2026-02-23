@@ -29,8 +29,10 @@ import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import java.time.Instant;
+
 /**
- * 部门领域对象【实体】.
+ * 部门领域对象【聚合根】.
  *
  * @author laokou
  */
@@ -83,6 +85,14 @@ public class DeptA extends AggregateRoot implements ValidateName {
 	@Override
 	public String getValidateName() {
 		return "Dept";
+	}
+
+	public boolean isSave() {
+		return ObjectUtils.equals(OperateType.SAVE, this.operateType);
+	}
+
+	public Instant getCreateTime() {
+		return isSave() ? super.createTime : null;
 	}
 
 }

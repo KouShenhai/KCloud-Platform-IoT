@@ -23,7 +23,7 @@ import org.laokou.admin.role.convertor.RoleConvertor;
 import org.laokou.admin.role.gateway.RoleDeptGateway;
 import org.laokou.admin.role.gatewayimpl.database.RoleDeptMapper;
 import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDeptDO;
-import org.laokou.admin.role.model.RoleE;
+import org.laokou.admin.role.model.RoleA;
 import org.laokou.common.core.util.CollectionExtUtils;
 import org.laokou.common.mybatisplus.util.MybatisUtils;
 import org.springframework.stereotype.Component;
@@ -43,9 +43,9 @@ public class RoleDeptGatewayImpl implements RoleDeptGateway {
 	private final MybatisUtils mybatisUtils;
 
 	@Override
-	public void updateRoleDept(RoleE roleE) {
-		deleteRoleDept(getRoleDeptIds(roleE.getRoleIds()));
-		insertRoleDept(roleE);
+	public void updateRoleDept(RoleA roleA) {
+		deleteRoleDept(getRoleDeptIds(roleA.getRoleE().getRoleIds()));
+		insertRoleDept(roleA);
 	}
 
 	@Override
@@ -53,9 +53,9 @@ public class RoleDeptGatewayImpl implements RoleDeptGateway {
 		deleteRoleDept(getRoleDeptIds(Arrays.asList(roleIds)));
 	}
 
-	private void insertRoleDept(RoleE roleE) {
+	private void insertRoleDept(RoleA roleA) {
 		// 新增角色菜单关联表
-		List<RoleDeptDO> list = RoleConvertor.toDataObjs(roleE);
+		List<RoleDeptDO> list = RoleConvertor.toDataObjs(roleA);
 		if (CollectionExtUtils.isNotEmpty(list)) {
 			mybatisUtils.batch(list, RoleDeptMapper.class, RoleDeptMapper::insert);
 		}

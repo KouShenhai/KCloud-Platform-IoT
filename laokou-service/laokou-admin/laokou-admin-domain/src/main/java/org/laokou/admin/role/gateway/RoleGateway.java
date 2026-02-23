@@ -17,7 +17,7 @@
 
 package org.laokou.admin.role.gateway;
 
-import org.laokou.admin.role.model.RoleE;
+import org.laokou.admin.role.model.RoleA;
 
 /**
  * 角色网关【防腐】.
@@ -29,12 +29,12 @@ public interface RoleGateway {
 	/**
 	 * 新增角色.
 	 */
-	void createRole(RoleE roleE);
+	void createRole(RoleA roleA);
 
 	/**
 	 * 修改角色.
 	 */
-	void updateRole(RoleE roleE);
+	void updateRole(RoleA roleA);
 
 	/**
 	 * 删除角色.

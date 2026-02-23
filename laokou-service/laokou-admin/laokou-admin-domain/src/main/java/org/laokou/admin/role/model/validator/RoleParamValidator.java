@@ -15,13 +15,15 @@
  *
  */
 
-package org.laokou.admin.role.model;
+package org.laokou.admin.role.model.validator;
+
+import org.laokou.admin.role.model.RoleA;
 
 /**
  * @author laokou
  */
 public interface RoleParamValidator {
 
-	void validateRole(RoleE roleE);
+	void validateRole(RoleA roleA);
 
 }
