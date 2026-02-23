@@ -19,7 +19,7 @@ package org.laokou.admin.menu.command.query;
 
 import org.laokou.admin.menu.dto.MenuTreeListQry;
 import org.laokou.admin.menu.dto.clientobject.MenuTreeCO;
-import org.laokou.admin.menu.service.builder.MenuTreeBuilder;
+import org.laokou.admin.menu.service.MenuTree;
 import org.laokou.admin.menu.model.enums.MenuTreeType;
 import org.laokou.common.context.util.UserUtils;
 import org.laokou.common.i18n.dto.Result;
@@ -37,22 +37,22 @@ import java.util.List;
 @Component
 public class MenuTreeListQryExe {
 
-	private final MenuTreeBuilder userMenuTreeBuilder;
+	private final MenuTree userMenuTree;
 
-	private final MenuTreeBuilder systemMenuTreeBuilder;
+	private final MenuTree systemMenuTree;
 
-	public MenuTreeListQryExe(@Qualifier("userMenuTreeBuilder") MenuTreeBuilder userMenuTreeBuilder,
-			@Qualifier("systemMenuTreeBuilder") MenuTreeBuilder systemMenuTreeBuilder) {
-		this.userMenuTreeBuilder = userMenuTreeBuilder;
-		this.systemMenuTreeBuilder = systemMenuTreeBuilder;
+	public MenuTreeListQryExe(@Qualifier("userMenuTreeBuilder") MenuTree userMenuTree,
+			@Qualifier("systemMenuTreeBuilder") MenuTree systemMenuTree) {
+		this.userMenuTree = userMenuTree;
+		this.systemMenuTree = systemMenuTree;
 	}
 
 	public Result<List<MenuTreeCO>> execute(MenuTreeListQry qry) {
 		MenuTreeType menuMenuTreeTypeEnum = MenuTreeType.getByCode(qry.getCode());
 		Assert.notNull(menuMenuTreeTypeEnum, "菜单类型不存在");
 		return switch (menuMenuTreeTypeEnum) {
-			case USER -> Result.ok(userMenuTreeBuilder.buildMenuTree(qry, UserUtils.getUserId()).getChildren());
-			case SYSTEM -> Result.ok(systemMenuTreeBuilder.buildMenuTree(qry, UserUtils.getUserId()).getChildren());
+			case USER -> Result.ok(userMenuTree.build(qry, UserUtils.getUserId()).getChildren());
+			case SYSTEM -> Result.ok(systemMenuTree.build(qry, UserUtils.getUserId()).getChildren());
 		};
 	}
 

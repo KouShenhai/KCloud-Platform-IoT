@@ -70,6 +70,7 @@ import org.springframework.cloud.client.loadbalancer.RequestDataContext;
 import org.springframework.cloud.client.loadbalancer.Response;
 import org.springframework.cloud.loadbalancer.core.NoopServiceInstanceListSupplier;
 import org.springframework.cloud.loadbalancer.core.ReactorServiceInstanceLoadBalancer;
+import org.springframework.cloud.loadbalancer.core.RoundRobinLoadBalancer;
 import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
 import org.springframework.http.HttpHeaders;
 import reactor.core.publisher.Mono;
@@ -79,16 +80,19 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * nacos路由负载均衡.
- * {@link com.alibaba.cloud.nacos.loadbalancer.NacosLoadBalancerClientConfiguration}
- * {@link org.springframework.cloud.loadbalancer.core.RoundRobinLoadBalancer}
+ * nacos路由负载均衡. {@link NacosLoadBalancerClientConfiguration}
+ * {@link RoundRobinLoadBalancer}
  *
  * @author XuDaojie
  * @author laokou
  * @since 2021.1
  */
 @Slf4j
-public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
+public record NacosLoadBalancer(
+		ObjectProvider<@NonNull ServiceInstanceListSupplier> serviceInstanceListSupplierProvider, String serviceId,
+		NacosDiscoveryProperties nacosDiscoveryProperties, InetIPv6Utils inetIPv6Utils,
+		List<ServiceInstanceFilter> serviceInstanceFilters,
+		Map<String, LoadBalancerAlgorithm> loadBalancerAlgorithmMap) implements ReactorServiceInstanceLoadBalancer {
 
 	/**
 	 * Storage local valid IPv6 address, it's a flag whether local machine support IPv6
@@ -96,37 +100,13 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	 */
 	static String ipv6;
 
-	private final String serviceId;
-
-	private final ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider;
-
-	private final NacosDiscoveryProperties nacosDiscoveryProperties;
-
-	private final InetIPv6Utils inetIPv6Utils;
-
-	private final List<ServiceInstanceFilter> serviceInstanceFilters;
-
-	private final Map<String, LoadBalancerAlgorithm> loadBalancerAlgorithmMap;
-
-	public NacosLoadBalancer(ObjectProvider<ServiceInstanceListSupplier> serviceInstanceListSupplierProvider,
-			String serviceId, NacosDiscoveryProperties nacosDiscoveryProperties, InetIPv6Utils inetIPv6Utils,
-			List<ServiceInstanceFilter> serviceInstanceFilters,
-			Map<String, LoadBalancerAlgorithm> loadBalancerAlgorithmMap) {
-		this.serviceId = serviceId;
-		this.inetIPv6Utils = inetIPv6Utils;
-		this.serviceInstanceListSupplierProvider = serviceInstanceListSupplierProvider;
-		this.nacosDiscoveryProperties = nacosDiscoveryProperties;
-		this.serviceInstanceFilters = serviceInstanceFilters;
-		this.loadBalancerAlgorithmMap = loadBalancerAlgorithmMap;
-	}
-
 	/**
 	 * 初始化.
 	 */
 	@PostConstruct
 	public void init() {
 		String ip = nacosDiscoveryProperties.getIp();
-		if (com.alibaba.cloud.commons.lang.StringUtils.isNotEmpty(ip)) {
+		if (StringUtils.isNotEmpty(ip)) {
 			ipv6 = RegexUtils.ipv4Regex(ip) ? nacosDiscoveryProperties.getMetadata().get("IPv6") : ip;
 		}
 		else {
@@ -144,7 +124,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 			List<ServiceInstance> ipv6InstanceList = new ArrayList<>();
 			for (ServiceInstance instance : instances) {
 				if (RegexUtils.ipv4Regex(instance.getHost())) {
-					if (com.alibaba.cloud.commons.lang.StringUtils.isNotEmpty(instance.getMetadata().get("IPv6"))) {
+					if (StringUtils.isNotEmpty(instance.getMetadata().get("IPv6"))) {
 						ipv6InstanceList.add(instance);
 					}
 				}
@@ -170,7 +150,7 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	 */
 	@NonNull
 	@Override
-	public Mono<Response<ServiceInstance>> choose(@NonNull Request request) {
+	public Mono<@NonNull Response<@NonNull ServiceInstance>> choose(@NonNull Request request) {
 		return serviceInstanceListSupplierProvider.getIfAvailable(NoopServiceInstanceListSupplier::new)
 			.get(request)
 			.next()
@@ -183,7 +163,8 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	 * @param request 请求
 	 * @return 服务实例响应体
 	 */
-	private Response<ServiceInstance> getInstanceResponse(List<ServiceInstance> serviceInstances, Request<?> request) {
+	private Response<@NonNull ServiceInstance> getInstanceResponse(List<ServiceInstance> serviceInstances,
+			Request<?> request) {
 		if (serviceInstances.isEmpty()) {
 			log.warn("No servers available for service: {}", this.serviceId);
 			return new EmptyResponse();
@@ -209,7 +190,8 @@ public class NacosLoadBalancer implements ReactorServiceInstanceLoadBalancer {
 	 * @param serviceInstances 服务实例
 	 * @return 响应结果
 	 */
-	private Response<ServiceInstance> getInstanceResponse(Request<?> request, List<ServiceInstance> serviceInstances) {
+	private Response<@NonNull ServiceInstance> getInstanceResponse(Request<?> request,
+			List<ServiceInstance> serviceInstances) {
 		if (serviceInstances.isEmpty()) {
 			log.error("No servers available for service: {}", this.serviceId);
 			return new EmptyResponse();

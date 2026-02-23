@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.admin.menu.service.builder;
+package org.laokou.admin.menu.service;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.menu.convertor.MenuConvertor;
@@ -26,9 +26,8 @@ import org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.common.context.util.UserUtils;
 import org.laokou.common.core.util.TreeUtils;
 import org.laokou.common.data.cache.annotation.DistributedCache;
-import org.laokou.common.data.cache.constant.NameConstants;
 import org.laokou.common.data.cache.aspectj.OperateType;
-import org.laokou.common.fory.config.ForyFactory;
+import org.laokou.common.data.cache.constant.NameConstants;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -38,17 +37,13 @@ import java.util.List;
  */
 @Component("userMenuTreeBuilder")
 @RequiredArgsConstructor
-public class UserMenuTreeBuilder implements MenuTreeBuilder {
+public class UserMenuTree implements MenuTree {
 
 	private final MenuMapper menuMapper;
 
-	static {
-		ForyFactory.INSTANCE.register(org.laokou.admin.menu.dto.clientobject.MenuTreeCO.class);
-	}
-
 	@Override
 	@DistributedCache(name = NameConstants.USER_MENU, key = "#userId", operateType = OperateType.GET)
-	public MenuTreeCO buildMenuTree(MenuTreeListQry qry, Long userId) {
+	public MenuTreeCO build(MenuTreeListQry qry, Long userId) {
 		List<MenuDO> list;
 		if (UserUtils.isSuperAdmin()) {
 			list = menuMapper.selectAllMenuList();

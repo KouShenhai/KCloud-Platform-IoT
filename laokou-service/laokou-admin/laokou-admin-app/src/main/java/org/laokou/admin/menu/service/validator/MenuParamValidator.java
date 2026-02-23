@@ -36,14 +36,14 @@ final class MenuParamValidator {
 
 	static ParamValidator.Validate validatePermission(MenuA menuA, MenuMapper menuMapper) {
 		String permission = menuA.getMenuE().getPermission();
-		if (menuA.isMenu() && StringExtUtils.isEmpty(permission)) {
+		if (menuA.isButton() && StringExtUtils.isEmpty(permission)) {
 			return org.laokou.common.i18n.util.ParamValidator.invalidate("菜单权限标识不能为空");
 		}
-		if (menuA.isMenu() && menuA.isSave() && menuMapper
+		if (menuA.isButton() && menuA.isSave() && menuMapper
 			.selectCount(Wrappers.lambdaQuery(MenuDO.class).eq(MenuDO::getPermission, permission)) > 0) {
 			return org.laokou.common.i18n.util.ParamValidator.invalidate("菜单权限标识已存在");
 		}
-		if (menuA.isMenu() && menuA.isModify()
+		if (menuA.isButton() && menuA.isModify()
 				&& menuMapper.selectCount(Wrappers.lambdaQuery(MenuDO.class)
 					.eq(MenuDO::getPermission, permission)
 					.ne(MenuDO::getId, menuA.getId())) > 0) {
@@ -99,7 +99,7 @@ final class MenuParamValidator {
 		if (menuA.isMenu() && ObjectUtils.isNull(status)) {
 			return ParamValidator.invalidate("菜单状态不能为空");
 		}
-		if (menuA.statusNotExist()) {
+		if (menuA.isMenu() && menuA.statusNotExist()) {
 			return ParamValidator.invalidate("菜单状态不存在");
 		}
 		return ParamValidator.validate();
