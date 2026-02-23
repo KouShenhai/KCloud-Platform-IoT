@@ -29,6 +29,7 @@ public class AdminConfig {
 	static {
 		ForyFactory.INSTANCE.register(org.laokou.admin.menu.dto.clientobject.MenuTreeCO.class);
 		ForyFactory.INSTANCE.register(org.laokou.admin.menu.dto.clientobject.MenuCO.class);
+		ForyFactory.INSTANCE.register(org.laokou.admin.dept.dto.clientobject.DeptCO.class);
 	}
 
 }
