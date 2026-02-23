@@ -35,6 +35,7 @@ package com.alibaba.cloud.nacos.loadbalancer;
 
 import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import com.alibaba.cloud.nacos.util.InetIPv6Utils;
+import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.util.MapUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -78,7 +79,7 @@ public class NacosLoadBalancerClientConfiguration {
 	@Bean
 	@ConditionalOnMissingBean
 	@ConditionalOnBean({ LoadBalancerClientFactory.class, NacosDiscoveryProperties.class, InetIPv6Utils.class })
-	public ReactorLoadBalancer<ServiceInstance> nacosLoadBalancer(Environment environment,
+	public ReactorLoadBalancer<@NonNull ServiceInstance> nacosLoadBalancer(Environment environment,
 			LoadBalancerClientFactory loadBalancerClientFactory, NacosDiscoveryProperties nacosDiscoveryProperties,
 			InetIPv6Utils inetIPv6Utils, List<ServiceInstanceFilter> serviceInstanceFilters,
 			List<LoadBalancerAlgorithm> loadBalancerAlgorithms) {

@@ -38,6 +38,7 @@ import com.alibaba.cloud.nacos.NacosServiceInstance;
 import com.alibaba.nacos.api.naming.pojo.Instance;
 import com.alibaba.nacos.client.naming.core.Balancer;
 import org.laokou.common.core.util.MapUtils;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.cloud.client.ServiceInstance;
 
 import java.util.List;
@@ -79,7 +80,7 @@ public class NacosBalancer extends Balancer {
 			Instance instance = new Instance();
 			instance.setIp(serviceInstance.getHost());
 			instance.setPort(serviceInstance.getPort());
-			instance.setWeight(Double.parseDouble(metadata.get("nacos.weight")));
+			instance.setWeight(Double.parseDouble(ObjectUtils.requireNotNull(metadata).get("nacos.weight")));
 			instance.setHealthy(Boolean.parseBoolean(metadata.get("nacos.healthy")));
 			instanceMap.put(instance, serviceInstance);
 			return instance;
@@ -100,7 +101,7 @@ public class NacosBalancer extends Balancer {
 	 */
 	private static void convertIPv4ToIPv6(NacosServiceInstance instance) {
 		if (Pattern.matches(IPV4_REGEX, instance.getHost())) {
-			String ip = instance.getMetadata().get(IPV6_KEY);
+			String ip = ObjectUtils.requireNotNull(instance.getMetadata()).get(IPV6_KEY);
 			if (StringUtils.isNotEmpty(ip)) {
 				instance.setHost(ip);
 			}
