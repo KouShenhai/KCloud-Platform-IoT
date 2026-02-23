@@ -15,32 +15,16 @@
  *
  */
 
-package org.laokou.admin.menu.service.builder;
+package org.laokou.admin.menu.service;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.admin.menu.convertor.MenuConvertor;
 import org.laokou.admin.menu.dto.MenuTreeListQry;
 import org.laokou.admin.menu.dto.clientobject.MenuTreeCO;
-import org.laokou.admin.menu.gatewayimpl.database.MenuMapper;
-import org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO;
-import org.laokou.common.core.util.TreeUtils;
-import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * @author laokou
  */
-@Component("systemMenuTreeBuilder")
-@RequiredArgsConstructor
-public class SystemMenuTreeBuilder implements MenuTreeBuilder {
+public interface MenuTree {
 
-	private final MenuMapper menuMapper;
-
-	@Override
-	public MenuTreeCO buildMenuTree(MenuTreeListQry qry, Long userId) {
-		List<MenuDO> list = menuMapper.selectObjectList(qry);
-		return TreeUtils.buildTreeNode(MenuConvertor.toClientObjs(list), MenuTreeCO.class);
-	}
+	MenuTreeCO build(MenuTreeListQry qry, Long userId);
 
 }

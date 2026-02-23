@@ -106,6 +106,10 @@ public class MenuA extends AggregateRoot implements ValidateName {
 		return ObjectUtils.isNotNull(menuE.getType()) && menuE.getType() == MenuType.MENU.getCode();
 	}
 
+	public boolean isButton() {
+		return ObjectUtils.isNotNull(menuE.getType()) && menuE.getType() == MenuType.BUTTON.getCode();
+	}
+
 	public boolean statusNotExist() {
 		return !List.of(MenuStatus.DISABLE.getCode(), MenuStatus.ENABLE.getCode()).contains(this.menuE.getStatus());
 	}
