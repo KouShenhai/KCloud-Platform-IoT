@@ -23,7 +23,7 @@ import org.laokou.admin.user.convertor.UserConvertor;
 import org.laokou.admin.user.gateway.UserRoleGateway;
 import org.laokou.admin.user.gatewayimpl.database.UserRoleMapper;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserRoleDO;
-import org.laokou.admin.user.model.UserE;
+import org.laokou.admin.user.model.UserA;
 import org.laokou.common.core.util.CollectionExtUtils;
 import org.laokou.common.mybatisplus.util.MybatisUtils;
 import org.springframework.stereotype.Component;
@@ -43,9 +43,9 @@ public class UserRoleGatewayImpl implements UserRoleGateway {
 	private final UserRoleMapper userRoleMapper;
 
 	@Override
-	public void updateUserRole(UserE userE) {
-		deleteUserRole(getUserRoleIds(userE.getUserIds()));
-		insertUserRole(userE);
+	public void updateUserRole(UserA userA) {
+		deleteUserRole(getUserRoleIds(userA.getUserE().getUserIds()));
+		insertUserRole(userA);
 	}
 
 	@Override
@@ -53,9 +53,9 @@ public class UserRoleGatewayImpl implements UserRoleGateway {
 		deleteUserRole(getUserRoleIds(Arrays.asList(userIds)));
 	}
 
-	private void insertUserRole(UserE userE) {
+	private void insertUserRole(UserA userA) {
 		// 新增用户角色关联表
-		List<UserRoleDO> list = UserConvertor.toDataObjects(userE);
+		List<UserRoleDO> list = UserConvertor.toDataObjects(userA);
 		if (CollectionExtUtils.isNotEmpty(list)) {
 			mybatisUtils.batch(list, UserRoleMapper.class, UserRoleMapper::insert);
 		}

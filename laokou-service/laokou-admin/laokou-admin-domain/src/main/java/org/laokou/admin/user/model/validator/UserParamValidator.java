@@ -15,13 +15,15 @@
  *
  */
 
-package org.laokou.admin.user.model;
+package org.laokou.admin.user.model.validator;
+
+import org.laokou.admin.user.model.UserA;
 
 /**
  * @author laokou
  */
 public interface UserParamValidator {
 
-	void validateUser(UserE userE) throws Exception;
+	void validateUser(UserA userA) throws Exception;
 
 }

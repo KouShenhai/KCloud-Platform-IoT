@@ -17,14 +17,14 @@
 
 package org.laokou.admin.user.gateway;
 
-import org.laokou.admin.user.model.UserE;
+import org.laokou.admin.user.model.UserA;
 
 /**
  * @author laokou
  */
 public interface UserDeptGateway {
 
-	void updateUserDept(UserE userE);
+	void updateUserDept(UserA userA);
 
 	void deleteUserDept(Long[] userIds);
 

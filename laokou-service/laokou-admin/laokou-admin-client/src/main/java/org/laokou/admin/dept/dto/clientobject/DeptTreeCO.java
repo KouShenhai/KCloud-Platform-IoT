@@ -33,9 +33,6 @@ import java.time.Instant;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class DeptTreeCO extends TreeUtils.TreeNode<DeptTreeCO> {
 
-	@Schema(name = "部门路径", description = "部门路径")
-	private String path;
-
 	@Schema(name = "部门排序", description = "部门排序")
 	private Integer sort;
 

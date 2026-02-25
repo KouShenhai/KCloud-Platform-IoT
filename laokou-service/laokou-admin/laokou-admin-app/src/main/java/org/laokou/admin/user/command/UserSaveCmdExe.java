@@ -22,7 +22,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.user.ability.UserDomainService;
 import org.laokou.admin.user.convertor.UserConvertor;
 import org.laokou.admin.user.dto.UserSaveCmd;
-import org.laokou.admin.user.model.UserE;
+import org.laokou.admin.user.factory.UserDomainFactory;
+import org.laokou.admin.user.model.UserA;
+import org.laokou.admin.user.model.enums.OperateType;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.stereotype.Component;
@@ -43,10 +45,10 @@ public class UserSaveCmdExe {
 
 	@CommandLog
 	public void executeVoid(UserSaveCmd cmd) throws Exception {
-		UserE userE = UserConvertor.toEntity(cmd.getCo(), true);
+		UserA userA = UserDomainFactory.createUserA().create(UserConvertor.toEntity(cmd.getCo()), OperateType.SAVE);
 		// 校验用户参数
-		userE.checkUserParam();
-		transactionalUtils.executeInTransaction(() -> userDomainService.createUser(userE));
+		userA.checkUserParam();
+		transactionalUtils.executeInTransaction(() -> userDomainService.createUser(userA));
 	}
 
 }

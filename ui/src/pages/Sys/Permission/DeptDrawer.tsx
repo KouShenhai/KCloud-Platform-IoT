@@ -112,15 +112,6 @@ export const DeptDrawer: React.FC<DeptDrawerProps> = ({ modalVisit, setModalVisi
 				rules={[{ required: true, message: '请输入部门名称' }]}
 			/>
 
-			{ readOnly && (
-			<ProFormText
-				disabled={loading}
-				name="path"
-				label="部门路径"
-				readonly={readOnly}
-			/>
-			)}
-
 			<ProFormDigit
 				disabled={loading}
 				name="sort"
