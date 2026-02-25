@@ -17,7 +17,8 @@
 
 package org.laokou.admin.user.factory;
 
-import org.laokou.admin.user.model.UserE;
+import org.laokou.admin.user.model.UserA;
+import org.laokou.admin.user.model.entity.UserE;
 import org.laokou.common.i18n.util.SpringContextUtils;
 
 /**
@@ -28,7 +29,15 @@ public final class UserDomainFactory {
 	private UserDomainFactory() {
 	}
 
-	public static UserE getUser() {
+	public static UserA getUser() {
+		return SpringContextUtils.getBeanProvider(UserA.class);
+	}
+
+	public static UserA createUserA() {
+		return SpringContextUtils.getBeanProvider(UserA.class);
+	}
+
+	public static UserE createUserE() {
 		return SpringContextUtils.getBeanProvider(UserE.class);
 	}
 

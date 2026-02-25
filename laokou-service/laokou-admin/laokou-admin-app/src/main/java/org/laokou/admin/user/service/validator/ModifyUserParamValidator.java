@@ -19,8 +19,8 @@ package org.laokou.admin.user.service.validator;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.user.gatewayimpl.database.UserMapper;
-import org.laokou.admin.user.model.UserE;
-import org.laokou.admin.user.model.UserParamValidator;
+import org.laokou.admin.user.model.UserA;
+import org.laokou.admin.user.model.validator.UserParamValidator;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.springframework.stereotype.Component;
 
@@ -34,14 +34,16 @@ public class ModifyUserParamValidator implements UserParamValidator {
 	private final UserMapper userMapper;
 
 	@Override
-	public void validateUser(UserE userE) throws Exception {
-		ParamValidator.validate("System",
+	public void validateUser(UserA userA) throws Exception {
+		ParamValidator.validate(userA.getValidateName(),
 				// 校验ID
-				org.laokou.admin.user.service.validator.UserParamValidator.validateId(userE),
+				org.laokou.admin.user.service.validator.UserParamValidator.validateId(userA),
 				// 校验邮箱
-				org.laokou.admin.user.service.validator.UserParamValidator.validateMail(userE, userMapper, false),
+				org.laokou.admin.user.service.validator.UserParamValidator.validateMail(userA, userMapper, false),
 				// 校验手机号
-				org.laokou.admin.user.service.validator.UserParamValidator.validateMobile(userE, userMapper, false));
+				org.laokou.admin.user.service.validator.UserParamValidator.validateMobile(userA, userMapper),
+				// 校验部门ID
+				org.laokou.admin.user.service.validator.UserParamValidator.validateDeptId(userA));
 	}
 
 }

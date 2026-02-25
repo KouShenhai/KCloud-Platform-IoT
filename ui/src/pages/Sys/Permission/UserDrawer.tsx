@@ -32,7 +32,7 @@ type TableColumns = {
 	mail: string | undefined;
 	mobile: string | undefined;
 	avatar: string | undefined;
-	deptIds: string[];
+	deptId: number;
 	roleIds: string[];
 	createTime: string | undefined;
 };
@@ -73,6 +73,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 					mail: value?.mail,
 					mobile: value?.mobile,
 					avatar: logId,
+					deptId: value?.deptId,
 				}
 				if (value.id === undefined) {
 					// @ts-ignore
@@ -110,7 +111,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 			<ProFormText
 				name="username"
 				label="用户名"
-				tooltip={"密码登录【不允许重复，不允许修改】"}
+				tooltip={"用户名【不允许重复，不允许修改】"}
 				disabled={edit}
 				readonly={readOnly}
 				placeholder={'请输入用户名'}
@@ -133,6 +134,26 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 				tooltip={"手机号登录【不允许重复】"}
 				readonly={readOnly}
 				placeholder={'请输入用户手机号'}
+			/>
+
+			<ProFormTreeSelect
+				disabled={loading}
+				readonly={readOnly}
+				name="deptId"
+				label="所属部门"
+				allowClear={true}
+				placeholder={'请选择所属部门'}
+				rules={[{ required: true, message: '请选择所属部门' }]}
+				fieldProps={{
+					fieldNames: {
+						label: 'name',
+						value: 'id',
+						children: 'children'
+					},
+				}}
+				request={async () => {
+					return deptTreeList
+				}}
 			/>
 
 			{!readOnly && (access.canUserModify || access.canUserModify) && access.canOssUpload && (
@@ -192,28 +213,6 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({ modalVisit, setModalVisi
 						label: 'name',
 						value: 'id',
 					}
-				}}
-			/>
-			)}
-
-			{ readOnly && (
-			<ProFormTreeSelect
-				disabled={loading}
-				name="deptIds"
-				label="所属部门"
-				readonly={readOnly}
-				allowClear={true}
-				placeholder={'请选择所属部门'}
-				rules={[{ required: true, message: '请选择所属部门' }]}
-				fieldProps={{
-					fieldNames: {
-						label: 'name',
-						value: 'id',
-						children: 'children'
-					}
-				}}
-				request={async () => {
-					return deptTreeList
 				}}
 			/>
 			)}

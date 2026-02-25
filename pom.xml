@@ -243,7 +243,7 @@
     <!--swagger-annotations-jakarta版本-->
     <swagger-annotations-jakarta.version>2.2.43</swagger-annotations-jakarta.version>
     <!--jsqlparser版本-->
-    <jsqlparser.version>5.2</jsqlparser.version>
+    <jsqlparser.version>5.3</jsqlparser.version>
     <!--commons-io-->
     <commons-io.version>2.21.0</commons-io.version>
     <!--commons-logging版本-->

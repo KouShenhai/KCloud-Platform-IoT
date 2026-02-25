@@ -18,10 +18,9 @@
 package org.laokou.admin.user.ability;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.user.gateway.UserDeptGateway;
 import org.laokou.admin.user.gateway.UserGateway;
 import org.laokou.admin.user.gateway.UserRoleGateway;
-import org.laokou.admin.user.model.UserE;
+import org.laokou.admin.user.model.UserA;
 import org.laokou.common.core.util.ThreadUtils;
 import org.springframework.stereotype.Component;
 
@@ -43,34 +42,18 @@ public class UserDomainService {
 
 	private final UserRoleGateway userRoleGateway;
 
-	private final UserDeptGateway userDeptGateway;
-
-	public void createUser(UserE userE) throws Exception {
-		// 用户名加密
-		userE.encryptUsername();
-		// 邮箱加密
-		userE.encryptMail();
-		// 手机号加密
-		userE.encryptMobile();
-		userGateway.createUser(userE);
+	public void createUser(UserA userA) {
+		userGateway.createUser(userA);
 	}
 
-	public void updateUser(UserE userE) throws Exception {
-		// 邮箱加密
-		userE.encryptMail();
-		// 手机号加密
-		userE.encryptMobile();
-		userGateway.updateUser(userE);
+	public void updateUser(UserA userA) {
+		userGateway.updateUser(userA);
 	}
 
-	public void updateAuthorityUser(UserE userE) throws Exception {
-		List<Callable<Boolean>> futures = new ArrayList<>(2);
+	public void updateAuthorityUser(UserA userA) throws Exception {
+		List<Callable<Boolean>> futures = new ArrayList<>(1);
 		futures.add(() -> {
-			userRoleGateway.updateUserRole(userE);
-			return true;
-		});
-		futures.add(() -> {
-			userDeptGateway.updateUserDept(userE);
+			userRoleGateway.updateUserRole(userA);
 			return true;
 		});
 		try (ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor()) {
@@ -79,17 +62,13 @@ public class UserDomainService {
 	}
 
 	public void deleteUser(Long[] ids) throws InterruptedException {
-		List<Callable<Boolean>> futures = new ArrayList<>(3);
+		List<Callable<Boolean>> futures = new ArrayList<>(2);
 		futures.add(() -> {
 			userGateway.deleteUser(ids);
 			return true;
 		});
 		futures.add(() -> {
 			userRoleGateway.deleteUserRole(ids);
-			return true;
-		});
-		futures.add(() -> {
-			userDeptGateway.deleteUserDept(ids);
 			return true;
 		});
 		try (ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor()) {

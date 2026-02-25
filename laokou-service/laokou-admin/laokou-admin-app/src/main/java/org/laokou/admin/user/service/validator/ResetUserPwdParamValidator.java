@@ -19,8 +19,8 @@ package org.laokou.admin.user.service.validator;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.user.gatewayimpl.database.UserMapper;
-import org.laokou.admin.user.model.UserE;
-import org.laokou.admin.user.model.UserParamValidator;
+import org.laokou.admin.user.model.UserA;
+import org.laokou.admin.user.model.validator.UserParamValidator;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -37,12 +37,12 @@ public class ResetUserPwdParamValidator implements UserParamValidator {
 	private final UserMapper userMapper;
 
 	@Override
-	public void validateUser(UserE userE) {
-		ParamValidator.validate("System",
+	public void validateUser(UserA userA) {
+		ParamValidator.validate(userA.getValidateName(),
 				// 校验ID
-				org.laokou.admin.user.service.validator.UserParamValidator.validateId(userE),
+				org.laokou.admin.user.service.validator.UserParamValidator.validateId(userA),
 				// 校验密码
-				org.laokou.admin.user.service.validator.UserParamValidator.validatePassword(userE, passwordEncoder,
+				org.laokou.admin.user.service.validator.UserParamValidator.validatePassword(userA, passwordEncoder,
 						userMapper));
 	}
 

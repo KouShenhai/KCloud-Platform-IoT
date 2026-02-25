@@ -63,8 +63,8 @@ public class UserCO extends ClientObject {
 	@Schema(name = "角色IDS", description = "角色IDS")
 	private List<String> roleIds;
 
-	@Schema(name = "部门IDS", description = "部门IDS")
-	private List<String> deptIds;
+	@Schema(name = "部门ID", description = "部门ID")
+	private Long deptId;
 
 	@Schema(name = "用户头像URL", description = "用户头像URL")
 	private String avatarUrl;

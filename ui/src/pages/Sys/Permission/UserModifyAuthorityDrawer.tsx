@@ -1,4 +1,4 @@
-import {DrawerForm, ProFormSelect, ProFormText, ProFormTreeSelect} from '@ant-design/pro-components';
+import {DrawerForm, ProFormSelect, ProFormText} from '@ant-design/pro-components';
 import { message } from 'antd';
 import {modifyUserAuthority} from '@/services/admin/user';
 import React, {useState} from "react";
@@ -9,7 +9,6 @@ interface UserAuthorityProps {
 	title: string;
 	dataSource: TableColumns;
 	onComponent: () => void;
-	deptTreeList: any[]
 	roleList: any[]
 }
 
@@ -22,7 +21,7 @@ type TableColumns = {
 
 
 
-export const UserModifyAuthorityDrawer: React.FC<UserAuthorityProps> = ({ modalModifyAuthorityVisit, setModalModifyAuthorityVisit, title, dataSource, onComponent, roleList, deptTreeList }) => {
+export const UserModifyAuthorityDrawer: React.FC<UserAuthorityProps> = ({ modalModifyAuthorityVisit, setModalModifyAuthorityVisit, title, dataSource, onComponent, roleList }) => {
 
 	const [loading, setLoading] = useState(false)
 
@@ -74,7 +73,7 @@ export const UserModifyAuthorityDrawer: React.FC<UserAuthorityProps> = ({ modalM
 			<ProFormText
 				name="username"
 				label="用户名"
-				tooltip={"密码登录【不允许重复，不允许修改】"}
+				tooltip={"用户名【不允许重复，不允许修改】"}
 				disabled={true}
 				placeholder={'请输入用户名'}
 				rules={[{ required: true, message: '请输入用户名' }]}
@@ -94,25 +93,6 @@ export const UserModifyAuthorityDrawer: React.FC<UserAuthorityProps> = ({ modalM
 						label: 'name',
 						value: 'id',
 					},
-				}}
-			/>
-
-			<ProFormTreeSelect
-				disabled={loading}
-				name="deptId"
-				label="所属部门"
-				allowClear={true}
-				placeholder={'请选择所属部门'}
-				rules={[{ required: true, message: '请选择所属部门' }]}
-				fieldProps={{
-					fieldNames: {
-						label: 'name',
-						value: 'id',
-						children: 'children'
-					},
-				}}
-				request={async () => {
-					return deptTreeList
 				}}
 			/>
 

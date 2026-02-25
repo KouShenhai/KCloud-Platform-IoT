@@ -17,7 +17,7 @@
 
 package org.laokou.admin.user.gateway;
 
-import org.laokou.admin.user.model.UserE;
+import org.laokou.admin.user.model.UserA;
 
 /**
  * 用户网关【防腐】.
@@ -29,12 +29,12 @@ public interface UserGateway {
 	/**
 	 * 新增用户.
 	 */
-	void createUser(UserE userE);
+	void createUser(UserA userA);
 
 	/**
 	 * 修改用户.
 	 */
-	void updateUser(UserE userE);
+	void updateUser(UserA userA);
 
 	/**
 	 * 删除用户.

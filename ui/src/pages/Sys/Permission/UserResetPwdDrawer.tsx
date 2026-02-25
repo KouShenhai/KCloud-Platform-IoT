@@ -59,8 +59,8 @@ export const UserResetPwdDrawer: React.FC<UserResetPwdDrawerProps> = ({ visible,
 
 			<ProFormText
 				name="username"
-				label="名称"
-				tooltip={"密码登录【不允许重复，不允许修改】"}
+				label="用户名"
+				tooltip={"用户名【不允许重复，不允许修改】"}
 				disabled={true}
 				placeholder={'请输入用户名'}
 				rules={[{ required: true, message: '请输入用户名' }]}

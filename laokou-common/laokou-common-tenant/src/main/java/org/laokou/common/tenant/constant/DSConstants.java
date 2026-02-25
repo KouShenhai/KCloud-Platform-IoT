@@ -68,11 +68,6 @@ public final class DSConstants {
 		public static final String USER_ROLE_TABLE = "sys_user_role";
 
 		/**
-		 * 用户部门表.
-		 */
-		public static final String USER_DEPT_TABLE = "sys_user_dept";
-
-		/**
 		 * 角色菜单表.
 		 */
 		public static final String ROLE_MENU_TABLE = "sys_role_menu";

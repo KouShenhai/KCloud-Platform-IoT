@@ -18,8 +18,8 @@
 package org.laokou.admin.user.service.validator;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.user.model.UserE;
-import org.laokou.admin.user.model.UserParamValidator;
+import org.laokou.admin.user.model.UserA;
+import org.laokou.admin.user.model.validator.UserParamValidator;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.springframework.stereotype.Component;
 
@@ -31,14 +31,12 @@ import org.springframework.stereotype.Component;
 public class ModifyUserAuthorityParamValidator implements UserParamValidator {
 
 	@Override
-	public void validateUser(UserE userE) {
-		ParamValidator.validate("System",
+	public void validateUser(UserA userA) {
+		ParamValidator.validate(userA.getValidateName(),
 				// 校验ID
-				org.laokou.admin.user.service.validator.UserParamValidator.validateId(userE),
+				org.laokou.admin.user.service.validator.UserParamValidator.validateId(userA),
 				// 校验角色IDS
-				org.laokou.admin.user.service.validator.UserParamValidator.validateRoleIds(userE),
-				// 校验部门IDS
-				org.laokou.admin.user.service.validator.UserParamValidator.validateDeptIds(userE));
+				org.laokou.admin.user.service.validator.UserParamValidator.validateRoleIds(userA));
 	}
 
 }

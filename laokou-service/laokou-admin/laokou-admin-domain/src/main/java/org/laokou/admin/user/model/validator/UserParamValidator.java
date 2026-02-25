@@ -15,17 +15,15 @@
  *
  */
 
-package org.laokou.admin.user.gateway;
+package org.laokou.admin.user.model.validator;
 
-import org.laokou.admin.user.model.UserE;
+import org.laokou.admin.user.model.UserA;
 
 /**
  * @author laokou
  */
-public interface UserDeptGateway {
+public interface UserParamValidator {
 
-	void updateUserDept(UserE userE);
-
-	void deleteUserDept(Long[] userIds);
+	void validateUser(UserA userA) throws Exception;
 
 }
