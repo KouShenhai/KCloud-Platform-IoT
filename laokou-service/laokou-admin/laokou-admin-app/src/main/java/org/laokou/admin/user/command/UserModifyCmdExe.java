@@ -48,7 +48,7 @@ public class UserModifyCmdExe {
 		UserA userA = UserDomainFactory.createUserA().create(UserConvertor.toEntity(cmd.getCo()), OperateType.MODIFY);
 		// 校验用户参数
 		userA.checkUserParam();
-		transactionalUtils.executeInTransaction(() -> userDomainService.updateUser(userA));
+		transactionalUtils.executeInTransaction(() -> userDomainService.updateUser(userA.encryptByUpdate()));
 	}
 
 }

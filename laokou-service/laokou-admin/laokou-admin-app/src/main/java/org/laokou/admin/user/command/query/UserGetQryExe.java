@@ -24,7 +24,6 @@ import org.laokou.admin.ossLog.gatewayimpl.database.dataobject.OssLogDO;
 import org.laokou.admin.user.convertor.UserConvertor;
 import org.laokou.admin.user.dto.UserGetQry;
 import org.laokou.admin.user.dto.clientobject.UserCO;
-import org.laokou.admin.user.gatewayimpl.database.UserDeptMapper;
 import org.laokou.admin.user.gatewayimpl.database.UserMapper;
 import org.laokou.admin.user.gatewayimpl.database.UserRoleMapper;
 import org.laokou.common.i18n.dto.Result;
@@ -45,15 +44,12 @@ public class UserGetQryExe {
 
 	private final UserRoleMapper userRoleMapper;
 
-	private final UserDeptMapper userDeptMapper;
-
 	private final OssLogMapper ossLogMapper;
 
 	public Result<UserCO> execute(UserGetQry qry) throws Exception {
 		try {
 			UserCO userCO = UserConvertor.toClientObject(userMapper.selectById(qry.getId()));
 			userCO.setRoleIds(userRoleMapper.selectRoleIdsByUserId(qry.getId()));
-			userCO.setDeptIds(userDeptMapper.selectDeptIdsByUserId(qry.getId()));
 			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);
 			OssLogDO ossLogDO = ossLogMapper.selectById(userCO.getAvatar());
 			if (ObjectUtils.isNotNull(ossLogDO)) {

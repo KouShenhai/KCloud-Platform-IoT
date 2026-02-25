@@ -352,7 +352,6 @@ export default () => {
 					// @ts-ignore
 					actionRef?.current?.reload();
 				}}
-				deptTreeList={deptTreeList}
 				roleList={roleList}
 			/>
 

@@ -41,7 +41,9 @@ public class SaveUserParamValidator implements UserParamValidator {
 				// 校验邮箱
 				org.laokou.admin.user.service.validator.UserParamValidator.validateMail(userA, userMapper, true),
 				// 校验手机号
-				org.laokou.admin.user.service.validator.UserParamValidator.validateMobile(userA, userMapper));
+				org.laokou.admin.user.service.validator.UserParamValidator.validateMobile(userA, userMapper),
+				// 校验部门ID
+				org.laokou.admin.user.service.validator.UserParamValidator.validateDeptId(userA));
 	}
 
 }

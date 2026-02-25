@@ -33,6 +33,7 @@ import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
 
 import java.util.List;
+import java.util.regex.Matcher;
 
 /**
  * @author laokou
@@ -62,7 +63,7 @@ public class SqlUtils {
 				: null;
 		for (ParameterMapping parameterMapping : parameterMappings) {
 			Object value = getParameterValue(boundSql, parameterMapping, metaObject);
-			sql = sql.replaceFirst("\\?", formatValue(value));
+			sql = sql.replaceFirst("\\?", Matcher.quoteReplacement(formatValue(value)));
 		}
 		return sql;
 	}

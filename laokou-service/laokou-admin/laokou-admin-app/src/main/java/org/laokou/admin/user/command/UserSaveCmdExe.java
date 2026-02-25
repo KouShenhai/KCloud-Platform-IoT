@@ -48,7 +48,7 @@ public class UserSaveCmdExe {
 		UserA userA = UserDomainFactory.createUserA().create(UserConvertor.toEntity(cmd.getCo()), OperateType.SAVE);
 		// 校验用户参数
 		userA.checkUserParam();
-		transactionalUtils.executeInTransaction(() -> userDomainService.createUser(userA));
+		transactionalUtils.executeInTransaction(() -> userDomainService.createUser(userA.encryptByCreate()));
 	}
 
 }

@@ -36,9 +36,7 @@ public class ModifyUserAuthorityParamValidator implements UserParamValidator {
 				// 校验ID
 				org.laokou.admin.user.service.validator.UserParamValidator.validateId(userA),
 				// 校验角色IDS
-				org.laokou.admin.user.service.validator.UserParamValidator.validateRoleIds(userA),
-				// 校验部门IDS
-				org.laokou.admin.user.service.validator.UserParamValidator.validateDeptIds(userA));
+				org.laokou.admin.user.service.validator.UserParamValidator.validateRoleIds(userA));
 	}
 
 }

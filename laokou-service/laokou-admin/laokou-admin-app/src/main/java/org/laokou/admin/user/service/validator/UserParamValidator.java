@@ -146,10 +146,9 @@ final class UserParamValidator {
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateDeptIds(UserA userA) {
-		List<String> deptIds = userA.getUserE().getDeptIds();
-		if (CollectionExtUtils.isEmpty(deptIds)) {
-			return ParamValidator.invalidate("用户部门IDS不能为空");
+	public static ParamValidator.Validate validateDeptId(UserA userA) {
+		if (ObjectUtils.isNull(userA.getUserE().getDeptId())) {
+			return ParamValidator.invalidate("用户部门ID不能为空");
 		}
 		return ParamValidator.validate();
 	}

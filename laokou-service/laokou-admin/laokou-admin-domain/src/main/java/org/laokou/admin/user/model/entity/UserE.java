@@ -102,19 +102,14 @@ public class UserE implements Serializable {
 	private List<String> roleIds;
 
 	/**
-	 * 部门IDS.
+	 * 部门ID.
 	 */
-	private List<String> deptIds;
+	private Long deptId;
 
 	/**
 	 * 用户角色IDS.
 	 */
 	private List<Long> userRoleIds;
-
-	/**
-	 * 用户部门IDS.
-	 */
-	private List<Long> userDeptIds;
 
 	/**
 	 * 用户IDS.

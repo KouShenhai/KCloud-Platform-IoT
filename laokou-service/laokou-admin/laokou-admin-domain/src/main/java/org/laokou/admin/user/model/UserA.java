@@ -20,6 +20,7 @@ package org.laokou.admin.user.model;
 import lombok.Getter;
 import org.laokou.admin.user.model.entity.UserE;
 import org.laokou.admin.user.model.enums.OperateType;
+import org.laokou.admin.user.model.enums.SuperAdmin;
 import org.laokou.admin.user.model.validator.UserParamValidator;
 import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.i18n.annotation.Entity;
@@ -71,7 +72,6 @@ public class UserA extends AggregateRoot implements ValidateName {
 			@Qualifier("resetUserPwdParamValidator") UserParamValidator resetUserPwdParamValidator,
 			@Qualifier("modifyUserAuthorityParamValidator") UserParamValidator modifyUserAuthorityParamValidator,
 			PasswordEncoder passwordEncoder) {
-		;
 		this.idGenerator = idGenerator;
 		this.saveUserParamValidator = saveUserParamValidator;
 		this.modifyUserParamValidator = modifyUserParamValidator;
@@ -104,13 +104,14 @@ public class UserA extends AggregateRoot implements ValidateName {
 		String mail = this.userE.getMail();
 		String mobile = this.userE.getMobile();
 		this.userE = this.userE.toBuilder()
-			.username(StringExtUtils.isNotEmpty(username) ? AESUtils.encrypt(username) : StringConstants.EMPTY)
-			.usernamePhrase(StringExtUtils.isNotEmpty(username) ? encryptPhrase(username) : StringConstants.EMPTY)
-			.password(encodedPassword("test123"))
-			.mail(StringExtUtils.isNotEmpty(mail) ? AESUtils.encrypt(mail) : StringConstants.EMPTY)
-			.mobile(StringExtUtils.isNotEmpty(mobile) ? AESUtils.encrypt(mobile) : StringConstants.EMPTY)
-			.mobilePhrase(StringExtUtils.isNotEmpty(mobile) ? encryptMobile(mobile) : StringConstants.EMPTY)
-			.mailPhrase(StringExtUtils.isNotEmpty(mail) ? encryptPhrase(mail) : StringConstants.EMPTY)
+			.superAdmin(SuperAdmin.NO.getCode())
+			.username(AESUtils.encrypt(username))
+			.usernamePhrase(encryptPhrase(username))
+			.password(encodedPassword("laokou123"))
+			.mail(AESUtils.encrypt(mail))
+			.mobile(AESUtils.encrypt(mobile))
+			.mobilePhrase(encryptMobile(mobile))
+			.mailPhrase(encryptPhrase(mail))
 			.build();
 		return this;
 	}
@@ -118,15 +119,14 @@ public class UserA extends AggregateRoot implements ValidateName {
 	public UserA encryptByUpdate() throws Exception {
 		String mail = this.userE.getMail();
 		String mobile = this.userE.getMobile();
-		String password = this.userE.getPassword();
 		this.userE = this.userE.toBuilder()
 			.username(null)
 			.usernamePhrase(null)
-			.mobile(StringExtUtils.isNotEmpty(mobile) ? AESUtils.encrypt(mobile) : StringConstants.EMPTY)
-			.mobilePhrase(StringExtUtils.isNotEmpty(mobile) ? encryptMobile(mobile) : StringConstants.EMPTY)
-			.mailPhrase(StringExtUtils.isNotEmpty(mail) ? encryptPhrase(mail) : StringConstants.EMPTY)
-			.password(StringExtUtils.isNotEmpty(password) ? encodedPassword(password) : StringConstants.EMPTY)
-			.mail(StringExtUtils.isNotEmpty(mail) ? AESUtils.encrypt(mail) : StringConstants.EMPTY)
+			.mobile(AESUtils.encrypt(mobile))
+			.mobilePhrase(encryptMobile(mobile))
+			.mailPhrase(encryptPhrase(mail))
+			.password(encodedPassword(this.userE.getPassword()))
+			.mail(AESUtils.encrypt(mail))
 			.build();
 		return this;
 	}
@@ -149,6 +149,9 @@ public class UserA extends AggregateRoot implements ValidateName {
 	}
 
 	private String encryptMobile(String mobile) throws Exception {
+		if (StringExtUtils.isEmpty(mobile)) {
+			return StringConstants.EMPTY;
+		}
 		List<String> list = new ArrayList<>(3);
 		list.add(AESUtils.encrypt(mobile.substring(0, 3)));
 		list.add(AESUtils.encrypt(mobile.substring(3, 7)));
@@ -157,6 +160,9 @@ public class UserA extends AggregateRoot implements ValidateName {
 	}
 
 	private String encryptPhrase(String phrase) throws Exception {
+		if (StringExtUtils.isEmpty(phrase)) {
+			return StringConstants.EMPTY;
+		}
 		List<String> list = new ArrayList<>(30);
 		for (int i = 0; i <= phrase.length() - 4; i++) {
 			list.add(AESUtils.encrypt(phrase.substring(i, i + 4)));
@@ -165,6 +171,9 @@ public class UserA extends AggregateRoot implements ValidateName {
 	}
 
 	private String encodedPassword(String password) {
+		if (StringExtUtils.isEmpty(password)) {
+			return null;
+		}
 		return passwordEncoder.encode(password);
 	}
 

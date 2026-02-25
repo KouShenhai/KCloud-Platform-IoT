@@ -18,7 +18,6 @@
 package org.laokou.admin.user.ability;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.user.gateway.UserDeptGateway;
 import org.laokou.admin.user.gateway.UserGateway;
 import org.laokou.admin.user.gateway.UserRoleGateway;
 import org.laokou.admin.user.model.UserA;
@@ -43,26 +42,18 @@ public class UserDomainService {
 
 	private final UserRoleGateway userRoleGateway;
 
-	private final UserDeptGateway userDeptGateway;
-
-	public void createUser(UserA userA) throws Exception {
-		// 加密
-		userGateway.createUser(userA.encryptByCreate());
+	public void createUser(UserA userA) {
+		userGateway.createUser(userA);
 	}
 
-	public void updateUser(UserA userA) throws Exception {
-		// 加密
-		userGateway.updateUser(userA.encryptByUpdate());
+	public void updateUser(UserA userA) {
+		userGateway.updateUser(userA);
 	}
 
 	public void updateAuthorityUser(UserA userA) throws Exception {
-		List<Callable<Boolean>> futures = new ArrayList<>(2);
+		List<Callable<Boolean>> futures = new ArrayList<>(1);
 		futures.add(() -> {
 			userRoleGateway.updateUserRole(userA);
-			return true;
-		});
-		futures.add(() -> {
-			userDeptGateway.updateUserDept(userA);
 			return true;
 		});
 		try (ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor()) {
@@ -71,17 +62,13 @@ public class UserDomainService {
 	}
 
 	public void deleteUser(Long[] ids) throws InterruptedException {
-		List<Callable<Boolean>> futures = new ArrayList<>(3);
+		List<Callable<Boolean>> futures = new ArrayList<>(2);
 		futures.add(() -> {
 			userGateway.deleteUser(ids);
 			return true;
 		});
 		futures.add(() -> {
 			userRoleGateway.deleteUserRole(ids);
-			return true;
-		});
-		futures.add(() -> {
-			userDeptGateway.deleteUserDept(ids);
 			return true;
 		});
 		try (ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor()) {
