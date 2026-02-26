@@ -25,7 +25,7 @@ import java.io.Serializable;
  * @author laokou
  */
 @Data
-public class WebSocketMessageCO implements Serializable {
+public class WebSocketMessage implements Serializable {
 
 	private String token;
 

@@ -32,8 +32,8 @@ import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.common.security.config.OAuth2OpaqueTokenIntrospector;
-import org.laokou.common.websocket.model.WebSocketMessageCO;
-import org.laokou.common.websocket.model.WebSocketTypeEnum;
+import org.laokou.common.websocket.model.WebSocketMessage;
+import org.laokou.common.websocket.model.enums.WebSocketType;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2Error;
@@ -104,11 +104,11 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 			int maxHeartBeatCount = springWebSocketServerProperties.getMaxHeartBeatCount();
 			if (WebSocketSessionHeartBeatManager.get(channelId) >= maxHeartBeatCount) {
 				log.info("【WebSocket-Server】 => 关闭连接，超过{}次未接收{}心跳{}", maxHeartBeatCount, channelId,
-						WebSocketTypeEnum.PONG.getCode());
+						WebSocketType.PONG.getCode());
 				ctx.close();
 				return;
 			}
-			String ping = WebSocketTypeEnum.PING.getCode();
+			String ping = WebSocketType.PING.getCode();
 			log.info("【WebSocket-Server】 => 发送{}心跳{}", channelId, ping);
 			ctx.writeAndFlush(new TextWebSocketFrame(ping));
 			WebSocketSessionHeartBeatManager.increment(channelId);
@@ -125,11 +125,11 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 			return;
 		}
 		try {
-			WebSocketMessageCO co = JacksonUtils.toBean(str, WebSocketMessageCO.class);
-			OAuth2AuthenticatedPrincipal principal = opaqueTokenIntrospector.introspect(co.getToken());
+			WebSocketMessage wsm = JacksonUtils.toBean(str, WebSocketMessage.class);
+			OAuth2AuthenticatedPrincipal principal = opaqueTokenIntrospector.introspect(wsm.getToken());
 			UserExtDetails userExtDetails = (UserExtDetails) principal;
-			log.info("【WebSocket-Server】 => 令牌校验成功，用户名：{}", principal.getName());
-			WebSocketTypeEnum.getByCode(co.getType()).handle(userExtDetails, co, channel);
+			log.debug("【WebSocket-Server】 => 令牌校验成功，用户名：{}", principal.getName());
+			WebSocketType.getByCode(wsm.getType()).handle(userExtDetails, wsm, channel);
 		}
 		catch (OAuth2AuthenticationException ex) {
 			OAuth2Error error = ex.getError();

@@ -26,6 +26,7 @@ import org.laokou.common.context.util.UserExtDetails;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.websocket.config.WebSocketSessionHeartBeatManager;
 import org.laokou.common.websocket.config.WebSocketSessionManager;
+import org.laokou.common.websocket.model.enums.WebSocketType;
 import org.mockito.Mockito;
 
 import java.util.Set;
@@ -35,7 +36,7 @@ import java.util.Set;
  *
  * @author laokou
  */
-class WebSocketTypeEnumTest {
+class WebSocketTypeTest {
 
 	private static final String TEST_CHANNEL_ID = "test-channel-enum";
 
@@ -47,10 +48,10 @@ class WebSocketTypeEnumTest {
 	@Test
 	void test_getByCode_for_message() {
 		// When
-		WebSocketTypeEnum result = WebSocketTypeEnum.getByCode("message");
+		WebSocketType result = WebSocketType.getByCode("message");
 
 		// Then
-		Assertions.assertThat(result).isEqualTo(WebSocketTypeEnum.MESSAGE);
+		Assertions.assertThat(result).isEqualTo(WebSocketType.MESSAGE);
 		Assertions.assertThat(result.getCode()).isEqualTo("message");
 		Assertions.assertThat(result.getDesc()).isEqualTo("消息");
 	}
@@ -58,10 +59,10 @@ class WebSocketTypeEnumTest {
 	@Test
 	void test_getByCode_for_connect() {
 		// When
-		WebSocketTypeEnum result = WebSocketTypeEnum.getByCode("connect");
+		WebSocketType result = WebSocketType.getByCode("connect");
 
 		// Then
-		Assertions.assertThat(result).isEqualTo(WebSocketTypeEnum.CONNECT);
+		Assertions.assertThat(result).isEqualTo(WebSocketType.CONNECT);
 		Assertions.assertThat(result.getCode()).isEqualTo("connect");
 		Assertions.assertThat(result.getDesc()).isEqualTo("建立连接");
 	}
@@ -69,10 +70,10 @@ class WebSocketTypeEnumTest {
 	@Test
 	void test_getByCode_for_ping() {
 		// When
-		WebSocketTypeEnum result = WebSocketTypeEnum.getByCode("ping");
+		WebSocketType result = WebSocketType.getByCode("ping");
 
 		// Then
-		Assertions.assertThat(result).isEqualTo(WebSocketTypeEnum.PING);
+		Assertions.assertThat(result).isEqualTo(WebSocketType.PING);
 		Assertions.assertThat(result.getCode()).isEqualTo("ping");
 		Assertions.assertThat(result.getDesc()).isEqualTo("发送心跳");
 	}
@@ -80,10 +81,10 @@ class WebSocketTypeEnumTest {
 	@Test
 	void test_getByCode_for_pong() {
 		// When
-		WebSocketTypeEnum result = WebSocketTypeEnum.getByCode("pong");
+		WebSocketType result = WebSocketType.getByCode("pong");
 
 		// Then
-		Assertions.assertThat(result).isEqualTo(WebSocketTypeEnum.PONG);
+		Assertions.assertThat(result).isEqualTo(WebSocketType.PONG);
 		Assertions.assertThat(result.getCode()).isEqualTo("pong");
 		Assertions.assertThat(result.getDesc()).isEqualTo("心跳应答");
 	}
@@ -91,7 +92,7 @@ class WebSocketTypeEnumTest {
 	@Test
 	void test_getByCode_throws_exception_for_unknown() {
 		// When & Then
-		Assertions.assertThatThrownBy(() -> WebSocketTypeEnum.getByCode("unknown"))
+		Assertions.assertThatThrownBy(() -> WebSocketType.getByCode("unknown"))
 			.isInstanceOf(BizException.class)
 			.hasMessageContaining("枚举类型不存在");
 	}
@@ -107,11 +108,11 @@ class WebSocketTypeEnumTest {
 		Mockito.when(mockChannel.id()).thenReturn(mockChannelId);
 		Mockito.when(mockChannelId.asLongText()).thenReturn(TEST_CHANNEL_ID);
 
-		WebSocketMessageCO message = new WebSocketMessageCO();
+		WebSocketMessage message = new WebSocketMessage();
 		message.setType("connect");
 
 		// When
-		WebSocketTypeEnum.CONNECT.handle(userDetails, message, mockChannel);
+		WebSocketType.CONNECT.handle(userDetails, message, mockChannel);
 
 		// Then
 		Set<Channel> channels = WebSocketSessionManager.get(1001L);
@@ -135,12 +136,12 @@ class WebSocketTypeEnumTest {
 		WebSocketSessionHeartBeatManager.increment(TEST_CHANNEL_ID);
 		WebSocketSessionHeartBeatManager.increment(TEST_CHANNEL_ID);
 
-		WebSocketMessageCO message = new WebSocketMessageCO();
+		WebSocketMessage message = new WebSocketMessage();
 		message.setType("pong");
 		message.setPayload("pong");
 
 		// When
-		WebSocketTypeEnum.PONG.handle(userDetails, message, mockChannel);
+		WebSocketType.PONG.handle(userDetails, message, mockChannel);
 
 		// Then
 		int count = WebSocketSessionHeartBeatManager.get(TEST_CHANNEL_ID);
