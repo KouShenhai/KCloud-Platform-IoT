@@ -23,11 +23,6 @@
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-iot-adapter</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
       <artifactId>laokou-auth-adapter</artifactId>
       <version>${project.version}</version>
     </dependency>

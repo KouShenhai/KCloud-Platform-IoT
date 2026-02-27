@@ -47,8 +47,18 @@ spring:
       ignored-interfaces:
         - docker0
         - veth.*
-  snowflake:
-    enabled: true
+  id-generator:
+    redis-segment:
+      # 是否启用 Redis 分段 ID 生成器（需同时配置 Redis 连接信息）
+      enabled: true
+      # 每次从 Redis 获取的号段步长
+      step: 1000
+      # Redis Key
+      key: "distributed:id:segment"
+      # 异步加载因子（号段使用达到此比例时预加载下一个号段）
+      load-factor: 0.5
+    snowflake:
+      enabled: true
   grpc:
     server:
       servlet:

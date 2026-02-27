@@ -19,32 +19,40 @@ package org.laokou.distributed.id.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 
 /**
+ * Redis 分段 ID 生成器配置属性.
+ *
  * @author laokou
  */
 @Data
-@Component
-@ConfigurationProperties(prefix = "spring.id-generator.snowflake")
-public class SpringSnowflakeProperties {
+@ConfigurationProperties(prefix = "spring.id-generator.redis-segment")
+public class SpringRedisSegmentProperties {
 
 	/**
-	 * 是否启用雪花算法.
+	 * 是否启用 Redis 分段 ID 生成器.
 	 */
-	private boolean enabled = true;
+	private boolean enabled = false;
 
 	/**
-	 * 起始时间戳（默认：2022-06-15 00:00:00）.
+	 * 每次从 Redis 获取的号段步长.
 	 * <p>
-	 * 雪花ID的时间戳部分是相对于这个起始时间的偏移量。 设置一个较近的起始时间可以让ID更短，但不能超过当前时间。 一旦设定不建议修改，否则可能产生重复ID。
+	 * 步长越大，对 Redis 的访问频率越低，性能越高。 但步长过大会导致服务重启时浪费较多 ID。
 	 * </p>
 	 */
-	private long startTimestamp = 1655222400000L;
+	private int step = 1000;
 
 	/**
-	 * 批量生成ID的最大数量.
+	 * Redis Key.
 	 */
-	private int maxBatchSize = 1000;
+	private String key = "distributed:id:segment";
+
+	/**
+	 * 异步加载因子.
+	 * <p>
+	 * 当号段使用比例达到此值时，异步加载下一个号段。 取值范围 (0, 1)，默认 0.5 表示号段用了50%时开始预加载。
+	 * </p>
+	 */
+	private double loadFactor = 0.5;
 
 }

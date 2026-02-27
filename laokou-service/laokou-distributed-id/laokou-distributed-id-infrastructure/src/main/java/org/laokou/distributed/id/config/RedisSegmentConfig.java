@@ -17,33 +17,31 @@
 
 package org.laokou.distributed.id.config;
 
-import com.alibaba.cloud.nacos.NacosConfigManager;
-import com.alibaba.cloud.nacos.NacosServiceManager;
+import org.laokou.common.redis.util.RedisUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 
 /**
+ * Redis 分段 ID 生成器自动配置.
+ *
  * @author laokou
  */
 @Configuration
-@ConditionalOnProperty(prefix = "spring.id-generator.snowflake", name = "enabled", havingValue = "true",
-		matchIfMissing = true)
-@EnableConfigurationProperties(SpringSnowflakeProperties.class)
-class SnowflakeConfig {
+@ConditionalOnProperty(prefix = "spring.id-generator.redis-segment", name = "enabled", havingValue = "true")
+@EnableConfigurationProperties(SpringRedisSegmentProperties.class)
+class RedisSegmentConfig {
 
 	/**
-	 * 创建基于 Nacos 的雪花生成器 Bean.
-	 * @return NacosSnowflakeGenerator
+	 * 创建 Redis 分段 ID 生成器 Bean.
+	 * @param redisUtils Redis工具类
+	 * @param properties 配置属性
+	 * @return RedisSegmentIdGenerator
 	 */
 	@Bean(initMethod = "init", destroyMethod = "close")
-	public IdGenerator snowflakeIdGenerator(NacosConfigManager nacosConfigManager,
-			NacosServiceManager nacosServiceManager, SpringSnowflakeProperties springSnowflakeProperties,
-			Environment environment) {
-		return new SnowflakeIdGenerator(nacosConfigManager, nacosServiceManager, springSnowflakeProperties,
-				environment);
+	public IdGenerator redisSegmentIdGenerator(RedisUtils redisUtils, SpringRedisSegmentProperties properties) {
+		return new RedisSegmentIdGenerator(redisUtils, properties);
 	}
 
 }

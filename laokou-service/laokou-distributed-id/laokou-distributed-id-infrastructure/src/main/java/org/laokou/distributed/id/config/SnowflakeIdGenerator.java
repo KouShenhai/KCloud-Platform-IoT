@@ -50,7 +50,7 @@ import java.util.stream.LongStream;
  * @author laokou
  */
 @Slf4j
-public class NacosSnowflakeGenerator implements SnowflakeGenerator {
+public class SnowflakeIdGenerator implements IdGenerator {
 
 	private static final String DATACENTER_ID_KEY = "datacenter_id";
 
@@ -148,7 +148,7 @@ public class NacosSnowflakeGenerator implements SnowflakeGenerator {
 	 */
 	private int currentPort;
 
-	public NacosSnowflakeGenerator(NacosConfigManager nacosConfigManager, NacosServiceManager nacosServiceManager,
+	public SnowflakeIdGenerator(NacosConfigManager nacosConfigManager, NacosServiceManager nacosServiceManager,
 			SpringSnowflakeProperties springSnowflakeProperties, Environment environment) {
 		this.machineBit = 5L;
 		this.datacenterBit = 5L;
@@ -267,6 +267,11 @@ public class NacosSnowflakeGenerator implements SnowflakeGenerator {
 				| (machineId << sequenceBit)
 				// 序列标识部分
 				| sequence;
+	}
+
+	@Override
+	public boolean isAvailable() {
+		return initialized.get();
 	}
 
 	@Override
