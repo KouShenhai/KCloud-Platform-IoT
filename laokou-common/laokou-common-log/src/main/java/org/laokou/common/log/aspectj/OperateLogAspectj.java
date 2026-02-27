@@ -22,14 +22,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.laokou.common.core.util.RequestUtils;
-import org.laokou.common.i18n.util.SpringUtils;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.fory.config.ForyFactory;
+import org.laokou.common.i18n.util.SpringUtils;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.log.convertor.OperateLogConvertor;
-import org.laokou.common.log.model.MqEnum;
+import org.laokou.common.log.factory.DomainFactory;
 import org.laokou.common.log.model.OperateLogA;
+import org.laokou.common.log.model.enums.Mq;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -61,12 +61,9 @@ public class OperateLogAspectj {
 	public Object doAround(ProceedingJoinPoint point, OperateLog operateLog) throws Throwable {
 		StopWatch stopWatch = new StopWatch("操作日志");
 		stopWatch.start();
-		OperateLogA operateLogA = OperateLogConvertor.toEntity();
-		operateLogA.getModuleName(operateLog.module());
-		operateLogA.getName(operateLog.operation());
-		operateLogA.getServiceId(springUtils.getServiceId());
-		operateLogA.getRequest(RequestUtils.getHttpServletRequest());
-		operateLogA.getProfile(environment.getActiveProfiles()[0]);
+		OperateLogA operateLogA = DomainFactory.createOperateLogA()
+			.create(OperateLogConvertor.toEntity(operateLog, springUtils::getServiceId,
+					() -> environment.getActiveProfiles()[0]));
 		String className = point.getTarget().getClass().getName();
 		String methodName = point.getSignature().getName();
 		// 组装类名
@@ -86,7 +83,7 @@ public class OperateLogAspectj {
 			// 获取错误
 			operateLogA.getThrowable(throwable);
 			// 发布领域事件
-			kafkaDomainEventPublisher.publish(MqEnum.OPERATE_LOG.getTopic(),
+			kafkaDomainEventPublisher.publish(Mq.OPERATE_LOG.getTopic(),
 					OperateLogConvertor.toDomainEvent(operateLogA));
 		}
 	}
