@@ -15,30 +15,22 @@
  *
  */
 
-package org.laokou.common.log.model;
+package org.laokou.common.websocket.model;
 
-import lombok.Getter;
+import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * @author laokou
  */
-@Getter
-public enum StatusEnum {
+@Data
+public class WebSocketMessage implements Serializable {
 
-	// @formatter:off
-	OK(0, "成功"),
+	private String token;
 
-	FAIL(1, "失败");
+	private String type;
 
-	private final int code;
-
-	private final String desc;
-
-	StatusEnum(int code, String desc) {
-		this.code = code;
-		this.desc = desc;
-	}
-
-	// @formatter:on
+	private String payload;
 
 }

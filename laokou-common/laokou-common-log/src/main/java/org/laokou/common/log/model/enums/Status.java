@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.log.model;
+package org.laokou.common.log.model.enums;
 
 import lombok.Getter;
 
@@ -23,29 +23,22 @@ import lombok.Getter;
  * @author laokou
  */
 @Getter
-public enum MqEnum {
+public enum Status {
 
-	OPERATE_LOG("operate_log", "操作日志") {
-		@Override
-		public String getTopic() {
-			return OPERATE_LOG_TOPIC;
-		}
+	// @formatter:off
+	OK(0, "成功"),
 
-	};
+	FAIL(1, "失败");
 
-	private final String code;
+	private final int code;
 
 	private final String desc;
 
-	MqEnum(String code, String desc) {
+	Status(int code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}
 
-	public abstract String getTopic();
-
-	public static final String OPERATE_LOG_TOPIC = "operate-log";
-
-	public static final String OPERATE_LOG_CONSUMER_GROUP = "operate-log-consumer-group";
+	// @formatter:on
 
 }

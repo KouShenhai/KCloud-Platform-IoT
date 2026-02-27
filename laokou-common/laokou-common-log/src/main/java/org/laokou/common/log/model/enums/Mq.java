@@ -15,22 +15,37 @@
  *
  */
 
-package org.laokou.common.websocket.model;
+package org.laokou.common.log.model.enums;
 
-import lombok.Data;
-
-import java.io.Serializable;
+import lombok.Getter;
 
 /**
  * @author laokou
  */
-@Data
-public class WebSocketMessageCO implements Serializable {
+@Getter
+public enum Mq {
 
-	private String token;
+	OPERATE_LOG("operate_log", "操作日志") {
+		@Override
+		public String getTopic() {
+			return OPERATE_LOG_TOPIC;
+		}
 
-	private String type;
+	};
 
-	private String payload;
+	private final String code;
+
+	private final String desc;
+
+	Mq(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
+
+	public abstract String getTopic();
+
+	public static final String OPERATE_LOG_TOPIC = "operate-log";
+
+	public static final String OPERATE_LOG_CONSUMER_GROUP = "operate-log-consumer-group";
 
 }
