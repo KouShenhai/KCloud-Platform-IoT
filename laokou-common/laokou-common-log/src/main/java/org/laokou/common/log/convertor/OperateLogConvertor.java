@@ -17,41 +17,68 @@
 
 package org.laokou.common.log.convertor;
 
+import com.google.common.net.HttpHeaders;
+import jakarta.servlet.http.HttpServletRequest;
 import org.laokou.common.context.util.UserUtils;
+import org.laokou.common.core.util.AddressUtils;
+import org.laokou.common.core.util.IpUtils;
+import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
+import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.log.factory.DomainFactory;
 import org.laokou.common.log.handler.event.OperateEvent;
 import org.laokou.common.log.mapper.OperateLogDO;
 import org.laokou.common.log.model.OperateLogA;
+import org.laokou.common.log.model.entity.OperateLogE;
+import org.lionsoul.ip2region.xdb.InetAddressException;
+
+import java.io.IOException;
+import java.util.function.Supplier;
 
 public final class OperateLogConvertor {
 
 	private OperateLogConvertor() {
 	}
 
-	public static OperateLogA toEntity() {
-		return DomainFactory.getOperateLog();
+	public static OperateLogE toEntity(OperateLog operateLog, Supplier<String> serviceIdSupplier,
+			Supplier<String> profileSupplier) throws InetAddressException, IOException, InterruptedException {
+		HttpServletRequest request = RequestUtils.getHttpServletRequest();
+		String ip = IpUtils.getIpAddr(request);
+		return DomainFactory.createOperateLogE()
+			.toBuilder()
+			.uri(request.getRequestURI())
+			.requestType(request.getMethod())
+			.userAgent(request.getHeader(HttpHeaders.USER_AGENT))
+			.ip(ip)
+			.address(AddressUtils.getRealAddress(ip))
+			.serviceAddress(System.getProperty("address"))
+			.moduleName(operateLog.module())
+			.name(operateLog.operation())
+			.serviceId(serviceIdSupplier.get())
+			.profile(profileSupplier.get())
+			.build();
 	}
 
 	public static OperateEvent toDomainEvent(OperateLogA operateLogA) {
+		OperateLogE operateLogE = operateLogA.getOperateLogE();
 		return OperateEvent.builder()
 			.id(operateLogA.getId())
-			.name(operateLogA.getName())
-			.moduleName(operateLogA.getModuleName())
-			.uri(operateLogA.getUri())
-			.methodName(operateLogA.getMethodName())
-			.requestType(operateLogA.getRequestType())
-			.requestParams(operateLogA.getRequestParams())
-			.userAgent(operateLogA.getUserAgent())
-			.ip(operateLogA.getIp())
-			.address(operateLogA.getAddress())
-			.status(operateLogA.getStatus())
-			.errorMessage(operateLogA.getErrorMessage())
-			.costTime(operateLogA.getCostTime())
-			.serviceId(operateLogA.getServiceId())
-			.serviceAddress(operateLogA.getServiceAddress())
-			.profile(operateLogA.getProfile())
-			.stackTrace(operateLogA.getStackTrace())
+			.name(operateLogE.getName())
+			.moduleName(operateLogE.getModuleName())
+			.uri(operateLogE.getUri())
+			.methodName(operateLogE.getMethodName())
+			.requestType(operateLogE.getRequestType())
+			.requestParams(operateLogE.getRequestParams())
+			.userAgent(operateLogE.getUserAgent())
+			.ip(operateLogE.getIp())
+			.address(operateLogE.getAddress())
+			.status(operateLogE.getStatus())
+			.errorMessage(operateLogE.getErrorMessage())
+			.costTime(operateLogE.getCostTime())
+			.serviceId(operateLogE.getServiceId())
+			.serviceAddress(operateLogE.getServiceAddress())
+			.profile(operateLogE.getProfile())
+			.stackTrace(operateLogE.getStackTrace())
 			.createTime(operateLogA.getCreateTime())
 			.tenantId(UserUtils.getTenantId())
 			.creator(UserUtils.getUserId())

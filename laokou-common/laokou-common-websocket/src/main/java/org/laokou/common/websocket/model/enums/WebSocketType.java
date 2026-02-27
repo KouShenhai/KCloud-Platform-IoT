@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.websocket.model;
+package org.laokou.common.websocket.model.enums;
 
 import io.netty.channel.Channel;
 import lombok.Getter;
@@ -24,25 +24,26 @@ import org.laokou.common.i18n.util.EnumParser;
 import org.laokou.common.context.util.UserExtDetails;
 import org.laokou.common.websocket.config.WebSocketSessionHeartBeatManager;
 import org.laokou.common.websocket.config.WebSocketSessionManager;
+import org.laokou.common.websocket.model.WebSocketMessage;
 
 /**
  * @author laokou
  */
 @Slf4j
 @Getter
-public enum WebSocketTypeEnum {
+public enum WebSocketType {
 
 	MESSAGE("message", "消息") {
 		@Override
-		public void handle(UserExtDetails userExtDetails, WebSocketMessageCO co, Channel channel) {
+		public void handle(UserExtDetails userExtDetails, WebSocketMessage wsm, Channel channel) {
 			log.info("【WebSocket-Server】 => 接收到消息，通道ID：{}，用户ID：{}，消息：{}", channel.id().asLongText(),
-					userExtDetails.getId(), co.getPayload());
+					userExtDetails.getId(), wsm.getPayload());
 		}
 	},
 
 	CONNECT("connect", "建立连接") {
 		@Override
-		public void handle(UserExtDetails userExtDetails, WebSocketMessageCO co, Channel channel) {
+		public void handle(UserExtDetails userExtDetails, WebSocketMessage wsm, Channel channel) {
 			Long clientId = userExtDetails.getId();
 			log.info("【WebSocket-Server】 => 已建立连接，通道ID：{}，用户ID：{}", channel.id().asLongText(), clientId);
 			WebSocketSessionManager.add(clientId, channel);
@@ -51,15 +52,15 @@ public enum WebSocketTypeEnum {
 
 	PING("ping", "发送心跳") {
 		@Override
-		public void handle(UserExtDetails userExtDetails, WebSocketMessageCO co, Channel channel) {
+		public void handle(UserExtDetails userExtDetails, WebSocketMessage wsm, Channel channel) {
 		}
 	},
 
 	PONG("pong", "心跳应答") {
 		@Override
-		public void handle(UserExtDetails userExtDetails, WebSocketMessageCO co, Channel channel) {
+		public void handle(UserExtDetails userExtDetails, WebSocketMessage wsm, Channel channel) {
 			String channelId = channel.id().asLongText();
-			log.info("【WebSocket-Server】 => 接收{}心跳{}", channelId, co.getPayload());
+			log.info("【WebSocket-Server】 => 接收{}心跳{}", channelId, wsm.getPayload());
 			if (WebSocketSessionHeartBeatManager.get(channelId) > 0) {
 				WebSocketSessionHeartBeatManager.reset(channelId);
 			}
@@ -70,15 +71,15 @@ public enum WebSocketTypeEnum {
 
 	private final String desc;
 
-	WebSocketTypeEnum(String code, String desc) {
+	WebSocketType(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}
 
-	public static WebSocketTypeEnum getByCode(String code) {
-		return EnumParser.parse(WebSocketTypeEnum.class, WebSocketTypeEnum::getCode, code);
+	public static WebSocketType getByCode(String code) {
+		return EnumParser.parse(WebSocketType.class, WebSocketType::getCode, code);
 	}
 
-	public abstract void handle(UserExtDetails userExtDetails, WebSocketMessageCO co, Channel channel);
+	public abstract void handle(UserExtDetails userExtDetails, WebSocketMessage wsm, Channel channel);
 
 }

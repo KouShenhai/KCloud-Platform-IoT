@@ -19,14 +19,19 @@ package org.laokou.common.log.factory;
 
 import org.laokou.common.i18n.util.SpringContextUtils;
 import org.laokou.common.log.model.OperateLogA;
+import org.laokou.common.log.model.entity.OperateLogE;
 
 public final class DomainFactory {
 
 	private DomainFactory() {
 	}
 
-	public static OperateLogA getOperateLog() {
+	public static OperateLogA createOperateLogA() {
 		return SpringContextUtils.getBeanProvider(OperateLogA.class);
+	}
+
+	public static OperateLogE createOperateLogE() {
+		return SpringContextUtils.getBeanProvider(OperateLogE.class);
 	}
 
 }

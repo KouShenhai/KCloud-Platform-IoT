@@ -148,7 +148,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 |        Nacos         |    3.1.0    |
 |         gRPC         |   1.77.0    |
 |        Redis         |    8.0.1    |
-|    Elasticsearch     |    9.3.0    |
+|    Elasticsearch     |    9.3.1    |
 |        Netty         | 4.2.9.Final |
 |        Kafka         |    4.0.2    |
 |        Pulsar        |    4.1.2    |
@@ -238,7 +238,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级微服务架构的I
 
 ### 👊 性能评测
 
-[请点击我，查看详情](性能测试.adoc)
+[请点击我，查看详情](PT.adoc)
 
 ### 😝 贡献者许可协议
 

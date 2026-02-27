@@ -159,7 +159,7 @@ image::doc/image/老寇IoT云平台业务架构图.png[架构图,align=center]
 |Nacos                       |3.1.0
 |gRPC                        |1.77.0
 |Redis                       |8.0.1
-|Elasticsearch               |9.3.0
+|Elasticsearch               |9.3.1
 |Netty                       |4.2.9.Final
 |Kafka                       |4.0.2
 |Pulsar                      |4.1.2
@@ -250,7 +250,7 @@ image::https://www.murphysec.com/platform3/v31/badge/1810494453766979584.svg[htt
 
 === 👊 性能评测
 
-link:性能测试.adoc[请点击我，查看详情]
+link:PT.adoc[请点击我，查看详情]
 
 === 😝 贡献者许可协议
 

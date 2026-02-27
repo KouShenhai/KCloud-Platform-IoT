@@ -23,7 +23,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.laokou.common.log.convertor.OperateLogConvertor;
 import org.laokou.common.log.handler.event.OperateEvent;
 import org.laokou.common.log.mapper.OperateLogMapper;
-import org.laokou.common.log.model.MqEnum;
+import org.laokou.common.log.model.enums.Mq;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.laokou.common.tenant.constant.DSConstants;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -44,7 +44,7 @@ public class OperateEventHandler {
 
 	private final TransactionalUtils transactionalUtils;
 
-	@KafkaListener(topics = MqEnum.OPERATE_LOG_TOPIC, groupId = MqEnum.OPERATE_LOG_CONSUMER_GROUP)
+	@KafkaListener(topics = Mq.OPERATE_LOG_TOPIC, groupId = Mq.OPERATE_LOG_CONSUMER_GROUP)
 	public void handleOperateLog(List<ConsumerRecord<String, Object>> messages, Acknowledgment acknowledgment) {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);

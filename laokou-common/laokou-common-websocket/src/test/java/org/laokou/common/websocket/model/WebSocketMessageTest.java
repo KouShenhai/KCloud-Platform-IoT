@@ -26,12 +26,12 @@ import org.laokou.common.i18n.util.JacksonUtils;
  *
  * @author laokou
  */
-class WebSocketMessageCOTest {
+class WebSocketMessageTest {
 
 	@Test
 	void test_setter_getter() {
 		// Given
-		WebSocketMessageCO message = new WebSocketMessageCO();
+		WebSocketMessage message = new WebSocketMessage();
 
 		// When
 		message.setToken("test-token-12345");
@@ -47,7 +47,7 @@ class WebSocketMessageCOTest {
 	@Test
 	void test_serialization_to_json() {
 		// Given
-		WebSocketMessageCO message = new WebSocketMessageCO();
+		WebSocketMessage message = new WebSocketMessage();
 		message.setToken("Bearer abc123");
 		message.setType("connect");
 		message.setPayload("connection payload");
@@ -68,7 +68,7 @@ class WebSocketMessageCOTest {
 		String json = "{\"token\":\"test-token\",\"type\":\"message\",\"payload\":\"test message\"}";
 
 		// When
-		WebSocketMessageCO message = JacksonUtils.toBean(json, WebSocketMessageCO.class);
+		WebSocketMessage message = JacksonUtils.toBean(json, WebSocketMessage.class);
 
 		// Then
 		Assertions.assertThat(message).isNotNull();
@@ -80,14 +80,14 @@ class WebSocketMessageCOTest {
 	@Test
 	void test_serialization_roundtrip() {
 		// Given
-		WebSocketMessageCO original = new WebSocketMessageCO();
+		WebSocketMessage original = new WebSocketMessage();
 		original.setToken("roundtrip-token");
 		original.setType("pong");
 		original.setPayload("pong response");
 
 		// When
 		String json = JacksonUtils.toJsonStr(original);
-		WebSocketMessageCO deserialized = JacksonUtils.toBean(json, WebSocketMessageCO.class);
+		WebSocketMessage deserialized = JacksonUtils.toBean(json, WebSocketMessage.class);
 
 		// Then
 		Assertions.assertThat(deserialized.getToken()).isEqualTo(original.getToken());
@@ -98,7 +98,7 @@ class WebSocketMessageCOTest {
 	@Test
 	void test_null_fields() {
 		// Given
-		WebSocketMessageCO message = new WebSocketMessageCO();
+		WebSocketMessage message = new WebSocketMessage();
 
 		// Then
 		Assertions.assertThat(message.getToken()).isNull();

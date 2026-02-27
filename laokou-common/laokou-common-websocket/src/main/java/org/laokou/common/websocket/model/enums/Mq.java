@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.websocket.model;
+package org.laokou.common.websocket.model.enums;
 
 import lombok.Getter;
 
@@ -23,6 +23,6 @@ import lombok.Getter;
  * @author laokou
  */
 @Getter
-public enum MqEnum {
+public enum Mq {
 
 }
