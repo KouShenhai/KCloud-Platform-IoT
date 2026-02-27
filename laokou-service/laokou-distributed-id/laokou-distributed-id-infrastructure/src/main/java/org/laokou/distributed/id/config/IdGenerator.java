@@ -18,13 +18,18 @@
 package org.laokou.distributed.id.config;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * 雪花算法生成器接口.
+ * 统一 ID 生成器接口.
+ * <p>
+ * 支持雪花算法和 Redis 分段两种策略，通过 gRPC 请求参数动态选择。
+ * </p>
  *
  * @author laokou
  */
-public interface SnowflakeGenerator {
+public interface IdGenerator {
 
 	/**
 	 * 初始化生成器.
@@ -39,10 +44,31 @@ public interface SnowflakeGenerator {
 	void close() throws Exception;
 
 	/**
-	 * 生成下一个雪花ID.
-	 * @return 雪花ID
+	 * 生成下一个唯一ID.
+	 * @return 唯一ID
 	 */
 	long nextId();
+
+	/**
+	 * 批量生成唯一ID.
+	 * @param num 数量
+	 * @return ID列表
+	 */
+	default List<Long> nextIds(int num) {
+		List<Long> ids = new ArrayList<>(num);
+		for (int i = 0; i < num; i++) {
+			ids.add(nextId());
+		}
+		return ids;
+	}
+
+	/**
+	 * 判断当前生成器是否可用.
+	 * @return 是否可用
+	 */
+	default boolean isAvailable() {
+		return false;
+	}
 
 	/**
 	 * 根据雪花ID获取生成时间.

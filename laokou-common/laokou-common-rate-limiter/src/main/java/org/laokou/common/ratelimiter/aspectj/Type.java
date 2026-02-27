@@ -18,6 +18,7 @@
 package org.laokou.common.ratelimiter.aspectj;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.Getter;
 import org.laokou.common.context.util.UserUtils;
 import org.laokou.common.core.util.IpUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
@@ -27,57 +28,52 @@ import org.laokou.common.i18n.common.constant.StringConstants;
  *
  * @author laokou
  */
+@Getter
 public enum Type {
 
-	/**
-	 * 默认.
-	 */
-	DEFAULT {
+	DEFAULT("default", "默认") {
 		@Override
 		public String resolve(HttpServletRequest request) {
 			return StringConstants.EMPTY;
 		}
 	},
 
-	/**
-	 * IP.
-	 */
-	IP {
+	IP("ip", "IP地址") {
 		@Override
 		public String resolve(HttpServletRequest request) {
 			return IpUtils.getIpAddr(request);
 		}
 	},
 
-	/**
-	 * 路径.
-	 */
-	PATH {
+	PATH("path", "路径") {
 		@Override
 		public String resolve(HttpServletRequest request) {
 			return request.getContextPath();
 		}
 	},
 
-	/**
-	 * 用户.
-	 */
-	USER {
+	USER("user", "用户") {
 		@Override
 		public String resolve(HttpServletRequest request) {
 			return UserUtils.getUserId().toString();
 		}
 	},
 
-	/**
-	 * 租户.
-	 */
-	TENANT {
+	TENANT("tenant", "租户") {
 		@Override
 		public String resolve(HttpServletRequest request) {
 			return UserUtils.getTenantId().toString();
 		}
 	};
+
+	private final String code;
+
+	private final String desc;
+
+	Type(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
 
 	public abstract String resolve(HttpServletRequest request);
 

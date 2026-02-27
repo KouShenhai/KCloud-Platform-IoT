@@ -17,6 +17,7 @@
 
 package org.laokou.common.lock;
 
+import lombok.Getter;
 import org.laokou.common.redis.util.RedisUtils;
 import org.redisson.api.RLock;
 
@@ -25,57 +26,52 @@ import org.redisson.api.RLock;
  *
  * @author laokou
  */
+@Getter
 public enum Type {
 
-	/**
-	 * 普通锁(默认).
-	 */
-	LOCK {
+	LOCK("lock", "普通锁") {
 		@Override
 		public RLock getLock(RedisUtils redisUtils, String key) {
 			return redisUtils.getLock(key);
 		}
 	},
 
-	/**
-	 * 公平锁.
-	 */
-	FAIR_LOCK {
+	FAIR_LOCK("fair_lock", "公平锁") {
 		@Override
 		public RLock getLock(RedisUtils redisUtils, String key) {
 			return redisUtils.getFairLock(key);
 		}
 	},
 
-	/**
-	 * 读锁.
-	 */
-	READ_LOCK {
+	READ_LOCK("read_lock", "读锁") {
 		@Override
 		public RLock getLock(RedisUtils redisUtils, String key) {
 			return redisUtils.getReadLock(key);
 		}
 	},
 
-	/**
-	 * 写锁.
-	 */
-	WRITE_LOCK {
+	WRITE_LOCK("write_lock", "写锁") {
 		@Override
 		public RLock getLock(RedisUtils redisUtils, String key) {
 			return redisUtils.getWriteLock(key);
 		}
 	},
 
-	/**
-	 * 强一致性锁(可以解决主从延迟).
-	 */
-	FENCED_LOCK {
+	FENCED_LOCK("fenced_lock", "强一致性锁(可以解决主从延迟)") {
 		@Override
 		public RLock getLock(RedisUtils redisUtils, String key) {
 			return redisUtils.getFencedLock(key);
 		}
 	};
+
+	private final String code;
+
+	private final String desc;
+
+	Type(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
 
 	public abstract RLock getLock(RedisUtils redisUtils, String key);
 

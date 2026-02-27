@@ -4,11 +4,18 @@ option java_multiple_files = true;
 option java_package = "org.laokou.distributed.id.proto";
 option java_outer_classname = "DistributedIdProto";
 
+enum IdType {
+	SNOWFLAKE = 0;
+	REDIS_SEGMENT = 1;
+}
+
 message GenerateIdRequest {
+	IdType type = 1;
 }
 
 message GenerateBatchIdRequest {
-	int32 num = 1;
+	IdType type = 1;
+	int32 num = 2;
 }
 
 message GenerateIdResponse {

@@ -26,6 +26,7 @@ import org.laokou.admin.menu.model.validator.MenuParamValidator;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.IdGenerator;
 import org.laokou.common.i18n.common.ValidateName;
+import org.laokou.common.i18n.common.enums.IdType;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -77,7 +78,7 @@ public class MenuA extends AggregateRoot implements ValidateName {
 		this.menuE = menuE;
 		Long primaryKey = this.menuE.getId();
 		super.createTime = InstantUtils.now();
-		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : idGenerator.getId();
+		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : idGenerator.getId(IdType.REDIS_SEGMENT);
 		this.operateType = ObjectUtils.isNotNull(primaryKey) ? OperateType.MODIFY : OperateType.SAVE;
 		return this;
 	}

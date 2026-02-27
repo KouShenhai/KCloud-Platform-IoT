@@ -24,6 +24,7 @@ import org.laokou.admin.dept.model.validator.DeptParamValidator;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.IdGenerator;
 import org.laokou.common.i18n.common.ValidateName;
+import org.laokou.common.i18n.common.enums.IdType;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -65,7 +66,7 @@ public class DeptA extends AggregateRoot implements ValidateName {
 		this.deptE = deptE;
 		Long primaryKey = this.deptE.getId();
 		super.createTime = InstantUtils.now();
-		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : idGenerator.getId();
+		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : idGenerator.getId(IdType.REDIS_SEGMENT);
 		this.operateType = ObjectUtils.isNotNull(primaryKey) ? OperateType.MODIFY : OperateType.SAVE;
 		return this;
 	}

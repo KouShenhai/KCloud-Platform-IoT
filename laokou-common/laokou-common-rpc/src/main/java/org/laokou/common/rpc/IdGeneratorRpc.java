@@ -27,6 +27,7 @@ import org.laokou.distributed.id.proto.GenerateBatchIdRequest;
 import org.laokou.distributed.id.proto.GenerateBatchIdsResponse;
 import org.laokou.distributed.id.proto.GenerateIdRequest;
 import org.laokou.distributed.id.proto.GenerateIdResponse;
+import org.laokou.distributed.id.proto.IdType;
 
 import java.util.List;
 
@@ -40,10 +41,10 @@ public class IdGeneratorRpc implements IdGenerator {
 	private DistributedIdServiceIGrpc.DistributedIdServiceIBlockingV2Stub distributedIdServiceIBlockingV2Stub;
 
 	@Override
-	public Long getId() {
+	public Long getId(org.laokou.common.i18n.common.enums.IdType idType) {
 		try {
 			GenerateIdResponse generateIdResponse = distributedIdServiceIBlockingV2Stub
-				.generateId(GenerateIdRequest.newBuilder().build());
+				.generateId(GenerateIdRequest.newBuilder().setType(getIdType(idType)).build());
 			return generateIdResponse.getData();
 		}
 		catch (StatusException ex) {
@@ -53,16 +54,23 @@ public class IdGeneratorRpc implements IdGenerator {
 	}
 
 	@Override
-	public List<Long> getIds(int num) {
+	public List<Long> getIds(org.laokou.common.i18n.common.enums.IdType idType, int num) {
 		try {
 			GenerateBatchIdsResponse generateBatchIdsResponse = distributedIdServiceIBlockingV2Stub
-				.generateBatchIds(GenerateBatchIdRequest.newBuilder().setNum(num).build());
+				.generateBatchIds(GenerateBatchIdRequest.newBuilder().setType(getIdType(idType)).setNum(num).build());
 			return generateBatchIdsResponse.getDataList();
 		}
 		catch (StatusException ex) {
 			log.error("批量生成分布式ID失败，错误信息：{}", ex.getMessage(), ex);
 			throw new ServiceNotFoundException("B_Service_DistributedIdNotFound", "调用分布式ID服务失败，请联系管理员", ex);
 		}
+	}
+
+	private IdType getIdType(org.laokou.common.i18n.common.enums.IdType idType) {
+		if (idType.getCode() == org.laokou.common.i18n.common.enums.IdType.SNOWFLAKE.getCode()) {
+			return IdType.SNOWFLAKE;
+		}
+		return IdType.REDIS_SEGMENT;
 	}
 
 }

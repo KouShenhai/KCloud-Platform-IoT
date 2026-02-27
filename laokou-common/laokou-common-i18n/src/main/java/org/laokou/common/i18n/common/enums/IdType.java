@@ -15,17 +15,24 @@
  *
  */
 
-package org.laokou.common.i18n.common;
+package org.laokou.common.i18n.common.enums;
 
-import java.util.List;
+import lombok.Getter;
 
-/**
- * @author laokou
- */
-public interface IdGenerator {
+@Getter
+public enum IdType {
 
-	Long getId(org.laokou.common.i18n.common.enums.IdType idType);
+	SNOWFLAKE(1, "雪花算法"),
 
-	List<Long> getIds(org.laokou.common.i18n.common.enums.IdType idType, int num);
+	REDIS_SEGMENT(2, "Redis分段");
+
+	private final int code;
+
+	private final String desc;
+
+	IdType(int code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
 
 }
