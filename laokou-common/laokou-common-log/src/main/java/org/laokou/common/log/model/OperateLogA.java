@@ -17,19 +17,20 @@
 
 package org.laokou.common.log.model;
 
-import com.google.common.net.HttpHeaders;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
-import org.laokou.common.core.util.AddressUtils;
 import org.laokou.common.core.util.CollectionExtUtils;
-import org.laokou.common.core.util.IpUtils;
 import org.laokou.common.i18n.annotation.Entity;
+import org.laokou.common.i18n.common.IdGenerator;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.dto.AggregateRoot;
+import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.log.model.entity.OperateLogE;
+import org.laokou.common.log.model.enums.Status;
 import org.springframework.util.StopWatch;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -45,166 +46,63 @@ import java.util.List;
  * @author laokou
  */
 @Entity
+@Getter
 public class OperateLogA extends AggregateRoot {
 
-	/**
-	 * 操作名称.
-	 */
-	@Getter
-	private String name;
+	private OperateLogE operateLogE;
 
-	/**
-	 * 操作的模块名称.
-	 */
-	@Getter
-	private String moduleName;
+	private final IdGenerator idGenerator;
 
-	/**
-	 * 操作的请求路径.
-	 */
-	@Getter
-	private String uri;
-
-	/**
-	 * 操作的请求类型.
-	 */
-	@Getter
-	private String requestType;
-
-	/**
-	 * 操作的浏览器.
-	 */
-	@Getter
-	private String userAgent;
-
-	/**
-	 * 操作的归属地.
-	 */
-	@Getter
-	private String address;
-
-	/**
-	 * 服务ID.
-	 */
-	@Getter
-	private String serviceId;
-
-	/**
-	 * 操作的方法名.
-	 */
-	@Getter
-	private String methodName;
-
-	/**
-	 * 操作的请求参数.
-	 */
-	@Getter
-	private String requestParams;
-
-	/**
-	 * 错误信息.
-	 */
-	@Getter
-	private String errorMessage;
-
-	/**
-	 * 操作状态 0成功 1失败.
-	 */
-	@Getter
-	private Integer status;
-
-	/**
-	 * 操作的消耗时间(毫秒).
-	 */
-	@Getter
-	private Long costTime;
-
-	/**
-	 * 操作的IP地址.
-	 */
-	@Getter
-	private String ip;
-
-	/**
-	 * 操作的服务环境.
-	 */
-	@Getter
-	private String profile;
-
-	/**
-	 * 操作的服务地址.
-	 */
-	@Getter
-	private String serviceAddress;
-
-	/**
-	 * 操作的堆栈信息.
-	 */
-	@Getter
-	private String stackTrace;
-
-	protected OperateLogA() {
-		// super(1L, InstantUtils.now());
+	public OperateLogA(IdGenerator idGenerator) {
+		this.idGenerator = idGenerator;
 	}
 
-	public void getProfile(String profile) {
-		this.profile = profile;
-	}
-
-	public void getModuleName(String moduleName) {
-		this.moduleName = moduleName;
-	}
-
-	public void getName(String name) {
-		this.name = name;
-	}
-
-	public void getServiceId(String serviceId) {
-		this.serviceId = serviceId;
-	}
-
-	public void getRequest(HttpServletRequest request) throws Exception {
-		this.uri = request.getRequestURI();
-		this.requestType = request.getMethod();
-		this.userAgent = request.getHeader(HttpHeaders.USER_AGENT);
-		this.ip = IpUtils.getIpAddr(request);
-		this.address = AddressUtils.getRealAddress(this.ip);
-		this.serviceAddress = System.getProperty("address");
+	public OperateLogA create(OperateLogE operateLogE) {
+		this.operateLogE = operateLogE;
+		super.createTime = InstantUtils.now();
+		super.id = idGenerator.getId();
+		return this;
 	}
 
 	public void getThrowable(Throwable throwable) {
+		int status = Status.OK.getCode();
+		String errorMessage = StringConstants.EMPTY;
+		String stackTrace = StringConstants.EMPTY;
 		if (ObjectUtils.isNotNull(throwable)) {
 			if (throwable instanceof GlobalException globalException) {
-				this.errorMessage = globalException.getMsg();
+				errorMessage = globalException.getMsg();
 			}
 			else {
-				this.errorMessage = throwable.getMessage();
+				errorMessage = throwable.getMessage();
 			}
-			this.stackTrace = getStackTraceAsString(throwable);
-			this.status = StatusEnum.FAIL.getCode();
+			stackTrace = getStackTraceAsString(throwable);
+			status = Status.FAIL.getCode();
 		}
-		else {
-			this.status = StatusEnum.OK.getCode();
-		}
+		this.operateLogE = this.operateLogE.toBuilder()
+			.status(status)
+			.errorMessage(errorMessage)
+			.stackTrace(stackTrace)
+			.build();
 	}
 
 	public void decorateMethodName(String className, String methodName) {
-		this.methodName = className + StringConstants.DOT + methodName + StringConstants.LEFT + StringConstants.RIGHT;
+		this.operateLogE = this.operateLogE.toBuilder()
+			.methodName(className + StringConstants.DOT + methodName + StringConstants.LEFT + StringConstants.RIGHT)
+			.build();
 	}
 
 	public void calculateTaskTime(StopWatch stopWatch) {
 		stopWatch.stop();
-		this.costTime = stopWatch.getTotalTimeMillis();
+		this.operateLogE = this.operateLogE.toBuilder().costTime(stopWatch.getTotalTimeMillis()).build();
 	}
 
 	public void decorateRequestParams(Object[] args) {
 		List<Object> params = new ArrayList<>(Arrays.asList(args)).stream().filter(this::filterArgs).toList();
-		if (CollectionExtUtils.isEmpty(params)) {
-			this.requestParams = JacksonUtils.EMPTY_JSON;
+		String requestParams = JacksonUtils.EMPTY_JSON;
+		if (CollectionExtUtils.isNotEmpty(params)) {
+			requestParams = JacksonUtils.toJsonStr(params.getFirst());
 		}
-		else {
-			this.requestParams = JacksonUtils.toJsonStr(params.getFirst());
-		}
+		this.operateLogE = this.operateLogE.toBuilder().requestParams(requestParams).build();
 	}
 
 	private boolean filterArgs(Object arg) {

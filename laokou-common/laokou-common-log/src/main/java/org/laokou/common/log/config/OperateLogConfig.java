@@ -18,7 +18,7 @@
 package org.laokou.common.log.config;
 
 import org.apache.kafka.clients.admin.NewTopic;
-import org.laokou.common.log.model.MqEnum;
+import org.laokou.common.log.model.enums.Mq;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.KafkaAdmin;
@@ -31,7 +31,7 @@ public class OperateLogConfig {
 
 	@Bean
 	public KafkaAdmin.NewTopics newTopics() {
-		return new KafkaAdmin.NewTopics(new NewTopic(MqEnum.OPERATE_LOG_TOPIC, 3, (short) 1));
+		return new KafkaAdmin.NewTopics(new NewTopic(Mq.OPERATE_LOG_TOPIC, 3, (short) 1));
 	}
 
 }

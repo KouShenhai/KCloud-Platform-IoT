@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.log.model;
+package org.laokou.common.log.model.enums;
 
 import lombok.Getter;
 
@@ -23,7 +23,7 @@ import lombok.Getter;
  * @author laokou
  */
 @Getter
-public enum StatusEnum {
+public enum Status {
 
 	// @formatter:off
 	OK(0, "成功"),
@@ -34,7 +34,7 @@ public enum StatusEnum {
 
 	private final String desc;
 
-	StatusEnum(int code, String desc) {
+	Status(int code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}

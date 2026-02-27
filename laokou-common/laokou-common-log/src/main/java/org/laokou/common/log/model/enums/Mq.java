@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.log.model;
+package org.laokou.common.log.model.enums;
 
 import lombok.Getter;
 
@@ -23,7 +23,7 @@ import lombok.Getter;
  * @author laokou
  */
 @Getter
-public enum MqEnum {
+public enum Mq {
 
 	OPERATE_LOG("operate_log", "操作日志") {
 		@Override
@@ -37,7 +37,7 @@ public enum MqEnum {
 
 	private final String desc;
 
-	MqEnum(String code, String desc) {
+	Mq(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}

@@ -28,6 +28,11 @@
       <artifactId>laokou-common-tenant</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-rpc</artifactId>
+      <version>${project.version}</version>
+    </dependency>
   </dependencies>
 
 </project>
