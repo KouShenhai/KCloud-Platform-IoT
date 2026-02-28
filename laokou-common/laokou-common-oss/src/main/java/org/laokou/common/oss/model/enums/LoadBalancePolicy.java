@@ -15,10 +15,11 @@
  *
  */
 
-package org.laokou.common.oss.model;
+package org.laokou.common.oss.model.enums;
 
 import lombok.Getter;
 import org.laokou.common.algorithm.template.select.HashAlgorithm;
+import org.laokou.common.oss.model.BaseOss;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ import java.util.List;
  * @author laokou
  */
 @Getter
-public enum LoadBalancePolicyEnum {
+public enum LoadBalancePolicy {
 
 	HASH("hash", "负载均衡【哈希】") {
 		@Override
@@ -39,7 +40,7 @@ public enum LoadBalancePolicyEnum {
 
 	private final String desc;
 
-	LoadBalancePolicyEnum(String code, String desc) {
+	LoadBalancePolicy(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}

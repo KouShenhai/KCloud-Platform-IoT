@@ -15,50 +15,31 @@
  *
  */
 
-package org.laokou.common.oss.model;
+package org.laokou.common.id.generator;
 
 import lombok.Data;
-import org.laokou.common.oss.model.enums.StoragePolicy;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
 @Data
-public final class AmazonS3 extends BaseOss {
+@Component
+@ConfigurationProperties(prefix = "spring.id-generator.snowflake")
+public class SpringSnowflakeProperties {
 
 	/**
-	 * 终端地址.
+	 * 起始时间戳（默认：2022-06-15 00:00:00）.
+	 * <p>
+	 * 雪花ID的时间戳部分是相对于这个起始时间的偏移量。 设置一个较近的起始时间可以让ID更短，但不能超过当前时间。 一旦设定不建议修改，否则可能产生重复ID。
+	 * </p>
 	 */
-	private String endpoint;
+	private long startTimestamp = 1655222400000L;
 
 	/**
-	 * 区域.
+	 * 批量生成ID的最大数量.
 	 */
-	private String region;
-
-	/**
-	 * 访问密钥.
-	 */
-	private String accessKey;
-
-	/**
-	 * 用户密钥.
-	 */
-	private String secretKey;
-
-	/**
-	 * 桶名.
-	 */
-	private String bucketName;
-
-	/**
-	 * 路径样式访问 1已开启 0未启用.
-	 */
-	private Integer pathStyleAccessEnabled;
-
-	@Override
-	public StoragePolicy getStoragePolicy() {
-		return StoragePolicy.AMAZON_S3;
-	}
+	private int maxBatchSize = 10000;
 
 }

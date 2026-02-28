@@ -19,14 +19,13 @@ package org.laokou.common.oss.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.laokou.common.i18n.dto.ClientObject;
 
 /**
  * @author laokou
  */
 @Getter
 @AllArgsConstructor
-public class OssUploadCO extends ClientObject {
+public class OssUpload {
 
 	private String url;
 

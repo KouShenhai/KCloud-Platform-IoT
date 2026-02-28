@@ -137,10 +137,6 @@ public class DistributedIdServiceImpl extends DistributedIdServiceIGrpc.Distribu
 			log.warn("No IdGenerator registered for type: {}", type);
 			return null;
 		}
-		if (!generator.isAvailable()) {
-			log.warn("IdGenerator for type [{}] is not available", type);
-			return null;
-		}
 		return generator;
 	}
 

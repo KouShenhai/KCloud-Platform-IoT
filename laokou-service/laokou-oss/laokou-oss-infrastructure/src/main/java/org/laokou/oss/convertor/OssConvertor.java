@@ -20,7 +20,8 @@ package org.laokou.oss.convertor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.laokou.common.oss.model.BaseOss;
 import org.laokou.common.oss.model.FileInfo;
-import org.laokou.common.oss.model.StoragePolicyEnum;
+import org.laokou.common.oss.model.OssUpload;
+import org.laokou.common.oss.model.enums.StoragePolicy;
 import org.laokou.oss.dto.clientobject.OssUploadCO;
 import org.laokou.oss.dto.domainevent.OssUploadEvent;
 import org.laokou.oss.factory.OssDomainFactory;
@@ -65,8 +66,8 @@ public final class OssConvertor {
 		return list.stream().map(OssConvertor::toBaseOss).toList();
 	}
 
-	public static OssUploadV toValueObject(org.laokou.common.oss.model.OssUploadCO ossUploadCO) {
-		return new OssUploadV(ossUploadCO.getUrl(), ossUploadCO.getOssId());
+	public static OssUploadV toValueObject(OssUpload ossUpload) {
+		return new OssUploadV(ossUpload.getUrl(), ossUpload.getOssId());
 	}
 
 	public static OssUploadV toValueObject(OssLogDO ossLogDO) {
@@ -75,8 +76,7 @@ public final class OssConvertor {
 
 	private static BaseOss toBaseOss(OssDO ossDO) {
 		try {
-			return StoragePolicyEnum.getByCode(ossDO.getType())
-				.getOss(ossDO.getId(), ossDO.getName(), ossDO.getParam());
+			return StoragePolicy.getByCode(ossDO.getType()).getOss(ossDO.getId(), ossDO.getName(), ossDO.getParam());
 		}
 		catch (JsonProcessingException ex) {
 			throw new RuntimeException(ex);

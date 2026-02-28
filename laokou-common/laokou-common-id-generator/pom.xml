@@ -8,7 +8,7 @@
     <version>4.0.1-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>laokou-common-redis-segment</artifactId>
+  <artifactId>laokou-common-id-generator</artifactId>
 
   <dependencies>
     <dependency>
@@ -19,6 +19,11 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-redis</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-nacos</artifactId>
+      <version>${project.version}</version>
     </dependency>
   </dependencies>
 
