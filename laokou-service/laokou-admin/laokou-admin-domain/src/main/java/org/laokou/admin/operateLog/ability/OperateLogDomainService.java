@@ -19,7 +19,7 @@ package org.laokou.admin.operateLog.ability;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.operateLog.gateway.OperateLogGateway;
-import org.laokou.admin.operateLog.model.OperateLogE;
+import org.laokou.admin.operateLog.model.OperateLog111E;
 import org.springframework.stereotype.Component;
 
 /**
@@ -33,12 +33,12 @@ public class OperateLogDomainService {
 
 	private final OperateLogGateway operateLogGateway;
 
-	public void createOperateLog(OperateLogE operateLogE) {
-		operateLogGateway.createOperateLog(operateLogE);
+	public void createOperateLog(OperateLog111E operateLog111E) {
+		operateLogGateway.createOperateLog(operateLog111E);
 	}
 
-	public void updateOperateLog(OperateLogE operateLogE) {
-		operateLogGateway.updateOperateLog(operateLogE);
+	public void updateOperateLog(OperateLog111E operateLog111E) {
+		operateLogGateway.updateOperateLog(operateLog111E);
 	}
 
 	public void deleteOperateLog(Long[] ids) {

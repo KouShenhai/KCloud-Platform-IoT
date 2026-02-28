@@ -30,7 +30,7 @@ import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.log.model.entity.OperateLogE;
+import org.laokou.common.i18n.common.entity.OperateLogE;
 import org.laokou.common.log.model.enums.Status;
 import org.springframework.util.StopWatch;
 import org.springframework.web.multipart.MultipartFile;

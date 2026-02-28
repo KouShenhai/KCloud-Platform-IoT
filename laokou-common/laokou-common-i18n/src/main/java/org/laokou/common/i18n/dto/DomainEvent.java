@@ -44,4 +44,6 @@ public abstract class DomainEvent implements Serializable {
 
 	protected final Long tenantId;
 
+	protected final Long deptId;
+
 }

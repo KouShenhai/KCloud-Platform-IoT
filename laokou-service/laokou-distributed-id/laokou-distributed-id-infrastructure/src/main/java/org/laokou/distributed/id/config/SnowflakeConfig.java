@@ -38,7 +38,7 @@ class SnowflakeConfig {
 	 * 创建基于 Nacos 的雪花生成器 Bean.
 	 * @return NacosSnowflakeGenerator
 	 */
-	@Bean(initMethod = "init", destroyMethod = "close")
+	@Bean(name = "snowflakeIdGenerator", initMethod = "init", destroyMethod = "close")
 	public IdGenerator snowflakeIdGenerator(NacosConfigManager nacosConfigManager,
 			NacosServiceManager nacosServiceManager, SpringSnowflakeProperties springSnowflakeProperties,
 			Environment environment) {

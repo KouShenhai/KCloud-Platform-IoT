@@ -21,7 +21,7 @@ import org.laokou.admin.noticeLog.model.Status;
 import org.laokou.admin.operateLog.dto.clientobject.OperateLogCO;
 import org.laokou.admin.operateLog.dto.excel.OperateLogExcel;
 import org.laokou.admin.operateLog.factory.OperateLogDomainFactory;
-import org.laokou.admin.operateLog.model.OperateLogE;
+import org.laokou.admin.operateLog.model.OperateLog111E;
 import org.laokou.common.excel.util.ExcelUtils;
 import org.laokou.common.i18n.common.constant.DateConstants;
 import org.laokou.common.i18n.util.InstantUtils;
@@ -43,30 +43,30 @@ public final class OperateLogConvertor implements ExcelUtils.ExcelConvertor<Oper
 	private OperateLogConvertor() {
 	}
 
-	public static OperateLogDO toDataObject(Long id, OperateLogE operateLogE, boolean isInsert) {
+	public static OperateLogDO toDataObject(Long id, OperateLog111E operateLog111E, boolean isInsert) {
 		OperateLogDO operateLogDO = new OperateLogDO();
 		if (isInsert) {
 			operateLogDO.setId(id);
 		}
 		else {
-			operateLogDO.setId(operateLogE.getId());
+			operateLogDO.setId(operateLog111E.getId());
 		}
-		operateLogDO.setName(operateLogE.getName());
-		operateLogDO.setModuleName(operateLogE.getModuleName());
-		operateLogDO.setUri(operateLogE.getUri());
-		operateLogDO.setRequestType(operateLogE.getRequestType());
-		operateLogDO.setUserAgent(operateLogE.getUserAgent());
-		operateLogDO.setAddress(operateLogE.getAddress());
-		operateLogDO.setOperator(operateLogE.getOperator());
-		operateLogDO.setMethodName(operateLogE.getMethodName());
-		operateLogDO.setRequestParams(operateLogE.getRequestParams());
-		operateLogDO.setErrorMessage(operateLogE.getErrorMessage());
-		operateLogDO.setStatus(operateLogE.getStatus());
-		operateLogDO.setCostTime(operateLogE.getCostTime());
-		operateLogDO.setIp(operateLogE.getIp());
-		operateLogDO.setProfile(operateLogE.getProfile());
-		operateLogDO.setServiceAddress(operateLogE.getServiceAddress());
-		operateLogDO.setStackTrace(operateLogE.getStackTrace());
+		operateLogDO.setName(operateLog111E.getName());
+		operateLogDO.setModuleName(operateLog111E.getModuleName());
+		operateLogDO.setUri(operateLog111E.getUri());
+		operateLogDO.setRequestType(operateLog111E.getRequestType());
+		operateLogDO.setUserAgent(operateLog111E.getUserAgent());
+		operateLogDO.setAddress(operateLog111E.getAddress());
+		operateLogDO.setOperator(operateLog111E.getOperator());
+		operateLogDO.setMethodName(operateLog111E.getMethodName());
+		operateLogDO.setRequestParams(operateLog111E.getRequestParams());
+		operateLogDO.setErrorMessage(operateLog111E.getErrorMessage());
+		operateLogDO.setStatus(operateLog111E.getStatus());
+		operateLogDO.setCostTime(operateLog111E.getCostTime());
+		operateLogDO.setIp(operateLog111E.getIp());
+		operateLogDO.setProfile(operateLog111E.getProfile());
+		operateLogDO.setServiceAddress(operateLog111E.getServiceAddress());
+		operateLogDO.setStackTrace(operateLog111E.getStackTrace());
 		return operateLogDO;
 	}
 
@@ -98,26 +98,26 @@ public final class OperateLogConvertor implements ExcelUtils.ExcelConvertor<Oper
 		return list.stream().map(OperateLogConvertor::toClientObject).toList();
 	}
 
-	public static OperateLogE toEntity(OperateLogCO operateLogCO) {
-		OperateLogE operateLogE = OperateLogDomainFactory.getOperateLog();
-		operateLogE.setId(operateLogCO.getId());
-		operateLogE.setName(operateLogCO.getName());
-		operateLogE.setModuleName(operateLogCO.getModuleName());
-		operateLogE.setUri(operateLogCO.getUri());
-		operateLogE.setMethodName(operateLogCO.getMethodName());
-		operateLogE.setRequestType(operateLogCO.getRequestType());
-		operateLogE.setRequestParams(operateLogCO.getRequestParams());
-		operateLogE.setUserAgent(operateLogCO.getUserAgent());
-		operateLogE.setIp(operateLogCO.getIp());
-		operateLogE.setAddress(operateLogCO.getAddress());
-		operateLogE.setStatus(operateLogCO.getStatus());
-		operateLogE.setOperator(operateLogCO.getOperator());
-		operateLogE.setErrorMessage(operateLogCO.getErrorMessage());
-		operateLogE.setCostTime(operateLogCO.getCostTime());
-		operateLogE.setProfile(operateLogCO.getProfile());
-		operateLogE.setServiceAddress(operateLogCO.getServiceAddress());
-		operateLogE.setStackTrace(operateLogCO.getStackTrace());
-		return operateLogE;
+	public static OperateLog111E toEntity(OperateLogCO operateLogCO) {
+		OperateLog111E operateLog111E = OperateLogDomainFactory.getOperateLog();
+		operateLog111E.setId(operateLogCO.getId());
+		operateLog111E.setName(operateLogCO.getName());
+		operateLog111E.setModuleName(operateLogCO.getModuleName());
+		operateLog111E.setUri(operateLogCO.getUri());
+		operateLog111E.setMethodName(operateLogCO.getMethodName());
+		operateLog111E.setRequestType(operateLogCO.getRequestType());
+		operateLog111E.setRequestParams(operateLogCO.getRequestParams());
+		operateLog111E.setUserAgent(operateLogCO.getUserAgent());
+		operateLog111E.setIp(operateLogCO.getIp());
+		operateLog111E.setAddress(operateLogCO.getAddress());
+		operateLog111E.setStatus(operateLogCO.getStatus());
+		operateLog111E.setOperator(operateLogCO.getOperator());
+		operateLog111E.setErrorMessage(operateLogCO.getErrorMessage());
+		operateLog111E.setCostTime(operateLogCO.getCostTime());
+		operateLog111E.setProfile(operateLogCO.getProfile());
+		operateLog111E.setServiceAddress(operateLogCO.getServiceAddress());
+		operateLog111E.setStackTrace(operateLogCO.getStackTrace());
+		return operateLog111E;
 	}
 
 	@Override

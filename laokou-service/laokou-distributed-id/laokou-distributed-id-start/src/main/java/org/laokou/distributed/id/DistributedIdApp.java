@@ -17,6 +17,7 @@
 
 package org.laokou.distributed.id;
 
+import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.WebApplicationType;
@@ -26,6 +27,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.util.StopWatch;
+
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -35,6 +37,7 @@ import java.net.UnknownHostException;
  * @author laokou
  */
 @Slf4j
+@EnableEncryptableProperties
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy
 @RequiredArgsConstructor

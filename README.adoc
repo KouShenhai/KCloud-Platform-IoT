@@ -60,7 +60,8 @@ image:https://deepwiki.com/badge.svg[Ask DeepWiki,link=https://deepwiki.com/KouS
 - 项目驱动学习任何知识
 
 === 👉 项目定位
-只适用于中大型微服务IoT项目【业务复杂】
+- 适用于单体IoT项目【业务复杂】
+- 适用于中大型微服务IoT项目【业务复杂】
 
 image:doc/image/img_1.png[COLA架构图,400,400,align=center]
 image:doc/image/img.png[COLA架构图,400,400,align=center]

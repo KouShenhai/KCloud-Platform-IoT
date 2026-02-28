@@ -29,7 +29,7 @@ import org.laokou.common.log.factory.DomainFactory;
 import org.laokou.common.log.handler.event.OperateEvent;
 import org.laokou.common.log.mapper.OperateLogDO;
 import org.laokou.common.log.model.OperateLogA;
-import org.laokou.common.log.model.entity.OperateLogE;
+import org.laokou.common.i18n.common.entity.OperateLogE;
 import org.lionsoul.ip2region.xdb.InetAddressException;
 
 import java.io.IOException;
@@ -82,6 +82,7 @@ public final class OperateLogConvertor {
 			.createTime(operateLogA.getCreateTime())
 			.tenantId(UserUtils.getTenantId())
 			.creator(UserUtils.getUserId())
+			.deptId(UserUtils.getDeptId())
 			.build();
 	}
 
