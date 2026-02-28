@@ -17,7 +17,7 @@
 
 package org.laokou.admin.operateLog.factory;
 
-import org.laokou.admin.operateLog.model.OperateLogE;
+import org.laokou.admin.operateLog.model.OperateLog111E;
 import org.laokou.common.i18n.util.SpringContextUtils;
 
 public final class OperateLogDomainFactory {
@@ -25,8 +25,8 @@ public final class OperateLogDomainFactory {
 	private OperateLogDomainFactory() {
 	}
 
-	public static OperateLogE getOperateLog() {
-		return SpringContextUtils.getBeanProvider(OperateLogE.class);
+	public static OperateLog111E getOperateLog() {
+		return SpringContextUtils.getBeanProvider(OperateLog111E.class);
 	}
 
 }

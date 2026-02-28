@@ -107,6 +107,7 @@ public final class LoginLogConvertor {
 		Optional<UserE> optional = Optional.ofNullable(userE);
 		Long creator = optional.map(UserE::getId).orElse(null);
 		Long tenantId = optional.map(UserE::getTenantId).orElse(null);
+		Long deptId = optional.map(UserE::getDeptId).orElse(null);
 		String errorMessage = StringConstants.EMPTY;
 		if (ObjectUtils.isNotNull(ex)) {
 			status = LoginStatus.FAIL.getCode();
@@ -125,6 +126,7 @@ public final class LoginLogConvertor {
 			.loginTime(authA.getCreateTime())
 			.tenantId(tenantId)
 			.creator(creator)
+			.deptId(deptId)
 			.build();
 	}
 

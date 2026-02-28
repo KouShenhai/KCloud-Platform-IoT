@@ -36,12 +36,13 @@ class RedisSegmentConfig {
 	/**
 	 * 创建 Redis 分段 ID 生成器 Bean.
 	 * @param redisUtils Redis工具类
-	 * @param properties 配置属性
+	 * @param springRedisSegmentProperties 配置属性
 	 * @return RedisSegmentIdGenerator
 	 */
-	@Bean(initMethod = "init", destroyMethod = "close")
-	public IdGenerator redisSegmentIdGenerator(RedisUtils redisUtils, SpringRedisSegmentProperties properties) {
-		return new RedisSegmentIdGenerator(redisUtils, properties);
+	@Bean(name = "redisSegmentIdGenerator", initMethod = "init", destroyMethod = "close")
+	public IdGenerator redisSegmentIdGenerator(RedisUtils redisUtils,
+			SpringRedisSegmentProperties springRedisSegmentProperties) {
+		return new RedisSegmentIdGenerator(redisUtils, springRedisSegmentProperties);
 	}
 
 }

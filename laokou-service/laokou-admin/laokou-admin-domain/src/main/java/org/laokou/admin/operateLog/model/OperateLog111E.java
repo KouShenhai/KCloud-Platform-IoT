@@ -15,30 +15,21 @@
  *
  */
 
-package org.laokou.common.log.model.entity;
+package org.laokou.admin.operateLog.model;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.laokou.common.i18n.annotation.Entity;
 
-import java.io.Serializable;
-
 /**
- * 操作日志实体.
+ * 操作日志领域对象【实体】.
  *
  * @author laokou
  */
-@Entity
+@Setter
 @Getter
-@Builder(toBuilder = true)
-@EqualsAndHashCode(callSuper = false)
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class OperateLogE implements Serializable {
+@Entity
+public class OperateLog111E {
 
 	/**
 	 * ID.
@@ -61,29 +52,14 @@ public class OperateLogE implements Serializable {
 	private String uri;
 
 	/**
-	 * 操作的请求类型.
-	 */
-	private String requestType;
-
-	/**
-	 * 操作的浏览器.
-	 */
-	private String userAgent;
-
-	/**
-	 * 操作的归属地.
-	 */
-	private String address;
-
-	/**
-	 * 服务ID.
-	 */
-	private String serviceId;
-
-	/**
 	 * 操作的方法名.
 	 */
 	private String methodName;
+
+	/**
+	 * 操作的请求类型.
+	 */
+	private String requestType;
 
 	/**
 	 * 操作的请求参数.
@@ -91,9 +67,19 @@ public class OperateLogE implements Serializable {
 	private String requestParams;
 
 	/**
-	 * 错误信息.
+	 * 操作的浏览器.
 	 */
-	private String errorMessage;
+	private String userAgent;
+
+	/**
+	 * 操作的IP地址.
+	 */
+	private String ip;
+
+	/**
+	 * 操作的归属地.
+	 */
+	private String address;
 
 	/**
 	 * 操作状态 0成功 1失败.
@@ -101,14 +87,19 @@ public class OperateLogE implements Serializable {
 	private Integer status;
 
 	/**
+	 * 操作人.
+	 */
+	private String operator;
+
+	/**
+	 * 错误信息.
+	 */
+	private String errorMessage;
+
+	/**
 	 * 操作的消耗时间(毫秒).
 	 */
 	private Long costTime;
-
-	/**
-	 * 操作的IP地址.
-	 */
-	private String ip;
 
 	/**
 	 * 操作的服务环境.

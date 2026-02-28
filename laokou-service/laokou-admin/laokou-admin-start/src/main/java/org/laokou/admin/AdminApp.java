@@ -73,8 +73,6 @@ class AdminApp {
 		System.setProperty("nacos.logging.default.config.enabled", "false");
 		// 忽略SSL认证
 		SslUtils.ignoreSSLTrust();
-		// 启用虚拟线程支持
-		System.setProperty("reactor.schedulers.defaultBoundedElasticOnVirtualThreads", "true");
 		new SpringApplicationBuilder(AdminApp.class).web(WebApplicationType.SERVLET).run(args);
 		stopWatch.stop();
 		log.info("{}", stopWatch.prettyPrint());
