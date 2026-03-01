@@ -41,7 +41,7 @@ import java.net.UnknownHostException;
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy
 @RequiredArgsConstructor
-@EnableDiscoveryClient(autoRegister = false)
+@EnableDiscoveryClient
 @SpringBootApplication(scanBasePackages = "org.laokou")
 class DistributedIdApp {
 
