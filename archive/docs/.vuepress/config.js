@@ -29,8 +29,10 @@ module.exports = {
 					},
 					{
 						text: '指南', link: '/pages/caff79/', items: [
-							{text: '后端项目启动', link: '/pages/caff79/'},
-							{text: '前端项目启动', link: '/pages/d38008/'},
+							{text: '后端项目启动', link: '/pages/caff78/'},
+							{text: '前端项目启动', link: '/pages/d38007/'},
+							{text: '后端项目启动【微服务】', link: '/pages/caff79/'},
+							{text: '前端项目启动【微服务】', link: '/pages/d38008/'},
 							{text: 'Docker安装', link: '/pages/511812/'},
 							{text: 'Linux常用命令', link: '/pages/d55f5f/'},
 							{text: 'Docker常用命令', link: '/pages/8300d6/'},
