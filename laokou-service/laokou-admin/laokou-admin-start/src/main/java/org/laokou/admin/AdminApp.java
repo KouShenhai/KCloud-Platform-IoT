@@ -22,7 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.annotation.EnableWarmUp;
 import org.laokou.common.i18n.util.SslUtils;
 import org.laokou.common.nacos.annotation.EnablePrintRouter;
-import org.laokou.common.rpc.annotation.EnableRpc;
 import org.laokou.common.security.annotation.EnableSecurity;
 import org.laokou.common.security.config.TransmittableThreadLocalSecurityContextHolderStrategy;
 import org.mybatis.spring.annotation.MapperScan;
@@ -47,7 +46,6 @@ import java.security.NoSuchAlgorithmException;
  * @author laokou
  */
 @Slf4j
-@EnableRpc
 @EnableWarmUp
 @EnablePrintRouter
 @EnableSecurity
@@ -73,8 +71,6 @@ class AdminApp {
 		System.setProperty("nacos.logging.default.config.enabled", "false");
 		// 忽略SSL认证
 		SslUtils.ignoreSSLTrust();
-		// 启用虚拟线程支持
-		System.setProperty("reactor.schedulers.defaultBoundedElasticOnVirtualThreads", "true");
 		new SpringApplicationBuilder(AdminApp.class).web(WebApplicationType.SERVLET).run(args);
 		stopWatch.stop();
 		log.info("{}", stopWatch.prettyPrint());

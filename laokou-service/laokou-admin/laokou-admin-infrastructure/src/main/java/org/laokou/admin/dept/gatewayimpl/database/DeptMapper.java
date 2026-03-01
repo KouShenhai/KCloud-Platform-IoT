@@ -28,7 +28,7 @@ import org.springframework.stereotype.Repository;
  * @author laokou
  */
 @Mapper
-@Repository
+@Repository("adminDeptMapper")
 public interface DeptMapper extends CrudMapper<Long, Integer, DeptDO> {
 
 }

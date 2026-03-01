@@ -22,6 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.annotation.EnableWarmUp;
 import org.laokou.common.i18n.util.SslUtils;
 import org.laokou.common.security.config.TransmittableThreadLocalSecurityContextHolderStrategy;
+import org.mybatis.spring.annotation.MapperScan;
+import org.mybatis.spring.annotation.MapperScans;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -31,6 +33,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StopWatch;
 
+import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -46,13 +49,16 @@ import java.security.NoSuchAlgorithmException;
 @EnableEncryptableProperties
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy
+@MapperScans({ @MapperScan(basePackages = "org.laokou.admin.**.gatewayimpl.database"),
+		@MapperScan(basePackages = "org.laokou.auth.**.gatewayimpl.database") })
 @SpringBootApplication(scanBasePackages = "org.laokou")
 class StandaloneApp {
 
 	// @formatter:off
-	void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
+	void main(String[] args) throws  NoSuchAlgorithmException, KeyManagementException, UnknownHostException {
 		StopWatch stopWatch = new StopWatch("Standalone应用程序");
 		stopWatch.start();
+		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "8099")));
 		// SpringSecurity 子线程读取父线程的上下文
 		SecurityContextHolder.setContextHolderStrategy(new TransmittableThreadLocalSecurityContextHolderStrategy());
 		// 忽略SSL认证

@@ -36,12 +36,12 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class NoticeLogGetQryExe {
 
-	private final NoticeLogMapper noticeLogMapper;
+	private final NoticeLogMapper adminNoticeLogMapper;
 
 	public Result<NoticeLogCO> execute(NoticeLogGetQry qry) {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);
-			return Result.ok(NoticeLogConvertor.toClientObject(noticeLogMapper.selectById(qry.getId())));
+			return Result.ok(NoticeLogConvertor.toClientObject(adminNoticeLogMapper.selectById(qry.getId())));
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

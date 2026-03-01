@@ -7,13 +7,4 @@
   </parent>
   <artifactId>laokou-distributed-id</artifactId>
   <packaging>pom</packaging>
-  <modules>
-    <module>laokou-distributed-id-start</module>
-    <module>laokou-distributed-id-infrastructure</module>
-    <module>laokou-distributed-id-adapter</module>
-    <module>laokou-distributed-id-app</module>
-    <module>laokou-distributed-id-client</module>
-    <module>laokou-distributed-id-domain</module>
-    <module>laokou-distributed-id-proto</module>
-  </modules>
 </project>

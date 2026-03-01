@@ -35,11 +35,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SystemMenuTree implements MenuTree {
 
-	private final MenuMapper menuMapper;
+	private final MenuMapper adminMenuMapper;
 
 	@Override
 	public MenuTreeCO build(MenuTreeListQry qry, Long userId) {
-		List<MenuDO> list = menuMapper.selectObjectList(qry);
+		List<MenuDO> list = adminMenuMapper.selectObjectList(qry);
 		return TreeUtils.buildTreeNode(MenuConvertor.toClientObjs(list), MenuTreeCO.class);
 	}
 

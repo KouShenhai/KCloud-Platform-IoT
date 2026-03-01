@@ -31,7 +31,7 @@ import java.util.List;
  * @author laokou
  */
 @Mapper
-@Repository
+@Repository("adminMenuMapper")
 public interface MenuMapper extends CrudMapper<Long, Integer, MenuDO> {
 
 	List<MenuDO> selectAllMenuList();

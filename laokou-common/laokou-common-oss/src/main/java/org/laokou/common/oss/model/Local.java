@@ -18,6 +18,7 @@
 package org.laokou.common.oss.model;
 
 import lombok.Data;
+import org.laokou.common.oss.model.enums.StoragePolicy;
 
 /**
  * @author laokou
@@ -41,8 +42,8 @@ public final class Local extends BaseOss {
 	private String directory;
 
 	@Override
-	public StoragePolicyEnum getStoragePolicy() {
-		return StoragePolicyEnum.LOCAL;
+	public StoragePolicy getStoragePolicy() {
+		return StoragePolicy.LOCAL;
 	}
 
 }

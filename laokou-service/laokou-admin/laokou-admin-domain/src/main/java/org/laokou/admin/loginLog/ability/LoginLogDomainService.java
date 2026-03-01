@@ -31,18 +31,18 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class LoginLogDomainService {
 
-	private final LoginLogGateway loginLogGateway;
+	private final LoginLogGateway adminLoginLogGateway;
 
 	public void createLoginLog(LoginLogE loginLogE) {
-		loginLogGateway.createLoginLog(loginLogE);
+		adminLoginLogGateway.createLoginLog(loginLogE);
 	}
 
 	public void updateLoginLog(LoginLogE loginLogE) {
-		loginLogGateway.updateLoginLog(loginLogE);
+		adminLoginLogGateway.updateLoginLog(loginLogE);
 	}
 
 	public void deleteLoginLog(Long[] ids) {
-		loginLogGateway.deleteLoginLog(ids);
+		adminLoginLogGateway.deleteLoginLog(ids);
 	}
 
 }

@@ -18,6 +18,8 @@
 package org.laokou.common.oss.model;
 
 import lombok.Data;
+import org.laokou.common.oss.model.enums.StoragePolicy;
+
 import java.io.Serializable;
 
 /**
@@ -26,7 +28,7 @@ import java.io.Serializable;
 @Data
 public abstract class BaseOss implements Serializable {
 
-	public abstract StoragePolicyEnum getStoragePolicy();
+	public abstract StoragePolicy getStoragePolicy();
 
 	protected String name;
 

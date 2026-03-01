@@ -18,41 +18,41 @@
 package org.laokou.admin.ossLog.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.ossLog.model.OssLogE;
-import org.springframework.stereotype.Component;
+import org.laokou.admin.ossLog.convertor.OssLogConvertor;
 import org.laokou.admin.ossLog.gateway.OssLogGateway;
 import org.laokou.admin.ossLog.gatewayimpl.database.OssLogMapper;
+import org.laokou.admin.ossLog.gatewayimpl.database.dataobject.OssLogDO;
+import org.laokou.admin.ossLog.model.OssLogE;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
-import org.laokou.admin.ossLog.convertor.OssLogConvertor;
-import org.laokou.admin.ossLog.gatewayimpl.database.dataobject.OssLogDO;
 
 /**
  * OSS日志网关实现.
  *
  * @author laokou
  */
-@Component
+@Component("adminOssLogGateway")
 @RequiredArgsConstructor
 public class OssLogGatewayImpl implements OssLogGateway {
 
-	private final OssLogMapper ossLogMapper;
+	private final OssLogMapper adminOssLogMapper;
 
 	@Override
 	public void createOssLog(OssLogE ossLogE) {
-		ossLogMapper.insert(OssLogConvertor.toDataObject(ossLogE));
+		adminOssLogMapper.insert(OssLogConvertor.toDataObject(ossLogE));
 	}
 
 	@Override
 	public void updateOssLog(OssLogE ossLogE) {
 		OssLogDO ossLogDO = OssLogConvertor.toDataObject(ossLogE);
-		ossLogDO.setVersion(ossLogMapper.selectVersion(ossLogE.getId()));
-		ossLogMapper.updateById(ossLogDO);
+		ossLogDO.setVersion(adminOssLogMapper.selectVersion(ossLogE.getId()));
+		adminOssLogMapper.updateById(ossLogDO);
 	}
 
 	@Override
 	public void deleteOssLog(Long[] ids) {
-		ossLogMapper.deleteByIds(Arrays.asList(ids));
+		adminOssLogMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }

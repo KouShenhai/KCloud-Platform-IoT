@@ -28,7 +28,7 @@ import org.laokou.common.i18n.annotation.Entity;
  */
 @Setter
 @Getter
-@Entity
+@Entity("adminNoticeLogE")
 public class NoticeLogE {
 
 	/**

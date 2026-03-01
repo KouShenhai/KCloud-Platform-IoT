@@ -47,7 +47,7 @@ public class UserResetPwdCmdExe {
 			.create(UserConvertor.toEntity(cmd.getId(), cmd.getPassword()), OperateType.RESET_PWD);
 		// 校验用户参数
 		userA.checkUserParam();
-		transactionalUtils.executeInTransaction(() -> userDomainService.updateUser(userA.encryptByUpdate()));
+		transactionalUtils.executeInTransaction(() -> userDomainService.updateUser(userA.encryptByRestPwd()));
 	}
 
 }

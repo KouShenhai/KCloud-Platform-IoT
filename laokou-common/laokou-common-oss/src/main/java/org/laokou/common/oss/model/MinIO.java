@@ -18,6 +18,7 @@
 package org.laokou.common.oss.model;
 
 import lombok.Data;
+import org.laokou.common.oss.model.enums.StoragePolicy;
 
 /**
  * @author laokou
@@ -52,8 +53,8 @@ public final class MinIO extends BaseOss {
 	private String bucketName;
 
 	@Override
-	public StoragePolicyEnum getStoragePolicy() {
-		return StoragePolicyEnum.MINIO;
+	public StoragePolicy getStoragePolicy() {
+		return StoragePolicy.MINIO;
 	}
 
 }

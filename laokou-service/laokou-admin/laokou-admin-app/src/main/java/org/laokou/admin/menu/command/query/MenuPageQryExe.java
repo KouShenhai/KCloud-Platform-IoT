@@ -38,11 +38,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MenuPageQryExe {
 
-	private final MenuMapper menuMapper;
+	private final MenuMapper adminMenuMapper;
 
 	public Result<Page<MenuCO>> execute(MenuPageQry qry) {
-		List<MenuDO> list = menuMapper.selectObjectPage(qry);
-		long total = menuMapper.selectObjectCount(qry);
+		List<MenuDO> list = adminMenuMapper.selectObjectPage(qry);
+		long total = adminMenuMapper.selectObjectCount(qry);
 		return Result.ok(Page.create(MenuConvertor.toClientObjects(list), total));
 	}
 

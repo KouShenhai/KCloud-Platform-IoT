@@ -23,13 +23,13 @@ import org.laokou.common.context.util.UserUtils;
 import org.laokou.common.core.util.AddressUtils;
 import org.laokou.common.core.util.IpUtils;
 import org.laokou.common.core.util.RequestUtils;
+import org.laokou.common.i18n.common.entity.OperateLogE;
 import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.log.factory.DomainFactory;
 import org.laokou.common.log.handler.event.OperateEvent;
 import org.laokou.common.log.mapper.OperateLogDO;
 import org.laokou.common.log.model.OperateLogA;
-import org.laokou.common.log.model.entity.OperateLogE;
 import org.lionsoul.ip2region.xdb.InetAddressException;
 
 import java.io.IOException;
@@ -82,6 +82,8 @@ public final class OperateLogConvertor {
 			.createTime(operateLogA.getCreateTime())
 			.tenantId(UserUtils.getTenantId())
 			.creator(UserUtils.getUserId())
+			.deptId(UserUtils.getDeptId())
+			.operator(UserUtils.getUserName())
 			.build();
 	}
 
@@ -110,6 +112,7 @@ public final class OperateLogConvertor {
 		operateLogDO.setEditor(operateEvent.getCreator());
 		operateLogDO.setCreateTime(operateEvent.getCreateTime());
 		operateLogDO.setUpdateTime(operateEvent.getCreateTime());
+		operateLogDO.setDeptId(operateEvent.getDeptId());
 		return operateLogDO;
 	}
 

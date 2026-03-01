@@ -47,7 +47,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class LoginLogsServiceImpl implements LoginLogsServiceI {
 
-	private final LoginLogSaveCmdExe loginLogSaveCmdExe;
+	private final LoginLogSaveCmdExe adminLoginLogSaveCmdExe;
 
 	private final LoginLogModifyCmdExe loginLogModifyCmdExe;
 
@@ -63,7 +63,7 @@ public class LoginLogsServiceImpl implements LoginLogsServiceI {
 
 	@Override
 	public void saveLoginLog(LoginLogSaveCmd cmd) {
-		loginLogSaveCmdExe.executeVoid(cmd);
+		adminLoginLogSaveCmdExe.executeVoid(cmd);
 	}
 
 	@Override

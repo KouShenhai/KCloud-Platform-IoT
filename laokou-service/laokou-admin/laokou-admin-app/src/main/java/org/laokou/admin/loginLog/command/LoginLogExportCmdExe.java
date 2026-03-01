@@ -38,13 +38,13 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class LoginLogExportCmdExe {
 
-	private final LoginLogMapper loginLogMapper;
+	private final LoginLogMapper adminLoginLogMapper;
 
 	@CommandLog
 	public void executeVoid(LoginLogExportCmd cmd) {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);
-			ExcelUtils.doExport("登录日志", "登录日志", ResponseUtils.getHttpServletResponse(), cmd, loginLogMapper,
+			ExcelUtils.doExport("登录日志", "登录日志", ResponseUtils.getHttpServletResponse(), cmd, adminLoginLogMapper,
 					LoginLogExcel.class, LoginLogConvertor.INSTANCE);
 		}
 		finally {

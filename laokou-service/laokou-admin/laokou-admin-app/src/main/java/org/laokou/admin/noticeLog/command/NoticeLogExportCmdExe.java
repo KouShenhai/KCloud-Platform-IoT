@@ -38,14 +38,14 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class NoticeLogExportCmdExe {
 
-	private final NoticeLogMapper noticeLogMapper;
+	private final NoticeLogMapper adminNoticeLogMapper;
 
 	@CommandLog
 	public void executeVoid(NoticeLogExportCmd cmd) {
 		// 校验参数
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);
-			ExcelUtils.doExport("通知日志", "通知日志", ResponseUtils.getHttpServletResponse(), cmd, noticeLogMapper,
+			ExcelUtils.doExport("通知日志", "通知日志", ResponseUtils.getHttpServletResponse(), cmd, adminNoticeLogMapper,
 					NoticeLogExcel.class, NoticeLogConvertor.INSTANCE);
 		}
 		finally {

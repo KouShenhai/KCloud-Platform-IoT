@@ -38,16 +38,16 @@ import java.util.concurrent.ExecutorService;
 @RequiredArgsConstructor
 public class UserDomainService {
 
-	private final UserGateway userGateway;
+	private final UserGateway adminUserGateway;
 
 	private final UserRoleGateway userRoleGateway;
 
 	public void createUser(UserA userA) {
-		userGateway.createUser(userA);
+		adminUserGateway.createUser(userA);
 	}
 
 	public void updateUser(UserA userA) {
-		userGateway.updateUser(userA);
+		adminUserGateway.updateUser(userA);
 	}
 
 	public void updateAuthorityUser(UserA userA) throws Exception {
@@ -64,7 +64,7 @@ public class UserDomainService {
 	public void deleteUser(Long[] ids) throws InterruptedException {
 		List<Callable<Boolean>> futures = new ArrayList<>(2);
 		futures.add(() -> {
-			userGateway.deleteUser(ids);
+			adminUserGateway.deleteUser(ids);
 			return true;
 		});
 		futures.add(() -> {

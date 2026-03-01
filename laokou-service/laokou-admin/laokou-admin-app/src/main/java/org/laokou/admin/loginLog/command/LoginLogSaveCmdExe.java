@@ -30,7 +30,7 @@ import org.springframework.stereotype.Component;
  *
  * @author laokou
  */
-@Component
+@Component("adminLoginLogSaveCmdExe")
 @RequiredArgsConstructor
 public class LoginLogSaveCmdExe {
 

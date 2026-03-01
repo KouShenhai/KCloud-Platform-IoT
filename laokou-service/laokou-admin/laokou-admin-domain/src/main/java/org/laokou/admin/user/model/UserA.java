@@ -125,8 +125,21 @@ public class UserA extends AggregateRoot implements ValidateName {
 			.mobile(AESUtils.encrypt(mobile))
 			.mobilePhrase(encryptMobile(mobile))
 			.mailPhrase(encryptPhrase(mail))
-			.password(encodedPassword(this.userE.getPassword()))
+			.password(null)
 			.mail(AESUtils.encrypt(mail))
+			.build();
+		return this;
+	}
+
+	public UserA encryptByRestPwd() {
+		this.userE = this.userE.toBuilder()
+			.username(null)
+			.usernamePhrase(null)
+			.mobile(null)
+			.mobilePhrase(null)
+			.mailPhrase(null)
+			.password(encodedPassword(this.userE.getPassword()))
+			.mail(null)
 			.build();
 		return this;
 	}
