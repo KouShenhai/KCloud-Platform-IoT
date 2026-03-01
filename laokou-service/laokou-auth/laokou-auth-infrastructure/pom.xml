@@ -122,11 +122,6 @@
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-distributed-id-proto</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
       <artifactId>laokou-common-tenant</artifactId>
       <version>${project.version}</version>
     </dependency>
@@ -145,7 +140,7 @@
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-rpc</artifactId>
+      <artifactId>laokou-common-id-generator</artifactId>
       <version>${project.version}</version>
     </dependency>
   </dependencies>

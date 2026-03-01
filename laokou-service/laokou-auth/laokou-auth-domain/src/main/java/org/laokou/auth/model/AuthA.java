@@ -169,16 +169,16 @@ public class AuthA extends AggregateRoot implements ValidateName {
 
 	// @formatter:off
 	AuthA(IdGenerator idGenerator,
-				 @NonNull HttpRequest httpRequest,
-                 PasswordValidator passwordValidator,
-                 CaptchaValidator captchaValidator,
-                 @Qualifier("authorizationCodeAuthParamValidator") AuthParamValidator authorizationCodeAuthParamValidator,
-                 @Qualifier("mailAuthParamValidator") AuthParamValidator mailAuthParamValidator,
-                 @Qualifier("mobileAuthParamValidator") AuthParamValidator mobileAuthParamValidator,
-                 @Qualifier("testAuthParamValidator") AuthParamValidator testAuthParamValidator,
-                 @Qualifier("usernamePasswordAuthParamValidator") AuthParamValidator usernamePasswordAuthParamValidator,
-				 @Qualifier("mailCaptchaParamValidator") CaptchaParamValidator mailCaptchaParamValidator,
-				 @Qualifier("mobileCaptchaParamValidator") CaptchaParamValidator mobileCaptchaParamValidator) {
+		@NonNull HttpRequest httpRequest,
+		@NonNull PasswordValidator passwordValidator,
+		@NonNull CaptchaValidator captchaValidator,
+		@Qualifier("authorizationCodeAuthParamValidator") @NonNull AuthParamValidator authorizationCodeAuthParamValidator,
+		@Qualifier("mailAuthParamValidator") @NonNull AuthParamValidator mailAuthParamValidator,
+		@Qualifier("mobileAuthParamValidator") @NonNull AuthParamValidator mobileAuthParamValidator,
+		@Qualifier("testAuthParamValidator") @NonNull AuthParamValidator testAuthParamValidator,
+		@Qualifier("usernamePasswordAuthParamValidator") @NonNull AuthParamValidator usernamePasswordAuthParamValidator,
+		@Qualifier("mailCaptchaParamValidator") @NonNull CaptchaParamValidator mailCaptchaParamValidator,
+		@Qualifier("mobileCaptchaParamValidator") @NonNull CaptchaParamValidator mobileCaptchaParamValidator) {
 		this.idGenerator = idGenerator;
 		this.parameterMap = httpRequest.getParameterMap();
 		this.userE = DomainFactory.createUser();

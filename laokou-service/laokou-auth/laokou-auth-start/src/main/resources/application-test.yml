@@ -73,11 +73,11 @@ spring:
           max-idle: 500 #连接池最大空闲连接
           min-idle: 200 #连接池最小空间连接
   redisson:
+    password: ${spring.data.redis.password}
     node:
       type: single
       single:
         address: redis://${spring.data.redis.host}:${spring.data.redis.port}
-    password: ${spring.data.redis.password}
   kafka:
     bootstrap-servers: kafka:9092
     consumer:

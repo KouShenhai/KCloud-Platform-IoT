@@ -42,13 +42,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LoginLogPageQryExe {
 
-	private final LoginLogMapper loginLogMapper;
+	private final LoginLogMapper adminLoginLogMapper;
 
 	public Result<Page<LoginLogCO>> execute(LoginLogPageQry qry) {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);
-			List<LoginLogDO> list = loginLogMapper.selectObjectPage(qry);
-			long total = loginLogMapper.selectObjectCount(qry);
+			List<LoginLogDO> list = adminLoginLogMapper.selectObjectPage(qry);
+			long total = adminLoginLogMapper.selectObjectCount(qry);
 			return Result.ok(Page.create(LoginLogConvertor.toClientObjects(list), total));
 		}
 		finally {

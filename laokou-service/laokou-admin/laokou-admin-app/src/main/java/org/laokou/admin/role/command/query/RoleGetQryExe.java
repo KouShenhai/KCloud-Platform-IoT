@@ -36,14 +36,14 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class RoleGetQryExe {
 
-	private final RoleMapper roleMapper;
+	private final RoleMapper adminRoleMapper;
 
 	private final RoleMenuMapper roleMenuMapper;
 
 	private final RoleDeptMapper roleDeptMapper;
 
 	public Result<RoleCO> execute(RoleGetQry qry) {
-		RoleCO roleCO = RoleConvertor.toClientObject(roleMapper.selectById(qry.getId()));
+		RoleCO roleCO = RoleConvertor.toClientObject(adminRoleMapper.selectById(qry.getId()));
 		roleCO.setMenuIds(roleMenuMapper.selectMenuIdsByRoleId(qry.getId()));
 		roleCO.setDeptIds(roleDeptMapper.selectDeptIdsByRoleId(qry.getId()));
 		return Result.ok(roleCO);

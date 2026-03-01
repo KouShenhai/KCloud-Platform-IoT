@@ -30,7 +30,7 @@
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-rpc</artifactId>
+      <artifactId>laokou-common-id-generator</artifactId>
       <version>${project.version}</version>
     </dependency>
   </dependencies>

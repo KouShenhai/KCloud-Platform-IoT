@@ -30,7 +30,7 @@ import org.laokou.admin.noticeLog.ability.NoticeLogDomainService;
  *
  * @author laokou
  */
-@Component
+@Component("adminNoticeLogSaveCmdExe")
 @RequiredArgsConstructor
 public class NoticeLogSaveCmdExe {
 

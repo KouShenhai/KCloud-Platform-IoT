@@ -32,7 +32,7 @@ import org.springframework.stereotype.Component;
 /**
  * @author laokou
  */
-@Component
+@Component("authOssLogGateway")
 @RequiredArgsConstructor
 public class OssLogGatewayImpl implements OssLogGateway {
 

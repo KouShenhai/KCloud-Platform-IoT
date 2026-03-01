@@ -18,10 +18,16 @@
 package org.laokou.common.log.config;
 
 import org.apache.kafka.clients.admin.NewTopic;
+import org.laokou.common.i18n.common.IdGenerator;
+import org.laokou.common.id.generator.segment.RedisSegmentIdGenerator;
+import org.laokou.common.id.generator.segment.SpringSegmentProperties;
 import org.laokou.common.log.model.enums.Mq;
+import org.laokou.common.redis.util.RedisUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.KafkaAdmin;
+
+import java.util.List;
 
 /**
  * @author laokou
@@ -32,6 +38,27 @@ public class OperateLogConfig {
 	@Bean
 	public KafkaAdmin.NewTopics newTopics() {
 		return new KafkaAdmin.NewTopics(new NewTopic(Mq.OPERATE_LOG_TOPIC, 3, (short) 1));
+	}
+
+	@Bean(name = "commonRedisSegmentIdGenerator", initMethod = "init", destroyMethod = "close")
+	public org.laokou.common.id.generator.IdGenerator commonRedisSegmentIdGenerator(RedisUtils redisUtils,
+			SpringSegmentProperties springSegmentProperties) {
+		return new RedisSegmentIdGenerator(redisUtils, springSegmentProperties);
+	}
+
+	@Bean(name = "commonIdGenerator")
+	public IdGenerator commonIdGenerator(org.laokou.common.id.generator.IdGenerator commonRedisSegmentIdGenerator) {
+		return new org.laokou.common.i18n.common.IdGenerator() {
+			@Override
+			public Long getId() {
+				return commonRedisSegmentIdGenerator.nextId();
+			}
+
+			@Override
+			public List<Long> getIds(int num) {
+				return commonRedisSegmentIdGenerator.nextIds(num);
+			}
+		};
 	}
 
 }

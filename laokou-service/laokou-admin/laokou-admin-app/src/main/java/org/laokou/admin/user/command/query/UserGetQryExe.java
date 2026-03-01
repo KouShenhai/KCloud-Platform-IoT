@@ -40,18 +40,18 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class UserGetQryExe {
 
-	private final UserMapper userMapper;
+	private final UserMapper adminUserMapper;
 
 	private final UserRoleMapper userRoleMapper;
 
-	private final OssLogMapper ossLogMapper;
+	private final OssLogMapper adminOssLogMapper;
 
 	public Result<UserCO> execute(UserGetQry qry) throws Exception {
 		try {
-			UserCO userCO = UserConvertor.toClientObject(userMapper.selectById(qry.getId()));
+			UserCO userCO = UserConvertor.toClientObject(adminUserMapper.selectById(qry.getId()));
 			userCO.setRoleIds(userRoleMapper.selectRoleIdsByUserId(qry.getId()));
 			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);
-			OssLogDO ossLogDO = ossLogMapper.selectById(userCO.getAvatar());
+			OssLogDO ossLogDO = adminOssLogMapper.selectById(userCO.getAvatar());
 			if (ObjectUtils.isNotNull(ossLogDO)) {
 				userCO.setAvatarUrl(ossLogDO.getUrl());
 			}

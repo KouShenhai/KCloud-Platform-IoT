@@ -42,13 +42,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OssLogPageQryExe {
 
-	private final OssLogMapper ossLogMapper;
+	private final OssLogMapper adminOssLogMapper;
 
 	public Result<Page<OssLogCO>> execute(OssLogPageQry qry) {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);
-			List<OssLogDO> list = ossLogMapper.selectObjectPage(qry);
-			long total = ossLogMapper.selectObjectCount(qry);
+			List<OssLogDO> list = adminOssLogMapper.selectObjectPage(qry);
+			long total = adminOssLogMapper.selectObjectCount(qry);
 			return Result.ok(Page.create(OssLogConvertor.toClientObjects(list), total));
 		}
 		finally {

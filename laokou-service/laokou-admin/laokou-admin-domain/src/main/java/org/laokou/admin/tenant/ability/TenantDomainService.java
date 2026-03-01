@@ -31,18 +31,18 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class TenantDomainService {
 
-	private final TenantGateway tenantGateway;
+	private final TenantGateway adminTenantGateway;
 
 	public void createTenant(TenantE tenantE) {
-		tenantGateway.createTenant(tenantE);
+		adminTenantGateway.createTenant(tenantE);
 	}
 
 	public void updateTenant(TenantE tenantE) {
-		tenantGateway.updateTenant(tenantE);
+		adminTenantGateway.updateTenant(tenantE);
 	}
 
 	public void deleteTenant(Long[] ids) {
-		tenantGateway.deleteTenant(ids);
+		adminTenantGateway.deleteTenant(ids);
 	}
 
 }

@@ -31,18 +31,18 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DeptDomainService {
 
-	private final DeptGateway deptGateway;
+	private final DeptGateway adminDeptGateway;
 
 	public void createDept(DeptA deptA) {
-		deptGateway.createDept(deptA);
+		adminDeptGateway.createDept(deptA);
 	}
 
 	public void updateDept(DeptA deptA) {
-		deptGateway.updateDept(deptA);
+		adminDeptGateway.updateDept(deptA);
 	}
 
 	public void deleteDept(Long[] ids) {
-		deptGateway.deleteDept(ids);
+		adminDeptGateway.deleteDept(ids);
 	}
 
 }

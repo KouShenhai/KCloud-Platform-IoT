@@ -40,13 +40,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class NoticeLogPageQryExe {
 
-	private final NoticeLogMapper noticeLogMapper;
+	private final NoticeLogMapper adminNoticeLogMapper;
 
 	public Result<Page<NoticeLogCO>> execute(NoticeLogPageQry qry) {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);
-			List<NoticeLogDO> list = noticeLogMapper.selectObjectPage(qry);
-			long total = noticeLogMapper.selectObjectCount(qry);
+			List<NoticeLogDO> list = adminNoticeLogMapper.selectObjectPage(qry);
+			long total = adminNoticeLogMapper.selectObjectCount(qry);
 			return Result.ok(Page.create(NoticeLogConvertor.toClientObjects(list), total));
 		}
 		finally {

@@ -19,7 +19,7 @@ package org.laokou.common.log.factory;
 
 import org.laokou.common.i18n.util.SpringContextUtils;
 import org.laokou.common.log.model.OperateLogA;
-import org.laokou.common.log.model.entity.OperateLogE;
+import org.laokou.common.i18n.common.entity.OperateLogE;
 
 public final class DomainFactory {
 

@@ -28,7 +28,7 @@ import org.springframework.stereotype.Repository;
  * @author laokou
  */
 @Mapper
-@Repository
+@Repository("adminNoticeLogMapper")
 public interface NoticeLogMapper extends CrudMapper<Long, Integer, NoticeLogDO> {
 
 }

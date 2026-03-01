@@ -18,6 +18,7 @@
 package org.laokou.common.oss.model;
 
 import lombok.Data;
+import org.laokou.common.oss.model.enums.StoragePolicy;
 
 /**
  * @author laokou
@@ -56,8 +57,8 @@ public final class AmazonS3 extends BaseOss {
 	private Integer pathStyleAccessEnabled;
 
 	@Override
-	public StoragePolicyEnum getStoragePolicy() {
-		return StoragePolicyEnum.AMAZON_S3;
+	public StoragePolicy getStoragePolicy() {
+		return StoragePolicy.AMAZON_S3;
 	}
 
 }

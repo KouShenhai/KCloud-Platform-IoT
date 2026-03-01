@@ -47,7 +47,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class NoticeLogsServiceImpl implements NoticeLogsServiceI {
 
-	private final NoticeLogSaveCmdExe noticeLogSaveCmdExe;
+	private final NoticeLogSaveCmdExe adminNoticeLogSaveCmdExe;
 
 	private final NoticeLogModifyCmdExe noticeLogModifyCmdExe;
 
@@ -63,7 +63,7 @@ public class NoticeLogsServiceImpl implements NoticeLogsServiceI {
 
 	@Override
 	public void saveNoticeLog(NoticeLogSaveCmd cmd) {
-		noticeLogSaveCmdExe.executeVoid(cmd);
+		adminNoticeLogSaveCmdExe.executeVoid(cmd);
 	}
 
 	@Override

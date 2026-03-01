@@ -17,11 +17,9 @@
 
 package org.laokou.common.rpc;
 
-import org.laokou.common.i18n.common.OssStorage;
-
 /**
  * @author laokou
  */
-public class OssStorageRpc implements OssStorage {
+public class OssStorageRpc {
 
 }

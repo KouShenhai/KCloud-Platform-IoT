@@ -111,6 +111,7 @@
     <module>laokou-common-mongodb</module>
     <module>laokou-common-grpc</module>
     <module>laokou-common-rpc</module>
+    <module>laokou-common-id-generator</module>
   </modules>
 
 </project>

@@ -39,17 +39,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserMenuTree implements MenuTree {
 
-	private final MenuMapper menuMapper;
+	private final MenuMapper adminMenuMapper;
 
 	@Override
 	@DistributedCache(name = NameConstants.USER_MENU, key = "#userId", operateType = OperateType.GET)
 	public MenuTreeCO build(MenuTreeListQry qry, Long userId) {
 		List<MenuDO> list;
 		if (UserUtils.isSuperAdmin()) {
-			list = menuMapper.selectAllMenuList();
+			list = adminMenuMapper.selectAllMenuList();
 		}
 		else {
-			list = menuMapper.selectMenuListByUserId(userId);
+			list = adminMenuMapper.selectMenuListByUserId(userId);
 		}
 		return TreeUtils.buildTreeNode(MenuConvertor.toClientObjs(list), MenuTreeCO.class);
 	}

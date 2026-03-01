@@ -31,18 +31,18 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class NoticeLogDomainService {
 
-	private final NoticeLogGateway noticeLogGateway;
+	private final NoticeLogGateway adminNoticeLogGateway;
 
 	public void createNoticeLog(NoticeLogE noticeLogE) {
-		noticeLogGateway.createNoticeLog(noticeLogE);
+		adminNoticeLogGateway.createNoticeLog(noticeLogE);
 	}
 
 	public void updateNoticeLog(NoticeLogE noticeLogE) {
-		noticeLogGateway.updateNoticeLog(noticeLogE);
+		adminNoticeLogGateway.updateNoticeLog(noticeLogE);
 	}
 
 	public void deleteNoticeLog(Long[] ids) {
-		noticeLogGateway.deleteNoticeLog(ids);
+		adminNoticeLogGateway.deleteNoticeLog(ids);
 	}
 
 }

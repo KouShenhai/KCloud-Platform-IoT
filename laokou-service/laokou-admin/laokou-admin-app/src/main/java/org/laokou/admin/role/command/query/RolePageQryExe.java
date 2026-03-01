@@ -38,11 +38,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RolePageQryExe {
 
-	private final RoleMapper roleMapper;
+	private final RoleMapper adminRoleMapper;
 
 	public Result<Page<RoleCO>> execute(RolePageQry qry) {
-		List<RoleDO> list = roleMapper.selectObjectPage(qry);
-		long total = roleMapper.selectObjectCount(qry);
+		List<RoleDO> list = adminRoleMapper.selectObjectPage(qry);
+		long total = adminRoleMapper.selectObjectCount(qry);
 		return Result.ok(Page.create(RoleConvertor.toClientObjects(list), total));
 	}
 

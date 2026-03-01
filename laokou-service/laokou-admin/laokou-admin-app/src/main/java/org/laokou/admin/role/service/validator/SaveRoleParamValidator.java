@@ -31,13 +31,13 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class SaveRoleParamValidator implements RoleParamValidator {
 
-	private final RoleMapper roleMapper;
+	private final RoleMapper adminRoleMapper;
 
 	@Override
 	public void validateRole(RoleA roleA) {
 		ParamValidator.validate(roleA.getValidateName(),
 				// 校验名称
-				org.laokou.admin.role.service.validator.RoleParamValidator.validateName(roleA, roleMapper),
+				org.laokou.admin.role.service.validator.RoleParamValidator.validateName(roleA, adminRoleMapper),
 				// 校验排序
 				org.laokou.admin.role.service.validator.RoleParamValidator.validateSort(roleA));
 	}

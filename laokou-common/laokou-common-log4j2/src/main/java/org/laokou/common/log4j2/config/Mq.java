@@ -27,9 +27,9 @@ public enum Mq {
 
 	;
 
-	public static final String DISTRIBUTED_IDENTIFIER_TRACE_LOG_TOPIC = "distributed-identifier-trace-log";
+	public static final String DISTRIBUTED_IDENTIFIER_TRACE_LOG_TOPIC = "distributed-id-segment-trace-log";
 
-	public static final String DISTRIBUTED_IDENTIFIER_TRACE_LOG_CONSUMER_GROUP = "distributed-identifier-trace-consumer-group";
+	public static final String DISTRIBUTED_IDENTIFIER_TRACE_LOG_CONSUMER_GROUP = "distributed-id-segment-trace-consumer-group";
 
 	public static final String GATEWAY_TRACE_LOG_TOPIC = "gateway-trace-log";
 

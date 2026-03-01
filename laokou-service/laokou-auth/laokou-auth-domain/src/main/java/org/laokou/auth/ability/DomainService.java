@@ -41,7 +41,7 @@ public class DomainService {
 
 	private final TenantGateway tenantGateway;
 
-	private final OssLogGateway ossLogGateway;
+	private final OssLogGateway authOssLogGateway;
 
 	private final CaptchaGateway captchaGateway;
 
@@ -89,7 +89,7 @@ public class DomainService {
 		// 校验数据权限
 		authA.checkDataFilter();
 		// 获取用户头像
-		authA.getUserAvatar(ossLogGateway.getOssUrl(authA.getUserE().getAvatar()));
+		authA.getUserAvatar(authOssLogGateway.getOssUrl(authA.getUserE().getAvatar()));
 	}
 
 }

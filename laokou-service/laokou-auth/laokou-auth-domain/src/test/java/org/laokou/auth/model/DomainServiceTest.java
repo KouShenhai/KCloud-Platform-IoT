@@ -100,7 +100,7 @@ class DomainServiceTest {
 	private HttpRequest httpRequest;
 
 	@MockitoBean
-	private OssLogGateway ossLogGateway;
+	private OssLogGateway authOssLogGateway;
 
 	@MockitoBean
 	private RoleGateway roleGateway;
@@ -159,7 +159,7 @@ class DomainServiceTest {
 		Mockito.verify(passwordValidator, Mockito.times(1)).validatePassword(this.password, this.password);
 		Mockito.verify(userGateway, Mockito.times(1)).getUserProfile(createUserVByUsernamePassword());
 		Mockito.verify(menuGateway, Mockito.times(1)).getMenuPermissions(createUserE());
-		Mockito.verify(ossLogGateway, Mockito.times(1)).getOssUrl(1L);
+		Mockito.verify(authOssLogGateway, Mockito.times(1)).getOssUrl(1L);
 		Mockito.verify(roleGateway, Mockito.times(1)).getDataScopes(createUserE());
 		Mockito.verify(deptGateway, Mockito.times(1)).getDeptIds(createUserE(), List.of("self", "custom"));
 		Assertions.assertThat(usernamePasswordAuth.getDataFilterV().deptIds()).isEqualTo(List.of(1L));
@@ -210,7 +210,7 @@ class DomainServiceTest {
 			.validateCaptcha(RedisKeyUtils.getMailAuthCaptchaKey(this.mail), this.captcha);
 		Mockito.verify(userGateway, Mockito.times(1)).getUserProfile(createUserVByMail());
 		Mockito.verify(menuGateway, Mockito.times(1)).getMenuPermissions(createUserE());
-		Mockito.verify(ossLogGateway, Mockito.times(1)).getOssUrl(1L);
+		Mockito.verify(authOssLogGateway, Mockito.times(1)).getOssUrl(1L);
 		Mockito.verify(roleGateway, Mockito.times(1)).getDataScopes(createUserE());
 		Mockito.verify(deptGateway, Mockito.times(1)).getDeptIds(createUserE(), List.of("self", "custom"));
 		Assertions.assertThat(mailAuth.getDataFilterV().deptIds()).isEqualTo(List.of(1L));
@@ -242,7 +242,7 @@ class DomainServiceTest {
 			.validateCaptcha(RedisKeyUtils.getMobileAuthCaptchaKey(this.mobile), this.captcha);
 		Mockito.verify(userGateway, Mockito.times(1)).getUserProfile(createUserVByMobile());
 		Mockito.verify(menuGateway, Mockito.times(1)).getMenuPermissions(createUserE());
-		Mockito.verify(ossLogGateway, Mockito.times(1)).getOssUrl(1L);
+		Mockito.verify(authOssLogGateway, Mockito.times(1)).getOssUrl(1L);
 		Mockito.verify(roleGateway, Mockito.times(1)).getDataScopes(createUserE());
 		Mockito.verify(deptGateway, Mockito.times(1)).getDeptIds(createUserE(), List.of("self", "custom"));
 		Assertions.assertThat(mobileAuth.getDataFilterV().deptIds()).isEqualTo(List.of(1L));
@@ -283,7 +283,7 @@ class DomainServiceTest {
 		Mockito.verify(passwordValidator, Mockito.times(1)).validatePassword(this.password, this.password);
 		Mockito.verify(userGateway, Mockito.times(1)).getUserProfile(createUserVByTest());
 		Mockito.verify(menuGateway, Mockito.times(1)).getMenuPermissions(createUserE());
-		Mockito.verify(ossLogGateway, Mockito.times(1)).getOssUrl(1L);
+		Mockito.verify(authOssLogGateway, Mockito.times(1)).getOssUrl(1L);
 		Mockito.verify(roleGateway, Mockito.times(1)).getDataScopes(createUserE());
 		Mockito.verify(deptGateway, Mockito.times(1)).getDeptIds(createUserE(), List.of("self", "custom"));
 		Assertions.assertThat(testAuth.getDataFilterV().deptIds()).isEqualTo(List.of(1L));
@@ -304,7 +304,7 @@ class DomainServiceTest {
 		Mockito.verify(passwordValidator, Mockito.times(1)).validatePassword(this.password, this.password);
 		Mockito.verify(userGateway, Mockito.times(1)).getUserProfile(createUserVByAuthorizationCode());
 		Mockito.verify(menuGateway, Mockito.times(1)).getMenuPermissions(createUserE());
-		Mockito.verify(ossLogGateway, Mockito.times(1)).getOssUrl(1L);
+		Mockito.verify(authOssLogGateway, Mockito.times(1)).getOssUrl(1L);
 		Mockito.verify(roleGateway, Mockito.times(1)).getDataScopes(createUserE());
 		Mockito.verify(deptGateway, Mockito.times(1)).getDeptIds(createUserE(), List.of("self", "custom"));
 		Assertions.assertThat(authorizationCodeAuth.getDataFilterV().deptIds()).isEqualTo(List.of(1L));
@@ -350,7 +350,7 @@ class DomainServiceTest {
 		Mockito.when(deptGateway.getDeptIds(Mockito.any(), Mockito.any())).thenReturn(List.of(1L));
 		Mockito.when(userGateway.getUserProfile(Mockito.any())).thenReturn(createUserE());
 		Mockito.when(menuGateway.getMenuPermissions(Mockito.any())).thenReturn(List.of("sys:user:save"));
-		Mockito.when(ossLogGateway.getOssUrl(Mockito.anyLong())).thenReturn("https://1.png");
+		Mockito.when(authOssLogGateway.getOssUrl(Mockito.anyLong())).thenReturn("https://1.png");
 		Map<String, String[]> params = new HashMap<>(4);
 		params.put(Constants.MAIL, new String[] { mailAuthParam.mail() });
 		params.put(Constants.CODE, new String[] { mailAuthParam.code() });
@@ -385,7 +385,7 @@ class DomainServiceTest {
 		Mockito.when(deptGateway.getDeptIds(Mockito.any(), Mockito.any())).thenReturn(List.of(1L));
 		Mockito.when(userGateway.getUserProfile(Mockito.any())).thenReturn(createUserE());
 		Mockito.when(menuGateway.getMenuPermissions(Mockito.any())).thenReturn(List.of("sys:user:save"));
-		Mockito.when(ossLogGateway.getOssUrl(Mockito.anyLong())).thenReturn("https://1.png");
+		Mockito.when(authOssLogGateway.getOssUrl(Mockito.anyLong())).thenReturn("https://1.png");
 		Map<String, String[]> params = new HashMap<>(4);
 		params.put(Constants.MOBILE, new String[] { mobileAuthParam.mobile() });
 		params.put(Constants.CODE, new String[] { mobileAuthParam.code() });
@@ -416,7 +416,7 @@ class DomainServiceTest {
 		Mockito.when(deptGateway.getDeptIds(Mockito.any(), Mockito.any())).thenReturn(List.of(1L));
 		Mockito.when(userGateway.getUserProfile(Mockito.any())).thenReturn(createUserE());
 		Mockito.when(menuGateway.getMenuPermissions(Mockito.any())).thenReturn(List.of("sys:user:save"));
-		Mockito.when(ossLogGateway.getOssUrl(Mockito.anyLong())).thenReturn("https://1.png");
+		Mockito.when(authOssLogGateway.getOssUrl(Mockito.anyLong())).thenReturn("https://1.png");
 		Map<String, String[]> params = new HashMap<>(4);
 		params.put(Constants.USERNAME, new String[] { testAuthParam.username() });
 		params.put(Constants.PASSWORD, new String[] { testAuthParam.password() });
@@ -447,7 +447,7 @@ class DomainServiceTest {
 		Mockito.when(deptGateway.getDeptIds(Mockito.any(), Mockito.any())).thenReturn(List.of(1L));
 		Mockito.when(userGateway.getUserProfile(Mockito.any())).thenReturn(createUserE());
 		Mockito.when(menuGateway.getMenuPermissions(Mockito.any())).thenReturn(List.of("sys:user:save"));
-		Mockito.when(ossLogGateway.getOssUrl(Mockito.anyLong())).thenReturn("https://1.png");
+		Mockito.when(authOssLogGateway.getOssUrl(Mockito.anyLong())).thenReturn("https://1.png");
 		Map<String, String[]> params = new HashMap<>(4);
 		params.put(Constants.USERNAME, new String[] { authorizationCodeAuthParam.username() });
 		params.put(Constants.PASSWORD, new String[] { authorizationCodeAuthParam.password() });
@@ -491,7 +491,7 @@ class DomainServiceTest {
 			Mockito.when(userGateway.getUserProfile(Mockito.any())).thenReturn(null);
 		}
 		Mockito.when(menuGateway.getMenuPermissions(Mockito.any())).thenReturn(List.of("sys:user:save"));
-		Mockito.when(ossLogGateway.getOssUrl(Mockito.anyLong())).thenReturn("https://1.png");
+		Mockito.when(authOssLogGateway.getOssUrl(Mockito.anyLong())).thenReturn("https://1.png");
 		Map<String, String[]> params = new HashMap<>(6);
 		params.put(Constants.USERNAME, new String[] { usernamePasswordAuthParam.username() });
 		params.put(Constants.PASSWORD, new String[] { usernamePasswordAuthParam.password() });

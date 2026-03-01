@@ -32,27 +32,27 @@ import java.util.Arrays;
  *
  * @author laokou
  */
-@Component
+@Component("adminDeptGateway")
 @RequiredArgsConstructor
 public class DeptGatewayImpl implements DeptGateway {
 
-	private final DeptMapper deptMapper;
+	private final DeptMapper adminDeptMapper;
 
 	@Override
 	public void createDept(DeptA deptA) {
-		deptMapper.insert(DeptConvertor.toDataObject(deptA));
+		adminDeptMapper.insert(DeptConvertor.toDataObject(deptA));
 	}
 
 	@Override
 	public void updateDept(DeptA deptA) {
 		DeptDO deptDO = DeptConvertor.toDataObject(deptA);
-		deptDO.setVersion(deptMapper.selectVersion(deptA.getId()));
-		deptMapper.updateById(deptDO);
+		deptDO.setVersion(adminDeptMapper.selectVersion(deptA.getId()));
+		adminDeptMapper.updateById(deptDO);
 	}
 
 	@Override
 	public void deleteDept(Long[] ids) {
-		deptMapper.deleteByIds(Arrays.asList(ids));
+		adminDeptMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }

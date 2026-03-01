@@ -33,28 +33,28 @@ import java.util.Arrays;
  * @author laokou
  */
 @Slf4j
-@Component
+@Component("adminUserGateway")
 @RequiredArgsConstructor
 public class UserGatewayImpl implements UserGateway {
 
-	private final UserMapper userMapper;
+	private final UserMapper adminUserMapper;
 
 	@Override
 	public void createUser(UserA userA) {
 		UserDO userDO = UserConvertor.toDataObject(userA);
-		userMapper.insert(userDO);
+		adminUserMapper.insert(userDO);
 	}
 
 	@Override
 	public void updateUser(UserA userA) {
 		UserDO userDO = UserConvertor.toDataObject(userA);
-		userDO.setVersion(userMapper.selectVersion(userA.getId()));
-		userMapper.updateById(userDO);
+		userDO.setVersion(adminUserMapper.selectVersion(userA.getId()));
+		adminUserMapper.updateById(userDO);
 	}
 
 	@Override
 	public void deleteUser(Long[] ids) {
-		userMapper.deleteByIds(Arrays.asList(ids));
+		adminUserMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }
