@@ -46,8 +46,8 @@ import org.laokou.auth.model.valueobject.UserV;
 import org.laokou.common.core.util.RegexUtils;
 import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.crypto.util.RSAUtils;
-import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.IdGenerator;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
@@ -93,8 +93,8 @@ class DomainServiceTest {
 	@MockitoBean
 	private CaptchaValidator captchaValidator;
 
-	@MockitoBean
-	private IdGenerator idGenerator;
+	@MockitoBean("authIdGenerator")
+	private IdGenerator authIdGenerator;
 
 	@MockitoBean
 	private HttpRequest httpRequest;
@@ -325,7 +325,7 @@ class DomainServiceTest {
 	}
 
 	private void createMailAuthInfo(MailAuthParam mailAuthParam) {
-		Mockito.when(idGenerator.getId()).thenReturn(1L);
+		Mockito.when(authIdGenerator.getId()).thenReturn(1L);
 		Mockito.doAnswer(invocation -> {
 			AuthA authA = invocation.getArgument(0);
 			UserV userV = authA.getUserV();
@@ -360,7 +360,7 @@ class DomainServiceTest {
 	}
 
 	private void createMobileAuthInfo(MobileAuthParam mobileAuthParam) {
-		Mockito.when(idGenerator.getId()).thenReturn(1L);
+		Mockito.when(authIdGenerator.getId()).thenReturn(1L);
 		Mockito.doAnswer(invocation -> {
 			AuthA authA = invocation.getArgument(0);
 			UserV userV = authA.getUserV();
@@ -395,7 +395,7 @@ class DomainServiceTest {
 	}
 
 	private void createTestAuthInfo(TestAuthParam testAuthParam) {
-		Mockito.when(idGenerator.getId()).thenReturn(1L);
+		Mockito.when(authIdGenerator.getId()).thenReturn(1L);
 		Mockito.doAnswer(invocation -> {
 			AuthA authA = invocation.getArgument(0);
 			UserV userV = authA.getUserV();
@@ -426,7 +426,7 @@ class DomainServiceTest {
 	}
 
 	private void createAuthorizationCodeAuthInfo(AuthorizationCodAuthParam authorizationCodeAuthParam) {
-		Mockito.when(idGenerator.getId()).thenReturn(1L);
+		Mockito.when(authIdGenerator.getId()).thenReturn(1L);
 		Mockito.doAnswer(invocation -> {
 			AuthA authA = invocation.getArgument(0);
 			UserV userV = authA.getUserV();
@@ -457,7 +457,7 @@ class DomainServiceTest {
 	}
 
 	private void createUsernamePasswordAuthInfo(UsernamePasswordAuthParam usernamePasswordAuthParam) {
-		Mockito.when(idGenerator.getId()).thenReturn(1L);
+		Mockito.when(authIdGenerator.getId()).thenReturn(1L);
 		Mockito.doAnswer(invocation -> {
 			AuthA authA = invocation.getArgument(0);
 			UserV userV = authA.getUserV();
