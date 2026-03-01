@@ -36,23 +36,23 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class NoticeLogGatewayImpl implements NoticeLogGateway {
 
-	private final NoticeLogMapper noticeLogMapper;
+	private final NoticeLogMapper adminNoticeLogMapper;
 
 	@Override
 	public void createNoticeLog(NoticeLogE noticeLogE) {
-		noticeLogMapper.insert(NoticeLogConvertor.toDataObject(1L, noticeLogE, true));
+		adminNoticeLogMapper.insert(NoticeLogConvertor.toDataObject(1L, noticeLogE, true));
 	}
 
 	@Override
 	public void updateNoticeLog(NoticeLogE noticeLogE) {
 		NoticeLogDO noticeLogDO = NoticeLogConvertor.toDataObject(null, noticeLogE, false);
-		noticeLogDO.setVersion(noticeLogMapper.selectVersion(noticeLogE.getId()));
-		noticeLogMapper.updateById(noticeLogDO);
+		noticeLogDO.setVersion(adminNoticeLogMapper.selectVersion(noticeLogE.getId()));
+		adminNoticeLogMapper.updateById(noticeLogDO);
 	}
 
 	@Override
 	public void deleteNoticeLog(Long[] ids) {
-		noticeLogMapper.deleteByIds(Arrays.asList(ids));
+		adminNoticeLogMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }

@@ -22,6 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.annotation.EnableWarmUp;
 import org.laokou.common.i18n.util.SslUtils;
 import org.laokou.common.security.config.TransmittableThreadLocalSecurityContextHolderStrategy;
+import org.mybatis.spring.annotation.MapperScan;
+import org.mybatis.spring.annotation.MapperScans;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -47,6 +49,8 @@ import java.security.NoSuchAlgorithmException;
 @EnableEncryptableProperties
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy
+@MapperScans({ @MapperScan(basePackages = "org.laokou.admin.**.gatewayimpl.database"),
+		@MapperScan(basePackages = "org.laokou.auth.**.gatewayimpl.database") })
 @SpringBootApplication(scanBasePackages = "org.laokou")
 class StandaloneApp {
 

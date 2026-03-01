@@ -34,10 +34,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class OssLogGetQryExe {
 
-	private final OssLogMapper ossLogMapper;
+	private final OssLogMapper adminOssLogMapper;
 
 	public Result<OssLogCO> execute(OssLogGetQry qry) {
-		return Result.ok(OssLogConvertor.toClientObject(ossLogMapper.selectById(qry.getId())));
+		return Result.ok(OssLogConvertor.toClientObject(adminOssLogMapper.selectById(qry.getId())));
 	}
 
 }

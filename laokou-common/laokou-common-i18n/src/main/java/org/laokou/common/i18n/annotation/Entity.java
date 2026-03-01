@@ -19,6 +19,7 @@ package org.laokou.common.i18n.annotation;
 
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
+import org.springframework.core.annotation.AliasFor;
 import org.springframework.stereotype.Component;
 
 import java.lang.annotation.ElementType;
@@ -38,5 +39,12 @@ import java.lang.annotation.Target;
 @Target({ ElementType.TYPE })
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public @interface Entity {
+
+	/**
+	 * The value may indicate a suggestion for a logical component name.
+	 * @return the suggested component name, if any (or empty String otherwise)
+	 */
+	@AliasFor(annotation = Component.class)
+	String value() default "";
 
 }

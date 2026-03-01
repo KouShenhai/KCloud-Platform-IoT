@@ -34,10 +34,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class LoginLogGetQryExe {
 
-	private final LoginLogMapper loginLogMapper;
+	private final LoginLogMapper adminLoginLogMapper;
 
 	public Result<LoginLogCO> execute(LoginLogGetQry qry) {
-		return Result.ok(LoginLogConvertor.toClientObject(loginLogMapper.selectById(qry.getId())));
+		return Result.ok(LoginLogConvertor.toClientObject(adminLoginLogMapper.selectById(qry.getId())));
 	}
 
 }

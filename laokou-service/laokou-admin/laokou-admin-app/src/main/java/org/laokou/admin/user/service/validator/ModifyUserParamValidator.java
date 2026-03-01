@@ -31,7 +31,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ModifyUserParamValidator implements UserParamValidator {
 
-	private final UserMapper userMapper;
+	private final UserMapper adminUserMapper;
 
 	@Override
 	public void validateUser(UserA userA) throws Exception {
@@ -39,9 +39,9 @@ public class ModifyUserParamValidator implements UserParamValidator {
 				// 校验ID
 				org.laokou.admin.user.service.validator.UserParamValidator.validateId(userA),
 				// 校验邮箱
-				org.laokou.admin.user.service.validator.UserParamValidator.validateMail(userA, userMapper, false),
+				org.laokou.admin.user.service.validator.UserParamValidator.validateMail(userA, adminUserMapper, false),
 				// 校验手机号
-				org.laokou.admin.user.service.validator.UserParamValidator.validateMobile(userA, userMapper),
+				org.laokou.admin.user.service.validator.UserParamValidator.validateMobile(userA, adminUserMapper),
 				// 校验部门ID
 				org.laokou.admin.user.service.validator.UserParamValidator.validateDeptId(userA));
 	}

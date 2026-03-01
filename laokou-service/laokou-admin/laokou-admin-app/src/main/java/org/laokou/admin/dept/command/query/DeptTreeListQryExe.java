@@ -37,11 +37,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DeptTreeListQryExe {
 
-	private final DeptMapper deptMapper;
+	private final DeptMapper adminDeptMapper;
 
 	public Result<List<DeptTreeCO>> execute(DeptTreeListQry qry) {
-		DeptTreeCO co = TreeUtils.buildTreeNode(DeptConvertor.toClientObjectList0(deptMapper.selectObjectList(qry)),
-				DeptTreeCO.class);
+		DeptTreeCO co = TreeUtils
+			.buildTreeNode(DeptConvertor.toClientObjectList0(adminDeptMapper.selectObjectList(qry)), DeptTreeCO.class);
 		return Result.ok(co.getChildren());
 	}
 

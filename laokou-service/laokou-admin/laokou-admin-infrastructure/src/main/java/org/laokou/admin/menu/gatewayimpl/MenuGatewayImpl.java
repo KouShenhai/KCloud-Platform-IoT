@@ -36,23 +36,23 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class MenuGatewayImpl implements MenuGateway {
 
-	private final MenuMapper menuMapper;
+	private final MenuMapper adminMenuMapper;
 
 	@Override
 	public void createMenu(MenuA menuA) {
-		menuMapper.insert(MenuConvertor.toDataObject(menuA));
+		adminMenuMapper.insert(MenuConvertor.toDataObject(menuA));
 	}
 
 	@Override
 	public void updateMenu(MenuA menuA) {
 		MenuDO menuDO = MenuConvertor.toDataObject(menuA);
-		menuDO.setVersion(menuMapper.selectVersion(menuA.getId()));
-		menuMapper.updateById(menuDO);
+		menuDO.setVersion(adminMenuMapper.selectVersion(menuA.getId()));
+		adminMenuMapper.updateById(menuDO);
 	}
 
 	@Override
 	public void deleteMenu(Long[] ids) {
-		menuMapper.deleteByIds(Arrays.asList(ids));
+		adminMenuMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }

@@ -34,10 +34,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class MenuGetQryExe {
 
-	private final MenuMapper menuMapper;
+	private final MenuMapper adminMenuMapper;
 
 	public Result<MenuCO> execute(MenuGetQry qry) {
-		return Result.ok(MenuConvertor.toClientObject(menuMapper.selectById(qry.getId())));
+		return Result.ok(MenuConvertor.toClientObject(adminMenuMapper.selectById(qry.getId())));
 	}
 
 }

@@ -37,28 +37,28 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class RoleGatewayImpl implements RoleGateway {
 
-	private final RoleMapper roleMapper;
+	private final RoleMapper adminRoleMapper;
 
 	@Override
 	public void createRole(RoleA roleA) {
 		RoleDO roleDO = RoleConvertor.toDataObject(roleA);
-		roleMapper.insert(roleDO);
+		adminRoleMapper.insert(roleDO);
 	}
 
 	@Override
 	public void updateRole(RoleA roleA) {
 		RoleDO roleDO = RoleConvertor.toDataObject(roleA);
 		roleDO.setVersion(getVersion(roleA.getId()));
-		roleMapper.updateById(roleDO);
+		adminRoleMapper.updateById(roleDO);
 	}
 
 	@Override
 	public void deleteRole(Long[] ids) {
-		roleMapper.deleteByIds(Arrays.asList(ids));
+		adminRoleMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 	private Integer getVersion(Long id) {
-		return roleMapper.selectVersion(id);
+		return adminRoleMapper.selectVersion(id);
 	}
 
 }
