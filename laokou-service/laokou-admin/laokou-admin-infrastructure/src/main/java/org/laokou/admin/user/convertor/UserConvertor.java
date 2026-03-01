@@ -47,7 +47,7 @@ public final class UserConvertor {
 		List<String> roleIds = userA.getUserE().getRoleIds();
 		Long userId = userA.getId();
 		int num = roleIds.size();
-		List<Long> primaryKeys = userA.getIdsBatch(num);
+		List<Long> primaryKeys = userA.getIds(num);
 		List<UserRoleDO> list = new ArrayList<>(num);
 		for (int i = 0; i < num; i++) {
 			UserRoleDO userRoleDO = new UserRoleDO();

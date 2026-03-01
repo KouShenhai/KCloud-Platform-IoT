@@ -31,6 +31,7 @@ import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.common.entity.OperateLogE;
 import org.laokou.common.log.model.enums.Status;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.util.StopWatch;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -51,16 +52,16 @@ public class OperateLogA extends AggregateRoot {
 
 	private OperateLogE operateLogE;
 
-	private final IdGenerator idGenerator;
+	private final IdGenerator commonIdGenerator;
 
-	public OperateLogA(IdGenerator idGenerator) {
-		this.idGenerator = idGenerator;
+	public OperateLogA(@Qualifier("commonIdGenerator") IdGenerator commonIdGenerator) {
+		this.commonIdGenerator = commonIdGenerator;
 	}
 
 	public OperateLogA create(OperateLogE operateLogE) {
 		this.operateLogE = operateLogE;
 		super.createTime = InstantUtils.now();
-		super.id = idGenerator.getId();
+		super.id = commonIdGenerator.getId();
 		return this;
 	}
 

@@ -47,16 +47,16 @@ public class DeptA extends AggregateRoot implements ValidateName {
 	 */
 	private OperateType operateType;
 
-	private final IdGenerator idGenerator;
+	private final IdGenerator commonIdGenerator;
 
 	private final DeptParamValidator saveDeptParamValidator;
 
 	private final DeptParamValidator modifyDeptParamValidator;
 
-	public DeptA(IdGenerator idGenerator,
+	public DeptA(@Qualifier("commonIdGenerator") IdGenerator commonIdGenerator,
 			@Qualifier("modifyDeptParamValidator") DeptParamValidator saveDeptParamValidator,
 			@Qualifier("saveDeptParamValidator") DeptParamValidator modifyDeptParamValidator) {
-		this.idGenerator = idGenerator;
+		this.commonIdGenerator = commonIdGenerator;
 		this.saveDeptParamValidator = saveDeptParamValidator;
 		this.modifyDeptParamValidator = modifyDeptParamValidator;
 	}
@@ -65,7 +65,7 @@ public class DeptA extends AggregateRoot implements ValidateName {
 		this.deptE = deptE;
 		Long primaryKey = this.deptE.getId();
 		super.createTime = InstantUtils.now();
-		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : idGenerator.getId();
+		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : commonIdGenerator.getId();
 		this.operateType = ObjectUtils.isNotNull(primaryKey) ? OperateType.MODIFY : OperateType.SAVE;
 		return this;
 	}
