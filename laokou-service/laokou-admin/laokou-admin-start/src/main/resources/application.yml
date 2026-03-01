@@ -68,6 +68,11 @@ spring:
   threads:
     virtual:
       enabled: true
+  id-generator:
+    segment:
+      key: id-generator:segment:${spring.application.name}
+      step: 10000
+      load-factor: 0.8
   security:
     oauth2:
       resource-server:
@@ -79,13 +84,6 @@ spring:
               - /actuator/**=laokou-admin
               - /doc.html=laokou-admin
               - /webjars/**=laokou-admin
-  grpc:
-    client:
-      channels:
-        laokou-distributed-id-segment:
-          address: discovery://laokou-distributed-id-segment
-          enable-keep-alive: true
-          idle-timeout: 60s
   cloud:
     loadbalancer:
       nacos:

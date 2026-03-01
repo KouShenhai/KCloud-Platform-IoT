@@ -72,11 +72,6 @@
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-distributed-id-segment-proto</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
       <artifactId>laokou-common-data-cache</artifactId>
       <version>${project.version}</version>
     </dependency>

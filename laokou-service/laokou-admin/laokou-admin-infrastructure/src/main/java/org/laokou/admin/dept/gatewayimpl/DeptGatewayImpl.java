@@ -32,7 +32,7 @@ import java.util.Arrays;
  *
  * @author laokou
  */
-@Component
+@Component("adminDeptGateway")
 @RequiredArgsConstructor
 public class DeptGatewayImpl implements DeptGateway {
 

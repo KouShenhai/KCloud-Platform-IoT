@@ -32,7 +32,7 @@ import org.laokou.admin.ossLog.gatewayimpl.database.dataobject.OssLogDO;
  *
  * @author laokou
  */
-@Component
+@Component("adminOssLogGateway")
 @RequiredArgsConstructor
 public class OssLogGatewayImpl implements OssLogGateway {
 

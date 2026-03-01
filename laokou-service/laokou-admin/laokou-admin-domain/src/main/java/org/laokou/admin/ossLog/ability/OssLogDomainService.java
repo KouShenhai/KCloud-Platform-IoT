@@ -31,18 +31,18 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class OssLogDomainService {
 
-	private final OssLogGateway ossLogGateway;
+	private final OssLogGateway adminOssLogGateway;
 
 	public void createOssLog(OssLogE ossLogE) {
-		ossLogGateway.createOssLog(ossLogE);
+		adminOssLogGateway.createOssLog(ossLogE);
 	}
 
 	public void updateOssLog(OssLogE ossLogE) {
-		ossLogGateway.updateOssLog(ossLogE);
+		adminOssLogGateway.updateOssLog(ossLogE);
 	}
 
 	public void deleteOssLog(Long[] ids) {
-		ossLogGateway.deleteOssLog(ids);
+		adminOssLogGateway.deleteOssLog(ids);
 	}
 
 }

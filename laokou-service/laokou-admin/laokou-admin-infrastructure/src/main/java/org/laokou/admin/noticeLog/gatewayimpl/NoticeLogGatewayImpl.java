@@ -32,7 +32,7 @@ import java.util.Arrays;
  *
  * @author laokou
  */
-@Component
+@Component("adminNoticeLogGateway")
 @RequiredArgsConstructor
 public class NoticeLogGatewayImpl implements NoticeLogGateway {
 

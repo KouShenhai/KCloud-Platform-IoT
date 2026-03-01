@@ -33,7 +33,7 @@ import java.util.Arrays;
  * @author laokou
  */
 @Slf4j
-@Component
+@Component("adminRoleGateway")
 @RequiredArgsConstructor
 public class RoleGatewayImpl implements RoleGateway {
 

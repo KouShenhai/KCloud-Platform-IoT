@@ -18,6 +18,7 @@
 package org.laokou.common.log.config;
 
 import org.apache.kafka.clients.admin.NewTopic;
+import org.laokou.common.i18n.common.IdGenerator;
 import org.laokou.common.log.model.enums.Mq;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

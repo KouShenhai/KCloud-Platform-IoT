@@ -30,6 +30,9 @@ import org.laokou.auth.model.enums.MqTopic;
 import org.laokou.auth.model.validator.PasswordValidator;
 import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.id.generator.IdGenerator;
+import org.laokou.common.id.generator.segment.RedisSegmentIdGenerator;
+import org.laokou.common.id.generator.segment.SpringSegmentProperties;
 import org.laokou.common.redis.util.RedisUtils;
 import org.laokou.common.security.config.RedisOAuth2AuthorizationConsentService;
 import org.laokou.common.security.config.RedisRegisteredClientRepository;
@@ -212,6 +215,26 @@ class OAuth2AuthorizationServerConfig {
 		return new KafkaAdmin.NewTopics(new NewTopic(MqTopic.LOGIN_LOG_TOPIC, 3, (short) 1),
 				new NewTopic(MqTopic.MAIL_CAPTCHA_TOPIC, 3, (short) 1),
 				new NewTopic(MqTopic.MOBILE_CAPTCHA_TOPIC, 3, (short) 1));
+	}
+
+	@Bean(name = "authRedisSegmentIdGenerator", initMethod = "init", destroyMethod = "close")
+	public IdGenerator authRedisSegmentIdGenerator(RedisUtils redisUtils, SpringSegmentProperties springSegmentProperties) {
+		return new RedisSegmentIdGenerator(redisUtils, springSegmentProperties);
+	}
+
+	@Bean(name = "authIdGenerator")
+	public org.laokou.common.i18n.common.IdGenerator authIdGenerator(IdGenerator authRedisSegmentIdGenerator) {
+		return new org.laokou.common.i18n.common.IdGenerator() {
+			@Override
+			public Long getId() {
+				return authRedisSegmentIdGenerator.nextId();
+			}
+
+			@Override
+			public List<Long> getIds(int num) {
+				return authRedisSegmentIdGenerator.nextIds(num);
+			}
+		};
 	}
 
 	private Boolean validateCaptcha(String key, String code) {

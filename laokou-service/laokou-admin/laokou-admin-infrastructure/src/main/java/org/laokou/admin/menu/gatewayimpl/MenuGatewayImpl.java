@@ -32,7 +32,7 @@ import java.util.Arrays;
  *
  * @author laokou
  */
-@Component
+@Component("adminMenuGateway")
 @RequiredArgsConstructor
 public class MenuGatewayImpl implements MenuGateway {
 

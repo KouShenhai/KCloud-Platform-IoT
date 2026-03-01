@@ -7,7 +7,4 @@
   </parent>
   <artifactId>laokou-distributed-id</artifactId>
   <packaging>pom</packaging>
-  <modules>
-    <module>laokou-distributed-id-segment</module>
-  </modules>
 </project>
