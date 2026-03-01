@@ -33,7 +33,7 @@ import java.util.List;
  * @author laokou
  */
 @Slf4j
-public class IdGeneratorRpc implements IdGenerator {
+public class SegmentIdGeneratorRpc implements IdGenerator {
 
 	@GrpcClient(serviceId = "laokou-distributed-id-segment")
 	private DistributedIdServiceIGrpc.DistributedIdServiceIBlockingV2Stub distributedIdServiceIBlockingV2Stub;

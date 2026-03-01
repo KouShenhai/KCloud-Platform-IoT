@@ -17,8 +17,7 @@
 
 package org.laokou.common.rpc.annotation;
 
-import org.laokou.common.rpc.IdGeneratorRpc;
-import org.laokou.common.rpc.OssStorageRpc;
+import org.laokou.common.rpc.SegmentIdGeneratorRpc;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.Documented;
@@ -33,7 +32,7 @@ import java.lang.annotation.Target;
 @Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Import({ IdGeneratorRpc.class, OssStorageRpc.class })
-public @interface EnableRpc {
+@Import({ SegmentIdGeneratorRpc.class })
+public @interface EnableSegmentIdGeneratorRpc {
 
 }

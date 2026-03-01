@@ -31,6 +31,17 @@
       <artifactId>laokou-admin-adapter</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-id-generator</artifactId>
+      <version>${project.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-to-slf4j</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
   </dependencies>
 
 </project>

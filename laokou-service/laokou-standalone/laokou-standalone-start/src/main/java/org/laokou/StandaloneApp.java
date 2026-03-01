@@ -31,6 +31,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StopWatch;
 
+import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -50,9 +51,10 @@ import java.security.NoSuchAlgorithmException;
 class StandaloneApp {
 
 	// @formatter:off
-	void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
+	void main(String[] args) throws  NoSuchAlgorithmException, KeyManagementException, UnknownHostException {
 		StopWatch stopWatch = new StopWatch("Standalone应用程序");
 		stopWatch.start();
+		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "8099")));
 		// SpringSecurity 子线程读取父线程的上下文
 		SecurityContextHolder.setContextHolderStrategy(new TransmittableThreadLocalSecurityContextHolderStrategy());
 		// 忽略SSL认证

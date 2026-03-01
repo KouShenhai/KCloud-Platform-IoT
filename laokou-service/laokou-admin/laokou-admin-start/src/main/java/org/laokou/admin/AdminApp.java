@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.annotation.EnableWarmUp;
 import org.laokou.common.i18n.util.SslUtils;
 import org.laokou.common.nacos.annotation.EnablePrintRouter;
-import org.laokou.common.rpc.annotation.EnableRpc;
+import org.laokou.common.rpc.annotation.EnableSegmentIdGeneratorRpc;
 import org.laokou.common.security.annotation.EnableSecurity;
 import org.laokou.common.security.config.TransmittableThreadLocalSecurityContextHolderStrategy;
 import org.mybatis.spring.annotation.MapperScan;
@@ -47,7 +47,6 @@ import java.security.NoSuchAlgorithmException;
  * @author laokou
  */
 @Slf4j
-@EnableRpc
 @EnableWarmUp
 @EnablePrintRouter
 @EnableSecurity
@@ -56,6 +55,7 @@ import java.security.NoSuchAlgorithmException;
 @EnableEncryptableProperties
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy
+@EnableSegmentIdGeneratorRpc
 @MapperScan(basePackages = "org.laokou.admin.**.gatewayimpl.database")
 @SpringBootApplication(scanBasePackages = "org.laokou")
 class AdminApp {

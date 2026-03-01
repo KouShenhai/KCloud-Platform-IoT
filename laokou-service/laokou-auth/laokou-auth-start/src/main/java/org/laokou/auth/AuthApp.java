@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.annotation.EnableWarmUp;
 import org.laokou.common.i18n.util.SslUtils;
 import org.laokou.common.nacos.annotation.EnablePrintRouter;
-import org.laokou.common.rpc.annotation.EnableRpc;
+import org.laokou.common.rpc.annotation.EnableSegmentIdGeneratorRpc;
 import org.laokou.common.security.config.TransmittableThreadLocalSecurityContextHolderStrategy;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -45,7 +45,6 @@ import java.security.NoSuchAlgorithmException;
  * @author laokou
  */
 @Slf4j
-@EnableRpc
 @EnablePrintRouter
 @EnableWarmUp
 @EnableScheduling
@@ -53,6 +52,7 @@ import java.security.NoSuchAlgorithmException;
 @EnableEncryptableProperties
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy
+@EnableSegmentIdGeneratorRpc
 @SpringBootApplication(scanBasePackages = "org.laokou")
 class AuthApp {
 
