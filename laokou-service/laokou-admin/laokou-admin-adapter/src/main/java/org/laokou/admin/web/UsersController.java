@@ -115,6 +115,7 @@ public class UsersController {
 	@PreAuthorize("hasAuthority('write') and hasAuthority('sys:user:modify')")
 	@OperateLog(module = "用户管理", operation = "重置用户密码")
 	@Operation(summary = "重置用户密码", description = "重置用户密码")
+	@DistributedCache(name = NameConstants.USERS, key = "#cmd.id", operateType = OperateType.DEL)
 	public void resetUserPwd(@RequestBody UserResetPwdCmd cmd) throws Exception {
 		usersServiceI.resetUserPwd(cmd);
 	}

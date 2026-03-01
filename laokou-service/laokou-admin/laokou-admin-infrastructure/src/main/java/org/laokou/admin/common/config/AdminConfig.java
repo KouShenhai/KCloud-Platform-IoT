@@ -18,14 +18,7 @@
 package org.laokou.admin.common.config;
 
 import org.laokou.common.fory.config.ForyFactory;
-import org.laokou.common.id.generator.IdGenerator;
-import org.laokou.common.id.generator.segment.RedisSegmentIdGenerator;
-import org.laokou.common.id.generator.segment.SpringSegmentProperties;
-import org.laokou.common.redis.util.RedisUtils;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.List;
 
 /**
  * @author laokou
@@ -37,26 +30,6 @@ public class AdminConfig {
 		ForyFactory.INSTANCE.register(org.laokou.admin.menu.dto.clientobject.MenuTreeCO.class);
 		ForyFactory.INSTANCE.register(org.laokou.admin.menu.dto.clientobject.MenuCO.class);
 		ForyFactory.INSTANCE.register(org.laokou.admin.dept.dto.clientobject.DeptCO.class);
-	}
-
-	@Bean(name = "adminRedisSegmentIdGenerator", initMethod = "init", destroyMethod = "close")
-	public IdGenerator adminRedisSegmentIdGenerator(RedisUtils redisUtils, SpringSegmentProperties springSegmentProperties) {
-		return new RedisSegmentIdGenerator(redisUtils, springSegmentProperties);
-	}
-
-	@Bean(name = "adminIdGenerator")
-	public org.laokou.common.i18n.common.IdGenerator adminIdGenerator(IdGenerator adminRedisSegmentIdGenerator) {
-		return new org.laokou.common.i18n.common.IdGenerator() {
-			@Override
-			public Long getId() {
-				return adminRedisSegmentIdGenerator.nextId();
-			}
-
-			@Override
-			public List<Long> getIds(int num) {
-				return adminRedisSegmentIdGenerator.nextIds(num);
-			}
-		};
 	}
 
 }
