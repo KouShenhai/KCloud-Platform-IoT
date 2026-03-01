@@ -21,7 +21,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.IdGenerator;
-import org.laokou.common.i18n.common.enums.IdType;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
@@ -86,7 +85,7 @@ public class ProductCategoryE {
 	}
 
 	public Long getPrimaryKey() {
-		return idGenerator.getId(IdType.REDIS_SEGMENT);
+		return idGenerator.getId();
 	}
 
 	public void checkProductCategoryParam() {

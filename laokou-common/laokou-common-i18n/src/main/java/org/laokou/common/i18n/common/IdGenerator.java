@@ -24,8 +24,8 @@ import java.util.List;
  */
 public interface IdGenerator {
 
-	Long getId(org.laokou.common.i18n.common.enums.IdType idType);
+	Long getId();
 
-	List<Long> getIds(org.laokou.common.i18n.common.enums.IdType idType, int num);
+	List<Long> getIds(int num);
 
 }

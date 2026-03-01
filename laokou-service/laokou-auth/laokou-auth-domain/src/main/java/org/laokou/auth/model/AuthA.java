@@ -49,7 +49,6 @@ import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.IdGenerator;
 import org.laokou.common.i18n.common.ValidateName;
 import org.laokou.common.i18n.common.constant.StringConstants;
-import org.laokou.common.i18n.common.enums.IdType;
 import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.util.InstantUtils;
@@ -473,7 +472,7 @@ public class AuthA extends AggregateRoot implements ValidateName {
 	}
 
 	private AuthA init() {
-		super.id = idGenerator.getId(IdType.REDIS_SEGMENT);
+		super.id = idGenerator.getId();
 		super.createTime = InstantUtils.now();
 		return this;
 	}

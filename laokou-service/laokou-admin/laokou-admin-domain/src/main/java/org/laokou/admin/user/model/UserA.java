@@ -27,7 +27,6 @@ import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.IdGenerator;
 import org.laokou.common.i18n.common.ValidateName;
 import org.laokou.common.i18n.common.constant.StringConstants;
-import org.laokou.common.i18n.common.enums.IdType;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -95,7 +94,7 @@ public class UserA extends AggregateRoot implements ValidateName {
 		this.userE = userE;
 		Long primaryKey = this.userE.getId();
 		super.createTime = InstantUtils.now();
-		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : idGenerator.getId(IdType.REDIS_SEGMENT);
+		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : idGenerator.getId();
 		this.operateType = operateType;
 		return this;
 	}
@@ -133,7 +132,7 @@ public class UserA extends AggregateRoot implements ValidateName {
 	}
 
 	public List<Long> getIdsBatch(int num) {
-		return idGenerator.getIds(IdType.REDIS_SEGMENT, num);
+		return idGenerator.getIds(num);
 	}
 
 	public boolean isSave() {

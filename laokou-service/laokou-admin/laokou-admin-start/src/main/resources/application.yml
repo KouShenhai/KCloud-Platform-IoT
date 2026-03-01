@@ -82,8 +82,8 @@ spring:
   grpc:
     client:
       channels:
-        laokou-distributed-id:
-          address: discovery://laokou-distributed-id
+        laokou-distributed-id-segment:
+          address: discovery://laokou-distributed-id-segment
           enable-keep-alive: true
           idle-timeout: 60s
   cloud:

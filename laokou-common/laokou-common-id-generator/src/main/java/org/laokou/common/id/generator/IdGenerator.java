@@ -18,7 +18,6 @@
 package org.laokou.common.id.generator;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -54,13 +53,7 @@ public interface IdGenerator {
 	 * @param num 数量
 	 * @return ID列表
 	 */
-	default List<Long> nextIds(int num) {
-		List<Long> ids = new ArrayList<>(num);
-		for (int i = 0; i < num; i++) {
-			ids.add(nextId());
-		}
-		return ids;
-	}
+	List<Long> nextIds(int num);
 
 	/**
 	 * 根据雪花ID获取生成时间.
