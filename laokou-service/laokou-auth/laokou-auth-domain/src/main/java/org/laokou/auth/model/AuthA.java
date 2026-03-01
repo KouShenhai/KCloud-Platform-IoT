@@ -115,7 +115,7 @@ public class AuthA extends AggregateRoot implements ValidateName {
 	/**
 	 * ID生成器.
 	 */
-	private final transient IdGenerator idGenerator;
+	private final transient IdGenerator authIdGenerator;
 
 	/**
 	 * 请求值Map映射.
@@ -168,7 +168,7 @@ public class AuthA extends AggregateRoot implements ValidateName {
 	private final CaptchaParamValidator mobileCaptchaParamValidator;
 
 	// @formatter:off
-	AuthA(IdGenerator idGenerator,
+	AuthA(@Qualifier("authIdGenerator") IdGenerator authIdGenerator,
 		@NonNull HttpRequest httpRequest,
 		@NonNull PasswordValidator passwordValidator,
 		@NonNull CaptchaValidator captchaValidator,
@@ -179,7 +179,7 @@ public class AuthA extends AggregateRoot implements ValidateName {
 		@Qualifier("usernamePasswordAuthParamValidator") @NonNull AuthParamValidator usernamePasswordAuthParamValidator,
 		@Qualifier("mailCaptchaParamValidator") @NonNull CaptchaParamValidator mailCaptchaParamValidator,
 		@Qualifier("mobileCaptchaParamValidator") @NonNull CaptchaParamValidator mobileCaptchaParamValidator) {
-		this.idGenerator = idGenerator;
+		this.authIdGenerator = authIdGenerator;
 		this.parameterMap = httpRequest.getParameterMap();
 		this.userE = DomainFactory.createUser();
 		this.passwordValidator = passwordValidator;
@@ -472,7 +472,7 @@ public class AuthA extends AggregateRoot implements ValidateName {
 	}
 
 	private AuthA init() {
-		super.id = idGenerator.getId();
+		super.id = authIdGenerator.getId();
 		super.createTime = InstantUtils.now();
 		return this;
 	}

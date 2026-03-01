@@ -45,7 +45,7 @@ public class RoleA extends AggregateRoot implements ValidateName {
 
 	private OperateType operateType;
 
-	private final IdGenerator idGenerator;
+	private final IdGenerator commonIdGenerator;
 
 	private final RoleParamValidator saveRoleParamValidator;
 
@@ -53,11 +53,11 @@ public class RoleA extends AggregateRoot implements ValidateName {
 
 	private final RoleParamValidator modifyRoleAuthorityParamValidator;
 
-	public RoleA(IdGenerator idGenerator,
+	public RoleA(@Qualifier("commonIdGenerator") IdGenerator commonIdGenerator,
 			@Qualifier("saveRoleParamValidator") RoleParamValidator saveRoleParamValidator,
 			@Qualifier("modifyRoleParamValidator") RoleParamValidator modifyRoleParamValidator,
 			@Qualifier("modifyRoleAuthorityParamValidator") RoleParamValidator modifyRoleAuthorityParamValidator) {
-		this.idGenerator = idGenerator;
+		this.commonIdGenerator = commonIdGenerator;
 		this.saveRoleParamValidator = saveRoleParamValidator;
 		this.modifyRoleParamValidator = modifyRoleParamValidator;
 		this.modifyRoleAuthorityParamValidator = modifyRoleAuthorityParamValidator;
@@ -67,7 +67,7 @@ public class RoleA extends AggregateRoot implements ValidateName {
 		this.roleE = roleE;
 		Long primaryKey = this.roleE.getId();
 		super.createTime = InstantUtils.now();
-		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : idGenerator.getId();
+		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : commonIdGenerator.getId();
 		this.operateType = operateType;
 		return this;
 	}
@@ -81,8 +81,8 @@ public class RoleA extends AggregateRoot implements ValidateName {
 		}
 	}
 
-	public List<Long> getIdsBatch(int num) {
-		return idGenerator.getIds(num);
+	public List<Long> getIds(int num) {
+		return commonIdGenerator.getIds(num);
 	}
 
 	@Override

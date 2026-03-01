@@ -54,7 +54,7 @@ public class UserA extends AggregateRoot implements ValidateName {
 	 */
 	private OperateType operateType;
 
-	private final IdGenerator idGenerator;
+	private final IdGenerator commonIdGenerator;
 
 	private final UserParamValidator saveUserParamValidator;
 
@@ -66,13 +66,13 @@ public class UserA extends AggregateRoot implements ValidateName {
 
 	private final PasswordEncoder passwordEncoder;
 
-	public UserA(IdGenerator idGenerator,
+	public UserA(@Qualifier("commonIdGenerator") IdGenerator commonIdGenerator,
 			@Qualifier("saveUserParamValidator") UserParamValidator saveUserParamValidator,
 			@Qualifier("modifyUserParamValidator") UserParamValidator modifyUserParamValidator,
 			@Qualifier("resetUserPwdParamValidator") UserParamValidator resetUserPwdParamValidator,
 			@Qualifier("modifyUserAuthorityParamValidator") UserParamValidator modifyUserAuthorityParamValidator,
 			PasswordEncoder passwordEncoder) {
-		this.idGenerator = idGenerator;
+		this.commonIdGenerator = commonIdGenerator;
 		this.saveUserParamValidator = saveUserParamValidator;
 		this.modifyUserParamValidator = modifyUserParamValidator;
 		this.resetUserPwdParamValidator = resetUserPwdParamValidator;
@@ -94,7 +94,7 @@ public class UserA extends AggregateRoot implements ValidateName {
 		this.userE = userE;
 		Long primaryKey = this.userE.getId();
 		super.createTime = InstantUtils.now();
-		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : idGenerator.getId();
+		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : commonIdGenerator.getId();
 		this.operateType = operateType;
 		return this;
 	}
@@ -144,8 +144,8 @@ public class UserA extends AggregateRoot implements ValidateName {
 		return this;
 	}
 
-	public List<Long> getIdsBatch(int num) {
-		return idGenerator.getIds(num);
+	public List<Long> getIds(int num) {
+		return commonIdGenerator.getIds(num);
 	}
 
 	public boolean isSave() {

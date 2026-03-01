@@ -51,7 +51,7 @@ public class RoleConvertor {
 		Long roleId = roleA.getId();
 		List<String> menuIds = roleA.getRoleE().getMenuIds();
 		int num = menuIds.size();
-		List<Long> primaryKeys = roleA.getIdsBatch(num);
+		List<Long> primaryKeys = roleA.getIds(num);
 		List<RoleMenuDO> list = new ArrayList<>(num);
 		for (int i = 0; i < num; i++) {
 			RoleMenuDO roleMenuDO = new RoleMenuDO();
@@ -75,7 +75,7 @@ public class RoleConvertor {
 		Long roleId = roleA.getId();
 		List<String> deptIds = roleA.getRoleE().getDeptIds();
 		int num = deptIds.size();
-		List<Long> primaryKeys = roleA.getIdsBatch(num);
+		List<Long> primaryKeys = roleA.getIds(num);
 		List<RoleDeptDO> list = new ArrayList<>(num);
 		for (int i = 0; i < num; i++) {
 			RoleDeptDO roleDeptDO = new RoleDeptDO();

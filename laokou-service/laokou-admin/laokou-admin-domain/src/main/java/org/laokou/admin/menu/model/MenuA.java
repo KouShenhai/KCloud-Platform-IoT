@@ -53,7 +53,7 @@ public class MenuA extends AggregateRoot implements ValidateName {
 	/*
 	 * ID生成器.
 	 */
-	private final IdGenerator idGenerator;
+	private final IdGenerator commonIdGenerator;
 
 	/*
 	 * 新增参数校验器.
@@ -65,10 +65,10 @@ public class MenuA extends AggregateRoot implements ValidateName {
 	 */
 	private final MenuParamValidator modifyMenuParamValidator;
 
-	public MenuA(IdGenerator idGenerator,
+	public MenuA(@Qualifier("commonIdGenerator") IdGenerator commonIdGenerator,
 			@Qualifier("saveMenuParamValidator") MenuParamValidator saveMenuParamValidator,
 			@Qualifier("modifyMenuParamValidator") MenuParamValidator modifyMenuParamValidator) {
-		this.idGenerator = idGenerator;
+		this.commonIdGenerator = commonIdGenerator;
 		this.saveMenuParamValidator = saveMenuParamValidator;
 		this.modifyMenuParamValidator = modifyMenuParamValidator;
 	}
@@ -77,7 +77,7 @@ public class MenuA extends AggregateRoot implements ValidateName {
 		this.menuE = menuE;
 		Long primaryKey = this.menuE.getId();
 		super.createTime = InstantUtils.now();
-		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : idGenerator.getId();
+		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : commonIdGenerator.getId();
 		this.operateType = ObjectUtils.isNotNull(primaryKey) ? OperateType.MODIFY : OperateType.SAVE;
 		return this;
 	}
