@@ -45,8 +45,6 @@ final class SegmentBuffer {
 
 	private final ReentrantReadWriteLock switchLock = new ReentrantReadWriteLock();
 
-	private final Lock readLock = switchLock.readLock();
-
 	private final Lock writeLock = switchLock.writeLock();
 
 	public Segment getCurrent() {

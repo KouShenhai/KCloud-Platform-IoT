@@ -31,7 +31,9 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.LockSupport;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * 基于 Redis 的分段 ID 生成器.
@@ -79,6 +81,10 @@ public class RedisSegmentIdGenerator implements IdGenerator {
 
 	private final DefaultRedisScript<@NonNull Long> segmentAllocScript;
 
+	private final ReentrantReadWriteLock switchLock = new ReentrantReadWriteLock();
+
+	private final Lock readLock = switchLock.readLock();
+
 	public RedisSegmentIdGenerator(RedisUtils redisUtils, SpringSegmentProperties springSegmentProperties) {
 		this.redisUtils = redisUtils;
 		this.segmentBuffer = new SegmentBuffer();
@@ -117,7 +123,7 @@ public class RedisSegmentIdGenerator implements IdGenerator {
 		if (!initialized.get()) {
 			throw new IllegalStateException("RedisSegmentIdGenerator is not initialized. Call init() before using.");
 		}
-		segmentBuffer.getReadLock().lock();
+		readLock.lock();
 		try {
 			Segment segment = segmentBuffer.getCurrent();
 			if (segment == null) {
@@ -133,7 +139,7 @@ public class RedisSegmentIdGenerator implements IdGenerator {
 			}
 		}
 		finally {
-			segmentBuffer.getReadLock().unlock();
+			readLock.unlock();
 		}
 		// 当前号段耗尽，尝试切换
 		switchAndRetry();
@@ -147,7 +153,7 @@ public class RedisSegmentIdGenerator implements IdGenerator {
 		}
 		List<Long> ids = new ArrayList<>(num);
 		while (ids.size() < num) {
-			segmentBuffer.getReadLock().lock();
+			readLock.lock();
 			try {
 				Segment segment = segmentBuffer.getCurrent();
 				if (segment == null) {
@@ -160,7 +166,7 @@ public class RedisSegmentIdGenerator implements IdGenerator {
 				}
 			}
 			finally {
-				segmentBuffer.getReadLock().unlock();
+				readLock.unlock();
 			}
 			if (ids.size() < num) {
 				switchAndRetry();
