@@ -102,7 +102,8 @@ public class RedisSegmentIdGenerator implements IdGenerator {
 	public void init() {
 		if (initialized.compareAndSet(false, true)) {
 			try {
-				springSegmentProperties.getConfigs().forEach((bizType, config) -> loadSegmentSync(true, BizType.getByCode(bizType), null, config));
+				springSegmentProperties.getConfigs()
+					.forEach((bizType, config) -> loadSegmentSync(true, BizType.getByCode(bizType), null, config));
 				log.info("RedisSegmentIdGenerator initialized successfully");
 			}
 			catch (Exception ex) {
@@ -118,6 +119,7 @@ public class RedisSegmentIdGenerator implements IdGenerator {
 	public void close() {
 		initialized.set(false);
 		ThreadUtils.shutdown(virtualThreadExecutor, 15);
+		springSegmentProperties.getConfigs().forEach(this::flushCursor);
 		log.info("RedisSegmentIdGenerator closed.");
 	}
 
@@ -220,7 +222,8 @@ public class RedisSegmentIdGenerator implements IdGenerator {
 		if (segmentBuffer.trySetLoading()) {
 			virtualThreadExecutor.execute(() -> {
 				try {
-					loadSegmentSync(false, bizType, segmentBuffer, springSegmentProperties.getConfigs().get(bizType.getCode()));
+					loadSegmentSync(false, bizType, segmentBuffer,
+							springSegmentProperties.getConfigs().get(bizType.getCode()));
 				}
 				catch (Exception e) {
 					log.error("Async segment load failed", e);
@@ -229,24 +232,38 @@ public class RedisSegmentIdGenerator implements IdGenerator {
 		}
 	}
 
-	private void loadSegmentSync(boolean isCurrent, BizType bizType, SegmentBuffer segmentBuffer, SpringSegmentProperties.SegmentConfig config) {
+	private void loadSegmentSync(boolean isCurrent, BizType bizType, SegmentBuffer segmentBuffer,
+			SpringSegmentProperties.SegmentConfig config) {
 		Exception lastException = null;
 		for (int i = 0; i < MAX_RETRY; i++) {
 			try {
-				Long maxId = redisUtils.execute(segmentAllocScript, List.of(config.getKey()),
-						String.valueOf(config.getStep()));
-				Segment segment = new Segment(maxId, config.getStep(),
-					config.getLoadFactor());
+				Segment segment;
 				if (isCurrent) {
+					// 读取cursor历史位置
+					String cursorKey = config.getCursorKey();
+					if (redisUtils.hasKey(cursorKey)) {
+						int step = config.getStep();
+						long curId = (long) redisUtils.get(cursorKey);
+						long minId = ((curId - 1) / step) * step + 1;
+						long maxId = minId + step - 1;
+						segment = new Segment(minId, maxId, curId, config.getStep(), config.getLoadFactor());
+					}
+					else {
+						long maxId = redisUtils.execute(segmentAllocScript, List.of(config.getKey()),
+								String.valueOf(config.getStep()));
+						segment = new Segment(maxId, config.getStep(), config.getLoadFactor());
+					}
 					segmentBuffer = new SegmentBuffer();
 					segmentBuffer.setCurrent(segment);
 					buffers.put(bizType, segmentBuffer);
 				}
 				else {
+					Long maxId = redisUtils.execute(segmentAllocScript, List.of(config.getKey()),
+							String.valueOf(config.getStep()));
+					segment = new Segment(maxId, config.getStep(), config.getLoadFactor());
 					segmentBuffer.setNext(segment);
 				}
-				log.info("Loaded segment: [{}, {}], step={}", segment.getMinId(), segment.getMaxId(),
-					config.getStep());
+				log.info("Loaded segment: [{}, {}], step={}", segment.getMinId(), segment.getMaxId(), config.getStep());
 				return;
 			}
 			catch (Exception ex) {
@@ -262,6 +279,27 @@ public class RedisSegmentIdGenerator implements IdGenerator {
 			}
 		}
 		throw new RuntimeException("Failed to load segment from Redis after " + MAX_RETRY + " attempts", lastException);
+	}
+
+	private void flushCursor(String bizType, SpringSegmentProperties.SegmentConfig config) {
+		for (int i = 0; i < MAX_RETRY; i++) {
+			try {
+				redisUtils.set(config.getCursorKey(),
+						buffers.get(BizType.getByCode(bizType)).getCurrent().getCursor().get());
+				break;
+			}
+			catch (Exception ex) {
+				log.error("Failed to flush segment cursor from Redis", ex);
+				try {
+					Thread.sleep(RETRY_DELAY_MS * (i + 1));
+				}
+				catch (InterruptedException iex) {
+					Thread.currentThread().interrupt();
+					throw new IllegalStateException("Interrupted while retrying flush segment cursor", iex);
+				}
+			}
+		}
+		log.info("Flushed segment cursor from Redis");
 	}
 
 }

@@ -29,6 +29,7 @@ public enum BizType {
 	AUTH("auth", "认证授权");
 
 	private final String code;
+
 	private final String desc;
 
 	BizType(String code, String desc) {

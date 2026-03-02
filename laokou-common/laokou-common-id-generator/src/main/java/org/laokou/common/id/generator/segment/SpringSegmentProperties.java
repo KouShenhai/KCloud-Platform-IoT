@@ -50,9 +50,14 @@ public class SpringSegmentProperties {
 		private int step = 10000;
 
 		/**
-		 * Redis Key.
+		 * Redis Segment Key.
 		 */
 		private String key = "id-generator:segment";
+
+		/**
+		 * Redis Segment Cursor Key.
+		 */
+		private String cursorKey = "id-generator:segment:cursor";
 
 		/**
 		 * 异步加载因子.
