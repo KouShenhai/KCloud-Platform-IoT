@@ -49,6 +49,14 @@ final class Segment {
 		this.cursor = new AtomicLong(this.minId);
 	}
 
+	public Segment(long minId, long maxId, long curId, int step, double loadFactor) {
+		this.step = step;
+		this.minId = minId;
+		this.maxId = maxId;
+		this.ref = (int) (loadFactor * step);
+		this.cursor = new AtomicLong(curId);
+	}
+
 	public long nextId() {
 		long id = this.cursor.getAndIncrement();
 		return id > this.maxId ? -1 : id;

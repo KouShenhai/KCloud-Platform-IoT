@@ -64,10 +64,14 @@ spring:
   lifecycle:
     timeout-per-shutdown-phase: 2m
   id-generator:
-    segment:
-      key: id-generator:segment:${spring.application.name}
-      step: 10000
-      load-factor: 0.8
+      segment:
+        node-id: ${NODE_ID:1}
+        configs:
+          auth:
+            key: id-generator:segment:${spring.application.name}:auth
+            cursor-key: id-generator:segment:cursor:${spring.application.name}:auth:${spring.id-generator.segment.node-id}
+            step: 10000
+            load-factor: 0.8
   # security
   security:
     oauth2:

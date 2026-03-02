@@ -29,6 +29,7 @@ import org.laokou.auth.model.function.HttpRequest;
 import org.laokou.auth.model.enums.MqTopic;
 import org.laokou.auth.model.validator.PasswordValidator;
 import org.laokou.common.fory.config.ForyFactory;
+import org.laokou.common.i18n.common.enums.BizType;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.id.generator.IdGenerator;
 import org.laokou.common.id.generator.segment.RedisSegmentIdGenerator;
@@ -227,13 +228,13 @@ class OAuth2AuthorizationServerConfig {
 	public org.laokou.common.i18n.common.IdGenerator authIdGenerator(IdGenerator authRedisSegmentIdGenerator) {
 		return new org.laokou.common.i18n.common.IdGenerator() {
 			@Override
-			public Long getId() {
-				return authRedisSegmentIdGenerator.nextId();
+			public Long getId(BizType bizType) {
+				return authRedisSegmentIdGenerator.nextId(bizType);
 			}
 
 			@Override
-			public List<Long> getIds(int num) {
-				return authRedisSegmentIdGenerator.nextIds(num);
+			public List<Long> getIds(BizType bizType, int num) {
+				return authRedisSegmentIdGenerator.nextIds(bizType, num);
 			}
 		};
 	}

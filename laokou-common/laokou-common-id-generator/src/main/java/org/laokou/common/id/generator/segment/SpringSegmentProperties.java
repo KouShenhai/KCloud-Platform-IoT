@@ -21,6 +21,9 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Redis 分段 ID 生成器配置属性.
  *
@@ -31,25 +34,39 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "spring.id-generator.segment")
 public class SpringSegmentProperties {
 
-	/**
-	 * 每次从 Redis 获取的号段步长.
-	 * <p>
-	 * 步长越大，对 Redis 的访问频率越低，性能越高。 但步长过大会导致服务重启时浪费较多 ID。
-	 * </p>
-	 */
-	private int step = 10000;
+	private String nodeId;
 
-	/**
-	 * Redis Key.
-	 */
-	private String key = "id-generator:segment";
+	private Map<String, SegmentConfig> configs = new HashMap<>(0);
 
-	/**
-	 * 异步加载因子.
-	 * <p>
-	 * 当号段使用比例达到此值时，异步加载下一个号段。 取值范围 (0, 1)，默认 0.8 表示号段用了50%时开始预加载。
-	 * </p>
-	 */
-	private double loadFactor = 0.8;
+	@Data
+	public static class SegmentConfig {
+
+		/**
+		 * 每次从 Redis 获取的号段步长.
+		 * <p>
+		 * 步长越大，对 Redis 的访问频率越低，性能越高。 但步长过大会导致服务重启时浪费较多 ID。
+		 * </p>
+		 */
+		private int step = 10000;
+
+		/**
+		 * Redis Segment Key.
+		 */
+		private String key = "id-generator:segment";
+
+		/**
+		 * Redis Segment Cursor Key.
+		 */
+		private String cursorKey = "id-generator:segment:cursor";
+
+		/**
+		 * 异步加载因子.
+		 * <p>
+		 * 当号段使用比例达到此值时，异步加载下一个号段。 取值范围 (0, 1)，默认 0.8 表示号段用了50%时开始预加载。
+		 * </p>
+		 */
+		private double loadFactor = 0.8;
+
+	}
 
 }
