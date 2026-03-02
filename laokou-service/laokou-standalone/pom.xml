@@ -9,11 +9,7 @@
   <version>4.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
-    <module>laokou-standalone-start</module>
-    <module>laokou-standalone-infrastructure</module>
-    <module>laokou-standalone-adapter</module>
-    <module>laokou-standalone-app</module>
-    <module>laokou-standalone-client</module>
-    <module>laokou-standalone-domain</module>
+    <module>laokou-standalone-auth</module>
+    <module>laokou-standalone-admin</module>
   </modules>
 </project>
