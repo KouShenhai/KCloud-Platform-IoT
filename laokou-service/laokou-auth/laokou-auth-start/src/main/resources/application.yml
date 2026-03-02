@@ -65,7 +65,7 @@ spring:
     timeout-per-shutdown-phase: 2m
   id-generator:
       segment:
-        node-id: 1
+        node-id: ${NODE_ID:1}
         configs:
           auth:
             key: id-generator:segment:${spring.application.name}:auth
