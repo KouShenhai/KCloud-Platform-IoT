@@ -20,6 +20,7 @@ package org.laokou.common.id.generator.segment;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.util.ThreadUtils;
+import org.laokou.common.i18n.common.enums.BizType;
 import org.laokou.common.i18n.util.ResourceExtUtils;
 import org.laokou.common.id.generator.IdGenerator;
 import org.laokou.common.redis.util.RedisUtils;
@@ -28,6 +29,8 @@ import org.springframework.data.redis.core.script.DefaultRedisScript;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -71,8 +74,6 @@ public class RedisSegmentIdGenerator implements IdGenerator {
 	 */
 	private final AtomicBoolean initialized = new AtomicBoolean(false);
 
-	private final SegmentBuffer segmentBuffer;
-
 	private final ExecutorService virtualThreadExecutor;
 
 	private final RedisUtils redisUtils;
@@ -85,21 +86,23 @@ public class RedisSegmentIdGenerator implements IdGenerator {
 
 	private final Lock readLock = switchLock.readLock();
 
+	private final Map<BizType, SegmentBuffer> buffers;
+
 	public RedisSegmentIdGenerator(RedisUtils redisUtils, SpringSegmentProperties springSegmentProperties) {
 		this.redisUtils = redisUtils;
-		this.segmentBuffer = new SegmentBuffer();
 		this.springSegmentProperties = springSegmentProperties;
 		this.virtualThreadExecutor = ThreadUtils.newVirtualTaskExecutor();
 		this.segmentAllocScript = new DefaultRedisScript<>();
 		this.segmentAllocScript.setLocation(ResourceExtUtils.getResource("lua/segment_alloc.lua"));
 		this.segmentAllocScript.setResultType(Long.class);
+		this.buffers = new ConcurrentHashMap<>();
 	}
 
 	@Override
 	public void init() {
 		if (initialized.compareAndSet(false, true)) {
 			try {
-				loadSegmentSync(true);
+				springSegmentProperties.getConfigs().forEach((bizType, config) -> loadSegmentSync(true, BizType.getByCode(bizType), null, config));
 				log.info("RedisSegmentIdGenerator initialized successfully");
 			}
 			catch (Exception ex) {
@@ -119,10 +122,11 @@ public class RedisSegmentIdGenerator implements IdGenerator {
 	}
 
 	@Override
-	public long nextId() {
+	public long nextId(BizType bizType) {
 		if (!initialized.get()) {
 			throw new IllegalStateException("RedisSegmentIdGenerator is not initialized. Call init() before using.");
 		}
+		SegmentBuffer segmentBuffer = buffers.get(bizType);
 		readLock.lock();
 		try {
 			Segment segment = segmentBuffer.getCurrent();
@@ -133,7 +137,7 @@ public class RedisSegmentIdGenerator implements IdGenerator {
 			if (id > 0) {
 				// 异步加载下一个 Buffer，提前准备好备用号段
 				if (segment.isNext() && segmentBuffer.isNotLoading() && segmentBuffer.isNotNextReady()) {
-					triggerAsyncLoad();
+					triggerAsyncLoad(bizType, segmentBuffer);
 				}
 				return id;
 			}
@@ -142,15 +146,16 @@ public class RedisSegmentIdGenerator implements IdGenerator {
 			readLock.unlock();
 		}
 		// 当前号段耗尽，尝试切换
-		switchAndRetry();
-		return nextId();
+		switchAndRetry(bizType, segmentBuffer);
+		return nextId(bizType);
 	}
 
 	@Override
-	public List<Long> nextIds(int num) {
+	public List<Long> nextIds(BizType bizType, int num) {
 		if (!initialized.get()) {
 			throw new IllegalStateException("RedisSegmentIdGenerator is not initialized. Call init() before using.");
 		}
+		SegmentBuffer segmentBuffer = buffers.get(bizType);
 		List<Long> ids = new ArrayList<>(num);
 		while (ids.size() < num) {
 			readLock.lock();
@@ -162,14 +167,14 @@ public class RedisSegmentIdGenerator implements IdGenerator {
 				List<Long> batchIds = segment.nextIds(num - ids.size());
 				ids.addAll(batchIds);
 				if (segment.isNext() && segmentBuffer.isNotLoading() && segmentBuffer.isNotNextReady()) {
-					triggerAsyncLoad();
+					triggerAsyncLoad(bizType, segmentBuffer);
 				}
 			}
 			finally {
 				readLock.unlock();
 			}
 			if (ids.size() < num) {
-				switchAndRetry();
+				switchAndRetry(bizType, segmentBuffer);
 			}
 		}
 		return ids;
@@ -195,12 +200,12 @@ public class RedisSegmentIdGenerator implements IdGenerator {
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
-	private void switchAndRetry() {
+	private void switchAndRetry(BizType bizType, SegmentBuffer segmentBuffer) {
 		// 等待备用 Buffer 加载完成
 		int retries = 0;
 		while (segmentBuffer.isNotNextReady()) {
 			if (segmentBuffer.isNotLoading()) {
-				triggerAsyncLoad();
+				triggerAsyncLoad(bizType, segmentBuffer);
 			}
 			LockSupport.parkNanos(TimeUnit.MILLISECONDS.toNanos(100));
 			if (++retries > 100) { // ~10 秒超时
@@ -211,11 +216,11 @@ public class RedisSegmentIdGenerator implements IdGenerator {
 		segmentBuffer.switchSegment();
 	}
 
-	private void triggerAsyncLoad() {
+	private void triggerAsyncLoad(BizType bizType, SegmentBuffer segmentBuffer) {
 		if (segmentBuffer.trySetLoading()) {
 			virtualThreadExecutor.execute(() -> {
 				try {
-					loadSegmentSync(false);
+					loadSegmentSync(false, bizType, segmentBuffer, springSegmentProperties.getConfigs().get(bizType.getCode()));
 				}
 				catch (Exception e) {
 					log.error("Async segment load failed", e);
@@ -224,22 +229,24 @@ public class RedisSegmentIdGenerator implements IdGenerator {
 		}
 	}
 
-	private void loadSegmentSync(boolean isCurrent) {
+	private void loadSegmentSync(boolean isCurrent, BizType bizType, SegmentBuffer segmentBuffer, SpringSegmentProperties.SegmentConfig config) {
 		Exception lastException = null;
 		for (int i = 0; i < MAX_RETRY; i++) {
 			try {
-				Long maxId = redisUtils.execute(segmentAllocScript, List.of(springSegmentProperties.getKey()),
-						String.valueOf(springSegmentProperties.getStep()));
-				Segment segment = new Segment(maxId, springSegmentProperties.getStep(),
-						springSegmentProperties.getLoadFactor());
+				Long maxId = redisUtils.execute(segmentAllocScript, List.of(config.getKey()),
+						String.valueOf(config.getStep()));
+				Segment segment = new Segment(maxId, config.getStep(),
+					config.getLoadFactor());
 				if (isCurrent) {
+					segmentBuffer = new SegmentBuffer();
 					segmentBuffer.setCurrent(segment);
+					buffers.put(bizType, segmentBuffer);
 				}
 				else {
 					segmentBuffer.setNext(segment);
 				}
 				log.info("Loaded segment: [{}, {}], step={}", segment.getMinId(), segment.getMaxId(),
-						springSegmentProperties.getStep());
+					config.getStep());
 				return;
 			}
 			catch (Exception ex) {

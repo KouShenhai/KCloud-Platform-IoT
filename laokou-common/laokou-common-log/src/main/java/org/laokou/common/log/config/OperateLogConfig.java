@@ -19,6 +19,7 @@ package org.laokou.common.log.config;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.laokou.common.i18n.common.IdGenerator;
+import org.laokou.common.i18n.common.enums.BizType;
 import org.laokou.common.id.generator.segment.RedisSegmentIdGenerator;
 import org.laokou.common.id.generator.segment.SpringSegmentProperties;
 import org.laokou.common.log.model.enums.Mq;
@@ -50,13 +51,13 @@ public class OperateLogConfig {
 	public IdGenerator commonIdGenerator(org.laokou.common.id.generator.IdGenerator commonRedisSegmentIdGenerator) {
 		return new org.laokou.common.i18n.common.IdGenerator() {
 			@Override
-			public Long getId() {
-				return commonRedisSegmentIdGenerator.nextId();
+			public Long getId(BizType bizType) {
+				return commonRedisSegmentIdGenerator.nextId(bizType);
 			}
 
 			@Override
-			public List<Long> getIds(int num) {
-				return commonRedisSegmentIdGenerator.nextIds(num);
+			public List<Long> getIds(BizType bizType, int num) {
+				return commonRedisSegmentIdGenerator.nextIds(bizType, num);
 			}
 		};
 	}

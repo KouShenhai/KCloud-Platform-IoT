@@ -166,6 +166,9 @@ spring:
         heart-beat-interval: 10000
         # 超过30秒，则标记为不健康
         heart-beat-timeout: 30000
+        # 元数据
+        metadata:
+          node_id: ${spring.id-generator.segment.node-id}
       config:
         # 开启配置中心
         enabled: true

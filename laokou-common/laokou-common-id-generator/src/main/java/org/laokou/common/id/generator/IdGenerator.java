@@ -17,6 +17,8 @@
 
 package org.laokou.common.id.generator;
 
+import org.laokou.common.i18n.common.enums.BizType;
+
 import java.time.Instant;
 import java.util.List;
 
@@ -46,14 +48,14 @@ public interface IdGenerator {
 	 * 生成下一个唯一ID.
 	 * @return 唯一ID
 	 */
-	long nextId();
+	long nextId(BizType bizType);
 
 	/**
 	 * 批量生成唯一ID.
 	 * @param num 数量
 	 * @return ID列表
 	 */
-	List<Long> nextIds(int num);
+	List<Long> nextIds(BizType bizType, int num);
 
 	/**
 	 * 根据雪花ID获取生成时间.

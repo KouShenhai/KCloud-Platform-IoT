@@ -15,19 +15,29 @@
  *
  */
 
-package org.laokou.common.i18n.common;
+package org.laokou.common.i18n.common.enums;
 
-import org.laokou.common.i18n.common.enums.BizType;
-
-import java.util.List;
+import lombok.Getter;
+import org.laokou.common.i18n.util.EnumParser;
 
 /**
  * @author laokou
  */
-public interface IdGenerator {
+@Getter
+public enum BizType {
 
-	Long getId(BizType bizType);
+	AUTH("auth", "认证授权");
 
-	List<Long> getIds(BizType bizType, int num);
+	private final String code;
+	private final String desc;
+
+	BizType(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
+
+	public static BizType getByCode(String code) {
+		return EnumParser.parse(BizType.class, BizType::getCode, code);
+	}
 
 }

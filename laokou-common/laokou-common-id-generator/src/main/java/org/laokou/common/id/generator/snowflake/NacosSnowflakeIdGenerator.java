@@ -25,6 +25,7 @@ import com.alibaba.nacos.api.naming.pojo.Instance;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.util.MapUtils;
+import org.laokou.common.i18n.common.enums.BizType;
 import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.id.generator.IdGenerator;
@@ -217,7 +218,7 @@ public class NacosSnowflakeIdGenerator implements IdGenerator {
 	 * @return 雪花ID
 	 */
 	@Override
-	public synchronized long nextId() {
+	public synchronized long nextId(BizType bizType) {
 		if (!initialized.get()) {
 			throw new IllegalStateException("NacosSnowflakeGenerator not initialized, please call init() first");
 		}
@@ -274,10 +275,10 @@ public class NacosSnowflakeIdGenerator implements IdGenerator {
 	}
 
 	@Override
-	public List<Long> nextIds(int num) {
+	public List<Long> nextIds(BizType bizType, int num) {
 		List<Long> ids = new ArrayList<>(num);
 		for (int i = 0; i < num; i++) {
-			ids.add(nextId());
+			ids.add(nextId(bizType));
 		}
 		return ids;
 	}
