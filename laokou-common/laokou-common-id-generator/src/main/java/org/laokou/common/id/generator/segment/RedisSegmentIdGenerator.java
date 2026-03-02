@@ -118,8 +118,8 @@ public class RedisSegmentIdGenerator implements IdGenerator {
 	@Override
 	public void close() {
 		initialized.set(false);
-		ThreadUtils.shutdown(virtualThreadExecutor, 15);
 		springSegmentProperties.getConfigs().forEach(this::flushCursor);
+		ThreadUtils.shutdown(virtualThreadExecutor, 15);
 		log.info("RedisSegmentIdGenerator closed.");
 	}
 
@@ -241,9 +241,9 @@ public class RedisSegmentIdGenerator implements IdGenerator {
 				if (isCurrent) {
 					// 读取cursor历史位置
 					String cursorKey = config.getCursorKey();
-					if (redisUtils.hasKey(cursorKey)) {
+					Object o = redisUtils.get(cursorKey);
+					if (o instanceof Long curId) {
 						int step = config.getStep();
-						long curId = (long) redisUtils.get(cursorKey);
 						long minId = ((curId - 1) / step) * step + 1;
 						long maxId = minId + step - 1;
 						segment = new Segment(minId, maxId, curId, config.getStep(), config.getLoadFactor());
@@ -285,7 +285,7 @@ public class RedisSegmentIdGenerator implements IdGenerator {
 		for (int i = 0; i < MAX_RETRY; i++) {
 			try {
 				redisUtils.set(config.getCursorKey(),
-						buffers.get(BizType.getByCode(bizType)).getCurrent().getCursor().get());
+						buffers.get(BizType.getByCode(bizType)).getCurrent().getCursor().get(), RedisUtils.NOT_EXPIRE);
 				break;
 			}
 			catch (Exception ex) {
@@ -299,7 +299,7 @@ public class RedisSegmentIdGenerator implements IdGenerator {
 				}
 			}
 		}
-		log.info("Flushed segment cursor from Redis");
+		log.info("bizType:{}, Flushed segment cursor from Redis", bizType);
 	}
 
 }

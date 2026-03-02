@@ -63,6 +63,35 @@ spring:
       enabled: true
   lifecycle:
     timeout-per-shutdown-phase: 2m
+  id-generator:
+    segment:
+      node-id: ${NODE_ID:1}
+      configs:
+        user:
+          key: id-generator:segment:${spring.application.name}:user
+          cursor-key: id-generator:segment:cursor:${spring.application.name}:user:${spring.id-generator.segment.node-id}
+          step: 10000
+          load-factor: 0.8
+        menu:
+          key: id-generator:segment:${spring.application.name}:menu
+          cursor-key: id-generator:segment:cursor:${spring.application.name}:menu:${spring.id-generator.segment.node-id}
+          step: 10000
+          load-factor: 0.8
+        role:
+          key: id-generator:segment:${spring.application.name}:role
+          cursor-key: id-generator:segment:cursor:${spring.application.name}:role:${spring.id-generator.segment.node-id}
+          step: 10000
+          load-factor: 0.8
+        dept:
+          key: id-generator:segment:${spring.application.name}:dept
+          cursor-key: id-generator:segment:cursor:${spring.application.name}:dept:${spring.id-generator.segment.node-id}
+          step: 10000
+          load-factor: 0.8
+        operate_log:
+          key: id-generator:segment:${spring.application.name}:operate-log
+          cursor-key: id-generator:segment:cursor:${spring.application.name}:operate-log:${spring.id-generator.segment.node-id}
+          step: 10000
+          load-factor: 0.8
   # security
   security:
     oauth2:

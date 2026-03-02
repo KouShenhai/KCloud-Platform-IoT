@@ -48,6 +48,7 @@ import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.crypto.util.RSAUtils;
 import org.laokou.common.i18n.common.IdGenerator;
 import org.laokou.common.i18n.common.constant.StringConstants;
+import org.laokou.common.i18n.common.enums.BizType;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
@@ -325,7 +326,7 @@ class DomainServiceTest {
 	}
 
 	private void createMailAuthInfo(MailAuthParam mailAuthParam) {
-		Mockito.when(authIdGenerator.getId()).thenReturn(1L);
+		Mockito.when(authIdGenerator.getId(BizType.AUTH)).thenReturn(1L);
 		Mockito.doAnswer(invocation -> {
 			AuthA authA = invocation.getArgument(0);
 			UserV userV = authA.getUserV();
@@ -360,7 +361,7 @@ class DomainServiceTest {
 	}
 
 	private void createMobileAuthInfo(MobileAuthParam mobileAuthParam) {
-		Mockito.when(authIdGenerator.getId()).thenReturn(1L);
+		Mockito.when(authIdGenerator.getId(BizType.AUTH)).thenReturn(1L);
 		Mockito.doAnswer(invocation -> {
 			AuthA authA = invocation.getArgument(0);
 			UserV userV = authA.getUserV();
@@ -395,7 +396,7 @@ class DomainServiceTest {
 	}
 
 	private void createTestAuthInfo(TestAuthParam testAuthParam) {
-		Mockito.when(authIdGenerator.getId()).thenReturn(1L);
+		Mockito.when(authIdGenerator.getId(BizType.AUTH)).thenReturn(1L);
 		Mockito.doAnswer(invocation -> {
 			AuthA authA = invocation.getArgument(0);
 			UserV userV = authA.getUserV();
@@ -426,7 +427,7 @@ class DomainServiceTest {
 	}
 
 	private void createAuthorizationCodeAuthInfo(AuthorizationCodAuthParam authorizationCodeAuthParam) {
-		Mockito.when(authIdGenerator.getId()).thenReturn(1L);
+		Mockito.when(authIdGenerator.getId(BizType.AUTH)).thenReturn(1L);
 		Mockito.doAnswer(invocation -> {
 			AuthA authA = invocation.getArgument(0);
 			UserV userV = authA.getUserV();
@@ -457,7 +458,7 @@ class DomainServiceTest {
 	}
 
 	private void createUsernamePasswordAuthInfo(UsernamePasswordAuthParam usernamePasswordAuthParam) {
-		Mockito.when(authIdGenerator.getId()).thenReturn(1L);
+		Mockito.when(authIdGenerator.getId(BizType.AUTH)).thenReturn(1L);
 		Mockito.doAnswer(invocation -> {
 			AuthA authA = invocation.getArgument(0);
 			UserV userV = authA.getUserV();

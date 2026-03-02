@@ -26,7 +26,21 @@ import org.laokou.common.i18n.util.EnumParser;
 @Getter
 public enum BizType {
 
-	AUTH("auth", "认证授权");
+	AUTH("auth", "认证"),
+
+	USER("user", "用户"),
+
+	DEPT("dept", "部门"),
+
+	ROLE("role", "角色"),
+
+	MENU("menu", "菜单"),
+
+	OPERATE_LOG("operate_log", "操作日志"),
+
+	THING_MODEL("thing_model", "物模型"),
+
+	PRODUCT_CATEGORY("product_category", "产品类别");
 
 	private final String code;
 

@@ -24,6 +24,7 @@ import org.laokou.common.core.util.CollectionExtUtils;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.IdGenerator;
 import org.laokou.common.i18n.common.constant.StringConstants;
+import org.laokou.common.i18n.common.enums.BizType;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.util.InstantUtils;
@@ -61,7 +62,7 @@ public class OperateLogA extends AggregateRoot {
 	public OperateLogA create(OperateLogE operateLogE) {
 		this.operateLogE = operateLogE;
 		super.createTime = InstantUtils.now();
-		super.id = commonIdGenerator.getId();
+		super.id = commonIdGenerator.getId(BizType.OPERATE_LOG);
 		return this;
 	}
 

@@ -24,6 +24,7 @@ import org.laokou.admin.role.model.validator.RoleParamValidator;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.IdGenerator;
 import org.laokou.common.i18n.common.ValidateName;
+import org.laokou.common.i18n.common.enums.BizType;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -67,7 +68,7 @@ public class RoleA extends AggregateRoot implements ValidateName {
 		this.roleE = roleE;
 		Long primaryKey = this.roleE.getId();
 		super.createTime = InstantUtils.now();
-		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : commonIdGenerator.getId();
+		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : commonIdGenerator.getId(BizType.ROLE);
 		this.operateType = operateType;
 		return this;
 	}
@@ -82,7 +83,7 @@ public class RoleA extends AggregateRoot implements ValidateName {
 	}
 
 	public List<Long> getIds(int num) {
-		return commonIdGenerator.getIds(num);
+		return commonIdGenerator.getIds(BizType.ROLE, num);
 	}
 
 	@Override
