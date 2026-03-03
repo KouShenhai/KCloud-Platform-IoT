@@ -25,7 +25,7 @@ import org.laokou.admin.menu.gatewayimpl.database.MenuMapper;
 import org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO;
 import org.laokou.common.context.util.UserUtils;
 import org.laokou.common.core.util.TreeUtils;
-import org.laokou.common.data.cache.annotation.Cache;
+import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.data.cache.aspectj.OperateType;
 import org.laokou.common.data.cache.constant.NameConstants;
 import org.springframework.stereotype.Component;
@@ -42,7 +42,7 @@ public class UserMenuTree implements MenuTree {
 	private final MenuMapper adminMenuMapper;
 
 	@Override
-	@Cache(name = NameConstants.USER_MENU, key = "#userId", operateType = OperateType.GET)
+	@DataCache(name = NameConstants.USER_MENU, key = "#userId", operateType = OperateType.GET)
 	public MenuTreeCO build(MenuTreeListQry qry, Long userId) {
 		List<MenuDO> list;
 		if (UserUtils.isSuperAdmin()) {

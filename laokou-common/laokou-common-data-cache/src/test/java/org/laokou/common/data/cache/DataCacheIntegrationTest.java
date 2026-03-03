@@ -46,7 +46,7 @@ class DataCacheIntegrationTest {
 
 	@Nested
 	@DisplayName("RedisCacheManager Tests")
-	class RedisCacheManagerTests {
+	class RedisDataCacheManagerTests {
 
 		@Test
 		@DisplayName("Test getCacheNames with configured caches returns names")
@@ -81,8 +81,8 @@ class DataCacheIntegrationTest {
 		void test_getCache_existingCache_returnsCache() throws Exception {
 			// Given
 			RedisUtils redisUtils = Mockito.mock(RedisUtils.class);
-			RMapCacheNative<Object, Object> mapCacheNative = Mockito.mock(RMapCacheNative.class);
-			Mockito.when(redisUtils.getMapCacheNative(Mockito.any(MapOptions.class))).thenReturn(mapCacheNative);
+			Mockito.when(redisUtils.getMapCacheNative(Mockito.any(MapOptions.class)))
+				.thenReturn(Mockito.mock(RMapCacheNative.class));
 
 			SpringCacheProperties properties = new SpringCacheProperties();
 			SpringCacheProperties.Config config = new SpringCacheProperties.Config();
@@ -106,8 +106,8 @@ class DataCacheIntegrationTest {
 		void test_getCache_dynamicCache_createsNewCache() throws Exception {
 			// Given
 			RedisUtils redisUtils = Mockito.mock(RedisUtils.class);
-			RMapCacheNative<Object, Object> mapCacheNative = Mockito.mock(RMapCacheNative.class);
-			Mockito.when(redisUtils.getMapCacheNative(Mockito.any(MapOptions.class))).thenReturn(mapCacheNative);
+			Mockito.when(redisUtils.getMapCacheNative(Mockito.any(MapOptions.class)))
+				.thenReturn(Mockito.mock(RMapCacheNative.class));
 
 			SpringCacheProperties properties = new SpringCacheProperties();
 
@@ -160,9 +160,8 @@ class DataCacheIntegrationTest {
 		void test_getCache_validName_returnsCache() throws Exception {
 			// Given
 			RedisUtils redisUtils = Mockito.mock(RedisUtils.class);
-			RLocalCachedMap<Object, Object> localCachedMap = Mockito.mock(RLocalCachedMap.class);
 			Mockito.when(redisUtils.getLocalCachedMap(Mockito.any(LocalCachedMapOptions.class)))
-				.thenReturn(localCachedMap);
+				.thenReturn(Mockito.mock(RLocalCachedMap.class));
 
 			SpringCacheProperties properties = new SpringCacheProperties();
 			SpringCacheProperties.LocalCacheConfig config = new SpringCacheProperties.LocalCacheConfig();

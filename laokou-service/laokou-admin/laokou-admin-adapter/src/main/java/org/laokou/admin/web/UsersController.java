@@ -35,7 +35,7 @@ import org.laokou.admin.user.dto.UserSaveCmd;
 import org.laokou.admin.user.dto.UserUploadAvatarCmd;
 import org.laokou.admin.user.dto.clientobject.UserCO;
 import org.laokou.admin.user.dto.clientobject.UserProfileCO;
-import org.laokou.common.data.cache.annotation.Cache;
+import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.data.cache.constant.NameConstants;
 import org.laokou.common.data.cache.aspectj.OperateType;
 import org.laokou.common.i18n.dto.Page;
@@ -82,7 +82,7 @@ public class UsersController {
 	@PreAuthorize("hasAuthority('write') and hasAuthority('sys:user:modify')")
 	@OperateLog(module = "用户管理", operation = "修改用户")
 	@Operation(summary = "修改用户", description = "修改用户")
-	@Cache(name = NameConstants.USERS, key = "#cmd.co.id", operateType = OperateType.DEL)
+	@DataCache(name = NameConstants.USERS, key = "#cmd.co.id", operateType = OperateType.DEL)
 	public void modifyUser(@RequestBody UserModifyCmd cmd) throws Exception {
 		usersServiceI.modifyUser(cmd);
 	}
@@ -115,14 +115,14 @@ public class UsersController {
 	@PreAuthorize("hasAuthority('write') and hasAuthority('sys:user:modify')")
 	@OperateLog(module = "用户管理", operation = "重置用户密码")
 	@Operation(summary = "重置用户密码", description = "重置用户密码")
-	@Cache(name = NameConstants.USERS, key = "#cmd.id", operateType = OperateType.DEL)
+	@DataCache(name = NameConstants.USERS, key = "#cmd.id", operateType = OperateType.DEL)
 	public void resetUserPwd(@RequestBody UserResetPwdCmd cmd) throws Exception {
 		usersServiceI.resetUserPwd(cmd);
 	}
 
 	@PutMapping("/v1/users/authority")
 	@PreAuthorize("hasAuthority('write') and hasAuthority('sys:user:modify')")
-	@Cache(name = NameConstants.USERS, key = "#cmd.co.id", operateType = OperateType.DEL)
+	@DataCache(name = NameConstants.USERS, key = "#cmd.co.id", operateType = OperateType.DEL)
 	@OperateLog(module = "用户管理", operation = "修改用户权限")
 	@Operation(summary = "修改用户权限", description = "修改用户权限")
 	public void modifyUserAuthority(@RequestBody UserModifyAuthorityCmd cmd) throws Exception {
@@ -139,7 +139,7 @@ public class UsersController {
 
 	@TraceLog
 	@GetMapping("/v1/users/{id}")
-	@Cache(name = NameConstants.USERS, key = "#id")
+	@DataCache(name = NameConstants.USERS, key = "#id")
 	@PreAuthorize("hasAuthority('read') and hasAuthority('sys:user:detail')")
 	@Operation(summary = "查看用户详情", description = "查看用户详情")
 	public Result<UserCO> getUserById(@PathVariable("id") Long id) throws Exception {

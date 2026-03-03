@@ -24,7 +24,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.laokou.common.data.cache.annotation.Cache;
+import org.laokou.common.data.cache.annotation.DataCache;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -36,11 +36,11 @@ import org.springframework.cache.CacheManager;
  * @author laokou
  */
 @ExtendWith(MockitoExtension.class)
-@DisplayName("CacheAspectj Unit Tests")
-class CacheAspectjTest {
+@DisplayName("DataCacheAspectj Unit Tests")
+class DataCacheAspectjTest {
 
 	@Mock
-	private CacheManager distributedCacheManager;
+	private CacheManager redisCacheManager;
 
 	@Mock
 	private ProceedingJoinPoint point;
@@ -49,7 +49,7 @@ class CacheAspectjTest {
 	private MethodSignature methodSignature;
 
 	@Mock
-	private Cache cache;
+	private DataCache dataCache;
 
 	@Mock
 	private org.springframework.cache.Cache cache;
@@ -57,11 +57,11 @@ class CacheAspectjTest {
 	@Mock
 	private org.springframework.cache.Cache.ValueWrapper valueWrapper;
 
-	private CacheAspectj aspectj;
+	private DataCacheAspectj aspectj;
 
 	@BeforeEach
 	void setUp() {
-		aspectj = new CacheAspectj(distributedCacheManager);
+		aspectj = new DataCacheAspectj(redisCacheManager);
 	}
 
 	@Test
@@ -72,22 +72,22 @@ class CacheAspectjTest {
 		String cacheKey = "testKey";
 		String cachedValue = "cachedResult";
 
-		Mockito.when(cache.name()).thenReturn(cacheName);
-		Mockito.when(cache.key()).thenReturn("'" + cacheKey + "'");
-		Mockito.when(cache.operateType()).thenReturn(OperateType.GET);
+		Mockito.when(dataCache.name()).thenReturn(cacheName);
+		Mockito.when(dataCache.key()).thenReturn("'" + cacheKey + "'");
+		Mockito.when(dataCache.operateType()).thenReturn(OperateType.GET);
 		Mockito.when(point.getSignature()).thenReturn(methodSignature);
 		Mockito.when(methodSignature.getParameterNames()).thenReturn(new String[] {});
 		Mockito.when(point.getArgs()).thenReturn(new Object[] {});
-		Mockito.when(distributedCacheManager.getCache(cacheName)).thenReturn(cache);
+		Mockito.when(redisCacheManager.getCache(cacheName)).thenReturn(cache);
 		Mockito.when(cache.get(cacheKey)).thenReturn(valueWrapper);
 		Mockito.when(valueWrapper.get()).thenReturn(cachedValue);
 
 		// When
-		Object result = aspectj.doAround(point, cache);
+		Object result = aspectj.doAround(point, dataCache);
 
 		// Then
 		Assertions.assertThat(result).isEqualTo(cachedValue);
-		Mockito.verify(distributedCacheManager).getCache(cacheName);
+		Mockito.verify(redisCacheManager).getCache(cacheName);
 	}
 
 	@Test
@@ -98,17 +98,17 @@ class CacheAspectjTest {
 		String cacheKey = "testKey";
 		Object expectedResult = "result";
 
-		Mockito.when(cache.name()).thenReturn(cacheName);
-		Mockito.when(cache.key()).thenReturn("'" + cacheKey + "'");
-		Mockito.when(cache.operateType()).thenReturn(OperateType.DEL);
+		Mockito.when(dataCache.name()).thenReturn(cacheName);
+		Mockito.when(dataCache.key()).thenReturn("'" + cacheKey + "'");
+		Mockito.when(dataCache.operateType()).thenReturn(OperateType.DEL);
 		Mockito.when(point.getSignature()).thenReturn(methodSignature);
 		Mockito.when(methodSignature.getParameterNames()).thenReturn(new String[] {});
 		Mockito.when(point.getArgs()).thenReturn(new Object[] {});
-		Mockito.when(distributedCacheManager.getCache(cacheName)).thenReturn(cache);
+		Mockito.when(redisCacheManager.getCache(cacheName)).thenReturn(cache);
 		Mockito.when(point.proceed()).thenReturn(expectedResult);
 
 		// When
-		Object result = aspectj.doAround(point, cache);
+		Object result = aspectj.doAround(point, dataCache);
 
 		// Then
 		Assertions.assertThat(result).isEqualTo(expectedResult);
@@ -124,19 +124,19 @@ class CacheAspectjTest {
 		String userId = "123";
 		Object expectedResult = "user";
 
-		Mockito.when(cache.name()).thenReturn(cacheName);
-		Mockito.when(cache.key()).thenReturn("#userId");
-		Mockito.when(cache.operateType()).thenReturn(OperateType.GET);
+		Mockito.when(dataCache.name()).thenReturn(cacheName);
+		Mockito.when(dataCache.key()).thenReturn("#userId");
+		Mockito.when(dataCache.operateType()).thenReturn(OperateType.GET);
 		Mockito.when(point.getSignature()).thenReturn(methodSignature);
 		Mockito.when(methodSignature.getParameterNames()).thenReturn(new String[] { "userId" });
 		Mockito.when(point.getArgs()).thenReturn(new Object[] { userId });
-		Mockito.when(distributedCacheManager.getCache(cacheName)).thenReturn(cache);
+		Mockito.when(redisCacheManager.getCache(cacheName)).thenReturn(cache);
 		Mockito.when(cache.get(userId)).thenReturn(null);
 		Mockito.when(point.proceed()).thenReturn(expectedResult);
 		Mockito.when(cache.putIfAbsent(userId, expectedResult)).thenReturn(null);
 
 		// When
-		Object result = aspectj.doAround(point, cache);
+		Object result = aspectj.doAround(point, dataCache);
 
 		// Then
 		Assertions.assertThat(result).isEqualTo(expectedResult);
