@@ -1,4 +1,4 @@
-name: 🤖 Stale Bot
+name: 🤖 Github Action Issue Stale Bot
 
 on:
   schedule:
