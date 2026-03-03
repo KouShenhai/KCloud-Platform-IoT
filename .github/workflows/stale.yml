@@ -1,0 +1,99 @@
+name: 🤖 Stale Bot
+
+on:
+  schedule:
+    # 每天北京时间 08:00（UTC 00:00）运行
+    - cron: '0 0 * * *'
+  workflow_dispatch: # 支持手动触发
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  stale:
+    name: Mark and Close Stale Issues & PRs
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🤖 Handle Stale Issues and PRs
+        uses: actions/stale@v9
+        with:
+          repo-token: ${{ secrets.ACTION_TOKEN }}
+
+          # ───────────── Issue 配置 ─────────────
+          # 超过 30 天无活动，标记为陈旧
+          days-before-issue-stale: 30
+          # 标记为陈旧后再过 7 天无活动，自动关闭
+          days-before-issue-close: 7
+          # 陈旧 Issue 添加的标签
+          stale-issue-label: '🕰️ stale'
+          # 带有以下标签的 Issue 不会被标记为陈旧
+          exempt-issue-labels: 'pinned,security,bug,enhancement,help wanted,good first issue'
+          # 标记为陈旧时发送的评论
+          stale-issue-message: |
+            👋 你好！
+
+            由于此 Issue 近期（**30 天**）没有任何活动，已被机器人自动标记为「**陈旧**」。
+
+            - 如果您认为此问题**仍应保持开放状态**，或问题**仍然存在**，请在评论区回复，维护人员会尽力跟进处理。
+            - 如果 **7 天内**仍无任何回复，此 Issue 将被**自动关闭**。
+
+            感谢您对 **KCloud-Platform-IoT** 的关注与贡献！🙏
+
+            > 本消息由 🤖 GitHub Actions Bot 自动发送
+          # 关闭陈旧 Issue 时发送的评论
+          close-issue-message: |
+            👋 你好！
+
+            由于此 Issue 长期没有任何活动，已被机器人自动**关闭**。
+
+            - 如果您认为此问题**仍未解决**，欢迎重新开启或提交新的 Issue，并提供更多上下文信息。
+            - 感谢您对 **KCloud-Platform-IoT** 的关注与贡献！🙏
+
+            > 本消息由 🤖 GitHub Actions Bot 自动发送
+          # 关闭时打上的标签
+          close-issue-label: '❌ closed-stale'
+
+          # ───────────── Pull Request 配置 ─────────────
+          # 超过 15 天无活动，标记为陈旧
+          days-before-pr-stale: 15
+          # 标记为陈旧后再过 7 天无活动，自动关闭
+          days-before-pr-close: 7
+          # 陈旧 PR 添加的标签
+          stale-pr-label: '🕰️ stale'
+          # 带有以下标签的 PR 不会被标记为陈旧
+          exempt-pr-labels: 'pinned,security,dependencies,do-not-merge'
+          # 标记为陈旧时发送的评论
+          stale-pr-message: |
+            👋 你好！
+
+            由于此 Pull Request 近期（**15 天**）没有任何活动，已被机器人自动标记为「**陈旧**」。
+
+            - 如果您仍在开发或等待 Review，请在评论区回复并说明进度。
+            - 如果 **7 天内**仍无任何回复，此 PR 将被**自动关闭**。
+
+            感谢您对 **KCloud-Platform-IoT** 的贡献！🙏
+
+            > 本消息由 🤖 GitHub Actions Bot 自动发送
+          # 关闭陈旧 PR 时发送的评论
+          close-pr-message: |
+            👋 你好！
+
+            由于此 Pull Request 长期没有任何活动，已被机器人自动**关闭**。
+
+            - 如果您仍希望合并此更改，欢迎重新开启此 PR 或提交新的 PR。
+            - 感谢您对 **KCloud-Platform-IoT** 的贡献！🙏
+
+            > 本消息由 🤖 GitHub Actions Bot 自动发送
+          # 关闭时打上的标签
+          close-pr-label: '❌ closed-stale'
+
+          # ───────────── 全局配置 ─────────────
+          # 每次最多处理 100 条（避免 API 限流）
+          operations-per-run: 100
+          # 开启 debug 日志，方便排查问题
+          debug-only: false
+          # 从最旧的 Issue/PR 开始处理
+          ascending: true
+          # 删除陈旧标签（当 Issue 重新活跃时自动移除 stale 标签）
+          remove-stale-when-updated: true
