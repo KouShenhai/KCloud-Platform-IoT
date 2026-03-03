@@ -17,13 +17,13 @@
 
 package org.laokou.admin.operateLog.dto.excel;
 
-import cn.idev.excel.annotation.ExcelProperty;
-import cn.idev.excel.annotation.write.style.ColumnWidth;
-import cn.idev.excel.annotation.write.style.ContentStyle;
-import cn.idev.excel.enums.BooleanEnum;
-import cn.idev.excel.enums.poi.HorizontalAlignmentEnum;
-import cn.idev.excel.enums.poi.VerticalAlignmentEnum;
 import lombok.Data;
+import org.apache.fesod.sheet.annotation.ExcelProperty;
+import org.apache.fesod.sheet.annotation.write.style.ColumnWidth;
+import org.apache.fesod.sheet.annotation.write.style.ContentStyle;
+import org.apache.fesod.sheet.enums.BooleanEnum;
+import org.apache.fesod.sheet.enums.poi.HorizontalAlignmentEnum;
+import org.apache.fesod.sheet.enums.poi.VerticalAlignmentEnum;
 import org.laokou.common.i18n.dto.DTO;
 
 /**

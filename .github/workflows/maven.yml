@@ -145,4 +145,4 @@ jobs:
           # 构建本地镜像
           mvnd spring-boot:build-image -DskipTests
           # 推送镜像到镜像仓库
-          docker push registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-gateway-native:4.0.1-SNAPSHOT
+          docker push registry.cn-shenzhen.aliyuncs.com/koushenhai/laokou-gateway-native:4.0.1

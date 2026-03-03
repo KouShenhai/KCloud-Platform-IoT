@@ -28,6 +28,11 @@ module.exports = {
 						]
 					},
 					{
+						text: '更新日志', link: '/pages/82bd54/', items: [
+							{text: '4.0.1版本更新日志【总览】', link: '/pages/82bd54/'},
+						]
+					},
+					{
 						text: '指南', link: '/pages/caff79/', items: [
 							{text: '后端项目启动【单体】', link: '/pages/caff78/'},
 							{text: '前端项目启动【单体】', link: '/pages/d38007/'},
