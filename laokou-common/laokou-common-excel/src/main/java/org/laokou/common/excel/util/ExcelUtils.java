@@ -17,17 +17,18 @@
 
 package org.laokou.common.excel.util;
 
-import cn.idev.excel.ExcelWriter;
-import cn.idev.excel.FastExcel;
-import cn.idev.excel.context.AnalysisContext;
-import cn.idev.excel.read.builder.ExcelReaderBuilder;
-import cn.idev.excel.read.listener.ReadListener;
-import cn.idev.excel.util.ListUtils;
-import cn.idev.excel.write.metadata.WriteSheet;
 import com.google.common.collect.Lists;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.fesod.common.util.ListUtils;
+import org.apache.fesod.sheet.ExcelWriter;
+import org.apache.fesod.sheet.FastExcel;
+import org.apache.fesod.sheet.FesodSheet;
+import org.apache.fesod.sheet.context.AnalysisContext;
+import org.apache.fesod.sheet.read.builder.ExcelReaderBuilder;
+import org.apache.fesod.sheet.read.listener.ReadListener;
+import org.apache.fesod.sheet.write.metadata.WriteSheet;
 import org.laokou.common.core.util.CollectionExtUtils;
 import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.excel.validator.ExcelValidator;
@@ -123,12 +124,12 @@ public final class ExcelUtils {
 			PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper, Class<EXCEL> clazz,
 			ExcelConvertor<DO, EXCEL> convertor) {
 		if (crudMapper.selectObjectCount(pageQuery) > 0) {
-			try (ExcelWriter excelWriter = FastExcel.write(out, clazz).build();
+			try (ExcelWriter excelWriter = FesodSheet.write(out, clazz).build();
 					ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor()) {
 				// https://idev.cn/fastexcel/zh-CN/docs/write/write_hard
 				List<DO> list = Collections.synchronizedList(new ArrayList<>(size));
 				// 设置sheet页
-				WriteSheet writeSheet = FastExcel.writerSheet(sheetName).head(clazz).build();
+				WriteSheet writeSheet = FesodSheet.writerSheet(sheetName).head(clazz).build();
 				crudMapper.selectObjectListHandler(pageQuery, resultContext -> {
 					list.add(resultContext.getResultObject());
 					if (list.size() % size == 0) {
