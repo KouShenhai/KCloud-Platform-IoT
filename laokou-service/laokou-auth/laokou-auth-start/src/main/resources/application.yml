@@ -179,7 +179,7 @@ spring:
       filter:
         enabled: true
   cache:
-    distributed-configs:
+    configs:
       oss_resource:
         ttl: 5m
 # actuator

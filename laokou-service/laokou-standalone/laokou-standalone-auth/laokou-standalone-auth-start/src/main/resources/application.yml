@@ -161,7 +161,7 @@ spring:
             DELETE:
               - /v1/tokens=laokou-standalone-auth
   cache:
-    distributed-configs:
+    configs:
       oss_resource:
         ttl: 5m
 # actuator

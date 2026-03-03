@@ -18,10 +18,9 @@
 package org.laokou.common.id.generator.segment;
 
 import lombok.Data;
+import org.laokou.common.core.util.MapUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
-
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -36,7 +35,7 @@ public class SpringSegmentProperties {
 
 	private String nodeId;
 
-	private Map<String, SegmentConfig> configs = new HashMap<>(0);
+	private Map<String, SegmentConfig> configs = MapUtils.newHashMap(0);
 
 	@Data
 	public static class SegmentConfig {

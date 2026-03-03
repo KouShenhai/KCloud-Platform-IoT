@@ -28,6 +28,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.laokou.common.core.config.HttpMessageConverterConfig;
+import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.testcontainers.util.DockerImageNames;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonReactiveClient;
@@ -214,7 +215,7 @@ class ReactiveRedisUtilsTest {
 	@DisplayName("Test hash operations - putAll")
 	void testPutAll() {
 		String key = "test:hash:putall";
-		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> map = MapUtils.newHashMap(3);
 		map.put("field1", "value1");
 		map.put("field2", "value2");
 		map.put("field3", "value3");

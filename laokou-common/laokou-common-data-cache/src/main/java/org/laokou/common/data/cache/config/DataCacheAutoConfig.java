@@ -32,8 +32,8 @@ import org.springframework.context.annotation.Bean;
 class DataCacheAutoConfig {
 
 	@Bean
-	public CacheManager distributedCacheManager(RedisUtils redisUtils, SpringCacheProperties springCacheProperties) {
-		return new DistributedCacheManager(redisUtils, springCacheProperties);
+	public CacheManager redisCacheManager(RedisUtils redisUtils, SpringCacheProperties springCacheProperties) {
+		return new RedisCacheManager(redisUtils, springCacheProperties);
 	}
 
 	@Bean

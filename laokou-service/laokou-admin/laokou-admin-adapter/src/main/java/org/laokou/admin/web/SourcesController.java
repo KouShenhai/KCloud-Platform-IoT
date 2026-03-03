@@ -29,7 +29,7 @@ import org.laokou.admin.source.dto.SourcePageQry;
 import org.laokou.admin.source.dto.SourceRemoveCmd;
 import org.laokou.admin.source.dto.SourceSaveCmd;
 import org.laokou.admin.source.dto.clientobject.SourceCO;
-import org.laokou.common.data.cache.annotation.DistributedCache;
+import org.laokou.common.data.cache.annotation.DataCache;
 import org.laokou.common.data.cache.constant.NameConstants;
 import org.laokou.common.data.cache.aspectj.OperateType;
 import org.laokou.common.i18n.dto.Page;
@@ -75,7 +75,7 @@ public class SourcesController {
 	@PreAuthorize("hasAuthority('write') and hasAuthority('sys:source:modify')")
 	@OperateLog(module = "数据源管理", operation = "修改数据源")
 	@Operation(summary = "修改数据源", description = "修改数据源")
-	@DistributedCache(name = NameConstants.SOURCES, key = "#cmd.co.id", operateType = OperateType.DEL)
+	@DataCache(name = NameConstants.SOURCES, key = "#cmd.co.id", operateType = OperateType.DEL)
 	public void modifySource(@RequestBody SourceModifyCmd cmd) {
 		sourcesServiceI.modifySource(cmd);
 	}
@@ -114,7 +114,7 @@ public class SourcesController {
 
 	@TraceLog
 	@GetMapping("/v1/sources/{id}")
-	@DistributedCache(name = NameConstants.SOURCES, key = "#id")
+	@DataCache(name = NameConstants.SOURCES, key = "#id")
 	@PreAuthorize("hasAuthority('read') and hasAuthority('sys:source:detail')")
 	@Operation(summary = "查看数据源详情", description = "查看数据源详情")
 	public Result<SourceCO> getSourceById(@PathVariable("id") Long id) {

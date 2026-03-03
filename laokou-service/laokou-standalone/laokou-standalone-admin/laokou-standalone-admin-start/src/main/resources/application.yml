@@ -105,8 +105,26 @@ spring:
               - /doc.html=laokou-standalone-admin
               - /webjars/**=laokou-standalone-admin
   cache:
-    distributed-configs:
-      oss_resource:
+    configs:
+      users:
+        ttl: 5m
+      user_menu:
+        ttl: 5m
+      sources:
+        ttl: 5m
+      tenants:
+        ttl: 5m
+      packages:
+        ttl: 5m
+      messages:
+        ttl: 5m
+      menus:
+        ttl: 5m
+      dicts:
+        ttl: 5m
+      depts:
+        ttl: 5m
+      oss:
         ttl: 5m
   liquibase:
     enabled: true

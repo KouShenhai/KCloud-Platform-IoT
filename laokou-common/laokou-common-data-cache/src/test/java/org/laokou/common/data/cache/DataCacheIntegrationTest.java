@@ -45,8 +45,8 @@ import java.util.Map;
 class DataCacheIntegrationTest {
 
 	@Nested
-	@DisplayName("DistributedCacheManager Tests")
-	class DistributedCacheManagerTests {
+	@DisplayName("RedisCacheManager Tests")
+	class RedisDataCacheManagerTests {
 
 		@Test
 		@DisplayName("Test getCacheNames with configured caches returns names")
@@ -55,15 +55,15 @@ class DataCacheIntegrationTest {
 			RedisUtils redisUtils = Mockito.mock(RedisUtils.class);
 			SpringCacheProperties properties = new SpringCacheProperties();
 
-			SpringCacheProperties.DistributedCacheConfig config1 = new SpringCacheProperties.DistributedCacheConfig();
+			SpringCacheProperties.Config config1 = new SpringCacheProperties.Config();
 			config1.setTtl(Duration.ofMinutes(10));
-			SpringCacheProperties.DistributedCacheConfig config2 = new SpringCacheProperties.DistributedCacheConfig();
+			SpringCacheProperties.Config config2 = new SpringCacheProperties.Config();
 			config2.setTtl(Duration.ofMinutes(20));
 
-			properties.setDistributedConfigs(Map.of("cache1", config1, "cache2", config2));
+			properties.setConfigs(Map.of("cache1", config1, "cache2", config2));
 
 			// Create manager using reflection since it's package-private
-			Class<?> managerClass = Class.forName("org.laokou.common.data.cache.config.DistributedCacheManager");
+			Class<?> managerClass = Class.forName("org.laokou.common.data.cache.config.RedisCacheManager");
 			Constructor<?> constructor = managerClass.getDeclaredConstructor(RedisUtils.class,
 					SpringCacheProperties.class);
 			constructor.setAccessible(true);
@@ -81,14 +81,14 @@ class DataCacheIntegrationTest {
 		void test_getCache_existingCache_returnsCache() throws Exception {
 			// Given
 			RedisUtils redisUtils = Mockito.mock(RedisUtils.class);
-			RMapCacheNative<Object, Object> mapCacheNative = Mockito.mock(RMapCacheNative.class);
-			Mockito.when(redisUtils.getMapCacheNative(Mockito.any(MapOptions.class))).thenReturn(mapCacheNative);
+			Mockito.when(redisUtils.getMapCacheNative(Mockito.any(MapOptions.class)))
+				.thenReturn(Mockito.mock(RMapCacheNative.class));
 
 			SpringCacheProperties properties = new SpringCacheProperties();
-			SpringCacheProperties.DistributedCacheConfig config = new SpringCacheProperties.DistributedCacheConfig();
-			properties.setDistributedConfigs(Map.of("testCache", config));
+			SpringCacheProperties.Config config = new SpringCacheProperties.Config();
+			properties.setConfigs(Map.of("testCache", config));
 
-			Class<?> managerClass = Class.forName("org.laokou.common.data.cache.config.DistributedCacheManager");
+			Class<?> managerClass = Class.forName("org.laokou.common.data.cache.config.RedisCacheManager");
 			Constructor<?> constructor = managerClass.getDeclaredConstructor(RedisUtils.class,
 					SpringCacheProperties.class);
 			constructor.setAccessible(true);
@@ -106,12 +106,12 @@ class DataCacheIntegrationTest {
 		void test_getCache_dynamicCache_createsNewCache() throws Exception {
 			// Given
 			RedisUtils redisUtils = Mockito.mock(RedisUtils.class);
-			RMapCacheNative<Object, Object> mapCacheNative = Mockito.mock(RMapCacheNative.class);
-			Mockito.when(redisUtils.getMapCacheNative(Mockito.any(MapOptions.class))).thenReturn(mapCacheNative);
+			Mockito.when(redisUtils.getMapCacheNative(Mockito.any(MapOptions.class)))
+				.thenReturn(Mockito.mock(RMapCacheNative.class));
 
 			SpringCacheProperties properties = new SpringCacheProperties();
 
-			Class<?> managerClass = Class.forName("org.laokou.common.data.cache.config.DistributedCacheManager");
+			Class<?> managerClass = Class.forName("org.laokou.common.data.cache.config.RedisCacheManager");
 			Constructor<?> constructor = managerClass.getDeclaredConstructor(RedisUtils.class,
 					SpringCacheProperties.class);
 			constructor.setAccessible(true);
@@ -160,9 +160,8 @@ class DataCacheIntegrationTest {
 		void test_getCache_validName_returnsCache() throws Exception {
 			// Given
 			RedisUtils redisUtils = Mockito.mock(RedisUtils.class);
-			RLocalCachedMap<Object, Object> localCachedMap = Mockito.mock(RLocalCachedMap.class);
 			Mockito.when(redisUtils.getLocalCachedMap(Mockito.any(LocalCachedMapOptions.class)))
-				.thenReturn(localCachedMap);
+				.thenReturn(Mockito.mock(RLocalCachedMap.class));
 
 			SpringCacheProperties properties = new SpringCacheProperties();
 			SpringCacheProperties.LocalCacheConfig config = new SpringCacheProperties.LocalCacheConfig();
