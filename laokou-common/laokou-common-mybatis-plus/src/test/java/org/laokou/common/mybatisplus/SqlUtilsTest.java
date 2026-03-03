@@ -23,6 +23,7 @@ import org.apache.ibatis.mapping.ParameterMapping;
 import org.apache.ibatis.session.Configuration;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.mybatisplus.util.SqlUtils;
 
@@ -215,7 +216,7 @@ class SqlUtilsTest {
 		String sql = "SELECT * FROM user WHERE name = ?";
 		List<ParameterMapping> parameterMappings = new ArrayList<>();
 		parameterMappings.add(new ParameterMapping.Builder(configuration, "name", String.class).build());
-		Map<String, Object> parameterObject = new HashMap<>();
+		Map<String, Object> parameterObject = MapUtils.newHashMap(1);
 		parameterObject.put("name", null);
 		BoundSql boundSql = new BoundSql(configuration, sql, parameterMappings, parameterObject);
 		String completeSql = SqlUtils.getCompleteSql(boundSql);

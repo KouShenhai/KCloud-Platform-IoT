@@ -33,7 +33,7 @@ import java.lang.annotation.Target;
 @Documented
 @Target({ ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface DistributedCache {
+public @interface Cache {
 
 	/**
 	 * 缓存名称.

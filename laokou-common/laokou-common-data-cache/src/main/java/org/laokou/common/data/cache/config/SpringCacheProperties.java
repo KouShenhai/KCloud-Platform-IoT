@@ -34,12 +34,12 @@ import java.util.Map;
 @ConfigurationProperties("spring.cache")
 public class SpringCacheProperties {
 
-	private Map<String, DistributedCacheConfig> distributedConfigs = MapUtils.newHashMap(0);
+	private Map<String, Config> configs = MapUtils.newHashMap(0);
 
 	private Map<String, LocalCacheConfig> localConfigs = MapUtils.newHashMap(0);
 
 	@Data
-	public static class DistributedCacheConfig {
+	public static class Config {
 
 		private Duration ttl = Duration.ofMinutes(5);
 

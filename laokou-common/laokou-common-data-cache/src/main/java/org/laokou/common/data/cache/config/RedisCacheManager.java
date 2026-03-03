@@ -60,7 +60,7 @@ import java.util.stream.Collectors;
  * @see RedissonSpringCacheManager
  */
 @Data
-final class DistributedCacheManager implements CacheManager {
+final class RedisCacheManager implements CacheManager {
 
 	private final RedisUtils redisUtils;
 
@@ -70,9 +70,9 @@ final class DistributedCacheManager implements CacheManager {
 
 	private final ConcurrentMap<String, Cache> instanceMap;
 
-	public DistributedCacheManager(RedisUtils redisUtils, SpringCacheProperties properties) {
+	public RedisCacheManager(RedisUtils redisUtils, SpringCacheProperties properties) {
 		this.redisUtils = redisUtils;
-		this.configMap = properties.getDistributedConfigs()
+		this.configMap = properties.getConfigs()
 			.entrySet()
 			.stream()
 			.collect(Collectors.toMap(Map.Entry::getKey, entry -> createConfig(entry.getValue())));
@@ -109,10 +109,10 @@ final class DistributedCacheManager implements CacheManager {
 		if (configMap.containsKey(name)) {
 			return configMap.get(name);
 		}
-		return createConfig(new SpringCacheProperties.DistributedCacheConfig());
+		return createConfig(new SpringCacheProperties.Config());
 	}
 
-	private CacheConfig createConfig(SpringCacheProperties.DistributedCacheConfig distributedCacheConfig) {
+	private CacheConfig createConfig(SpringCacheProperties.Config distributedCacheConfig) {
 		CacheConfig cacheConfig = new CacheConfig();
 		cacheConfig.setTTL(distributedCacheConfig.getTtl().toMillis());
 		return cacheConfig;

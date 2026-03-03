@@ -128,7 +128,7 @@ spring:
     enabled: true
     change-log: classpath:/db/changelog/db.changelog-master.xml
   cache:
-    distributed-configs:
+    configs:
       users:
         ttl: 5m
       user_menu:

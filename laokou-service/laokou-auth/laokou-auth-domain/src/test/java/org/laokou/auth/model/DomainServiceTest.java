@@ -43,6 +43,7 @@ import org.laokou.auth.model.validator.CaptchaValidator;
 import org.laokou.auth.model.validator.PasswordValidator;
 import org.laokou.auth.model.valueobject.CaptchaV;
 import org.laokou.auth.model.valueobject.UserV;
+import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.core.util.RegexUtils;
 import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.crypto.util.RSAUtils;
@@ -449,7 +450,7 @@ class DomainServiceTest {
 		Mockito.when(userGateway.getUserProfile(Mockito.any())).thenReturn(createUserE());
 		Mockito.when(menuGateway.getMenuPermissions(Mockito.any())).thenReturn(List.of("sys:user:save"));
 		Mockito.when(authOssLogGateway.getOssUrl(Mockito.anyLong())).thenReturn("https://1.png");
-		Map<String, String[]> params = new HashMap<>(4);
+		Map<String, String[]> params = MapUtils.newHashMap(4);
 		params.put(Constants.USERNAME, new String[] { authorizationCodeAuthParam.username() });
 		params.put(Constants.PASSWORD, new String[] { authorizationCodeAuthParam.password() });
 		params.put(Constants.TENANT_CODE, new String[] { authorizationCodeAuthParam.tenantCode() });
@@ -493,7 +494,7 @@ class DomainServiceTest {
 		}
 		Mockito.when(menuGateway.getMenuPermissions(Mockito.any())).thenReturn(List.of("sys:user:save"));
 		Mockito.when(authOssLogGateway.getOssUrl(Mockito.anyLong())).thenReturn("https://1.png");
-		Map<String, String[]> params = new HashMap<>(6);
+		Map<String, String[]> params = MapUtils.newHashMap(6);
 		params.put(Constants.USERNAME, new String[] { usernamePasswordAuthParam.username() });
 		params.put(Constants.PASSWORD, new String[] { usernamePasswordAuthParam.password() });
 		params.put(Constants.TENANT_CODE, new String[] { usernamePasswordAuthParam.tenantCode() });

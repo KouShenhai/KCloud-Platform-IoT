@@ -23,7 +23,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.common.core.util.SpringExpressionUtils;
-import org.laokou.common.data.cache.annotation.DistributedCache;
+import org.laokou.common.data.cache.annotation.Cache;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Component;
@@ -36,20 +36,20 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Aspect
 @Component
-public class DistributedCacheAspectj {
+public class CacheAspectj {
 
-	private final CacheManager distributedCacheManager;
+	private final CacheManager redisCacheManager;
 
-	public DistributedCacheAspectj(@Qualifier("distributedCacheManager") CacheManager distributedCacheManager) {
-		this.distributedCacheManager = distributedCacheManager;
+	public CacheAspectj(@Qualifier("redisCacheManager") CacheManager redisCacheManager) {
+		this.redisCacheManager = redisCacheManager;
 	}
 
-	@Around("@annotation(distributedCache)")
-	public Object doAround(ProceedingJoinPoint point, DistributedCache distributedCache) {
-		String name = distributedCache.name();
-		String key = SpringExpressionUtils.parse(distributedCache.key(),
+	@Around("@annotation(cache)")
+	public Object doAround(ProceedingJoinPoint point, Cache cache) {
+		String name = cache.name();
+		String key = SpringExpressionUtils.parse(cache.key(),
 				((MethodSignature) point.getSignature()).getParameterNames(), point.getArgs(), String.class);
-		return distributedCache.operateType().execute(name, key, point, distributedCacheManager);
+		return cache.operateType().execute(name, key, point, redisCacheManager);
 	}
 
 }
