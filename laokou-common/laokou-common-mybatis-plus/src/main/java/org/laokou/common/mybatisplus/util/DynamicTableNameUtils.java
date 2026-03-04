@@ -24,7 +24,8 @@ import org.laokou.common.i18n.common.constant.StringConstants;
  */
 public final class DynamicTableNameUtils {
 
-	private DynamicTableNameUtils(){}
+	private DynamicTableNameUtils() {
+	}
 
 	public static final ScopedValue<String> CONTEXT = ScopedValue.newInstance();
 
