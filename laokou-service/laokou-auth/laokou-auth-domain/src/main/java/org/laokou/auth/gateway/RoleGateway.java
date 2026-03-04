@@ -19,13 +19,13 @@ package org.laokou.auth.gateway;
 
 import org.laokou.auth.model.entity.UserE;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author laokou
  */
 public interface RoleGateway {
 
-	List<String> getDataScopes(UserE userE);
+	Set<String> getDataScopes(UserE userE);
 
 }

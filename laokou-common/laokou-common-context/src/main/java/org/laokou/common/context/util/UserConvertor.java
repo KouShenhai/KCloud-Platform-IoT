@@ -17,7 +17,7 @@
 
 package org.laokou.common.context.util;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author laokou
@@ -27,7 +27,7 @@ public final class UserConvertor {
 	private UserConvertor() {
 	}
 
-	public static UserExtDetails toUserDetails(User user, List<String> scopes) {
+	public static UserExtDetails toUserDetails(User user, Set<String> scopes) {
 		return DomainFactory.createUserDetails()
 			.toBuilder()
 			.id(user.id())

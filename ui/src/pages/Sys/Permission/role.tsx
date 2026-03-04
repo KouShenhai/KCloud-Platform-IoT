@@ -8,7 +8,7 @@ import {TableRowSelection} from "antd/es/table/interface";
 import {Button, message, Modal} from 'antd';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import {trim} from "@/utils/format";
-import {listTreeMenu} from "@/services/admin/menu";
+import {listSelectTreeMenu} from "@/services/admin/menu";
 import {listTreeDept} from "@/services/admin/dept";
 import {RoleDrawer} from "@/pages/Sys/Permission/RoleDrawer";
 import {RoleModifyAuthorityDrawer} from "@/pages/Sys/Permission/RoleModifyAuthorityDrawer";
@@ -53,7 +53,7 @@ export default () => {
 	}
 
 	const getMenuTreeList = async () => {
-		listTreeMenu({code: 1, status: 0}).then(res => {
+		listSelectTreeMenu({code: 1, status: 0}).then(res => {
 			setMenuTreeList(res?.data)
 		})
 	}

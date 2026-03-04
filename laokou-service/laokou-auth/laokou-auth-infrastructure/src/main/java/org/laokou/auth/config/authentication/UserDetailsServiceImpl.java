@@ -57,7 +57,7 @@ record UserDetailsServiceImpl(
 						RequestUtils.getHttpServletRequest())
 				.getPrincipal();
 			if (principal instanceof User user) {
-				return UserConvertor.toUserDetails(user, Collections.emptyList());
+				return UserConvertor.toUserDetails(user, Collections.emptySet());
 			}
 			throw new BizException("B_OAuth2_UserNotExist", "用户不存在");
 		}

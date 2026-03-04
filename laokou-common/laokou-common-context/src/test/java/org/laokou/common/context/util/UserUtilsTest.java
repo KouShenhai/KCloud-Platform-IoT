@@ -31,8 +31,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 /**
  * UserUtils test class.
@@ -49,8 +48,7 @@ class UserUtilsTest {
 
 	@BeforeEach
 	void setUp() {
-		List<String> permissions = new ArrayList<>();
-		permissions.add("sys:user:query");
+		Set<String> permissions = Set.of("sys:user:query");
 
 		mockUserExtDetails = UserExtDetails.builder()
 			.id(1L)

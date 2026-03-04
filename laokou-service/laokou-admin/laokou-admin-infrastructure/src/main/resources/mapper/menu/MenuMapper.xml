@@ -90,11 +90,12 @@
   </select>
 
   <select id="selectMenuListByUserId" resultType="org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO">
-    select m.id,
+    select distinct m.id,
            m."name",
            m.pid,
            m."path",
-           m.icon
+           m.icon,
+           m.sort
     from sys_menu m
     join sys_role_menu rm on m.id = rm.menu_id
     join sys_user_role ur on rm.role_id = ur.role_id

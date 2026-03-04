@@ -25,7 +25,7 @@ import org.laokou.auth.gatewayimpl.database.MenuMapper;
 import org.laokou.auth.model.entity.UserE;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * 菜单.
@@ -45,11 +45,11 @@ public class MenuGatewayImpl implements MenuGateway {
 	 * @return 菜单权限标识集合
 	 */
 	@Override
-	public List<String> getMenuPermissions(UserE userE) {
+	public Set<String> getMenuPermissions(UserE userE) {
 		if (userE.isSuperAdministrator()) {
-			return menuMapper.selectAllPermissions();
+			return Set.copyOf(menuMapper.selectAllPermissions());
 		}
-		return menuMapper.selectPermissions(UserConvertor.toDataObject(userE));
+		return Set.copyOf(menuMapper.selectPermissions(UserConvertor.toDataObject(userE)));
 	}
 
 }

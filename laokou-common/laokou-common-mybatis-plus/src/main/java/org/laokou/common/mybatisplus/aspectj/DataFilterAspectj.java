@@ -29,7 +29,7 @@ import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.common.mybatisplus.annotation.DataFilter;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -54,7 +54,7 @@ public class DataFilterAspectj {
 	private String getSql(DataFilter dataFilter) {
 		return Stream.of(getDeptFilterSql(dataFilter), getUserFilterSql(dataFilter))
 			.filter(StringExtUtils::isNotEmpty)
-			.collect(Collectors.joining(StringConstants.SPACE + StringConstants.AND_));
+			.collect(Collectors.joining(StringConstants.SPACE + StringConstants.OR));
 	}
 
 	private String getTableAlias(DataFilter dataFilter) {
@@ -66,7 +66,7 @@ public class DataFilterAspectj {
 	}
 
 	private String getDeptFilterSql(DataFilter dataFilter) {
-		List<Long> deptIds = UserUtils.getDeptIds();
+		Set<Long> deptIds = UserUtils.getDeptIds();
 		if (CollectionExtUtils.isEmpty(deptIds)) {
 			return StringConstants.EMPTY;
 		}

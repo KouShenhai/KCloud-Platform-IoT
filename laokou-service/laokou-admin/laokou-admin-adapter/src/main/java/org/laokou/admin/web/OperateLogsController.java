@@ -33,6 +33,7 @@ import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.log.annotation.OperateLog;
+import org.laokou.common.mybatisplus.annotation.DataFilter;
 import org.laokou.common.secret.annotation.ApiSecret;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.http.MediaType;
@@ -106,6 +107,7 @@ public class OperateLogsController {
 	}
 
 	@TraceLog
+	@DataFilter
 	@PostMapping("/v1/operate-logs/page")
 	@PreAuthorize("hasAuthority('read') and hasAuthority('sys:operate-log:page')")
 	@Operation(summary = "分页查询操作日志列表", description = "分页查询操作日志列表")

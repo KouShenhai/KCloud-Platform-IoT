@@ -21,7 +21,7 @@
 <mapper namespace="org.laokou.auth.gatewayimpl.database.RoleMapper">
 
   <select id="selectDataScopes" resultType="string">
-    select distinct data_scope from sys_role r
+    select data_scope from sys_role r
     join sys_user_role ur on ur.role_id = r.id
     where ur.user_id = #{user.id} and r.tenant_id = #{user.tenantId}
   </select>

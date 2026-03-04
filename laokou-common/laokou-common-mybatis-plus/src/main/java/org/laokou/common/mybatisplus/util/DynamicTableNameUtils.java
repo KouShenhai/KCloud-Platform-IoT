@@ -15,27 +15,22 @@
  *
  */
 
-package org.laokou.common.mybatisplus.config;
+package org.laokou.common.mybatisplus.util;
 
-import com.alibaba.ttl.TransmittableThreadLocal;
+import org.laokou.common.i18n.common.constant.StringConstants;
 
 /**
  * @author laokou
  */
-public class DynamicTableNameContextHolder {
+public final class DynamicTableNameUtils {
 
-	private static final ThreadLocal<String> LOCAL = new TransmittableThreadLocal<>();
-
-	public static void set(String suffix) {
-		LOCAL.set(suffix);
+	private DynamicTableNameUtils() {
 	}
 
-	public static void clear() {
-		LOCAL.remove();
-	}
+	public static final ScopedValue<String> CONTEXT = ScopedValue.newInstance();
 
-	public static String get() {
-		return LOCAL.get();
+	public static String getTableName() {
+		return CONTEXT.orElse(StringConstants.EMPTY);
 	}
 
 }

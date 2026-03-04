@@ -83,7 +83,6 @@ import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Executors;
@@ -224,7 +223,7 @@ class WebSocketMessageSendIntegrationTest {
 		OAuth2UsernamePasswordGrantAuthorization authorization = new OAuth2UsernamePasswordGrantAuthorization(
 				"auth-test-1", TEST_CLIENT_ID, TEST_USER, scopes, accessToken, refreshToken,
 				new User(1L, TEST_USER, "laokou", "https://baidu.com/avatar.png", true, 0, "2413176044@qq.com",
-						"18888888888", 0L, 1L, List.of("sys:user:list"), List.of(1L), null));
+						"18888888888", 0L, 1L, Set.of("sys:user:list"), Set.of(1L), null));
 
 		authorizationRepository.save(authorization);
 	}

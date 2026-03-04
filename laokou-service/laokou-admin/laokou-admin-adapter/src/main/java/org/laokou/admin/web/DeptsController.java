@@ -38,6 +38,7 @@ import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.log.annotation.OperateLog;
+import org.laokou.common.mybatisplus.annotation.DataFilter;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -109,6 +110,7 @@ public class DeptsController {
 	}
 
 	@TraceLog
+	@DataFilter
 	@PostMapping("/v1/depts/page")
 	@PreAuthorize("hasAuthority('read') and hasAuthority('sys:dept:page')")
 	@Operation(summary = "分页查询部门列表", description = "分页查询部门列表")
@@ -117,10 +119,19 @@ public class DeptsController {
 	}
 
 	@TraceLog
+	@DataFilter
 	@PostMapping("/v1/depts/list-tree")
 	@PreAuthorize("hasAuthority('read') and hasAuthority('sys:dept:list-tree')")
 	@Operation(summary = "查询部门树列表", description = "查询部门树列表")
 	public Result<List<DeptTreeCO>> listTreeDept(@RequestBody DeptTreeListQry qry) {
+		return deptsServiceI.listTreeDept(qry);
+	}
+
+	@TraceLog
+	@PostMapping("/v1/depts/list-select-tree")
+	@PreAuthorize("hasAuthority('read') and hasAuthority('sys:dept:list-tree')")
+	@Operation(summary = "查询部门树列表", description = "查询部门树列表")
+	public Result<List<DeptTreeCO>> listSelectTreeDept(@RequestBody DeptTreeListQry qry) {
 		return deptsServiceI.listTreeDept(qry);
 	}
 

@@ -120,9 +120,9 @@ public final class StringConstants {
 	public static final String AND = "&";
 
 	/**
-	 * AND.
+	 * OR.
 	 */
-	public static final String AND_ = "and";
+	public static final String OR = "or";
 
 	/**
 	 * 分割参数.

@@ -25,7 +25,7 @@ import org.laokou.auth.gatewayimpl.database.DeptMapper;
 import org.laokou.auth.model.entity.UserE;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * 部门.
@@ -40,8 +40,8 @@ public class DeptGatewayImpl implements DeptGateway {
 	private final DeptMapper deptMapper;
 
 	@Override
-	public List<Long> getDeptIds(UserE userE, List<String> dataScopes) {
-		return deptMapper.selectDeptIds(UserConvertor.toDataObject(userE), dataScopes);
+	public Set<Long> getDeptIds(UserE userE, Set<String> dataScopes) {
+		return Set.copyOf(deptMapper.selectDeptIds(UserConvertor.toDataObject(userE), dataScopes.stream().toList()));
 	}
 
 }

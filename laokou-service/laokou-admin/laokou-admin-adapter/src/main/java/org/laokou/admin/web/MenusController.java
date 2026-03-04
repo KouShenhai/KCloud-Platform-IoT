@@ -38,6 +38,7 @@ import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.log.annotation.OperateLog;
+import org.laokou.common.mybatisplus.annotation.DataFilter;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -109,6 +110,7 @@ public class MenusController {
 	}
 
 	@TraceLog
+	@DataFilter
 	@PostMapping("/v1/menus/page")
 	@PreAuthorize("hasAuthority('read') and hasAuthority('sys:menu:page')")
 	@Operation(summary = "分页查询菜单列表", description = "分页查询菜单列表")
@@ -117,10 +119,19 @@ public class MenusController {
 	}
 
 	@TraceLog
+	@DataFilter
 	@PostMapping("/v1/menus/list-tree")
 	@PreAuthorize("hasAuthority('read') and hasAuthority('sys:menu:list-tree')")
 	@Operation(summary = "查询菜单树列表", description = "查询菜单树列表")
 	public Result<List<MenuTreeCO>> listTreeMenu(@RequestBody MenuTreeListQry qry) {
+		return menusServiceI.listTreeMenu(qry);
+	}
+
+	@TraceLog
+	@PostMapping("/v1/menus/list-select-tree")
+	@PreAuthorize("hasAuthority('read') and hasAuthority('sys:menu:list-tree')")
+	@Operation(summary = "查询菜单树列表", description = "查询菜单树列表")
+	public Result<List<MenuTreeCO>> listSelectTreeMenu(@RequestBody MenuTreeListQry qry) {
 		return menusServiceI.listTreeMenu(qry);
 	}
 

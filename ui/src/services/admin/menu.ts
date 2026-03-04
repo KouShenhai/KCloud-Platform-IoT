@@ -129,3 +129,14 @@ export async function listUserTreeMenu(body: any,options?: { [key: string]: any 
 		...(options || {}),
 	});
 }
+
+export async function listSelectTreeMenu(body: any,options?: { [key: string]: any }) {
+	return request<API.Result>('/apis/admin/api/v1/menus/list-select-tree', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		data: body,
+		...(options || {}),
+	});
+}

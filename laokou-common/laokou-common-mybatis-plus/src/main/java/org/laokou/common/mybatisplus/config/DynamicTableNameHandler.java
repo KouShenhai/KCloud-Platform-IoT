@@ -18,22 +18,18 @@
 package org.laokou.common.mybatisplus.config;
 
 import com.baomidou.mybatisplus.extension.plugins.handler.TableNameHandler;
+import org.laokou.common.mybatisplus.util.DynamicTableNameUtils;
 
 /**
  * @author laokou
  */
 public class DynamicTableNameHandler implements TableNameHandler {
 
-	/**
-	 * 分表标识符.
-	 */
-	public static final String PLACE_HOLDER = "$$";
-
 	@Override
 	public String dynamicTableName(String sql, String tableName) {
-		if (tableName.endsWith(PLACE_HOLDER)) {
-			return tableName.substring(0, tableName.length() - PLACE_HOLDER.length())
-				.concat(DynamicTableNameContextHolder.get());
+		String identifier = "$$";
+		if (tableName.contains(identifier)) {
+			return tableName.replace(identifier, DynamicTableNameUtils.getTableName());
 		}
 		return tableName;
 	}
