@@ -26,9 +26,9 @@ import org.laokou.common.crypto.util.AESUtils;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * UserConvertor test class.
@@ -60,9 +60,7 @@ class UserConvertorTest {
 	@DisplayName("Test toUserDetails converts User to UserExtDetails with all properties")
 	void test_toUserDetails_converts_all_properties() throws Exception {
 		// Given
-		List<String> permissions = new ArrayList<>();
-		permissions.add("sys:user:query");
-		permissions.add("sys:user:add");
+		Set<String> permissions = Set.of("sys:user:query", "sys:user:add");
 
 		String encryptedUsername = AESUtils.encrypt("admin");
 		String encryptedMail = AESUtils.encrypt("admin@example.com");
@@ -83,7 +81,7 @@ class UserConvertorTest {
 			.build();
 
 		// When
-		UserExtDetails result = UserConvertor.toUserDetails(user, Collections.emptyList());
+		UserExtDetails result = UserConvertor.toUserDetails(user, Collections.emptySet());
 
 		// Then
 		Assertions.assertThat(result).isNotNull();
@@ -122,7 +120,7 @@ class UserConvertorTest {
 			.build();
 
 		// When
-		UserExtDetails result = UserConvertor.toUserDetails(user, Collections.emptyList());
+		UserExtDetails result = UserConvertor.toUserDetails(user, Collections.emptySet());
 
 		// Then
 		Assertions.assertThat(result.getUsername()).isEqualTo(originalUsername);
@@ -149,7 +147,7 @@ class UserConvertorTest {
 			.build();
 
 		// When
-		UserExtDetails result = UserConvertor.toUserDetails(user, Collections.emptyList());
+		UserExtDetails result = UserConvertor.toUserDetails(user, Collections.emptySet());
 
 		// Then
 		Assertions.assertThat(result).isNotNull();
@@ -170,10 +168,10 @@ class UserConvertorTest {
 	@DisplayName("Test toUserDetails with empty permissions set")
 	void test_toUserDetails_with_empty_permissions() throws Exception {
 		// Given
-		User user = User.builder().id(4L).username(AESUtils.encrypt("user4")).permissions(new ArrayList<>()).build();
+		User user = User.builder().id(4L).username(AESUtils.encrypt("user4")).permissions(new HashSet<>()).build();
 
 		// When
-		UserExtDetails result = UserConvertor.toUserDetails(user, Collections.emptyList());
+		UserExtDetails result = UserConvertor.toUserDetails(user, Collections.emptySet());
 
 		// Then
 		Assertions.assertThat(result.getPermissions()).isNotNull().isEmpty();
@@ -186,7 +184,7 @@ class UserConvertorTest {
 		User user = User.builder().id(5L).username(AESUtils.encrypt("user5")).build();
 
 		// When
-		UserConvertor.toUserDetails(user, Collections.emptyList());
+		UserConvertor.toUserDetails(user, Collections.emptySet());
 
 		// Then
 		domainFactoryMockedStatic.verify(DomainFactory::createUserDetails, Mockito.times(1));

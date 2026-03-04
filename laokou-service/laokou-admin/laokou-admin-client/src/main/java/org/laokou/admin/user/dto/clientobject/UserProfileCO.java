@@ -22,7 +22,7 @@ import lombok.Data;
 import org.laokou.common.i18n.dto.ClientObject;
 
 import java.io.Serial;
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author laokou
@@ -44,9 +44,9 @@ public class UserProfileCO extends ClientObject {
 	private String avatar;
 
 	@Schema(name = "菜单权限标识集合", description = "菜单权限标识集合")
-	private List<String> permissions;
+	private Set<String> permissions;
 
 	@Schema(name = "授权范围集合", description = "授权范围集合")
-	private List<String> scopes;
+	private Set<String> scopes;
 
 }

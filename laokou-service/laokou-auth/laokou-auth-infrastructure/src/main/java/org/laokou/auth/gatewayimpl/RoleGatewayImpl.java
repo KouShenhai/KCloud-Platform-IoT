@@ -24,7 +24,7 @@ import org.laokou.auth.gatewayimpl.database.RoleMapper;
 import org.laokou.auth.model.entity.UserE;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author laokou
@@ -36,8 +36,8 @@ public class RoleGatewayImpl implements RoleGateway {
 	private final RoleMapper roleMapper;
 
 	@Override
-	public List<String> getDataScopes(UserE userE) {
-		return roleMapper.selectDataScopes(UserConvertor.toDataObject(userE));
+	public Set<String> getDataScopes(UserE userE) {
+		return Set.copyOf(roleMapper.selectDataScopes(UserConvertor.toDataObject(userE)));
 	}
 
 }

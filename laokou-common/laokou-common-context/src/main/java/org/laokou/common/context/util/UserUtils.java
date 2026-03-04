@@ -21,7 +21,7 @@ import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author laokou
@@ -84,7 +84,7 @@ public final class UserUtils {
 	 * 部门IDS.
 	 * @return List<Long>
 	 */
-	public static List<Long> getDeptIds() {
+	public static Set<Long> getDeptIds() {
 		return userDetail().getDeptIds();
 	}
 

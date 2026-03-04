@@ -62,6 +62,7 @@ import java.io.Serial;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Supplier;
 
 /**
@@ -257,13 +258,13 @@ public class AuthA extends AggregateRoot implements ValidateName {
 		this.userE = userE;
 	}
 
-	public void getMenuPermissions(List<String> permissions) {
+	public void getMenuPermissions(Set<String> permissions) {
 		this.userV = this.userV.toBuilder().permissions(permissions).build();
 	}
 
-	public void getDataFilter(Supplier<List<String>> dataScopesSupper, Supplier<List<Long>> deptIdsSupplier) {
+	public void getDataFilter(Supplier<Set<String>> dataScopesSupper, Supplier<Set<Long>> deptIdsSupplier) {
 		if (userE.isSuperAdministrator()) {
-			this.dataFilterV = DataFilterV.builder().deptIds(Collections.emptyList()).creator(null).build();
+			this.dataFilterV = DataFilterV.builder().deptIds(Collections.emptySet()).creator(null).build();
 			return;
 		}
 		this.userV = this.userV.toBuilder().dataScopes(dataScopesSupper.get()).build();
@@ -272,10 +273,10 @@ public class AuthA extends AggregateRoot implements ValidateName {
 			return;
 		}
 		if (this.userV.dataScopes().contains(DataScope.ALL.getCode())) {
-			this.dataFilterV = DataFilterV.builder().deptIds(Collections.emptyList()).creator(null).build();
+			this.dataFilterV = DataFilterV.builder().deptIds(Collections.emptySet()).creator(null).build();
 			return;
 		}
-		List<Long> deptIds = Collections.emptyList();
+		Set<Long> deptIds = Collections.emptySet();
 		Long creator = null;
 		if (this.userV.dataScopes().contains(DataScope.BELOW_DEPT.getCode())
 				|| this.userV.dataScopes().contains(DataScope.SELF_DEPT.getCode())

@@ -35,6 +35,7 @@ import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.log.annotation.OperateLog;
+import org.laokou.common.mybatisplus.annotation.DataFilter;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -112,6 +113,7 @@ public class RolesController {
 	}
 
 	@TraceLog
+	@DataFilter
 	@PostMapping("/v1/roles/page")
 	@PreAuthorize("hasAuthority('read') and hasAuthority('sys:role:page')")
 	@Operation(summary = "分页查询角色列表", description = "分页查询角色列表")

@@ -118,3 +118,14 @@ export async function listTreeDept(body: any,options?: { [key: string]: any }) {
 		...(options || {}),
 	});
 }
+
+export async function listSelectTreeDept(body: any,options?: { [key: string]: any }) {
+	return request<API.Result>('/apis/admin/api/v1/depts/list-select-tree', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		data: body,
+		...(options || {}),
+	});
+}

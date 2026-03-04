@@ -29,6 +29,7 @@ import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
@@ -64,7 +65,8 @@ public class DataFilterInterceptor implements InnerInterceptor {
 				plainSelect.setWhere(andExpression);
 			}
 			// 新sql写入
-			PluginUtils.mpBoundSql(boundSql).sql(plainSelect.toString());
+			String newSql = plainSelect.toString().replaceAll(StringConstants.SINGLE_QUOT, StringConstants.EMPTY);
+			PluginUtils.mpBoundSql(boundSql).sql(newSql);
 		}
 	}
 

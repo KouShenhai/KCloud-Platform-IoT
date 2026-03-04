@@ -32,6 +32,7 @@ import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
 
 import java.security.Principal;
+import java.util.stream.Collectors;
 
 /**
  * @author laokou
@@ -53,7 +54,7 @@ public record OAuth2OpaqueTokenIntrospector(
 			throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED);
 		}
 		if (accessToken.isActive() && refreshToken.isActive() && authorization.getAttribute(Principal.class.getName()) instanceof User user) {
-			return UserConvertor.toUserDetails(user, authorization.getAuthorizedScopes().stream().toList());
+			return UserConvertor.toUserDetails(user, authorization.getAuthorizedScopes().stream().collect(Collectors.toSet()));
 		}
 		authorizationService.remove(authorization);
 		throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED);
