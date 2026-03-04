@@ -6,10 +6,10 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-standalone</artifactId>
-    <version>4.0.1</version>
+    <version>4.0.2-SNAPSHOT</version>
   </parent>
 
-  <version>4.0.1</version>
+  <version>4.0.2-SNAPSHOT</version>
   <artifactId>laokou-standalone-auth</artifactId>
   <packaging>pom</packaging>
 

@@ -22,7 +22,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.laokou</groupId>
   <artifactId>KCloud-Platform-IoT</artifactId>
-  <version>4.0.1</version>
+  <version>4.0.2-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
     <module>laokou-common</module>
@@ -46,7 +46,7 @@
     </developer>
   </developers>
   <scm>
-    <tag>kcloud-platform-iot-4.0.1.RELEASE</tag>
+    <tag>kcloud-platform-iot-4.0.2.RELEASE</tag>
     <url>https://github.com/KouShenhai/KCloud-Platform-IoT</url>
     <connection>scm:git:https://github.com/KouShenhai/KCloud-Platform-IoT.git</connection>
     <developerConnection>scm:git:https://github.com/KouShenhai/KCloud-Platform-IoT.git</developerConnection>
@@ -61,7 +61,7 @@
   </licenses>
   <properties>
     <!--项目版本-->
-    <project.version>4.0.1</project.version>
+    <project.version>4.0.2-SNAPSHOT</project.version>
     <!--JDK版本-->
     <java.version>25</java.version>
     <!--项目编码-->
@@ -1002,8 +1002,8 @@
         <configuration>
           <!--备份版本-->
           <generateBackupPoms>true</generateBackupPoms>
-          <newVersion>4.0.2-SNAPSHOT</newVersion>
-          <oldVersion>4.0.1</oldVersion>
+          <newVersion>4.0.2</newVersion>
+          <oldVersion>4.0.2-SNAPSHOT</oldVersion>
         </configuration>
       </plugin>
       <plugin>
