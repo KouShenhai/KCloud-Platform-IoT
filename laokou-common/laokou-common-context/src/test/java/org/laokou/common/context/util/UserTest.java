@@ -23,9 +23,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.core.GrantedAuthority;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * User record test class.
@@ -39,10 +39,7 @@ class UserTest {
 
 	@BeforeEach
 	void setUp() {
-		List<String> permissions = new ArrayList<>();
-		permissions.add("sys:user:query");
-		permissions.add("sys:user:add");
-		permissions.add("sys:role:query");
+		Set<String> permissions = Set.of("sys:user:query", "sys:user:add", "sys:role:query");
 
 		user = User.builder()
 			.id(1L)
@@ -55,7 +52,7 @@ class UserTest {
 			.mobile("13800138000")
 			.tenantId(100L)
 			.deptId(10L)
-			.deptIds(List.of(1L))
+			.deptIds(Set.of(1L))
 			.creator(1L)
 			.permissions(permissions)
 			.build();
@@ -75,7 +72,7 @@ class UserTest {
 		Assertions.assertThat(user.mobile()).isEqualTo("13800138000");
 		Assertions.assertThat(user.tenantId()).isEqualTo(100L);
 		Assertions.assertThat(user.deptId()).isEqualTo(10L);
-		Assertions.assertThat(user.deptIds()).isEqualTo(List.of(1L));
+		Assertions.assertThat(user.deptIds()).isEqualTo(Set.of(1L));
 		Assertions.assertThat(user.creator()).isEqualTo(1L);
 		Assertions.assertThat(user.permissions())
 			.hasSize(3)
@@ -191,7 +188,7 @@ class UserTest {
 	@DisplayName("Test getAuthorities with empty permissions returns empty collection")
 	void test_getAuthorities_emptyPermissions_returnsEmptyCollection() {
 		// Given
-		User userWithEmptyPerms = User.builder().id(3L).username("user3").permissions(new ArrayList<>()).build();
+		User userWithEmptyPerms = User.builder().id(3L).username("user3").permissions(new HashSet<>()).build();
 
 		// When
 		Collection<GrantedAuthority> authorities = userWithEmptyPerms.getAuthorities();
