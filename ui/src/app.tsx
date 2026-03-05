@@ -254,9 +254,16 @@ export const request: {
 		},
 	},
 	// 请求拦截
-	requestInterceptors: [
+		requestInterceptors: [
 		async (config: any) => {
 			const headers = config.headers ? config.headers : [];
+			// 国际化：携带语言到后端（优先使用 umi plugin-locale 的 current locale）
+			const { getLocale } = require('@@/exports');
+			const locale = getLocale?.() || 'zh-CN';
+			if (locale) {
+				// 若后端使用自定义 header，也可以同时带上（按需保留/改名）
+				headers['Language'] = locale;
+			}
 			const accessToken = getAccessToken()
 			if (!headers['Skip-Token'] && accessToken) {
 				headers['Authorization'] = `Bearer ${accessToken}`

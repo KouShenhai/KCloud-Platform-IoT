@@ -23,7 +23,7 @@ export default [
 		icon: 'home'
 	},
 	{
-		name: 'Login',
+		name: '登录',
 		path: '/login',
 		component: './Login',
 		layout: false,
