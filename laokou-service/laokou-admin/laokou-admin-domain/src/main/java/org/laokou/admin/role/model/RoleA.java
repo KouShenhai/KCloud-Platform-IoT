@@ -82,7 +82,11 @@ public class RoleA extends AggregateRoot implements ValidateName {
 		}
 	}
 
-	public List<Long> getIds(int num) {
+	public List<Long> createBatchRoleMenuIds(int num) {
+		return commonIdGenerator.getIds(BizType.ROLE, num);
+	}
+
+	public List<Long> createBatchRoleDeptIds(int num) {
 		return commonIdGenerator.getIds(BizType.ROLE, num);
 	}
 

@@ -51,11 +51,11 @@ public class RoleConvertor {
 		Long roleId = roleA.getId();
 		List<String> menuIds = roleA.getRoleE().getMenuIds();
 		int num = menuIds.size();
-		List<Long> primaryKeys = roleA.getIds(num);
+		List<Long> roleMenuIds = roleA.createBatchRoleMenuIds(num);
 		List<RoleMenuDO> list = new ArrayList<>(num);
 		for (int i = 0; i < num; i++) {
 			RoleMenuDO roleMenuDO = new RoleMenuDO();
-			roleMenuDO.setId(primaryKeys.get(i));
+			roleMenuDO.setId(roleMenuIds.get(i));
 			roleMenuDO.setRoleId(roleId);
 			roleMenuDO.setMenuId(Long.valueOf(menuIds.get(i)));
 			list.add(roleMenuDO);
@@ -75,11 +75,11 @@ public class RoleConvertor {
 		Long roleId = roleA.getId();
 		List<String> deptIds = roleA.getRoleE().getDeptIds();
 		int num = deptIds.size();
-		List<Long> primaryKeys = roleA.getIds(num);
+		List<Long> roleDeptIds = roleA.createBatchRoleDeptIds(num);
 		List<RoleDeptDO> list = new ArrayList<>(num);
 		for (int i = 0; i < num; i++) {
 			RoleDeptDO roleDeptDO = new RoleDeptDO();
-			roleDeptDO.setId(primaryKeys.get(i));
+			roleDeptDO.setId(roleDeptIds.get(i));
 			roleDeptDO.setRoleId(roleId);
 			roleDeptDO.setDeptId(Long.valueOf(deptIds.get(i)));
 			list.add(roleDeptDO);

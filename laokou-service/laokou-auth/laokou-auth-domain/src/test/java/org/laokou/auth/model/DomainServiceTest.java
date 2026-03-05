@@ -61,7 +61,6 @@ import org.springframework.test.context.TestConstructor;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -165,7 +164,7 @@ class DomainServiceTest {
 		Mockito.verify(authOssLogGateway, Mockito.times(1)).getOssUrl(1L);
 		Mockito.verify(roleGateway, Mockito.times(1)).getDataScopes(createUserE());
 		Mockito.verify(deptGateway, Mockito.times(1)).getDeptIds(createUserE(), Set.of("self", "custom"));
-		Assertions.assertThat(usernamePasswordAuth.getDataFilterV().deptIds()).isEqualTo(List.of(1L));
+		Assertions.assertThat(usernamePasswordAuth.getDataFilterV().deptIds()).isEqualTo(Set.of(1L));
 		Assertions.assertThat(usernamePasswordAuth.getUserV().avatar()).isEqualTo("https://1.png");
 		Assertions.assertThat(usernamePasswordAuth.getUserE().getDeptId()).isEqualTo(1L);
 		Mockito.verify(usernamePasswordAuthParamValidator, Mockito.times(1)).validateAuth(usernamePasswordAuth);
@@ -216,7 +215,7 @@ class DomainServiceTest {
 		Mockito.verify(authOssLogGateway, Mockito.times(1)).getOssUrl(1L);
 		Mockito.verify(roleGateway, Mockito.times(1)).getDataScopes(createUserE());
 		Mockito.verify(deptGateway, Mockito.times(1)).getDeptIds(createUserE(), Set.of("self", "custom"));
-		Assertions.assertThat(mailAuth.getDataFilterV().deptIds()).isEqualTo(List.of(1L));
+		Assertions.assertThat(mailAuth.getDataFilterV().deptIds()).isEqualTo(Set.of(1L));
 		Assertions.assertThat(mailAuth.getUserV().avatar()).isEqualTo("https://1.png");
 		Assertions.assertThat(mailAuth.getUserE().getDeptId()).isEqualTo(1L);
 		Mockito.verify(mailAuthParamValidator, Mockito.times(1)).validateAuth(mailAuth);
@@ -248,7 +247,7 @@ class DomainServiceTest {
 		Mockito.verify(authOssLogGateway, Mockito.times(1)).getOssUrl(1L);
 		Mockito.verify(roleGateway, Mockito.times(1)).getDataScopes(createUserE());
 		Mockito.verify(deptGateway, Mockito.times(1)).getDeptIds(createUserE(), Set.of("self", "custom"));
-		Assertions.assertThat(mobileAuth.getDataFilterV().deptIds()).isEqualTo(List.of(1L));
+		Assertions.assertThat(mobileAuth.getDataFilterV().deptIds()).isEqualTo(Set.of(1L));
 		Assertions.assertThat(mobileAuth.getUserV().avatar()).isEqualTo("https://1.png");
 		Assertions.assertThat(mobileAuth.getUserE().getDeptId()).isEqualTo(1L);
 		Mockito.verify(mobileAuthParamValidator, Mockito.times(1)).validateAuth(mobileAuth);
@@ -289,7 +288,7 @@ class DomainServiceTest {
 		Mockito.verify(authOssLogGateway, Mockito.times(1)).getOssUrl(1L);
 		Mockito.verify(roleGateway, Mockito.times(1)).getDataScopes(createUserE());
 		Mockito.verify(deptGateway, Mockito.times(1)).getDeptIds(createUserE(), Set.of("self", "custom"));
-		Assertions.assertThat(testAuth.getDataFilterV().deptIds()).isEqualTo(List.of(1L));
+		Assertions.assertThat(testAuth.getDataFilterV().deptIds()).isEqualTo(Set.of(1L));
 		Assertions.assertThat(testAuth.getUserV().avatar()).isEqualTo("https://1.png");
 		Assertions.assertThat(testAuth.getUserE().getDeptId()).isEqualTo(1L);
 		Mockito.verify(testAuthParamValidator, Mockito.times(1)).validateAuth(testAuth);
@@ -310,7 +309,7 @@ class DomainServiceTest {
 		Mockito.verify(authOssLogGateway, Mockito.times(1)).getOssUrl(1L);
 		Mockito.verify(roleGateway, Mockito.times(1)).getDataScopes(createUserE());
 		Mockito.verify(deptGateway, Mockito.times(1)).getDeptIds(createUserE(), Set.of("self", "custom"));
-		Assertions.assertThat(authorizationCodeAuth.getDataFilterV().deptIds()).isEqualTo(List.of(1L));
+		Assertions.assertThat(authorizationCodeAuth.getDataFilterV().deptIds()).isEqualTo(Set.of(1L));
 		Assertions.assertThat(authorizationCodeAuth.getUserV().avatar()).isEqualTo("https://1.png");
 		Assertions.assertThat(authorizationCodeAuth.getUserE().getDeptId()).isEqualTo(1L);
 		Mockito.verify(authorizationCodeAuthParamValidator, Mockito.times(1)).validateAuth(authorizationCodeAuth);
