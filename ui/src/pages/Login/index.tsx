@@ -20,6 +20,7 @@ import {JSEncrypt} from 'jsencrypt';
 import {v7 as uuidV7} from 'uuid';
 import {clearToken, setToken} from "@/access"
 import {history} from "@umijs/max";
+import {SelectLang, useIntl} from "@@/exports";
 
 const USERNAME_PASSWORD = {key: 'username_password', label: '用户名密码登录'};
 const MOBILE = {key: 'mobile', label: '手机号登录'};
@@ -34,6 +35,8 @@ const iconStyles: CSSProperties = {
 };
 
 export default () => {
+	const intl = useIntl();
+	const t = (id: string, values?: Record<string, any>) => intl.formatMessage({id}, values);
 	const items = [
 		USERNAME_PASSWORD,
 		MOBILE,
@@ -196,13 +199,16 @@ export default () => {
 				width: '100vw',
 			}}
 		>
+			<div style={{position: 'fixed', top: 16, right: 16, zIndex: 9999}}>
+				<SelectLang reload={true} />
+			</div>
 			<LoginFormPage
 				formRef={formRef}
 				onFinish={onSubmit}
 				backgroundImageUrl={"/FfdJeJRQWjEeGTpqgBKj.png"}
 				logo={<img alt="logo" src="/logo.png"/>}
-				title="老寇IoT云平台"
-				subTitle="企业级微服务架构云服务多租户IoT平台"
+				title={t('app.title')}
+				subTitle={t('login.subtitle')}
 				loading={loading}
 				actions={
 					<div
@@ -214,11 +220,9 @@ export default () => {
 						}}
 					>
 						<Divider plain>
-              <span
-				  style={{color: '#CCC', fontWeight: 'normal', fontSize: 14}}
-			  >
-                其他登录方式
-              </span>
+							<span style={{color: '#CCC', fontWeight: 'normal', fontSize: 14}}>
+								{t('login.otherWays')}
+							</span>
 						</Divider>
 						<Space align="center" size={24}>
 							<div
@@ -296,11 +300,11 @@ export default () => {
 						prefix: <TeamOutlined className={'prefixIcon'}/>,
 						autoComplete: 'new-password',
 					}}
-					placeholder={'请输入租户编码'}
+					placeholder={t('login.tenantCode.placeholder')}
 					rules={[
 						{
 							required: true,
-							message: '请输入租户编码',
+							message: t('login.tenantCode.required'),
 						},
 					]}
 				/>
@@ -315,11 +319,11 @@ export default () => {
 								prefix: <UserOutlined className={'prefixIcon'}/>,
 								autoComplete: 'new-password',
 							}}
-							placeholder={'请输入用户名'}
+							placeholder={t('login.username.placeholder')}
 							rules={[
 								{
 									required: true,
-									message: '请输入用户名',
+									message: t('login.username.required'),
 								},
 							]}
 						/>
@@ -331,11 +335,11 @@ export default () => {
 								prefix: <LockOutlined className={'prefixIcon'}/>,
 								autoComplete: 'new-password',
 							}}
-							placeholder={'请输入密码'}
+							placeholder={t('login.password.placeholder')}
 							rules={[
 								{
 									required: true,
-									message: '请输入密码',
+									message: t('login.password.required'),
 								},
 							]}
 						/>
@@ -350,16 +354,16 @@ export default () => {
 										autoComplete: 'new-password',
 									}}
 									name="captcha"
-									placeholder={'请输入验证码'}
+									placeholder={t('login.captcha.placeholder')}
 									rules={[
 										{
 											required: true,
-											message: '请输入验证码',
+											message: t('login.captcha.required'),
 										},
 										{
 											pattern: /^[A-Za-z0-9]{4}$/,
-											message: '请输入4位验证码（数字和字母）'
-										}
+											message: t('login.captcha.invalid'),
+										},
 									]}
 								/>
 							</Col>
@@ -388,16 +392,16 @@ export default () => {
 								autoComplete: 'new-password',
 							}}
 							name="mobile"
-							placeholder={'请输入手机号'}
+							placeholder={t('login.mobile.placeholder')}
 							rules={[
 								{
 									required: true,
-									message: '请输入手机号',
+									message: t('login.mobile.required'),
 								},
 								{
 									pattern: /^1\d{10}$/,
-									message: '手机号格式错误',
-								}
+									message: t('login.mobile.invalid'),
+								},
 							]}
 						/>
 						<ProFormCaptcha
@@ -411,23 +415,23 @@ export default () => {
 							captchaProps={{
 								size: 'large',
 							}}
-							placeholder={'请输入验证码'}
+							placeholder={t('login.smsCaptcha.placeholder')}
 							captchaTextRender={(timing, count) => {
 								if (timing) {
-									return `${count} 获取验证码`;
+									return t('login.captcha.countdown', {count});
 								}
-								return '获取验证码';
+								return t('login.captcha.get');
 							}}
 							name="mobile_captcha"
 							rules={[
 								{
 									required: true,
-									message: '请输入验证码',
+									message: t('login.smsCaptcha.required'),
 								},
 								{
 									pattern: /^\d{6}$/,
-									message: '请输入6位数字的验证码'
-								}
+									message: t('login.smsCaptcha.invalid'),
+								},
 							]}
 							onGetCaptcha={sendMobileCaptcha}
 						/>
@@ -443,15 +447,15 @@ export default () => {
 								autoComplete: 'new-password',
 							}}
 							name="mail"
-							placeholder={'请输入邮箱'}
+							placeholder={t('login.mail.placeholder')}
 							rules={[
 								{
 									required: true,
-									message: '请输入邮箱',
+									message: t('login.mail.required'),
 								},
 								{
 									pattern: /^\w+(-+.\w+)*@\w+(-.\w+)*.\w+(-.\w+)*$/,
-									message: '邮箱格式错误',
+									message: t('login.mail.invalid'),
 								},
 							]}
 						/>
@@ -466,23 +470,23 @@ export default () => {
 							captchaProps={{
 								size: 'large',
 							}}
-							placeholder={'请输入验证码'}
+							placeholder={t('login.mailCaptcha.placeholder')}
 							captchaTextRender={(timing, count) => {
 								if (timing) {
-									return `${count} 获取验证码`;
+									return t('login.captcha.countdown', {count});
 								}
-								return '获取验证码';
+								return t('login.captcha.get');
 							}}
 							name="mail_captcha"
 							rules={[
 								{
 									required: true,
-									message: '请输入验证码',
+									message: t('login.mailCaptcha.required'),
 								},
 								{
 									pattern: /^\d{6}$/,
-									message: '请输入6位数字的验证码'
-								}
+									message: t('login.mailCaptcha.invalid'),
+								},
 							]}
 							onGetCaptcha={sendMailCaptcha}
 						/>

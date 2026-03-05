@@ -3,7 +3,7 @@
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
 // 更多信息见文档：https://umijs.org/docs/api/runtime-config#getinitialstate
 import {Dropdown, message, theme} from "antd";
-import {history} from "@umijs/max";
+import {history, SelectLang, useIntl} from "@@/exports";
 import {HomeOutlined, LogoutOutlined, RobotOutlined, SettingOutlined} from "@ant-design/icons";
 import {ReactElement, ReactNode, ReactPortal} from "react";
 import {logout, refresh} from '@/services/auth/auth';
@@ -28,7 +28,7 @@ const getIcon = (icon: string) => {
 
 const getRouters = (menus: any[]) => {
 	const routers = [{
-		name: '首页',
+		name: 'menu.home',
 		path: '/home',
 		icon: <HomeOutlined/>
 	}]
@@ -111,6 +111,9 @@ export async function getInitialState(): Promise<{
 }
 
 export const layout: RunTimeLayoutConfig  = ({ initialState }: any) => {
+	// 新写法：使用 intl.formatMessage，替代 formatMessage()
+	const intl = useIntl();
+	const t = (id: string, values?: Record<string, any>) => intl.formatMessage({id}, values);
 	return {
 		// 面包屑配置
 		headerContentRender: () => <ProBreadcrumb />,
@@ -131,6 +134,10 @@ export const layout: RunTimeLayoutConfig  = ({ initialState }: any) => {
 		colorPrimary: "#1677ff",
 		fixedHeader: true,
 		siderMenuType: "sub",
+		actionsRender: () => {
+			// Ant Design Pro 风格的语言切换组件（来自 umi plugin-locale）
+			return [<SelectLang key="SelectLang" reload={false} />];
+		},
 		avatarProps: {
 			src: initialState?.avatar,
 			size: 'small',
@@ -143,7 +150,7 @@ export const layout: RunTimeLayoutConfig  = ({ initialState }: any) => {
 								{
 									key: 'logout',
 									icon: <LogoutOutlined/>,
-									label: '注销',
+									label: t('user.logout'),
 									onClick: async () => {
 										if (refreshTimeoutRef) {
 											clearTimeout(refreshTimeoutRef);
@@ -203,6 +210,14 @@ export const layout: RunTimeLayoutConfig  = ({ initialState }: any) => {
 	};
 };
 
+const t = (id: string, values?: Record<string, any>) => {
+	// 新写法：在非 React 组件/Hook 环境下（如 request errorHandler）使用 getIntl()
+	// getIntl 来自 umi plugin-locale（@@/exports 导出）
+	// eslint-disable-next-line @typescript-eslint/no-var-requires
+	const {getIntl} = require('@@/exports');
+	return getIntl().formatMessage({id}, values);
+};
+
 export const request: {
 	responseInterceptors: ((response: any) => any)[];
 	requestInterceptors: (((config: any) => any) | ((error: any) => any))[];
@@ -211,7 +226,7 @@ export const request: {
 } = {
 	timeout: 60000,
 	// other axios options you want
-	errorConfig: {
+		errorConfig: {
 		errorHandler(error: any) {
 			const {request, response, code} = error;
 			let errorMessage;
@@ -219,19 +234,19 @@ export const request: {
 				errorMessage = response.data.error_description
 			}
 			if (response && response.status === 500) {
-				errorMessage = '服务器内部错误，无法完成请求'
+				errorMessage = t('error.serverInternal')
 			}
 			if (code === 'ERR_BAD_RESPONSE') {
-				errorMessage = '网络请求错误，请稍后再试'
+				errorMessage = t('error.network')
 			}
 			if (response && response.status === 400 && response.data.error === "invalid_grant") {
-				errorMessage = "令牌续期失败，请重新登录"
+				errorMessage = t('error.refreshTokenFailed')
 			}
 			if (response && response.status === 404) {
-				errorMessage = "无法找到 " + request.responseURL + " 请求的资源"
+				errorMessage = t('error.resourceNotFound', {url: request?.responseURL})
 			}
 			if (response && response.status === 401 && response.data.error === "invalid_client") {
-				errorMessage = "无效客户端，请检查认证服务器配置"
+				errorMessage = t('error.invalidClient')
 			}
 			message.error(errorMessage).then();
 		},

@@ -36,6 +36,12 @@ export default defineConfig({
 	layout: {
 		title: '老寇IoT云平台',
 	},
+	locale: {
+		// umi/max 内置 i18n
+		default: 'zh-CN',
+		antd: true,
+		baseNavigator: true,
+	},
 	/**
 	 * 路由的配置，不在路由中引入的文件不会编译.
 	 * @description 只支持 path，component，routes，redirect，wrappers，title 的配置
