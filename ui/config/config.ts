@@ -40,6 +40,7 @@ export default defineConfig({
 		// umi/max 内置 i18n
 		default: 'zh-CN',
 		antd: true,
+		title: true,
 		baseNavigator: true,
 	},
 	/**

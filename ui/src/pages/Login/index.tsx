@@ -37,7 +37,7 @@ const iconStyles: CSSProperties = {
 export default () => {
 	const intl = useIntl();
 	const t = (id: string, values?: Record<string, any>) => intl.formatMessage({id}, values);
-const items = [
+	const items = [
 		{ ...USERNAME_PASSWORD, label: t(USERNAME_PASSWORD.label) },
 		{ ...MOBILE, label: t(MOBILE.label) },
 		{ ...MAIL, label: t(MAIL.label) },

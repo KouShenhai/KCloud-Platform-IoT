@@ -26,9 +26,9 @@ const getIcon = (icon: string) => {
 	}
 }
 
-const getRouters = (menus: any[]) => {
+const getRouters = (menus: any[], homeName: string) => {
 	const routers = [{
-		name: '首页',
+		name: homeName,
 		path: '/home',
 		icon: <HomeOutlined/>
 	}]
@@ -123,7 +123,7 @@ export const layout: RunTimeLayoutConfig  = ({ initialState }: any) => {
 			params: initialState?.username,
 			request: async () => {
 				const result = await listUserTreeMenu({code: 0}).catch(console.log);
-				return getRouters(result?.data)
+				return getRouters(result?.data, t('menu.home'))
 			}
 		},
 		layout: 'mix',
@@ -136,7 +136,7 @@ export const layout: RunTimeLayoutConfig  = ({ initialState }: any) => {
 		siderMenuType: "sub",
 		actionsRender: () => {
 			// Ant Design Pro 风格的语言切换组件（来自 umi plugin-locale）
-			return [<SelectLang key="SelectLang" reload={false} />];
+			return [<SelectLang key="SelectLang" reload={true} />];
 		},
 		avatarProps: {
 			src: initialState?.avatar,
