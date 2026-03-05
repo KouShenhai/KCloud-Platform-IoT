@@ -53,7 +53,8 @@ module.exports = {
 							{text: 'Elasticsearch注解', link: '/pages/409dff/'},
 							{text: 'Spring Cloud Alibaba配置', link: '/pages/3cc49d/'},
 							{text: 'Spring Cloud Gateway配置', link: '/pages/4953b0/'},
-							{text: '17.gRPC配置', link: '/pages/4953b1/'},
+							{text: 'gRPC配置', link: '/pages/4953b1/'},
+							{text: 'ID生成器', link: '/pages/b69cd9/'},
 						]
 					},
 				]

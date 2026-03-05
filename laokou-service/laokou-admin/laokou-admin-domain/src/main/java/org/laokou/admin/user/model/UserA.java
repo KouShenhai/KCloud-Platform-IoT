@@ -145,7 +145,7 @@ public class UserA extends AggregateRoot implements ValidateName {
 		return this;
 	}
 
-	public List<Long> getIds(int num) {
+	public List<Long> createBatchUserRoleIds(int num) {
 		return commonIdGenerator.getIds(BizType.USER, num);
 	}
 
