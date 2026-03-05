@@ -17,86 +17,91 @@ export default [
 		redirect: '/home',
 	},
 	{
-		name: 'menu.home',
+		name: '首页',
 		path: '/home',
 		component: './Home',
 		icon: 'home'
 	},
 	{
-		name: 'menu.login',
+		name: 'Login',
 		path: '/login',
 		component: './Login',
 		layout: false,
 	},
 	{
-		name: 'menu.sys',
+		name: '系统管理',
 		path: '/sys',
 		icon: 'setting',
 		routes: [
 			{
-				name: 'menu.sys.permission',
+				name: '权限管理',
 				path: '/sys/permission',
 				routes: [
 					{
-						name: 'menu.sys.permission.dept',
+						name: '菜单',
+						path: '/sys/permission/menu',
+						component: './Sys/Permission/menu'
+					},
+					{
+						name: '部门',
 						path: '/sys/permission/dept',
 						component: './Sys/Permission/dept'
 					},
 					{
-						name: 'menu.sys.permission.role',
+						name: '角色',
 						path: '/sys/permission/role',
 						component: './Sys/Permission/role'
 					},
 					{
-						name: 'menu.sys.permission.user',
+						name: '用户',
 						path: '/sys/permission/user',
 						component: './Sys/Permission/user'
 					},
 				]
 			},
 			{
-				name: 'menu.sys.log',
+				name: '日志管理',
 				path: '/sys/log',
 				routes: [
 					{
-						name: 'menu.sys.log.login',
+						name: '登录日志',
 						path: '/sys/log/login',
 						component: './Sys/Log/login'
 					},
 					{
-						name: 'menu.sys.log.notice',
+						name: '通知日志',
 						path: '/sys/log/notice',
 						component: './Sys/Log/notice'
 					},
 					{
-						name: 'menu.sys.log.operate',
+						name: '操作日志',
 						path: '/sys/log/operate',
 						component: './Sys/Log/operate'
 					}
 				]
 			},
 			{
-				name: 'menu.sys.oss',
+				name: '对象存储',
 				path: '/sys/oss',
 				routes: [
 					{
-						name: 'menu.sys.oss.config',
+						name: '对象存储配置',
 						path: '/sys/oss/config',
 						component: './Sys/Oss/config'
 					},
 					{
-						name: 'menu.sys.oss.log',
+						name: '对象存储日志',
 						path: '/sys/oss/log',
 						component: './Sys/Oss/log'
 					}
 				]
 			},
 			{
-				name: 'menu.sys.config',
+				name: '系统配置',
 				path: '/sys/config',
 				routes: [
 					{
-						name: 'menu.sys.config.generator',
+						name: '代码生成器',
 						path: '/sys/config/generator',
 						component: './Sys/Config/generator'
 					}
@@ -105,21 +110,21 @@ export default [
 		]
 	},
 	{
-		name: 'menu.iot',
+		name: '物联管理',
 		path: '/iot',
 		icon: 'robot',
 		routes: [
 			{
-				name: 'menu.iot.device',
+				name: '设备管理',
 				path: '/iot/device',
 				routes: [
 					{
-						name: 'menu.iot.device.thingModel',
+						name: '物模型',
 						path: '/iot/device/thingModel',
 						component: './IoT/Device/thingModel'
 					},
 					{
-						name: 'menu.iot.device.productCategory',
+						name: '产品类别',
 						path: '/iot/device/productCategory',
 						component: './IoT/Device/productCategory'
 					},

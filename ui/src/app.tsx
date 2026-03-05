@@ -28,7 +28,7 @@ const getIcon = (icon: string) => {
 
 const getRouters = (menus: any[]) => {
 	const routers = [{
-		name: 'menu.home',
+		name: '首页',
 		path: '/home',
 		icon: <HomeOutlined/>
 	}]

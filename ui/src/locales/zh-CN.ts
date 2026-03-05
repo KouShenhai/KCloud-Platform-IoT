@@ -25,6 +25,9 @@ export default {
 
 	// login
 	'login.subtitle': '企业级多租户IoT云平台',
+	'login.usernamePassword': '用户名密码登录',
+	'login.mobile': '手机号登录',
+	'login.mail': '邮箱登录',
 	'login.otherWays': '其他登录方式',
 	'login.tenantCode.placeholder': '请输入租户编码',
 	'login.tenantCode.required': '请输入租户编码',

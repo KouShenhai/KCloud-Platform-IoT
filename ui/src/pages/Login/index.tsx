@@ -22,9 +22,9 @@ import {clearToken, setToken} from "@/access"
 import {history} from "@umijs/max";
 import {SelectLang, useIntl} from "@@/exports";
 
-const USERNAME_PASSWORD = {key: 'username_password', label: '用户名密码登录'};
-const MOBILE = {key: 'mobile', label: '手机号登录'};
-const MAIL = {key: 'mail', label: '邮箱登录'};
+const USERNAME_PASSWORD = {key: 'username_password', label: 'login.usernamePassword'};
+const MOBILE = {key: 'mobile', label: 'login.mobile'};
+const MAIL = {key: 'mail', label: 'login.mail'};
 type LoginType = 'username_password' | 'mobile' | 'mail';
 
 const iconStyles: CSSProperties = {
@@ -37,10 +37,10 @@ const iconStyles: CSSProperties = {
 export default () => {
 	const intl = useIntl();
 	const t = (id: string, values?: Record<string, any>) => intl.formatMessage({id}, values);
-	const items = [
-		USERNAME_PASSWORD,
-		MOBILE,
-		MAIL
+const items = [
+		{ ...USERNAME_PASSWORD, label: t(USERNAME_PASSWORD.label) },
+		{ ...MOBILE, label: t(MOBILE.label) },
+		{ ...MAIL, label: t(MAIL.label) },
 	];
 	const [loading, setLoading] = useState<boolean>(false);
 	const [loginType, setLoginType] = useState<LoginType>('username_password');
