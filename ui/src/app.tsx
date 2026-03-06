@@ -114,8 +114,10 @@ export async function getInitialState(): Promise<{
 }
 
 export const layout: RunTimeLayoutConfig  = ({ initialState }: any) => {
-	// 新写法：使用 intl.formatMessage，替代 formatMessage()
 	return {
+		// 浏览器 Tab 标题（可国际化）
+		title: t('app.title'),
+
 		// 面包屑配置
 		headerContentRender: () => <ProBreadcrumb />,
 		logo: '/logo.png',

@@ -34,7 +34,7 @@ export default defineConfig({
 	 */
 	proxy: proxy[REACT_APP_ENV as keyof typeof proxy],
 	layout: {
-		title: '老寇IoT云平台',
+		// title 建议放到 src/app.tsx 的运行时 layout 中用 t('app.title') 动态返回
 	},
 	locale: {
 		// umi/max 内置 i18n
