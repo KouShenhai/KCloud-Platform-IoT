@@ -3,7 +3,7 @@
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
 // 更多信息见文档：https://umijs.org/docs/api/runtime-config#getinitialstate
 import {Dropdown, message, theme} from "antd";
-import {history, SelectLang, useIntl} from "@@/exports";
+import {history, SelectLang} from "@@/exports";
 import {HomeOutlined, LogoutOutlined, RobotOutlined, SettingOutlined} from "@ant-design/icons";
 import {ReactElement, ReactNode, ReactPortal} from "react";
 import {logout, refresh} from '@/services/auth/auth';
@@ -26,9 +26,10 @@ const getIcon = (icon: string) => {
 	}
 }
 
-const getRouters = (menus: any[], homeName: string) => {
+const getRouters = (menus: any[]) => {
 	const routers = [{
-		name: homeName,
+		name: 'menu.home',
+		title: 'menu.home',
 		path: '/home',
 		icon: <HomeOutlined/>
 	}]
@@ -112,8 +113,6 @@ export async function getInitialState(): Promise<{
 
 export const layout: RunTimeLayoutConfig  = ({ initialState }: any) => {
 	// 新写法：使用 intl.formatMessage，替代 formatMessage()
-	const intl = useIntl();
-	const t = (id: string, values?: Record<string, any>) => intl.formatMessage({id}, values);
 	return {
 		// 面包屑配置
 		headerContentRender: () => <ProBreadcrumb />,
@@ -123,7 +122,7 @@ export const layout: RunTimeLayoutConfig  = ({ initialState }: any) => {
 			params: initialState?.username,
 			request: async () => {
 				const result = await listUserTreeMenu({code: 0}).catch(console.log);
-				return getRouters(result?.data, t('menu.home'))
+				return getRouters(result?.data)
 			}
 		},
 		layout: 'mix',
