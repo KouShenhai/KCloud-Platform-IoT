@@ -101,6 +101,7 @@ export async function getInitialState(): Promise<{
 	username: string;
 	avatar: string;
 	permissions: string[]
+	scopes: string[]
 }> {
 	const result = await getUserProfile().catch(console.log);
 	return {
@@ -108,6 +109,7 @@ export async function getInitialState(): Promise<{
 		username: result?.data?.username,
 		avatar: result?.data?.avatar ? result?.data?.avatar : '/1.png',
 		permissions: result?.data?.permissions,
+		scopes: result?.data?.scopes,
 	};
 }
 

@@ -19,7 +19,7 @@ export default {
 	// error
 	'error.serverInternal': 'Internal server error. Unable to complete the request.',
 	'error.network': 'Network request error. Please try again later.',
-	'error.refreshTokenFailed': 'Session refresh failed. Please log in again.',
+	'error.refreshTokenFailed': 'Token refresh failed. Please log in again.',
 	'error.resourceNotFound': 'Resource not found: {url}',
 	'error.invalidClient': 'Invalid client. Please check the auth server configuration.',
 
