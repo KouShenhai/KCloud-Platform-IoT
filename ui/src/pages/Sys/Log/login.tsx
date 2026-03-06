@@ -7,7 +7,7 @@ import {trim} from "@/utils/format";
 import {ExportToExcel} from "@/utils/export";
 import moment from "moment";
 import {useRef, useState} from "react";
-import {useAccess} from "@@/exports";
+import {useAccess, useIntl} from "@@/exports";
 
 export default () => {
 
@@ -25,6 +25,8 @@ export default () => {
 	};
 
 	const access = useAccess();
+	const intl = useIntl();
+	const t = (id: string, values?: Record<string, any>) => intl.formatMessage({id}, values);
 	const actionRef = useRef(null);
 	const [list, setList] = useState<TableColumns[]>([]);
 	const [param, setParam] = useState<any>({});
@@ -32,8 +34,8 @@ export default () => {
 
 	const getLoginType = (type: string) => {
 		return {
-			'username_password': '用户名密码登录',
-			'mobile': '手机号登录',
+			'username_password': t('login.usernamePassword'),
+			'mobile': t('login.mobile'),
 			'mail': '邮箱登录',
 			'authorization_code': '授权码登录',
 		}[type]
@@ -173,8 +175,8 @@ export default () => {
 				mode: 'single',
 				options: [
 					{
-						value: "username_password",
-						label: "用户名密码登录",
+						value: 'username_password',
+						label: t('login.usernamePassword'),
 					},
 					{
 						value: "mail",
