@@ -9,7 +9,7 @@ import * as oss from './oss';
 import * as operateLog from './operateLog';
 import * as menu from './menu';
 import * as loginLog from './loginLog';
-import * as i18nMessage from './i18nMessage';
+import * as i18nMenu from './i18nMenu';
 import * as dictType from './dict';
 import * as dictItem from './dictItem';
 import * as dept from './dept';
@@ -26,7 +26,7 @@ export default {
 	operateLog,
 	menu,
 	loginLog,
-	i18nMessage,
+	i18nMenu,
 	dictType,
 	dictItem,
 	dept,

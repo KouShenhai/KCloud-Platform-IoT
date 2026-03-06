@@ -15,61 +15,37 @@
  *
  */
 
-package org.laokou.admin.menu.dto.clientobject;
+package org.laokou.admin.i18nMenu.dto.clientobject;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
-import org.laokou.common.core.util.TreeUtils;
-
-import java.time.Instant;
+import org.laokou.common.i18n.dto.ClientObject;
 
 /**
- * 菜单树客户端对象.
+ * 国际化菜单客户端对象.
  *
  * @author laokou
  */
 @Data
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class MenuTreeCO extends TreeUtils.TreeNode<MenuTreeCO> {
+public class I18nMenuCO extends ClientObject {
 
 	/**
-	 * 菜单标题.
+	 * ID.
 	 */
-	private String title;
+	private Long id;
 
 	/**
-	 * 菜单路径.
+	 * 编码.
 	 */
-	private String path;
+	private String code;
 
 	/**
-	 * 菜单图标.
+	 * 中文.
 	 */
-	private String icon;
+	private String zhMessage;
 
 	/**
-	 * 创建时间.
+	 * 英文.
 	 */
-	private Instant createTime;
-
-	/**
-	 * 菜单权限标识.
-	 */
-	private String permission;
-
-	/**
-	 * 菜单类型 0菜单 1按钮.
-	 */
-	private Integer type;
-
-	/**
-	 * 菜单排序.
-	 */
-	private Integer sort;
-
-	/**
-	 * 菜单状态 0启用 1停用.
-	 */
-	private Integer status;
+	private String enMessage;
 
 }

@@ -110,7 +110,7 @@ declare namespace API {
 		co?: DictCO;
 	};
 
-	type I18nMessageCO = {
+	type I18nMenuCO = {
 		extValues?: Record<string, any>;
 		id?: number;
 		code?: string;
@@ -118,13 +118,13 @@ declare namespace API {
 		enMessage?: string;
 	};
 
-	type I18nMessageExportCmd = true;
+	type I18nMenuExportCmd = true;
 
-	type I18nMessageModifyCmd = {
-		co?: I18nMessageCO;
+	type I18nMenuModifyCmd = {
+		co?: I18nMenuCO;
 	};
 
-	type I18nMessagePageQry = {
+	type I18nMenuPageQry = {
 		pageNum?: number;
 		pageSize?: number;
 		pageIndex?: number;
@@ -132,8 +132,8 @@ declare namespace API {
 		params?: Record<string, any>;
 	};
 
-	type I18nMessageSaveCmd = {
-		co?: I18nMessageCO;
+	type I18nMenuSaveCmd = {
+		co?: I18nMenuCO;
 	};
 
 	type LoginLogCO = {

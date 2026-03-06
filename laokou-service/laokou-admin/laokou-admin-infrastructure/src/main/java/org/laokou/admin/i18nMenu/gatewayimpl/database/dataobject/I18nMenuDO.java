@@ -15,61 +15,34 @@
  *
  */
 
-package org.laokou.admin.menu.dto.clientobject;
+package org.laokou.admin.i18nMenu.gatewayimpl.database.dataobject;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import org.laokou.common.core.util.TreeUtils;
-
-import java.time.Instant;
+import org.laokou.common.mybatisplus.mapper.BaseDO;
 
 /**
- * 菜单树客户端对象.
+ * 国际化菜单数据对象.
  *
  * @author laokou
  */
 @Data
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class MenuTreeCO extends TreeUtils.TreeNode<MenuTreeCO> {
+@TableName("sys_i18n_message")
+public class I18nMenuDO extends BaseDO {
 
 	/**
-	 * 菜单标题.
+	 * 编码.
 	 */
-	private String title;
+	private String code;
 
 	/**
-	 * 菜单路径.
+	 * 中文.
 	 */
-	private String path;
+	private String zhMessage;
 
 	/**
-	 * 菜单图标.
+	 * 英文.
 	 */
-	private String icon;
-
-	/**
-	 * 创建时间.
-	 */
-	private Instant createTime;
-
-	/**
-	 * 菜单权限标识.
-	 */
-	private String permission;
-
-	/**
-	 * 菜单类型 0菜单 1按钮.
-	 */
-	private Integer type;
-
-	/**
-	 * 菜单排序.
-	 */
-	private Integer sort;
-
-	/**
-	 * 菜单状态 0启用 1停用.
-	 */
-	private Integer status;
+	private String enMessage;
 
 }

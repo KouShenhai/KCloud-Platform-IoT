@@ -23,7 +23,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 /**
- * 国际化消息工具类. <a href=
+ * 国际化菜单工具类. <a href=
  * "https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#context-functionality-messagesource">...</a>
  *
  * @author laokou
