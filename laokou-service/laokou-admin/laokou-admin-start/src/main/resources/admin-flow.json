@@ -416,7 +416,7 @@
     "controlBehavior": 0
   },
   {
-    "resource": "/api/v1/i18n-messages",
+    "resource": "/api/v1/i18n-menus",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -424,7 +424,7 @@
     "controlBehavior": 0
   },
   {
-    "resource": "/api/v1/i18n-messages/import",
+    "resource": "/api/v1/i18n-menus/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -432,7 +432,7 @@
     "controlBehavior": 0
   },
   {
-    "resource": "/api/v1/i18n-messages/export",
+    "resource": "/api/v1/i18n-menus/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -440,7 +440,7 @@
     "controlBehavior": 0
   },
   {
-    "resource": "/api/v1/i18n-messages/page",
+    "resource": "/api/v1/i18n-menus/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -448,7 +448,7 @@
     "controlBehavior": 0
   },
   {
-    "resource": "/api/v1/i18n-messages/{id}",
+    "resource": "/api/v1/i18n-menus/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,

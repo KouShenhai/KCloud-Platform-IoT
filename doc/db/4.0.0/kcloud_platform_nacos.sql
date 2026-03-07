@@ -817,7 +817,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/api/v1/i18n-messages",
+    "resource": "/api/v1/i18n-menus",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -825,7 +825,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/api/v1/i18n-messages/import",
+    "resource": "/api/v1/i18n-menus/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -833,7 +833,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/api/v1/i18n-messages/export",
+    "resource": "/api/v1/i18n-menus/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -841,7 +841,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/api/v1/i18n-messages/page",
+    "resource": "/api/v1/i18n-menus/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -849,7 +849,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (20, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/api/v1/i18n-messages/{id}",
+    "resource": "/api/v1/i18n-menus/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1580,7 +1580,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/api/v1/i18n-messages",
+    "resource": "/api/v1/i18n-menus",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -1588,7 +1588,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/api/v1/i18n-messages/import",
+    "resource": "/api/v1/i18n-menus/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1596,7 +1596,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/api/v1/i18n-messages/export",
+    "resource": "/api/v1/i18n-menus/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1604,7 +1604,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/api/v1/i18n-messages/page",
+    "resource": "/api/v1/i18n-menus/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1612,7 +1612,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (40, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/api/v1/i18n-messages/{id}",
+    "resource": "/api/v1/i18n-menus/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2239,7 +2239,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/api/v1/i18n-messages",
+    "resource": "/api/v1/i18n-menus",
     "limitApp": "default",
     "count": 500000,
     "grade": 1,
@@ -2247,7 +2247,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/api/v1/i18n-messages/import",
+    "resource": "/api/v1/i18n-menus/import",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2255,7 +2255,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/api/v1/i18n-messages/export",
+    "resource": "/api/v1/i18n-menus/export",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2263,7 +2263,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/api/v1/i18n-messages/page",
+    "resource": "/api/v1/i18n-menus/page",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2271,7 +2271,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
     "controlBehavior": 0
   },
   {
-    "resource": "/api/v1/i18n-messages/{id}",
+    "resource": "/api/v1/i18n-menus/{id}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
