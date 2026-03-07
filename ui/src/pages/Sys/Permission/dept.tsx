@@ -315,8 +315,8 @@ export default () => {
 				]}
 				dateFormatter="string"
 				toolbar={{
-					title: t('menu.sys.permission.user'),
-					tooltip: t('menu.sys.permission.user'),
+					title: t('menu.sys.permission.dept'),
+					tooltip: t('menu.sys.permission.dept'),
 				}}
 			/>
 		</>

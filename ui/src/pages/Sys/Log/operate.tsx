@@ -78,7 +78,7 @@ export default () => {
 			title: t('common.number'),
 			dataIndex: 'index',
 			valueType: 'indexBorder',
-			width: 60,
+			width: 85,
 		},
 		{
 			title: t('sys.log.operate.moduleName'),
@@ -94,6 +94,7 @@ export default () => {
 			dataIndex: 'name',
 			ellipsis: true,
 			valueType: 'text',
+			width: 130,
 			fieldProps: {
 				placeholder: t('sys.log.operate.placeholder.name'),
 			},
@@ -156,6 +157,7 @@ export default () => {
 			title: t('sys.log.operate.status'),
 			dataIndex: 'status',
 			hideInSearch: true,
+			ellipsis: true,
 			valueEnum: {
 				'0': { text: t('sys.log.common.success'), status: 'Success' },
 				'1': { text: t('sys.log.common.fail'), status: 'Error' },
@@ -207,6 +209,7 @@ export default () => {
 			title: t('common.operation'),
 			valueType: 'option',
 			key: 'option',
+			width: 100,
 			render: (_, record) => [
 				access.canOperateLogGetDetail && (
 					<a
@@ -339,8 +342,8 @@ export default () => {
 				]}
 				dateFormatter="string"
 				toolbar={{
-					title: t('sys.log.operate.title'),
-					tooltip: t('sys.log.operate.title'),
+					title: t('menu.sys.log.operate'),
+					tooltip: t('menu.sys.log.operate'),
 				}}
 			/>
 		</>

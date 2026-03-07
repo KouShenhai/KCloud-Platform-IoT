@@ -47,7 +47,7 @@ export default () => {
 			title: t('common.number'),
 			dataIndex: 'index',
 			valueType: 'indexBorder',
-			width: 60,
+			width: 85,
 		},
 		{
 			title: t('common.createTime'),
@@ -103,8 +103,8 @@ export default () => {
 			}}
 			dateFormatter="string"
 			toolbar={{
-				title: t('sys.config.generator.title'),
-				tooltip: t('sys.config.generator.title'),
+				title: t('menu.sys.config.generator'),
+				tooltip: t('menu.sys.config.generator'),
 			}}
 		/>
 	);

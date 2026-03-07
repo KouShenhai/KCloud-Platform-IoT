@@ -79,7 +79,7 @@ export default () => {
 			title: t('common.number'),
 			dataIndex: 'index',
 			valueType: 'indexBorder',
-			width: 60,
+			width: 85,
 		},
 		{
 			title: t('user.username'),
@@ -341,8 +341,8 @@ export default () => {
 			]}
 			dateFormatter="string"
 			toolbar={{
-				title: t('sys.log.login.title'),
-				tooltip: t('sys.log.login.title'),
+				title: t('menu.sys.log.login'),
+				tooltip: t('menu.sys.log.login'),
 			}}
 		/>
 	);

@@ -70,7 +70,7 @@ export default () => {
 			title: t('common.number'),
 			dataIndex: 'index',
 			valueType: 'indexBorder',
-			width: 60,
+			width: 85,
 		},
 		{
 			title: t('sys.log.notice.code'),
@@ -283,8 +283,8 @@ export default () => {
 				]}
 				dateFormatter="string"
 				toolbar={{
-					title: t('sys.log.notice.title'),
-					tooltip: t('sys.log.notice.title'),
+					title: t('menu.sys.log.notice'),
+					tooltip: t('menu.sys.log.notice'),
 				}}
 			/>
 		</>

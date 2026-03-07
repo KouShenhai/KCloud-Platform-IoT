@@ -304,8 +304,8 @@ export default () => {
 				]}
 				dateFormatter="string"
 				toolbar={{
-					title: t('iot.productCategory.title'),
-					tooltip: t('iot.productCategory.title'),
+					title: t('menu.iot.device.productCategory'),
+					tooltip: t('menu.iot.device.productCategory'),
 				}}
 			/>
 		</>

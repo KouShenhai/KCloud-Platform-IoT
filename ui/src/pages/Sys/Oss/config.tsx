@@ -44,7 +44,7 @@ export default () => {
 			title: t('common.number'),
 			dataIndex: 'index',
 			valueType: 'indexBorder',
-			width: 60,
+			width: 85,
 		},
 		{
 			title: t('sys.oss.config.name'),
@@ -200,8 +200,8 @@ export default () => {
 			}}
 			dateFormatter="string"
 			toolbar={{
-				title: t('sys.oss.config.title'),
-				tooltip: t('sys.oss.config.title'),
+				title: t('menu.sys.oss.config'),
+				tooltip: t('menu.sys.oss.config'),
 			}}
 		/>
 	);

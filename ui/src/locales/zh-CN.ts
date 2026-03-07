@@ -115,6 +115,12 @@ export default {
 	'toast.deleteSuccess': '删除成功',
 	'toast.selectAtLeastOne': '请至少选择一条数据',
 
+	// sys/oss/log
+	'sys.log.common.success': '成功',
+	'sys.log.common.fail': '失败',
+	'sys.log.common.export': '导出',
+	'sys.log.common.exportAll': '导出全部',
+
 	// home
 	'home.productCount': '产品数量',
 	'home.deviceCount': '设备数量',
@@ -129,7 +135,6 @@ export default {
 	'home.deviceMessageCount': '设备消息数量',
 
 	// iot/productCategory
-	'iot.productCategory.title': '产品类别',
 	'iot.productCategory.pid': '父级产品类别',
 	'iot.productCategory.name': '产品类别名称',
 	'iot.productCategory.sort': '产品类别排序',
@@ -144,7 +149,6 @@ export default {
 	'iot.productCategory.required.sort': '请输入产品类别排序',
 
 	// iot/thingModel
-	'iot.thingModel.title': '物模型',
 	'iot.thingModel.insert': '新增物模型',
 	'iot.thingModel.view': '查看物模型',
 	'iot.thingModel.modify': '修改物模型',
@@ -196,6 +200,8 @@ export default {
 	'iot.thingModel.specs.integerLength': '整数位长度',
 	'iot.thingModel.specs.decimalLength': '小数位长度',
 	'iot.thingModel.specs.unit': '单位',
+
+	// iot/device
 	'iot.device.send': '发送',
 	'iot.device.ws.connected': 'WebSocket 连接已建立',
 	'iot.device.ws.error': 'WebSocket 错误',
@@ -234,8 +240,20 @@ export default {
 	'sys.menu.tooltip.icon': '只支持目录菜单显示图标',
 
 	// sys/dept
-	'sys.dept.title': '部门',
-	'sys.oss.config.title': '对象存储配置',
+	'sys.dept.pid': '父级部门',
+	'sys.dept.name': '部门名称',
+	'sys.dept.sort': '部门排序',
+	'sys.dept.insert': '新增部门',
+	'sys.dept.view': '查看部门',
+	'sys.dept.modify': '修改部门',
+	'sys.dept.placeholder.pid': '请选择父级部门',
+	'sys.dept.placeholder.name': '请输入部门名称',
+	'sys.dept.placeholder.sort': '请输入部门排序',
+	'sys.dept.required.pid': '请选择父级部门',
+	'sys.dept.required.name': '请输入部门名称',
+	'sys.dept.required.sort': '请输入部门排序',
+
+	// sys/oss/config
 	'sys.oss.config.name': 'OSS名称',
 	'sys.oss.config.type': 'OSS类型',
 	'sys.oss.config.status': 'OSS状态',
@@ -245,15 +263,7 @@ export default {
 	'sys.oss.config.type.amazonS3': '亚马逊S3',
 	'sys.oss.config.type.local': '本地',
 
-	// sys/oss/log
-	'sys.oss.log.title': '对象存储日志',
-	'sys.log.common.success': '成功',
-	'sys.log.common.fail': '失败',
-	'sys.log.common.export': '导出',
-	'sys.log.common.exportAll': '导出全部',
-
 	// sys/log/operate
-	'sys.log.operate.title': '操作日志',
 	'sys.log.operate.drawer.title': '查看操作日志',
 	'sys.log.operate.moduleName': '模块名称',
 	'sys.log.operate.name': '操作名称',
@@ -291,7 +301,6 @@ export default {
 	'sys.log.operate.required.createTime': '请输入创建时间',
 
 	// sys/log/notice
-	'sys.log.notice.title': '通知日志',
 	'sys.log.notice.drawer.title': '查看通知日志',
 	'sys.log.notice.code': '通知编码',
 	'sys.log.notice.name': '通知名称',
@@ -311,7 +320,6 @@ export default {
 	'sys.log.notice.required.createTime': '请输入创建时间',
 
 	// sys/log/login
-	'sys.log.login.title': '登录日志',
 	'sys.log.login.ip': 'IP地址',
 	'sys.log.login.address': '归属地',
 	'sys.log.login.browser': '浏览器',
@@ -341,20 +349,6 @@ export default {
 	'sys.oss.log.type.image': '图片',
 	'sys.oss.log.type.video': '视频',
 	'sys.oss.log.type.audio': '音频',
-
-	// sys/dept
-	'sys.dept.pid': '父级部门',
-	'sys.dept.name': '部门名称',
-	'sys.dept.sort': '部门排序',
-	'sys.dept.insert': '新增部门',
-	'sys.dept.view': '查看部门',
-	'sys.dept.modify': '修改部门',
-	'sys.dept.placeholder.pid': '请选择父级部门',
-	'sys.dept.placeholder.name': '请输入部门名称',
-	'sys.dept.placeholder.sort': '请输入部门排序',
-	'sys.dept.required.pid': '请选择父级部门',
-	'sys.dept.required.name': '请输入部门名称',
-	'sys.dept.required.sort': '请输入部门排序',
 
 	// login
 	'login.subtitle': '企业级多租户IoT云平台',
@@ -411,9 +405,6 @@ export default {
 	'menu.sys.oss.log': '对象存储日志',
 	'menu.sys.config': '系统配置',
 	'menu.sys.config.generator': '代码生成器',
-
-	// sys/config/generator
-	'sys.config.generator.title': '代码生成器',
 	'menu.iot': '物联管理',
 	'menu.iot.device': '设备管理',
 	'menu.iot.device.thingModel': '物模型',

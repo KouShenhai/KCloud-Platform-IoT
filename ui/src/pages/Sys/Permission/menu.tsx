@@ -132,6 +132,7 @@ export default () => {
 			disable: true,
 			title: t('sys.menu.type'),
 			dataIndex: 'type',
+			ellipsis: true,
 			hideInSearch: true,
 			renderFormItem: (_, { defaultRender }) => {
 				return defaultRender(_);
@@ -177,6 +178,7 @@ export default () => {
 		{
 			title: t('sys.menu.status'),
 			dataIndex: 'status',
+			ellipsis: true,
 			hideInSearch: true,
 			render: (_, record) => (
 				<Switch
