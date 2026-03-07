@@ -28,8 +28,8 @@ const getIcon = (icon: string) => {
 
 const getRouters = (menus: any[]) => {
 	const routers = [{
-		name: 'menu.home',
-		title: 'menu.home',
+		name: 'home',
+		title: 'home',
 		path: '/home',
 		icon: <HomeOutlined/>
 	}]
@@ -113,17 +113,19 @@ export async function getInitialState(): Promise<{
 	};
 }
 
+// @ts-ignore
 export const layout: RunTimeLayoutConfig  = ({ initialState }: any) => {
 	return {
 		// 浏览器 Tab 标题（可国际化）
+		// eslint-disable-next-line @typescript-eslint/no-use-before-define
 		title: t('app.title'),
-
+		locale: true,
 		// 面包屑配置
 		headerContentRender: () => <ProBreadcrumb />,
 		logo: '/logo.png',
 		menu: {
-			locale: false,
-			params: initialState?.username,
+			// eslint-disable-next-line @typescript-eslint/no-var-requires
+			params: `${initialState?.username || ''}__${require('@@/exports').getLocale?.() || 'zh-CN'}`,
 			request: async () => {
 				const result = await listUserTreeMenu({code: 0}).catch(console.log);
 				return getRouters(result?.data)
@@ -139,7 +141,7 @@ export const layout: RunTimeLayoutConfig  = ({ initialState }: any) => {
 		siderMenuType: "sub",
 		actionsRender: () => {
 			// Ant Design Pro 风格的语言切换组件（来自 umi plugin-locale）
-			return [<SelectLang key="SelectLang" reload={true} />];
+			return [<SelectLang key="SelectLang" reload={false} />];
 		},
 		avatarProps: {
 			src: initialState?.avatar,
@@ -153,6 +155,7 @@ export const layout: RunTimeLayoutConfig  = ({ initialState }: any) => {
 								{
 									key: 'logout',
 									icon: <LogoutOutlined/>,
+									// eslint-disable-next-line @typescript-eslint/no-use-before-define
 									label: t('user.logout'),
 									onClick: async () => {
 										if (refreshTimeoutRef) {
