@@ -1,5 +1,5 @@
-import {DrawerForm, ProFormText} from '@ant-design/pro-components';
-import React from "react";
+import { DrawerForm, ProFormText } from '@ant-design/pro-components';
+import React from 'react';
 
 interface NoticeLogDrawerProps {
 	modalVisit: boolean;
@@ -18,8 +18,12 @@ type TableColumns = {
 	createTime: string | undefined;
 };
 
-export const NoticeLogDrawer: React.FC<NoticeLogDrawerProps> = ({ modalVisit, setModalVisit, dataSource, getStatus }) => {
-
+export const NoticeLogDrawer: React.FC<NoticeLogDrawerProps> = ({
+	modalVisit,
+	setModalVisit,
+	dataSource,
+	getStatus,
+}) => {
 	return (
 		<DrawerForm<TableColumns>
 			open={modalVisit}
@@ -27,7 +31,7 @@ export const NoticeLogDrawer: React.FC<NoticeLogDrawerProps> = ({ modalVisit, se
 			drawerProps={{
 				destroyOnClose: true,
 				closable: true,
-				maskClosable: true
+				maskClosable: true,
 			}}
 			initialValues={dataSource}
 			onOpenChange={setModalVisit}
@@ -36,7 +40,7 @@ export const NoticeLogDrawer: React.FC<NoticeLogDrawerProps> = ({ modalVisit, se
 					style: {
 						display: 'none',
 					},
-				}
+				},
 			}}
 		>
 			<ProFormText
@@ -59,7 +63,7 @@ export const NoticeLogDrawer: React.FC<NoticeLogDrawerProps> = ({ modalVisit, se
 				label="通知状态"
 				rules={[{ required: true, message: '请输入通知状态' }]}
 				convertValue={(value) => {
-					return getStatus(value as string)
+					return getStatus(value as string);
 				}}
 			/>
 
@@ -83,7 +87,6 @@ export const NoticeLogDrawer: React.FC<NoticeLogDrawerProps> = ({ modalVisit, se
 				label="创建时间"
 				rules={[{ required: true, message: '请输入创建时间' }]}
 			/>
-
 		</DrawerForm>
 	);
 };

@@ -21,7 +21,7 @@ export default [
 		title: 'menu.home',
 		path: '/home',
 		component: './Home',
-		icon: 'home'
+		icon: 'home',
 	},
 	{
 		name: 'menu.login',
@@ -45,27 +45,27 @@ export default [
 						name: 'menu.sys.permission.menu',
 						title: 'menu.sys.permission.menu',
 						path: '/sys/permission/menu',
-						component: './Sys/Permission/menu'
+						component: './Sys/Permission/menu',
 					},
 					{
 						name: 'menu.sys.permission.dept',
 						title: 'menu.sys.permission.dept',
 						path: '/sys/permission/dept',
-						component: './Sys/Permission/dept'
+						component: './Sys/Permission/dept',
 					},
 					{
 						name: 'menu.sys.permission.role',
 						title: 'menu.sys.permission.role',
 						path: '/sys/permission/role',
-						component: './Sys/Permission/role'
+						component: './Sys/Permission/role',
 					},
 					{
 						name: 'menu.sys.permission.user',
 						title: 'menu.sys.permission.user',
 						path: '/sys/permission/user',
-						component: './Sys/Permission/user'
+						component: './Sys/Permission/user',
 					},
-				]
+				],
 			},
 			{
 				name: 'menu.sys.log',
@@ -76,21 +76,21 @@ export default [
 						name: 'menu.sys.log.login',
 						title: 'menu.sys.log.login',
 						path: '/sys/log/login',
-						component: './Sys/Log/login'
+						component: './Sys/Log/login',
 					},
 					{
 						name: 'menu.sys.log.notice',
 						title: 'menu.sys.log.notice',
 						path: '/sys/log/notice',
-						component: './Sys/Log/notice'
+						component: './Sys/Log/notice',
 					},
 					{
 						name: 'menu.sys.log.operate',
 						title: 'menu.sys.log.operate',
 						path: '/sys/log/operate',
-						component: './Sys/Log/operate'
-					}
-				]
+						component: './Sys/Log/operate',
+					},
+				],
 			},
 			{
 				name: 'menu.sys.oss',
@@ -101,15 +101,15 @@ export default [
 						name: 'menu.sys.oss.config',
 						title: 'menu.sys.oss.config',
 						path: '/sys/oss/config',
-						component: './Sys/Oss/config'
+						component: './Sys/Oss/config',
 					},
 					{
 						name: 'menu.sys.oss.log',
 						title: 'menu.sys.oss.log',
 						path: '/sys/oss/log',
-						component: './Sys/Oss/log'
-					}
-				]
+						component: './Sys/Oss/log',
+					},
+				],
 			},
 			{
 				name: 'menu.sys.config',
@@ -120,11 +120,11 @@ export default [
 						name: 'menu.sys.config.generator',
 						title: 'menu.sys.config.generator',
 						path: '/sys/config/generator',
-						component: './Sys/Config/generator'
-					}
-				]
-			}
-		]
+						component: './Sys/Config/generator',
+					},
+				],
+			},
+		],
 	},
 	{
 		name: 'menu.iot',
@@ -141,16 +141,16 @@ export default [
 						name: 'menu.iot.device.thingModel',
 						title: 'menu.iot.device.thingModel',
 						path: '/iot/device/thingModel',
-						component: './IoT/Device/thingModel'
+						component: './IoT/Device/thingModel',
 					},
 					{
 						name: 'menu.iot.device.productCategory',
 						title: 'menu.iot.device.productCategory',
 						path: '/iot/device/productCategory',
-						component: './IoT/Device/productCategory'
+						component: './IoT/Device/productCategory',
 					},
-				]
-			}
-		]
-	}
+				],
+			},
+		],
+	},
 ];

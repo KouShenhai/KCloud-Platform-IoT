@@ -1,8 +1,11 @@
 /* eslint-disable */
-import {request} from '@umijs/max';
+import { request } from '@umijs/max';
 
 /** 修改字典项 修改字典项 PUT /api/v1/dict-items */
-export async function modifyDictItem(body: API.DictItemModifyCmd, options?: { [key: string]: any }) {
+export async function modifyDictItem(
+	body: API.DictItemModifyCmd,
+	options?: { [key: string]: any },
+) {
 	return request<any>('/api/v1/dict-items', {
 		method: 'PUT',
 		headers: {
@@ -14,7 +17,10 @@ export async function modifyDictItem(body: API.DictItemModifyCmd, options?: { [k
 }
 
 /** 保存字典项 保存字典项 POST /api/v1/dict-items */
-export async function saveDictItem(body: API.DictItemSaveCmd, options?: { [key: string]: any }) {
+export async function saveDictItem(
+	body: API.DictItemSaveCmd,
+	options?: { [key: string]: any },
+) {
 	return request<any>('/api/v1/dict-items', {
 		method: 'POST',
 		headers: {
@@ -26,7 +32,10 @@ export async function saveDictItem(body: API.DictItemSaveCmd, options?: { [key: 
 }
 
 /** 删除字典项 删除字典项 DELETE /api/v1/dict-items */
-export async function removeDictItem(body: number[], options?: { [key: string]: any }) {
+export async function removeDictItem(
+	body: number[],
+	options?: { [key: string]: any },
+) {
 	return request<any>('/api/v1/dict-items', {
 		method: 'DELETE',
 		headers: {
@@ -43,16 +52,19 @@ export async function getDictItemById(
 	params: API.getByIdParams,
 	options?: { [key: string]: any },
 ) {
-	const {id: param0, ...queryParams} = params;
+	const { id: param0, ...queryParams } = params;
 	return request<API.Result>(`/api/v1/dict-items/${param0}`, {
 		method: 'GET',
-		params: {...queryParams},
+		params: { ...queryParams },
 		...(options || {}),
 	});
 }
 
 /** 导出字典项 导出字典项 POST /api/v1/dict-items/export */
-export async function exportDictItem(body: API.DictItemExportCmd, options?: { [key: string]: any }) {
+export async function exportDictItem(
+	body: API.DictItemExportCmd,
+	options?: { [key: string]: any },
+) {
 	return request<any>('/api/v1/dict-items/export', {
 		method: 'POST',
 		headers: {
@@ -64,7 +76,11 @@ export async function exportDictItem(body: API.DictItemExportCmd, options?: { [k
 }
 
 /** 导入字典项 导入字典项 POST /api/v1/dict-items/import */
-export async function importDictItem(body: {}, file?: File[], options?: { [key: string]: any }) {
+export async function importDictItem(
+	body: {},
+	file?: File[],
+	options?: { [key: string]: any },
+) {
 	const formData = new FormData();
 
 	if (file) {
@@ -96,7 +112,10 @@ export async function importDictItem(body: {}, file?: File[], options?: { [key: 
 }
 
 /** 分页查询字典项列表 分页查询字典项列表 POST /api/v1/dict-items/page */
-export async function pageDictItem(body: API.DictItemPageQry, options?: { [key: string]: any }) {
+export async function pageDictItem(
+	body: API.DictItemPageQry,
+	options?: { [key: string]: any },
+) {
 	return request<API.Result>('/api/v1/dict-items/page', {
 		method: 'POST',
 		headers: {

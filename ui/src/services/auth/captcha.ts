@@ -1,5 +1,5 @@
 /* eslint-disable */
-import {request} from '@umijs/max';
+import { request } from '@umijs/max';
 
 /** 根据UUID获取验证码 根据UUID获取验证码 GET /api/v1/captchas/${param0} */
 export async function getCaptchaByUuid(
@@ -7,10 +7,10 @@ export async function getCaptchaByUuid(
 	params: API.CaptchaParams,
 	options?: { [key: string]: any },
 ) {
-	const {uuid: param0, ...queryParams} = params;
+	const { uuid: param0, ...queryParams } = params;
 	return request<API.Result>(`/apis/auth/api/v1/captchas/${param0}`, {
 		method: 'GET',
-		params: {...queryParams},
+		params: { ...queryParams },
 		...(options || {}),
 	});
 }
@@ -25,7 +25,7 @@ export async function sendCaptcha(
 		method: 'POST',
 		headers: {
 			'request-id': requestId,
-			'Content-Type': 'application/json'
+			'Content-Type': 'application/json',
 		},
 		data: body,
 		...(options || {}),

@@ -1,9 +1,8 @@
-import React, {useEffect, useState} from "react";
+import { useEffect, useState } from 'react';
 
 export default () => {
-
 	const [inputMessage, setInputMessage] = useState('');
-	let ws: WebSocket
+	let ws: WebSocket;
 
 	// 初始化 WebSocket
 	useEffect(() => {
@@ -18,7 +17,7 @@ export default () => {
 		// 接收消息
 		ws.onmessage = (event) => {
 			const newMessage = event.data;
-			console.log(newMessage)
+			console.log(newMessage);
 		};
 
 		// 监听错误

@@ -1,11 +1,9 @@
-import type {ProColumns} from '@ant-design/pro-components';
-import {ProTable} from '@ant-design/pro-components';
-import {pageOssLog} from "@/services/admin/ossLog";
-import {useRef} from "react";
-import {Space, Tag} from "antd";
+import { pageOssLog } from '@/services/admin/ossLog';
+import type { ProColumns } from '@ant-design/pro-components';
+import { ProTable } from '@ant-design/pro-components';
+import { useRef } from 'react';
 
 export default () => {
-
 	type TableColumns = {
 		id: number | undefined;
 		databaseName: string;
@@ -25,16 +23,20 @@ export default () => {
 	const actionRef = useRef();
 
 	const getPageQueryParam = (params: any) => {
-		return  {
+		return {
 			pageSize: params?.pageSize,
 			pageNum: params?.current,
 			pageIndex: params?.pageSize * (params?.current - 1),
 			params: {
-				startTime: params?.startDate ? `${params.startDate} 00:00:00` : undefined,
-				endTime: params?.endDate ? `${params.endDate} 23:59:59` : undefined
-			}
-		}
-	}
+				startTime: params?.startDate
+					? `${params.startDate} 00:00:00`
+					: undefined,
+				endTime: params?.endDate
+					? `${params.endDate} 23:59:59`
+					: undefined,
+			},
+		};
+	};
 
 	const columns: ProColumns<TableColumns>[] = [
 		{
@@ -50,7 +52,7 @@ export default () => {
 			valueType: 'dateTime',
 			hideInSearch: true,
 			width: 160,
-			ellipsis: true
+			ellipsis: true,
 		},
 		{
 			title: '创建日期',
@@ -67,8 +69,8 @@ export default () => {
 						endDate: value[1],
 					};
 				},
-			}
-		}
+			},
+		},
 	];
 
 	return (
@@ -77,19 +79,19 @@ export default () => {
 			columns={columns}
 			request={async (params) => {
 				// 表单搜索项会从 params 传入，传递给后端接口。
-				return pageOssLog(getPageQueryParam(params)).then(res => {
+				return pageOssLog(getPageQueryParam(params)).then((res) => {
 					return Promise.resolve({
 						data: res?.data?.records,
 						total: parseInt(res?.data?.total || 0),
 						success: true,
 					});
-				})
+				});
 			}}
 			rowKey="id"
 			pagination={{
 				showQuickJumper: true,
 				showSizeChanger: false,
-				pageSize: 10
+				pageSize: 10,
 			}}
 			search={{
 				layout: 'vertical',

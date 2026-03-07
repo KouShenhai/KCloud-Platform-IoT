@@ -1,7 +1,11 @@
-import {DrawerForm, ProFormSelect, ProFormText} from '@ant-design/pro-components';
+import { modifyUserAuthority } from '@/services/admin/user';
+import {
+	DrawerForm,
+	ProFormSelect,
+	ProFormText,
+} from '@ant-design/pro-components';
 import { message } from 'antd';
-import {modifyUserAuthority} from '@/services/admin/user';
-import React, {useState} from "react";
+import React, { useState } from 'react';
 
 interface UserAuthorityProps {
 	modalModifyAuthorityVisit: boolean;
@@ -9,7 +13,7 @@ interface UserAuthorityProps {
 	title: string;
 	dataSource: TableColumns;
 	onComponent: () => void;
-	roleList: any[]
+	roleList: any[];
 }
 
 type TableColumns = {
@@ -19,11 +23,15 @@ type TableColumns = {
 	roleIds: string[];
 };
 
-
-
-export const UserModifyAuthorityDrawer: React.FC<UserAuthorityProps> = ({ modalModifyAuthorityVisit, setModalModifyAuthorityVisit, title, dataSource, onComponent, roleList }) => {
-
-	const [loading, setLoading] = useState(false)
+export const UserModifyAuthorityDrawer: React.FC<UserAuthorityProps> = ({
+	modalModifyAuthorityVisit,
+	setModalModifyAuthorityVisit,
+	title,
+	dataSource,
+	onComponent,
+	roleList,
+}) => {
+	const [loading, setLoading] = useState(false);
 
 	return (
 		<DrawerForm<TableColumns>
@@ -32,7 +40,7 @@ export const UserModifyAuthorityDrawer: React.FC<UserAuthorityProps> = ({ modalM
 			drawerProps={{
 				destroyOnClose: true,
 				closable: true,
-				maskClosable: true
+				maskClosable: true,
 			}}
 			initialValues={dataSource}
 			onOpenChange={setModalModifyAuthorityVisit}
@@ -43,26 +51,28 @@ export const UserModifyAuthorityDrawer: React.FC<UserAuthorityProps> = ({ modalM
 					style: {
 						display: 'inline-block',
 					},
-				}
+				},
 			}}
-			onFinish={ async (value) => {
-				setLoading(true)
+			onFinish={async (value) => {
+				setLoading(true);
 				const co = {
 					id: value?.id,
 					deptId: value?.deptId,
 					roleIds: value?.roleIds,
-				}
-				modifyUserAuthority({co: co}).then(res => {
-					if (res.code === 'OK') {
-						message.success("分配权限成功").then()
-						setModalModifyAuthorityVisit(false)
-						onComponent();
-					}
-				}).finally(() => {
-					setLoading(false)
-				})
-			}}>
-
+				};
+				modifyUserAuthority({ co: co })
+					.then((res) => {
+						if (res.code === 'OK') {
+							message.success('分配权限成功').then();
+							setModalModifyAuthorityVisit(false);
+							onComponent();
+						}
+					})
+					.finally(() => {
+						setLoading(false);
+					});
+			}}
+		>
 			<ProFormText
 				disabled={loading}
 				name="id"
@@ -73,7 +83,7 @@ export const UserModifyAuthorityDrawer: React.FC<UserAuthorityProps> = ({ modalM
 			<ProFormText
 				name="username"
 				label="用户名"
-				tooltip={"用户名【不允许重复，不允许修改】"}
+				tooltip={'用户名【不允许重复，不允许修改】'}
 				disabled={true}
 				placeholder={'请输入用户名'}
 				rules={[{ required: true, message: '请输入用户名' }]}
@@ -95,7 +105,6 @@ export const UserModifyAuthorityDrawer: React.FC<UserAuthorityProps> = ({ modalM
 					},
 				}}
 			/>
-
 		</DrawerForm>
 	);
 };

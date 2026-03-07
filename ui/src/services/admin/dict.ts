@@ -1,8 +1,11 @@
 /* eslint-disable */
-import {request} from '@umijs/max';
+import { request } from '@umijs/max';
 
 /** 修改字典 修改字典 PUT /api/v1/dicts */
-export async function modifyDict(body: API.DictModifyCmd, options?: { [key: string]: any }) {
+export async function modifyDict(
+	body: API.DictModifyCmd,
+	options?: { [key: string]: any },
+) {
 	return request<any>('/api/v1/dicts', {
 		method: 'PUT',
 		headers: {
@@ -14,7 +17,10 @@ export async function modifyDict(body: API.DictModifyCmd, options?: { [key: stri
 }
 
 /** 保存字典 保存字典 POST /api/v1/dicts */
-export async function saveDict(body: API.DictSaveCmd, options?: { [key: string]: any }) {
+export async function saveDict(
+	body: API.DictSaveCmd,
+	options?: { [key: string]: any },
+) {
 	return request<any>('/api/v1/dicts', {
 		method: 'POST',
 		headers: {
@@ -26,7 +32,10 @@ export async function saveDict(body: API.DictSaveCmd, options?: { [key: string]:
 }
 
 /** 删除字典 删除字典 DELETE /api/v1/dicts */
-export async function removeDict(body: number[], options?: { [key: string]: any }) {
+export async function removeDict(
+	body: number[],
+	options?: { [key: string]: any },
+) {
 	return request<any>('/api/v1/dicts', {
 		method: 'DELETE',
 		headers: {
@@ -43,16 +52,19 @@ export async function getDictById(
 	params: API.getByIdParams,
 	options?: { [key: string]: any },
 ) {
-	const {id: param0, ...queryParams} = params;
+	const { id: param0, ...queryParams } = params;
 	return request<API.Result>(`/api/v1/dicts/${param0}`, {
 		method: 'GET',
-		params: {...queryParams},
+		params: { ...queryParams },
 		...(options || {}),
 	});
 }
 
 /** 导出字典 导出字典 POST /api/v1/dicts/export */
-export async function exportDict(body: API.DictExportCmd, options?: { [key: string]: any }) {
+export async function exportDict(
+	body: API.DictExportCmd,
+	options?: { [key: string]: any },
+) {
 	return request<any>('/api/v1/dicts/export', {
 		method: 'POST',
 		headers: {
@@ -64,7 +76,11 @@ export async function exportDict(body: API.DictExportCmd, options?: { [key: stri
 }
 
 /** 导入字典 导入字典 POST /api/v1/dicts/import */
-export async function importDict(body: {}, file?: File[], options?: { [key: string]: any }) {
+export async function importDict(
+	body: {},
+	file?: File[],
+	options?: { [key: string]: any },
+) {
 	const formData = new FormData();
 
 	if (file) {
@@ -96,7 +112,10 @@ export async function importDict(body: {}, file?: File[], options?: { [key: stri
 }
 
 /** 分页查询字典列表 分页查询字典列表 POST /api/v1/dicts/page */
-export async function pageDict(body: API.DictPageQry, options?: { [key: string]: any }) {
+export async function pageDict(
+	body: API.DictPageQry,
+	options?: { [key: string]: any },
+) {
 	return request<API.Result>('/api/v1/dicts/page', {
 		method: 'POST',
 		headers: {

@@ -2,38 +2,51 @@
 
 // 全局初始化数据配置，用于 Layout 用户信息和权限初始化
 // 更多信息见文档：https://umijs.org/docs/api/runtime-config#getinitialstate
-import {Dropdown, message, theme} from "antd";
-import {history, SelectLang} from "@@/exports";
-import {HomeOutlined, LogoutOutlined, RobotOutlined, SettingOutlined} from "@ant-design/icons";
-import {ReactElement, ReactNode, ReactPortal} from "react";
-import {logout, refresh} from '@/services/auth/auth';
-import {clearToken, getAccessToken, getExpireTime, getRefreshToken, setToken} from '@/access';
-import React from "react";
-import {RunTimeLayoutConfig} from "@@/plugin-layout/types";
-import {getUserProfile} from "@/services/admin/user";
-import {listUserTreeMenu} from "@/services/admin/menu";
-import {ProBreadcrumb} from "@ant-design/pro-layout";
+import {
+	clearToken,
+	getAccessToken,
+	getExpireTime,
+	getRefreshToken,
+	setToken,
+} from '@/access';
+import { listUserTreeMenu } from '@/services/admin/menu';
+import { getUserProfile } from '@/services/admin/user';
+import { logout, refresh } from '@/services/auth/auth';
+import { history, SelectLang } from '@@/exports';
+import { RunTimeLayoutConfig } from '@@/plugin-layout/types';
+import {
+	HomeOutlined,
+	LogoutOutlined,
+	RobotOutlined,
+	SettingOutlined,
+} from '@ant-design/icons';
+import { ProBreadcrumb } from '@ant-design/pro-layout';
+import { Dropdown, message, theme } from 'antd';
+import { ReactElement, ReactNode, ReactPortal } from 'react';
 
-let refreshTokenFlag = false
+let refreshTokenFlag = false;
 
 let refreshTimeoutRef: any = null;
 
 const getIcon = (icon: string) => {
 	switch (icon) {
-		case 'SettingOutlined': return <SettingOutlined/>
-		case 'RobotOutlined': return <RobotOutlined/>
-		default: return <SettingOutlined/>
+		case 'SettingOutlined':
+			return <SettingOutlined />;
+		case 'RobotOutlined':
+			return <RobotOutlined />;
+		default:
+			return <SettingOutlined />;
 	}
-}
+};
 
 const mapMenuTreeI18n = (menus: any[]): any[] => {
 	if (!Array.isArray(menus) || menus.length === 0) {
 		return [];
 	}
 	return menus.map((item: any) => {
-		const next: any = {...item};
+		const next: any = { ...item };
 
-		next.name = t(next.name)
+		next.name = t(next.name);
 
 		// icon 兼容：后端可能传 string，也可能已经是 ReactNode
 		if (typeof next.icon === 'string') {
@@ -52,40 +65,47 @@ const mapMenuTreeI18n = (menus: any[]): any[] => {
 };
 
 const getRouters = (menus: any[]) => {
-	const routers: any[] = [{
-		name: 'home',
-		title: 'home',
-		path: '/home',
-		icon: <HomeOutlined/>
-	}]
+	const routers: any[] = [
+		{
+			name: t('menu.home'),
+			path: '/home',
+			icon: <HomeOutlined />,
+		},
+	];
 	if (menus.length > 0) {
 		routers.push(...mapMenuTreeI18n(menus));
 	}
-	return routers
-}
+	return routers;
+};
 
-const refreshToken =  async (refreshToken: string | null) => {
+const refreshToken = async (refreshToken: string | null) => {
 	if (refreshToken && !refreshTokenFlag) {
 		// console.log('开始刷新令牌')
 		refreshTokenFlag = true;
 		// 刷新令牌
-		refresh({refresh_token: refreshToken, grant_type: 'refresh_token'}).then((res) => {
-			if (res.code === 'OK') {
-				// console.log('刷新令牌成功')
-				// 清除令牌
-				clearToken()
-				// 存储令牌
-				setToken(res.data?.access_token, res.data?.refresh_token, res.data?.expires_in * 1000 + new Date().getTime());
-				// 定时刷新令牌
-				// eslint-disable-next-line @typescript-eslint/no-use-before-define
-				scheduleRefreshToken().catch(console.log)
-			}
-		}).finally(() => {
-			refreshTokenFlag = false
-			// console.log('刷新令牌结束')
-		});
+		refresh({ refresh_token: refreshToken, grant_type: 'refresh_token' })
+			.then((res) => {
+				if (res.code === 'OK') {
+					// console.log('刷新令牌成功')
+					// 清除令牌
+					clearToken();
+					// 存储令牌
+					setToken(
+						res.data?.access_token,
+						res.data?.refresh_token,
+						res.data?.expires_in * 1000 + new Date().getTime(),
+					);
+					// 定时刷新令牌
+					// eslint-disable-next-line @typescript-eslint/no-use-before-define
+					scheduleRefreshToken().catch(console.log);
+				}
+			})
+			.finally(() => {
+				refreshTokenFlag = false;
+				// console.log('刷新令牌结束')
+			});
 	}
-}
+};
 
 const calculateRefreshTime = (expireTime: number) => {
 	const nowTime = Date.now();
@@ -102,7 +122,7 @@ const calculateRefreshTime = (expireTime: number) => {
 
 	// 如果已经过了刷新时间，立即刷新
 	return Math.max(0, refreshTime);
-}
+};
 
 const scheduleRefreshToken = async () => {
 	if (refreshTimeoutRef) {
@@ -112,9 +132,9 @@ const scheduleRefreshToken = async () => {
 	const refreshTime = calculateRefreshTime(getExpireTime());
 
 	refreshTimeoutRef = setTimeout(async () => {
-		refreshToken(getRefreshToken()).then()
+		refreshToken(getRefreshToken()).then();
 	}, refreshTime);
-}
+};
 
 scheduleRefreshToken().catch(console.log);
 
@@ -122,8 +142,8 @@ export async function getInitialState(): Promise<{
 	id: bigint;
 	username: string;
 	avatar: string;
-	permissions: string[]
-	scopes: string[]
+	permissions: string[];
+	scopes: string[];
 }> {
 	const result = await getUserProfile().catch(console.log);
 	return {
@@ -136,31 +156,35 @@ export async function getInitialState(): Promise<{
 }
 
 // @ts-ignore
-export const layout: RunTimeLayoutConfig  = ({ initialState }: any) => {
+export const layout: RunTimeLayoutConfig = ({ initialState }: any) => {
 	return {
 		// 浏览器 Tab 标题（可国际化）
 		// eslint-disable-next-line @typescript-eslint/no-use-before-define
 		title: t('app.title'),
-		locale: true,
 		// 面包屑配置
 		headerContentRender: () => <ProBreadcrumb />,
 		logo: '/logo.png',
 		menu: {
+			locale: false,
 			// eslint-disable-next-line @typescript-eslint/no-var-requires
-			params: `${initialState?.username || ''}__${require('@@/exports').getLocale?.() || 'zh-CN'}`,
+			params: `${initialState?.username || ''}__${
+				require('@@/exports').getLocale?.() || 'zh-CN'
+			}`,
 			request: async () => {
-				const result = await listUserTreeMenu({code: 0}).catch(console.log);
-				return getRouters(result?.data)
-			}
+				const result = await listUserTreeMenu({ code: 0 }).catch(
+					console.log,
+				);
+				return getRouters(result?.data);
+			},
 		},
 		layout: 'mix',
 		splitMenus: false,
 		fixSiderbar: true,
-		navTheme: "light",
-		contentWidth: "Fluid",
-		colorPrimary: "#1677ff",
+		navTheme: 'light',
+		contentWidth: 'Fluid',
+		colorPrimary: '#1677ff',
 		fixedHeader: true,
-		siderMenuType: "sub",
+		siderMenuType: 'sub',
 		actionsRender: () => {
 			// Ant Design Pro 风格的语言切换组件（来自 umi plugin-locale）
 			return [<SelectLang key="SelectLang" reload={false} />];
@@ -169,14 +193,25 @@ export const layout: RunTimeLayoutConfig  = ({ initialState }: any) => {
 			src: initialState?.avatar,
 			size: 'small',
 			title: initialState?.username,
-			render: (_props: any, dom: string | number | boolean | ReactElement | Iterable<ReactNode> | ReactPortal | null | undefined) => {
+			render: (
+				_props: any,
+				dom:
+					| string
+					| number
+					| boolean
+					| ReactElement
+					| Iterable<ReactNode>
+					| ReactPortal
+					| null
+					| undefined,
+			) => {
 				return (
 					<Dropdown
 						menu={{
 							items: [
 								{
 									key: 'logout',
-									icon: <LogoutOutlined/>,
+									icon: <LogoutOutlined />,
 									// eslint-disable-next-line @typescript-eslint/no-use-before-define
 									label: t('user.logout'),
 									onClick: async () => {
@@ -184,9 +219,11 @@ export const layout: RunTimeLayoutConfig  = ({ initialState }: any) => {
 											clearTimeout(refreshTimeoutRef);
 										}
 										// @ts-ignore
-										logout({token: getAccessToken()}).finally(() => {
-											history.push('/login')
-										})
+										logout({
+											token: getAccessToken(),
+										}).finally(() => {
+											history.push('/login');
+										});
 									},
 								},
 							],
@@ -195,7 +232,7 @@ export const layout: RunTimeLayoutConfig  = ({ initialState }: any) => {
 						{dom}
 					</Dropdown>
 				);
-			}
+			},
 		},
 		token: {
 			// bgLayout: 'rgb(16 18 26)', // layout 的背景颜色
@@ -242,47 +279,60 @@ const t = (id: string, values?: Record<string, any>) => {
 	// 新写法：在非 React 组件/Hook 环境下（如 request errorHandler）使用 getIntl()
 	// getIntl 来自 umi plugin-locale（@@/exports 导出）
 	// eslint-disable-next-line @typescript-eslint/no-var-requires
-	const {getIntl} = require('@@/exports');
-	return getIntl().formatMessage({id}, values);
+	const { getIntl } = require('@@/exports');
+	return getIntl().formatMessage({ id }, values);
 };
 
 export const request: {
 	responseInterceptors: ((response: any) => any)[];
 	requestInterceptors: (((config: any) => any) | ((error: any) => any))[];
 	timeout: number;
-	errorConfig: { errorThrower(): void; errorHandler(error: any): void }
+	errorConfig: { errorThrower(): void; errorHandler(error: any): void };
 } = {
 	timeout: 60000,
 	// other axios options you want
-		errorConfig: {
+	errorConfig: {
 		errorHandler(error: any) {
-			const {request, response, code} = error;
+			const { request, response, code } = error;
 			let errorMessage;
-			if (response && response.data && response.data.error_description !== undefined) {
-				errorMessage = response.data.error_description
+			if (
+				response &&
+				response.data &&
+				response.data.error_description !== undefined
+			) {
+				errorMessage = response.data.error_description;
 			}
 			if (response && response.status === 500) {
-				errorMessage = t('error.serverInternal')
+				errorMessage = t('error.serverInternal');
 			}
 			if (code === 'ERR_BAD_RESPONSE') {
-				errorMessage = t('error.network')
+				errorMessage = t('error.network');
 			}
-			if (response && response.status === 400 && response.data.error === "invalid_grant") {
-				errorMessage = t('error.refreshTokenFailed')
+			if (
+				response &&
+				response.status === 400 &&
+				response.data.error === 'invalid_grant'
+			) {
+				errorMessage = t('error.refreshTokenFailed');
 			}
 			if (response && response.status === 404) {
-				errorMessage = t('error.resourceNotFound', {url: request?.responseURL})
+				errorMessage = t('error.resourceNotFound', {
+					url: request?.responseURL,
+				});
 			}
-			if (response && response.status === 401 && response.data.error === "invalid_client") {
-				errorMessage = t('error.invalidClient')
+			if (
+				response &&
+				response.status === 401 &&
+				response.data.error === 'invalid_client'
+			) {
+				errorMessage = t('error.invalidClient');
 			}
 			message.error(errorMessage).then();
 		},
-		errorThrower() {
-		},
+		errorThrower() {},
 	},
 	// 请求拦截
-		requestInterceptors: [
+	requestInterceptors: [
 		async (config: any) => {
 			const headers = config.headers ? config.headers : [];
 			// 国际化：携带语言到后端（优先使用 umi plugin-locale 的 current locale）
@@ -292,9 +342,9 @@ export const request: {
 				// 若后端使用自定义 header，也可以同时带上（按需保留/改名）
 				headers['Language'] = locale;
 			}
-			const accessToken = getAccessToken()
+			const accessToken = getAccessToken();
 			if (!headers['Skip-Token'] && accessToken) {
-				headers['Authorization'] = `Bearer ${accessToken}`
+				headers['Authorization'] = `Bearer ${accessToken}`;
 			}
 			return config;
 		},
@@ -305,20 +355,23 @@ export const request: {
 	// 响应拦截
 	responseInterceptors: [
 		async (response: any) => {
-			const {status, data} = response;
-			if (response.request?.responseType === 'blob' || response.request?.responseType === 'arraybuffer') {
-				if(response.data.type === 'application/json') {
-					const res = await new Response(response.data).json()
+			const { status, data } = response;
+			if (
+				response.request?.responseType === 'blob' ||
+				response.request?.responseType === 'arraybuffer'
+			) {
+				if (response.data.type === 'application/json') {
+					const res = await new Response(response.data).json();
 					message.error(res.msg).then();
 				}
 			}
 			if (status === 200 && data.code === undefined) {
-				response.data = {code: 'OK', msg: '请求成功', data: data};
+				response.data = { code: 'OK', msg: '请求成功', data: data };
 			} else if (status === 200 && data.code !== 'OK') {
-				if (data.code === "Unauthorized") {
+				if (data.code === 'Unauthorized') {
 					history.push('/login');
 				} else {
-					message.error(data.msg).then()
+					message.error(data.msg).then();
 				}
 			}
 			return response;
@@ -326,11 +379,15 @@ export const request: {
 	],
 };
 
-export const antd: (memo: { theme: { algorithm?: any }; appConfig: { message: { maxCount: number } } }) => {
+export const antd: (memo: {
 	theme: { algorithm?: any };
-	appConfig: { message: { maxCount: number } }
+	appConfig: { message: { maxCount: number } };
+}) => {
+	theme: { algorithm?: any };
+	appConfig: { message: { maxCount: number } };
 } = (memo: {
-	theme: { algorithm?: any; }; appConfig: {
+	theme: { algorithm?: any };
+	appConfig: {
 		message: {
 			// 配置 message 最大显示数，超过限制时，最早的消息会被自动关闭
 			maxCount: number;
@@ -344,8 +401,8 @@ export const antd: (memo: { theme: { algorithm?: any }; appConfig: { message: { 
 		message: {
 			// 配置 message 最大显示数，超过限制时，最早的消息会被自动关闭
 			maxCount: 3,
-		}
-	}
+		},
+	};
 
 	return memo;
 };

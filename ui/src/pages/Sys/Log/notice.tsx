@@ -1,20 +1,22 @@
-import {ProColumns} from '@ant-design/pro-components';
-import {ProTable} from '@ant-design/pro-components';
-import {exportNoticeLog, pageNoticeLog, getNoticeLogById} from "@/services/admin/noticeLog";
-import {Button} from "antd";
-import {ExportOutlined} from "@ant-design/icons";
-import {trim} from "@/utils/format";
-import {ExportToExcel} from "@/utils/export";
-import moment from "moment";
-import {useRef, useState} from "react";
-import {NoticeLogDrawer} from "@/pages/Sys/Log/NoticeDrawer";
-import {useAccess} from "@@/exports";
+import { NoticeLogDrawer } from '@/pages/Sys/Log/NoticeDrawer';
+import {
+	exportNoticeLog,
+	getNoticeLogById,
+	pageNoticeLog,
+} from '@/services/admin/noticeLog';
+import { ExportToExcel } from '@/utils/export';
+import { trim } from '@/utils/format';
+import { useAccess } from '@@/exports';
+import { ExportOutlined } from '@ant-design/icons';
+import { ProColumns, ProTable } from '@ant-design/pro-components';
+import { Button } from 'antd';
+import moment from 'moment';
+import { useRef, useState } from 'react';
 
 export default () => {
-
 	const [modalVisit, setModalVisit] = useState(false);
-	const [dataSource, setDataSource] = useState<any>({})
-	const [loading, setLoading] = useState(false)
+	const [dataSource, setDataSource] = useState<any>({});
+	const [loading, setLoading] = useState(false);
 
 	type TableColumns = {
 		id: number;
@@ -26,7 +28,7 @@ export default () => {
 		createTime: string | undefined;
 	};
 
-	const access = useAccess()
+	const access = useAccess();
 	const actionRef = useRef(null);
 	const [list, setList] = useState<TableColumns[]>([]);
 	const [param, setParam] = useState<any>({});
@@ -35,8 +37,8 @@ export default () => {
 		return {
 			'0': '成功',
 			'1': '失败',
-		}[status]
-	}
+		}[status];
+	};
 
 	const getPageQueryParam = (params: any) => {
 		const param = {
@@ -48,13 +50,17 @@ export default () => {
 			status: params?.statusValue,
 			errorMessage: trim(params?.errorMessage),
 			params: {
-				startTime: params?.startDate ? `${params.startDate} 00:00:00` : undefined,
-				endTime: params?.endDate ? `${params.endDate} 23:59:59` : undefined
-			}
-		}
-		setParam(param)
-		return param
-	}
+				startTime: params?.startDate
+					? `${params.startDate} 00:00:00`
+					: undefined,
+				endTime: params?.endDate
+					? `${params.endDate} 23:59:59`
+					: undefined,
+			},
+		};
+		setParam(param);
+		return param;
+	};
 
 	const columns: ProColumns<TableColumns>[] = [
 		{
@@ -70,7 +76,7 @@ export default () => {
 			valueType: 'text',
 			fieldProps: {
 				placeholder: '请输入通知编码',
-			}
+			},
 		},
 		{
 			title: '通知名称',
@@ -79,7 +85,7 @@ export default () => {
 			valueType: 'text',
 			fieldProps: {
 				placeholder: '请输入通知名称',
-			}
+			},
 		},
 		{
 			title: '通知状态',
@@ -101,17 +107,17 @@ export default () => {
 						value: '1',
 					},
 				],
-			}
+			},
 		},
 		{
 			title: '通知状态',
 			dataIndex: 'status',
 			hideInSearch: true,
 			valueEnum: {
-				'0': {text: '成功', status: 'Success'},
-				'1': {text: '失败', status: 'Error'},
+				'0': { text: '成功', status: 'Success' },
+				'1': { text: '失败', status: 'Error' },
 			},
-			ellipsis: true
+			ellipsis: true,
 		},
 		{
 			title: '错误信息',
@@ -120,7 +126,7 @@ export default () => {
 			valueType: 'text',
 			fieldProps: {
 				placeholder: '请输入错误信息',
-			}
+			},
 		},
 		{
 			title: '创建时间',
@@ -129,7 +135,7 @@ export default () => {
 			valueType: 'dateTime',
 			hideInSearch: true,
 			width: 160,
-			ellipsis: true
+			ellipsis: true,
 		},
 		{
 			title: '创建时间',
@@ -146,32 +152,34 @@ export default () => {
 						endDate: value[1],
 					};
 				},
-			}
+			},
 		},
 		{
 			title: '操作',
 			valueType: 'option',
 			key: 'option',
 			render: (_, record) => [
-				( access.canNoticeLogGetDetail && <a key="get"
-				   onClick={() => {
-					   getNoticeLogById({id: record?.id}).then(res => {
-						   if (res.code === 'OK') {
-							   setDataSource(res?.data)
-							   setModalVisit(true)
-						   }
-					   })
-				   }}
-				>
-					查看
-				</a>)
+				access.canNoticeLogGetDetail && (
+					<a
+						key="get"
+						onClick={() => {
+							getNoticeLogById({ id: record?.id }).then((res) => {
+								if (res.code === 'OK') {
+									setDataSource(res?.data);
+									setModalVisit(true);
+								}
+							});
+						}}
+					>
+						查看
+					</a>
+				),
 			],
 		},
 	];
 
 	return (
 		<>
-
 			<NoticeLogDrawer
 				modalVisit={modalVisit}
 				setModalVisit={setModalVisit}
@@ -185,59 +193,91 @@ export default () => {
 				columns={columns}
 				request={async (params) => {
 					// 表单搜索项会从 params 传入，传递给后端接口。
-					const list: TableColumns[] = []
-					return pageNoticeLog(getPageQueryParam(params)).then(res => {
-						res?.data?.records?.forEach((item: TableColumns) => {
-							item.status = item.status as string;
-							list.push(item);
-						});
-						setList(list)
-						return Promise.resolve({
-							data: list,
-							total: parseInt(res?.data?.total || 0),
-							success: true,
-						});
-					})
+					const list: TableColumns[] = [];
+					return pageNoticeLog(getPageQueryParam(params)).then(
+						(res) => {
+							res?.data?.records?.forEach(
+								(item: TableColumns) => {
+									item.status = item.status as string;
+									list.push(item);
+								},
+							);
+							setList(list);
+							return Promise.resolve({
+								data: list,
+								total: parseInt(res?.data?.total || 0),
+								success: true,
+							});
+						},
+					);
 				}}
 				rowKey="id"
 				pagination={{
 					showQuickJumper: true,
 					showSizeChanger: false,
-					pageSize: 10
+					pageSize: 10,
 				}}
 				search={{
 					layout: 'vertical',
 					defaultCollapsed: true,
 				}}
-				toolBarRender={
-					() => [
-						<Button key="export" type="primary" ghost icon={<ExportOutlined/>} onClick={() => {
+				toolBarRender={() => [
+					<Button
+						key="export"
+						type="primary"
+						ghost
+						icon={<ExportOutlined />}
+						onClick={() => {
 							const _list: TableColumns[] = [];
 							// 格式化数据
-							list.forEach(item => {
-								item.status = getStatus(item.status as string)
-								_list.push(item)
-							})
+							list.forEach((item) => {
+								item.status = getStatus(item.status as string);
+								_list.push(item);
+							});
 							ExportToExcel({
 								sheetData: _list,
-								sheetFilter: ["code", "name", "status", "param", "errorMessage", "createTime"],
-								sheetHeader: ["通知编码", "通知名称", "通知状态", "通知参数", "错误信息", "创建时间"],
-								fileName: "通知日志_导出_" + moment(new Date()).format('YYYYMMDDHHmmss'),
-								sheetName: "通知日志"
-							})
-						}}>
-							导出
-						</Button>,
-						( access.canNoticeLogExport && <Button loading={loading} key="exportAll" type="primary" icon={<ExportOutlined/>} onClick={() => {
-							setLoading(true)
-							exportNoticeLog(param).finally(() => {
-								setLoading(false)
-							})
-						}}>
+								sheetFilter: [
+									'code',
+									'name',
+									'status',
+									'param',
+									'errorMessage',
+									'createTime',
+								],
+								sheetHeader: [
+									'通知编码',
+									'通知名称',
+									'通知状态',
+									'通知参数',
+									'错误信息',
+									'创建时间',
+								],
+								fileName:
+									'通知日志_导出_' +
+									moment(new Date()).format('YYYYMMDDHHmmss'),
+								sheetName: '通知日志',
+							});
+						}}
+					>
+						导出
+					</Button>,
+					access.canNoticeLogExport && (
+						<Button
+							loading={loading}
+							key="exportAll"
+							type="primary"
+							icon={<ExportOutlined />}
+							onClick={() => {
+								setLoading(true);
+								exportNoticeLog(param).finally(() => {
+									setLoading(false);
+								});
+							}}
+						>
 							导出全部
-						</Button>)
-					]
-				}
+						</Button>
+					),
+				]}
 				dateFormatter="string"
 				toolbar={{
 					title: '通知日志',

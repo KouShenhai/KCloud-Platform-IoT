@@ -1,7 +1,12 @@
-import {DrawerForm, ProFormSelect, ProFormText, ProFormTreeSelect} from '@ant-design/pro-components';
+import { modifyRoleAuthority } from '@/services/admin/role';
+import {
+	DrawerForm,
+	ProFormSelect,
+	ProFormText,
+	ProFormTreeSelect,
+} from '@ant-design/pro-components';
 import { message } from 'antd';
-import {modifyRoleAuthority} from '@/services/admin/role';
-import React, {useState} from "react";
+import React, { useState } from 'react';
 
 interface RoleAuthorityProps {
 	modalModifyAuthorityVisit: boolean;
@@ -22,11 +27,18 @@ type TableColumns = {
 	deptIds: string[];
 };
 
-
-
-export const RoleModifyAuthorityDrawer: React.FC<RoleAuthorityProps> = ({ modalModifyAuthorityVisit, setModalModifyAuthorityVisit, title, dataSource, onComponent, menuTreeList, deptTreeList, typeValue, setTypeValue }) => {
-
-	const [loading, setLoading] = useState(false)
+export const RoleModifyAuthorityDrawer: React.FC<RoleAuthorityProps> = ({
+	modalModifyAuthorityVisit,
+	setModalModifyAuthorityVisit,
+	title,
+	dataSource,
+	onComponent,
+	menuTreeList,
+	deptTreeList,
+	typeValue,
+	setTypeValue,
+}) => {
+	const [loading, setLoading] = useState(false);
 
 	return (
 		<DrawerForm<TableColumns>
@@ -35,7 +47,7 @@ export const RoleModifyAuthorityDrawer: React.FC<RoleAuthorityProps> = ({ modalM
 			drawerProps={{
 				destroyOnClose: true,
 				closable: true,
-				maskClosable: true
+				maskClosable: true,
 			}}
 			initialValues={dataSource}
 			onOpenChange={setModalModifyAuthorityVisit}
@@ -46,35 +58,41 @@ export const RoleModifyAuthorityDrawer: React.FC<RoleAuthorityProps> = ({ modalM
 					style: {
 						display: 'inline-block',
 					},
-				}
+				},
 			}}
-			onFinish={ async (value) => {
-				setLoading(true)
-				let menuIds: any[] = []
-				let deptIds: any[] = []
+			onFinish={async (value) => {
+				setLoading(true);
+				let menuIds: any[] = [];
+				let deptIds: any[] = [];
 				if (value?.menuIds) {
-					menuIds = value?.menuIds.map((item: any) => item?.value ? item?.value : item)
+					menuIds = value?.menuIds.map((item: any) =>
+						item?.value ? item?.value : item,
+					);
 				}
 				if (value?.deptIds) {
-					deptIds = value?.deptIds.map((item: any) => item?.value ? item?.value : item)
+					deptIds = value?.deptIds.map((item: any) =>
+						item?.value ? item?.value : item,
+					);
 				}
 				const co = {
 					id: value?.id,
 					dataScope: value?.dataScope,
 					deptIds: deptIds,
-					menuIds: menuIds
-				}
-				modifyRoleAuthority({co: co}).then(res => {
-					if (res.code === 'OK') {
-						message.success("分配权限成功").then()
-						setModalModifyAuthorityVisit(false)
-						onComponent();
-					}
-				}).finally(() => {
-					setLoading(false)
-				})
-			}}>
-
+					menuIds: menuIds,
+				};
+				modifyRoleAuthority({ co: co })
+					.then((res) => {
+						if (res.code === 'OK') {
+							message.success('分配权限成功').then();
+							setModalModifyAuthorityVisit(false);
+							onComponent();
+						}
+					})
+					.finally(() => {
+						setLoading(false);
+					});
+			}}
+		>
 			<ProFormText
 				disabled={loading}
 				name="id"
@@ -101,7 +119,7 @@ export const RoleModifyAuthorityDrawer: React.FC<RoleAuthorityProps> = ({ modalM
 					fieldNames: {
 						label: 'name',
 						value: 'id',
-						children: 'children'
+						children: 'children',
 					},
 					// 最多显示多少个 tag，响应式模式会对性能产生损耗
 					maxTagCount: 6,
@@ -120,10 +138,10 @@ export const RoleModifyAuthorityDrawer: React.FC<RoleAuthorityProps> = ({ modalM
 					// 不显示搜索
 					showSearch: false,
 					// 高度
-					listHeight: 640
+					listHeight: 640,
 				}}
 				request={async () => {
-					return menuTreeList
+					return menuTreeList;
 				}}
 			/>
 
@@ -134,14 +152,14 @@ export const RoleModifyAuthorityDrawer: React.FC<RoleAuthorityProps> = ({ modalM
 				placeholder={'请选择数据范围'}
 				rules={[{ required: true, message: '请选择数据范围' }]}
 				onChange={(value: string) => {
-					setTypeValue(value)
+					setTypeValue(value);
 				}}
 				options={[
-					{value: 'all', label: '全部'},
-					{value: 'custom', label: '自定义'},
-					{value: 'self_dept', label: '仅本部门'},
-					{value: 'below_dept', label: '部门及以下'},
-					{value: 'self', label: '仅本人'},
+					{ value: 'all', label: '全部' },
+					{ value: 'custom', label: '自定义' },
+					{ value: 'self_dept', label: '仅本部门' },
+					{ value: 'below_dept', label: '部门及以下' },
+					{ value: 'self', label: '仅本人' },
 				]}
 			/>
 
@@ -157,7 +175,7 @@ export const RoleModifyAuthorityDrawer: React.FC<RoleAuthorityProps> = ({ modalM
 						fieldNames: {
 							label: 'name',
 							value: 'id',
-							children: 'children'
+							children: 'children',
 						},
 						// 最多显示多少个 tag，响应式模式会对性能产生损耗
 						maxTagCount: 6,
@@ -176,14 +194,13 @@ export const RoleModifyAuthorityDrawer: React.FC<RoleAuthorityProps> = ({ modalM
 						// 不显示搜索
 						showSearch: false,
 						// 高度
-						listHeight: 450
+						listHeight: 450,
 					}}
 					request={async () => {
-						return deptTreeList
+						return deptTreeList;
 					}}
 				/>
 			)}
-
 		</DrawerForm>
 	);
 };

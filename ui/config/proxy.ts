@@ -17,7 +17,7 @@ export default {
 			// 微服务代理地址
 			target: 'http://gateway:5555',
 			changeOrigin: true,
-			pathRewrite: {'^/apis': ''}
+			pathRewrite: { '^/apis': '' },
 		},
 	},
 };

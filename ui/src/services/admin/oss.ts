@@ -1,8 +1,11 @@
 /* eslint-disable */
-import {request} from '@umijs/max';
+import { request } from '@umijs/max';
 
 /** 修改OSS 修改OSS PUT /api/v1/oss */
-export async function modifyOss(body: API.OssModifyCmd, options?: { [key: string]: any }) {
+export async function modifyOss(
+	body: API.OssModifyCmd,
+	options?: { [key: string]: any },
+) {
 	return request<any>('/apis/admin/api/v1/oss', {
 		method: 'PUT',
 		headers: {
@@ -14,7 +17,10 @@ export async function modifyOss(body: API.OssModifyCmd, options?: { [key: string
 }
 
 /** 保存OSS 保存OSS POST /api/v1/oss */
-export async function saveOss(body: API.OssSaveCmd, options?: { [key: string]: any }) {
+export async function saveOss(
+	body: API.OssSaveCmd,
+	options?: { [key: string]: any },
+) {
 	return request<any>('/apis/admin/api/v1/oss', {
 		method: 'POST',
 		headers: {
@@ -26,7 +32,10 @@ export async function saveOss(body: API.OssSaveCmd, options?: { [key: string]: a
 }
 
 /** 删除OSS 删除OSS DELETE /api/v1/oss */
-export async function removeOss(body: number[], options?: { [key: string]: any }) {
+export async function removeOss(
+	body: number[],
+	options?: { [key: string]: any },
+) {
 	return request<any>('/apis/admin/api/v1/oss', {
 		method: 'DELETE',
 		headers: {
@@ -43,16 +52,19 @@ export async function getOssById(
 	params: API.getByIdParams,
 	options?: { [key: string]: any },
 ) {
-	const {id: param0, ...queryParams} = params;
+	const { id: param0, ...queryParams } = params;
 	return request<API.Result>(`/apis/admin/api/v1/oss/${param0}`, {
 		method: 'GET',
-		params: {...queryParams},
+		params: { ...queryParams },
 		...(options || {}),
 	});
 }
 
 /** 导出OSS 导出OSS POST /api/v1/oss/export */
-export async function exportOss(body: API.OssExportCmd, options?: { [key: string]: any }) {
+export async function exportOss(
+	body: API.OssExportCmd,
+	options?: { [key: string]: any },
+) {
 	return request<any>('/apis/admin/api/v1/oss/export', {
 		method: 'POST',
 		headers: {
@@ -64,7 +76,11 @@ export async function exportOss(body: API.OssExportCmd, options?: { [key: string
 }
 
 /** 导入OSS 导入OSS POST /api/v1/oss/import */
-export async function importOss(body: {}, file?: File[], options?: { [key: string]: any }) {
+export async function importOss(
+	body: {},
+	file?: File[],
+	options?: { [key: string]: any },
+) {
 	const formData = new FormData();
 
 	if (file) {
@@ -96,7 +112,10 @@ export async function importOss(body: {}, file?: File[], options?: { [key: strin
 }
 
 /** 分页查询OSS列表 分页查询OSS列表 POST /api/v1/oss/page */
-export async function pageOss(body: API.OssPageQry, options?: { [key: string]: any }) {
+export async function pageOss(
+	body: API.OssPageQry,
+	options?: { [key: string]: any },
+) {
 	return request<API.Result>('/apis/admin/api/v1/oss/page', {
 		method: 'POST',
 		headers: {

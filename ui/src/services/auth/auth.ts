@@ -1,9 +1,6 @@
-import {request} from '@umijs/max';
+import { request } from '@umijs/max';
 
-async function getToken(
-	params: any,
-	options?: { [key: string]: any },
-) {
+async function getToken(params: any, options?: { [key: string]: any }) {
 	return request<API.Result>(`/apis/auth/api/v1/oauth2/token`, {
 		method: 'POST',
 		data: params,
@@ -13,9 +10,10 @@ async function getToken(
 				.map((ent) => ent.join('='))
 				.join('&'),
 		headers: {
-			Authorization: 'Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=',
+			Authorization:
+				'Basic OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=',
 			'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-			'Skip-Token' : true
+			'Skip-Token': true,
 		},
 		...(options || {}),
 	});
@@ -27,15 +25,15 @@ export async function login(
 	params: API.OAuth2Param,
 	options?: { [key: string]: any },
 ) {
-	return getToken(params, options)
+	return getToken(params, options);
 }
 
 /** OAuth2 认证授权 POST /oauth2/token */
 export async function refresh(
 	params: API.RefreshTokenParam,
-	options?: { [key: string]: any }
+	options?: { [key: string]: any },
 ) {
-	return getToken(params, options)
+	return getToken(params, options);
 }
 
 /** 清除令牌 清除令牌 DELETE /api/v1/logouts */

@@ -1,8 +1,11 @@
 /* eslint-disable */
-import {request} from '@umijs/max';
+import { request } from '@umijs/max';
 
 /** 修改国际化菜单 修改国际化菜单 PUT /api/v1/i18n-menus */
-export async function modifyI18nMenu(body: API.I18nMenuModifyCmd, options?: { [key: string]: any }) {
+export async function modifyI18nMenu(
+	body: API.I18nMenuModifyCmd,
+	options?: { [key: string]: any },
+) {
 	return request<any>('/api/v1/i18n-menus', {
 		method: 'PUT',
 		headers: {
@@ -14,7 +17,10 @@ export async function modifyI18nMenu(body: API.I18nMenuModifyCmd, options?: { [k
 }
 
 /** 保存国际化菜单 保存国际化菜单 POST /api/v1/i18n-menus */
-export async function saveI18nMenu(body: API.I18nMenuSaveCmd, options?: { [key: string]: any }) {
+export async function saveI18nMenu(
+	body: API.I18nMenuSaveCmd,
+	options?: { [key: string]: any },
+) {
 	return request<any>('/api/v1/i18n-menus', {
 		method: 'POST',
 		headers: {
@@ -26,7 +32,10 @@ export async function saveI18nMenu(body: API.I18nMenuSaveCmd, options?: { [key: 
 }
 
 /** 删除国际化菜单 删除国际化菜单 DELETE /api/v1/i18n-menus */
-export async function removeI18nMenu(body: number[], options?: { [key: string]: any }) {
+export async function removeI18nMenu(
+	body: number[],
+	options?: { [key: string]: any },
+) {
 	return request<any>('/api/v1/i18n-menus', {
 		method: 'DELETE',
 		headers: {
@@ -43,16 +52,19 @@ export async function getI18nMenuById(
 	params: API.getByIdParams,
 	options?: { [key: string]: any },
 ) {
-	const {id: param0, ...queryParams} = params;
+	const { id: param0, ...queryParams } = params;
 	return request<API.Result>(`/api/v1/i18n-menus/${param0}`, {
 		method: 'GET',
-		params: {...queryParams},
+		params: { ...queryParams },
 		...(options || {}),
 	});
 }
 
 /** 导出国际化菜单 导出国际化菜单 POST /api/v1/i18n-menus/export */
-export async function exportI18nMenu(body: API.I18nMenuExportCmd, options?: { [key: string]: any }) {
+export async function exportI18nMenu(
+	body: API.I18nMenuExportCmd,
+	options?: { [key: string]: any },
+) {
 	return request<any>('/api/v1/i18n-menus/export', {
 		method: 'POST',
 		headers: {
@@ -64,7 +76,11 @@ export async function exportI18nMenu(body: API.I18nMenuExportCmd, options?: { [k
 }
 
 /** 导入国际化菜单 导入国际化菜单 POST /api/v1/i18n-menus/import */
-export async function importI18nMenu(body: {}, file?: File[], options?: { [key: string]: any }) {
+export async function importI18nMenu(
+	body: {},
+	file?: File[],
+	options?: { [key: string]: any },
+) {
 	const formData = new FormData();
 
 	if (file) {
@@ -96,7 +112,10 @@ export async function importI18nMenu(body: {}, file?: File[], options?: { [key: 
 }
 
 /** 分页查询国际化菜单列表 分页查询国际化菜单列表 POST /api/v1/i18n-menus/page */
-export async function pageI18nMenu(body: API.I18nMenuPageQry, options?: { [key: string]: any }) {
+export async function pageI18nMenu(
+	body: API.I18nMenuPageQry,
+	options?: { [key: string]: any },
+) {
 	return request<API.Result>('/api/v1/i18n-menus/page', {
 		method: 'POST',
 		headers: {

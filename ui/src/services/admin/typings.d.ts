@@ -215,7 +215,7 @@ declare namespace API {
 		status?: number;
 		operator?: string;
 		errorMessage?: string;
-        costTime?: number;
+		costTime?: number;
 	};
 
 	type OperateLogExportCmd = true;
@@ -267,7 +267,7 @@ declare namespace API {
 	};
 
 	// @ts-ignore
-    type Result = {
+	type Result = {
 		/** 状态编码 */
 		code?: string;
 		/** 响应描述 */
@@ -434,5 +434,4 @@ declare namespace API {
 	type OssLogModifyCmd = {
 		co?: OssLogCO;
 	};
-
 }

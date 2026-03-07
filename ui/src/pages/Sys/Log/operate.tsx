@@ -1,20 +1,22 @@
-import {ProColumns} from '@ant-design/pro-components';
-import {ProTable} from '@ant-design/pro-components';
-import {exportOperateLog, pageOperateLog, getOperateLogById} from "@/services/admin/operateLog";
-import {Button} from "antd";
-import {ExportOutlined} from "@ant-design/icons";
-import {trim} from "@/utils/format";
-import {ExportToExcel} from "@/utils/export";
-import moment from "moment";
-import {useRef, useState} from "react";
-import {OperateLogDrawer} from "@/pages/Sys/Log/OperateDrawer";
-import {useAccess} from "@@/exports";
+import { OperateLogDrawer } from '@/pages/Sys/Log/OperateDrawer';
+import {
+	exportOperateLog,
+	getOperateLogById,
+	pageOperateLog,
+} from '@/services/admin/operateLog';
+import { ExportToExcel } from '@/utils/export';
+import { trim } from '@/utils/format';
+import { useAccess } from '@@/exports';
+import { ExportOutlined } from '@ant-design/icons';
+import { ProColumns, ProTable } from '@ant-design/pro-components';
+import { Button } from 'antd';
+import moment from 'moment';
+import { useRef, useState } from 'react';
 
 export default () => {
-
 	const [modalVisit, setModalVisit] = useState(false);
-	const [dataSource, setDataSource] = useState<any>({})
-	const [loading, setLoading] = useState(false)
+	const [dataSource, setDataSource] = useState<any>({});
+	const [loading, setLoading] = useState(false);
 
 	type TableColumns = {
 		id: number;
@@ -30,7 +32,7 @@ export default () => {
 		costTime: number | string;
 	};
 
-	const access = useAccess()
+	const access = useAccess();
 	const actionRef = useRef();
 	const [list, setList] = useState<TableColumns[]>([]);
 	const [param, setParam] = useState<any>({});
@@ -39,8 +41,8 @@ export default () => {
 		return {
 			'0': '成功',
 			'1': '失败',
-		}[status]
-	}
+		}[status];
+	};
 
 	const getPageQueryParam = (params: any) => {
 		const param = {
@@ -56,13 +58,17 @@ export default () => {
 			profile: trim(params?.profile),
 			errorMessage: trim(params?.errorMessage),
 			params: {
-				startTime: params?.startDate ? `${params.startDate} 00:00:00` : undefined,
-				endTime: params?.endDate ? `${params.endDate} 23:59:59` : undefined
-			}
-		}
-		setParam(param)
-		return param
-	}
+				startTime: params?.startDate
+					? `${params.startDate} 00:00:00`
+					: undefined,
+				endTime: params?.endDate
+					? `${params.endDate} 23:59:59`
+					: undefined,
+			},
+		};
+		setParam(param);
+		return param;
+	};
 
 	const columns: ProColumns<TableColumns>[] = [
 		{
@@ -78,7 +84,7 @@ export default () => {
 			valueType: 'text',
 			fieldProps: {
 				placeholder: '请输入模块名称',
-			}
+			},
 		},
 		{
 			title: '操作名称',
@@ -87,7 +93,7 @@ export default () => {
 			valueType: 'text',
 			fieldProps: {
 				placeholder: '请输入操作名称',
-			}
+			},
 		},
 		{
 			title: '请求类型',
@@ -96,7 +102,7 @@ export default () => {
 			valueType: 'text',
 			fieldProps: {
 				placeholder: '请输入请求类型',
-			}
+			},
 		},
 		{
 			title: '操作人员',
@@ -105,7 +111,7 @@ export default () => {
 			valueType: 'text',
 			fieldProps: {
 				placeholder: '请输入操作人员',
-			}
+			},
 		},
 		{
 			title: 'IP地址',
@@ -114,13 +120,13 @@ export default () => {
 			valueType: 'text',
 			fieldProps: {
 				placeholder: '请输入IP地址',
-			}
+			},
 		},
 		{
 			title: 'IP归属地',
 			dataIndex: 'address',
 			ellipsis: true,
-			hideInSearch: true
+			hideInSearch: true,
 		},
 		{
 			title: '操作状态',
@@ -141,17 +147,17 @@ export default () => {
 					},
 				],
 				placeholder: '请选择操作状态',
-			}
+			},
 		},
 		{
 			title: '操作状态',
 			dataIndex: 'status',
 			hideInSearch: true,
 			valueEnum: {
-				'0': {text: '成功', status: 'Success'},
-				'1': {text: '失败', status: 'Error'},
+				'0': { text: '成功', status: 'Success' },
+				'1': { text: '失败', status: 'Error' },
 			},
-			width: 80
+			width: 80,
 		},
 		{
 			title: '错误信息',
@@ -160,13 +166,13 @@ export default () => {
 			valueType: 'text',
 			fieldProps: {
 				placeholder: '请输入错误信息',
-			}
+			},
 		},
 		{
 			title: '消耗时间(毫秒)',
 			dataIndex: 'costTime',
 			hideInSearch: true,
-			ellipsis: true
+			ellipsis: true,
 		},
 		{
 			title: '创建时间',
@@ -175,7 +181,7 @@ export default () => {
 			valueType: 'dateTime',
 			hideInSearch: true,
 			width: 160,
-			ellipsis: true
+			ellipsis: true,
 		},
 		{
 			title: '创建时间',
@@ -184,7 +190,7 @@ export default () => {
 			hideInTable: true,
 			fieldProps: {
 				placeholder: ['请选择开始时间', '请选择结束时间'],
- 			},
+			},
 			search: {
 				transform: (value) => {
 					return {
@@ -192,25 +198,30 @@ export default () => {
 						endDate: value[1],
 					};
 				},
-			}
+			},
 		},
 		{
 			title: '操作',
 			valueType: 'option',
 			key: 'option',
 			render: (_, record) => [
-				( access.canOperateLogGetDetail && <a key="get"
-				   onClick={() => {
-					   getOperateLogById({id: record?.id}).then(res => {
-						   if (res.code === 'OK') {
-							   setDataSource(res?.data)
-							   setModalVisit(true)
-						   }
-					   })
-				   }}
-				>
-					查看
-				</a>)
+				access.canOperateLogGetDetail && (
+					<a
+						key="get"
+						onClick={() => {
+							getOperateLogById({ id: record?.id }).then(
+								(res) => {
+									if (res.code === 'OK') {
+										setDataSource(res?.data);
+										setModalVisit(true);
+									}
+								},
+							);
+						}}
+					>
+						查看
+					</a>
+				),
 			],
 		},
 	];
@@ -230,59 +241,99 @@ export default () => {
 				columns={columns}
 				request={async (params) => {
 					// 表单搜索项会从 params 传入，传递给后端接口。
-					const list: TableColumns[] = []
-					return pageOperateLog(getPageQueryParam(params)).then(res => {
-						res?.data?.records?.forEach((item: TableColumns) => {
-							item.status = item.status as string;
-							list.push(item);
-						});
-						setList(list)
-						return Promise.resolve({
-							data: list,
-							total: parseInt(res?.data?.total || 0),
-							success: true,
-						});
-					})
+					const list: TableColumns[] = [];
+					return pageOperateLog(getPageQueryParam(params)).then(
+						(res) => {
+							res?.data?.records?.forEach(
+								(item: TableColumns) => {
+									item.status = item.status as string;
+									list.push(item);
+								},
+							);
+							setList(list);
+							return Promise.resolve({
+								data: list,
+								total: parseInt(res?.data?.total || 0),
+								success: true,
+							});
+						},
+					);
 				}}
 				rowKey="id"
 				pagination={{
 					showQuickJumper: true,
 					showSizeChanger: false,
-					pageSize: 10
+					pageSize: 10,
 				}}
 				search={{
 					layout: 'vertical',
 					defaultCollapsed: true,
 				}}
-				toolBarRender={
-					() => [
-						<Button key="export" type="primary" ghost icon={<ExportOutlined/>} onClick={() => {
+				toolBarRender={() => [
+					<Button
+						key="export"
+						type="primary"
+						ghost
+						icon={<ExportOutlined />}
+						onClick={() => {
 							const _list: TableColumns[] = [];
 							// 格式化数据
-							list.forEach(item => {
-								item.status = getStatus(item.status as string)
-								_list.push(item)
-							})
+							list.forEach((item) => {
+								item.status = getStatus(item.status as string);
+								_list.push(item);
+							});
 							ExportToExcel({
 								sheetData: _list,
-								sheetFilter: ["moduleName", "name", "requestType", "operator", "ip", "address", "status", "errorMessage", "costTime", "createTime"],
-								sheetHeader: ["模块名称", "操作名称", "请求类型", "操作人员", "IP地址", "IP归属地", "操作状态", "错误信息", "消耗时间(毫秒)", "创建时间"],
-								fileName: "操作日志_导出_" + moment(new Date()).format('YYYYMMDDHHmmss'),
-								sheetName: "操作日志"
-							})
-						}}>
-							导出
-						</Button>,
-						( access.canOperateLogExport && <Button loading={loading} key="exportAll" type="primary" icon={<ExportOutlined/>} onClick={() => {
-							setLoading(true)
-							exportOperateLog(param).finally(() => {
-								setLoading(false)
-							})
-						}}>
+								sheetFilter: [
+									'moduleName',
+									'name',
+									'requestType',
+									'operator',
+									'ip',
+									'address',
+									'status',
+									'errorMessage',
+									'costTime',
+									'createTime',
+								],
+								sheetHeader: [
+									'模块名称',
+									'操作名称',
+									'请求类型',
+									'操作人员',
+									'IP地址',
+									'IP归属地',
+									'操作状态',
+									'错误信息',
+									'消耗时间(毫秒)',
+									'创建时间',
+								],
+								fileName:
+									'操作日志_导出_' +
+									moment(new Date()).format('YYYYMMDDHHmmss'),
+								sheetName: '操作日志',
+							});
+						}}
+					>
+						导出
+					</Button>,
+					access.canOperateLogExport && (
+						<Button
+							loading={loading}
+							key="exportAll"
+							type="primary"
+							icon={<ExportOutlined />}
+							onClick={() => {
+								setLoading(true);
+								exportOperateLog(param).finally(() => {
+									setLoading(false);
+								});
+							}}
+						>
 							导出全部
-						</Button>)
-					]
-				}
+						</Button>
+					),
+				]}
 				dateFormatter="string"
 				toolbar={{
 					title: '操作日志',

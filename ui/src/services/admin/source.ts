@@ -1,8 +1,11 @@
 /* eslint-disable */
-import {request} from '@umijs/max';
+import { request } from '@umijs/max';
 
 /** 修改数据源 修改数据源 PUT /api/v1/sources */
-export async function modifySource(body: API.SourceModifyCmd, options?: { [key: string]: any }) {
+export async function modifySource(
+	body: API.SourceModifyCmd,
+	options?: { [key: string]: any },
+) {
 	return request<any>('/api/v1/sources', {
 		method: 'PUT',
 		headers: {
@@ -14,7 +17,10 @@ export async function modifySource(body: API.SourceModifyCmd, options?: { [key: 
 }
 
 /** 保存数据源 保存数据源 POST /api/v1/sources */
-export async function saveSource(body: API.SourceSaveCmd, options?: { [key: string]: any }) {
+export async function saveSource(
+	body: API.SourceSaveCmd,
+	options?: { [key: string]: any },
+) {
 	return request<any>('/api/v1/sources', {
 		method: 'POST',
 		headers: {
@@ -26,7 +32,10 @@ export async function saveSource(body: API.SourceSaveCmd, options?: { [key: stri
 }
 
 /** 删除数据源 删除数据源 DELETE /api/v1/sources */
-export async function removeSource(body: number[], options?: { [key: string]: any }) {
+export async function removeSource(
+	body: number[],
+	options?: { [key: string]: any },
+) {
 	return request<any>('/api/v1/sources', {
 		method: 'DELETE',
 		headers: {
@@ -43,16 +52,19 @@ export async function getSourceById(
 	params: API.getByIdParams,
 	options?: { [key: string]: any },
 ) {
-	const {id: param0, ...queryParams} = params;
+	const { id: param0, ...queryParams } = params;
 	return request<API.Result>(`/api/v1/sources/${param0}`, {
 		method: 'GET',
-		params: {...queryParams},
+		params: { ...queryParams },
 		...(options || {}),
 	});
 }
 
 /** 导出数据源 导出数据源 POST /api/v1/sources/export */
-export async function exportSource(body: API.SourceExportCmd, options?: { [key: string]: any }) {
+export async function exportSource(
+	body: API.SourceExportCmd,
+	options?: { [key: string]: any },
+) {
 	return request<any>('/api/v1/sources/export', {
 		method: 'POST',
 		headers: {
@@ -64,7 +76,11 @@ export async function exportSource(body: API.SourceExportCmd, options?: { [key: 
 }
 
 /** 导入数据源 导入数据源 POST /api/v1/sources/import */
-export async function importSource(body: {}, file?: File[], options?: { [key: string]: any }) {
+export async function importSource(
+	body: {},
+	file?: File[],
+	options?: { [key: string]: any },
+) {
 	const formData = new FormData();
 
 	if (file) {
@@ -96,7 +112,10 @@ export async function importSource(body: {}, file?: File[], options?: { [key: st
 }
 
 /** 分页查询数据源列表 分页查询数据源列表 POST /api/v1/sources/page */
-export async function pageSource(body: API.SourcePageQry, options?: { [key: string]: any }) {
+export async function pageSource(
+	body: API.SourcePageQry,
+	options?: { [key: string]: any },
+) {
 	return request<API.Result>('/api/v1/sources/page', {
 		method: 'POST',
 		headers: {

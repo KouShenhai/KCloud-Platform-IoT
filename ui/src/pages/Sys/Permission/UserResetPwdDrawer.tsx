@@ -1,7 +1,7 @@
+import { resetUserPwd } from '@/services/admin/user';
 import { DrawerForm, ProFormText } from '@ant-design/pro-components';
 import { message } from 'antd';
-import { resetUserPwd } from '@/services/admin/user';
-import React, {useState} from "react";
+import React, { useState } from 'react';
 
 interface UserResetPwdDrawerProps {
 	visible: boolean;
@@ -9,9 +9,12 @@ interface UserResetPwdDrawerProps {
 	dataSource: any;
 }
 
-export const UserResetPwdDrawer: React.FC<UserResetPwdDrawerProps> = ({ visible, setVisible, dataSource}) => {
-
-	const [loading, setLoading] = useState(false)
+export const UserResetPwdDrawer: React.FC<UserResetPwdDrawerProps> = ({
+	visible,
+	setVisible,
+	dataSource,
+}) => {
+	const [loading, setLoading] = useState(false);
 
 	return (
 		<DrawerForm
@@ -27,8 +30,8 @@ export const UserResetPwdDrawer: React.FC<UserResetPwdDrawerProps> = ({ visible,
 					style: {
 						display: 'inline-block',
 					},
-					loading: loading
-				}
+					loading: loading,
+				},
 			}}
 			initialValues={dataSource}
 			onOpenChange={setVisible}
@@ -36,31 +39,28 @@ export const UserResetPwdDrawer: React.FC<UserResetPwdDrawerProps> = ({ visible,
 				setLoading(true);
 				const { password, confirmPassword } = value;
 				if (password !== confirmPassword) {
-					message.error("两次密码不一致");
+					message.error('两次密码不一致');
 					return;
 				}
-				resetUserPwd({ id: value?.id, password }).then(res => {
-					if (res.code === 'OK') {
-						message.success("密码重置成功");
-						setVisible(false);
-						return true;
-					}
-				}).finally(() => {
-					setLoading(false);
-				});
+				resetUserPwd({ id: value?.id, password })
+					.then((res) => {
+						if (res.code === 'OK') {
+							message.success('密码重置成功');
+							setVisible(false);
+							return true;
+						}
+					})
+					.finally(() => {
+						setLoading(false);
+					});
 			}}
 		>
-			<ProFormText
-				disabled={loading}
-				name="id"
-				label="ID"
-				hidden
-			/>
+			<ProFormText disabled={loading} name="id" label="ID" hidden />
 
 			<ProFormText
 				name="username"
 				label="用户名"
-				tooltip={"用户名【不允许重复，不允许修改】"}
+				tooltip={'用户名【不允许重复，不允许修改】'}
 				disabled={true}
 				placeholder={'请输入用户名'}
 				rules={[{ required: true, message: '请输入用户名' }]}

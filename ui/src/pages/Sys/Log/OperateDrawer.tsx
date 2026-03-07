@@ -1,6 +1,6 @@
-import {DrawerForm, ProFormText} from '@ant-design/pro-components';
-import {ProFormTextArea} from "@ant-design/pro-form";
-import React from "react";
+import { DrawerForm, ProFormText } from '@ant-design/pro-components';
+import { ProFormTextArea } from '@ant-design/pro-form';
+import React from 'react';
 
 interface OperateLogDrawerProps {
 	modalVisit: boolean;
@@ -32,8 +32,12 @@ type TableColumns = {
 	createTime: string | undefined;
 };
 
-export const OperateLogDrawer: React.FC<OperateLogDrawerProps> = ({ modalVisit, setModalVisit, dataSource, getStatus }) => {
-
+export const OperateLogDrawer: React.FC<OperateLogDrawerProps> = ({
+	modalVisit,
+	setModalVisit,
+	dataSource,
+	getStatus,
+}) => {
 	return (
 		<DrawerForm<TableColumns>
 			open={modalVisit}
@@ -41,7 +45,7 @@ export const OperateLogDrawer: React.FC<OperateLogDrawerProps> = ({ modalVisit, 
 			drawerProps={{
 				destroyOnClose: true,
 				closable: true,
-				maskClosable: true
+				maskClosable: true,
 			}}
 			width={1200}
 			initialValues={dataSource}
@@ -51,9 +55,9 @@ export const OperateLogDrawer: React.FC<OperateLogDrawerProps> = ({ modalVisit, 
 					style: {
 						display: 'none',
 					},
-				}
-			}}>
-
+				},
+			}}
+		>
 			<ProFormText
 				readonly={true}
 				name="name"
@@ -130,7 +134,7 @@ export const OperateLogDrawer: React.FC<OperateLogDrawerProps> = ({ modalVisit, 
 				label="操作状态"
 				rules={[{ required: true, message: '请输入操作状态' }]}
 				convertValue={(value) => {
-					return getStatus(value as string)
+					return getStatus(value as string);
 				}}
 			/>
 
@@ -175,7 +179,6 @@ export const OperateLogDrawer: React.FC<OperateLogDrawerProps> = ({ modalVisit, 
 				label="创建时间"
 				rules={[{ required: true, message: '请输入创建时间' }]}
 			/>
-
 		</DrawerForm>
 	);
 };
