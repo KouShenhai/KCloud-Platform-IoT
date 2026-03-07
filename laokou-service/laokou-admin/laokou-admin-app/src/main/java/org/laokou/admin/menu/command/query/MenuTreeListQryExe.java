@@ -50,9 +50,10 @@ public class MenuTreeListQryExe {
 	public Result<List<MenuTreeCO>> execute(MenuTreeListQry qry) {
 		MenuTreeType menuMenuTreeTypeEnum = MenuTreeType.getByCode(qry.getCode());
 		Assert.notNull(menuMenuTreeTypeEnum, "菜单类型不存在");
+		Long userId = UserUtils.getUserId();
 		return switch (menuMenuTreeTypeEnum) {
-			case USER -> Result.ok(userMenuTree.build(qry, UserUtils.getUserId()).getChildren());
-			case SYSTEM -> Result.ok(systemMenuTree.build(qry, UserUtils.getUserId()).getChildren());
+			case USER -> Result.ok(userMenuTree.build(qry, userId).getChildren());
+			case SYSTEM -> Result.ok(systemMenuTree.build(qry, userId).getChildren());
 		};
 	}
 

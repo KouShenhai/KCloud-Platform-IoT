@@ -33,11 +33,6 @@ import java.time.Instant;
 public class MenuTreeCO extends TreeUtils.TreeNode<MenuTreeCO> {
 
 	/**
-	 * 菜单标题.
-	 */
-	private String title;
-
-	/**
 	 * 菜单路径.
 	 */
 	private String path;

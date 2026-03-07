@@ -26,6 +26,9 @@ import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.LockSupport;
+
 /**
  * 操作类型枚举.
  *
@@ -66,7 +69,8 @@ public enum OperateType {
 		@Override
 		public Object execute(String name, String key, ProceedingJoinPoint point, CacheManager cacheManager) {
 			try {
-				getCache(cacheManager, name).evictIfPresent(key);
+				getCache(cacheManager, name).evict(key);
+				LockSupport.parkNanos(TimeUnit.MILLISECONDS.toNanos(200));
 				return point.proceed();
 			}
 			catch (GlobalException e) {

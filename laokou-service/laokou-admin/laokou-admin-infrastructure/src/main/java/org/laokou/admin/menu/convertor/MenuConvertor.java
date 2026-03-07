@@ -75,7 +75,6 @@ public final class MenuConvertor {
 		MenuTreeCO co = new MenuTreeCO();
 		co.setId(menuDO.getId());
 		co.setName(menuDO.getName());
-		co.setTitle(menuDO.getName());
 		co.setPid(menuDO.getPid());
 		co.setPath(menuDO.getPath());
 		co.setIcon(menuDO.getIcon());

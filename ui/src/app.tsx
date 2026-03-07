@@ -26,18 +26,40 @@ const getIcon = (icon: string) => {
 	}
 }
 
+const mapMenuTreeI18n = (menus: any[]): any[] => {
+	if (!Array.isArray(menus) || menus.length === 0) {
+		return [];
+	}
+	return menus.map((item: any) => {
+		const next: any = {...item};
+
+		next.name = t(next.name)
+
+		// icon 兼容：后端可能传 string，也可能已经是 ReactNode
+		if (typeof next.icon === 'string') {
+			next.icon = getIcon(next.icon);
+		}
+
+		// 递归处理子菜单（常见字段：children / routes）
+		const children = next.children || next.routes;
+		if (Array.isArray(children) && children.length > 0) {
+			next.routes = mapMenuTreeI18n(children);
+			delete next.children; // 统一成 routes，避免 ProLayout 只识别 routes 导致深层不生效
+		}
+
+		return next;
+	});
+};
+
 const getRouters = (menus: any[]) => {
-	const routers = [{
+	const routers: any[] = [{
 		name: 'home',
 		title: 'home',
 		path: '/home',
 		icon: <HomeOutlined/>
 	}]
 	if (menus.length > 0) {
-		menus.forEach((item: any) => {
-			item.icon = getIcon(item.icon)
-			routers.push(item)
-		})
+		routers.push(...mapMenuTreeI18n(menus));
 	}
 	return routers
 }
