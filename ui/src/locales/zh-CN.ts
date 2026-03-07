@@ -47,7 +47,6 @@ export default {
 	'user.avatarFileName': '用户头像.png',
 
 	// auth/role
-	'role.title': '角色',
 	'role.name': '角色名称',
 	'role.sort': '角色排序',
 	'role.dataScope': '数据范围',

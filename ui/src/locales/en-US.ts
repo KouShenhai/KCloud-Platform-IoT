@@ -47,7 +47,6 @@ export default {
 	'user.avatarFileName': 'Avatar.png',
 
 	// auth/role
-	'role.title': 'Roles',
 	'role.name': 'Role Name',
 	'role.sort': 'Role Sort',
 	'role.dataScope': 'Data Scope',
