@@ -7,6 +7,7 @@ import {
 } from '@ant-design/pro-components';
 import { message } from 'antd';
 import React, { useState } from 'react';
+import { useIntl } from '@@/exports';
 
 interface RoleAuthorityProps {
 	modalModifyAuthorityVisit: boolean;
@@ -38,6 +39,10 @@ export const RoleModifyAuthorityDrawer: React.FC<RoleAuthorityProps> = ({
 	typeValue,
 	setTypeValue,
 }) => {
+	const intl = useIntl();
+	const t = (id: string, values?: Record<string, any>) =>
+		intl.formatMessage({ id }, values);
+
 	const [loading, setLoading] = useState(false);
 
 	return (
@@ -83,7 +88,7 @@ export const RoleModifyAuthorityDrawer: React.FC<RoleAuthorityProps> = ({
 				modifyRoleAuthority({ co: co })
 					.then((res) => {
 						if (res.code === 'OK') {
-							message.success('分配权限成功').then();
+							message.success(t('toast.assignSuccess')).then();
 							setModalModifyAuthorityVisit(false);
 							onComponent();
 						}
@@ -102,19 +107,23 @@ export const RoleModifyAuthorityDrawer: React.FC<RoleAuthorityProps> = ({
 
 			<ProFormText
 				name="name"
-				label="角色名称"
+				label={t('role.name')}
 				disabled={true}
-				placeholder={'请输入角色名称'}
-				rules={[{ required: true, message: '请输入角色名称' }]}
+				placeholder={t('role.placeholder.name')}
+				rules={[
+					{ required: true, message: t('role.validate.nameRequired') },
+				]}
 			/>
 
 			<ProFormTreeSelect
 				disabled={loading}
 				name="menuIds"
-				label="菜单权限"
+				label={t('role.menuAuthority')}
 				allowClear={true}
-				placeholder={'请选择菜单权限'}
-				rules={[{ required: true, message: '请选择菜单权限' }]}
+				placeholder={t('role.placeholder.menuAuthority')}
+				rules={[
+					{ required: true, message: t('role.validate.menuAuthorityRequired') },
+				]}
 				fieldProps={{
 					fieldNames: {
 						label: 'name',
@@ -148,18 +157,23 @@ export const RoleModifyAuthorityDrawer: React.FC<RoleAuthorityProps> = ({
 			<ProFormSelect
 				disabled={loading}
 				name="dataScope"
-				label="数据范围"
-				placeholder={'请选择数据范围'}
-				rules={[{ required: true, message: '请选择数据范围' }]}
+				label={t('role.dataScope')}
+				placeholder={t('role.placeholder.dataScope')}
+				rules={[
+					{
+						required: true,
+						message: t('role.validate.dataScopeRequired'),
+					},
+				]}
 				onChange={(value: string) => {
 					setTypeValue(value);
 				}}
 				options={[
-					{ value: 'all', label: '全部' },
-					{ value: 'custom', label: '自定义' },
-					{ value: 'self_dept', label: '仅本部门' },
-					{ value: 'below_dept', label: '部门及以下' },
-					{ value: 'self', label: '仅本人' },
+					{ value: 'all', label: t('role.dataScope.all') },
+					{ value: 'custom', label: t('role.dataScope.custom') },
+					{ value: 'self_dept', label: t('role.dataScope.selfDept') },
+					{ value: 'below_dept', label: t('role.dataScope.belowDept') },
+					{ value: 'self', label: t('role.dataScope.self') },
 				]}
 			/>
 
@@ -167,10 +181,15 @@ export const RoleModifyAuthorityDrawer: React.FC<RoleAuthorityProps> = ({
 				<ProFormTreeSelect
 					disabled={loading}
 					name="deptIds"
-					label="部门权限"
+					label={t('role.deptAuthority')}
 					allowClear={true}
-					placeholder={'请选择部门权限'}
-					rules={[{ required: true, message: '请选择部门权限' }]}
+					placeholder={t('role.placeholder.deptAuthority')}
+					rules={[
+						{
+							required: true,
+							message: t('role.validate.deptAuthorityRequired'),
+						},
+					]}
 					fieldProps={{
 						fieldNames: {
 							label: 'name',

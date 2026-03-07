@@ -8,6 +8,7 @@ import {
 } from '@ant-design/pro-components';
 import { message } from 'antd';
 import React, { useState } from 'react';
+import { useIntl } from '@@/exports';
 import { v7 as uuidV7 } from 'uuid';
 
 interface RoleDrawerProps {
@@ -45,6 +46,10 @@ export const RoleDrawer: React.FC<RoleDrawerProps> = ({
 	requestId,
 	setRequestId,
 }) => {
+	const intl = useIntl();
+	const t = (id: string, values?: Record<string, any>) =>
+		intl.formatMessage({ id }, values);
+
 	const [loading, setLoading] = useState(false);
 
 	return (
@@ -80,7 +85,7 @@ export const RoleDrawer: React.FC<RoleDrawerProps> = ({
 					saveRole({ co: co }, requestId)
 						.then((res) => {
 							if (res.code === 'OK') {
-								message.success('保存成功').then();
+								message.success(t('toast.saveSuccess')).then();
 								setModalVisit(false);
 								onComponent();
 							}
@@ -93,7 +98,7 @@ export const RoleDrawer: React.FC<RoleDrawerProps> = ({
 					modifyRole({ co: co })
 						.then((res) => {
 							if (res.code === 'OK') {
-								message.success('修改成功').then();
+								message.success(t('toast.modifySuccess')).then();
 								setModalVisit(false);
 								onComponent();
 							}
@@ -114,37 +119,46 @@ export const RoleDrawer: React.FC<RoleDrawerProps> = ({
 			<ProFormText
 				disabled={loading}
 				name="name"
-				label="角色名称"
+				label={t('role.name')}
 				readonly={readOnly}
-				placeholder={'请输入角色名称'}
-				rules={[{ required: true, message: '请输入角色名称' }]}
+				placeholder={t('role.placeholder.name')}
+				rules={[
+					{ required: true, message: t('role.validate.nameRequired') },
+				]}
 			/>
 
 			<ProFormDigit
 				disabled={loading}
 				name="sort"
-				label="角色排序"
+				label={t('role.sort')}
 				readonly={readOnly}
-				placeholder={'请输入角色排序'}
+				placeholder={t('role.placeholder.sort')}
 				min={1}
 				max={99999}
-				rules={[{ required: true, message: '请输入角色排序' }]}
+				rules={[
+					{ required: true, message: t('role.validate.sortRequired') },
+				]}
 			/>
 
 			{readOnly && (
 				<ProFormSelect
 					disabled={loading}
 					name="dataScope"
-					label="数据范围"
+					label={t('role.dataScope')}
 					readonly={readOnly}
-					placeholder={'请选择数据范围'}
-					rules={[{ required: true, message: '请选择数据范围' }]}
+					placeholder={t('role.placeholder.dataScope')}
+					rules={[
+						{
+							required: true,
+							message: t('role.validate.dataScopeRequired'),
+						},
+					]}
 					options={[
-						{ value: 'all', label: '全部' },
-						{ value: 'custom', label: '自定义' },
-						{ value: 'dept_self', label: '仅本部门' },
-						{ value: 'dept', label: '部门及以下' },
-						{ value: 'self', label: '仅本人' },
+						{ value: 'all', label: t('role.dataScope.all') },
+						{ value: 'custom', label: t('role.dataScope.custom') },
+						{ value: 'dept_self', label: t('role.dataScope.selfDept') },
+						{ value: 'dept', label: t('role.dataScope.belowDept') },
+						{ value: 'self', label: t('role.dataScope.self') },
 					]}
 				/>
 			)}
@@ -153,11 +167,16 @@ export const RoleDrawer: React.FC<RoleDrawerProps> = ({
 				<ProFormTreeSelect
 					disabled={loading}
 					name="menuIds"
-					label="菜单权限"
+					label={t('role.menuAuthority')}
 					readonly={readOnly}
 					allowClear={true}
-					placeholder={'请选择菜单权限'}
-					rules={[{ required: true, message: '请选择菜单权限' }]}
+					placeholder={t('role.placeholder.menuAuthority')}
+					rules={[
+						{
+							required: true,
+							message: t('role.validate.menuAuthorityRequired'),
+						},
+					]}
 					fieldProps={{
 						fieldNames: {
 							label: 'name',
@@ -175,11 +194,16 @@ export const RoleDrawer: React.FC<RoleDrawerProps> = ({
 				<ProFormTreeSelect
 					disabled={loading}
 					name="deptIds"
-					label="部门权限"
+					label={t('role.deptAuthority')}
 					readonly={readOnly}
 					allowClear={true}
-					placeholder={'请选择部门权限'}
-					rules={[{ required: true, message: '请选择部门权限' }]}
+					placeholder={t('role.placeholder.deptAuthority')}
+					rules={[
+						{
+							required: true,
+							message: t('role.validate.deptAuthorityRequired'),
+						},
+					]}
 					fieldProps={{
 						fieldNames: {
 							label: 'name',
@@ -198,8 +222,10 @@ export const RoleDrawer: React.FC<RoleDrawerProps> = ({
 					disabled={loading}
 					readonly={true}
 					name="createTime"
-					rules={[{ required: true, message: '请输入创建时间' }]}
-					label="创建时间"
+					rules={[
+						{ required: true, message: t('role.validate.createTimeRequired') },
+					]}
+					label={t('common.createTime')}
 				/>
 			)}
 		</DrawerForm>

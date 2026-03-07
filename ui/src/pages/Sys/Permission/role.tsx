@@ -4,15 +4,23 @@ import { listTreeDept } from '@/services/admin/dept';
 import { listSelectTreeMenu } from '@/services/admin/menu';
 import { getRoleById, pageRole, removeRole } from '@/services/admin/role';
 import { trim } from '@/utils/format';
-import { useAccess } from '@@/exports';
+import { useAccess, useIntl } from '@@/exports';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
-import { ProColumns, ProTable } from '@ant-design/pro-components';
+import {
+	ActionType,
+	ProColumns,
+	ProTable,
+} from '@ant-design/pro-components';
 import { Button, message, Modal } from 'antd';
 import { TableRowSelection } from 'antd/es/table/interface';
 import { useEffect, useRef, useState } from 'react';
 import { v7 as uuidV7 } from 'uuid';
 
 export default () => {
+	const intl = useIntl();
+	const t = (id: string, values?: Record<string, any>) =>
+		intl.formatMessage({ id }, values);
+
 	type TableColumns = {
 		id: number;
 		name: string | undefined;
@@ -25,7 +33,7 @@ export default () => {
 	const [readOnly, setReadOnly] = useState(false);
 	const [modalVisit, setModalVisit] = useState(false);
 	// @ts-ignore
-	const actionRef = useRef();
+	const actionRef = useRef<ActionType>();
 	const [dataSource, setDataSource] = useState<any>({});
 	const [ids, setIds] = useState<number[]>([]);
 	const [title, setTitle] = useState('');
@@ -83,60 +91,62 @@ export default () => {
 
 	const columns: ProColumns<TableColumns>[] = [
 		{
-			title: '序号',
+			title: t('common.number'),
 			dataIndex: 'index',
 			valueType: 'indexBorder',
-			width: 60,
+			width: 85,
 		},
 		{
-			title: '角色名称',
+			title: t('role.name'),
 			dataIndex: 'name',
 			valueType: 'text',
 			fieldProps: {
-				placeholder: '请输入角色名称',
+				placeholder: t('role.placeholder.name'),
 			},
+			width: 220,
 		},
 		{
-			title: '数据范围',
+			title: t('role.dataScope'),
 			dataIndex: 'dataScope',
 			valueType: 'select',
+			width: 200,
 			fieldProps: {
 				valueType: 'select',
 				mode: 'single',
-				placeholder: '请选择数据范围',
+				placeholder: t('role.placeholder.dataScope'),
 				options: [
 					{
 						value: 'all',
-						label: '全部',
+						label: t('role.dataScope.all'),
 					},
 					{
 						value: 'custom',
-						label: '自定义',
+						label: t('role.dataScope.custom'),
 					},
 					{
 						value: 'self_dept',
-						label: '仅本部门',
+						label: t('role.dataScope.selfDept'),
 					},
 					{
 						value: 'below_dept',
-						label: '部门及以下',
+						label: t('role.dataScope.belowDept'),
 					},
 					{
 						value: 'self',
-						label: '仅本人',
+						label: t('role.dataScope.self'),
 					},
 				],
 			},
 		},
 		{
-			title: '角色排序',
+			title: t('role.sort'),
 			dataIndex: 'sort',
 			hideInSearch: true,
 			ellipsis: true,
-			width: 80,
+			width: 200,
 		},
 		{
-			title: '创建时间',
+			title: t('common.createTime'),
 			key: 'createTime',
 			dataIndex: 'createTime',
 			valueType: 'dateTime',
@@ -145,12 +155,12 @@ export default () => {
 			ellipsis: true,
 		},
 		{
-			title: '创建时间',
+			title: t('common.createTime'),
 			dataIndex: 'createTimeValue',
 			valueType: 'dateRange',
 			hideInTable: true,
 			fieldProps: {
-				placeholder: ['请选择开始时间', '请选择结束时间'],
+				placeholder: [t('common.selectStartTime'), t('common.selectEndTime')],
 			},
 			search: {
 				transform: (value) => {
@@ -162,7 +172,7 @@ export default () => {
 			},
 		},
 		{
-			title: '操作',
+			title: t('common.operation'),
 			valueType: 'option',
 			key: 'option',
 			render: (_, record) => [
@@ -172,7 +182,7 @@ export default () => {
 						onClick={() => {
 							getRoleById({ id: record?.id }).then((res) => {
 								if (res.code === 'OK') {
-									setTitle('查看角色');
+									setTitle(t('role.view'));
 									setModalVisit(true);
 									setReadOnly(true);
 									setDataSource(res?.data);
@@ -180,7 +190,7 @@ export default () => {
 							});
 						}}
 					>
-						查看
+						{t('common.view')}
 					</a>
 				),
 				access.canRoleModify && (
@@ -189,7 +199,7 @@ export default () => {
 						onClick={() => {
 							getRoleById({ id: record?.id }).then((res) => {
 								if (res.code === 'OK') {
-									setTitle('修改角色');
+									setTitle(t('role.modify'));
 									setModalVisit(true);
 									setReadOnly(false);
 									setDataSource(res?.data);
@@ -197,7 +207,7 @@ export default () => {
 							});
 						}}
 					>
-						修改
+						{t('common.modify')}
 					</a>
 				),
 				access.canRoleModify && (
@@ -205,14 +215,14 @@ export default () => {
 						key={'modifyAuthority'}
 						onClick={() => {
 							getRoleById({ id: record?.id }).then((res) => {
-								setTitle('分配权限');
+								setTitle(t('role.assignAuthority'));
 								setModalModifyAuthorityVisit(true);
 								setDataSource(res?.data);
 								setTypeValue(res?.data?.dataScope);
 							});
 						}}
 					>
-						分配权限
+						{t('common.assignPermission')}
 					</a>
 				),
 				access.canRoleRemove && (
@@ -220,14 +230,14 @@ export default () => {
 						key="remove"
 						onClick={() => {
 							Modal.confirm({
-								title: '确认删除?',
-								content: '您确定要删除吗?',
-								okText: '确认',
-								cancelText: '取消',
+								title: t('confirm.deleteTitle'),
+								content: t('confirm.deleteContent'),
+								okText: t('common.ok'),
+								cancelText: t('common.cancel'),
 								onOk: () => {
 									removeRole([record?.id]).then((res) => {
 										if (res.code === 'OK') {
-											message.success('删除成功').then();
+											message.success(t('toast.deleteSuccess')).then();
 											// @ts-ignore
 											actionRef?.current?.reload();
 										}
@@ -236,7 +246,7 @@ export default () => {
 							});
 						}}
 					>
-						删除
+						{t('common.delete')}
 					</a>
 				),
 			],
@@ -302,7 +312,7 @@ export default () => {
 							type="primary"
 							icon={<PlusOutlined />}
 							onClick={() => {
-								setTitle('新增角色');
+								setTitle(t('role.insert'));
 								setRequestId(uuidV7());
 								setReadOnly(false);
 								setModalVisit(true);
@@ -315,7 +325,7 @@ export default () => {
 								});
 							}}
 						>
-							新增
+							{t('common.insert')}
 						</Button>
 					),
 					access.canRoleRemove && (
@@ -326,22 +336,18 @@ export default () => {
 							icon={<DeleteOutlined />}
 							onClick={() => {
 								Modal.confirm({
-									title: '确认删除?',
-									content: '您确定要删除吗?',
-									okText: '确认',
-									cancelText: '取消',
+									title: t('confirm.deleteTitle'),
+									content: t('confirm.deleteContent'),
+									okText: t('common.ok'),
+									cancelText: t('common.cancel'),
 									onOk: async () => {
 										if (ids.length === 0) {
-											message
-												.warning('请至少选择一条数据')
-												.then();
+											message.warning(t('toast.selectAtLeastOne')).then();
 											return;
 										}
 										removeRole(ids).then((res) => {
 											if (res.code === 'OK') {
-												message
-													.success('删除成功')
-													.then();
+												message.success(t('toast.deleteSuccess')).then();
 												// @ts-ignore
 												actionRef?.current?.reload();
 											}
@@ -350,14 +356,14 @@ export default () => {
 								});
 							}}
 						>
-							删除
+							{t('common.delete')}
 						</Button>
 					),
 				]}
 				dateFormatter="string"
 				toolbar={{
-					title: '角色',
-					tooltip: '角色',
+					title: t('role.title'),
+					tooltip: t('role.title'),
 				}}
 			/>
 		</>
