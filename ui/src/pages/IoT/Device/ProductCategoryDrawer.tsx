@@ -1,9 +1,18 @@
-import {DrawerForm, ProFormDigit, ProFormText, ProFormTreeSelect} from '@ant-design/pro-components';
+import {
+	modifyProductCategory,
+	saveProductCategory,
+} from '@/services/iot/productCategory';
+import { useIntl } from '@@/exports';
+import {
+	DrawerForm,
+	ProFormDigit,
+	ProFormText,
+	ProFormTreeSelect,
+} from '@ant-design/pro-components';
+import { ProFormTextArea } from '@ant-design/pro-form';
 import { message } from 'antd';
-import {modifyProductCategory, saveProductCategory} from "@/services/iot/productCategory";
-import {v7 as uuidV7} from "uuid";
-import React, {useState} from "react";
-import {ProFormTextArea} from "@ant-design/pro-form";
+import React, { useState } from 'react';
+import { v7 as uuidV7 } from 'uuid';
 
 interface ProductCategoryDrawerProps {
 	modalVisit: boolean;
@@ -12,9 +21,9 @@ interface ProductCategoryDrawerProps {
 	readOnly: boolean;
 	dataSource: TableColumns;
 	onComponent: () => void;
-	treeList: any[]
-	requestId: string
-	setRequestId: (requestId: string) => void
+	treeList: any[];
+	requestId: string;
+	setRequestId: (requestId: string) => void;
 }
 
 type TableColumns = {
@@ -27,9 +36,21 @@ type TableColumns = {
 	createTime: string | undefined;
 };
 
-export const ProductCategoryDrawer: React.FC<ProductCategoryDrawerProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent, treeList, requestId, setRequestId }) => {
-
-	const [loading, setLoading] = useState(false)
+export const ProductCategoryDrawer: React.FC<ProductCategoryDrawerProps> = ({
+	modalVisit,
+	setModalVisit,
+	title,
+	readOnly,
+	dataSource,
+	onComponent,
+	treeList,
+	requestId,
+	setRequestId,
+}) => {
+	const intl = useIntl();
+	const t = (id: string, values?: Record<string, any>) =>
+		intl.formatMessage({ id }, values);
+	const [loading, setLoading] = useState(false);
 
 	return (
 		<DrawerForm<TableColumns>
@@ -38,7 +59,7 @@ export const ProductCategoryDrawer: React.FC<ProductCategoryDrawerProps> = ({ mo
 			drawerProps={{
 				destroyOnClose: true,
 				closable: true,
-				maskClosable: true
+				maskClosable: true,
 			}}
 			initialValues={dataSource}
 			onOpenChange={setModalVisit}
@@ -49,35 +70,39 @@ export const ProductCategoryDrawer: React.FC<ProductCategoryDrawerProps> = ({ mo
 					style: {
 						display: readOnly ? 'none' : 'inline-block',
 					},
-				}
+				},
 			}}
-			onFinish={ async (value) => {
-				setLoading(true)
+			onFinish={async (value) => {
+				setLoading(true);
 				if (value.id === undefined) {
 					// @ts-ignore
-					saveProductCategory({co: value}, requestId).then(res => {
-						if (res.code === 'OK') {
-							message.success("保存成功").then()
-							setModalVisit(false)
-							onComponent()
-						}
-					}).finally(() => {
-						setRequestId(uuidV7())
-						setLoading(false)
-					})
+					saveProductCategory({ co: value }, requestId)
+						.then((res) => {
+							if (res.code === 'OK') {
+								message.success(t('toast.saveSuccess')).then();
+								setModalVisit(false);
+								onComponent();
+							}
+						})
+						.finally(() => {
+							setRequestId(uuidV7());
+							setLoading(false);
+						});
 				} else {
-					modifyProductCategory({co: value}).then(res => {
-						if (res.code === 'OK') {
-							message.success("修改成功").then()
-							setModalVisit(false)
-							onComponent()
-						}
-					}).finally(() => {
-						setLoading(false)
-					})
+					modifyProductCategory({ co: value })
+						.then((res) => {
+							if (res.code === 'OK') {
+								message.success(t('toast.modifySuccess')).then();
+								setModalVisit(false);
+								onComponent();
+							}
+						})
+						.finally(() => {
+							setLoading(false);
+						});
 				}
-			}}>
-
+			}}
+		>
 			<ProFormText
 				disabled={loading}
 				name="id"
@@ -88,20 +113,25 @@ export const ProductCategoryDrawer: React.FC<ProductCategoryDrawerProps> = ({ mo
 			<ProFormTreeSelect
 				disabled={loading}
 				name="pid"
-				label="父级产品类别"
+				label={t('iot.productCategory.pid')}
 				readonly={readOnly}
 				allowClear={true}
-				placeholder={'请选择父级产品类别'}
-				rules={[{ required: true, message: '请选择父级产品类别' }]}
+				placeholder={t('iot.productCategory.placeholder.pid')}
+				rules={[
+					{
+						required: true,
+						message: t('iot.productCategory.required.pid'),
+					},
+				]}
 				fieldProps={{
 					fieldNames: {
 						label: 'name',
 						value: 'id',
-						children: 'children'
+						children: 'children',
 					},
 				}}
 				request={async () => {
-					return treeList
+					return treeList;
 				}}
 			/>
 
@@ -109,38 +139,52 @@ export const ProductCategoryDrawer: React.FC<ProductCategoryDrawerProps> = ({ mo
 				disabled={loading}
 				readonly={readOnly}
 				name="name"
-				label="产品类别名称"
-				rules={[{ required: true, message: '请输入产品类别名称' }]}
+				label={t('iot.productCategory.name')}
+				rules={[
+					{
+						required: true,
+						message: t('iot.productCategory.required.name'),
+					},
+				]}
 			/>
 
 			<ProFormDigit
 				disabled={loading}
 				name="sort"
-				label="产品类别排序"
+				label={t('iot.productCategory.sort')}
 				readonly={readOnly}
-				placeholder={'请输入产品类别排序'}
+				placeholder={t('iot.productCategory.placeholder.sort')}
 				min={1}
 				max={99999}
-				rules={[{ required: true, message: '请输入产品类别排序' }]}
+				rules={[
+					{
+						required: true,
+						message: t('iot.productCategory.required.sort'),
+					},
+				]}
 			/>
 
 			<ProFormTextArea
 				disabled={loading}
 				readonly={readOnly}
 				name="remark"
-				label="产品类别备注"
+				label={t('iot.productCategory.remark')}
 			/>
 
-			{ readOnly && (
+			{readOnly && (
 				<ProFormText
 					disabled={loading}
 					readonly={true}
 					name="createTime"
-					rules={[{ required: true, message: '请输入创建时间' }]}
-					label="创建时间"
+					rules={[
+						{
+							required: true,
+							message: t('role.validate.createTimeRequired'),
+						},
+					]}
+					label={t('common.createTime')}
 				/>
 			)}
-
 		</DrawerForm>
 	);
 };

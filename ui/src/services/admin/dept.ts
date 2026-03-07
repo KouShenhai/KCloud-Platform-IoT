@@ -1,8 +1,11 @@
 /* eslint-disable */
-import {request} from '@umijs/max';
+import { request } from '@umijs/max';
 
 /** 修改部门 修改部门 PUT /api/v1/depts */
-export async function modifyDept(body: API.DeptModifyCmd, options?: { [key: string]: any }) {
+export async function modifyDept(
+	body: API.DeptModifyCmd,
+	options?: { [key: string]: any },
+) {
 	return request<any>('/apis/admin/api/v1/depts', {
 		method: 'PUT',
 		headers: {
@@ -14,7 +17,11 @@ export async function modifyDept(body: API.DeptModifyCmd, options?: { [key: stri
 }
 
 /** 保存部门 保存部门 POST /api/v1/depts */
-export async function saveDept(body: API.DeptSaveCmd, requestId: string, options?: { [key: string]: any }) {
+export async function saveDept(
+	body: API.DeptSaveCmd,
+	requestId: string,
+	options?: { [key: string]: any },
+) {
 	return request<any>('/apis/admin/api/v1/depts', {
 		method: 'POST',
 		headers: {
@@ -27,7 +34,10 @@ export async function saveDept(body: API.DeptSaveCmd, requestId: string, options
 }
 
 /** 删除部门 删除部门 DELETE /api/v1/depts */
-export async function removeDept(body: number[], options?: { [key: string]: any }) {
+export async function removeDept(
+	body: number[],
+	options?: { [key: string]: any },
+) {
 	return request<any>('/apis/admin/api/v1/depts', {
 		method: 'DELETE',
 		headers: {
@@ -44,16 +54,19 @@ export async function getDeptById(
 	params: API.getByIdParams,
 	options?: { [key: string]: any },
 ) {
-	const {id: param0, ...queryParams} = params;
+	const { id: param0, ...queryParams } = params;
 	return request<API.Result>(`/apis/admin/api/v1/depts/${param0}`, {
 		method: 'GET',
-		params: {...queryParams},
+		params: { ...queryParams },
 		...(options || {}),
 	});
 }
 
 /** 导出部门 导出部门 POST /api/v1/depts/export */
-export async function exportDept(body: API.DeptExportCmd, options?: { [key: string]: any }) {
+export async function exportDept(
+	body: API.DeptExportCmd,
+	options?: { [key: string]: any },
+) {
 	return request<any>('/apis/admin/api/v1/depts/export', {
 		method: 'POST',
 		headers: {
@@ -65,7 +78,11 @@ export async function exportDept(body: API.DeptExportCmd, options?: { [key: stri
 }
 
 /** 导入部门 导入部门 POST /api/v1/depts/import */
-export async function importDept(body: {}, file?: File[], options?: { [key: string]: any }) {
+export async function importDept(
+	body: {},
+	file?: File[],
+	options?: { [key: string]: any },
+) {
 	const formData = new FormData();
 
 	if (file) {
@@ -97,7 +114,10 @@ export async function importDept(body: {}, file?: File[], options?: { [key: stri
 }
 
 /** 分页查询部门列表 分页查询部门列表 POST /api/v1/depts/page */
-export async function pageDept(body: API.DeptPageQry, options?: { [key: string]: any }) {
+export async function pageDept(
+	body: API.DeptPageQry,
+	options?: { [key: string]: any },
+) {
 	return request<API.Result>('/apis/admin/api/v1/depts/page', {
 		method: 'POST',
 		headers: {
@@ -108,7 +128,10 @@ export async function pageDept(body: API.DeptPageQry, options?: { [key: string]:
 	});
 }
 
-export async function listTreeDept(body: any,options?: { [key: string]: any }) {
+export async function listTreeDept(
+	body: any,
+	options?: { [key: string]: any },
+) {
 	return request<API.Result>('/apis/admin/api/v1/depts/list-tree', {
 		method: 'POST',
 		headers: {
@@ -119,7 +142,10 @@ export async function listTreeDept(body: any,options?: { [key: string]: any }) {
 	});
 }
 
-export async function listSelectTreeDept(body: any,options?: { [key: string]: any }) {
+export async function listSelectTreeDept(
+	body: any,
+	options?: { [key: string]: any },
+) {
 	return request<API.Result>('/apis/admin/api/v1/depts/list-select-tree', {
 		method: 'POST',
 		headers: {

@@ -33,6 +33,8 @@ import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.stereotype.Component;
 
 import java.security.Principal;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.LockSupport;
 
 /**
  * 退出登录执行器.
@@ -74,7 +76,8 @@ public class TokenRemoveCmdExe {
 
 	private void evictCache(OAuth2Authorization authorization) {
 		if (authorization.getAttribute(Principal.class.getName()) instanceof User user) {
-			OperateType.getCache(redisCacheManager, NameConstants.USER_MENU).evictIfPresent(user.id());
+			OperateType.getCache(redisCacheManager, NameConstants.USER_MENU).evict(user.id());
+			LockSupport.parkNanos(TimeUnit.MILLISECONDS.toNanos(200));
 		}
 	}
 

@@ -1,7 +1,8 @@
+import { resetUserPwd } from '@/services/admin/user';
+import { useIntl } from '@@/exports';
 import { DrawerForm, ProFormText } from '@ant-design/pro-components';
 import { message } from 'antd';
-import { resetUserPwd } from '@/services/admin/user';
-import React, {useState} from "react";
+import React, { useState } from 'react';
 
 interface UserResetPwdDrawerProps {
 	visible: boolean;
@@ -9,14 +10,20 @@ interface UserResetPwdDrawerProps {
 	dataSource: any;
 }
 
-export const UserResetPwdDrawer: React.FC<UserResetPwdDrawerProps> = ({ visible, setVisible, dataSource}) => {
-
-	const [loading, setLoading] = useState(false)
+export const UserResetPwdDrawer: React.FC<UserResetPwdDrawerProps> = ({
+	visible,
+	setVisible,
+	dataSource,
+}) => {
+	const intl = useIntl();
+	const t = (id: string, values?: Record<string, any>) =>
+		intl.formatMessage({ id }, values);
+	const [loading, setLoading] = useState(false);
 
 	return (
 		<DrawerForm
 			open={visible}
-			title="重置密码"
+			title={t('user.resetPwd.title')}
 			drawerProps={{
 				destroyOnClose: true,
 				closable: true,
@@ -27,8 +34,8 @@ export const UserResetPwdDrawer: React.FC<UserResetPwdDrawerProps> = ({ visible,
 					style: {
 						display: 'inline-block',
 					},
-					loading: loading
-				}
+					loading: loading,
+				},
 			}}
 			initialValues={dataSource}
 			onOpenChange={setVisible}
@@ -36,53 +43,62 @@ export const UserResetPwdDrawer: React.FC<UserResetPwdDrawerProps> = ({ visible,
 				setLoading(true);
 				const { password, confirmPassword } = value;
 				if (password !== confirmPassword) {
-					message.error("两次密码不一致");
+					message.error(t('user.resetPwd.passwordNotMatch'));
 					return;
 				}
-				resetUserPwd({ id: value?.id, password }).then(res => {
-					if (res.code === 'OK') {
-						message.success("密码重置成功");
-						setVisible(false);
-						return true;
-					}
-				}).finally(() => {
-					setLoading(false);
-				});
+				resetUserPwd({ id: value?.id, password })
+					.then((res) => {
+						if (res.code === 'OK') {
+							message.success(t('user.resetPwd.success'));
+							setVisible(false);
+							return true;
+						}
+					})
+					.finally(() => {
+						setLoading(false);
+					});
 			}}
 		>
-			<ProFormText
-				disabled={loading}
-				name="id"
-				label="ID"
-				hidden
-			/>
+			<ProFormText disabled={loading} name="id" label="ID" hidden />
 
 			<ProFormText
 				name="username"
-				label="用户名"
-				tooltip={"用户名【不允许重复，不允许修改】"}
+				label={t('user.username')}
+				tooltip={t('user.tooltip.username')}
 				disabled={true}
-				placeholder={'请输入用户名'}
-				rules={[{ required: true, message: '请输入用户名' }]}
+				placeholder={t('user.placeholder.username')}
+				rules={[
+					{ required: true, message: t('user.required.username') },
+				]}
 			/>
 
 			<ProFormText.Password
 				disabled={loading}
 				name="password"
-				label="密码"
-				tooltip="默认密码：laokou123"
-				placeholder="请输入密码"
+				label={t('user.resetPwd.password')}
+				tooltip={t('user.resetPwd.defaultPwdTooltip')}
+				placeholder={t('user.resetPwd.placeholder.password')}
 				fieldProps={{ autoComplete: 'new-password' }}
-				rules={[{ required: true, message: '请输入密码' }]}
+				rules={[
+					{
+						required: true,
+						message: t('user.resetPwd.required.password'),
+					},
+				]}
 			/>
 			<ProFormText.Password
 				disabled={loading}
 				name="confirmPassword"
-				label="确认密码"
-				tooltip="默认密码：laokou123"
-				placeholder="请输入确认密码"
+				label={t('user.resetPwd.confirmPassword')}
+				tooltip={t('user.resetPwd.defaultPwdTooltip')}
+				placeholder={t('user.resetPwd.placeholder.confirmPassword')}
 				fieldProps={{ autoComplete: 'new-password' }}
-				rules={[{ required: true, message: '请输入确认密码' }]}
+				rules={[
+					{
+						required: true,
+						message: t('user.resetPwd.required.confirmPassword'),
+					},
+				]}
 			/>
 		</DrawerForm>
 	);

@@ -1,6 +1,7 @@
-import {DrawerForm, ProFormText} from '@ant-design/pro-components';
-import {ProFormTextArea} from "@ant-design/pro-form";
-import React from "react";
+import { useIntl } from '@@/exports';
+import { DrawerForm, ProFormText } from '@ant-design/pro-components';
+import { ProFormTextArea } from '@ant-design/pro-form';
+import React from 'react';
 
 interface OperateLogDrawerProps {
 	modalVisit: boolean;
@@ -32,16 +33,24 @@ type TableColumns = {
 	createTime: string | undefined;
 };
 
-export const OperateLogDrawer: React.FC<OperateLogDrawerProps> = ({ modalVisit, setModalVisit, dataSource, getStatus }) => {
+export const OperateLogDrawer: React.FC<OperateLogDrawerProps> = ({
+	modalVisit,
+	setModalVisit,
+	dataSource,
+	getStatus,
+}) => {
+	const intl = useIntl();
+	const t = (id: string, values?: Record<string, any>) =>
+		intl.formatMessage({ id }, values);
 
 	return (
 		<DrawerForm<TableColumns>
 			open={modalVisit}
-			title="查看操作日志"
+			title={t('sys.log.operate.drawer.title')}
 			drawerProps={{
 				destroyOnClose: true,
 				closable: true,
-				maskClosable: true
+				maskClosable: true,
 			}}
 			width={1200}
 			initialValues={dataSource}
@@ -51,131 +60,215 @@ export const OperateLogDrawer: React.FC<OperateLogDrawerProps> = ({ modalVisit, 
 					style: {
 						display: 'none',
 					},
-				}
-			}}>
-
+				},
+			}}
+		>
 			<ProFormText
 				readonly={true}
 				name="name"
-				label="操作名称"
-				rules={[{ required: true, message: '请输入操作名称' }]}
+				label={t('sys.log.operate.name')}
+				rules={[
+					{
+						required: true,
+						message: t('sys.log.operate.required.name'),
+					},
+				]}
 			/>
 
 			<ProFormText
 				readonly={true}
 				name="moduleName"
-				label="模块名称"
-				rules={[{ required: true, message: '请输入模块名称' }]}
+				label={t('sys.log.operate.moduleName')}
+				rules={[
+					{
+						required: true,
+						message: t('sys.log.operate.required.moduleName'),
+					},
+				]}
 			/>
 
 			<ProFormText
 				readonly={true}
 				name="operator"
-				label="操作人"
-				rules={[{ required: true, message: '请输入操作人' }]}
+				label={t('sys.log.operate.operator')}
+				rules={[
+					{
+						required: true,
+						message: t('sys.log.operate.required.operator'),
+					},
+				]}
 			/>
 
 			<ProFormText
 				readonly={true}
 				name="uri"
-				label="请求路径"
-				rules={[{ required: true, message: '请输入URI' }]}
+				label={t('sys.log.operate.uri')}
+				rules={[
+					{
+						required: true,
+						message: t('sys.log.operate.required.uri'),
+					},
+				]}
 			/>
 
 			<ProFormText
 				readonly={true}
 				name="requestType"
-				label="请求类型"
-				rules={[{ required: true, message: '请输入请求类型' }]}
+				label={t('sys.log.operate.requestType')}
+				rules={[
+					{
+						required: true,
+						message: t('sys.log.operate.required.requestType'),
+					},
+				]}
 			/>
 
 			<ProFormText
 				readonly={true}
 				name="requestParams"
-				label="请求参数"
-				rules={[{ required: true, message: '请输入请求参数' }]}
+				label={t('sys.log.operate.requestParams')}
+				rules={[
+					{
+						required: true,
+						message: t('sys.log.operate.required.requestParams'),
+					},
+				]}
 			/>
 
 			<ProFormText
 				readonly={true}
 				name="methodName"
-				label="方法名"
-				rules={[{ required: true, message: '请输入方法名' }]}
+				label={t('sys.log.operate.methodName')}
+				rules={[
+					{
+						required: true,
+						message: t('sys.log.operate.required.methodName'),
+					},
+				]}
 			/>
 
 			<ProFormText
 				readonly={true}
 				name="userAgent"
-				label="浏览器"
-				rules={[{ required: true, message: '请输入浏览器' }]}
+				label={t('sys.log.operate.userAgent')}
+				rules={[
+					{
+						required: true,
+						message: t('sys.log.operate.required.userAgent'),
+					},
+				]}
 			/>
 
 			<ProFormText
 				readonly={true}
 				name="ip"
-				label="IP地址"
-				rules={[{ required: true, message: '请输入IP地址' }]}
+				label={t('sys.log.operate.ip')}
+				rules={[
+					{
+						required: true,
+						message: t('sys.log.operate.required.ip'),
+					},
+				]}
 			/>
 
 			<ProFormText
 				readonly={true}
 				name="address"
-				label="IP地址"
-				rules={[{ required: true, message: '请输入IP地址' }]}
+				label={t('sys.log.operate.address')}
+				rules={[
+					{
+						required: true,
+						message: t('sys.log.operate.required.address'),
+					},
+				]}
 			/>
 
 			<ProFormText
 				readonly={true}
 				name="status"
-				label="操作状态"
-				rules={[{ required: true, message: '请输入操作状态' }]}
+				label={t('sys.log.operate.status')}
+				rules={[
+					{
+						required: true,
+						message: t('sys.log.operate.required.status'),
+					},
+				]}
 				convertValue={(value) => {
-					return getStatus(value as string)
+					return getStatus(value as string);
 				}}
 			/>
 
 			<ProFormText
 				readonly={true}
 				name="profile"
-				label="服务环境"
-				rules={[{ required: true, message: '请输入服务环境' }]}
+				label={t('sys.log.operate.profile')}
+				rules={[
+					{
+						required: true,
+						message: t('sys.log.operate.required.profile'),
+					},
+				]}
 			/>
 
 			<ProFormText
 				readonly={true}
 				name="serviceId"
-				label="服务ID"
-				rules={[{ required: true, message: '请输入服务ID' }]}
+				label={t('sys.log.operate.serviceId')}
+				rules={[
+					{
+						required: true,
+						message: t('sys.log.operate.required.serviceId'),
+					},
+				]}
 			/>
 
 			<ProFormText
 				readonly={true}
 				name="serviceAddress"
-				label="服务地址"
-				rules={[{ required: true, message: '请输入服务地址' }]}
+				label={t('sys.log.operate.serviceAddress')}
+				rules={[
+					{
+						required: true,
+						message: t('sys.log.operate.required.serviceAddress'),
+					},
+				]}
 			/>
 
 			<ProFormText
 				readonly={true}
 				name="errorMessage"
-				label="错误信息"
-				rules={[{ required: true, message: '请输入错误信息' }]}
+				label={t('sys.log.operate.errorMessage')}
+				rules={[
+					{
+						required: true,
+						message: t('sys.log.operate.required.errorMessage'),
+					},
+				]}
 			/>
 
 			<ProFormTextArea
 				readonly={true}
 				name="stackTrace"
-				label="堆栈信息"
-				rules={[{ required: true, message: '请输入堆栈信息' }]}
+				label={t('sys.log.operate.stackTrace')}
+				rules={[
+					{
+						required: true,
+						message: t('sys.log.operate.required.stackTrace'),
+					},
+				]}
 			/>
 
 			<ProFormText
 				readonly={true}
 				name="createTime"
-				label="创建时间"
-				rules={[{ required: true, message: '请输入创建时间' }]}
+				label={t('common.createTime')}
+				rules={[
+					{
+						required: true,
+						message: t('sys.log.operate.required.createTime'),
+					},
+				]}
 			/>
-
 		</DrawerForm>
 	);
 };

@@ -1,7 +1,9 @@
-import ImgCrop from "antd-img-crop";
-import {GetProp, Upload, UploadFile, UploadProps} from "antd";
-import {uploadUserAvatar} from "@/services/admin/user";
-import React from "react";
+import { uploadUserAvatar } from '@/services/admin/user';
+import { useIntl } from '@@/exports';
+import type { GetProp, UploadFile, UploadProps } from 'antd';
+import { Upload } from 'antd';
+import ImgCrop from 'antd-img-crop';
+import React from 'react';
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 
@@ -13,7 +15,16 @@ interface UploadAvatarDrawerProps {
 	setLogId: (logId: number) => void;
 }
 
-export const UploadAvatarDrawer: React.FC<UploadAvatarDrawerProps> = ({ setPreviewOpen, setPreviewImage, fileList, setFileList, setLogId }) => {
+export const UploadAvatarDrawer: React.FC<UploadAvatarDrawerProps> = ({
+	setPreviewOpen,
+	setPreviewImage,
+	fileList,
+	setFileList,
+	setLogId,
+}) => {
+	const intl = useIntl();
+	const t = (id: string, values?: Record<string, any>) =>
+		intl.formatMessage({ id }, values);
 
 	const getBase64 = (file: FileType): Promise<string> =>
 		new Promise((resolve, reject) => {
@@ -29,15 +40,15 @@ export const UploadAvatarDrawer: React.FC<UploadAvatarDrawerProps> = ({ setPrevi
 		}
 		setPreviewImage(file.url || (file.preview as string));
 		setPreviewOpen(true);
-	}
+	};
 
 	const onChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
 		if (newFileList[0]?.response && newFileList[0]?.response.code !== 'OK') {
-			setFileList([])
+			setFileList([]);
 		} else {
-			setFileList(newFileList)
+			setFileList(newFileList);
 		}
-	}
+	};
 
 	return (
 		<ImgCrop rotationSlider>
@@ -47,29 +58,30 @@ export const UploadAvatarDrawer: React.FC<UploadAvatarDrawerProps> = ({ setPrevi
 				fileList={fileList}
 				onChange={onChange}
 				onPreview={handlePreview}
-				customRequest={async ( options ) => {
+				customRequest={async (options) => {
 					const { file, onProgress, onError, onSuccess } = options;
 					const formData = new FormData();
-					formData.append('file', file);
-					uploadUserAvatar(formData).then(res => {
-						// @ts-ignore
-						onProgress({ percent: 100 }, file)
-						if (res.code === 'OK') {
+					formData.append('file', file as any);
+					uploadUserAvatar(formData)
+						.then((res) => {
 							// @ts-ignore
-							onSuccess(res, file)
-							// 修改日志ID
-							setLogId(res.data.logId)
-						} else {
-							// @ts-ignore
-							onError({status: 500, url: '', method: 'POST'}, res)
-						}
-					}).catch(() => {
-						setFileList([])
-					})
-				}
-			}
+							onProgress?.({ percent: 100 }, file);
+							if (res.code === 'OK') {
+								// @ts-ignore
+								onSuccess?.(res, file);
+								// 修改日志ID
+								setLogId(res.data.logId);
+							} else {
+								// @ts-ignore
+								onError?.({ status: 500, url: '', method: 'POST' }, res);
+							}
+						})
+						.catch(() => {
+							setFileList([]);
+						});
+				}}
 			>
-				{fileList.length < 1 && '上传头像'}
+				{fileList.length < 1 && t('user.avatar.upload')}
 			</Upload>
 		</ImgCrop>
 	);

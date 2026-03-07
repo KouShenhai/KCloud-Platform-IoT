@@ -1,15 +1,16 @@
+import { modifyMenu, saveMenu } from '@/services/admin/menu';
+import { useIntl } from '@@/exports';
 import {
 	DrawerForm,
 	ProFormDigit,
 	ProFormRadio,
 	ProFormSelect,
 	ProFormText,
-	ProFormTreeSelect
+	ProFormTreeSelect,
 } from '@ant-design/pro-components';
 import { message } from 'antd';
-import {modifyMenu, saveMenu} from "@/services/admin/menu";
-import {v7 as uuidV7} from "uuid";
-import React, {useState} from "react";
+import React, { useState } from 'react';
+import { v7 as uuidV7 } from 'uuid';
 
 interface MenuDrawerProps {
 	modalVisit: boolean;
@@ -20,9 +21,9 @@ interface MenuDrawerProps {
 	onComponent: () => void;
 	typeValue: number;
 	setTypeValue: (value: number) => void;
-	treeList: any[]
-	requestId: string
-	setRequestId: (requestId: string) => void
+	treeList: any[];
+	requestId: string;
+	setRequestId: (requestId: string) => void;
 }
 
 type TableColumns = {
@@ -37,9 +38,23 @@ type TableColumns = {
 	createTime: string | undefined;
 };
 
-export const MenuDrawer: React.FC<MenuDrawerProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent, typeValue, setTypeValue, treeList, requestId, setRequestId }) => {
-
-	const [loading, setLoading] = useState(false)
+export const MenuDrawer: React.FC<MenuDrawerProps> = ({
+	modalVisit,
+	setModalVisit,
+	title,
+	readOnly,
+	dataSource,
+	onComponent,
+	typeValue,
+	setTypeValue,
+	treeList,
+	requestId,
+	setRequestId,
+}) => {
+	const intl = useIntl();
+	const t = (id: string, values?: Record<string, any>) =>
+		intl.formatMessage({ id }, values);
+	const [loading, setLoading] = useState(false);
 
 	return (
 		<DrawerForm<TableColumns>
@@ -48,7 +63,7 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({ modalVisit, setModalVisi
 			drawerProps={{
 				destroyOnClose: true,
 				closable: true,
-				maskClosable: true
+				maskClosable: true,
 			}}
 			initialValues={dataSource}
 			onOpenChange={setModalVisit}
@@ -59,34 +74,38 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({ modalVisit, setModalVisi
 					style: {
 						display: readOnly ? 'none' : 'inline-block',
 					},
+				},
+			}}
+			onFinish={async (value) => {
+				setLoading(true);
+				if (value.id === undefined) {
+					saveMenu({ co: value }, requestId)
+						.then((res) => {
+							if (res.code === 'OK') {
+								message.success(t('toast.saveSuccess')).then();
+								setModalVisit(false);
+								onComponent();
+							}
+						})
+						.finally(() => {
+							setRequestId(uuidV7());
+							setLoading(false);
+						});
+				} else {
+					modifyMenu({ co: value })
+						.then((res) => {
+							if (res.code === 'OK') {
+								message.success(t('toast.modifySuccess')).then();
+								setModalVisit(false);
+								onComponent();
+							}
+						})
+						.finally(() => {
+							setLoading(false);
+						});
 				}
 			}}
-			onFinish={ async (value) => {
-				setLoading(true)
-				if (value.id === undefined) {
-					saveMenu({co: value}, requestId).then(res => {
-						if (res.code === 'OK') {
-							message.success("保存成功").then()
-							setModalVisit(false)
-							onComponent()
-						}
-					}).finally(() => {
-						setRequestId(uuidV7())
-						setLoading(false)
-					})
-				} else {
-					modifyMenu({co: value}).then(res => {
-						if (res.code === 'OK') {
-							message.success("修改成功").then()
-							setModalVisit(false)
-							onComponent()
-						}
-					}).finally(() => {
-						setLoading(false)
-					})
-				}
-			}}>
-
+		>
 			<ProFormText
 				disabled={loading}
 				name="id"
@@ -94,48 +113,54 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({ modalVisit, setModalVisi
 				hidden={true}
 			/>
 
+			<ProFormSelect
+				disabled={loading}
+				name="type"
+				label={t('sys.menu.type')}
+				readonly={readOnly}
+				placeholder={t('sys.menu.placeholder.type')}
+				rules={[
+					{ required: true, message: t('sys.menu.required.type') },
+				]}
+				onChange={(value: number) => {
+					setTypeValue(value);
+				}}
+				options={[
+					{ value: 0, label: t('sys.menu.type.menu') },
+					{ value: 1, label: t('sys.menu.type.button') },
+				]}
+			/>
+
 			<ProFormTreeSelect
 				disabled={loading}
 				name="pid"
-				label="父级菜单"
+				label={t('sys.menu.pid')}
 				readonly={readOnly}
 				allowClear={true}
-				placeholder={'请选择父级菜单'}
-				rules={[{ required: true, message: '请选择父级菜单' }]}
+				placeholder={t('sys.menu.placeholder.pid')}
+				rules={[
+					{ required: true, message: t('sys.menu.required.pid') },
+				]}
 				fieldProps={{
 					fieldNames: {
 						label: 'name',
 						value: 'id',
-						children: 'children'
+						children: 'children',
 					},
 				}}
 				request={async () => {
-					return treeList
+					return treeList;
 				}}
 			/>
 
 			<ProFormText
 				disabled={loading}
 				name="name"
-				label="菜单名称"
+				label={t('sys.menu.name')}
 				readonly={readOnly}
-				placeholder={'请输入菜单名称'}
-				rules={[{ required: true, message: '请输入菜单名称' }]}
-			/>
-
-			<ProFormSelect
-				disabled={loading}
-				name="type"
-				label="菜单类型"
-				readonly={readOnly}
-				placeholder={'请选择菜单类型'}
-				rules={[{ required: true, message: '请选择菜单类型' }]}
-				onChange={(value: number) => {
-					setTypeValue(value)
-				}}
-				options={[
-					{value: 0, label: '菜单'},
-					{value: 1, label: '按钮'}
+				placeholder={t('sys.menu.placeholder.name')}
+				rules={[
+					{ required: true, message: t('sys.menu.required.name') },
 				]}
 			/>
 
@@ -143,11 +168,13 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({ modalVisit, setModalVisi
 				<ProFormText
 					disabled={loading}
 					name="path"
-					label="菜单路径"
-					tooltip={'只对菜单有效【不允许重复】'}
+					label={t('sys.menu.path')}
+					tooltip={t('sys.menu.tooltip.path')}
 					readonly={readOnly}
-					placeholder={'请输入菜单路径'}
-					rules={[{ required: true, message: '请输入菜单路径' }]}
+					placeholder={t('sys.menu.placeholder.path')}
+					rules={[
+						{ required: true, message: t('sys.menu.required.path') },
+					]}
 				/>
 			)}
 
@@ -155,11 +182,16 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({ modalVisit, setModalVisi
 				<ProFormText
 					disabled={loading}
 					name="permission"
-					label="菜单权限标识"
-					tooltip={'只对按钮有效【不允许重复】'}
+					label={t('sys.menu.permission')}
+					tooltip={t('sys.menu.tooltip.permission')}
 					readonly={readOnly}
-					placeholder={'请输入菜单权限标识'}
-					rules={[{ required: true, message: '请输入菜单权限标识' }]}
+					placeholder={t('sys.menu.placeholder.permission')}
+					rules={[
+						{
+							required: true,
+							message: t('sys.menu.required.permission'),
+						},
+					]}
 				/>
 			)}
 
@@ -167,48 +199,59 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({ modalVisit, setModalVisi
 				<ProFormText
 					disabled={loading}
 					name="icon"
-					label="菜单图标"
-					tooltip={'只支持目录菜单显示图标'}
+					label={t('sys.menu.icon')}
+					tooltip={t('sys.menu.tooltip.icon')}
 					readonly={readOnly}
-					placeholder={'请输入菜单图标'}
+					placeholder={t('sys.menu.placeholder.icon')}
 				/>
 			)}
 
 			<ProFormDigit
 				disabled={loading}
 				name="sort"
-				label="菜单排序"
+				label={t('sys.menu.sort')}
 				readonly={readOnly}
-				placeholder={'请输入菜单排序'}
+				placeholder={t('sys.menu.placeholder.sort')}
 				min={1}
 				max={99999}
-				rules={[{ required: true, message: '请输入菜单排序' }]}
+				rules={[
+					{ required: true, message: t('sys.menu.required.sort') },
+				]}
 			/>
 
 			{typeValue === 0 && (
 				<ProFormRadio.Group
 					disabled={loading}
 					name="status"
-					label="菜单状态"
+					label={t('sys.menu.status')}
 					readonly={readOnly}
-					rules={[{required: true, message: '请选择菜单状态',}]}
+					rules={[
+						{
+							required: true,
+							message: t('sys.menu.required.status'),
+						},
+					]}
 					options={[
-						{label:"启用",value: 0 },
-						{label:"禁用",value: 1 }
+						{ label: t('common.enable'), value: 0 },
+						{ label: t('common.disable'), value: 1 },
 					]}
 				/>
 			)}
 
-			{ readOnly && (
+			{readOnly && (
 				<ProFormText
 					disabled={loading}
 					readonly={true}
 					name="createTime"
-					rules={[{ required: true, message: '请输入创建时间' }]}
-					label="创建时间"
+					rules={[
+						{
+							required: true,
+							message: t('role.validate.createTimeRequired'),
+						},
+					]}
+					label={t('common.createTime')}
 				/>
 			)}
-
 		</DrawerForm>
 	);
 };

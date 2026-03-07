@@ -1,5 +1,4 @@
 declare namespace API {
-
 	type CaptchaParams = {
 		uuid: string;
 	};
@@ -16,7 +15,7 @@ declare namespace API {
 
 	type SendCaptchaCO = {
 		co: SendCaptchaParam;
-	}
+	};
 
 	type OAuth2Param = {
 		username?: string;
@@ -43,10 +42,10 @@ declare namespace API {
 		mobile?: string;
 		mail_captcha?: string;
 		mobile_captcha?: string;
-		tenant_code?: string
+		tenant_code?: string;
 	};
 
-    type Result = {
+	type Result = {
 		/** 状态编码 */
 		code?: string;
 		/** 响应描述 */

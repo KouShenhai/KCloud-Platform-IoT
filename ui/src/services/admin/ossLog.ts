@@ -1,8 +1,11 @@
 /* eslint-disable */
-import {request} from '@umijs/max';
+import { request } from '@umijs/max';
 
 /** 修改OSS日志 修改OSS日志 PUT /api/v1/oss-logs */
-export async function modifyOssLog(body: API.OssLogModifyCmd, options?: { [key: string]: any }) {
+export async function modifyOssLog(
+	body: API.OssLogModifyCmd,
+	options?: { [key: string]: any },
+) {
 	return request<any>('/apis/admin/api/v1/oss-logs', {
 		method: 'PUT',
 		headers: {
@@ -14,7 +17,10 @@ export async function modifyOssLog(body: API.OssLogModifyCmd, options?: { [key: 
 }
 
 /** 保存OSS日志 保存OSS日志 POST /api/v1/oss-logs */
-export async function saveOssLog(body: API.OssLogSaveCmd, options?: { [key: string]: any }) {
+export async function saveOssLog(
+	body: API.OssLogSaveCmd,
+	options?: { [key: string]: any },
+) {
 	return request<any>('/apis/admin/api/v1/oss-logs', {
 		method: 'POST',
 		headers: {
@@ -26,7 +32,10 @@ export async function saveOssLog(body: API.OssLogSaveCmd, options?: { [key: stri
 }
 
 /** 删除OSS日志 删除OSS日志 DELETE /api/v1/oss-logs */
-export async function removeOssLog(body: number[], options?: { [key: string]: any }) {
+export async function removeOssLog(
+	body: number[],
+	options?: { [key: string]: any },
+) {
 	return request<any>('/apis/admin/api/v1/oss-logs', {
 		method: 'DELETE',
 		headers: {
@@ -43,16 +52,19 @@ export async function getOssLogById(
 	params: API.getByIdParams,
 	options?: { [key: string]: any },
 ) {
-	const {id: param0, ...queryParams} = params;
+	const { id: param0, ...queryParams } = params;
 	return request<API.Result>(`/apis/admin/api/v1/oss-logs/${param0}`, {
 		method: 'GET',
-		params: {...queryParams},
+		params: { ...queryParams },
 		...(options || {}),
 	});
 }
 
 /** 导出OSS日志 导出OSS日志 POST /api/v1/oss-logs/export */
-export async function exportOssLog(body: API.OssLogExportCmd, options?: { [key: string]: any }) {
+export async function exportOssLog(
+	body: API.OssLogExportCmd,
+	options?: { [key: string]: any },
+) {
 	return request<any>('/apis/admin/api/v1/oss-logs/export', {
 		method: 'POST',
 		headers: {
@@ -64,7 +76,11 @@ export async function exportOssLog(body: API.OssLogExportCmd, options?: { [key: 
 }
 
 /** 导入OSS日志 导入OSS日志 POST /api/v1/oss-logs/import */
-export async function importOssLog(body: {}, file?: File[], options?: { [key: string]: any }) {
+export async function importOssLog(
+	body: {},
+	file?: File[],
+	options?: { [key: string]: any },
+) {
 	const formData = new FormData();
 
 	if (file) {
@@ -96,7 +112,10 @@ export async function importOssLog(body: {}, file?: File[], options?: { [key: st
 }
 
 /** 分页查询OSS日志列表 分页查询OSS日志列表 POST /api/v1/oss-logs/page */
-export async function pageOssLog(body: API.OssLogPageQry, options?: { [key: string]: any }) {
+export async function pageOssLog(
+	body: API.OssLogPageQry,
+	options?: { [key: string]: any },
+) {
 	return request<API.Result>('/apis/admin/api/v1/oss-logs/page', {
 		method: 'POST',
 		headers: {

@@ -1,22 +1,22 @@
-import {
-	ProColumns
-} from '@ant-design/pro-components';
-import {ProTable} from '@ant-design/pro-components';
-import { pageUser, removeUser, getUserById } from '@/services/admin/user';
-import {useEffect, useRef, useState} from "react";
-import {TableRowSelection} from "antd/es/table/interface";
-import {Button, message, Modal, Space, Switch, Tag, UploadFile} from 'antd';
-import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
-import {trim} from "@/utils/format";
+import { UserDrawer } from '@/pages/Sys/Permission/UserDrawer';
+import { UserModifyAuthorityDrawer } from '@/pages/Sys/Permission/UserModifyAuthorityDrawer';
 import { UserResetPwdDrawer } from '@/pages/Sys/Permission/UserResetPwdDrawer';
-import {UserDrawer} from "@/pages/Sys/Permission/UserDrawer";
-import {listSelectTreeDept} from "@/services/admin/dept";
-import {pageRole} from "@/services/admin/role";
-import {UserModifyAuthorityDrawer} from "@/pages/Sys/Permission/UserModifyAuthorityDrawer";
-import {useAccess} from "@@/exports";
-import {v7 as uuidV7} from "uuid";
+import { listSelectTreeDept } from '@/services/admin/dept';
+import { pageRole } from '@/services/admin/role';
+import { getUserById, pageUser, removeUser } from '@/services/admin/user';
+import { trim } from '@/utils/format';
+import { useAccess, useIntl } from '@@/exports';
+import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
+import { ActionType, ProColumns, ProTable } from '@ant-design/pro-components';
+import { Button, message, Modal, Space, Switch, Tag, UploadFile } from 'antd';
+import { TableRowSelection } from 'antd/es/table/interface';
+import { useEffect, useRef, useState } from 'react';
+import { v7 as uuidV7 } from 'uuid';
 
 export default () => {
+	const intl = useIntl();
+	const t = (id: string, values?: Record<string, any>) =>
+		intl.formatMessage({ id }, values);
 
 	type TableColumns = {
 		id: number;
@@ -28,33 +28,34 @@ export default () => {
 		superAdmin: number | undefined;
 	};
 
-	const access = useAccess()
-	const [readOnly, setReadOnly] = useState(false)
+	const access = useAccess();
+	const [readOnly, setReadOnly] = useState(false);
 	const [modalVisit, setModalVisit] = useState(false);
-	const [modalModifyAuthorityVisit, setModalModifyAuthorityVisit] = useState(false);
+	const [modalModifyAuthorityVisit, setModalModifyAuthorityVisit] =
+		useState(false);
 	const [modalRestPwdVisit, setModalRestPwdVisit] = useState(false);
-	const actionRef = useRef();
-	const [dataSource, setDataSource] = useState<any>({})
-	const [ids, setIds] = useState<number[]>([])
-	const [title, setTitle] = useState("")
-	const [edit, setEdit] = useState(false)
-	const [deptTreeList, setDeptTreeList] = useState<any[]>([])
-	const [roleList, setRoleList] = useState<any[]>([])
-	const [fileList, setFileList] = useState<UploadFile[]>([])
-	const [requestId, setRequestId] = useState('')
+	const actionRef = useRef<ActionType | null>(null);
+	const [dataSource, setDataSource] = useState<any>({});
+	const [ids, setIds] = useState<number[]>([]);
+	const [title, setTitle] = useState('');
+	const [edit, setEdit] = useState(false);
+	const [deptTreeList, setDeptTreeList] = useState<any[]>([]);
+	const [roleList, setRoleList] = useState<any[]>([]);
+	const [fileList, setFileList] = useState<UploadFile[]>([]);
+	const [requestId, setRequestId] = useState('');
 	const [logId, setLogId] = useState<number>(1);
 
 	const getDeptTreeList = async () => {
-		listSelectTreeDept({}).then(res => {
-			setDeptTreeList(res?.data)
-		})
-	}
+		listSelectTreeDept({}).then((res) => {
+			setDeptTreeList(res?.data);
+		});
+	};
 
 	const getRoleList = async () => {
-		pageRole({pageSize: 10000, pageNum: 1, pageIndex: 0}).then(res => {
-			setRoleList(res?.data?.records)
-		})
-	}
+		pageRole({ pageSize: 10000, pageNum: 1, pageIndex: 0 }).then((res) => {
+			setRoleList(res?.data?.records);
+		});
+	};
 
 	const getPageQueryParam = (params: any) => {
 		return {
@@ -67,91 +68,99 @@ export default () => {
 			superAdmin: params?.superAdmin,
 			status: params?.status,
 			params: {
-				startTime: params?.startDate ? `${params.startDate} 00:00:00` : undefined,
-				endTime: params?.endDate ? `${params.endDate} 23:59:59` : undefined
-			}
-		}
-	}
+				startTime: params?.startDate
+					? `${params.startDate} 00:00:00`
+					: undefined,
+				endTime: params?.endDate
+					? `${params.endDate} 23:59:59`
+					: undefined,
+			},
+		};
+	};
 
 	const rowSelection: TableRowSelection<TableColumns> = {
 		onChange: (selectedRowKeys) => {
-			const ids: number[] = []
-			selectedRowKeys.forEach(item => {
-				ids.push(item as number)
-			})
-			setIds(ids)
-		}
+			const ids: number[] = [];
+			selectedRowKeys.forEach((item) => {
+				ids.push(item as number);
+			});
+			setIds(ids);
+		},
 	};
 
 	useEffect(() => {
-		getDeptTreeList().catch(console.log)
-		getRoleList().catch(console.log)
+		getDeptTreeList().catch(console.log);
+		getRoleList().catch(console.log);
 	}, []);
 
 	const columns: ProColumns<TableColumns>[] = [
 		{
-			title: '序号',
+			title: t('common.number'),
 			dataIndex: 'index',
 			valueType: 'indexBorder',
-			width: 60,
+			width: 85,
 		},
 		{
-			title: '用户名',
+			title: t('user.username'),
 			dataIndex: 'username',
-			tooltip: "仅支持四个字符的模糊查询",
+			tooltip: t('user.tooltipFuzzyQueryFourChars'),
 			valueType: 'text',
 			ellipsis: true,
+			width: 120,
 			fieldProps: {
-				placeholder: '请输入用户名',
-			}
+				placeholder: t('user.placeholder.username'),
+			},
 		},
 		{
-			title: '用户邮箱',
+			title: t('user.mail'),
 			dataIndex: 'mail',
-			tooltip: "仅支持四个字符的模糊查询",
+			tooltip: t('user.tooltipFuzzyQueryFourChars'),
 			valueType: 'text',
+			width: 120,
 			fieldProps: {
-				placeholder: '请输入用户邮箱',
+				placeholder: t('user.placeholder.mail'),
 			},
 			ellipsis: true,
 		},
 		{
-			title: '用户手机号',
+			title: t('user.mobile'),
 			dataIndex: 'mobile',
-			tooltip: "仅支持三个或四个字符的模糊查询",
+			tooltip: t('user.tooltipFuzzyQueryThreeOrFourChars'),
 			valueType: 'text',
+			width: 120,
 			fieldProps: {
-				placeholder: '请输入用户手机号',
+				placeholder: t('user.placeholder.mobile'),
 			},
 			ellipsis: true,
 		},
 		{
-			title: '超级管理员',
+			title: t('user.superAdmin'),
 			dataIndex: 'superAdmin',
 			valueType: 'select',
 			hideInTable: true,
 			fieldProps: {
 				valueType: 'select',
 				mode: 'single',
-				placeholder: '请选择超级管理员',
+				placeholder: t('user.placeholder.superAdmin'),
 				options: [
 					{
-						label: '否',
+						label: t('common.no'),
 						value: 0,
 					},
 					{
-						label: '是',
+						label: t('common.yes'),
 						value: 1,
 					},
 				],
 			},
-			ellipsis: true
+			ellipsis: true,
 		},
 		{
 			disable: true,
-			title: '超级管理员',
+			title: t('user.superAdmin'),
 			dataIndex: 'superAdmin',
 			hideInSearch: true,
+			width: 120,
 			renderFormItem: (_, { defaultRender }) => {
 				return defaultRender(_);
 			},
@@ -159,63 +168,72 @@ export default () => {
 				<Space>
 					{record?.superAdmin === 0 && (
 						<Tag color={'rgb(51 114 253)'} key={'menu'}>
-							否
+							{t('common.no')}
 						</Tag>
 					)}
 					{record?.superAdmin === 1 && (
 						<Tag color={'#fd5251'} key={'button'}>
-							是
+							{t('common.yes')}
 						</Tag>
 					)}
 				</Space>
 			),
 		},
 		{
-			title: '用户状态',
+			title: t('user.status'),
 			dataIndex: 'status',
 			hideInTable: true,
 			valueType: 'select',
 			fieldProps: {
 				valueType: 'select',
 				mode: 'single',
-				placeholder: '请选择用户状态',
+				placeholder: t('user.placeholder.status'),
 				options: [
 					{
-						label: '启用',
+						label: t('common.enable'),
 						value: 0,
 					},
 					{
-						label: '禁用',
+						label: t('common.disable'),
 						value: 1,
 					},
 				],
 			},
-			ellipsis: true
+			ellipsis: true,
+			width: 100,
 		},
 		{
-			title: '用户状态',
+			title: t('user.status'),
 			dataIndex: 'status',
 			hideInSearch: true,
 			render: (_, record) => (
-				<Switch checkedChildren="启用" unCheckedChildren="禁用" disabled={true} checked={record?.status === 0} />
+				<Switch
+					checkedChildren={t('common.enable')}
+					unCheckedChildren={t('common.disable')}
+					disabled={true}
+					checked={record?.status === 0}
+				/>
 			),
 		},
 		{
-			title: '创建时间',
+			title: t('common.createTime'),
 			key: 'createTime',
 			dataIndex: 'createTime',
 			valueType: 'dateTime',
 			hideInSearch: true,
 			width: 160,
-			ellipsis: true
+			ellipsis: true,
 		},
 		{
-			title: '创建时间',
+			title: t('common.createTime'),
 			dataIndex: 'createTimeValue',
 			valueType: 'dateRange',
 			hideInTable: true,
 			fieldProps: {
-				placeholder: ['请选择开始时间', '请选择结束时间'],
+				placeholder: [
+					t('common.selectStartTime'),
+					t('common.selectEndTime'),
+				],
 			},
 			search: {
 				transform: (value) => {
@@ -224,102 +242,143 @@ export default () => {
 						endDate: value[1],
 					};
 				},
-			}
+			},
 		},
 		{
-			title: '操作',
+			title: t('common.operation'),
 			valueType: 'option',
 			key: 'option',
-			width: 250,
+			width: 400,
 			render: (_, record) => [
-				( access.canUserGetDetail && <a key="get"
-				   onClick={() => {
-					   getUserById({id: record?.id}).then(res => {
-						   if (res.code === 'OK') {
-							   setTitle('查看用户')
-							   setModalVisit(true)
-							   setReadOnly(true)
-							   setDataSource(res?.data)
-							   setLogId(res?.data?.logId)
-							   const avatarUrl = res?.data?.avatarUrl;
-							   if (avatarUrl) {
-								   setFileList([{uid: '-1', name: '用户头像.png', status: 'done', url: avatarUrl}])
-							   } else {
-								   setFileList([])
-							   }
-						   }
-					   })
-				   }}
-				>
-					查看
-				</a>),
-				( access.canUserModify && <a key="modify"
-				   onClick={() => {
-					   getUserById({id: record?.id}).then(res => {
-						   if (res.code === 'OK') {
-							   setTitle('修改用户')
-							   setModalVisit(true)
-							   setReadOnly(false)
-							   setEdit(true)
-							   setDataSource(res?.data)
-							   const avatarUrl = res?.data?.avatarUrl;
-							   if (avatarUrl) {
-								   setFileList([{uid: '-1', name: '用户头像.png', status: 'done', url: avatarUrl}])
-							   } else {
-								   setFileList([])
-							   }
-						   }
-					   })
-				   }}
-				>
-					修改
-				</a>),
-				( access.canUserModify && <a key={'modifyAuthority'} onClick={() => {
-					getUserById({id: record?.id}).then(res => {
-						setTitle('分配权限')
-						setModalModifyAuthorityVisit(true)
-						setDataSource(res?.data)
-					})
-				}}>
-					分配权限
-				</a>),
-				( access.canUserModify && <a key={'resetPwd'} onClick={() => {
-					getUserById({id: record?.id}).then(res => {
-						setModalRestPwdVisit(true)
-						setDataSource(res?.data)
-					})
-				}}>
-					重置密码
-				</a>),
-				( access.canUserRemove && <a key="remove" onClick={() => {
-					Modal.confirm({
-						title: '确认删除?',
-						content: '您确定要删除吗?',
-						okText: '确认',
-						cancelText: '取消',
-						onOk: () => {
-							removeUser([record?.id]).then(res => {
+				access.canUserGetDetail && (
+					<a
+						key="get"
+						title={t('common.view')}
+						onClick={() => {
+							getUserById({ id: record?.id }).then((res) => {
 								if (res.code === 'OK') {
-									message.success("删除成功").then()
-									// @ts-ignore
-									actionRef?.current?.reload();
+									setTitle(t('user.view'));
+									setModalVisit(true);
+									setReadOnly(true);
+									setDataSource(res?.data);
+									setLogId(res?.data?.logId);
+									const avatarUrl = res?.data?.avatarUrl;
+									if (avatarUrl) {
+										setFileList([
+											{
+												uid: '-1',
+												name: t('user.avatarFileName'),
+												status: 'done',
+												url: avatarUrl,
+											},
+										]);
+									} else {
+										setFileList([]);
+									}
 								}
-							})
-						}
-					})
-				}}>
-					删除
-				</a>)
+							});
+						}}
+					>
+						{t('common.view')}
+					</a>
+				),
+				access.canUserModify && (
+					<a
+						key="modify"
+						onClick={() => {
+							getUserById({ id: record?.id }).then((res) => {
+								if (res.code === 'OK') {
+									setTitle(t('user.modify'));
+									setModalVisit(true);
+									setReadOnly(false);
+									setEdit(true);
+									setDataSource(res?.data);
+									const avatarUrl = res?.data?.avatarUrl;
+									if (avatarUrl) {
+										setFileList([
+											{
+												uid: '-1',
+												name: t('user.avatarFileName'),
+												status: 'done',
+												url: avatarUrl,
+											},
+										]);
+									} else {
+										setFileList([]);
+									}
+								}
+							});
+						}}
+					>
+						{t('common.modify')}
+					</a>
+				),
+				access.canUserModify && (
+					<a
+						key={'modifyAuthority'}
+						onClick={() => {
+							getUserById({ id: record?.id }).then((res) => {
+								setTitle(t('user.assignAuthority'));
+								setModalModifyAuthorityVisit(true);
+								setDataSource(res?.data);
+							});
+						}}
+					>
+						{t('common.assignPermission')}
+					</a>
+				),
+				access.canUserModify && (
+					<a
+						key={'resetPwd'}
+						onClick={() => {
+							getUserById({ id: record?.id }).then((res) => {
+								setTitle(t('user.resetPwd.title'));
+								setModalRestPwdVisit(true);
+								setDataSource(res?.data);
+							});
+						}}
+					>
+						{t('common.resetPwd')}
+					</a>
+				),
+				access.canUserRemove && (
+					<a
+						key="remove"
+						onClick={() => {
+							Modal.confirm({
+								title: t('confirm.deleteTitle'),
+								content: t('confirm.deleteContent'),
+								okText: t('common.ok'),
+								cancelText: t('common.cancel'),
+								onOk: () => {
+									removeUser([record?.id]).then((res) => {
+										if (res.code === 'OK') {
+											message
+												.success(
+													t('toast.deleteSuccess'),
+												)
+												.then();
+											// @ts-ignore
+											actionRef?.current?.reload();
+										}
+									});
+								},
+							});
+						}}
+					>
+						{t('common.delete')}
+					</a>
+				),
 			],
 		},
 	];
 
 	return (
 		<>
-
-			<UserResetPwdDrawer visible={modalRestPwdVisit}
-                                setVisible={setModalRestPwdVisit}
-                                dataSource={dataSource}
+			<UserResetPwdDrawer
+				visible={modalRestPwdVisit}
+				setVisible={setModalRestPwdVisit}
+				dataSource={dataSource}
 			/>
 
 			<UserDrawer
@@ -358,15 +417,15 @@ export default () => {
 			<ProTable<TableColumns>
 				actionRef={actionRef}
 				columns={columns}
-				request={ async (params) => {
+				request={async (params) => {
 					// 表单搜索项会从 params 传入，传递给后端接口。
-					return pageUser(getPageQueryParam(params)).then(res => {
+					return pageUser(getPageQueryParam(params)).then((res) => {
 						return Promise.resolve({
 							data: res?.data?.records,
 							total: parseInt(res?.data?.total || 0),
 							success: true,
 						});
-					})
+					});
 				}}
 				rowSelection={{ ...rowSelection }}
 				rowKey="id"
@@ -374,53 +433,76 @@ export default () => {
 					layout: 'vertical',
 					defaultCollapsed: true,
 				}}
-				toolBarRender={
-					() => [
-						( access.canUserSave && <Button key="save" type="primary" icon={<PlusOutlined />} onClick={() => {
-							setTitle('新增用户')
-							setRequestId(uuidV7())
-							setReadOnly(false)
-							setModalVisit(true)
-							setEdit(false)
-							setDataSource({
-								id: undefined,
-								username: '',
-								superAdmin: 0,
-								status: 0,
-							})
-							setFileList([])
-						}}>
-							新增
-						</Button>),
-						( access.canUserRemove && <Button key="remove" type="primary" danger icon={<DeleteOutlined />} onClick={() => {
-							Modal.confirm({
-								title: '确认删除?',
-								content: '您确定要删除吗?',
-								okText: '确认',
-								cancelText: '取消',
-								onOk: async () => {
-									if (ids.length === 0) {
-										message.warning("请至少选择一条数据").then()
-										return;
-									}
-									removeUser(ids).then(res => {
-										if (res.code === 'OK') {
-											message.success("删除成功").then()
-											// @ts-ignore
-											actionRef?.current?.reload();
+				toolBarRender={() => [
+					access.canUserSave && (
+						<Button
+							key="save"
+							type="primary"
+							icon={<PlusOutlined />}
+							onClick={() => {
+								setTitle(t('user.insert'));
+								setRequestId(uuidV7());
+								setReadOnly(false);
+								setModalVisit(true);
+								setEdit(false);
+								setDataSource({
+									id: undefined,
+									username: '',
+									superAdmin: 0,
+									status: 0,
+								});
+								setFileList([]);
+							}}
+						>
+							{t('common.insert')}
+						</Button>
+					),
+					access.canUserRemove && (
+						<Button
+							key="remove"
+							type="primary"
+							danger
+							icon={<DeleteOutlined />}
+							onClick={() => {
+								Modal.confirm({
+									title: t('confirm.deleteTitle'),
+									content: t('confirm.deleteContent'),
+									okText: t('common.ok'),
+									cancelText: t('common.cancel'),
+									onOk: async () => {
+										if (ids.length === 0) {
+											message
+												.warning(
+													t('toast.selectAtLeastOne'),
+												)
+												.then();
+											return;
 										}
-									})
-								},
-							});
-						}}>
-							删除
-						</Button>)
-					]
-				}
+										removeUser(ids).then((res) => {
+											if (res.code === 'OK') {
+												message
+													.success(
+														t(
+															'toast.deleteSuccess',
+														),
+													)
+													.then();
+												// @ts-ignore
+												actionRef?.current?.reload();
+											}
+										});
+									},
+								});
+							}}
+						>
+							{t('common.delete')}
+						</Button>
+					),
+				]}
 				dateFormatter="string"
 				toolbar={{
-					title: '用户',
-					tooltip: '用户【默认密码：laokou123】',
+					title: t('menu.sys.permission.user'),
+					tooltip: t('user.tooltipDefaultPwd'),
 				}}
 			/>
 		</>

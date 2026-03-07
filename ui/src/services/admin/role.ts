@@ -1,8 +1,11 @@
 /* eslint-disable */
-import {request} from '@umijs/max';
+import { request } from '@umijs/max';
 
 /** 修改角色 修改角色 PUT /api/v1/roles */
-export async function modifyRole(body: API.RoleModifyCmd, options?: { [key: string]: any }) {
+export async function modifyRole(
+	body: API.RoleModifyCmd,
+	options?: { [key: string]: any },
+) {
 	return request<any>('/apis/admin/api/v1/roles', {
 		method: 'PUT',
 		headers: {
@@ -14,7 +17,11 @@ export async function modifyRole(body: API.RoleModifyCmd, options?: { [key: stri
 }
 
 /** 保存角色 保存角色 POST /api/v1/roles */
-export async function saveRole(body: API.RoleSaveCmd,requestId: string, options?: { [key: string]: any }) {
+export async function saveRole(
+	body: API.RoleSaveCmd,
+	requestId: string,
+	options?: { [key: string]: any },
+) {
 	return request<any>('/apis/admin/api/v1/roles', {
 		method: 'POST',
 		headers: {
@@ -27,7 +34,10 @@ export async function saveRole(body: API.RoleSaveCmd,requestId: string, options?
 }
 
 /** 删除角色 删除角色 DELETE /api/v1/roles */
-export async function removeRole(body: number[], options?: { [key: string]: any }) {
+export async function removeRole(
+	body: number[],
+	options?: { [key: string]: any },
+) {
 	return request<any>('/apis/admin/api/v1/roles', {
 		method: 'DELETE',
 		headers: {
@@ -44,16 +54,19 @@ export async function getRoleById(
 	params: API.getByIdParams,
 	options?: { [key: string]: any },
 ) {
-	const {id: param0, ...queryParams} = params;
+	const { id: param0, ...queryParams } = params;
 	return request<API.Result>(`/apis/admin/api/v1/roles/${param0}`, {
 		method: 'GET',
-		params: {...queryParams},
+		params: { ...queryParams },
 		...(options || {}),
 	});
 }
 
 /** 导出角色 导出角色 POST /api/v1/roles/export */
-export async function exportRole(body: API.RoleExportCmd, options?: { [key: string]: any }) {
+export async function exportRole(
+	body: API.RoleExportCmd,
+	options?: { [key: string]: any },
+) {
 	return request<any>('/apis/admin/api/v1/roles/export', {
 		method: 'POST',
 		headers: {
@@ -65,7 +78,11 @@ export async function exportRole(body: API.RoleExportCmd, options?: { [key: stri
 }
 
 /** 导入角色 导入角色 POST /api/v1/roles/import */
-export async function importRole(body: {}, file?: File[], options?: { [key: string]: any }) {
+export async function importRole(
+	body: {},
+	file?: File[],
+	options?: { [key: string]: any },
+) {
 	const formData = new FormData();
 
 	if (file) {
@@ -97,7 +114,10 @@ export async function importRole(body: {}, file?: File[], options?: { [key: stri
 }
 
 /** 分页查询角色列表 分页查询角色列表 POST /api/v1/roles/page */
-export async function pageRole(body: API.RolePageQry, options?: { [key: string]: any }) {
+export async function pageRole(
+	body: API.RolePageQry,
+	options?: { [key: string]: any },
+) {
 	return request<API.Result>('/apis/admin/api/v1/roles/page', {
 		method: 'POST',
 		headers: {
@@ -109,7 +129,10 @@ export async function pageRole(body: API.RolePageQry, options?: { [key: string]:
 }
 
 /** 修改角色权限 修改角色权限 PUT /api/v1/roles/authority */
-export async function modifyRoleAuthority(body: API.RoleModifyAuthorityCmd, options?: { [key: string]: any }) {
+export async function modifyRoleAuthority(
+	body: API.RoleModifyAuthorityCmd,
+	options?: { [key: string]: any },
+) {
 	return request<any>('/apis/admin/api/v1/roles/authority', {
 		method: 'PUT',
 		headers: {

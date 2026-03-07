@@ -1,9 +1,15 @@
-import {DrawerForm, ProFormDigit, ProFormSelect, ProFormText} from '@ant-design/pro-components';
-import {Col, message, Row} from 'antd';
-import React, {useState} from "react";
-import {ProFormTextArea} from "@ant-design/pro-form";
-import {v7 as uuidV7} from "uuid";
-import {modifyThingModel, saveThingModel} from "@/services/iot/thingModel";
+import { modifyThingModel, saveThingModel } from '@/services/iot/thingModel';
+import { useIntl } from '@@/exports';
+import {
+	DrawerForm,
+	ProFormDigit,
+	ProFormSelect,
+	ProFormText,
+} from '@ant-design/pro-components';
+import { ProFormTextArea } from '@ant-design/pro-form';
+import { Col, message, Row } from 'antd';
+import React, { useState } from 'react';
+import { v7 as uuidV7 } from 'uuid';
 
 interface ThingModelDrawerProps {
 	modalVisit: boolean;
@@ -14,8 +20,8 @@ interface ThingModelDrawerProps {
 	onComponent: () => void;
 	dataType: string;
 	setDataType: (type: string) => void;
-	requestId: string
-	setRequestId: (requestId: string) => void
+	requestId: string;
+	setRequestId: (requestId: string) => void;
 }
 
 type TableColumns = {
@@ -31,31 +37,49 @@ type TableColumns = {
 	createTime: string | undefined;
 };
 
-export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, setModalVisit, title, readOnly, dataSource, onComponent,dataType, setDataType, requestId, setRequestId }) => {
-
-	const [loading, setLoading] = useState(false)
+export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
+	modalVisit,
+	setModalVisit,
+	title,
+	readOnly,
+	dataSource,
+	onComponent,
+	dataType,
+	setDataType,
+	requestId,
+	setRequestId,
+}) => {
+	const intl = useIntl();
+	const t = (id: string, values?: Record<string, any>) =>
+		intl.formatMessage({ id }, values);
+	const [loading, setLoading] = useState(false);
 
 	const getSpecs = (value: any) => {
 		switch (value.dataType) {
-			case 'integer': return {
-				length: value.length,
-				unit: value.unit,
-			}
-			case 'decimal': return {
-				integerLength: value.integerLength,
-				decimalLength: value.decimalLength,
-				unit: value.unit,
-			}
-			case 'boolean': return {
-				trueText: value?.trueText,
-				falseText: value?.falseText,
-			}
-			case 'string': return {
-				length: value.length,
-			}
-			default: return {}
+			case 'integer':
+				return {
+					length: value.length,
+					unit: value.unit,
+				};
+			case 'decimal':
+				return {
+					integerLength: value.integerLength,
+					decimalLength: value.decimalLength,
+					unit: value.unit,
+				};
+			case 'boolean':
+				return {
+					trueText: value?.trueText,
+					falseText: value?.falseText,
+				};
+			case 'string':
+				return {
+					length: value.length,
+				};
+			default:
+				return {};
 		}
-	}
+	};
 
 	return (
 		<DrawerForm<TableColumns>
@@ -64,7 +88,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 			drawerProps={{
 				destroyOnClose: true,
 				closable: true,
-				maskClosable: true
+				maskClosable: true,
 			}}
 			initialValues={dataSource}
 			onOpenChange={setModalVisit}
@@ -75,37 +99,41 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 					style: {
 						display: readOnly ? 'none' : 'inline-block',
 					},
+				},
+			}}
+			onFinish={async (value) => {
+				setLoading(true);
+				value.specs = JSON.stringify(getSpecs(value));
+				// @ts-ignore
+				value.type = value.type.join(',');
+				if (value.id === undefined) {
+					saveThingModel({ co: value }, requestId)
+						.then((res) => {
+							if (res.code === 'OK') {
+								message.success(t('toast.saveSuccess')).then();
+								setModalVisit(false);
+								onComponent();
+							}
+						})
+						.finally(() => {
+							setRequestId(uuidV7());
+							setLoading(false);
+						});
+				} else {
+					modifyThingModel({ co: value })
+						.then((res) => {
+							if (res.code === 'OK') {
+								message.success(t('toast.modifySuccess')).then();
+								setModalVisit(false);
+								onComponent();
+							}
+						})
+						.finally(() => {
+							setLoading(false);
+						});
 				}
 			}}
-			onFinish={ async (value) => {
-				setLoading(true)
-				value.specs = JSON.stringify(getSpecs(value))
-				// @ts-ignore
-				value.type = value.type.join(',')
-				if (value.id === undefined) {
-					saveThingModel({co: value}, requestId).then(res => {
-						if (res.code === 'OK') {
-							message.success("保存成功").then()
-							setModalVisit(false)
-							onComponent()
-						}
-					}).finally(() => {
-						setRequestId(uuidV7())
-						setLoading(false)
-					})
-				} else {
-					modifyThingModel({co: value}).then(res => {
-						if (res.code === 'OK') {
-							message.success("修改成功").then()
-							setModalVisit(false)
-							onComponent()
-						}
-					}).finally(() => {
-						setLoading(false)
-					})
-				}
-			}}>
-
+		>
 			<ProFormText
 				disabled={loading}
 				name="id"
@@ -117,94 +145,142 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 				disabled={loading}
 				readonly={readOnly}
 				name="code"
-				label="物模型编码"
-				rules={[{ required: true, message: '请输入物模型编码' }]}
+				label={t('iot.thingModel.code')}
+				rules={[
+					{ required: true, message: t('iot.thingModel.required.code') },
+				]}
 			/>
 
 			<ProFormText
 				disabled={loading}
 				readonly={readOnly}
 				name="name"
-				label="物模型名称"
-				rules={[{ required: true, message: '请输入物模型名称' }]}
+				label={t('iot.thingModel.name')}
+				rules={[
+					{ required: true, message: t('iot.thingModel.required.name') },
+				]}
 			/>
 
 			<ProFormSelect
 				disabled={loading}
 				name="category"
-				label="物模型类别"
+				label={t('iot.thingModel.category')}
 				readonly={readOnly}
-				placeholder={'请选择模型类别'}
-				rules={[{ required: true, message: '请选择物模型类别' }]}
+				placeholder={t('iot.thingModel.placeholder.category')}
+				rules={[
+					{
+						required: true,
+						message: t('iot.thingModel.required.category'),
+					},
+				]}
 				options={[
-					{value: 1, label: '属性'},
-					{value: 2, label: '事件'}
+					{
+						value: 1,
+						label: t('iot.thingModel.category.property'),
+					},
+					{
+						value: 2,
+						label: t('iot.thingModel.category.event'),
+					},
 				]}
 			/>
 
 			<ProFormSelect
 				disabled={loading}
 				name="type"
-				label="物模型类型"
+				label={t('iot.thingModel.type')}
 				mode={'multiple'}
 				readonly={readOnly}
-				placeholder={'请选择物模型类型'}
-				rules={[{ required: true, message: '请选择物模型类型' }]}
+				placeholder={t('iot.thingModel.placeholder.type')}
+				rules={[
+					{ required: true, message: t('iot.thingModel.required.type') },
+				]}
 				options={[
-					{value: 'read', label: '读'},
-					{value: 'write', label: '写'},
-					{value: 'report', label: '上报'}
+					{ value: 'read', label: t('iot.thingModel.type.read') },
+					{ value: 'write', label: t('iot.thingModel.type.write') },
+					{ value: 'report', label: t('iot.thingModel.type.report') },
 				]}
 			/>
 
 			<ProFormDigit
 				disabled={loading}
 				name="sort"
-				label="物模型排序"
+				label={t('iot.thingModel.sort')}
 				readonly={readOnly}
-				placeholder={'请输入物模型排序'}
+				placeholder={t('iot.thingModel.placeholder.sort')}
 				min={1}
 				max={99999}
-				rules={[{ required: true, message: '请输入排序' }]}
+				rules={[
+					{ required: true, message: t('iot.thingModel.required.sort') },
+				]}
 			/>
 
 			<ProFormSelect
 				disabled={loading}
 				name="dataType"
-				label="物模型数据类型"
+				label={t('iot.thingModel.dataType')}
 				readonly={readOnly}
-				placeholder={'请选择数据类型'}
-				rules={[{ required: true, message: '请选择物模型数据类型' }]}
+				placeholder={t('iot.thingModel.placeholder.dataType')}
+				rules={[
+					{
+						required: true,
+						message: t('iot.thingModel.required.dataType'),
+					},
+				]}
 				options={[
-					{value: 'integer', label: '整数型'},
-					{value: 'decimal', label: '小数型'},
-					{value: 'boolean', label: '布尔型'},
-					{value: 'string', label: '字符串型'},
+					{
+						value: 'integer',
+						label: t('iot.thingModel.dataType.integer'),
+					},
+					{
+						value: 'decimal',
+						label: t('iot.thingModel.dataType.decimal'),
+					},
+					{
+						value: 'boolean',
+						label: t('iot.thingModel.dataType.boolean'),
+					},
+					{
+						value: 'string',
+						label: t('iot.thingModel.dataType.string'),
+					},
 				]}
 				onChange={setDataType}
 			/>
 
-			{ dataType === 'string' && (
+			{dataType === 'string' && (
 				<ProFormText
 					disabled={loading}
 					readonly={readOnly}
 					name="length"
-					label="长度"
-					rules={[{ required: true, message: '请输入长度' },
-						{ pattern: /^(2000|1\d{3}|[1-9]\d{0,2})$/, message:"长度必须为1-2000的整数" },
+					label={t('iot.thingModel.length')}
+					rules={[
+						{
+							required: true,
+							message: t('iot.thingModel.required.length'),
+						},
+						{
+							pattern: /^(2000|1\d{3}|[1-9]\d{0,2})$/,
+							message: t('iot.thingModel.validate.length1To2000'),
+						},
 					]}
 				/>
 			)}
 
-			{ dataType === 'boolean' && (
+			{dataType === 'boolean' && (
 				<Row gutter={24}>
 					<Col span={12}>
 						<ProFormText
 							disabled={loading}
 							readonly={readOnly}
 							name="trueText"
-							label="1对应文本"
-							rules={[{ required: true, message: '请输入1对应文本' }]}
+							label={t('iot.thingModel.trueText')}
+							rules={[
+								{
+									required: true,
+									message: t('iot.thingModel.required.trueText'),
+								},
+							]}
 						/>
 					</Col>
 					<Col span={12}>
@@ -212,27 +288,35 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 							disabled={loading}
 							readonly={readOnly}
 							name="falseText"
-							label="0对应文本"
-							rules={[{ required: true, message: '请输入0对应文本' }]}
+							label={t('iot.thingModel.falseText')}
+							rules={[
+								{
+									required: true,
+									message: t('iot.thingModel.required.falseText'),
+								},
+							]}
 						/>
 					</Col>
 				</Row>
 			)}
 
-			{ dataType === 'integer' && (
+			{dataType === 'integer' && (
 				<Row gutter={24}>
 					<Col span={12}>
 						<ProFormText
 							disabled={loading}
 							readonly={readOnly}
 							name="length"
-							label="长度"
+							label={t('iot.thingModel.length')}
 							rules={[
-								{ required: true, message: '请输入长度' },
+								{
+									required: true,
+									message: t('iot.thingModel.required.length'),
+								},
 								{
 									pattern: /^(8|16|32|64)$/,
-									message: '长度必须为8、16、32、64的整数'
-								}
+									message: t('iot.thingModel.validate.intLength'),
+								},
 							]}
 						/>
 					</Col>
@@ -241,26 +325,29 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 							disabled={loading}
 							readonly={readOnly}
 							name="unit"
-							label="单位"
+							label={t('iot.thingModel.unit')}
 						/>
 					</Col>
 				</Row>
 			)}
 
-			{ dataType === 'decimal' && (
+			{dataType === 'decimal' && (
 				<Row gutter={24}>
 					<Col span={8}>
 						<ProFormText
 							disabled={loading}
 							readonly={readOnly}
 							name="integerLength"
-							label="整数位长度"
+							label={t('iot.thingModel.integerLength')}
 							rules={[
-								{ required: true, message: '请输入整数位长度' },
+								{
+									required: true,
+									message: t('iot.thingModel.required.integerLength'),
+								},
 								{
 									pattern: /^([1-9]|[1-5][0-9]|6[0-4])$/,
-									message: '整数位长度必须为1-64的整数'
-								}
+									message: t('iot.thingModel.validate.integerLength'),
+								},
 							]}
 						/>
 					</Col>
@@ -269,13 +356,16 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 							disabled={loading}
 							readonly={readOnly}
 							name="decimalLength"
-							label="小数位长度"
+							label={t('iot.thingModel.decimalLength')}
 							rules={[
-								{ required: true, message: '请输入小数位长度' },
+								{
+									required: true,
+									message: t('iot.thingModel.required.decimalLength'),
+								},
 								{
 									pattern: /^[1-4]$/,
-									message: '小数位长度必须为1-4的整数'
-								}
+									message: t('iot.thingModel.validate.decimalLength'),
+								},
 							]}
 						/>
 					</Col>
@@ -284,7 +374,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 							disabled={loading}
 							readonly={readOnly}
 							name="unit"
-							label="单位"
+							label={t('iot.thingModel.unit')}
 						/>
 					</Col>
 				</Row>
@@ -294,19 +384,23 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({ modalVisit, 
 				disabled={loading}
 				readonly={readOnly}
 				name="remark"
-				label="物模型备注"
+				label={t('iot.thingModel.remark')}
 			/>
 
-			{ readOnly && (
+			{readOnly && (
 				<ProFormText
 					disabled={loading}
 					readonly={true}
 					name="createTime"
-					rules={[{ required: true, message: '请输入创建时间' }]}
-					label="创建时间"
+					rules={[
+						{
+							required: true,
+							message: t('role.validate.createTimeRequired'),
+						},
+					]}
+					label={t('common.createTime')}
 				/>
 			)}
-
 		</DrawerForm>
 	);
 };

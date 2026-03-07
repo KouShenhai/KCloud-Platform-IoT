@@ -112,7 +112,7 @@ class DataCacheAspectjTest {
 
 		// Then
 		Assertions.assertThat(result).isEqualTo(expectedResult);
-		Mockito.verify(cache).evictIfPresent(cacheKey);
+		Mockito.verify(cache).evict(cacheKey);
 		Mockito.verify(point).proceed();
 	}
 

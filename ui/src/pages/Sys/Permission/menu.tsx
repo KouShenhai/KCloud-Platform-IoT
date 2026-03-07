@@ -1,18 +1,15 @@
-import {
-	ProColumns
-} from '@ant-design/pro-components';
-import {ProTable} from '@ant-design/pro-components';
-import {listTreeMenu, removeMenu, getMenuById} from "@/services/admin/menu";
-import {useEffect, useRef, useState} from "react";
-import {TableRowSelection} from "antd/es/table/interface";
-import {Button, message, Modal, Space, Switch, Tag} from 'antd';
+import { MenuDrawer } from '@/pages/Sys/Permission/MenuDrawer';
+import { getMenuById, listTreeMenu, removeMenu } from '@/services/admin/menu';
+import { useAccess, useIntl } from '@@/exports';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
-import {MenuDrawer} from "@/pages/Sys/Permission/MenuDrawer";
-import {useAccess} from "@@/exports";
-import {v7 as uuidV7} from "uuid";
+import { ProColumns, ProTable } from '@ant-design/pro-components';
+import type { ActionType } from '@ant-design/pro-components';
+import { Button, message, Modal, Space, Switch, Tag } from 'antd';
+import { TableRowSelection } from 'antd/es/table/interface';
+import { useEffect, useRef, useState } from 'react';
+import { v7 as uuidV7 } from 'uuid';
 
 export default () => {
-
 	type TableColumns = {
 		id: number;
 		name: string | undefined;
@@ -24,16 +21,19 @@ export default () => {
 		sort: number | undefined;
 	};
 
-	const access = useAccess()
-	const [readOnly, setReadOnly] = useState(false)
+	const access = useAccess();
+	const intl = useIntl();
+	const t = (id: string, values?: Record<string, any>) =>
+		intl.formatMessage({ id }, values);
+	const [readOnly, setReadOnly] = useState(false);
 	const [modalVisit, setModalVisit] = useState(false);
-	const actionRef = useRef();
-	const [dataSource, setDataSource] = useState<any>({})
-	const [ids, setIds] = useState<number[]>([])
-	const [title, setTitle] = useState("")
+	const actionRef = useRef<ActionType | null>(null);
+	const [dataSource, setDataSource] = useState<any>({});
+	const [ids, setIds] = useState<number[]>([]);
+	const [title, setTitle] = useState('');
 	const [typeValue, setTypeValue] = useState(0);
-	const [treeList, setTreeList] = useState<any[]>([])
-	const [requestId, setRequestId] = useState('')
+	const [treeList, setTreeList] = useState<any[]>([]);
+	const [requestId, setRequestId] = useState('');
 
 	const getListTreeQueryParam = (params: any) => {
 		return {
@@ -41,66 +41,72 @@ export default () => {
 			type: params?.typeValue,
 			status: params?.statusValue,
 			params: {
-				startTime: params?.startDateValue ? `${params.startDateValue} 00:00:00` : undefined,
-				endTime: params?.endDateValue ? `${params.endDateValue} 23:59:59` : undefined
-			}
-		}
-	}
+				startTime: params?.startDateValue
+					? `${params.startDateValue} 00:00:00`
+					: undefined,
+				endTime: params?.endDateValue
+					? `${params.endDateValue} 23:59:59`
+					: undefined,
+			},
+		};
+	};
 
 	const getTreeList = async () => {
-		listTreeMenu({code: 1, type: 0, status: 0}).then(res => {
-			setTreeList([{
-				id: '0',
-				name: '根目录',
-				children: res?.data
-			}])
-		})
-	}
+		return listTreeMenu({ code: 1, type: 0, status: 0 }).then((res) => {
+			setTreeList([
+				{
+					id: '0',
+					name: t('common.root'),
+					children: res?.data,
+				},
+			]);
+		});
+	};
 
 	const rowSelection: TableRowSelection<TableColumns> = {
 		onChange: (selectedRowKeys) => {
-			const ids: number[] = []
-			selectedRowKeys.forEach(item => {
-				ids.push(item as number)
-			})
-			setIds(ids)
-		}
+			const ids: number[] = [];
+			selectedRowKeys.forEach((item) => {
+				ids.push(item as number);
+			});
+			setIds(ids);
+		},
 	};
 
 	useEffect(() => {
-		getTreeList().catch(console.log)
+		getTreeList().catch(console.log);
 	}, []);
 
 	const columns: ProColumns<TableColumns>[] = [
 		{
-			title: '序号',
+			title: t('common.number'),
 			dataIndex: 'index',
 			valueType: 'indexBorder',
 			width: 110,
 		},
 		{
-			title: '菜单名称',
+			title: t('sys.menu.name'),
 			dataIndex: 'name',
 			hideInSearch: true,
 			ellipsis: true,
 			width: 220,
 		},
 		{
-			title: '菜单路径',
+			title: t('sys.menu.path'),
 			dataIndex: 'path',
 			ellipsis: true,
 			hideInSearch: true,
-			width: 180
+			width: 180,
 		},
 		{
-			title: '菜单权限标识',
+			title: t('sys.menu.permission'),
 			dataIndex: 'permission',
 			ellipsis: true,
 			hideInSearch: true,
-			width: 180
+			width: 180,
 		},
 		{
-			title: '菜单类型',
+			title: t('sys.menu.type'),
 			key: 'typeValue',
 			dataIndex: 'typeValue',
 			hideInTable: true,
@@ -108,24 +114,25 @@ export default () => {
 			fieldProps: {
 				valueType: 'select',
 				mode: 'single',
-				placeholder: '请选择菜单类型',
+				placeholder: t('sys.menu.placeholder.type'),
 				options: [
 					{
 						value: 0,
-						label: '菜单',
+						label: t('sys.menu.type.menu'),
 					},
 					{
 						value: 1,
-						label: '按钮',
+						label: t('sys.menu.type.button'),
 					},
 				],
 			},
-			ellipsis: true
+			ellipsis: true,
 		},
 		{
 			disable: true,
-			title: '菜单类型',
+			title: t('sys.menu.type'),
 			dataIndex: 'type',
+			ellipsis: true,
 			hideInSearch: true,
 			renderFormItem: (_, { defaultRender }) => {
 				return defaultRender(_);
@@ -134,19 +141,19 @@ export default () => {
 				<Space>
 					{record?.type === 0 && (
 						<Tag color={'rgb(51 114 253)'} key={'menu'}>
-							菜单
+							{t('sys.menu.type.menu')}
 						</Tag>
 					)}
 					{record?.type === 1 && (
 						<Tag color={'#fd5251'} key={'button'}>
-							按钮
+							{t('sys.menu.type.button')}
 						</Tag>
 					)}
 				</Space>
 			),
 		},
 		{
-			title: '菜单状态',
+			title: t('sys.menu.status'),
 			key: 'statusValue',
 			dataIndex: 'statusValue',
 			hideInTable: true,
@@ -154,51 +161,57 @@ export default () => {
 			fieldProps: {
 				valueType: 'select',
 				mode: 'single',
-				placeholder: '请选择菜单状态',
+				placeholder: t('sys.menu.placeholder.status'),
 				options: [
 					{
 						value: 0,
-						label: '启用',
+						label: t('common.enable'),
 					},
 					{
 						value: 1,
-						label: '禁用',
+						label: t('common.disable'),
 					},
-				]
+				],
 			},
-			ellipsis: true
+			ellipsis: true,
 		},
 		{
-			title: '菜单状态',
+			title: t('sys.menu.status'),
 			dataIndex: 'status',
+			ellipsis: true,
 			hideInSearch: true,
 			render: (_, record) => (
-				<Switch checkedChildren="启用" unCheckedChildren="禁用" disabled={true} checked={record?.status === 0} />
+				<Switch
+					checkedChildren={t('common.enable')}
+					unCheckedChildren={t('common.disable')}
+					disabled={true}
+					checked={record?.status === 0}
+				/>
 			),
 		},
 		{
-			title: '菜单排序',
+			title: t('sys.menu.sort'),
 			dataIndex: 'sort',
 			hideInSearch: true,
-			ellipsis: true
+			ellipsis: true,
 		},
 		{
-			title: '创建时间',
+			title: t('common.createTime'),
 			key: 'createTime',
 			dataIndex: 'createTime',
 			valueType: 'dateTime',
 			hideInSearch: true,
 			width: 160,
-			ellipsis: true
+			ellipsis: true,
 		},
 		{
-			title: '创建时间',
+			title: t('common.createTime'),
 			key: 'createTimeValue',
 			dataIndex: 'createTimeValue',
 			valueType: 'dateRange',
 			hideInTable: true,
 			fieldProps: {
-				placeholder: ['请选择开始时间', '请选择结束时间'],
+				placeholder: [t('common.selectStartTime'), t('common.selectEndTime')],
 			},
 			search: {
 				transform: (value) => {
@@ -207,92 +220,109 @@ export default () => {
 						endDateValue: value[1],
 					};
 				},
-			}
+			},
 		},
 		{
-			title: '操作',
+			title: t('common.operation'),
 			valueType: 'option',
 			key: 'option',
 			render: (_, record) => [
-				( access.canMenuGetDetail && <a key="get"
-				   onClick={() => {
-					   getMenuById({id: record?.id}).then(res => {
-						   if (res.code === 'OK') {
-							   setTitle('查看菜单')
-							   setModalVisit(true)
-							   setReadOnly(true)
-							   const data = res?.data;
-							   setTypeValue(data.type)
-							   setDataSource(data)
-						   }
-					   })
-				   }}
-				>
-					查看
-				</a>),
-				( access.canMenuSave && <a key="save" onClick={() => {
-					setTitle('新增菜单')
-					setRequestId(uuidV7())
-					setTypeValue(0)
-					setReadOnly(false)
-					setModalVisit(true)
-					setDataSource({
-						id: undefined,
-						name: '',
-						path: '',
-						permission: '',
-						sort: 1,
-						icon: '',
-						status: 0,
-						type: 0,
-						pid: record?.id
-					})
-				}}>
-					新增
-				</a>),
-				( access.canMenuModify && <a key="modify"
-				   onClick={() => {
-					   getMenuById({id: record?.id}).then(res => {
-						   if (res.code === 'OK') {
-							   setTitle('修改菜单')
-							   setModalVisit(true)
-							   setReadOnly(false)
-							   const data = res?.data;
-							   setTypeValue(data.type)
-							   setDataSource(data)
-						   }
-					   })
-				   }}
-				>
-					修改
-				</a>),
-				( access.canMenuRemove && <a key="remove" onClick={() => {
-					Modal.confirm({
-						title: '确认删除?',
-						content: '您确定要删除吗?',
-						okText: '确认',
-						cancelText: '取消',
-						onOk: () => {
-							removeMenu([record?.id]).then(res => {
+				access.canMenuGetDetail && (
+					<a
+						key="get"
+						onClick={() => {
+							getMenuById({ id: record?.id }).then((res) => {
 								if (res.code === 'OK') {
-									message.success("删除成功").then()
-									// @ts-ignore
-									actionRef?.current?.reload();
+									setTitle(t('sys.menu.view'));
+									setModalVisit(true);
+									setReadOnly(true);
+									const data = res?.data;
+									setTypeValue(data.type);
+									setDataSource(data);
 								}
-							})
-						}
-					})
-				}}>
-					删除
-				</a>)
+							});
+						}}
+					>
+						{t('common.view')}
+					</a>
+				),
+				access.canMenuSave && (
+					<a
+						key="save"
+						onClick={() => {
+							setTitle(t('sys.menu.insert'));
+							setRequestId(uuidV7());
+							setTypeValue(0);
+							setReadOnly(false);
+							setModalVisit(true);
+							setDataSource({
+								id: undefined,
+								name: '',
+								path: '',
+								permission: '',
+								sort: 1,
+								icon: '',
+								status: 0,
+								type: 0,
+								pid: record?.id,
+							});
+						}}
+					>
+						{t('common.insert')}
+					</a>
+				),
+				access.canMenuModify && (
+					<a
+						key="modify"
+						onClick={() => {
+							getMenuById({ id: record?.id }).then((res) => {
+								if (res.code === 'OK') {
+									setTitle(t('sys.menu.modify'));
+									setModalVisit(true);
+									setReadOnly(false);
+									const data = res?.data;
+									setTypeValue(data.type);
+									setDataSource(data);
+								}
+							});
+						}}
+					>
+						{t('common.modify')}
+					</a>
+				),
+				access.canMenuRemove && (
+					<a
+						key="remove"
+						onClick={() => {
+							Modal.confirm({
+								title: t('confirm.deleteTitle'),
+								content: t('confirm.deleteContent'),
+								okText: t('common.ok'),
+								cancelText: t('common.cancel'),
+								onOk: () => {
+									removeMenu([record?.id]).then((res) => {
+										if (res.code === 'OK') {
+											message
+												.success(t('toast.deleteSuccess'))
+												.then();
+											// @ts-ignore
+											actionRef?.current?.reload();
+										}
+									});
+								},
+							});
+						}}
+					>
+						{t('common.delete')}
+					</a>
+				),
 			],
-			width: 190
+			width: 190,
 		},
 	];
 
 	return (
 		<>
-
 			<MenuDrawer
 				modalVisit={modalVisit}
 				setModalVisit={setModalVisit}
@@ -314,14 +344,16 @@ export default () => {
 			<ProTable<TableColumns>
 				actionRef={actionRef}
 				columns={columns}
-				request={ async (params) => {
+				request={async (params) => {
 					// 表单搜索项会从 params 传入，传递给后端接口。
-					return listTreeMenu(getListTreeQueryParam(params)).then(res => {
-						return Promise.resolve({
-							data: res?.data,
-							success: true,
-						});
-					})
+					return listTreeMenu(getListTreeQueryParam(params)).then(
+						(res) => {
+							return Promise.resolve({
+								data: res?.data,
+								success: true,
+							});
+						},
+					);
 				}}
 				rowSelection={{ ...rowSelection }}
 				rowKey="id"
@@ -329,56 +361,73 @@ export default () => {
 					layout: 'vertical',
 					defaultCollapsed: true,
 				}}
-				toolBarRender={
-					() => [
-						( access.canMenuSave && <Button key="save" type="primary" icon={<PlusOutlined />} onClick={() => {
-							setTitle('新增菜单')
-							setRequestId(uuidV7())
-							setTypeValue(0)
-							setReadOnly(false)
-							setModalVisit(true)
-							setDataSource({
-								id: undefined,
-								name: '',
-								path: '',
-								permission: '',
-								sort: 1,
-								icon: '',
-								status: 0,
-								type: 0,
-							})
-						}}>
-							新增
-						</Button>),
-						( access.canMenuRemove && <Button key="remove" type="primary" danger icon={<DeleteOutlined />} onClick={() => {
-							Modal.confirm({
-								title: '确认删除?',
-								content: '您确定要删除吗?',
-								okText: '确认',
-								cancelText: '取消',
-								onOk: async () => {
-									if (ids.length === 0) {
-										message.warning("请至少选择一条数据").then()
-										return;
-									}
-									removeMenu(ids).then(res => {
-										if (res.code === 'OK') {
-											message.success("删除成功").then()
-											// @ts-ignore
-											actionRef?.current?.reload();
+				toolBarRender={() => [
+					access.canMenuSave && (
+						<Button
+							key="save"
+							type="primary"
+							icon={<PlusOutlined />}
+							onClick={() => {
+								setTitle(t('sys.menu.insert'));
+								setRequestId(uuidV7());
+								setTypeValue(0);
+								setReadOnly(false);
+								setModalVisit(true);
+								setDataSource({
+									id: undefined,
+									name: '',
+									path: '',
+									permission: '',
+									sort: 1,
+									icon: '',
+									status: 0,
+									type: 0,
+								});
+							}}
+						>
+							{t('common.insert')}
+						</Button>
+					),
+					access.canMenuRemove && (
+						<Button
+							key="remove"
+							type="primary"
+							danger
+							icon={<DeleteOutlined />}
+							onClick={() => {
+								Modal.confirm({
+									title: t('confirm.deleteTitle'),
+									content: t('confirm.deleteContent'),
+									okText: t('common.ok'),
+									cancelText: t('common.cancel'),
+									onOk: async () => {
+										if (ids.length === 0) {
+											message
+												.warning(t('toast.selectAtLeastOne'))
+												.then();
+											return;
 										}
-									})
-								},
-							});
-						}}>
-							删除
-						</Button>)
-					]
-				}
+										removeMenu(ids).then((res) => {
+											if (res.code === 'OK') {
+												message
+													.success(t('toast.deleteSuccess'))
+													.then();
+												// @ts-ignore
+												actionRef?.current?.reload();
+											}
+										});
+									},
+								});
+							}}
+						>
+							{t('common.delete')}
+						</Button>
+					),
+				]}
 				dateFormatter="string"
 				toolbar={{
-					title: '菜单',
-					tooltip: '菜单',
+					title: t('menu.sys.permission.menu'),
+					tooltip: t('menu.sys.permission.menu'),
 				}}
 			/>
 		</>

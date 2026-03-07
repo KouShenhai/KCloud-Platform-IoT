@@ -1,5 +1,6 @@
-import {DrawerForm, ProFormText} from '@ant-design/pro-components';
-import React from "react";
+import { useIntl } from '@@/exports';
+import { DrawerForm, ProFormText } from '@ant-design/pro-components';
+import React from 'react';
 
 interface NoticeLogDrawerProps {
 	modalVisit: boolean;
@@ -18,16 +19,24 @@ type TableColumns = {
 	createTime: string | undefined;
 };
 
-export const NoticeLogDrawer: React.FC<NoticeLogDrawerProps> = ({ modalVisit, setModalVisit, dataSource, getStatus }) => {
+export const NoticeLogDrawer: React.FC<NoticeLogDrawerProps> = ({
+	modalVisit,
+	setModalVisit,
+	dataSource,
+	getStatus,
+}) => {
+	const intl = useIntl();
+	const t = (id: string, values?: Record<string, any>) =>
+		intl.formatMessage({ id }, values);
 
 	return (
 		<DrawerForm<TableColumns>
 			open={modalVisit}
-			title="查看通知日志"
+			title={t('sys.log.notice.drawer.title')}
 			drawerProps={{
 				destroyOnClose: true,
 				closable: true,
-				maskClosable: true
+				maskClosable: true,
 			}}
 			initialValues={dataSource}
 			onOpenChange={setModalVisit}
@@ -36,54 +45,83 @@ export const NoticeLogDrawer: React.FC<NoticeLogDrawerProps> = ({ modalVisit, se
 					style: {
 						display: 'none',
 					},
-				}
+				},
 			}}
 		>
 			<ProFormText
 				readonly={true}
 				name="code"
-				label="通知编码"
-				rules={[{ required: true, message: '请输入通知编码' }]}
+				label={t('sys.log.notice.code')}
+				rules={[
+					{
+						required: true,
+						message: t('sys.log.notice.required.code'),
+					},
+				]}
 			/>
 
 			<ProFormText
 				readonly={true}
 				name="name"
-				label="通知名称"
-				rules={[{ required: true, message: '请输入通知名称' }]}
+				label={t('sys.log.notice.name')}
+				rules={[
+					{
+						required: true,
+						message: t('sys.log.notice.required.name'),
+					},
+				]}
 			/>
 
 			<ProFormText
 				readonly={true}
 				name="status"
-				label="通知状态"
-				rules={[{ required: true, message: '请输入通知状态' }]}
+				label={t('sys.log.notice.status')}
+				rules={[
+					{
+						required: true,
+						message: t('sys.log.notice.required.status'),
+					},
+				]}
 				convertValue={(value) => {
-					return getStatus(value as string)
+					return getStatus(value as string);
 				}}
 			/>
 
 			<ProFormText
 				readonly={true}
 				name="param"
-				label="通知参数"
-				rules={[{ required: true, message: '请输入通知参数' }]}
+				label={t('sys.log.notice.param')}
+				rules={[
+					{
+						required: true,
+						message: t('sys.log.notice.required.param'),
+					},
+				]}
 			/>
 
 			<ProFormText
 				readonly={true}
 				name="errorMessage"
-				label="错误信息"
-				rules={[{ required: true, message: '请输入错误信息' }]}
+				label={t('sys.log.notice.errorMessage')}
+				rules={[
+					{
+						required: true,
+						message: t('sys.log.notice.required.errorMessage'),
+					},
+				]}
 			/>
 
 			<ProFormText
 				readonly={true}
 				name="createTime"
-				label="创建时间"
-				rules={[{ required: true, message: '请输入创建时间' }]}
+				label={t('common.createTime')}
+				rules={[
+					{
+						required: true,
+						message: t('sys.log.notice.required.createTime'),
+					},
+				]}
 			/>
-
 		</DrawerForm>
 	);
 };

@@ -1,10 +1,13 @@
 /* eslint-disable */
-import {request} from '@umijs/max';
-import {ExportAllToExcel} from "@/utils/export";
-import moment from "moment";
+import { ExportAllToExcel } from '@/utils/export';
+import { request } from '@umijs/max';
+import moment from 'moment';
 
 /** 修改通知日志 修改通知日志 PUT /api/v1/notice-logs */
-export async function modifyNoticeLog(body: API.NoticeLogModifyCmd, options?: { [key: string]: any }) {
+export async function modifyNoticeLog(
+	body: API.NoticeLogModifyCmd,
+	options?: { [key: string]: any },
+) {
 	return request<any>('/apis/admin/api/v1/notice-logs', {
 		method: 'PUT',
 		headers: {
@@ -16,7 +19,10 @@ export async function modifyNoticeLog(body: API.NoticeLogModifyCmd, options?: { 
 }
 
 /** 保存通知日志 保存通知日志 POST /api/v1/notice-logs */
-export async function saveNoticeLog(body: API.NoticeLogSaveCmd, options?: { [key: string]: any }) {
+export async function saveNoticeLog(
+	body: API.NoticeLogSaveCmd,
+	options?: { [key: string]: any },
+) {
 	return request<any>('/apis/admin/api/v1/notice-logs', {
 		method: 'POST',
 		headers: {
@@ -28,7 +34,10 @@ export async function saveNoticeLog(body: API.NoticeLogSaveCmd, options?: { [key
 }
 
 /** 删除通知日志 删除通知日志 DELETE /api/v1/notice-logs */
-export async function removeNoticeLog(body: number[], options?: { [key: string]: any }) {
+export async function removeNoticeLog(
+	body: number[],
+	options?: { [key: string]: any },
+) {
 	return request<any>('/apis/admin/api/v1/notice-logs', {
 		method: 'DELETE',
 		headers: {
@@ -45,21 +54,37 @@ export async function getNoticeLogById(
 	params: API.getByIdParams,
 	options?: { [key: string]: any },
 ) {
-	const {id: param0, ...queryParams} = params;
+	const { id: param0, ...queryParams } = params;
 	return request<API.Result>(`/apis/admin/api/v1/notice-logs/${param0}`, {
 		method: 'GET',
-		params: {...queryParams},
+		params: { ...queryParams },
 		...(options || {}),
 	});
 }
 
 /** 导出通知日志 导出通知日志 POST /api/v1/notice-logs/export */
-export async function exportNoticeLog(body: API.NoticeLogExportCmd, options?: { [key: string]: any }) {
-	return ExportAllToExcel("通知日志" + "_导出全部_" + moment(new Date()).format('YYYYMMDDHHmmss') + ".xlsx", '/apis/admin/api/v1/notice-logs/export', 'POST', body, options)
+export async function exportNoticeLog(
+	body: API.NoticeLogExportCmd,
+	options?: { [key: string]: any },
+) {
+	return ExportAllToExcel(
+		'通知日志' +
+			'_导出全部_' +
+			moment(new Date()).format('YYYYMMDDHHmmss') +
+			'.xlsx',
+		'/apis/admin/api/v1/notice-logs/export',
+		'POST',
+		body,
+		options,
+	);
 }
 
 /** 导入通知日志 导入通知日志 POST /api/v1/notice-logs/import */
-export async function importNoticeLog(body: {}, file?: File[], options?: { [key: string]: any }) {
+export async function importNoticeLog(
+	body: {},
+	file?: File[],
+	options?: { [key: string]: any },
+) {
 	const formData = new FormData();
 
 	if (file) {
@@ -91,7 +116,10 @@ export async function importNoticeLog(body: {}, file?: File[], options?: { [key:
 }
 
 /** 分页查询通知日志列表 分页查询通知日志列表 POST /api/v1/notice-logs/page */
-export async function pageNoticeLog(body: API.NoticeLogPageQry, options?: { [key: string]: any }) {
+export async function pageNoticeLog(
+	body: API.NoticeLogPageQry,
+	options?: { [key: string]: any },
+) {
 	return request<API.Result>('/apis/admin/api/v1/notice-logs/page', {
 		method: 'POST',
 		headers: {

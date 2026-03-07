@@ -1,3 +1,8 @@
+import { clearToken, setToken } from '@/access';
+import { login } from '@/services/auth/auth';
+import { getCaptchaByUuid, sendCaptcha } from '@/services/auth/captcha';
+import { getSecretInfo } from '@/services/auth/secret';
+import { SelectLang, useIntl } from '@@/exports';
 import {
 	AlipayOutlined,
 	GithubOutlined,
@@ -10,21 +15,25 @@ import {
 	UserOutlined,
 	WechatOutlined,
 } from '@ant-design/icons';
-import {CaptFieldRef, LoginFormPage, ProFormCaptcha, ProFormInstance, ProFormText,} from '@ant-design/pro-components';
-import {Col, Divider, Image, message, Row, Space, Tabs} from 'antd';
-import {CSSProperties, useEffect, useRef, useState} from 'react';
-import {login} from '@/services/auth/auth';
-import {getCaptchaByUuid, sendCaptcha } from '@/services/auth/captcha';
-import {getSecretInfo} from '@/services/auth/secret';
-import {JSEncrypt} from 'jsencrypt';
-import {v7 as uuidV7} from 'uuid';
-import {clearToken, setToken} from "@/access"
-import {history} from "@umijs/max";
-import {SelectLang, useIntl} from "@@/exports";
+import {
+	CaptFieldRef,
+	LoginFormPage,
+	ProFormCaptcha,
+	ProFormInstance,
+	ProFormText,
+} from '@ant-design/pro-components';
+import { history } from '@umijs/max';
+import { Col, Divider, Image, message, Row, Space, Tabs } from 'antd';
+import { JSEncrypt } from 'jsencrypt';
+import { CSSProperties, useEffect, useRef, useState } from 'react';
+import { v7 as uuidV7 } from 'uuid';
 
-const USERNAME_PASSWORD = {key: 'username_password', label: 'login.usernamePassword'};
-const MOBILE = {key: 'mobile', label: 'login.mobile'};
-const MAIL = {key: 'mail', label: 'login.mail'};
+const USERNAME_PASSWORD = {
+	key: 'username_password',
+	label: 'login.usernamePassword',
+};
+const MOBILE = { key: 'mobile', label: 'login.mobile' };
+const MAIL = { key: 'mail', label: 'login.mail' };
 type LoginType = 'username_password' | 'mobile' | 'mail';
 
 const iconStyles: CSSProperties = {
@@ -36,7 +45,8 @@ const iconStyles: CSSProperties = {
 
 export default () => {
 	const intl = useIntl();
-	const t = (id: string, values?: Record<string, any>) => intl.formatMessage({id}, values);
+	const t = (id: string, values?: Record<string, any>) =>
+		intl.formatMessage({ id }, values);
 	const items = [
 		{ ...USERNAME_PASSWORD, label: t(USERNAME_PASSWORD.label) },
 		{ ...MOBILE, label: t(MOBILE.label) },
@@ -53,7 +63,7 @@ export default () => {
 
 	const setFormField = (form: API.LoginParam) => {
 		formRef?.current?.setFieldsValue(form);
-	}
+	};
 	const encrypt = new JSEncrypt();
 
 	const getParams = (form: API.LoginParam) => {
@@ -78,27 +88,27 @@ export default () => {
 					mail: form.mail,
 					code: form.mail_captcha,
 					tenant_code: form.tenant_code,
-					grant_type: MAIL.key
+					grant_type: MAIL.key,
 				};
 			case MOBILE.key:
 				return {
 					mobile: form.mobile,
 					code: form.mobile_captcha,
 					tenant_code: form.tenant_code,
-					grant_type: MOBILE.key
+					grant_type: MOBILE.key,
 				};
 		}
 	};
 
 	const getCaptchaImage = async () => {
 		// 清空验证码输入框
-		setFormField({captcha: ''})
+		setFormField({ captcha: '' });
 		// 调用验证码API
 		const uuid = uuidV7();
 		// @ts-ignore
-		getCaptchaByUuid({uuid: uuid}).then((res: { code: string; data: React.SetStateAction<string>; }) => {
-			if (res.code === 'OK') {
-				setCaptchaImage(res.data);
+		getCaptchaByUuid({ uuid: uuid }).then((res) => {
+			if (res?.code === 'OK') {
+				setCaptchaImage(res.data as any);
 			}
 		});
 		setUuid(uuid);
@@ -106,73 +116,88 @@ export default () => {
 
 	const getPublicKey = async () => {
 		// @ts-ignore
-		getSecretInfo().then((res: { code: string; data: { publicKey: React.SetStateAction<string>; }; }) => {
-			if (res.code === 'OK') {
-				setPublicKey(res.data.publicKey);
+		getSecretInfo().then((res) => {
+			if (res?.code === 'OK') {
+				setPublicKey((res.data as any)?.publicKey);
 			}
 		});
 	};
 
 	const sendMailCaptcha = async () => {
 		const param = {
-			tenantCode: formRef?.current?.getFieldValue("tenant_code"),
-			uuid: formRef?.current?.getFieldValue(MAIL.key)
-		}
-		const co = { co : param }
-		sendCaptcha('mail', co as API.SendCaptchaCO, uuidV7()).then(res => {
-			if (res.code !== "OK") {
-				mailCaptchaRef.current?.endTiming()
-			}
-		}).catch(console.log)
-	}
+			tenantCode: formRef?.current?.getFieldValue('tenant_code'),
+			uuid: formRef?.current?.getFieldValue(MAIL.key),
+		};
+		const co = { co: param };
+		sendCaptcha('mail', co as API.SendCaptchaCO, uuidV7())
+			.then((res) => {
+				if (res.code !== 'OK') {
+					mailCaptchaRef.current?.endTiming();
+				}
+			})
+			.catch(console.log);
+	};
 
 	const sendMobileCaptcha = async () => {
 		const param = {
-			tenantCode: formRef?.current?.getFieldValue("tenant_code"),
-			uuid: formRef?.current?.getFieldValue(MOBILE.key)
-		}
-		const co = { co : param }
-		sendCaptcha('mobile', co as API.SendCaptchaCO, uuidV7()).then(res => {
-			if (res.code !== "OK") {
-				mobileCaptchaRef.current?.endTiming()
-			}
-		}).catch(console.log)
-	}
+			tenantCode: formRef?.current?.getFieldValue('tenant_code'),
+			uuid: formRef?.current?.getFieldValue(MOBILE.key),
+		};
+		const co = { co: param };
+		sendCaptcha('mobile', co as API.SendCaptchaCO, uuidV7())
+			.then((res) => {
+				if (res.code !== 'OK') {
+					mobileCaptchaRef.current?.endTiming();
+				}
+			})
+			.catch(console.log);
+	};
 
 	const clearMailCaptcha = () => {
-		setFormField({mail_captcha: ''})
-	}
+		setFormField({ mail_captcha: '' });
+	};
 
 	const clearMobileCaptcha = () => {
-		setFormField({mobile_captcha: ''})
-	}
+		setFormField({ mobile_captcha: '' });
+	};
 
-	const timeFix 	= () => {
+	const timeFix = () => {
 		const time = new Date();
 		const hour = time.getHours();
-		return hour < 9 ? '早上好' : hour <= 11 ? '上午好' : hour <= 13 ? '中午好' : hour < 20 ? '下午好' : '晚上好';
+		return hour < 9
+			? t('login.greeting.morning')
+			: hour <= 11
+			? t('login.greeting.forenoon')
+			: hour <= 13
+			? t('login.greeting.noon')
+			: hour < 20
+			? t('login.greeting.afternoon')
+			: t('login.greeting.evening');
 	};
 
 	useEffect(() => {
-		clearToken()
-		getPublicKey().catch(console.log)
-		getCaptchaImage().catch(console.log)
+		clearToken();
+		getPublicKey().catch(console.log);
+		getCaptchaImage().catch(console.log);
 	}, []);
 
 	const onSubmit = async (form: API.LoginParam) => {
-		setLoading(true)
+		setLoading(true);
 		const params = getParams(form);
-		login({...params})
+		login({ ...params })
 			// @ts-ignore
-			.then((res: {
-				code: string;
-				data: { access_token: string; refresh_token: string; expires_in: number; };
-			}) => {
-				if (res.code === 'OK') {
+			.then((res) => {
+				if (res?.code === 'OK') {
 					// 提示框【登录成功】
-					message.success(`${timeFix()}，欢迎回来`).then();
+					message
+						.success(t('login.welcomeBack', { greeting: timeFix() }))
+						.then();
 					// 登录成功，存储令牌
-					setToken(res.data?.access_token, res.data?.refresh_token, res.data?.expires_in * 1000 + new Date().getTime())
+					setToken(
+						res.data?.access_token,
+						res.data?.refresh_token,
+						res.data?.expires_in * 1000 + new Date().getTime(),
+					);
 					// 获取跳转地址
 					const urlParams = new URL(window.location.href).searchParams;
 					// 跳转路由
@@ -180,7 +205,7 @@ export default () => {
 					// 1.5秒后刷新页面
 					setTimeout(() => {
 						window.location.reload();
-					}, 1500)
+					}, 1500);
 				}
 			})
 			.catch(() => {
@@ -188,7 +213,8 @@ export default () => {
 				getCaptchaImage();
 				clearMailCaptcha();
 				clearMobileCaptcha();
-			}).finally(() => setLoading(false));
+			})
+			.finally(() => setLoading(false));
 	};
 
 	return (
@@ -199,14 +225,16 @@ export default () => {
 				width: '100vw',
 			}}
 		>
-			<div style={{position: 'fixed', top: 16, right: 16, zIndex: 9999}}>
+			<div
+				style={{ position: 'fixed', top: 16, right: 16, zIndex: 9999 }}
+			>
 				<SelectLang reload={true} />
 			</div>
 			<LoginFormPage
 				formRef={formRef}
 				onFinish={onSubmit}
-				backgroundImageUrl={"/FfdJeJRQWjEeGTpqgBKj.png"}
-				logo={<img alt="logo" src="/logo.png"/>}
+				backgroundImageUrl={'/FfdJeJRQWjEeGTpqgBKj.png'}
+				logo={<img alt="logo" src="/logo.png" />}
 				title={t('app.title')}
 				subTitle={t('login.subtitle')}
 				loading={loading}
@@ -220,7 +248,13 @@ export default () => {
 						}}
 					>
 						<Divider plain>
-							<span style={{color: '#CCC', fontWeight: 'normal', fontSize: 14}}>
+							<span
+								style={{
+									color: '#CCC',
+									fontWeight: 'normal',
+									fontSize: 14,
+								}}
+							>
 								{t('login.otherWays')}
 							</span>
 						</Divider>
@@ -237,7 +271,9 @@ export default () => {
 									borderRadius: '50%',
 								}}
 							>
-								<GithubOutlined style={{...iconStyles, color: '#1f2328'}}/>
+								<GithubOutlined
+									style={{ ...iconStyles, color: '#1f2328' }}
+								/>
 							</div>
 							<div
 								style={{
@@ -251,7 +287,9 @@ export default () => {
 									borderRadius: '50%',
 								}}
 							>
-								<WechatOutlined style={{...iconStyles, color: '#0fcd2a'}}/>
+								<WechatOutlined
+									style={{ ...iconStyles, color: '#0fcd2a' }}
+								/>
 							</div>
 							<div
 								style={{
@@ -265,7 +303,9 @@ export default () => {
 									borderRadius: '50%',
 								}}
 							>
-								<QqOutlined style={{...iconStyles, color: '#1191ff'}}/>
+								<QqOutlined
+									style={{ ...iconStyles, color: '#1191ff' }}
+								/>
 							</div>
 							<div
 								style={{
@@ -279,7 +319,9 @@ export default () => {
 									borderRadius: '50%',
 								}}
 							>
-								<AlipayOutlined style={{...iconStyles, color: '#1677FF'}}/>
+								<AlipayOutlined
+									style={{ ...iconStyles, color: '#1677FF' }}
+								/>
 							</div>
 						</Space>
 					</div>
@@ -289,7 +331,9 @@ export default () => {
 					centered
 					items={items}
 					activeKey={loginType}
-					onChange={(activeKey) => setLoginType(activeKey as LoginType)}
+					onChange={(activeKey) =>
+						setLoginType(activeKey as LoginType)
+					}
 				></Tabs>
 
 				<ProFormText
@@ -297,7 +341,7 @@ export default () => {
 					name="tenant_code"
 					fieldProps={{
 						size: 'large',
-						prefix: <TeamOutlined className={'prefixIcon'}/>,
+						prefix: <TeamOutlined className={'prefixIcon'} />,
 						autoComplete: 'new-password',
 					}}
 					placeholder={t('login.tenantCode.placeholder')}
@@ -316,7 +360,9 @@ export default () => {
 							name="username"
 							fieldProps={{
 								size: 'large',
-								prefix: <UserOutlined className={'prefixIcon'}/>,
+								prefix: (
+									<UserOutlined className={'prefixIcon'} />
+								),
 								autoComplete: 'new-password',
 							}}
 							placeholder={t('login.username.placeholder')}
@@ -332,7 +378,9 @@ export default () => {
 							name="password"
 							fieldProps={{
 								size: 'large',
-								prefix: <LockOutlined className={'prefixIcon'}/>,
+								prefix: (
+									<LockOutlined className={'prefixIcon'} />
+								),
 								autoComplete: 'new-password',
 							}}
 							placeholder={t('login.password.placeholder')}
@@ -347,10 +395,14 @@ export default () => {
 							<Col span={16}>
 								<ProFormText
 									disabled={loading}
-									width={"sm"}
+									width={'sm'}
 									fieldProps={{
 										size: 'large',
-										prefix: <SafetyCertificateOutlined className={'prefixIcon'}/>,
+										prefix: (
+											<SafetyCertificateOutlined
+												className={'prefixIcon'}
+											/>
+										),
 										autoComplete: 'new-password',
 									}}
 									name="captcha"
@@ -358,7 +410,9 @@ export default () => {
 									rules={[
 										{
 											required: true,
-											message: t('login.captcha.required'),
+											message: t(
+												'login.captcha.required',
+											),
 										},
 										{
 											pattern: /^[A-Za-z0-9]{4}$/,
@@ -370,10 +424,10 @@ export default () => {
 							<Col span={8}>
 								<Image
 									src={captchaImage}
-									alt="验证码"
+									alt={t('login.captcha.alt')}
 									style={{
-										maxWidth: "100%",
-										minHeight: "32px"
+										maxWidth: '100%',
+										minHeight: '32px',
 									}}
 									preview={false}
 									onClick={() => getCaptchaImage()}
@@ -388,7 +442,9 @@ export default () => {
 							disabled={loading}
 							fieldProps={{
 								size: 'large',
-								prefix: <MobileOutlined className={'prefixIcon'}/>,
+								prefix: (
+									<MobileOutlined className={'prefixIcon'} />
+								),
 								autoComplete: 'new-password',
 							}}
 							name="mobile"
@@ -408,7 +464,11 @@ export default () => {
 							disabled={loading}
 							fieldProps={{
 								size: 'large',
-								prefix: <SafetyCertificateOutlined className={'prefixIcon'}/>,
+								prefix: (
+									<SafetyCertificateOutlined
+										className={'prefixIcon'}
+									/>
+								),
 								autoComplete: 'new-password',
 							}}
 							fieldRef={mobileCaptchaRef}
@@ -418,7 +478,9 @@ export default () => {
 							placeholder={t('login.smsCaptcha.placeholder')}
 							captchaTextRender={(timing, count) => {
 								if (timing) {
-									return t('login.captcha.countdown', {count});
+									return t('login.captcha.countdown', {
+										count,
+									});
 								}
 								return t('login.captcha.get');
 							}}
@@ -443,7 +505,9 @@ export default () => {
 							disabled={loading}
 							fieldProps={{
 								size: 'large',
-								prefix: <MailOutlined className={'prefixIcon'}/>,
+								prefix: (
+									<MailOutlined className={'prefixIcon'} />
+								),
 								autoComplete: 'new-password',
 							}}
 							name="mail"
@@ -454,7 +518,8 @@ export default () => {
 									message: t('login.mail.required'),
 								},
 								{
-									pattern: /^\w+(-+.\w+)*@\w+(-.\w+)*.\w+(-.\w+)*$/,
+									pattern:
+										/^\w+(-+.\w+)*@\w+(-.\w+)*.\w+(-.\w+)*$/,
 									message: t('login.mail.invalid'),
 								},
 							]}
@@ -463,7 +528,11 @@ export default () => {
 							disabled={loading}
 							fieldProps={{
 								size: 'large',
-								prefix: <SafetyCertificateOutlined className={'prefixIcon'}/>,
+								prefix: (
+									<SafetyCertificateOutlined
+										className={'prefixIcon'}
+									/>
+								),
 								autoComplete: 'new-password',
 							}}
 							fieldRef={mailCaptchaRef}
@@ -473,7 +542,9 @@ export default () => {
 							placeholder={t('login.mailCaptcha.placeholder')}
 							captchaTextRender={(timing, count) => {
 								if (timing) {
-									return t('login.captcha.countdown', {count});
+									return t('login.captcha.countdown', {
+										count,
+									});
 								}
 								return t('login.captcha.get');
 							}}

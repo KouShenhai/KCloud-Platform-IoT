@@ -1,10 +1,13 @@
 /* eslint-disable */
-import {request} from '@umijs/max';
-import {ExportAllToExcel} from "@/utils/export";
-import moment from "moment";
+import { ExportAllToExcel } from '@/utils/export';
+import { request } from '@umijs/max';
+import moment from 'moment';
 
 /** 修改操作日志 修改操作日志 PUT /api/v1/operate-logs */
-export async function modifyOperateLog(body: API.OperateLogModifyCmd, options?: { [key: string]: any }) {
+export async function modifyOperateLog(
+	body: API.OperateLogModifyCmd,
+	options?: { [key: string]: any },
+) {
 	return request<any>('/apis/admin/api/v1/operate-logs', {
 		method: 'PUT',
 		headers: {
@@ -16,7 +19,10 @@ export async function modifyOperateLog(body: API.OperateLogModifyCmd, options?: 
 }
 
 /** 保存操作日志 保存操作日志 POST /api/v1/operate-logs */
-export async function saveOperateLog(body: API.OperateLogSaveCmd, options?: { [key: string]: any }) {
+export async function saveOperateLog(
+	body: API.OperateLogSaveCmd,
+	options?: { [key: string]: any },
+) {
 	return request<any>('/apis/admin/api/v1/operate-logs', {
 		method: 'POST',
 		headers: {
@@ -28,7 +34,10 @@ export async function saveOperateLog(body: API.OperateLogSaveCmd, options?: { [k
 }
 
 /** 删除操作日志 删除操作日志 DELETE /api/v1/operate-logs */
-export async function removeOperateLog(body: number[], options?: { [key: string]: any }) {
+export async function removeOperateLog(
+	body: number[],
+	options?: { [key: string]: any },
+) {
 	return request<any>('/apis/admin/api/v1/operate-logs', {
 		method: 'DELETE',
 		headers: {
@@ -45,21 +54,37 @@ export async function getOperateLogById(
 	params: API.getByIdParams,
 	options?: { [key: string]: any },
 ) {
-	const {id: param0, ...queryParams} = params;
+	const { id: param0, ...queryParams } = params;
 	return request<API.Result>(`/apis/admin/api/v1/operate-logs/${param0}`, {
 		method: 'GET',
-		params: {...queryParams},
+		params: { ...queryParams },
 		...(options || {}),
 	});
 }
 
 /** 导出操作日志 导出操作日志 POST /api/v1/operate-logs/export */
-export async function exportOperateLog(body: API.OperateLogExportCmd, options?: { [key: string]: any }) {
-	return ExportAllToExcel("操作日志" + "_导出全部_" + moment(new Date()).format('YYYYMMDDHHmmss') + ".xlsx", '/apis/admin/api/v1/operate-logs/export', 'POST', body, options)
+export async function exportOperateLog(
+	body: API.OperateLogExportCmd,
+	options?: { [key: string]: any },
+) {
+	return ExportAllToExcel(
+		'操作日志' +
+			'_导出全部_' +
+			moment(new Date()).format('YYYYMMDDHHmmss') +
+			'.xlsx',
+		'/apis/admin/api/v1/operate-logs/export',
+		'POST',
+		body,
+		options,
+	);
 }
 
 /** 导入操作日志 导入操作日志 POST /api/v1/operate-logs/import */
-export async function importOperateLog(body: {}, file?: File[], options?: { [key: string]: any }) {
+export async function importOperateLog(
+	body: {},
+	file?: File[],
+	options?: { [key: string]: any },
+) {
 	const formData = new FormData();
 
 	if (file) {
@@ -91,7 +116,10 @@ export async function importOperateLog(body: {}, file?: File[], options?: { [key
 }
 
 /** 分页查询操作日志列表 分页查询操作日志列表 POST /api/v1/operate-logs/page */
-export async function pageOperateLog(body: API.OperateLogPageQry, options?: { [key: string]: any }) {
+export async function pageOperateLog(
+	body: API.OperateLogPageQry,
+	options?: { [key: string]: any },
+) {
 	return request<API.Result>('/apis/admin/api/v1/operate-logs/page', {
 		method: 'POST',
 		headers: {

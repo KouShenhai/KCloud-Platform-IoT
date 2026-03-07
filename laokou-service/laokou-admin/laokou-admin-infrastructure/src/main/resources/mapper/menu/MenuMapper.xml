@@ -79,19 +79,20 @@
   </select>
 
   <select id="selectAllMenuList" resultType="org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO">
-    select id,
-           "name",
-           pid,
-           "path",
-           icon
-    from sys_menu
-    where "type" = 0 and status = 0 and del_flag = 0 and tenant_id = 0
-    order by "sort" desc
+    select m.id,
+           im.code as "name",
+           m.pid,
+           m."path",
+           m.icon
+    from sys_menu m
+    join sys_i18n_menu im on m."name" = im.menu
+    where m."type" = 0 and m.status = 0 and m.del_flag = 0 and m.tenant_id = 0
+    order by m."sort" desc
   </select>
 
   <select id="selectMenuListByUserId" resultType="org.laokou.admin.menu.gatewayimpl.database.dataobject.MenuDO">
     select distinct m.id,
-           m."name",
+           im.code as "name",
            m.pid,
            m."path",
            m.icon,
@@ -99,6 +100,7 @@
     from sys_menu m
     join sys_role_menu rm on m.id = rm.menu_id
     join sys_user_role ur on rm.role_id = ur.role_id
+    join sys_i18n_menu im on m."name" = im.menu
     where ur.user_id = #{userId} and m."type" = 0 and m.status = 0 and m.del_flag = 0 and m.tenant_id = 0
     order by m."sort" desc
   </select>

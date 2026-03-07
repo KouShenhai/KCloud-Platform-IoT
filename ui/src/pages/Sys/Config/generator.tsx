@@ -1,11 +1,13 @@
-import type {ProColumns} from '@ant-design/pro-components';
-import {ProTable} from '@ant-design/pro-components';
-import {pageOssLog} from "@/services/admin/ossLog";
-import {useRef} from "react";
-import {Space, Tag} from "antd";
+import { pageOssLog } from '@/services/admin/ossLog';
+import { useIntl } from '@@/exports';
+import type { ActionType, ProColumns } from '@ant-design/pro-components';
+import { ProTable } from '@ant-design/pro-components';
+import { useRef } from 'react';
 
 export default () => {
-
+	const intl = useIntl();
+	const t = (id: string, values?: Record<string, any>) =>
+		intl.formatMessage({ id }, values);
 	type TableColumns = {
 		id: number | undefined;
 		databaseName: string;
@@ -22,43 +24,47 @@ export default () => {
 		createTime: string | undefined;
 	};
 
-	const actionRef = useRef();
+	const actionRef = useRef<ActionType | null>(null);
 
 	const getPageQueryParam = (params: any) => {
-		return  {
+		return {
 			pageSize: params?.pageSize,
 			pageNum: params?.current,
 			pageIndex: params?.pageSize * (params?.current - 1),
 			params: {
-				startTime: params?.startDate ? `${params.startDate} 00:00:00` : undefined,
-				endTime: params?.endDate ? `${params.endDate} 23:59:59` : undefined
-			}
-		}
-	}
+				startTime: params?.startDate
+					? `${params.startDate} 00:00:00`
+					: undefined,
+				endTime: params?.endDate
+					? `${params.endDate} 23:59:59`
+					: undefined,
+			},
+		};
+	};
 
 	const columns: ProColumns<TableColumns>[] = [
 		{
-			title: '序号',
+			title: t('common.number'),
 			dataIndex: 'index',
 			valueType: 'indexBorder',
-			width: 60,
+			width: 85,
 		},
 		{
-			title: '创建日期',
+			title: t('common.createTime'),
 			key: 'createTime',
 			dataIndex: 'createTime',
 			valueType: 'dateTime',
 			hideInSearch: true,
 			width: 160,
-			ellipsis: true
+			ellipsis: true,
 		},
 		{
-			title: '创建日期',
+			title: t('common.createTime'),
 			dataIndex: 'createTimeValue',
 			valueType: 'dateRange',
 			hideInTable: true,
 			fieldProps: {
-				placeholder: ['请选择开始日期', '请选择结束日期'],
+				placeholder: [t('common.selectStartTime'), t('common.selectEndTime')],
 			},
 			search: {
 				transform: (value) => {
@@ -67,8 +73,8 @@ export default () => {
 						endDate: value[1],
 					};
 				},
-			}
-		}
+			},
+		},
 	];
 
 	return (
@@ -77,19 +83,19 @@ export default () => {
 			columns={columns}
 			request={async (params) => {
 				// 表单搜索项会从 params 传入，传递给后端接口。
-				return pageOssLog(getPageQueryParam(params)).then(res => {
+				return pageOssLog(getPageQueryParam(params)).then((res) => {
 					return Promise.resolve({
 						data: res?.data?.records,
 						total: parseInt(res?.data?.total || 0),
 						success: true,
 					});
-				})
+				});
 			}}
 			rowKey="id"
 			pagination={{
 				showQuickJumper: true,
 				showSizeChanger: false,
-				pageSize: 10
+				pageSize: 10,
 			}}
 			search={{
 				layout: 'vertical',
@@ -97,8 +103,8 @@ export default () => {
 			}}
 			dateFormatter="string"
 			toolbar={{
-				title: '代码生成器',
-				tooltip: '代码生成器',
+				title: t('menu.sys.config.generator'),
+				tooltip: t('menu.sys.config.generator'),
 			}}
 		/>
 	);
