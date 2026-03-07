@@ -34,8 +34,7 @@ export default () => {
 	const [modalModifyAuthorityVisit, setModalModifyAuthorityVisit] =
 		useState(false);
 	const [modalRestPwdVisit, setModalRestPwdVisit] = useState(false);
-	// @ts-ignore
-	const actionRef = useRef<ActionType>();
+	const actionRef = useRef<ActionType | null>(null);
 	const [dataSource, setDataSource] = useState<any>({});
 	const [ids, setIds] = useState<number[]>([]);
 	const [title, setTitle] = useState('');
@@ -333,6 +332,7 @@ export default () => {
 						key={'resetPwd'}
 						onClick={() => {
 							getUserById({ id: record?.id }).then((res) => {
+								setTitle(t('user.resetPwd.title'));
 								setModalRestPwdVisit(true);
 								setDataSource(res?.data);
 							});

@@ -1,9 +1,13 @@
 import { pageOssLog } from '@/services/admin/ossLog';
-import type { ProColumns } from '@ant-design/pro-components';
+import { useIntl } from '@@/exports';
+import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { useRef } from 'react';
 
 export default () => {
+	const intl = useIntl();
+	const t = (id: string, values?: Record<string, any>) =>
+		intl.formatMessage({ id }, values);
 	type TableColumns = {
 		id: number | undefined;
 		databaseName: string;
@@ -20,7 +24,7 @@ export default () => {
 		createTime: string | undefined;
 	};
 
-	const actionRef = useRef();
+	const actionRef = useRef<ActionType | null>(null);
 
 	const getPageQueryParam = (params: any) => {
 		return {
@@ -40,13 +44,13 @@ export default () => {
 
 	const columns: ProColumns<TableColumns>[] = [
 		{
-			title: '序号',
+			title: t('common.number'),
 			dataIndex: 'index',
 			valueType: 'indexBorder',
 			width: 60,
 		},
 		{
-			title: '创建日期',
+			title: t('common.createTime'),
 			key: 'createTime',
 			dataIndex: 'createTime',
 			valueType: 'dateTime',
@@ -55,12 +59,12 @@ export default () => {
 			ellipsis: true,
 		},
 		{
-			title: '创建日期',
+			title: t('common.createTime'),
 			dataIndex: 'createTimeValue',
 			valueType: 'dateRange',
 			hideInTable: true,
 			fieldProps: {
-				placeholder: ['请选择开始日期', '请选择结束日期'],
+				placeholder: [t('common.selectStartTime'), t('common.selectEndTime')],
 			},
 			search: {
 				transform: (value) => {
@@ -99,8 +103,8 @@ export default () => {
 			}}
 			dateFormatter="string"
 			toolbar={{
-				title: '代码生成器',
-				tooltip: '代码生成器',
+				title: t('sys.config.generator.title'),
+				tooltip: t('sys.config.generator.title'),
 			}}
 		/>
 	);

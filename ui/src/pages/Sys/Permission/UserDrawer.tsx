@@ -1,6 +1,6 @@
 import { UploadAvatarDrawer } from '@/pages/Sys/Permission/UploadAvatarDrawer';
 import { modifyUser, saveUser } from '@/services/admin/user';
-import { useAccess } from '@@/exports';
+import { useAccess, useIntl } from '@@/exports';
 import {
 	DrawerForm,
 	ProFormRadio,
@@ -61,6 +61,9 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({
 	setLogId,
 }) => {
 	const access = useAccess();
+	const intl = useIntl();
+	const t = (id: string, values?: Record<string, any>) =>
+		intl.formatMessage({ id }, values);
 	const [previewOpen, setPreviewOpen] = useState(false);
 	const [previewImage, setPreviewImage] = useState('');
 	const [loading, setLoading] = useState(false);
@@ -101,7 +104,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({
 					saveUser({ co: co }, requestId)
 						.then((res) => {
 							if (res.code === 'OK') {
-								message.success('保存成功').then();
+								message.success(t('toast.saveSuccess')).then();
 								setModalVisit(false);
 								onComponent();
 							}
@@ -115,7 +118,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({
 					modifyUser({ co: co })
 						.then((res) => {
 							if (res.code === 'OK') {
-								message.success('修改成功').then();
+								message.success(t('toast.modifySuccess')).then();
 								setModalVisit(false);
 								onComponent();
 							}
@@ -135,40 +138,44 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({
 
 			<ProFormText
 				name="username"
-				label="用户名"
-				tooltip={'用户名【不允许重复，不允许修改】'}
+				label={t('user.username')}
+				tooltip={t('user.tooltip.username')}
 				disabled={edit}
 				readonly={readOnly}
-				placeholder={'请输入用户名'}
-				rules={[{ required: true, message: '请输入用户名' }]}
+				placeholder={t('user.placeholder.username')}
+				rules={[
+					{ required: true, message: t('user.required.username') },
+				]}
 			/>
 
 			<ProFormText
 				disabled={loading}
 				name="mail"
-				label="用户邮箱"
-				tooltip={'邮箱登录【不允许重复】'}
+				label={t('user.mail')}
+				tooltip={t('user.tooltip.mail')}
 				readonly={readOnly}
-				placeholder={'请输入用户邮箱'}
+				placeholder={t('user.placeholder.mail')}
 			/>
 
 			<ProFormText
 				disabled={loading}
 				name="mobile"
-				label="用户手机号"
-				tooltip={'手机号登录【不允许重复】'}
+				label={t('user.mobile')}
+				tooltip={t('user.tooltip.mobile')}
 				readonly={readOnly}
-				placeholder={'请输入用户手机号'}
+				placeholder={t('user.placeholder.mobile')}
 			/>
 
 			<ProFormTreeSelect
 				disabled={loading}
 				readonly={readOnly}
 				name="deptId"
-				label="所属部门"
+				label={t('user.dept')}
 				allowClear={true}
-				placeholder={'请选择所属部门'}
-				rules={[{ required: true, message: '请选择所属部门' }]}
+				placeholder={t('user.placeholder.dept')}
+				rules={[
+					{ required: true, message: t('user.required.dept') },
+				]}
 				fieldProps={{
 					fieldNames: {
 						label: 'name',
@@ -184,7 +191,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({
 			{!readOnly &&
 				(access.canUserModify || access.canUserModify) &&
 				access.canOssUpload && (
-					<ProFormItem label={'用户头像'}>
+					<ProFormItem label={t('user.avatar')}>
 						<UploadAvatarDrawer
 							setPreviewImage={setPreviewImage}
 							setPreviewOpen={setPreviewOpen}
@@ -196,7 +203,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({
 				)}
 
 			{readOnly && fileList.length > 0 && (
-				<ProFormItem label={'用户头像'}>
+				<ProFormItem label={t('user.avatar')}>
 					<Image width={100} src={fileList[0].url} />
 				</ProFormItem>
 			)}
@@ -204,12 +211,14 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({
 			<ProFormRadio.Group
 				disabled={loading}
 				name="status"
-				label="用户状态"
+				label={t('user.status')}
 				readonly={readOnly}
-				rules={[{ required: true, message: '请选择用户状态' }]}
+				rules={[
+					{ required: true, message: t('user.required.status') },
+				]}
 				options={[
-					{ label: '启用', value: 0 },
-					{ label: '禁用', value: 1 },
+					{ label: t('common.enable'), value: 0 },
+					{ label: t('common.disable'), value: 1 },
 				]}
 			/>
 
@@ -231,12 +240,14 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({
 					disabled={loading}
 					name="roleIds"
 					allowClear={true}
-					label="所属角色"
+					label={t('user.roles')}
 					mode={'multiple'}
 					readonly={readOnly}
 					options={roleList}
-					placeholder={'请选择所属角色'}
-					rules={[{ required: true, message: '请选择所属角色' }]}
+					placeholder={t('user.placeholder.roles')}
+					rules={[
+						{ required: true, message: t('user.required.roles') },
+					]}
 					fieldProps={{
 						fieldNames: {
 							label: 'name',
@@ -251,8 +262,13 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({
 					disabled={loading}
 					readonly={true}
 					name="createTime"
-					rules={[{ required: true, message: '请输入创建时间' }]}
-					label="创建时间"
+					rules={[
+						{
+							required: true,
+							message: t('role.validate.createTimeRequired'),
+						},
+					]}
+					label={t('common.createTime')}
 				/>
 			)}
 		</DrawerForm>

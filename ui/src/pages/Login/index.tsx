@@ -106,28 +106,21 @@ export default () => {
 		// 调用验证码API
 		const uuid = uuidV7();
 		// @ts-ignore
-		getCaptchaByUuid({ uuid: uuid }).then(
-			(res: { code: string; data: React.SetStateAction<string> }) => {
-				if (res.code === 'OK') {
-					setCaptchaImage(res.data);
-				}
-			},
-		);
+		getCaptchaByUuid({ uuid: uuid }).then((res) => {
+			if (res?.code === 'OK') {
+				setCaptchaImage(res.data as any);
+			}
+		});
 		setUuid(uuid);
 	};
 
 	const getPublicKey = async () => {
 		// @ts-ignore
-		getSecretInfo().then(
-			(res: {
-				code: string;
-				data: { publicKey: React.SetStateAction<string> };
-			}) => {
-				if (res.code === 'OK') {
-					setPublicKey(res.data.publicKey);
-				}
-			},
-		);
+		getSecretInfo().then((res) => {
+			if (res?.code === 'OK') {
+				setPublicKey((res.data as any)?.publicKey);
+			}
+		});
 	};
 
 	const sendMailCaptcha = async () => {
@@ -172,14 +165,14 @@ export default () => {
 		const time = new Date();
 		const hour = time.getHours();
 		return hour < 9
-			? '早上好'
+			? t('login.greeting.morning')
 			: hour <= 11
-			? '上午好'
+			? t('login.greeting.forenoon')
 			: hour <= 13
-			? '中午好'
+			? t('login.greeting.noon')
 			: hour < 20
-			? '下午好'
-			: '晚上好';
+			? t('login.greeting.afternoon')
+			: t('login.greeting.evening');
 	};
 
 	useEffect(() => {
@@ -193,36 +186,28 @@ export default () => {
 		const params = getParams(form);
 		login({ ...params })
 			// @ts-ignore
-			.then(
-				(res: {
-					code: string;
-					data: {
-						access_token: string;
-						refresh_token: string;
-						expires_in: number;
-					};
-				}) => {
-					if (res.code === 'OK') {
-						// 提示框【登录成功】
-						message.success(`${timeFix()}，欢迎回来`).then();
-						// 登录成功，存储令牌
-						setToken(
-							res.data?.access_token,
-							res.data?.refresh_token,
-							res.data?.expires_in * 1000 + new Date().getTime(),
-						);
-						// 获取跳转地址
-						const urlParams = new URL(window.location.href)
-							.searchParams;
-						// 跳转路由
-						history.push(urlParams.get('redirect') || '/');
-						// 1.5秒后刷新页面
-						setTimeout(() => {
-							window.location.reload();
-						}, 1500);
-					}
-				},
-			)
+			.then((res) => {
+				if (res?.code === 'OK') {
+					// 提示框【登录成功】
+					message
+						.success(t('login.welcomeBack', { greeting: timeFix() }))
+						.then();
+					// 登录成功，存储令牌
+					setToken(
+						res.data?.access_token,
+						res.data?.refresh_token,
+						res.data?.expires_in * 1000 + new Date().getTime(),
+					);
+					// 获取跳转地址
+					const urlParams = new URL(window.location.href).searchParams;
+					// 跳转路由
+					history.push(urlParams.get('redirect') || '/');
+					// 1.5秒后刷新页面
+					setTimeout(() => {
+						window.location.reload();
+					}, 1500);
+				}
+			})
 			.catch(() => {
 				// 登录失败，刷新验证码
 				getCaptchaImage();
@@ -439,7 +424,7 @@ export default () => {
 							<Col span={8}>
 								<Image
 									src={captchaImage}
-									alt="验证码"
+									alt={t('login.captcha.alt')}
 									style={{
 										maxWidth: '100%',
 										minHeight: '32px',

@@ -5,9 +5,10 @@ import {
 	removeThingModel,
 } from '@/services/iot/thingModel';
 import { trim } from '@/utils/format';
-import { useAccess } from '@@/exports';
+import { useAccess, useIntl } from '@@/exports';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import { ProColumns, ProTable } from '@ant-design/pro-components';
+import type { ActionType } from '@ant-design/pro-components';
 import { Button, message, Modal, Space, Tag } from 'antd';
 import { TableRowSelection } from 'antd/es/table/interface';
 import { useRef, useState } from 'react';
@@ -15,7 +16,10 @@ import { v7 as uuidV7 } from 'uuid';
 
 export default () => {
 	const access = useAccess();
-	const actionRef = useRef();
+	const intl = useIntl();
+	const t = (id: string, values?: Record<string, any>) =>
+		intl.formatMessage({ id }, values);
+	const actionRef = useRef<ActionType | null>(null);
 	const [modalVisit, setModalVisit] = useState(false);
 	const [dataSource, setDataSource] = useState<any>({});
 	const [title, setTitle] = useState('');
@@ -82,83 +86,83 @@ export default () => {
 
 	const columns: ProColumns<TableColumns>[] = [
 		{
-			title: '序号',
+			title: t('common.number'),
 			dataIndex: 'index',
 			valueType: 'indexBorder',
-			width: 60,
+			width: 85,
 		},
 		{
-			title: '物模型编码',
+			title: t('iot.thingModel.code'),
 			dataIndex: 'code',
 			valueType: 'text',
 			ellipsis: true,
 			fieldProps: {
-				placeholder: '请输入物模型编码',
+				placeholder: t('iot.thingModel.placeholder.code'),
 			},
 		},
 		{
-			title: '物模型名称',
+			title: t('iot.thingModel.name'),
 			dataIndex: 'name',
 			valueType: 'text',
 			ellipsis: true,
 			fieldProps: {
-				placeholder: '请输入物模型名称',
+				placeholder: t('iot.thingModel.placeholder.name'),
 			},
 		},
 		{
-			title: '物模型数据类型',
+			title: t('iot.thingModel.dataType'),
 			key: 'dataType',
 			dataIndex: 'dataType',
 			valueType: 'select',
 			fieldProps: {
 				valueType: 'select',
 				mode: 'single',
-				placeholder: '请选择物模型数据类型',
+				placeholder: t('iot.thingModel.placeholder.dataType'),
 				options: [
 					{
 						value: 'integer',
-						label: '整数型',
+						label: t('iot.thingModel.dataType.integer'),
 					},
 					{
 						value: 'decimal',
-						label: '小数型',
+						label: t('iot.thingModel.dataType.decimal'),
 					},
 					{
 						value: 'boolean',
-						label: '布尔型',
+						label: t('iot.thingModel.dataType.boolean'),
 					},
 					{
 						value: 'string',
-						label: '字符串型',
+						label: t('iot.thingModel.dataType.string'),
 					},
 				],
 			},
 			ellipsis: true,
 		},
 		{
-			title: '物模型类别',
+			title: t('iot.thingModel.category'),
 			key: 'category',
 			dataIndex: 'category',
 			valueType: 'select',
 			fieldProps: {
 				valueType: 'select',
 				mode: 'single',
-				placeholder: '请选择物模型类别',
+				placeholder: t('iot.thingModel.placeholder.category'),
 				options: [
 					{
 						value: 1,
-						label: '属性',
+						label: t('iot.thingModel.category.property'),
 					},
 					{
 						value: 2,
-						label: '事件',
+						label: t('iot.thingModel.category.event'),
 					},
 				],
 			},
 			ellipsis: true,
 		},
 		{
-			title: '物模型类型',
+			title: t('iot.thingModel.type'),
 			key: 'typeValue',
 			dataIndex: 'typeValue',
 			valueType: 'select',
@@ -167,25 +171,25 @@ export default () => {
 			fieldProps: {
 				valueType: 'select',
 				mode: 'multiple',
-				placeholder: '请选择物模型类型',
+				placeholder: t('iot.thingModel.placeholder.type'),
 				options: [
 					{
 						value: 'read',
-						label: '读',
+						label: t('iot.thingModel.type.read'),
 					},
 					{
 						value: 'write',
-						label: '写',
+						label: t('iot.thingModel.type.write'),
 					},
 					{
 						value: 'report',
-						label: '上报',
+						label: t('iot.thingModel.type.report'),
 					},
 				],
 			},
 		},
 		{
-			title: '物模型类型',
+			title: t('iot.thingModel.type'),
 			dataIndex: 'type',
 			disable: true,
 			hideInSearch: true,
@@ -198,19 +202,19 @@ export default () => {
 					if (item === 'read') {
 						element.push(
 							<Tag color={'green-inverse'} key={'read'}>
-								读
+								{t('iot.thingModel.type.read')}
 							</Tag>,
 						);
 					} else if (item === 'write') {
 						element.push(
 							<Tag color={'#fd5251'} key={'write'}>
-								写
+								{t('iot.thingModel.type.write')}
 							</Tag>,
 						);
 					} else if (item === 'report') {
 						element.push(
 							<Tag color={'#f4a300'} key={'report'}>
-								上报
+								{t('iot.thingModel.type.report')}
 							</Tag>,
 						);
 					}
@@ -219,7 +223,7 @@ export default () => {
 			},
 		},
 		{
-			title: '物模型规则说明',
+			title: t('iot.thingModel.specs'),
 			dataIndex: 'specs',
 			valueType: 'text',
 			hideInSearch: true,
@@ -235,7 +239,7 @@ export default () => {
 						{(record?.dataType === 'integer' ||
 							record?.dataType === 'string') && (
 							<div>
-								长度：
+								{t('iot.thingModel.specs.length')}：
 								<span style={{ color: '#fd5251' }}>
 									{data?.length}
 								</span>
@@ -243,7 +247,7 @@ export default () => {
 						)}
 						{record?.dataType === 'decimal' && (
 							<div>
-								整数位长度：
+								{t('iot.thingModel.specs.integerLength')}：
 								<span style={{ color: '#fd5251' }}>
 									{data?.integerLength}
 								</span>
@@ -251,7 +255,7 @@ export default () => {
 						)}
 						{record?.dataType === 'decimal' && (
 							<div>
-								小数位长度：
+								{t('iot.thingModel.specs.decimalLength')}：
 								<span style={{ color: '#fd5251' }}>
 									{data?.decimalLength}
 								</span>
@@ -260,9 +264,9 @@ export default () => {
 						{(record?.dataType === 'decimal' ||
 							record?.dataType === 'integer') && (
 							<div>
-								单位：
+								{t('iot.thingModel.specs.unit')}：
 								<span style={{ color: '#fd5251' }}>
-									{data?.unit ? data?.unit : '无'}
+									{data?.unit ? data?.unit : t('common.none')}
 								</span>
 							</div>
 						)}
@@ -287,7 +291,7 @@ export default () => {
 			},
 		},
 		{
-			title: '创建时间',
+			title: t('common.createTime'),
 			key: 'createTime',
 			dataIndex: 'createTime',
 			valueType: 'dateTime',
@@ -296,12 +300,12 @@ export default () => {
 			ellipsis: true,
 		},
 		{
-			title: '创建时间',
+			title: t('common.createTime'),
 			dataIndex: 'createTimeValue',
 			valueType: 'dateRange',
 			hideInTable: true,
 			fieldProps: {
-				placeholder: ['请选择开始时间', '请选择结束时间'],
+				placeholder: [t('common.selectStartTime'), t('common.selectEndTime')],
 			},
 			search: {
 				transform: (value) => {
@@ -313,7 +317,7 @@ export default () => {
 			},
 		},
 		{
-			title: '操作',
+			title: t('common.operation'),
 			valueType: 'option',
 			key: 'option',
 			render: (_, record) => [
@@ -323,7 +327,7 @@ export default () => {
 						onClick={() => {
 							getThingModelById({ id: record?.id }).then(
 								(res) => {
-									setTitle('查看物模型');
+									setTitle(t('iot.thingModel.view'));
 									const data = getData(res?.data);
 									setDataSource(data);
 									setModalVisit(true);
@@ -333,7 +337,7 @@ export default () => {
 							);
 						}}
 					>
-						查看
+						{t('common.view')}
 					</a>
 				),
 				access.canThingModelModify && (
@@ -342,7 +346,7 @@ export default () => {
 						onClick={() => {
 							getThingModelById({ id: record?.id }).then(
 								(res) => {
-									setTitle('修改物模型');
+									setTitle(t('iot.thingModel.modify'));
 									const data = getData(res?.data);
 									setDataSource(data);
 									setModalVisit(true);
@@ -352,7 +356,7 @@ export default () => {
 							);
 						}}
 					>
-						修改
+						{t('common.modify')}
 					</a>
 				),
 				access.canThingModelRemove && (
@@ -360,16 +364,16 @@ export default () => {
 						key="remove"
 						onClick={() => {
 							Modal.confirm({
-								title: '确认删除?',
-								content: '您确定要删除吗?',
-								okText: '确认',
-								cancelText: '取消',
+								title: t('confirm.deleteTitle'),
+								content: t('confirm.deleteContent'),
+								okText: t('common.ok'),
+								cancelText: t('common.cancel'),
 								onOk: () => {
 									removeThingModel([record?.id]).then(
 										(res) => {
 											if (res.code === 'OK') {
 												message
-													.success('删除成功')
+													.success(t('toast.deleteSuccess'))
 													.then();
 												// @ts-ignore
 												actionRef?.current?.reload();
@@ -380,7 +384,7 @@ export default () => {
 							});
 						}}
 					>
-						删除
+						{t('common.delete')}
 					</a>
 				),
 			],
@@ -438,7 +442,7 @@ export default () => {
 							type="primary"
 							icon={<PlusOutlined />}
 							onClick={() => {
-								setTitle('新增物模型');
+								setTitle(t('iot.thingModel.insert'));
 								setRequestId(uuidV7());
 								setReadOnly(false);
 								setModalVisit(true);
@@ -450,7 +454,7 @@ export default () => {
 								});
 							}}
 						>
-							新增
+							{t('common.insert')}
 						</Button>
 					),
 					access.canThingModelRemove && (
@@ -461,21 +465,21 @@ export default () => {
 							icon={<DeleteOutlined />}
 							onClick={() => {
 								Modal.confirm({
-									title: '确认删除?',
-									content: '您确定要删除吗?',
-									okText: '确认',
-									cancelText: '取消',
+									title: t('confirm.deleteTitle'),
+									content: t('confirm.deleteContent'),
+									okText: t('common.ok'),
+									cancelText: t('common.cancel'),
 									onOk: async () => {
 										if (ids.length === 0) {
 											message
-												.warning('请至少选择一条数据')
+												.warning(t('toast.selectAtLeastOne'))
 												.then();
 											return;
 										}
 										removeThingModel(ids).then((res) => {
 											if (res.code === 'OK') {
 												message
-													.success('删除成功')
+													.success(t('toast.deleteSuccess'))
 													.then();
 												// @ts-ignore
 												actionRef?.current?.reload();
@@ -485,14 +489,14 @@ export default () => {
 								});
 							}}
 						>
-							删除
+							{t('common.delete')}
 						</Button>
 					),
 				]}
 				dateFormatter="string"
 				toolbar={{
-					title: '物模型',
-					tooltip: '物模型',
+					title: t('iot.thingModel.title'),
+					tooltip: t('iot.thingModel.title'),
 				}}
 			/>
 		</>

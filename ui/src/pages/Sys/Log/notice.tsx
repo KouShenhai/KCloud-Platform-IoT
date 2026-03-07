@@ -6,7 +6,7 @@ import {
 } from '@/services/admin/noticeLog';
 import { ExportToExcel } from '@/utils/export';
 import { trim } from '@/utils/format';
-import { useAccess } from '@@/exports';
+import { useAccess, useIntl } from '@@/exports';
 import { ExportOutlined } from '@ant-design/icons';
 import { ProColumns, ProTable } from '@ant-design/pro-components';
 import { Button } from 'antd';
@@ -14,6 +14,9 @@ import moment from 'moment';
 import { useRef, useState } from 'react';
 
 export default () => {
+	const intl = useIntl();
+	const t = (id: string, values?: Record<string, any>) =>
+		intl.formatMessage({ id }, values);
 	const [modalVisit, setModalVisit] = useState(false);
 	const [dataSource, setDataSource] = useState<any>({});
 	const [loading, setLoading] = useState(false);
@@ -29,14 +32,14 @@ export default () => {
 	};
 
 	const access = useAccess();
-	const actionRef = useRef(null);
+	const actionRef = useRef<any>(null);
 	const [list, setList] = useState<TableColumns[]>([]);
 	const [param, setParam] = useState<any>({});
 
 	const getStatus = (status: string) => {
 		return {
-			'0': '成功',
-			'1': '失败',
+			'0': t('sys.log.common.success'),
+			'1': t('sys.log.common.fail'),
 		}[status];
 	};
 
@@ -64,31 +67,31 @@ export default () => {
 
 	const columns: ProColumns<TableColumns>[] = [
 		{
-			title: '序号',
+			title: t('common.number'),
 			dataIndex: 'index',
 			valueType: 'indexBorder',
 			width: 60,
 		},
 		{
-			title: '通知编码',
+			title: t('sys.log.notice.code'),
 			dataIndex: 'code',
 			ellipsis: true,
 			valueType: 'text',
 			fieldProps: {
-				placeholder: '请输入通知编码',
+				placeholder: t('sys.log.notice.placeholder.code'),
 			},
 		},
 		{
-			title: '通知名称',
+			title: t('sys.log.notice.name'),
 			dataIndex: 'name',
 			ellipsis: true,
 			valueType: 'text',
 			fieldProps: {
-				placeholder: '请输入通知名称',
+				placeholder: t('sys.log.notice.placeholder.name'),
 			},
 		},
 		{
-			title: '通知状态',
+			title: t('sys.log.notice.status'),
 			key: 'statusValue',
 			dataIndex: 'statusValue',
 			hideInTable: true,
@@ -96,40 +99,40 @@ export default () => {
 			fieldProps: {
 				valueType: 'select',
 				mode: 'single',
-				placeholder: '请选择通知状态',
+				placeholder: t('sys.log.notice.placeholder.status'),
 				options: [
 					{
-						label: '成功',
+						label: t('sys.log.common.success'),
 						value: '0',
 					},
 					{
-						label: '失败',
+						label: t('sys.log.common.fail'),
 						value: '1',
 					},
 				],
 			},
 		},
 		{
-			title: '通知状态',
+			title: t('sys.log.notice.status'),
 			dataIndex: 'status',
 			hideInSearch: true,
 			valueEnum: {
-				'0': { text: '成功', status: 'Success' },
-				'1': { text: '失败', status: 'Error' },
+				'0': { text: t('sys.log.common.success'), status: 'Success' },
+				'1': { text: t('sys.log.common.fail'), status: 'Error' },
 			},
 			ellipsis: true,
 		},
 		{
-			title: '错误信息',
+			title: t('sys.log.notice.errorMessage'),
 			dataIndex: 'errorMessage',
 			ellipsis: true,
 			valueType: 'text',
 			fieldProps: {
-				placeholder: '请输入错误信息',
+				placeholder: t('sys.log.notice.placeholder.errorMessage'),
 			},
 		},
 		{
-			title: '创建时间',
+			title: t('common.createTime'),
 			key: 'createTime',
 			dataIndex: 'createTime',
 			valueType: 'dateTime',
@@ -138,12 +141,12 @@ export default () => {
 			ellipsis: true,
 		},
 		{
-			title: '创建时间',
+			title: t('common.createTime'),
 			dataIndex: 'createTimeValue',
 			valueType: 'dateRange',
 			hideInTable: true,
 			fieldProps: {
-				placeholder: ['请选择开始时间', '请选择结束时间'],
+				placeholder: [t('common.selectStartTime'), t('common.selectEndTime')],
 			},
 			search: {
 				transform: (value) => {
@@ -155,7 +158,7 @@ export default () => {
 			},
 		},
 		{
-			title: '操作',
+			title: t('common.operation'),
 			valueType: 'option',
 			key: 'option',
 			render: (_, record) => [
@@ -171,7 +174,7 @@ export default () => {
 							});
 						}}
 					>
-						查看
+						{t('common.view')}
 					</a>
 				),
 			],
@@ -245,21 +248,21 @@ export default () => {
 									'createTime',
 								],
 								sheetHeader: [
-									'通知编码',
-									'通知名称',
-									'通知状态',
-									'通知参数',
-									'错误信息',
-									'创建时间',
+									t('sys.log.notice.code'),
+									t('sys.log.notice.name'),
+									t('sys.log.notice.status'),
+									t('sys.log.notice.param'),
+									t('sys.log.notice.errorMessage'),
+									t('common.createTime'),
 								],
 								fileName:
-									'通知日志_导出_' +
+									t('sys.log.notice.exportFilePrefix') +
 									moment(new Date()).format('YYYYMMDDHHmmss'),
-								sheetName: '通知日志',
+								sheetName: t('sys.log.notice.title'),
 							});
 						}}
 					>
-						导出
+						{t('sys.log.common.export')}
 					</Button>,
 					access.canNoticeLogExport && (
 						<Button
@@ -274,14 +277,14 @@ export default () => {
 								});
 							}}
 						>
-							导出全部
+							{t('sys.log.common.exportAll')}
 						</Button>
 					),
 				]}
 				dateFormatter="string"
 				toolbar={{
-					title: '通知日志',
-					tooltip: '通知日志',
+					title: t('sys.log.notice.title'),
+					tooltip: t('sys.log.notice.title'),
 				}}
 			/>
 		</>

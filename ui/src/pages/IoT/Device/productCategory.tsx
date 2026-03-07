@@ -4,9 +4,10 @@ import {
 	listTreeProductCategory,
 	removeProductCategory,
 } from '@/services/iot/productCategory';
-import { useAccess } from '@@/exports';
+import { useAccess, useIntl } from '@@/exports';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import { ProColumns, ProTable } from '@ant-design/pro-components';
+import type { ActionType } from '@ant-design/pro-components';
 import { Button, message, Modal } from 'antd';
 import { TableRowSelection } from 'antd/es/table/interface';
 import { useRef, useState } from 'react';
@@ -14,7 +15,10 @@ import { v7 as uuidV7 } from 'uuid';
 
 export default () => {
 	const access = useAccess();
-	const actionRef = useRef();
+	const intl = useIntl();
+	const t = (id: string, values?: Record<string, any>) =>
+		intl.formatMessage({ id }, values);
+	const actionRef = useRef<ActionType | null>(null);
 	const [modalVisit, setModalVisit] = useState(false);
 	const [dataSource, setDataSource] = useState<any>({});
 	const [title, setTitle] = useState('');
@@ -58,26 +62,26 @@ export default () => {
 
 	const columns: ProColumns<TableColumns>[] = [
 		{
-			title: '序号',
+			title: t('common.number'),
 			dataIndex: 'index',
 			valueType: 'indexBorder',
-			width: 60,
+			width: 85,
 		},
 		{
-			title: '产品类别名称',
+			title: t('iot.productCategory.name'),
 			dataIndex: 'name',
 			ellipsis: true,
 			valueType: 'text',
 			hideInSearch: true,
 		},
 		{
-			title: '产品类别排序',
+			title: t('iot.productCategory.sort'),
 			dataIndex: 'sort',
 			hideInSearch: true,
 			ellipsis: true,
 		},
 		{
-			title: '创建时间',
+			title: t('common.createTime'),
 			key: 'createTime',
 			dataIndex: 'createTime',
 			valueType: 'dateTime',
@@ -86,12 +90,12 @@ export default () => {
 			ellipsis: true,
 		},
 		{
-			title: '创建时间',
+			title: t('common.createTime'),
 			dataIndex: 'createTime',
 			valueType: 'dateRange',
 			hideInTable: true,
 			fieldProps: {
-				placeholder: ['请选择开始时间', '请选择结束时间'],
+				placeholder: [t('common.selectStartTime'), t('common.selectEndTime')],
 			},
 			search: {
 				transform: (value) => {
@@ -103,7 +107,7 @@ export default () => {
 			},
 		},
 		{
-			title: '操作',
+			title: t('common.operation'),
 			valueType: 'option',
 			key: 'option',
 			render: (_, record) => [
@@ -113,7 +117,7 @@ export default () => {
 						onClick={() => {
 							getProductCategoryById({ id: record?.id }).then(
 								(res) => {
-									setTitle('查看产品类别');
+									setTitle(t('iot.productCategory.view'));
 									setDataSource(res?.data);
 									setModalVisit(true);
 									setReadOnly(true);
@@ -121,14 +125,14 @@ export default () => {
 							);
 						}}
 					>
-						查看
+						{t('common.view')}
 					</a>
 				),
 				access.canProductCategorySave && (
 					<a
 						key="save"
 						onClick={() => {
-							setTitle('新增产品类别');
+							setTitle(t('iot.productCategory.insert'));
 							setRequestId(uuidV7());
 							setReadOnly(false);
 							setModalVisit(true);
@@ -141,7 +145,7 @@ export default () => {
 							});
 						}}
 					>
-						新增
+						{t('common.insert')}
 					</a>
 				),
 				access.canProductCategoryModify && (
@@ -150,7 +154,7 @@ export default () => {
 						onClick={() => {
 							getProductCategoryById({ id: record?.id }).then(
 								(res) => {
-									setTitle('修改产品类别');
+									setTitle(t('iot.productCategory.modify'));
 									setDataSource(res?.data);
 									setModalVisit(true);
 									setReadOnly(false);
@@ -158,7 +162,7 @@ export default () => {
 							);
 						}}
 					>
-						修改
+						{t('common.modify')}
 					</a>
 				),
 				access.canProductCategoryRemove && (
@@ -166,16 +170,16 @@ export default () => {
 						key="remove"
 						onClick={() => {
 							Modal.confirm({
-								title: '确认删除?',
-								content: '您确定要删除吗?',
-								okText: '确认',
-								cancelText: '取消',
+								title: t('confirm.deleteTitle'),
+								content: t('confirm.deleteContent'),
+								okText: t('common.ok'),
+								cancelText: t('common.cancel'),
 								onOk: () => {
 									removeProductCategory([record?.id]).then(
 										(res) => {
 											if (res.code === 'OK') {
 												message
-													.success('删除成功')
+													.success(t('toast.deleteSuccess'))
 													.then();
 												// @ts-ignore
 												actionRef?.current?.reload();
@@ -186,7 +190,7 @@ export default () => {
 							});
 						}}
 					>
-						删除
+						{t('common.delete')}
 					</a>
 				),
 			],
@@ -221,7 +225,7 @@ export default () => {
 						setTreeList([
 							{
 								id: '0',
-								name: '根目录',
+								name: t('common.root'),
 								children: res?.data,
 							},
 						]);
@@ -244,7 +248,7 @@ export default () => {
 							type="primary"
 							icon={<PlusOutlined />}
 							onClick={() => {
-								setTitle('新增产品类别');
+								setTitle(t('iot.productCategory.insert'));
 								setRequestId(uuidV7());
 								setReadOnly(false);
 								setModalVisit(true);
@@ -257,7 +261,7 @@ export default () => {
 								});
 							}}
 						>
-							新增
+							{t('common.insert')}
 						</Button>
 					),
 					access.canProductCategoryRemove && (
@@ -268,14 +272,14 @@ export default () => {
 							icon={<DeleteOutlined />}
 							onClick={() => {
 								Modal.confirm({
-									title: '确认删除?',
-									content: '您确定要删除吗?',
-									okText: '确认',
-									cancelText: '取消',
+									title: t('confirm.deleteTitle'),
+									content: t('confirm.deleteContent'),
+									okText: t('common.ok'),
+									cancelText: t('common.cancel'),
 									onOk: async () => {
 										if (ids.length === 0) {
 											message
-												.warning('请至少选择一条数据')
+												.warning(t('toast.selectAtLeastOne'))
 												.then();
 											return;
 										}
@@ -283,7 +287,7 @@ export default () => {
 											(res) => {
 												if (res.code === 'OK') {
 													message
-														.success('删除成功')
+														.success(t('toast.deleteSuccess'))
 														.then();
 													// @ts-ignore
 													actionRef?.current?.reload();
@@ -294,14 +298,14 @@ export default () => {
 								});
 							}}
 						>
-							删除
+							{t('common.delete')}
 						</Button>
 					),
 				]}
 				dateFormatter="string"
 				toolbar={{
-					title: '产品类别',
-					tooltip: '产品类别',
+					title: t('iot.productCategory.title'),
+					tooltip: t('iot.productCategory.title'),
 				}}
 			/>
 		</>

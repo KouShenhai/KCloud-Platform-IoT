@@ -39,6 +39,13 @@ const getIcon = (icon: string) => {
 	}
 };
 
+const t = (id: string, values?: Record<string, any>) => {
+	// 在非 React 组件/Hook 环境下（如 runtime config）使用 getIntl()
+	// eslint-disable-next-line @typescript-eslint/no-var-requires
+	const { getIntl } = require('@@/exports');
+	return getIntl().formatMessage({ id }, values);
+};
+
 const mapMenuTreeI18n = (menus: any[]): any[] => {
 	if (!Array.isArray(menus) || menus.length === 0) {
 		return [];
@@ -187,7 +194,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState }: any) => {
 		siderMenuType: 'sub',
 		actionsRender: () => {
 			// Ant Design Pro 风格的语言切换组件（来自 umi plugin-locale）
-			return [<SelectLang key="SelectLang" reload={false} />];
+			return [<SelectLang key="SelectLang" reload={true} />];
 		},
 		avatarProps: {
 			src: initialState?.avatar,
@@ -220,7 +227,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState }: any) => {
 										}
 										// @ts-ignore
 										logout({
-											token: getAccessToken(),
+											token: getAccessToken() ?? undefined,
 										}).finally(() => {
 											history.push('/login');
 										});
@@ -273,14 +280,6 @@ export const layout: RunTimeLayoutConfig = ({ initialState }: any) => {
 			// }
 		},
 	};
-};
-
-const t = (id: string, values?: Record<string, any>) => {
-	// 新写法：在非 React 组件/Hook 环境下（如 request errorHandler）使用 getIntl()
-	// getIntl 来自 umi plugin-locale（@@/exports 导出）
-	// eslint-disable-next-line @typescript-eslint/no-var-requires
-	const { getIntl } = require('@@/exports');
-	return getIntl().formatMessage({ id }, values);
 };
 
 export const request: {
@@ -366,7 +365,12 @@ export const request: {
 				}
 			}
 			if (status === 200 && data.code === undefined) {
-				response.data = { code: 'OK', msg: '请求成功', data: data };
+				response.data = {
+					code: 'OK',
+					// 统一国际化
+					msg: t('common.requestSuccess'),
+					data: data,
+				};
 			} else if (status === 200 && data.code !== 'OK') {
 				if (data.code === 'Unauthorized') {
 					history.push('/login');

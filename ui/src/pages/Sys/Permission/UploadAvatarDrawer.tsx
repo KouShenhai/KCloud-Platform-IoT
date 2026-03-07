@@ -1,5 +1,7 @@
 import { uploadUserAvatar } from '@/services/admin/user';
-import { GetProp, Upload, UploadFile, UploadProps } from 'antd';
+import { useIntl } from '@@/exports';
+import type { GetProp, UploadFile, UploadProps } from 'antd';
+import { Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
 import React from 'react';
 
@@ -20,6 +22,10 @@ export const UploadAvatarDrawer: React.FC<UploadAvatarDrawerProps> = ({
 	setFileList,
 	setLogId,
 }) => {
+	const intl = useIntl();
+	const t = (id: string, values?: Record<string, any>) =>
+		intl.formatMessage({ id }, values);
+
 	const getBase64 = (file: FileType): Promise<string> =>
 		new Promise((resolve, reject) => {
 			const reader = new FileReader();
@@ -37,10 +43,7 @@ export const UploadAvatarDrawer: React.FC<UploadAvatarDrawerProps> = ({
 	};
 
 	const onChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
-		if (
-			newFileList[0]?.response &&
-			newFileList[0]?.response.code !== 'OK'
-		) {
+		if (newFileList[0]?.response && newFileList[0]?.response.code !== 'OK') {
 			setFileList([]);
 		} else {
 			setFileList(newFileList);
@@ -58,22 +61,19 @@ export const UploadAvatarDrawer: React.FC<UploadAvatarDrawerProps> = ({
 				customRequest={async (options) => {
 					const { file, onProgress, onError, onSuccess } = options;
 					const formData = new FormData();
-					formData.append('file', file);
+					formData.append('file', file as any);
 					uploadUserAvatar(formData)
 						.then((res) => {
 							// @ts-ignore
-							onProgress({ percent: 100 }, file);
+							onProgress?.({ percent: 100 }, file);
 							if (res.code === 'OK') {
 								// @ts-ignore
-								onSuccess(res, file);
+								onSuccess?.(res, file);
 								// 修改日志ID
 								setLogId(res.data.logId);
 							} else {
 								// @ts-ignore
-								onError(
-									{ status: 500, url: '', method: 'POST' },
-									res,
-								);
+								onError?.({ status: 500, url: '', method: 'POST' }, res);
 							}
 						})
 						.catch(() => {
@@ -81,7 +81,7 @@ export const UploadAvatarDrawer: React.FC<UploadAvatarDrawerProps> = ({
 						});
 				}}
 			>
-				{fileList.length < 1 && '上传头像'}
+				{fileList.length < 1 && t('user.avatar.upload')}
 			</Upload>
 		</ImgCrop>
 	);

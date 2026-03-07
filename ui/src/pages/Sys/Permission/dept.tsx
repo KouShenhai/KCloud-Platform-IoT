@@ -51,7 +51,7 @@ export default () => {
 			setTreeList([
 				{
 					id: '0',
-					name: '根目录',
+					name: t('common.root'),
 					children: res?.data,
 				},
 			]);
@@ -80,22 +80,22 @@ export default () => {
 			width: 110,
 		},
 		{
-			title: '部门名称',
+			title: t('sys.dept.name'),
 			dataIndex: 'name',
 			valueType: 'text',
 			fieldProps: {
-				placeholder: '请输入部门名称',
+				placeholder: t('sys.dept.placeholder.name'),
 			},
 		},
 		{
-			title: '部门排序',
+			title: t('sys.dept.sort'),
 			dataIndex: 'sort',
 			hideInSearch: true,
 			ellipsis: true,
 			width: 80,
 		},
 		{
-			title: '创建时间',
+			title: t('common.createTime'),
 			key: 'createTime',
 			dataIndex: 'createTime',
 			valueType: 'dateTime',
@@ -104,12 +104,12 @@ export default () => {
 			ellipsis: true,
 		},
 		{
-			title: '创建时间',
+			title: t('common.createTime'),
 			dataIndex: 'createTimeValue',
 			valueType: 'dateRange',
 			hideInTable: true,
 			fieldProps: {
-				placeholder: ['请选择开始时间', '请选择结束时间'],
+				placeholder: [t('common.selectStartTime'), t('common.selectEndTime')],
 			},
 			search: {
 				transform: (value) => {
@@ -121,7 +121,7 @@ export default () => {
 			},
 		},
 		{
-			title: '操作',
+			title: t('common.operation'),
 			valueType: 'option',
 			key: 'option',
 			render: (_, record) => [
@@ -131,7 +131,7 @@ export default () => {
 						onClick={() => {
 							getDeptById({ id: record?.id }).then((res) => {
 								if (res.code === 'OK') {
-									setTitle('查看部门');
+									setTitle(t('sys.dept.view'));
 									setModalVisit(true);
 									setReadOnly(true);
 									setDataSource(res?.data);
@@ -139,14 +139,14 @@ export default () => {
 							});
 						}}
 					>
-						查看
+						{t('common.view')}
 					</a>
 				),
 				access.canDeptSave && (
 					<a
 						key="save"
 						onClick={() => {
-							setTitle('新增部门');
+							setTitle(t('sys.dept.insert'));
 							setRequestId(uuidV7());
 							setReadOnly(false);
 							setModalVisit(true);
@@ -159,7 +159,7 @@ export default () => {
 							});
 						}}
 					>
-						新增
+						{t('common.insert')}
 					</a>
 				),
 				access.canDeptModify && (
@@ -168,7 +168,7 @@ export default () => {
 						onClick={() => {
 							getDeptById({ id: record?.id }).then((res) => {
 								if (res.code === 'OK') {
-									setTitle('修改部门');
+									setTitle(t('sys.dept.modify'));
 									setModalVisit(true);
 									setReadOnly(false);
 									setDataSource(res?.data);
@@ -176,7 +176,7 @@ export default () => {
 							});
 						}}
 					>
-						修改
+						{t('common.modify')}
 					</a>
 				),
 				access.canDeptRemove && (
@@ -204,7 +204,7 @@ export default () => {
 							});
 						}}
 					>
-						删除
+						{t('common.delete')}
 					</a>
 				),
 			],
@@ -256,7 +256,7 @@ export default () => {
 							type="primary"
 							icon={<PlusOutlined />}
 							onClick={() => {
-								setTitle('新增部门');
+								setTitle(t('sys.dept.insert'));
 								setRequestId(uuidV7());
 								setReadOnly(false);
 								setModalVisit(true);
@@ -309,14 +309,14 @@ export default () => {
 								});
 							}}
 						>
-							删除
+							{t('common.delete')}
 						</Button>
 					),
 				]}
 				dateFormatter="string"
 				toolbar={{
-					title: '部门',
-					tooltip: '部门',
+					title: t('menu.sys.permission.user'),
+					tooltip: t('menu.sys.permission.user'),
 				}}
 			/>
 		</>

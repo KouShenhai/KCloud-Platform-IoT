@@ -1,4 +1,5 @@
 import { modifyUserAuthority } from '@/services/admin/user';
+import { useIntl } from '@@/exports';
 import {
 	DrawerForm,
 	ProFormSelect,
@@ -31,6 +32,9 @@ export const UserModifyAuthorityDrawer: React.FC<UserAuthorityProps> = ({
 	onComponent,
 	roleList,
 }) => {
+	const intl = useIntl();
+	const t = (id: string, values?: Record<string, any>) =>
+		intl.formatMessage({ id }, values);
 	const [loading, setLoading] = useState(false);
 
 	return (
@@ -63,7 +67,7 @@ export const UserModifyAuthorityDrawer: React.FC<UserAuthorityProps> = ({
 				modifyUserAuthority({ co: co })
 					.then((res) => {
 						if (res.code === 'OK') {
-							message.success('分配权限成功').then();
+							message.success(t('toast.assignSuccess')).then();
 							setModalModifyAuthorityVisit(false);
 							onComponent();
 						}
@@ -82,21 +86,25 @@ export const UserModifyAuthorityDrawer: React.FC<UserAuthorityProps> = ({
 
 			<ProFormText
 				name="username"
-				label="用户名"
-				tooltip={'用户名【不允许重复，不允许修改】'}
+				label={t('user.username')}
+				tooltip={t('user.tooltip.username')}
 				disabled={true}
-				placeholder={'请输入用户名'}
-				rules={[{ required: true, message: '请输入用户名' }]}
+				placeholder={t('user.placeholder.username')}
+				rules={[
+					{ required: true, message: t('user.required.username') },
+				]}
 			/>
 
 			<ProFormSelect
 				disabled={loading}
 				name="roleIds"
 				allowClear={true}
-				label="所属角色"
+				label={t('user.roles')}
 				mode={'multiple'}
-				placeholder={'请选择所属角色'}
-				rules={[{ required: true, message: '请选择所属角色' }]}
+				placeholder={t('user.placeholder.roles')}
+				rules={[
+					{ required: true, message: t('user.required.roles') },
+				]}
 				options={roleList}
 				fieldProps={{
 					fieldNames: {

@@ -1,4 +1,5 @@
 import { modifyDept, saveDept } from '@/services/admin/dept';
+import { useIntl } from '@@/exports';
 import {
 	DrawerForm,
 	ProFormDigit,
@@ -41,6 +42,9 @@ export const DeptDrawer: React.FC<DeptDrawerProps> = ({
 	requestId,
 	setRequestId,
 }) => {
+	const intl = useIntl();
+	const t = (id: string, values?: Record<string, any>) =>
+		intl.formatMessage({ id }, values);
 	const [loading, setLoading] = useState(false);
 
 	return (
@@ -70,7 +74,7 @@ export const DeptDrawer: React.FC<DeptDrawerProps> = ({
 					saveDept({ co: value }, requestId)
 						.then((res) => {
 							if (res.code === 'OK') {
-								message.success('保存成功').then();
+								message.success(t('toast.saveSuccess')).then();
 								setModalVisit(false);
 								onComponent();
 							}
@@ -83,7 +87,7 @@ export const DeptDrawer: React.FC<DeptDrawerProps> = ({
 					modifyDept({ co: value })
 						.then((res) => {
 							if (res.code === 'OK') {
-								message.success('修改成功').then();
+								message.success(t('toast.modifySuccess')).then();
 								setModalVisit(false);
 								onComponent();
 							}
@@ -104,11 +108,13 @@ export const DeptDrawer: React.FC<DeptDrawerProps> = ({
 			<ProFormTreeSelect
 				disabled={loading}
 				name="pid"
-				label="父级部门"
+				label={t('sys.dept.pid')}
 				readonly={readOnly}
 				allowClear={true}
-				placeholder={'请选择父级部门'}
-				rules={[{ required: true, message: '请选择父级部门' }]}
+				placeholder={t('sys.dept.placeholder.pid')}
+				rules={[
+					{ required: true, message: t('sys.dept.required.pid') },
+				]}
 				fieldProps={{
 					fieldNames: {
 						label: 'name',
@@ -124,21 +130,25 @@ export const DeptDrawer: React.FC<DeptDrawerProps> = ({
 			<ProFormText
 				disabled={loading}
 				name="name"
-				label="部门名称"
+				label={t('sys.dept.name')}
 				readonly={readOnly}
-				placeholder={'请输入部门名称'}
-				rules={[{ required: true, message: '请输入部门名称' }]}
+				placeholder={t('sys.dept.placeholder.name')}
+				rules={[
+					{ required: true, message: t('sys.dept.required.name') },
+				]}
 			/>
 
 			<ProFormDigit
 				disabled={loading}
 				name="sort"
-				label="部门排序"
+				label={t('sys.dept.sort')}
 				readonly={readOnly}
-				placeholder={'请输入部门排序'}
+				placeholder={t('sys.dept.placeholder.sort')}
 				min={1}
 				max={99999}
-				rules={[{ required: true, message: '请输入部门排序' }]}
+				rules={[
+					{ required: true, message: t('sys.dept.required.sort') },
+				]}
 			/>
 
 			{readOnly && (
@@ -146,8 +156,13 @@ export const DeptDrawer: React.FC<DeptDrawerProps> = ({
 					disabled={loading}
 					readonly={true}
 					name="createTime"
-					rules={[{ required: true, message: '请输入创建时间' }]}
-					label="创建时间"
+					rules={[
+						{
+							required: true,
+							message: t('role.validate.createTimeRequired'),
+						},
+					]}
+					label={t('common.createTime')}
 				/>
 			)}
 		</DrawerForm>

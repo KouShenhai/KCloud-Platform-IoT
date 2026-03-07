@@ -6,7 +6,7 @@ import {
 } from '@/services/admin/operateLog';
 import { ExportToExcel } from '@/utils/export';
 import { trim } from '@/utils/format';
-import { useAccess } from '@@/exports';
+import { useAccess, useIntl } from '@@/exports';
 import { ExportOutlined } from '@ant-design/icons';
 import { ProColumns, ProTable } from '@ant-design/pro-components';
 import { Button } from 'antd';
@@ -14,6 +14,9 @@ import moment from 'moment';
 import { useRef, useState } from 'react';
 
 export default () => {
+	const intl = useIntl();
+	const t = (id: string, values?: Record<string, any>) =>
+		intl.formatMessage({ id }, values);
 	const [modalVisit, setModalVisit] = useState(false);
 	const [dataSource, setDataSource] = useState<any>({});
 	const [loading, setLoading] = useState(false);
@@ -33,14 +36,14 @@ export default () => {
 	};
 
 	const access = useAccess();
-	const actionRef = useRef();
+	const actionRef = useRef<any>(null);
 	const [list, setList] = useState<TableColumns[]>([]);
 	const [param, setParam] = useState<any>({});
 
 	const getStatus = (status: string) => {
 		return {
-			'0': '成功',
-			'1': '失败',
+			'0': t('sys.log.common.success'),
+			'1': t('sys.log.common.fail'),
 		}[status];
 	};
 
@@ -72,64 +75,64 @@ export default () => {
 
 	const columns: ProColumns<TableColumns>[] = [
 		{
-			title: '序号',
+			title: t('common.number'),
 			dataIndex: 'index',
 			valueType: 'indexBorder',
 			width: 60,
 		},
 		{
-			title: '模块名称',
+			title: t('sys.log.operate.moduleName'),
 			dataIndex: 'moduleName',
 			ellipsis: true,
 			valueType: 'text',
 			fieldProps: {
-				placeholder: '请输入模块名称',
+				placeholder: t('sys.log.operate.placeholder.moduleName'),
 			},
 		},
 		{
-			title: '操作名称',
+			title: t('sys.log.operate.name'),
 			dataIndex: 'name',
 			ellipsis: true,
 			valueType: 'text',
 			fieldProps: {
-				placeholder: '请输入操作名称',
+				placeholder: t('sys.log.operate.placeholder.name'),
 			},
 		},
 		{
-			title: '请求类型',
+			title: t('sys.log.operate.requestType'),
 			dataIndex: 'requestType',
 			ellipsis: true,
 			valueType: 'text',
 			fieldProps: {
-				placeholder: '请输入请求类型',
+				placeholder: t('sys.log.operate.placeholder.requestType'),
 			},
 		},
 		{
-			title: '操作人员',
+			title: t('sys.log.operate.operator'),
 			dataIndex: 'operator',
 			ellipsis: true,
 			valueType: 'text',
 			fieldProps: {
-				placeholder: '请输入操作人员',
+				placeholder: t('sys.log.operate.placeholder.operator'),
 			},
 		},
 		{
-			title: 'IP地址',
+			title: t('sys.log.operate.ip'),
 			dataIndex: 'ip',
 			ellipsis: true,
 			valueType: 'text',
 			fieldProps: {
-				placeholder: '请输入IP地址',
+				placeholder: t('sys.log.operate.placeholder.ip'),
 			},
 		},
 		{
-			title: 'IP归属地',
+			title: t('sys.log.operate.address'),
 			dataIndex: 'address',
 			ellipsis: true,
 			hideInSearch: true,
 		},
 		{
-			title: '操作状态',
+			title: t('sys.log.operate.status'),
 			dataIndex: 'statusValue',
 			valueType: 'select',
 			hideInTable: true,
@@ -138,44 +141,44 @@ export default () => {
 				mode: 'single',
 				options: [
 					{
-						label: '成功',
+						label: t('sys.log.common.success'),
 						value: '0',
 					},
 					{
-						label: '失败',
+						label: t('sys.log.common.fail'),
 						value: '1',
 					},
 				],
-				placeholder: '请选择操作状态',
+				placeholder: t('sys.log.operate.placeholder.status'),
 			},
 		},
 		{
-			title: '操作状态',
+			title: t('sys.log.operate.status'),
 			dataIndex: 'status',
 			hideInSearch: true,
 			valueEnum: {
-				'0': { text: '成功', status: 'Success' },
-				'1': { text: '失败', status: 'Error' },
+				'0': { text: t('sys.log.common.success'), status: 'Success' },
+				'1': { text: t('sys.log.common.fail'), status: 'Error' },
 			},
 			width: 80,
 		},
 		{
-			title: '错误信息',
+			title: t('sys.log.operate.errorMessage'),
 			dataIndex: 'errorMessage',
 			ellipsis: true,
 			valueType: 'text',
 			fieldProps: {
-				placeholder: '请输入错误信息',
+				placeholder: t('sys.log.operate.placeholder.errorMessage'),
 			},
 		},
 		{
-			title: '消耗时间(毫秒)',
+			title: t('sys.log.operate.costTime'),
 			dataIndex: 'costTime',
 			hideInSearch: true,
 			ellipsis: true,
 		},
 		{
-			title: '创建时间',
+			title: t('common.createTime'),
 			key: 'createTime',
 			dataIndex: 'createTime',
 			valueType: 'dateTime',
@@ -184,12 +187,12 @@ export default () => {
 			ellipsis: true,
 		},
 		{
-			title: '创建时间',
+			title: t('common.createTime'),
 			dataIndex: 'createTimeValue',
 			valueType: 'dateRange',
 			hideInTable: true,
 			fieldProps: {
-				placeholder: ['请选择开始时间', '请选择结束时间'],
+				placeholder: [t('common.selectStartTime'), t('common.selectEndTime')],
 			},
 			search: {
 				transform: (value) => {
@@ -201,7 +204,7 @@ export default () => {
 			},
 		},
 		{
-			title: '操作',
+			title: t('common.operation'),
 			valueType: 'option',
 			key: 'option',
 			render: (_, record) => [
@@ -219,7 +222,7 @@ export default () => {
 							);
 						}}
 					>
-						查看
+						{t('common.view')}
 					</a>
 				),
 			],
@@ -297,25 +300,25 @@ export default () => {
 									'createTime',
 								],
 								sheetHeader: [
-									'模块名称',
-									'操作名称',
-									'请求类型',
-									'操作人员',
-									'IP地址',
-									'IP归属地',
-									'操作状态',
-									'错误信息',
-									'消耗时间(毫秒)',
-									'创建时间',
+									t('sys.log.operate.moduleName'),
+									t('sys.log.operate.name'),
+									t('sys.log.operate.requestType'),
+									t('sys.log.operate.operator'),
+									t('sys.log.operate.ip'),
+									t('sys.log.operate.address'),
+									t('sys.log.operate.status'),
+									t('sys.log.operate.errorMessage'),
+									t('sys.log.operate.costTime'),
+									t('common.createTime'),
 								],
 								fileName:
-									'操作日志_导出_' +
+									t('sys.log.operate.exportFilePrefix') +
 									moment(new Date()).format('YYYYMMDDHHmmss'),
-								sheetName: '操作日志',
+								sheetName: t('sys.log.operate.title'),
 							});
 						}}
 					>
-						导出
+						{t('sys.log.common.export')}
 					</Button>,
 					access.canOperateLogExport && (
 						<Button
@@ -330,14 +333,14 @@ export default () => {
 								});
 							}}
 						>
-							导出全部
+							{t('sys.log.common.exportAll')}
 						</Button>
 					),
 				]}
 				dateFormatter="string"
 				toolbar={{
-					title: '操作日志',
-					tooltip: '操作日志',
+					title: t('sys.log.operate.title'),
+					tooltip: t('sys.log.operate.title'),
 				}}
 			/>
 		</>

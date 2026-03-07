@@ -1,6 +1,10 @@
+import { useIntl } from '@@/exports';
 import { useEffect, useState } from 'react';
 
 export default () => {
+	const intl = useIntl();
+	const t = (id: string, values?: Record<string, any>) =>
+		intl.formatMessage({ id }, values);
 	const [inputMessage, setInputMessage] = useState('');
 	let ws: WebSocket;
 
@@ -11,7 +15,7 @@ export default () => {
 
 		// 监听连接打开
 		ws.onopen = () => {
-			console.log('WebSocket 连接已建立');
+			console.log(t('iot.device.ws.connected'));
 		};
 
 		// 接收消息
@@ -22,7 +26,7 @@ export default () => {
 
 		// 监听错误
 		ws.onerror = (error) => {
-			console.error('WebSocket 错误:', error);
+			console.error(t('iot.device.ws.error'), error);
 		};
 
 		// 清理函数：组件卸载时关闭连接
@@ -50,7 +54,7 @@ export default () => {
 					onChange={(e) => setInputMessage(e.target.value)}
 				/>
 				{/* eslint-disable-next-line react/button-has-type */}
-				<button onClick={sendMessage}>发送</button>
+				<button onClick={sendMessage}>{t('iot.device.send')}</button>
 			</div>
 		</div>
 	);

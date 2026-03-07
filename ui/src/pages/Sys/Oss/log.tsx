@@ -1,10 +1,14 @@
 import { pageOssLog } from '@/services/admin/ossLog';
-import type { ProColumns } from '@ant-design/pro-components';
+import { useIntl } from '@@/exports';
+import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { Space, Tag } from 'antd';
 import { useRef } from 'react';
 
 export default () => {
+	const intl = useIntl();
+	const t = (id: string, values?: Record<string, any>) =>
+		intl.formatMessage({ id }, values);
 	type TableColumns = {
 		id: number | undefined;
 		name: string | undefined;
@@ -18,7 +22,7 @@ export default () => {
 		createTime: string | undefined;
 	};
 
-	const actionRef = useRef();
+	const actionRef = useRef<ActionType | null>(null);
 
 	const getPageQueryParam = (params: any) => {
 		return {
@@ -38,13 +42,13 @@ export default () => {
 
 	const columns: ProColumns<TableColumns>[] = [
 		{
-			title: '序号',
+			title: t('common.number'),
 			dataIndex: 'index',
 			valueType: 'indexBorder',
 			width: 60,
 		},
 		{
-			title: '文件名称',
+			title: t('sys.oss.log.name'),
 			dataIndex: 'name',
 			ellipsis: true,
 			valueType: 'text',
@@ -58,21 +62,21 @@ export default () => {
 			hideInSearch: true,
 		},
 		{
-			title: '文件大小【单位/字节】',
+			title: t('sys.oss.log.size'),
 			dataIndex: 'size',
 			ellipsis: true,
 			valueType: 'text',
 			hideInSearch: true,
 		},
 		{
-			title: '文件类型',
+			title: t('sys.oss.log.contentType'),
 			dataIndex: 'contentType',
 			ellipsis: true,
 			valueType: 'text',
 			hideInSearch: true,
 		},
 		{
-			title: '类型',
+			title: t('sys.oss.log.type'),
 			dataIndex: 'type',
 			ellipsis: true,
 			valueType: 'text',
@@ -83,31 +87,31 @@ export default () => {
 				<Space>
 					{record?.type === 'image' && (
 						<Tag color={'rgb(51 114 253)'} key={'image'}>
-							图片
+							{t('sys.oss.log.type.image')}
 						</Tag>
 					)}
 					{record?.type === 'video' && (
 						<Tag color={'#fd5251'} key={'video'}>
-							视频
+							{t('sys.oss.log.type.video')}
 						</Tag>
 					)}
 					{record?.type === 'audio' && (
 						<Tag color={'#ffa500'} key={'audio'}>
-							音频
+							{t('sys.oss.log.type.audio')}
 						</Tag>
 					)}
 				</Space>
 			),
 		},
 		{
-			title: '文件格式',
+			title: t('sys.oss.log.format'),
 			dataIndex: 'format',
 			ellipsis: true,
 			valueType: 'text',
 			hideInSearch: true,
 		},
 		{
-			title: '创建日期',
+			title: t('common.createTime'),
 			key: 'createTime',
 			dataIndex: 'createTime',
 			valueType: 'dateTime',
@@ -116,12 +120,12 @@ export default () => {
 			ellipsis: true,
 		},
 		{
-			title: '创建日期',
+			title: t('common.createTime'),
 			dataIndex: 'createTimeValue',
 			valueType: 'dateRange',
 			hideInTable: true,
 			fieldProps: {
-				placeholder: ['请选择开始日期', '请选择结束日期'],
+				placeholder: [t('common.selectStartTime'), t('common.selectEndTime')],
 			},
 			search: {
 				transform: (value) => {
@@ -160,8 +164,8 @@ export default () => {
 			}}
 			dateFormatter="string"
 			toolbar={{
-				title: '对象存储配置',
-				tooltip: '对象存储配置',
+				title: t('menu.sys.oss.log'),
+				tooltip: t('menu.sys.oss.log'),
 			}}
 		/>
 	);

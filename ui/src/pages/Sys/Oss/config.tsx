@@ -1,11 +1,15 @@
 import { pageOss } from '@/services/admin/oss';
 import { trim } from '@/utils/format';
-import type { ProColumns } from '@ant-design/pro-components';
+import { useIntl } from '@@/exports';
+import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { Space, Switch, Tag } from 'antd';
 import { useRef } from 'react';
 
 export default () => {
+	const intl = useIntl();
+	const t = (id: string, values?: Record<string, any>) =>
+		intl.formatMessage({ id }, values);
 	type TableColumns = {
 		id: number | undefined;
 		name: string | undefined;
@@ -14,7 +18,7 @@ export default () => {
 		createTime: string | undefined;
 	};
 
-	const actionRef = useRef();
+	const actionRef = useRef<ActionType | null>(null);
 
 	const getPageQueryParam = (params: any) => {
 		return {
@@ -37,22 +41,22 @@ export default () => {
 
 	const columns: ProColumns<TableColumns>[] = [
 		{
-			title: '序号',
+			title: t('common.number'),
 			dataIndex: 'index',
 			valueType: 'indexBorder',
 			width: 60,
 		},
 		{
-			title: 'OSS名称',
+			title: t('sys.oss.config.name'),
 			dataIndex: 'name',
 			ellipsis: true,
 			valueType: 'text',
 			fieldProps: {
-				placeholder: '请输入OSS名称',
+				placeholder: t('sys.oss.config.placeholder.name'),
 			},
 		},
 		{
-			title: 'OSS类型',
+			title: t('sys.oss.config.type'),
 			key: 'typeValue',
 			dataIndex: 'typeValue',
 			hideInTable: true,
@@ -60,15 +64,15 @@ export default () => {
 			fieldProps: {
 				valueType: 'select',
 				mode: 'single',
-				placeholder: '请选择OSS类型',
+				placeholder: t('sys.oss.config.placeholder.type'),
 				options: [
 					{
 						value: 'amazon_s3',
-						label: '亚马逊S3',
+						label: t('sys.oss.config.type.amazonS3'),
 					},
 					{
 						value: 'local',
-						label: '本地',
+						label: t('sys.oss.config.type.local'),
 					},
 					{
 						value: 'minio',
@@ -80,7 +84,7 @@ export default () => {
 		},
 		{
 			disable: true,
-			title: 'OSS类型',
+			title: t('sys.oss.config.type'),
 			dataIndex: 'type',
 			hideInSearch: true,
 			renderFormItem: (_, { defaultRender }) => {
@@ -90,12 +94,12 @@ export default () => {
 				<Space>
 					{record?.type === 'amazon_s3' && (
 						<Tag color={'rgb(51 114 253)'} key={'amazon_s3'}>
-							亚马逊S3
+							{t('sys.oss.config.type.amazonS3')}
 						</Tag>
 					)}
 					{record?.type === 'local' && (
 						<Tag color={'#fd5251'} key={'local'}>
-							本地
+							{t('sys.oss.config.type.local')}
 						</Tag>
 					)}
 					{record?.type === 'minio' && (
@@ -107,7 +111,7 @@ export default () => {
 			),
 		},
 		{
-			title: 'OSS状态',
+			title: t('sys.oss.config.status'),
 			key: 'statusValue',
 			dataIndex: 'statusValue',
 			hideInTable: true,
@@ -115,35 +119,35 @@ export default () => {
 			fieldProps: {
 				valueType: 'select',
 				mode: 'single',
-				placeholder: '请选择菜单状态',
+				placeholder: t('sys.oss.config.placeholder.status'),
 				options: [
 					{
 						value: 0,
-						label: '启用',
+						label: t('common.enable'),
 					},
 					{
 						value: 1,
-						label: '禁用',
+						label: t('common.disable'),
 					},
 				],
 			},
 			ellipsis: true,
 		},
 		{
-			title: 'OSS状态',
+			title: t('sys.oss.config.status'),
 			dataIndex: 'status',
 			hideInSearch: true,
 			render: (_, record) => (
 				<Switch
-					checkedChildren="启用"
-					unCheckedChildren="禁用"
+					checkedChildren={t('common.enable')}
+					unCheckedChildren={t('common.disable')}
 					disabled={true}
 					checked={record?.status === 0}
 				/>
 			),
 		},
 		{
-			title: '登录日期',
+			title: t('common.createTime'),
 			key: 'createTime',
 			dataIndex: 'createTime',
 			valueType: 'dateTime',
@@ -152,12 +156,12 @@ export default () => {
 			ellipsis: true,
 		},
 		{
-			title: '登录日期',
+			title: t('common.createTime'),
 			dataIndex: 'createTimeValue',
 			valueType: 'dateRange',
 			hideInTable: true,
 			fieldProps: {
-				placeholder: ['请选择开始日期', '请选择结束日期'],
+				placeholder: [t('common.selectStartTime'), t('common.selectEndTime')],
 			},
 			search: {
 				transform: (value) => {
@@ -196,8 +200,8 @@ export default () => {
 			}}
 			dateFormatter="string"
 			toolbar={{
-				title: '对象存储配置',
-				tooltip: '对象存储配置',
+				title: t('sys.oss.config.title'),
+				tooltip: t('sys.oss.config.title'),
 			}}
 		/>
 	);

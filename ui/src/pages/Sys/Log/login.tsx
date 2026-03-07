@@ -27,7 +27,7 @@ export default () => {
 	const intl = useIntl();
 	const t = (id: string, values?: Record<string, any>) =>
 		intl.formatMessage({ id }, values);
-	const actionRef = useRef(null);
+	const actionRef = useRef<any>(null);
 	const [list, setList] = useState<TableColumns[]>([]);
 	const [param, setParam] = useState<any>({});
 	const [loading, setLoading] = useState(false);
@@ -36,15 +36,15 @@ export default () => {
 		return {
 			username_password: t('login.usernamePassword'),
 			mobile: t('login.mobile'),
-			mail: '邮箱登录',
-			authorization_code: '授权码登录',
+			mail: t('login.mail'),
+			authorization_code: t('sys.log.login.type.authorizationCode'),
 		}[type];
 	};
 
 	const getLoginStatus = (status: string) => {
 		return {
-			'0': '登录成功',
-			'1': '登录失败',
+			'0': t('sys.log.login.status.success'),
+			'1': t('sys.log.login.status.fail'),
 		}[status];
 	};
 
@@ -76,58 +76,58 @@ export default () => {
 
 	const columns: ProColumns<TableColumns>[] = [
 		{
-			title: '序号',
+			title: t('common.number'),
 			dataIndex: 'index',
 			valueType: 'indexBorder',
 			width: 60,
 		},
 		{
-			title: '用户名',
+			title: t('user.username'),
 			dataIndex: 'username',
 			ellipsis: true,
 			valueType: 'text',
 			fieldProps: {
-				placeholder: '请输入用户名',
+				placeholder: t('user.placeholder.username'),
 			},
 		},
 		{
-			title: 'IP地址',
+			title: t('sys.log.login.ip'),
 			dataIndex: 'ip',
 			ellipsis: true,
 			valueType: 'text',
 			fieldProps: {
-				placeholder: '请输入IP地址',
+				placeholder: t('sys.log.login.placeholder.ip'),
 			},
 		},
 		{
-			title: '归属地',
+			title: t('sys.log.login.address'),
 			dataIndex: 'address',
 			ellipsis: true,
 			valueType: 'text',
 			fieldProps: {
-				placeholder: '请输入归属地',
+				placeholder: t('sys.log.login.placeholder.address'),
 			},
 		},
 		{
-			title: '浏览器',
+			title: t('sys.log.login.browser'),
 			dataIndex: 'browser',
 			ellipsis: true,
 			valueType: 'text',
 			fieldProps: {
-				placeholder: '请输入浏览器',
+				placeholder: t('sys.log.login.placeholder.browser'),
 			},
 		},
 		{
-			title: '操作系统',
+			title: t('sys.log.login.os'),
 			dataIndex: 'os',
 			ellipsis: true,
 			valueType: 'text',
 			fieldProps: {
-				placeholder: '请输入操作系统',
+				placeholder: t('sys.log.login.placeholder.os'),
 			},
 		},
 		{
-			title: '登录状态',
+			title: t('sys.log.login.status'),
 			key: 'statusValue',
 			dataIndex: 'statusValue',
 			valueType: 'select',
@@ -138,37 +138,37 @@ export default () => {
 				options: [
 					{
 						value: '0',
-						label: '登录成功',
+						label: t('sys.log.login.status.success'),
 					},
 					{
 						value: '1',
-						label: '登录失败',
+						label: t('sys.log.login.status.fail'),
 					},
 				],
-				placeholder: '请选择登录状态',
+				placeholder: t('sys.log.login.placeholder.status'),
 			},
 		},
 		{
-			title: '登录状态',
+			title: t('sys.log.login.status'),
 			dataIndex: 'status',
 			hideInSearch: true,
 			valueEnum: {
-				'0': { text: '登录成功', status: 'Success' },
-				'1': { text: '登录失败', status: 'Error' },
+				'0': { text: t('sys.log.login.status.success'), status: 'Success' },
+				'1': { text: t('sys.log.login.status.fail'), status: 'Error' },
 			},
 			ellipsis: true,
 		},
 		{
-			title: '错误信息',
+			title: t('sys.log.login.errorMessage'),
 			dataIndex: 'errorMessage',
 			ellipsis: true,
 			valueType: 'text',
 			fieldProps: {
-				placeholder: '请输入错误信息',
+				placeholder: t('sys.log.login.placeholder.errorMessage'),
 			},
 		},
 		{
-			title: '登录类型',
+			title: t('sys.log.login.type'),
 			key: 'typeValue',
 			dataIndex: 'typeValue',
 			valueType: 'select',
@@ -183,30 +183,33 @@ export default () => {
 					},
 					{
 						value: 'mail',
-						label: '邮箱登录',
+						label: t('login.mail'),
 					},
 					{
 						value: 'mobile',
-						label: '手机号登录',
+						label: t('login.mobile'),
 					},
 					{
 						value: 'authorization_code',
-						label: '授权码登录',
+						label: t('sys.log.login.type.authorizationCode'),
 					},
 				],
-				placeholder: '请选择登录类型',
+				placeholder: t('sys.log.login.placeholder.type'),
 			},
 		},
 		{
-			title: '登录类型',
+			title: t('sys.log.login.type'),
 			dataIndex: 'type',
 			hideInSearch: true,
 			valueEnum: {
-				authorization_code: { text: '授权码登录', status: 'Error' },
-				mail: { text: '邮箱登录', status: 'Success' },
-				mobile: { text: '手机号登录', status: 'Default' },
+				authorization_code: {
+					text: t('sys.log.login.type.authorizationCode'),
+					status: 'Error',
+				},
+				mail: { text: t('login.mail'), status: 'Success' },
+				mobile: { text: t('login.mobile'), status: 'Default' },
 				username_password: {
-					text: '用户名密码登录',
+					text: t('login.usernamePassword'),
 					status: 'Processing',
 				},
 			},
@@ -214,7 +217,7 @@ export default () => {
 			ellipsis: true,
 		},
 		{
-			title: '登录日期',
+			title: t('sys.log.login.loginTime'),
 			key: 'createTime',
 			dataIndex: 'createTime',
 			valueType: 'dateTime',
@@ -223,12 +226,12 @@ export default () => {
 			ellipsis: true,
 		},
 		{
-			title: '登录日期',
+			title: t('sys.log.login.loginTime'),
 			dataIndex: 'createTimeValue',
 			valueType: 'dateRange',
 			hideInTable: true,
 			fieldProps: {
-				placeholder: ['请选择开始日期', '请选择结束日期'],
+				placeholder: [t('common.selectStartTime'), t('common.selectEndTime')],
 			},
 			search: {
 				transform: (value) => {
@@ -300,24 +303,24 @@ export default () => {
 								'createTime',
 							],
 							sheetHeader: [
-								'用户名',
-								'IP地址',
-								'归属地',
-								'浏览器',
-								'操作系统',
-								'登录状态',
-								'错误信息',
-								'登录类型',
-								'登录时间',
+								t('user.username'),
+								t('sys.log.login.ip'),
+								t('sys.log.login.address'),
+								t('sys.log.login.browser'),
+								t('sys.log.login.os'),
+								t('sys.log.login.status'),
+								t('sys.log.login.errorMessage'),
+								t('sys.log.login.type'),
+								t('sys.log.login.loginTime'),
 							],
 							fileName:
-								'登录日志_导出_' +
+								t('sys.log.login.exportFilePrefix') +
 								moment(new Date()).format('YYYYMMDDHHmmss'),
-							sheetName: '登录日志',
+							sheetName: t('sys.log.login.title'),
 						});
 					}}
 				>
-					导出
+					{t('sys.log.common.export')}
 				</Button>,
 				access.canLoginLogExport && (
 					<Button
@@ -332,14 +335,14 @@ export default () => {
 							});
 						}}
 					>
-						导出全部
+						{t('sys.log.common.exportAll')}
 					</Button>
 				),
 			]}
 			dateFormatter="string"
 			toolbar={{
-				title: '登录日志',
-				tooltip: '登录日志',
+				title: t('sys.log.login.title'),
+				tooltip: t('sys.log.login.title'),
 			}}
 		/>
 	);

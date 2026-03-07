@@ -2,6 +2,7 @@ import {
 	modifyProductCategory,
 	saveProductCategory,
 } from '@/services/iot/productCategory';
+import { useIntl } from '@@/exports';
 import {
 	DrawerForm,
 	ProFormDigit,
@@ -46,6 +47,9 @@ export const ProductCategoryDrawer: React.FC<ProductCategoryDrawerProps> = ({
 	requestId,
 	setRequestId,
 }) => {
+	const intl = useIntl();
+	const t = (id: string, values?: Record<string, any>) =>
+		intl.formatMessage({ id }, values);
 	const [loading, setLoading] = useState(false);
 
 	return (
@@ -75,7 +79,7 @@ export const ProductCategoryDrawer: React.FC<ProductCategoryDrawerProps> = ({
 					saveProductCategory({ co: value }, requestId)
 						.then((res) => {
 							if (res.code === 'OK') {
-								message.success('保存成功').then();
+								message.success(t('toast.saveSuccess')).then();
 								setModalVisit(false);
 								onComponent();
 							}
@@ -88,7 +92,7 @@ export const ProductCategoryDrawer: React.FC<ProductCategoryDrawerProps> = ({
 					modifyProductCategory({ co: value })
 						.then((res) => {
 							if (res.code === 'OK') {
-								message.success('修改成功').then();
+								message.success(t('toast.modifySuccess')).then();
 								setModalVisit(false);
 								onComponent();
 							}
@@ -109,11 +113,16 @@ export const ProductCategoryDrawer: React.FC<ProductCategoryDrawerProps> = ({
 			<ProFormTreeSelect
 				disabled={loading}
 				name="pid"
-				label="父级产品类别"
+				label={t('iot.productCategory.pid')}
 				readonly={readOnly}
 				allowClear={true}
-				placeholder={'请选择父级产品类别'}
-				rules={[{ required: true, message: '请选择父级产品类别' }]}
+				placeholder={t('iot.productCategory.placeholder.pid')}
+				rules={[
+					{
+						required: true,
+						message: t('iot.productCategory.required.pid'),
+					},
+				]}
 				fieldProps={{
 					fieldNames: {
 						label: 'name',
@@ -130,26 +139,36 @@ export const ProductCategoryDrawer: React.FC<ProductCategoryDrawerProps> = ({
 				disabled={loading}
 				readonly={readOnly}
 				name="name"
-				label="产品类别名称"
-				rules={[{ required: true, message: '请输入产品类别名称' }]}
+				label={t('iot.productCategory.name')}
+				rules={[
+					{
+						required: true,
+						message: t('iot.productCategory.required.name'),
+					},
+				]}
 			/>
 
 			<ProFormDigit
 				disabled={loading}
 				name="sort"
-				label="产品类别排序"
+				label={t('iot.productCategory.sort')}
 				readonly={readOnly}
-				placeholder={'请输入产品类别排序'}
+				placeholder={t('iot.productCategory.placeholder.sort')}
 				min={1}
 				max={99999}
-				rules={[{ required: true, message: '请输入产品类别排序' }]}
+				rules={[
+					{
+						required: true,
+						message: t('iot.productCategory.required.sort'),
+					},
+				]}
 			/>
 
 			<ProFormTextArea
 				disabled={loading}
 				readonly={readOnly}
 				name="remark"
-				label="产品类别备注"
+				label={t('iot.productCategory.remark')}
 			/>
 
 			{readOnly && (
@@ -157,8 +176,13 @@ export const ProductCategoryDrawer: React.FC<ProductCategoryDrawerProps> = ({
 					disabled={loading}
 					readonly={true}
 					name="createTime"
-					rules={[{ required: true, message: '请输入创建时间' }]}
-					label="创建时间"
+					rules={[
+						{
+							required: true,
+							message: t('role.validate.createTimeRequired'),
+						},
+					]}
+					label={t('common.createTime')}
 				/>
 			)}
 		</DrawerForm>

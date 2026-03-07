@@ -1,5 +1,10 @@
+import { getIntl } from '@@/exports';
 import { Area } from '@ant-design/plots';
 import React from 'react';
+
+const t = (id: string, values?: Record<string, any>) => {
+	return getIntl().formatMessage({ id }, values);
+};
 
 const DeviceMessageArea: React.FC = () => {
 	const data = [
@@ -57,7 +62,7 @@ const DeviceMessageArea: React.FC = () => {
 			},
 		},
 		tooltip: {
-			items: [{ name: '设备消息数量', channel: 'y' }],
+			items: [{ name: t('home.deviceMessageCount'), channel: 'y' }],
 		},
 	};
 	return <Area {...config} />;
