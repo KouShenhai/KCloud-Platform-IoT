@@ -84,7 +84,7 @@ class GatewayApp implements CommandLineRunner {
 	public void run(@NotNull String... args) {
 		// 执行同步路由任务【15s后自动释放内存】
 		virtualThreadExecutor.execute(() -> nacosRouteDefinitionRepository.syncRouter()
-			.take(Duration.ofSeconds(10))
+			.take(Duration.ofSeconds(15))
 			.subscribeOn(Schedulers.boundedElastic())
 			.subscribe());
 	}
