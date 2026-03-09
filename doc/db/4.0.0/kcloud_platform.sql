@@ -238,7 +238,7 @@ INSERT INTO "public"."sys_i18n_menu" VALUES (19, 1, 1, '2026-03-07 12:06:37', '2
 INSERT INTO "public"."sys_i18n_menu" VALUES (20, 1, 1, '2026-03-07 12:06:37', '2026-03-07 12:06:37', 0, 0, 0, 1535887940687765505, 'menu.sys.base', '基础数据');
 INSERT INTO "public"."sys_i18n_menu" VALUES (21, 1, 1, '2026-03-07 12:06:37', '2026-03-07 12:06:37', 0, 0, 0, 1535887940687765505, 'menu.sys.base.dict', '数据字典');
 INSERT INTO "public"."sys_i18n_menu" VALUES (22, 1, 1, '2026-03-07 12:06:37', '2026-03-07 12:06:37', 0, 0, 0, 1535887940687765505, 'menu.sys.log.operate', '操作日志');
-INSERT INTO "public"."sys_i18n_menu" VALUES (23, 1, 1, '2026-03-07 12:06:37', '2026-03-07 12:06:37', 0, 0, 0, 1535887940687765505, 'menu.sys.base.i18n', '国际化');
+INSERT INTO "public"."sys_i18n_menu" VALUES (23, 1, 1, '2026-03-07 12:06:37', '2026-03-07 12:06:37', 0, 0, 0, 1535887940687765505, 'menu.sys.base.i18n-menu', '国际化菜单');
 INSERT INTO "public"."sys_i18n_menu" VALUES (24, 1, 1, '2026-03-07 12:06:37', '2026-03-07 12:06:37', 0, 0, 0, 1535887940687765505, 'menu.sys.oss', '对象存储');
 INSERT INTO "public"."sys_i18n_menu" VALUES (25, 1, 1, '2026-03-07 12:06:37', '2026-03-07 12:06:37', 0, 0, 0, 1535887940687765505, 'menu.sys.oss.config', '对象存储配置');
 INSERT INTO "public"."sys_i18n_menu" VALUES (26, 1, 1, '2026-03-07 12:06:37', '2026-03-07 12:06:37', 0, 0, 0, 1535887940687765505, 'menu.sys.oss.log', '对象存储日志');
@@ -324,7 +324,7 @@ INSERT INTO "public"."sys_menu" VALUES (25, 1, 1, '2025-01-21 05:19:17', '2025-0
 INSERT INTO "public"."sys_menu" VALUES (26, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0,0, 1, NULL, 0, '基础数据', '/sys/base', NULL, 2000, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (27, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0,0, 26, NULL, 0, '数据字典', '/sys/base/dict', NULL, 900, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (28, 1, 1, '2024-09-15 12:56:07', '2024-09-15 12:56:10', 0, 0, 0,0, 2, NULL, 0, '操作日志', '/sys/log/operate', '', 900, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (29, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0,0, 26, NULL, 0, '国际化', '/sys/base/i18n', NULL, 800, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (29, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0,0, 26, NULL, 0, '国际化菜单', '/sys/base/i18nMenu', NULL, 800, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (30, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0,0, 1, NULL, 0, '对象存储', '/sys/oss', NULL, 1200, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (31, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0,0, 30, NULL, 0, '对象存储配置', '/sys/oss/config', NULL, 200, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (32, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 0,0, 30, NULL, 0, '对象存储日志', '/sys/oss/log', NULL, 100, 0, 0, NULL);

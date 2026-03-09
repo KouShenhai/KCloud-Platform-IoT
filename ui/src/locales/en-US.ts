@@ -350,6 +350,15 @@ export default {
 	'sys.oss.log.type.video': 'Video',
 	'sys.oss.log.type.audio': 'Audio',
 
+	// sys/i18n-menu
+	'sys.i18nMenu.code': 'Menu Code',
+	'sys.i18nMenu.name': 'Menu Name',
+	'sys.i18nMenu.placeholder.code': 'Please enter menu code',
+	'sys.i18nMenu.placeholder.name': 'Please enter menu name',
+	'sys.i18nMenu.insert': 'Insert I18n Menu',
+	'sys.i18nMenu.view': 'View I18n Menu',
+	'sys.i18nMenu.modify': 'Modify I18n Menu',
+
 	// login
 	'login.subtitle': 'Enterprise level multi tenant IoT cloud platform',
 	'login.usernamePassword': 'User pwd login',
@@ -417,6 +426,6 @@ export default {
 	'menu.sys.tenant.source': 'Sources',
 	'menu.sys.base': 'Basic Data',
 	'menu.sys.base.dict': 'Dicts',
-	'menu.sys.base.i18n': 'I18n',
+	'menu.sys.base.i18n-menu': 'I18n Menu',
 	'menu.sys.cluster': 'Clusters',
 };
