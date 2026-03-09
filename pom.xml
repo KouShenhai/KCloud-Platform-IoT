@@ -145,7 +145,7 @@
     <!--nacos版本-->
     <nacos.version>3.1.1</nacos.version>
     <!--micrometer-tracing-bom版本-->
-    <micrometer-tracing.version>1.6.3</micrometer-tracing.version>
+    <micrometer-tracing.version>1.6.4</micrometer-tracing.version>
     <!--opentelemetry版本-->
     <opentelemetry.version>1.60.1</opentelemetry.version>
     <!--netty版本-->
