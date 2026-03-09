@@ -107,7 +107,7 @@
     <!--spring-asciidoctor-backends版本-->
     <spring-asciidoctor-backends.version>0.0.7</spring-asciidoctor-backends.version>
     <!--protobuf-maven-plugin版本-->
-    <protobuf-maven-plugin.version>5.0.1</protobuf-maven-plugin.version>
+    <protobuf-maven-plugin.version>5.0.2</protobuf-maven-plugin.version>
     <!--central-publishing-maven-plugin版本-->
     <central-publishing-maven-plugin.version>0.10.0</central-publishing-maven-plugin.version>
     <!--maven-source-plugin版本-->
@@ -133,7 +133,7 @@
     <!--spring-ai版本-->
     <spring-ai.version>1.1.2</spring-ai.version>
     <!--spring-ai-alibaba版本-->
-    <spring-ai-alibaba.version>1.1.2.0</spring-ai-alibaba.version>
+    <spring-ai-alibaba.version>1.1.2.1</spring-ai-alibaba.version>
     <!--springdoc-openapi版本-->
     <springdoc-openapi.version>3.0.2</springdoc-openapi.version>
     <!--testcontainers版本-->
@@ -145,7 +145,7 @@
     <!--nacos版本-->
     <nacos.version>3.1.1</nacos.version>
     <!--micrometer-tracing-bom版本-->
-    <micrometer-tracing.version>1.6.3</micrometer-tracing.version>
+    <micrometer-tracing.version>1.6.4</micrometer-tracing.version>
     <!--opentelemetry版本-->
     <opentelemetry.version>1.60.1</opentelemetry.version>
     <!--netty版本-->
