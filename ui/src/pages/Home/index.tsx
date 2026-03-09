@@ -64,18 +64,18 @@ const HomePage: React.FC = () => {
 						</div>
 						<div className={'pro-card-1-footer'}>
 							<Row gutter={24}>
-								<Col span={6}>
+								<Col span={7}>
 									<Space>
 										<Badge status="success" /> {t('home.online')}
 									</Space>
 								</Col>
-								<Col span={6}>3</Col>
-								<Col span={6}>
+								<Col span={5}>3</Col>
+								<Col span={7}>
 									<Space>
 										<Badge status="error" /> {t('home.offline')}
 									</Space>
 								</Col>
-								<Col span={6}>2</Col>
+								<Col span={5}>2</Col>
 							</Row>
 						</div>
 					</ProCard>
