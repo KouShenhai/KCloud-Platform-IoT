@@ -199,7 +199,7 @@ image::doc/image/老寇IoT云平台业务架构图.png[架构图,align=center]
 - 序列化&反序列化：Jackson & Fory & Protobuf
 - 数据库：Postgresql
 - 时序数据库：TimescaleDB & TDengine & InfluxDB
-- 数据库迁移：Liquibase
+- 数据库迁移：Flyway
 - 链路&指标采集：Micrometer
 
 ==== 🌴 项目结构

@@ -126,9 +126,12 @@ spring:
         ttl: 5m
       oss:
         ttl: 5m
-  liquibase:
+  flyway:
     enabled: true
-    change-log: classpath:/db/changelog/db.changelog-master.xml
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    baseline-version: 0
+    validate-on-migrate: true
 # actuator
 management:
   endpoints:

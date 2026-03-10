@@ -197,36 +197,7 @@ COMMENT ON TABLE "public"."group_capacity" IS '集群、各Group容量信息表'
 ALTER TABLE "public"."group_capacity" ADD CONSTRAINT "group_capacity_pkey" PRIMARY KEY ("id");
 CREATE UNIQUE INDEX "group_capacity_group_id_idx" ON "public"."group_capacity" USING btree (
 "group_id"
-	);
-
-DROP TABLE IF EXISTS "public"."databasechangeloglock";
-CREATE TABLE "public"."databasechangeloglock" (
-"id" int4 NOT NULL,
-"locked" bool NOT NULL,
-"lockgranted" timestamp(6),
-"lockedby" varchar(255)
-)
-;
-
-DROP TABLE IF EXISTS "public"."databasechangelog";
-CREATE TABLE "public"."databasechangelog" (
-"id" varchar(255)  NOT NULL,
-"author" varchar(255)  NOT NULL,
-"filename" varchar(255)  NOT NULL,
-"dateexecuted" timestamp(6) NOT NULL,
-"orderexecuted" int4 NOT NULL,
-"exectype" varchar(10)  NOT NULL,
-"md5sum" varchar(35) ,
-"description" varchar(255) ,
-"comments" varchar(255) ,
-"tag" varchar(255) ,
-"liquibase" varchar(20) ,
-"contexts" varchar(255) ,
-"labels" varchar(255) ,
-"deployment_id" varchar(10)
-)
-;
-ALTER TABLE "public"."databasechangeloglock" ADD CONSTRAINT "databasechangeloglock_pkey" PRIMARY KEY ("id");
+);
 
 DROP TABLE IF EXISTS "public"."config_tags_relation";
 CREATE TABLE "public"."config_tags_relation" (

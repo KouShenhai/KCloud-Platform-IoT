@@ -210,8 +210,8 @@
     <fory-core.version>0.13.2</fory-core.version>
     <!--browscap-java版本-->
     <browscap-java.version>1.5.1</browscap-java.version>
-    <!--liquibase-core版本-->
-    <liquibase-core.version>5.0.2</liquibase-core.version>
+    <!--flyway版本-->
+    <flyway.version>10.22.0</flyway.version>
     <!--snail-job版本-->
     <snail-job.version>1.9.0-jdk8</snail-job.version>
     <!--archunit-junit5版本-->
@@ -578,9 +578,14 @@
         <version>${snail-job.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.liquibase</groupId>
-        <artifactId>liquibase-core</artifactId>
-        <version>${liquibase-core.version}</version>
+        <groupId>org.flywaydb</groupId>
+        <artifactId>flyway-core</artifactId>
+        <version>${flyway.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.flywaydb</groupId>
+        <artifactId>flyway-database-postgresql</artifactId>
+        <version>${flyway.version}</version>
       </dependency>
       <dependency>
         <groupId>com.blueconic</groupId>
