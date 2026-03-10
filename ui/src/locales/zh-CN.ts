@@ -350,6 +350,15 @@ export default {
 	'sys.oss.log.type.video': '视频',
 	'sys.oss.log.type.audio': '音频',
 
+	// sys/i18n-menu
+	'sys.i18nMenu.code': '菜单编码',
+	'sys.i18nMenu.name': '菜单名称',
+	'sys.i18nMenu.placeholder.code': '请输入菜单编码',
+	'sys.i18nMenu.placeholder.name': '请输入菜单名称',
+	'sys.i18nMenu.insert': '新增国际化菜单',
+	'sys.i18nMenu.view': '查看国际化菜单',
+	'sys.i18nMenu.modify': '修改国际化菜单',
+
 	// login
 	'login.subtitle': '企业级多租户IoT云平台',
 	'login.usernamePassword': '用户名密码登录',
@@ -417,6 +426,6 @@ export default {
 	'menu.sys.tenant.source': '数据源',
 	'menu.sys.base': '基础数据',
 	'menu.sys.base.dict': '数据字典',
-	'menu.sys.base.i18n': '国际化',
+	'menu.sys.base.i18n-menu': '国际化菜单',
 	'menu.sys.cluster': '集群管理',
 };

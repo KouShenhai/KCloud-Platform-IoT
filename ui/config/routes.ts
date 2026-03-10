@@ -93,6 +93,19 @@ export default [
 				],
 			},
 			{
+				name: 'menu.sys.base',
+				title: 'menu.sys.base',
+				path: '/sys/base',
+				routes: [
+					{
+						name: 'menu.sys.base.i18n-menu',
+						title: 'menu.sys.base.i18n-menu',
+						path: '/sys/base/i18nMenu',
+						component: './Sys/Base/i18nMenu',
+					},
+				],
+			},
+			{
 				name: 'menu.sys.oss',
 				title: 'menu.sys.oss',
 				path: '/sys/oss',
