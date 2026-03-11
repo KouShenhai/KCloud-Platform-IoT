@@ -124,9 +124,12 @@ spring:
       eager: true #开启饥饿加载，直接初始化
       transport:
         dashboard: sentinel:8972
-  liquibase:
+  flyway:
     enabled: true
-    change-log: classpath:/db/changelog/db.changelog-master.xml
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    baseline-version: 0
+    validate-on-migrate: true
   cache:
     configs:
       users:

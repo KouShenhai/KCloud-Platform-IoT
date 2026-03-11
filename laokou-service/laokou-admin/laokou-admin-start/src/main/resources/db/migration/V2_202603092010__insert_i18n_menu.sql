@@ -1,6 +1,3 @@
--- liquibase formatted sql
-
--- changeset dev:000002
 INSERT INTO "public"."sys_i18n_menu" VALUES (8, 1, 1, '2026-03-07 12:06:37', '2026-03-07 12:06:37', 0, 0, 0, 1535887940687765505,  'menu.iot.device.thingModel', '物模型');
 INSERT INTO "public"."sys_i18n_menu" VALUES (10, 1, 1, '2026-03-07 12:06:37', '2026-03-07 12:06:37', 0, 0, 0, 1535887940687765505, 'menu.iot.device.productCategory', '产品类别');
 INSERT INTO "public"."sys_i18n_menu" VALUES (1, 1, 1, '2026-03-07 12:06:37', '2026-03-07 12:06:37', 0, 0, 0, 1535887940687765505,  'menu.sys', '系统管理');

@@ -119,14 +119,16 @@
       <artifactId>spring-boot-configuration-processor</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.liquibase</groupId>
-      <artifactId>liquibase-core</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>com.opencsv</groupId>
-          <artifactId>opencsv</artifactId>
-        </exclusion>
-      </exclusions>
+      <groupId>org.flywaydb</groupId>
+      <artifactId>flyway-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.flywaydb</groupId>
+      <artifactId>flyway-database-postgresql</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-flyway</artifactId>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
@@ -170,10 +172,6 @@
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-csv</artifactId>
       <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-liquibase</artifactId>
     </dependency>
   </dependencies>
 
