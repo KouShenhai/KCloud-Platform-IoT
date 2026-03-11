@@ -29,8 +29,8 @@ devDependencies:
     specifier: ^9
     version: 9.1.7
   lint-staged:
-    specifier: ^16.3.2
-    version: 16.3.2
+    specifier: ^16.3.3
+    version: 16.3.3
   prettier:
     specifier: ^2.8.7
     version: 2.8.8
@@ -2817,6 +2817,12 @@ packages:
 
   /@types/node@25.3.3:
     resolution: {integrity: sha512-DpzbrH7wIcBaJibpKo9nnSQL0MTRdnWttGyE5haGwK86xgMOkFLp7vEyfQPGLOJh5wNYiJ3V9PmUMDhV9u8kkQ==, tarball: https://registry.npmjs.org/@types/node/-/node-25.3.3.tgz}
+    dependencies:
+      undici-types: 7.18.2
+    dev: false
+
+  /@types/node@25.4.0:
+    resolution: {integrity: sha512-9wLpoeWuBlcbBpOY3XmzSTG3oscB6xjBEEtn+pYXTfhyXhIxC5FsBer2KTopBlvKEiW9l13po9fq+SJY/5lkhw==, tarball: https://registry.npmjs.org/@types/node/-/node-25.4.0.tgz}
     dependencies:
       undici-types: 7.18.2
     dev: false
@@ -7863,7 +7869,7 @@ packages:
     resolution: {integrity: sha512-7vuh85V5cdDofPyxn58nrPjBktZo0u9x1g8WtjQol+jZDaE+fhN+cIvTj11GndBnMnyfrUOG1sZQxCdjKh+DKg==, tarball: https://registry.npmjs.org/jest-worker/-/jest-worker-27.5.1.tgz}
     engines: {node: '>= 10.13.0'}
     dependencies:
-      '@types/node': 25.3.3
+      '@types/node': 25.4.0
       merge-stream: 2.0.0
       supports-color: 8.1.1
     dev: false
@@ -8167,8 +8173,8 @@ packages:
     resolution: {integrity: sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==, tarball: https://registry.npmjs.org/lines-and-columns/-/lines-and-columns-1.2.4.tgz}
     dev: false
 
-  /lint-staged@16.3.2:
-    resolution: {integrity: sha512-xKqhC2AeXLwiAHXguxBjuChoTTWFC6Pees0SHPwOpwlvI3BH7ZADFPddAdN3pgo3aiKgPUx/bxE78JfUnxQnlg==, tarball: https://registry.npmjs.org/lint-staged/-/lint-staged-16.3.2.tgz}
+  /lint-staged@16.3.3:
+    resolution: {integrity: sha512-RLq2koZ5fGWrx7tcqx2tSTMQj4lRkfNJaebO/li/uunhCJbtZqwTuwPHpgIimAHHi/2nZIiGrkCHDCOeR1onxA==, tarball: https://registry.npmjs.org/lint-staged/-/lint-staged-16.3.3.tgz}
     engines: {node: '>=20.17'}
     hasBin: true
     dependencies:
