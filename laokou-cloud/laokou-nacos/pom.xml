@@ -37,7 +37,7 @@
     <!--client-java版本-->
     <client-java.version>22.0.0</client-java.version>
     <!--lombok版本-->
-    <lombok.version>1.18.42</lombok.version>
+    <lombok.version>1.18.44</lombok.version>
     <!--jasypt版本-->
     <jasypt.version>4.0.4</jasypt.version>
   </properties>
