@@ -23,10 +23,10 @@ import org.laokou.common.i18n.util.SpringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 
 /**
  * 资源服务器配置.
@@ -61,14 +61,21 @@ class OAuth2ResourceServerConfig {
 			.cors(AbstractHttpConfigurer::disable)
 			.csrf(AbstractHttpConfigurer::disable)
 			.httpBasic(AbstractHttpConfigurer::disable)
-			.securityContext(AbstractHttpConfigurer::disable)
+			// 开启 Session 持久化，支持 form login 认证成功后通过 SavedRequest 重定向回授权端点
+			// Spring Security form login 依赖 HttpSession 保存：
+			//   1. SavedRequest（原始 /oauth2/authorize 请求）
+			//   2. 认证成功后的 SecurityContext（用于回到授权端点时识别已登录用户）
+			.securityContext(ctx -> ctx.securityContextRepository(new HttpSessionSecurityContextRepository()))
 			// 自定义登录页面
 			// https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/form.html
-			// 登录页面 -> DefaultLoginPageGeneratingFilter
-			.formLogin(Customizer.withDefaults())
+			.formLogin(form -> form
+				.loginPage("/login")
+				.loginProcessingUrl("/login")
+				.failureUrl("/login?error")
+				.permitAll())
 			// 不记住
 			.rememberMe(AbstractHttpConfigurer::disable)
-			// 清除session
+			// 清除 session
 			.logout(logout -> logout.clearAuthentication(true).invalidateHttpSession(true))
 			.build();
 	}

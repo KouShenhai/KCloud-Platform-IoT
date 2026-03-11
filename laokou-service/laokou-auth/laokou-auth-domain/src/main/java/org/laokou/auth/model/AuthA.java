@@ -72,7 +72,7 @@ import java.util.function.Supplier;
  */
 @Entity
 @Getter
-public class AuthA extends AggregateRoot implements ValidateName {
+public final class AuthA extends AggregateRoot implements ValidateName {
 
 	@Serial
 	private static final long serialVersionUID = 3319752558160144699L;
@@ -170,7 +170,7 @@ public class AuthA extends AggregateRoot implements ValidateName {
 	private final CaptchaParamValidator mobileCaptchaParamValidator;
 
 	// @formatter:off
-	AuthA(@Qualifier("authIdGenerator") IdGenerator authIdGenerator,
+	AuthA(@Qualifier("authIdGenerator") @NonNull IdGenerator authIdGenerator,
 		@NonNull HttpRequest httpRequest,
 		@NonNull PasswordValidator passwordValidator,
 		@NonNull CaptchaValidator captchaValidator,
@@ -200,40 +200,40 @@ public class AuthA extends AggregateRoot implements ValidateName {
 		this.grantType = GrantType.USERNAME_PASSWORD;
 		this.captchaV = getCaptchaVByUsernamePasswordAuth();
 		this.userV = getUserVByUsernamePasswordAuth();
-		return init();
+		return create();
 	}
 
 	public AuthA createMobileAuth() throws Exception {
 		this.grantType = GrantType.MOBILE;
 		this.captchaV = getCaptchaVByMobileAuth();
 		this.userV = getUserVByMobileAuth();
-		return init();
+		return create();
 	}
 
 	public AuthA createMailAuth() throws Exception {
 		this.grantType = GrantType.MAIL;
 		this.captchaV = getCaptchaVByMailAuth();
 		this.userV = getUserVByMailAuth();
-		return init();
+		return create();
 	}
 
 	public AuthA createAuthorizationCodeAuth() throws Exception {
 		this.grantType = GrantType.AUTHORIZATION_CODE;
 		this.userV = getUserVByAuthorizationCodeAuth();
-		return init();
+		return create();
 	}
 
 	public AuthA createTestAuth() throws Exception {
 		this.grantType = GrantType.TEST;
 		this.userV = getUserVByTestAuth();
-		return init();
+		return create();
 	}
 
 	public AuthA createCaptchaVBySend(String uuid, String tag, String tenantCode) {
 		this.sendCaptchaType = SendCaptchaType.getByCode(tag);
 		this.captchaV = CaptchaV.builder().uuid(uuid).build();
 		this.userV = UserV.builder().tenantCode(tenantCode).build();
-		return init();
+		return create();
 	}
 
 	public String getCaptchaBySend() {
@@ -473,7 +473,7 @@ public class AuthA extends AggregateRoot implements ValidateName {
 			.build();
 	}
 
-	private AuthA init() {
+	private AuthA create() {
 		super.id = authIdGenerator.getId(BizType.AUTH);
 		super.createTime = InstantUtils.now();
 		return this;
