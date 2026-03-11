@@ -155,6 +155,7 @@ spring:
               - /v1/secrets=laokou-auth
               - /doc.html=laokou-auth
               - /webjars/**=laokou-auth
+              - /login=laokou-auth
             POST:
               - /v1/captchas/send/mail=laokou-auth
               - /v1/captchas/send/mobile=laokou-auth
