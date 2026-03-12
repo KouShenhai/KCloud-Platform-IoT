@@ -133,7 +133,7 @@
     <!--spring-ai版本-->
     <spring-ai.version>1.1.2</spring-ai.version>
     <!--spring-ai-alibaba版本-->
-    <spring-ai-alibaba.version>1.1.2.1</spring-ai-alibaba.version>
+    <spring-ai-alibaba.version>1.1.2.2</spring-ai-alibaba.version>
     <!--springdoc-openapi版本-->
     <springdoc-openapi.version>3.0.2</springdoc-openapi.version>
     <!--testcontainers版本-->
@@ -161,7 +161,7 @@
     <!--redisson版本-->
     <redisson.version>4.3.0</redisson.version>
     <!--lombok版本-->
-    <lombok.version>1.18.42</lombok.version>
+    <lombok.version>1.18.44</lombok.version>
     <!--postgresql版本-->
     <postgresql.version>42.7.10</postgresql.version>
     <!--admin版本-->
@@ -183,7 +183,7 @@
     <!--fesod版本-->
     <fesod.version>2.0.1-incubating</fesod.version>
     <!--s3版本-->
-    <s3.version>2.42.9</s3.version>
+    <s3.version>2.42.10</s3.version>
     <!--dynamic-datasource版本-->
     <dynamic-datasource.version>4.5.0</dynamic-datasource.version>
     <!--httpclient5版本-->
@@ -201,7 +201,7 @@
     <!--transmittable-thread-local版本-->
     <transmittable-thread-local.version>2.14.5</transmittable-thread-local.version>
     <!--mockito版本-->
-    <mockito.version>5.22.0</mockito.version>
+    <mockito.version>5.23.0</mockito.version>
     <!--knife4j版本-->
     <knife4j.version>4.5.0</knife4j.version>
     <!--taos-jdbcdriver版本-->
@@ -211,7 +211,7 @@
     <!--browscap-java版本-->
     <browscap-java.version>1.5.1</browscap-java.version>
     <!--flyway版本-->
-    <flyway.version>10.22.0</flyway.version>
+    <flyway.version>12.1.0</flyway.version>
     <!--snail-job版本-->
     <snail-job.version>1.9.0-jdk8</snail-job.version>
     <!--archunit-junit5版本-->
@@ -223,7 +223,7 @@
     <!--influxdb-client-java版本-->
     <influxdb-client-java.version>7.5.0</influxdb-client-java.version>
     <!--reactor-core版本-->
-    <reactor-core.version>3.8.3</reactor-core.version>
+    <reactor-core.version>3.8.4</reactor-core.version>
     <!--opencsv版本-->
     <opencsv.version>5.12.0</opencsv.version>
     <!--wiremock版本-->
@@ -241,7 +241,7 @@
     <!--modbus4j版本-->
     <modbus4j.version>v3.1.0</modbus4j.version>
     <!--swagger-annotations-jakarta版本-->
-    <swagger-annotations-jakarta.version>2.2.44</swagger-annotations-jakarta.version>
+    <swagger-annotations-jakarta.version>2.2.45</swagger-annotations-jakarta.version>
     <!--jsqlparser版本-->
     <jsqlparser.version>5.3</jsqlparser.version>
     <!--commons-io-->
