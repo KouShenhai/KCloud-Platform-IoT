@@ -30,6 +30,7 @@ import org.laokou.common.security.config.convertor.OAuth2AuthorizationRequestToB
 import org.laokou.common.security.config.convertor.UsernamePasswordAuthenticationTokenToBytesConverter;
 import org.laokou.common.security.config.repository.OAuth2AuthorizationGrantAuthorizationRepository;
 import org.laokou.common.security.filter.I18nFilter;
+import org.laokou.common.security.filter.LoginFilter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -65,6 +66,11 @@ public class OAuth2AuthorizationConfig {
 	@Bean
 	public I18nFilter i18nFilter() {
 		return new I18nFilter();
+	}
+
+	@Bean
+	public LoginFilter loginFilter() throws IOException {
+		return new LoginFilter();
 	}
 
 	/**

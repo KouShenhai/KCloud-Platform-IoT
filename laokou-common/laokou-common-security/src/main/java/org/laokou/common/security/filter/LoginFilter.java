@@ -22,32 +22,33 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.jspecify.annotations.NonNull;
-import org.laokou.common.i18n.util.I18nUtils;
+import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.i18n.util.ResourceExtUtils;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
-/**
- * I18n过滤器.
- *
- * @author laokou
- */
-@Order(Ordered.HIGHEST_PRECEDENCE)
-public final class I18nFilter extends OncePerRequestFilter {
+@Order(Ordered.HIGHEST_PRECEDENCE + 10000)
+public final class LoginFilter extends OncePerRequestFilter {
+
+	private final String LOGIN_HTML = new String(ResourceExtUtils.getResource("static/index.html").getInputStream().readAllBytes(), StandardCharsets.UTF_8);
+
+	public LoginFilter() throws IOException {
+	}
 
 	@Override
-	protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
-			@NonNull FilterChain chain) {
-		ScopedValue.where(I18nUtils.LOCALE, I18nUtils.getLocale(request)).run(() -> {
-			try {
-				chain.doFilter(request, response);
-			}
-			catch (IOException | ServletException e) {
-				throw new RuntimeException(e);
-			}
-		});
+	protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws IOException, ServletException {
+		if (ObjectUtils.equals("GET", request.getMethod()) && ObjectUtils.equals(request.getServletPath(), "/login")) {
+			response.setContentType("text/html;charset=UTF-8");
+			response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+			response.setContentLength(LOGIN_HTML.getBytes(StandardCharsets.UTF_8).length);
+			response.getWriter().write(LOGIN_HTML);
+			return;
+		}
+		filterChain.doFilter(request, response);
 	}
 
 }
