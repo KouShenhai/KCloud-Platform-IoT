@@ -339,11 +339,13 @@ export default () => {
 				<ProFormText
 					disabled={loading}
 					name="tenant_code"
+					initialValue={'laokouyun'}
 					fieldProps={{
 						size: 'large',
 						prefix: <TeamOutlined className={'prefixIcon'} />,
 						autoComplete: 'new-password',
 					}}
+					allowClear={true}
 					placeholder={t('login.tenantCode.placeholder')}
 					rules={[
 						{
@@ -358,6 +360,7 @@ export default () => {
 						<ProFormText
 							disabled={loading}
 							name="username"
+							initialValue={'admin'}
 							fieldProps={{
 								size: 'large',
 								prefix: (
@@ -365,6 +368,7 @@ export default () => {
 								),
 								autoComplete: 'new-password',
 							}}
+							allowClear={true}
 							placeholder={t('login.username.placeholder')}
 							rules={[
 								{
@@ -376,6 +380,8 @@ export default () => {
 						<ProFormText.Password
 							disabled={loading}
 							name="password"
+							initialValue={'admin123'}
+							allowClear={true}
 							fieldProps={{
 								size: 'large',
 								prefix: (
@@ -406,6 +412,7 @@ export default () => {
 										autoComplete: 'new-password',
 									}}
 									name="captcha"
+									allowClear={true}
 									placeholder={t('login.captcha.placeholder')}
 									rules={[
 										{
@@ -440,6 +447,7 @@ export default () => {
 					<>
 						<ProFormText
 							disabled={loading}
+							allowClear={true}
 							fieldProps={{
 								size: 'large',
 								prefix: (
@@ -462,6 +470,7 @@ export default () => {
 						/>
 						<ProFormCaptcha
 							disabled={loading}
+							allowClear={true}
 							fieldProps={{
 								size: 'large',
 								prefix: (
@@ -502,6 +511,7 @@ export default () => {
 				{loginType === MAIL.key && (
 					<>
 						<ProFormText
+							allowClear={true}
 							disabled={loading}
 							fieldProps={{
 								size: 'large',
@@ -526,6 +536,7 @@ export default () => {
 						/>
 						<ProFormCaptcha
 							disabled={loading}
+							allowClear={true}
 							fieldProps={{
 								size: 'large',
 								prefix: (
