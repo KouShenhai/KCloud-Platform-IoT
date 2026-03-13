@@ -40,16 +40,16 @@ importers:
         version: 4.25.8(@babel/runtime@7.28.6)(@codemirror/autocomplete@6.20.1)(@codemirror/language@6.12.2)(@codemirror/lint@6.9.5)(@codemirror/search@6.6.0)(@codemirror/state@6.5.4)(@codemirror/theme-one-dark@6.1.3)(@codemirror/view@6.39.16)(codemirror@6.0.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@umijs/max':
         specifier: ^4.4.6
-        version: 4.6.31(@babel/core@7.29.0)(@types/node@25.4.0)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(dva@2.5.0-beta.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(lightningcss@1.22.1)(prettier@2.8.8)(rc-field-form@2.7.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(resolve-url-loader@5.0.0)(rollup@3.30.0)(sass@1.54.0)(terser@5.46.0)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.105.4)
+        version: 4.6.31(@babel/core@7.29.0)(@types/node@25.5.0)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(dva@2.5.0-beta.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(lightningcss@1.22.1)(prettier@2.8.8)(rc-field-form@2.7.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(resolve-url-loader@5.0.0)(rollup@3.30.0)(sass@1.54.0)(terser@5.46.0)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.105.4)
       '@umijs/plugin-openapi':
         specifier: ^1.3.3
-        version: 1.3.3(chokidar@3.6.0)(encoding@0.1.13)(typescript@5.9.3)(umi@4.6.31(@babel/core@7.29.0)(@types/node@25.4.0)(@types/react@19.2.14)(eslint@8.35.0)(lightningcss@1.22.1)(prettier@2.8.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(resolve-url-loader@5.0.0)(rollup@3.30.0)(sass@1.54.0)(stylelint@14.8.2)(terser@5.46.0)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.105.4))
+        version: 1.3.3(chokidar@3.6.0)(encoding@0.1.13)(typescript@5.9.3)(umi@4.6.31(@babel/core@7.29.0)(@types/node@25.5.0)(@types/react@19.2.14)(eslint@8.35.0)(lightningcss@1.22.1)(prettier@2.8.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(resolve-url-loader@5.0.0)(rollup@3.30.0)(sass@1.54.0)(stylelint@14.8.2)(terser@5.46.0)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.105.4))
       antd:
         specifier: ^5.24.4
         version: 5.29.3(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       antd-img-crop:
         specifier: ^4.24.0
-        version: 4.29.0(antd@5.29.3(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 4.30.0(antd@5.29.3(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       axios:
         specifier: ^1.12.0
         version: 1.13.6
@@ -594,6 +594,9 @@ packages:
   '@codemirror/commands@6.10.2':
     resolution: {integrity: sha512-vvX1fsih9HledO1c9zdotZYUZnE4xV0m6i3m25s5DIfXofuprk6cRcLUZvSk3CASUbwjQX21tOGbkY2BH8TpnQ==}
 
+  '@codemirror/commands@6.10.3':
+    resolution: {integrity: sha512-JFRiqhKu+bvSkDLI+rUhJwSxQxYb759W5GBezE8Uc8mHLqC9aV/9aTC7yJSqCtB3F00pylrLCwnyS91Ap5ej4Q==}
+
   '@codemirror/lang-java@6.0.2':
     resolution: {integrity: sha512-m5Nt1mQ/cznJY7tMfQTJchmrjdjQ71IDs+55d1GAa8DGaB8JXWsVCkVT284C3RTASaY43YknrK2X3hPO/J3MOQ==}
 
@@ -611,6 +614,9 @@ packages:
 
   '@codemirror/state@6.5.4':
     resolution: {integrity: sha512-8y7xqG/hpB53l25CIoit9/ngxdfoG+fx+V3SHBrinnhOtLvKHRyAJJuHzkWrR4YXXLX8eXBsejgAAxHUOdW1yw==}
+
+  '@codemirror/state@6.6.0':
+    resolution: {integrity: sha512-4nbvra5R5EtiCzr9BTHiTLc+MLXK2QGiAVYMyi8PkQd3SR+6ixar/Q/01Fa21TBIDOZXgeWV4WppsQolSreAPQ==}
 
   '@codemirror/theme-one-dark@6.1.3':
     resolution: {integrity: sha512-NzBdIvEJmx6fjeremiGp3t/okrLPYT0d9orIc7AFun8oZcRk58aejkqhv6spnz4MLAevrKNPMQYXEWMg4s+sKA==}
@@ -1630,8 +1636,8 @@ packages:
   '@types/node@25.3.5':
     resolution: {integrity: sha512-oX8xrhvpiyRCQkG1MFchB09f+cXftgIXb3a7UUa4Y3wpmZPw5tyZGTLWhlESOLq1Rq6oDlc8npVU2/9xiCuXMA==}
 
-  '@types/node@25.4.0':
-    resolution: {integrity: sha512-9wLpoeWuBlcbBpOY3XmzSTG3oscB6xjBEEtn+pYXTfhyXhIxC5FsBer2KTopBlvKEiW9l13po9fq+SJY/5lkhw==}
+  '@types/node@25.5.0':
+    resolution: {integrity: sha512-jp2P3tQMSxWugkCUKLRPVUpGaL5MVFwF8RDuSRztfwgN1wmqJeMSbKlnEtQqU8UrhTmzEmZdu2I6v2dpp7XIxw==}
 
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
@@ -2227,8 +2233,8 @@ packages:
     peerDependencies:
       dayjs: '*'
 
-  antd-img-crop@4.29.0:
-    resolution: {integrity: sha512-f+3Gx3VHVYlF8wnv2yBEMMjcxtoryM8jbx2urdhhAeTT4hZnHBbf2gLG6sEtD8RNTENvjTOgEMhey1R1JA9Swg==}
+  antd-img-crop@4.30.0:
+    resolution: {integrity: sha512-fjpwyCNKtKr22AQcENBix5Y+P8ECM80Ivk/Yn7kF9D0XltYBGJHg+3yycxcGq7ATgnl7pgPYDvN2VzKleogCLQ==}
     peerDependencies:
       antd: '>=4.0.0'
       react: '>=16.8.0'
@@ -6743,8 +6749,8 @@ packages:
     resolution: {integrity: sha512-g9ljZiwki/LfxmQADO3dEY1CbpmXT5Hm2fJ+QaGKwSXUylMybePR7/67YW7jOrrvjEgL1Fmz5kzyAjWVWLlucg==}
     engines: {node: '>=6'}
 
-  terser-webpack-plugin@5.3.17:
-    resolution: {integrity: sha512-YR7PtUp6GMU91BgSJmlaX/rS2lGDbAF7D+Wtq7hRO+MiljNmodYvqslzCFiYVAgW+Qoaaia/QUIP4lGXufjdZw==}
+  terser-webpack-plugin@5.4.0:
+    resolution: {integrity: sha512-Bn5vxm48flOIfkdl5CaD2+1CiUVbonWQ3KQPyP7/EuIl9Gbzq/gQFOzaMFUEgVjB1396tcK0SG8XcNJ/2kDH8g==}
     engines: {node: '>= 10.13.0'}
     peerDependencies:
       '@swc/core': '*'
@@ -8283,6 +8289,13 @@ snapshots:
       '@codemirror/view': 6.39.16
       '@lezer/common': 1.5.1
 
+  '@codemirror/commands@6.10.3':
+    dependencies:
+      '@codemirror/language': 6.12.2
+      '@codemirror/state': 6.6.0
+      '@codemirror/view': 6.39.16
+      '@lezer/common': 1.5.1
+
   '@codemirror/lang-java@6.0.2':
     dependencies:
       '@codemirror/language': 6.12.2
@@ -8320,6 +8333,10 @@ snapshots:
       crelt: 1.0.6
 
   '@codemirror/state@6.5.4':
+    dependencies:
+      '@marijn/find-cluster-break': 1.0.2
+
+  '@codemirror/state@6.6.0':
     dependencies:
       '@marijn/find-cluster-break': 1.0.2
 
@@ -9255,7 +9272,7 @@ snapshots:
     dependencies:
       undici-types: 7.18.2
 
-  '@types/node@25.4.0':
+  '@types/node@25.5.0':
     dependencies:
       undici-types: 7.18.2
 
@@ -9515,18 +9532,18 @@ snapshots:
       - webpack-hot-middleware
       - webpack-plugin-serve
 
-  '@umijs/bundler-vite@4.6.31(@types/node@25.4.0)(lightningcss@1.22.1)(postcss@8.5.8)(rollup@3.30.0)(sass@1.54.0)(terser@5.46.0)':
+  '@umijs/bundler-vite@4.6.31(@types/node@25.5.0)(lightningcss@1.22.1)(postcss@8.5.8)(rollup@3.30.0)(sass@1.54.0)(terser@5.46.0)':
     dependencies:
       '@svgr/core': 6.5.1
       '@umijs/bundler-utils': 4.6.31
       '@umijs/utils': 4.6.31
-      '@vitejs/plugin-react': 4.0.0(vite@4.5.2(@types/node@25.4.0)(less@4.1.3)(lightningcss@1.22.1)(sass@1.54.0)(terser@5.46.0))
+      '@vitejs/plugin-react': 4.0.0(vite@4.5.2(@types/node@25.5.0)(less@4.1.3)(lightningcss@1.22.1)(sass@1.54.0)(terser@5.46.0))
       core-js: 3.34.0
       less: 4.1.3
       postcss-preset-env: 7.5.0(postcss@8.5.8)
       rollup-plugin-visualizer: 5.9.0(rollup@3.30.0)
       systemjs: 6.15.1
-      vite: 4.5.2(@types/node@25.4.0)(less@4.1.3)(lightningcss@1.22.1)(sass@1.54.0)(terser@5.46.0)
+      vite: 4.5.2(@types/node@25.5.0)(less@4.1.3)(lightningcss@1.22.1)(sass@1.54.0)(terser@5.46.0)
     transitivePeerDependencies:
       - '@types/node'
       - lightningcss
@@ -9716,14 +9733,14 @@ snapshots:
       - typescript
       - webpack
 
-  '@umijs/max@4.6.31(@babel/core@7.29.0)(@types/node@25.4.0)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(dva@2.5.0-beta.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(lightningcss@1.22.1)(prettier@2.8.8)(rc-field-form@2.7.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(resolve-url-loader@5.0.0)(rollup@3.30.0)(sass@1.54.0)(terser@5.46.0)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.105.4)':
+  '@umijs/max@4.6.31(@babel/core@7.29.0)(@types/node@25.5.0)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(dva@2.5.0-beta.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(lightningcss@1.22.1)(prettier@2.8.8)(rc-field-form@2.7.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(resolve-url-loader@5.0.0)(rollup@3.30.0)(sass@1.54.0)(terser@5.46.0)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.105.4)':
     dependencies:
       '@umijs/lint': 4.6.31(eslint@8.35.0)(stylelint@14.8.2)(typescript@5.9.3)
       '@umijs/plugins': 4.6.31(@babel/core@7.29.0)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(antd@4.24.16(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(dva@2.5.0-beta.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(rc-field-form@2.7.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       antd: 4.24.16(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       eslint: 8.35.0
       stylelint: 14.8.2
-      umi: 4.6.31(@babel/core@7.29.0)(@types/node@25.4.0)(@types/react@19.2.14)(eslint@8.35.0)(lightningcss@1.22.1)(prettier@2.8.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(resolve-url-loader@5.0.0)(rollup@3.30.0)(sass@1.54.0)(stylelint@14.8.2)(terser@5.46.0)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.105.4)
+      umi: 4.6.31(@babel/core@7.29.0)(@types/node@25.5.0)(@types/react@19.2.14)(eslint@8.35.0)(lightningcss@1.22.1)(prettier@2.8.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(resolve-url-loader@5.0.0)(rollup@3.30.0)(sass@1.54.0)(stylelint@14.8.2)(terser@5.46.0)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.105.4)
     transitivePeerDependencies:
       - '@babel/core'
       - '@rspack/core'
@@ -9801,12 +9818,12 @@ snapshots:
       - encoding
       - typescript
 
-  '@umijs/plugin-openapi@1.3.3(chokidar@3.6.0)(encoding@0.1.13)(typescript@5.9.3)(umi@4.6.31(@babel/core@7.29.0)(@types/node@25.4.0)(@types/react@19.2.14)(eslint@8.35.0)(lightningcss@1.22.1)(prettier@2.8.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(resolve-url-loader@5.0.0)(rollup@3.30.0)(sass@1.54.0)(stylelint@14.8.2)(terser@5.46.0)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.105.4))':
+  '@umijs/plugin-openapi@1.3.3(chokidar@3.6.0)(encoding@0.1.13)(typescript@5.9.3)(umi@4.6.31(@babel/core@7.29.0)(@types/node@25.5.0)(@types/react@19.2.14)(eslint@8.35.0)(lightningcss@1.22.1)(prettier@2.8.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(resolve-url-loader@5.0.0)(rollup@3.30.0)(sass@1.54.0)(stylelint@14.8.2)(terser@5.46.0)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.105.4))':
     dependencies:
       '@umijs/openapi': 1.14.1(chokidar@3.6.0)(encoding@0.1.13)(typescript@5.9.3)
       serve-static: 1.16.3
       swagger-ui-dist: 4.19.1
-      umi: 4.6.31(@babel/core@7.29.0)(@types/node@25.4.0)(@types/react@19.2.14)(eslint@8.35.0)(lightningcss@1.22.1)(prettier@2.8.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(resolve-url-loader@5.0.0)(rollup@3.30.0)(sass@1.54.0)(stylelint@14.8.2)(terser@5.46.0)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.105.4)
+      umi: 4.6.31(@babel/core@7.29.0)(@types/node@25.5.0)(@types/react@19.2.14)(eslint@8.35.0)(lightningcss@1.22.1)(prettier@2.8.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(resolve-url-loader@5.0.0)(rollup@3.30.0)(sass@1.54.0)(stylelint@14.8.2)(terser@5.46.0)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.105.4)
     transitivePeerDependencies:
       - chokidar
       - encoding
@@ -9862,7 +9879,7 @@ snapshots:
       - react-native
       - supports-color
 
-  '@umijs/preset-umi@4.6.31(@types/node@25.4.0)(@types/react@19.2.14)(lightningcss@1.22.1)(resolve-url-loader@5.0.0)(rollup@3.30.0)(sass@1.54.0)(terser@5.46.0)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.105.4)':
+  '@umijs/preset-umi@4.6.31(@types/node@25.5.0)(@types/react@19.2.14)(lightningcss@1.22.1)(resolve-url-loader@5.0.0)(rollup@3.30.0)(sass@1.54.0)(terser@5.46.0)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.105.4)':
     dependencies:
       '@iconify/utils': 2.1.1
       '@stagewise/toolbar': 0.6.2
@@ -9873,7 +9890,7 @@ snapshots:
       '@umijs/bundler-mako': 0.11.10(postcss@8.5.8)(sass@1.54.0)(typescript@5.9.3)(webpack@5.105.4)
       '@umijs/bundler-utils': 4.6.31
       '@umijs/bundler-utoopack': 4.6.31(resolve-url-loader@5.0.0)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.105.4)
-      '@umijs/bundler-vite': 4.6.31(@types/node@25.4.0)(lightningcss@1.22.1)(postcss@8.5.8)(rollup@3.30.0)(sass@1.54.0)(terser@5.46.0)
+      '@umijs/bundler-vite': 4.6.31(@types/node@25.5.0)(lightningcss@1.22.1)(postcss@8.5.8)(rollup@3.30.0)(sass@1.54.0)(terser@5.46.0)
       '@umijs/bundler-webpack': 4.6.31(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.105.4)
       '@umijs/core': 4.6.31
       '@umijs/did-you-know': 1.0.4
@@ -10060,13 +10077,13 @@ snapshots:
 
   '@utoo/style-loader@1.0.1': {}
 
-  '@vitejs/plugin-react@4.0.0(vite@4.5.2(@types/node@25.4.0)(less@4.1.3)(lightningcss@1.22.1)(sass@1.54.0)(terser@5.46.0))':
+  '@vitejs/plugin-react@4.0.0(vite@4.5.2(@types/node@25.5.0)(less@4.1.3)(lightningcss@1.22.1)(sass@1.54.0)(terser@5.46.0))':
     dependencies:
       '@babel/core': 7.29.0
       '@babel/plugin-transform-react-jsx-self': 7.27.1(@babel/core@7.29.0)
       '@babel/plugin-transform-react-jsx-source': 7.27.1(@babel/core@7.29.0)
       react-refresh: 0.14.2
-      vite: 4.5.2(@types/node@25.4.0)(less@4.1.3)(lightningcss@1.22.1)(sass@1.54.0)(terser@5.46.0)
+      vite: 4.5.2(@types/node@25.5.0)(less@4.1.3)(lightningcss@1.22.1)(sass@1.54.0)(terser@5.46.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -10236,7 +10253,7 @@ snapshots:
     dependencies:
       dayjs: 1.11.19
 
-  antd-img-crop@4.29.0(antd@5.29.3(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  antd-img-crop@4.30.0(antd@5.29.3(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       antd: 5.29.3(date-fns@2.30.0)(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
@@ -10836,7 +10853,7 @@ snapshots:
   codemirror@6.0.2:
     dependencies:
       '@codemirror/autocomplete': 6.20.1
-      '@codemirror/commands': 6.10.2
+      '@codemirror/commands': 6.10.3
       '@codemirror/language': 6.12.2
       '@codemirror/lint': 6.9.5
       '@codemirror/search': 6.6.0
@@ -12755,7 +12772,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 25.4.0
+      '@types/node': 25.5.0
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
@@ -15595,7 +15612,7 @@ snapshots:
 
   tapable@2.3.0: {}
 
-  terser-webpack-plugin@5.3.17(webpack@5.105.4):
+  terser-webpack-plugin@5.4.0(webpack@5.105.4):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
       jest-worker: 27.5.1
@@ -15753,14 +15770,14 @@ snapshots:
 
   typescript@5.9.3: {}
 
-  umi@4.6.31(@babel/core@7.29.0)(@types/node@25.4.0)(@types/react@19.2.14)(eslint@8.35.0)(lightningcss@1.22.1)(prettier@2.8.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(resolve-url-loader@5.0.0)(rollup@3.30.0)(sass@1.54.0)(stylelint@14.8.2)(terser@5.46.0)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.105.4):
+  umi@4.6.31(@babel/core@7.29.0)(@types/node@25.5.0)(@types/react@19.2.14)(eslint@8.35.0)(lightningcss@1.22.1)(prettier@2.8.8)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(resolve-url-loader@5.0.0)(rollup@3.30.0)(sass@1.54.0)(stylelint@14.8.2)(terser@5.46.0)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.105.4):
     dependencies:
       '@babel/runtime': 7.23.6
       '@umijs/bundler-utils': 4.6.31
       '@umijs/bundler-webpack': 4.6.31(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.105.4)
       '@umijs/core': 4.6.31
       '@umijs/lint': 4.6.31(eslint@8.35.0)(stylelint@14.8.2)(typescript@5.9.3)
-      '@umijs/preset-umi': 4.6.31(@types/node@25.4.0)(@types/react@19.2.14)(lightningcss@1.22.1)(resolve-url-loader@5.0.0)(rollup@3.30.0)(sass@1.54.0)(terser@5.46.0)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.105.4)
+      '@umijs/preset-umi': 4.6.31(@types/node@25.5.0)(@types/react@19.2.14)(lightningcss@1.22.1)(resolve-url-loader@5.0.0)(rollup@3.30.0)(sass@1.54.0)(terser@5.46.0)(type-fest@0.20.2)(typescript@5.9.3)(webpack@5.105.4)
       '@umijs/renderer-react': 4.6.31(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@umijs/server': 4.6.31
       '@umijs/test': 4.6.31(@babel/core@7.29.0)
@@ -15905,13 +15922,13 @@ snapshots:
 
   vary@1.1.2: {}
 
-  vite@4.5.2(@types/node@25.4.0)(less@4.1.3)(lightningcss@1.22.1)(sass@1.54.0)(terser@5.46.0):
+  vite@4.5.2(@types/node@25.5.0)(less@4.1.3)(lightningcss@1.22.1)(sass@1.54.0)(terser@5.46.0):
     dependencies:
       esbuild: 0.18.20
       postcss: 8.5.8
       rollup: 3.30.0
     optionalDependencies:
-      '@types/node': 25.4.0
+      '@types/node': 25.5.0
       fsevents: 2.3.3
       less: 4.1.3
       lightningcss: 1.22.1
@@ -15978,7 +15995,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 4.3.3
       tapable: 2.3.0
-      terser-webpack-plugin: 5.3.17(webpack@5.105.4)
+      terser-webpack-plugin: 5.4.0(webpack@5.105.4)
       watchpack: 2.5.1
       webpack-sources: 3.3.4
     transitivePeerDependencies:
