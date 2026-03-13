@@ -229,7 +229,7 @@
     <!--wiremock版本-->
     <wiremock.version>4.0.0-beta.29</wiremock.version>
     <!--jsch版本-->
-    <jsch.version>2.27.8</jsch.version>
+    <jsch.version>2.27.9</jsch.version>
     <!--jSerialComm版本-->
     <jSerialComm.version>2.11.4</jSerialComm.version>
     <!--californium版本-->
