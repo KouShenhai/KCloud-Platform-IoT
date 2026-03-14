@@ -25,6 +25,7 @@ import org.laokou.auth.dto.CaptchaGetQry;
 import org.laokou.auth.dto.CaptchaSendCmd;
 import org.laokou.auth.model.enums.SendCaptchaType;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.ratelimiter.annotation.RateLimiter;
 import org.laokou.common.ratelimiter.aspectj.Type;
@@ -46,11 +47,21 @@ public class CaptchasController {
 	private final CaptchasServiceI captchasServiceI;
 
 	@TraceLog
-	@GetMapping("/v1/captchas/{uuid}")
-	@RateLimiter(key = "GET_CAPTCHA", type = Type.IP)
-	@Operation(summary = "根据UUID获取验证码", description = "根据UUID获取验证码")
-	public Result<String> getCaptchaByUuid(@PathVariable("uuid") String uuid) {
-		return captchasServiceI.getCaptchaByUuid(new CaptchaGetQry(uuid));
+	@GetMapping("/v1/username-password/captchas/{uuid}")
+	@RateLimiter(key = "GET_USERNAME_PASSWORD_CAPTCHA", type = Type.IP)
+	@Operation(summary = "根据UUID获取用户名密码登录验证码", description = "根据UUID获取用户名密码登录验证码")
+	public Result<String> getUsernamePasswordAuthCaptchaByUuid(@PathVariable("uuid") String uuid) {
+		return captchasServiceI
+			.getCaptchaByUuid(new CaptchaGetQry(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey(uuid)));
+	}
+
+	@TraceLog
+	@GetMapping("/v1/authorization-code/captchas/{uuid}")
+	@RateLimiter(key = "GET_AUTHORIZATION_CODE_CAPTCHA", type = Type.IP)
+	@Operation(summary = "根据UUID获取授权码登录验证码", description = "根据UUID获取授权码登录验证码")
+	public Result<String> getAuthorizationCodeAuthCaptchaByUuid(@PathVariable("uuid") String uuid) {
+		return captchasServiceI
+			.getCaptchaByUuid(new CaptchaGetQry(RedisKeyUtils.getAuthorizationCodeAuthCaptchaKey(uuid)));
 	}
 
 	@Idempotent

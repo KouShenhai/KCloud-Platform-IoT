@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>登录</title>
+	<link th:href="@{/css/login.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="content">
+	<form class="login-form" method="post" th:action="@{/login}">
+		<h2>KCloud-Platform-IoT统一认证平台</h2>
+
+		<!-- Spring Security CSRF -->
+		<input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+		<!-- 错误信息（failureUrl=/login?error） -->
+		<div th:if="${param.error}" class="alert alert-danger" style="margin: 12px 0; color: #b00020;">
+			<span>用户名或密码错误</span>
+		</div>
+
+		<!-- 登出提示（可选） -->
+		<div th:if="${param.logout}" class="alert alert-success" style="margin: 12px 0; color: #1b5e20;">
+			<span>已退出登录</span>
+		</div>
+
+		<p>
+			<label for="tenantId" class="screenreader">租户编号</label>
+			<input type="text" id="tenantId" name="tenantId" placeholder="租户编号" required autofocus
+				   th:value="${param.tenantId}">
+		</p>
+
+		<p>
+			<label for="username" class="screenreader">用户名</label>
+			<input type="text" id="username" name="username" placeholder="用户名" required
+				   th:value="${param.username}">
+		</p>
+
+		<p>
+			<label for="password" class="screenreader">密码</label>
+			<input type="password" id="password" name="password" placeholder="密码" required>
+		</p>
+
+		<!-- uuid：后端验证码接口需要的 uuid（/api/v1/captchas/{uuid}） -->
+		<input type="hidden" id="uuid" name="uuid" th:value="${param.uuid}"/>
+
+		<p style="display:flex; gap: 8px; align-items: center;">
+			<span style="flex: 1;">
+				<label for="captcha" class="screenreader">验证码</label>
+				<input type="text" id="captcha" name="captcha" placeholder="验证码" required autocomplete="off">
+			</span>
+			<span style="display:flex; flex-direction: column; gap: 4px; align-items: center;">
+				<!-- 注意：这里按项目现有接口对齐：GET /api/v1/captchas/{uuid} 返回 base64 字符串 -->
+				<img id="captchaImg"
+					 th:src="@{'/api/v1/captchas/' + ${param.uuid}}"
+					 alt="验证码"
+					 style="height: 38px; cursor: pointer;"
+					 onclick="refreshCaptcha()"/>
+				<a href="javascript:void(0)" onclick="refreshCaptcha()" style="font-size: 12px;">换一张</a>
+			</span>
+		</p>
+
+		<button type="submit" class="primary">登录</button>
+	</form>
+</div>
+
+<script>
+	function randomUUID() {
+		// 简易 uuid（前端生成即可满足验证码 uuid 的唯一性）
+		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+			const r = (Math.random() * 16) | 0,
+				v = c === 'x' ? r : (r & 0x3) | 0x8;
+			return v.toString(16);
+		});
+	}
+
+	function refreshCaptcha() {
+		const uuidInput = document.getElementById('uuid');
+		const img = document.getElementById('captchaImg');
+		if (!uuidInput || !img) return;
+
+		// 如果没有 uuid，则先生成
+		if (!uuidInput.value) {
+			uuidInput.value = randomUUID();
+		}
+
+		// 直接换 uuid，避免服务端/网关缓存
+		uuidInput.value = randomUUID();
+
+		// CaptchasController: GET /v1/captchas/{uuid}（通常会有 /api 前缀）
+		img.setAttribute('src', '/api/v1/captchas/' + uuidInput.value);
+	}
+
+	// 首次进入页面自动生成 uuid 并加载验证码
+	(function initCaptcha() {
+		const uuidInput = document.getElementById('uuid');
+		if (!uuidInput) return;
+		if (!uuidInput.value) {
+			uuidInput.value = randomUUID();
+		}
+		const img = document.getElementById('captchaImg');
+		if (img) {
+			img.setAttribute('src', '/api/v1/captchas/' + uuidInput.value);
+		}
+	})();
+</script>
+</body>
+</html>

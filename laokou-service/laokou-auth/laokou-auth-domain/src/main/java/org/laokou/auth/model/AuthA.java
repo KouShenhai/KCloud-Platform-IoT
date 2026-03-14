@@ -381,7 +381,8 @@ public final class AuthA extends AggregateRoot implements ValidateName {
 	}
 
 	private boolean isUseCaptcha() {
-		return List.of(GrantType.USERNAME_PASSWORD, GrantType.MOBILE, GrantType.MAIL).contains(grantType);
+		return List.of(GrantType.USERNAME_PASSWORD, GrantType.MOBILE, GrantType.MAIL, GrantType.AUTHORIZATION_CODE)
+			.contains(grantType);
 	}
 
 	private boolean isUsePassword() {
@@ -393,7 +394,8 @@ public final class AuthA extends AggregateRoot implements ValidateName {
 			case MOBILE -> RedisKeyUtils.getMobileAuthCaptchaKey(this.captchaV.uuid());
 			case MAIL -> RedisKeyUtils.getMailAuthCaptchaKey(this.captchaV.uuid());
 			case USERNAME_PASSWORD -> RedisKeyUtils.getUsernamePasswordAuthCaptchaKey(this.captchaV.uuid());
-			case AUTHORIZATION_CODE, TEST -> throw new UnsupportedOperationException("Unsupported grant type");
+			case AUTHORIZATION_CODE -> RedisKeyUtils.getAuthorizationCodeAuthCaptchaKey(this.captchaV.uuid());
+			case TEST -> throw new UnsupportedOperationException("Unsupported grant type");
 		};
 	}
 

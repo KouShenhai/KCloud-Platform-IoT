@@ -15,24 +15,20 @@
  *
  */
 
-package org.laokou.auth.dto;
+package org.laokou.auth.web;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import org.laokou.common.i18n.dto.CommonCommand;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
 /**
- * 查看验证码命令请求.
- *
  * @author laokou
  */
-@Getter
-@RequiredArgsConstructor
-public class CaptchaGetQry extends CommonCommand {
+@Controller
+public class LoginController {
 
-	/**
-	 * 标识.
-	 */
-	private final String key;
+	@GetMapping("/login")
+	public String login() {
+		return "login";
+	}
 
 }

@@ -219,8 +219,7 @@ class OAuth2AuthorizationServerConfig {
 	}
 
 	@Bean(name = "authRedisSegmentIdGenerator", initMethod = "init", destroyMethod = "close")
-	IdGenerator authRedisSegmentIdGenerator(RedisUtils redisUtils,
-			SpringSegmentProperties springSegmentProperties) {
+	IdGenerator authRedisSegmentIdGenerator(RedisUtils redisUtils, SpringSegmentProperties springSegmentProperties) {
 		return new RedisSegmentIdGenerator(redisUtils, springSegmentProperties);
 	}
 

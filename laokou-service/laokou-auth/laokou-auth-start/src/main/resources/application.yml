@@ -63,6 +63,12 @@ spring:
       enabled: true
   lifecycle:
     timeout-per-shutdown-phase: 2m
+  thymeleaf:
+    cache: false
+    check-template: true
+    encoding: UTF-8
+    check-template-location: true
+    prefix: classpath:/templates/
   id-generator:
       segment:
         node-id: ${NODE_ID:1}
@@ -151,7 +157,8 @@ spring:
               - /v3/api-docs/**=laokou-auth
               - /actuator/**=laokou-auth
               - /error=laokou-auth
-              - /v1/captchas/{uuid}=laokou-auth
+              - /v1/username-password/captchas/{uuid}=laokou-auth
+              - /v1/authorization-code/captchas/{uuid}=laokou-auth
               - /v1/secrets=laokou-auth
               - /doc.html=laokou-auth
               - /webjars/**=laokou-auth

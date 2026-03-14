@@ -34,6 +34,14 @@ public final class RedisKeyUtils {
 	}
 
 	/**
+	 * 验证码Key.
+	 * @param uuid UUID
+	 */
+	public static String getAuthorizationCodeAuthCaptchaKey(String uuid) {
+		return "auth:authorization-code:captcha:" + uuid;
+	}
+
+	/**
 	 * 手机验证码Key.
 	 * @param mobile 手机号
 	 */

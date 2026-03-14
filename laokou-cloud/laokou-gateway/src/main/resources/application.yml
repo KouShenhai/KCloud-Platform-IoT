@@ -193,11 +193,13 @@ request-matcher:
       - /**/v3/api-docs/**=laokou-gateway
       - /actuator/**=laokou-gateway
       - /favicon.ico=laokou-gateway
-      - /api/v1/captchas/{uuid}=laokou-gateway
+      - /api/v1/username-password/captchas/{uuid}=laokou-gateway
+      - /api/v1/authorization-code/captchas/{uuid}=laokou-gateway
       - /api/v1/secrets=laokou-gateway
       - /doc.html=laokou-gateway
       - /webjars/**=laokou-gateway
       - /ws=laokou-gateway
+      - /api/login=laokou-gateway
     POST:
       - /api/v1/captchas/send/mail=laokou-gateway
       - /api/v1/captchas/send/mobile=laokou-gateway

@@ -22,10 +22,8 @@ import com.wf.captcha.base.Captcha;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.dto.CaptchaGetQry;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.laokou.common.redis.util.RedisUtils;
 import org.springframework.stereotype.Component;
-
 import java.awt.Font;
 
 /**
@@ -48,8 +46,7 @@ public class CaptchaGetQryExe {
 		Captcha ca = generate();
 		String captcha = ca.text();
 		String base64 = ca.toBase64();
-		String usernamePasswordAuthCaptchaKey = RedisKeyUtils.getUsernamePasswordAuthCaptchaKey(qry.getUuid());
-		redisUtils.set(usernamePasswordAuthCaptchaKey, captcha, RedisUtils.FIVE_MINUTE_EXPIRE);
+		redisUtils.set(qry.getKey(), captcha, RedisUtils.FIVE_MINUTE_EXPIRE);
 		return Result.ok(base64);
 	}
 

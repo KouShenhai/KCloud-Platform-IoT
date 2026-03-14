@@ -1,6 +1,6 @@
 import { clearToken, setToken } from '@/access';
 import { login } from '@/services/auth/auth';
-import { getCaptchaByUuid, sendCaptcha } from '@/services/auth/captcha';
+import { getUsernamePasswordAuthCaptchaByUuid, sendCaptcha} from '@/services/auth/captcha';
 import { getSecretInfo } from '@/services/auth/secret';
 import { SelectLang, useIntl } from '@@/exports';
 import {
@@ -13,6 +13,7 @@ import {
 	SafetyCertificateOutlined,
 	TeamOutlined,
 	UserOutlined,
+	VerifiedOutlined,
 	WechatOutlined,
 } from '@ant-design/icons';
 import {
@@ -106,7 +107,7 @@ export default () => {
 		// 调用验证码API
 		const uuid = uuidV7();
 		// @ts-ignore
-		getCaptchaByUuid({ uuid: uuid }).then((res) => {
+		getUsernamePasswordAuthCaptchaByUuid({ uuid: uuid }).then((res) => {
 			if (res?.code === 'OK') {
 				setCaptchaImage(res.data as any);
 			}
@@ -259,6 +260,22 @@ export default () => {
 							</span>
 						</Divider>
 						<Space align="center" size={24}>
+							<div
+								style={{
+									display: 'flex',
+									justifyContent: 'center',
+									alignItems: 'center',
+									flexDirection: 'column',
+									height: 40,
+									width: 40,
+									border: '1px solid #D4D8DD',
+									borderRadius: '50%',
+								}}
+							>
+								<VerifiedOutlined
+									style={{ ...iconStyles, color: '#1191ff' }}
+								/>
+							</div>
 							<div
 								style={{
 									display: 'flex',
