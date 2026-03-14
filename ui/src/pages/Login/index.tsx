@@ -1,4 +1,4 @@
-import { clearToken, setToken } from '@/access';
+import { clearToken, getAccessToken, getExpireTime, setToken } from '@/access';
 import { login } from '@/services/auth/auth';
 import { getUsernamePasswordAuthCaptchaByUuid, sendCaptcha} from '@/services/auth/captcha';
 import { getSecretInfo } from '@/services/auth/secret';
@@ -177,6 +177,15 @@ export default () => {
 	};
 
 	useEffect(() => {
+		// 如果已有 token 且未过期：访问 /login 直接跳转首页（避免重复登录）
+		const token = getAccessToken();
+		const expireTime = getExpireTime();
+		if (token && expireTime && expireTime > Date.now()) {
+			history.replace('/');
+			return;
+		}
+
+		// 无有效 token 才初始化登录页
 		clearToken();
 		getPublicKey().catch(console.log);
 		getCaptchaImage().catch(console.log);
