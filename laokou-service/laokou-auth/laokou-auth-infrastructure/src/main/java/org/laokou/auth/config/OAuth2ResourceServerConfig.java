@@ -60,17 +60,15 @@ class OAuth2ResourceServerConfig {
 			.cors(AbstractHttpConfigurer::disable)
 			.csrf(AbstractHttpConfigurer::disable)
 			.httpBasic(AbstractHttpConfigurer::disable)
+			.rememberMe(AbstractHttpConfigurer::disable)
 			// 自定义登录页面
 			// https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/form.html
 			// 登录页面 -> DefaultLoginPageGeneratingFilter
 			.formLogin(form -> form
 				.loginPage("/login")
 				.loginProcessingUrl("/login")
-				.failureUrl("/login?error")
 				.permitAll()
 			)
-			// 不记住
-			.rememberMe(AbstractHttpConfigurer::disable)
 			// 清除 session
 			.logout(logout -> logout.clearAuthentication(true).invalidateHttpSession(true))
 			.build();
