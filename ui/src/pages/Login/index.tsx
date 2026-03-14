@@ -13,7 +13,6 @@ import {
 	SafetyCertificateOutlined,
 	TeamOutlined,
 	UserOutlined,
-	VerifiedOutlined,
 	WechatOutlined,
 } from '@ant-design/icons';
 import {
@@ -281,7 +280,7 @@ export default () => {
 									borderRadius: '50%',
 								}}
 							>
-								<VerifiedOutlined
+								<SafetyCertificateOutlined
 									style={{ ...iconStyles, color: '#1191ff' }}
 								/>
 							</div>
