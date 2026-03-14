@@ -36,7 +36,7 @@ image:https://gitee.com/laokouyun/KCloud-Platform-IoT/badge/fork.svg?theme=dark[
 image:https://gitcode.com/KouShenhai_/KCloud-Platform-IoT/star/badge.svg?theme=dark[GitCode star,link=https://gitcode.com/KouShenhai_/KCloud-Platform-IoT]
 image:https://atomgit.com/KouShenhai_/KCloud-Platform-IoT/star/2025top.svg?theme=dark[GitCode star,link=https://gitcode.com/KouShenhai_/KCloud-Platform-IoT]
 
-image:https://img.shields.io/static/v1?label=Spring%20Framework&message=7.0.5&color=green[Spring Framework,link=https://spring.io/projects/spring-framework]
+image:https://img.shields.io/static/v1?label=Spring%20Framework&message=7.0.6&color=green[Spring Framework,link=https://spring.io/projects/spring-framework]
 image:https://img.shields.io/static/v1?label=Spring%20Security&message=7.0.3&color=green[Spring Security,link=https://spring.io/projects/spring-security]
 image:https://img.shields.io/static/v1?label=Spring%20Boot&message=4.0.3&color=green[Spring Boot,link=https://spring.io/projects/spring-boot]
 image:https://img.shields.io/static/v1?label=Spring%20Cloud&message=2025.1.0&color=green[Spring Cloud,link=https://spring.io/projects/spring-cloud]
@@ -149,10 +149,10 @@ image::doc/image/老寇IoT云平台业务架构图.png[架构图,align=center]
 |组件                         |版本
 
 |Spring Boot                 |4.0.3
-|Spring Framework            |7.0.5
+|Spring Framework            |7.0.6
 |Spring Security             |7.0.3
 |Spring gRPC                 |1.0.2
-|Spring Data                 |2025.1.3
+|Spring Data                 |2025.1.4
 |Spring Cloud                |2025.1.0
 |Spring Cloud Alibaba        |2025.1.0.0
 |Spring Boot Admin           |4.0.2
@@ -348,8 +348,9 @@ https://www.bilibili.com/video/BV1zeCCBcEn5[哔哩哔哩视频-GitCode百大开�
 [width=100%]
 |===
 |时间         |网名        |赞助           |备注
-|2025/06/11 |  路*   | ￥20.00  |        感谢开源~
-|2025/01/25 |  擎*   | ￥20.00  |        请喝咖啡        
+|2026/03/11 |  W*g      | ￥50.00  |无          
+|2025/06/11  |  路*       | ￥20.00  |感谢开源~
+|2025/01/25  |  擎*        | ￥20.00  |请喝咖啡        
 |2024/12/08  |t*          |￥199.00      |无
 |2024/12/02  |'c*         |￥399.00      |无
 |2024/11/25  |tio*        |￥520.00      |希望KCloud飞起，实现专精特新!
