@@ -295,7 +295,7 @@ class DomainServiceTest {
 	}
 
 	@Test
-	@DisplayName("Test authorization code password auth success")
+	@DisplayName("Test authorization code auth success")
 	void test_auth_authorizationCode_success() throws Exception {
 		createAuthorizationCodeAuthInfo(createAuthorizationCodeAuthParam());
 		AuthA authorizationCodeAuth = createAuth().createAuthorizationCodeAuth();
@@ -303,6 +303,8 @@ class DomainServiceTest {
 		Assertions.assertThatCode(() -> domainService.auth(authorizationCodeAuth)).doesNotThrowAnyException();
 		Mockito.verify(tenantGateway, Mockito.times(1)).getTenantId(this.tenantCode);
 		Mockito.verify(httpRequest, Mockito.times(1)).getParameterMap();
+		Mockito.verify(captchaValidator, Mockito.times(1))
+			.validateCaptcha(RedisKeyUtils.getAuthorizationCodeAuthCaptchaKey(this.uuid), this.captcha);
 		Mockito.verify(passwordValidator, Mockito.times(1)).validatePassword(this.password, this.password);
 		Mockito.verify(userGateway, Mockito.times(1)).getUserProfile(createUserVByAuthorizationCode());
 		Mockito.verify(menuGateway, Mockito.times(1)).getMenuPermissions(createUserE());
@@ -432,8 +434,15 @@ class DomainServiceTest {
 		Mockito.doAnswer(invocation -> {
 			AuthA authA = invocation.getArgument(0);
 			UserV userV = authA.getUserV();
+			CaptchaV captchaV = authA.getCaptchaV();
 			if (StringExtUtils.isEmpty(userV.tenantCode())) {
 				throw new IllegalArgumentException("tenant code must not be empty");
+			}
+			if (StringExtUtils.isEmpty(captchaV.uuid())) {
+				throw new IllegalArgumentException("uuid must not be empty");
+			}
+			if (StringExtUtils.isEmpty(captchaV.captcha())) {
+				throw new IllegalArgumentException("captcha must not be empty");
 			}
 			if (StringExtUtils.isEmpty(userV.username())) {
 				throw new IllegalArgumentException("username must not be empty");
@@ -444,6 +453,7 @@ class DomainServiceTest {
 			return null;
 		}).when(authorizationCodeAuthParamValidator).validateAuth(Mockito.any());
 		Mockito.when(passwordValidator.validatePassword(Mockito.anyString(), Mockito.anyString())).thenReturn(true);
+		Mockito.when(captchaValidator.validateCaptcha(Mockito.anyString(), Mockito.anyString())).thenReturn(true);
 		Mockito.when(tenantGateway.getTenantId(Mockito.anyString())).thenReturn(1L);
 		Mockito.when(roleGateway.getDataScopes(Mockito.any())).thenReturn(Set.of("self", "custom"));
 		Mockito.when(deptGateway.getDeptIds(Mockito.any(), Mockito.any())).thenReturn(Set.of(1L));
@@ -453,8 +463,11 @@ class DomainServiceTest {
 		Map<String, String[]> params = MapUtils.newHashMap(4);
 		params.put(Constants.USERNAME, new String[] { authorizationCodeAuthParam.username() });
 		params.put(Constants.PASSWORD, new String[] { authorizationCodeAuthParam.password() });
+		params.put(Constants.UUID, new String[] { authorizationCodeAuthParam.uuid() });
+		params.put(Constants.CAPTCHA, new String[] { authorizationCodeAuthParam.captcha() });
 		params.put(Constants.TENANT_CODE, new String[] { authorizationCodeAuthParam.tenantCode() });
 		params.put(Constants.GRANT_TYPE, new String[] { authorizationCodeAuthParam.grantType() });
+
 		Mockito.when(httpRequest.getParameterMap()).thenReturn(params);
 	}
 
@@ -535,7 +548,7 @@ class DomainServiceTest {
 	}
 
 	private AuthorizationCodAuthParam createAuthorizationCodeAuthParam() {
-		return new AuthorizationCodAuthParam(this.username, this.password, this.tenantCode,
+		return new AuthorizationCodAuthParam(this.uuid, this.captcha, this.username, this.password, this.tenantCode,
 				GrantType.AUTHORIZATION_CODE.getCode());
 	}
 
@@ -552,7 +565,7 @@ class DomainServiceTest {
 	}
 
 	private AuthorizationCodAuthParam createAuthorizationCodeEmptyAuthParam() {
-		return new AuthorizationCodAuthParam(null, null, null, GrantType.AUTHORIZATION_CODE.getCode());
+		return new AuthorizationCodAuthParam(null, null, null, null, null, GrantType.AUTHORIZATION_CODE.getCode());
 	}
 
 	private UserV createUserVByUsernamePassword() throws Exception {
@@ -624,7 +637,8 @@ class DomainServiceTest {
 	private record TestAuthParam(String username, String password, String tenantCode, String grantType) {
 	}
 
-	private record AuthorizationCodAuthParam(String username, String password, String tenantCode, String grantType) {
+	private record AuthorizationCodAuthParam(String uuid, String captcha, String username, String password,
+			String tenantCode, String grantType) {
 	}
 
 }
