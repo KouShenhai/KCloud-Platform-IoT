@@ -219,6 +219,7 @@ public final class AuthA extends AggregateRoot implements ValidateName {
 
 	public AuthA createAuthorizationCodeAuth() throws Exception {
 		this.grantType = GrantType.AUTHORIZATION_CODE;
+		this.captchaV = getCaptchaVByAuthorizationCodeAuth();
 		this.userV = getUserVByAuthorizationCodeAuth();
 		return create();
 	}
@@ -405,6 +406,10 @@ public final class AuthA extends AggregateRoot implements ValidateName {
 
 	private String getParameterValue(String key) {
 		return parameterMap.getOrDefault(key, new String[] { StringConstants.EMPTY })[0];
+	}
+
+	private CaptchaV getCaptchaVByAuthorizationCodeAuth() {
+		return getCaptchaVByUsernamePasswordAuth();
 	}
 
 	private CaptchaV getCaptchaVByUsernamePasswordAuth() {

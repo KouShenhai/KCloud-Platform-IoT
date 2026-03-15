@@ -70,6 +70,10 @@
           <groupId>com.alibaba</groupId>
           <artifactId>druid-spring-boot-4-starter</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>org.mybatis</groupId>
+          <artifactId>mybatis-spring</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
