@@ -35,7 +35,7 @@ import java.io.IOException;
  * @author laokou
  */
 @Order(Ordered.HIGHEST_PRECEDENCE)
-public class I18nFilter extends OncePerRequestFilter {
+public final class I18nFilter extends OncePerRequestFilter {
 
 	@Override
 	protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,

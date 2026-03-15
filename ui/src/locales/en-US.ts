@@ -126,8 +126,8 @@ export default {
 	'home.deviceCount': 'Device Count',
 	'home.online': 'Online',
 	'home.offline': 'Offline',
-	'home.todayDeviceMessageCount': "Today's device message count",
-	'home.monthDeviceMessageCount': 'Monthly device message count',
+	'home.todayDeviceMessageCount': "Today's device msg count",
+	'home.monthDeviceMessageCount': 'Monthly device msg count',
 	'home.todayDeviceAlarmCount': "Today's device alarm count",
 	'home.monthDeviceAlarmCount': 'Monthly device alarm count',
 	'home.deviceMessage': 'Device Messages',
@@ -361,7 +361,7 @@ export default {
 
 	// login
 	'login.subtitle': 'Enterprise level multi tenant IoT cloud platform',
-	'login.usernamePassword': 'User pwd login',
+	'login.usernamePassword': 'Password login',
 	'login.mobile': 'Mobile login',
 	'login.mail': 'Mail login',
 	'login.otherWays': 'Other sign-in methods',

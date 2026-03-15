@@ -18,12 +18,11 @@
 package org.laokou.auth.config;
 
 import lombok.Data;
-import org.laokou.common.security.config.OAuth2ResourceServerProperties;
 import org.laokou.common.i18n.util.SpringUtils;
+import org.laokou.common.security.config.OAuth2ResourceServerProperties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
@@ -61,14 +60,16 @@ class OAuth2ResourceServerConfig {
 			.cors(AbstractHttpConfigurer::disable)
 			.csrf(AbstractHttpConfigurer::disable)
 			.httpBasic(AbstractHttpConfigurer::disable)
-			.securityContext(AbstractHttpConfigurer::disable)
+			.rememberMe(AbstractHttpConfigurer::disable)
 			// 自定义登录页面
 			// https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/form.html
 			// 登录页面 -> DefaultLoginPageGeneratingFilter
-			.formLogin(Customizer.withDefaults())
-			// 不记住
-			.rememberMe(AbstractHttpConfigurer::disable)
-			// 清除session
+			.formLogin(form -> form
+				.loginPage("/login")
+				.loginProcessingUrl("/login")
+				.permitAll()
+			)
+			// 清除 session
 			.logout(logout -> logout.clearAuthentication(true).invalidateHttpSession(true))
 			.build();
 	}

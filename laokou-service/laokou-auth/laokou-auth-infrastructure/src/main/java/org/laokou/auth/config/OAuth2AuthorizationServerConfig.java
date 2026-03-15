@@ -219,13 +219,12 @@ class OAuth2AuthorizationServerConfig {
 	}
 
 	@Bean(name = "authRedisSegmentIdGenerator", initMethod = "init", destroyMethod = "close")
-	public IdGenerator authRedisSegmentIdGenerator(RedisUtils redisUtils,
-			SpringSegmentProperties springSegmentProperties) {
+	IdGenerator authRedisSegmentIdGenerator(RedisUtils redisUtils, SpringSegmentProperties springSegmentProperties) {
 		return new RedisSegmentIdGenerator(redisUtils, springSegmentProperties);
 	}
 
 	@Bean(name = "authIdGenerator")
-	public org.laokou.common.i18n.common.IdGenerator authIdGenerator(IdGenerator authRedisSegmentIdGenerator) {
+	org.laokou.common.i18n.common.IdGenerator authIdGenerator(IdGenerator authRedisSegmentIdGenerator) {
 		return new org.laokou.common.i18n.common.IdGenerator() {
 			@Override
 			public Long getId(BizType bizType) {

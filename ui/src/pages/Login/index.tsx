@@ -1,6 +1,6 @@
-import { clearToken, setToken } from '@/access';
+import { clearToken, getAccessToken, getExpireTime, setToken } from '@/access';
 import { login } from '@/services/auth/auth';
-import { getCaptchaByUuid, sendCaptcha } from '@/services/auth/captcha';
+import { getUsernamePasswordAuthCaptchaByUuid, sendCaptcha} from '@/services/auth/captcha';
 import { getSecretInfo } from '@/services/auth/secret';
 import { SelectLang, useIntl } from '@@/exports';
 import {
@@ -106,7 +106,7 @@ export default () => {
 		// 调用验证码API
 		const uuid = uuidV7();
 		// @ts-ignore
-		getCaptchaByUuid({ uuid: uuid }).then((res) => {
+		getUsernamePasswordAuthCaptchaByUuid({ uuid: uuid }).then((res) => {
 			if (res?.code === 'OK') {
 				setCaptchaImage(res.data as any);
 			}
@@ -176,6 +176,15 @@ export default () => {
 	};
 
 	useEffect(() => {
+		// 如果已有 token 且未过期：访问 /login 直接跳转首页（避免重复登录）
+		const token = getAccessToken();
+		const expireTime = getExpireTime();
+		if (token && expireTime && expireTime > Date.now()) {
+			history.replace('/');
+			return;
+		}
+
+		// 无有效 token 才初始化登录页
 		clearToken();
 		getPublicKey().catch(console.log);
 		getCaptchaImage().catch(console.log);
@@ -271,6 +280,22 @@ export default () => {
 									borderRadius: '50%',
 								}}
 							>
+								<SafetyCertificateOutlined
+									style={{ ...iconStyles, color: '#1191ff' }}
+								/>
+							</div>
+							<div
+								style={{
+									display: 'flex',
+									justifyContent: 'center',
+									alignItems: 'center',
+									flexDirection: 'column',
+									height: 40,
+									width: 40,
+									border: '1px solid #D4D8DD',
+									borderRadius: '50%',
+								}}
+							>
 								<GithubOutlined
 									style={{ ...iconStyles, color: '#1f2328' }}
 								/>
@@ -339,11 +364,13 @@ export default () => {
 				<ProFormText
 					disabled={loading}
 					name="tenant_code"
+					initialValue={'laokouyun'}
 					fieldProps={{
 						size: 'large',
 						prefix: <TeamOutlined className={'prefixIcon'} />,
 						autoComplete: 'new-password',
 					}}
+					allowClear={true}
 					placeholder={t('login.tenantCode.placeholder')}
 					rules={[
 						{
@@ -358,6 +385,7 @@ export default () => {
 						<ProFormText
 							disabled={loading}
 							name="username"
+							initialValue={'admin'}
 							fieldProps={{
 								size: 'large',
 								prefix: (
@@ -365,6 +393,7 @@ export default () => {
 								),
 								autoComplete: 'new-password',
 							}}
+							allowClear={true}
 							placeholder={t('login.username.placeholder')}
 							rules={[
 								{
@@ -376,6 +405,8 @@ export default () => {
 						<ProFormText.Password
 							disabled={loading}
 							name="password"
+							initialValue={'admin123'}
+							allowClear={true}
 							fieldProps={{
 								size: 'large',
 								prefix: (
@@ -406,6 +437,7 @@ export default () => {
 										autoComplete: 'new-password',
 									}}
 									name="captcha"
+									allowClear={true}
 									placeholder={t('login.captcha.placeholder')}
 									rules={[
 										{
@@ -440,6 +472,7 @@ export default () => {
 					<>
 						<ProFormText
 							disabled={loading}
+							allowClear={true}
 							fieldProps={{
 								size: 'large',
 								prefix: (
@@ -462,6 +495,7 @@ export default () => {
 						/>
 						<ProFormCaptcha
 							disabled={loading}
+							allowClear={true}
 							fieldProps={{
 								size: 'large',
 								prefix: (
@@ -502,6 +536,7 @@ export default () => {
 				{loginType === MAIL.key && (
 					<>
 						<ProFormText
+							allowClear={true}
 							disabled={loading}
 							fieldProps={{
 								size: 'large',
@@ -526,6 +561,7 @@ export default () => {
 						/>
 						<ProFormCaptcha
 							disabled={loading}
+							allowClear={true}
 							fieldProps={{
 								size: 'large',
 								prefix: (

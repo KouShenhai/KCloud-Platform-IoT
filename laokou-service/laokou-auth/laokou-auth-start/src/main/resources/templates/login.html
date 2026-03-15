@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+  <title>统一认证中心 - 登录</title>
+
+  <!-- Element Plus（Vue3 UI） -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-plus@2.7.8/dist/index.css"/>
+
+  <style>
+    :root{
+      --brand: #1677ff;
+      --bg1: #0b1220;
+      --bg2: #0e1a2b;
+      --card: rgba(255,255,255,.92);
+      --cardBorder: rgba(255,255,255,.35);
+      --text: rgba(0,0,0,.88);
+      --text2: rgba(0,0,0,.45);
+    }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(1200px 600px at 20% 10%, rgba(22,119,255,.40), transparent 60%),
+        radial-gradient(900px 500px at 90% 40%, rgba(82,196,26,.25), transparent 60%),
+        radial-gradient(700px 450px at 40% 95%, rgba(250,173,20,.25), transparent 55%),
+        linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 100%);
+      font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+      overflow: hidden;
+    }
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      opacity: .16;
+      background-image:
+        linear-gradient(rgba(255,255,255,.14) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.14) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(circle at 35% 30%, #000 0%, rgba(0,0,0,.25) 55%, transparent 72%);
+      pointer-events: none;
+    }
+    .container {
+      position: relative;
+      height: 100%;
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      align-items: center;
+      padding: 40px 64px;
+      gap: 40px;
+    }
+    @media (max-width: 980px) {
+      body { overflow: auto; }
+      .container { grid-template-columns: 1fr; padding: 28px 18px; }
+      .left { display: none; }
+    }
+    .left { color: rgba(255,255,255,.92); }
+    .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+    .logo {
+      width: 40px; height: 40px; border-radius: 12px;
+      background:
+        radial-gradient(16px 16px at 30% 30%, rgba(255,255,255,.90), rgba(255,255,255,.15)),
+        linear-gradient(135deg, rgba(22,119,255,.95), rgba(47,84,235,.9));
+      box-shadow: 0 16px 40px rgba(22,119,255,.25);
+    }
+    .brand-title { font-size: 18px; font-weight: 600; letter-spacing: .4px; }
+    .slogan { margin: 0 0 18px; font-size: 40px; font-weight: 700; line-height: 1.1; }
+    .desc { margin: 0; max-width: 560px; color: rgba(255,255,255,.75); font-size: 14px; line-height: 1.8; }
+
+    .card {
+      backdrop-filter: blur(12px);
+      background: var(--card);
+      border: 1px solid var(--cardBorder);
+      border-radius: 18px;
+      box-shadow:
+        0 20px 60px rgba(0,0,0,.35),
+        0 1px 0 rgba(255,255,255,.4) inset;
+      padding: 26px 26px 16px;
+    }
+    .card-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 10px; }
+    .card-title { font-size: 18px; font-weight: 650; color: var(--text); }
+    .card-subtitle { font-size: 12px; color: var(--text2); margin-top: 4px; }
+    .footer { margin-top: 12px; display: flex; justify-content: space-between; gap: 12px; color: rgba(0,0,0,.45); font-size: 12px; }
+
+    .captcha-row { display: grid; grid-template-columns: 1fr 128px; gap: 12px; align-items: center; }
+    .captcha-img {
+      width: 128px; height: 40px; border-radius: 10px;
+      border: 1px solid rgba(0,0,0,.08);
+      cursor: pointer; user-select: none;
+      background: #fff; object-fit: cover;
+    }
+
+    .fallback { display: none; margin-top: 10px; }
+    .nojs .fallback { display: block; }
+    .nojs #app { display: none; }
+    .fallback input {
+      width: 100%;
+      height: 40px;
+      border: 1px solid rgba(0,0,0,.12);
+      border-radius: 10px;
+      padding: 0 12px;
+      outline: none;
+      box-sizing: border-box;
+      margin-bottom: 12px;
+    }
+    .fallback .row { display: grid; grid-template-columns: 1fr 128px; gap: 12px; }
+    .fallback button{
+      width: 100%;
+      height: 40px;
+      border-radius: 10px;
+      border: none;
+      background: var(--brand);
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .error-box{
+      padding: 10px 12px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      border: 1px solid rgba(245,108,108,.35);
+      background: rgba(245,108,108,.10);
+      color: rgba(0,0,0,.80);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .el-input__wrapper { border-radius: 10px; }
+    .el-button { border-radius: 10px; }
+  </style>
+</head>
+
+<body class="nojs">
+<div class="bg-grid"></div>
+
+<div class="container">
+  <section class="left">
+    <div class="brand">
+      <div class="logo"></div>
+      <div class="brand-title">Laokou Auth</div>
+    </div>
+    <h1 class="slogan">统一认证中心</h1>
+    <p class="desc">
+      支持多租户接入、细粒度权限控制与安全审计。请使用租户编号、账号密码与验证码完成登录。
+      若登录失败，可在右侧查看错误信息并重试。
+    </p>
+  </section>
+
+  <section class="right">
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">欢迎登录</div>
+          <div class="card-subtitle">Spring Security 7 自定义登录（Thymeleaf + Vue）</div>
+        </div>
+        <div style="color: rgba(0,0,0,.45); font-size: 12px;">
+          <span>Login</span>
+        </div>
+      </div>
+
+      <div class="error-box"
+           th:if="${#request.getParameter('error') != null
+                or session['SPRING_SECURITY_LAST_EXCEPTION'] != null
+                or session['LAOKOU_AUTH_ERROR'] != null}">
+        <div th:if="${#request.getParameter('error') != null}">
+          登录失败：账号/密码/租户/验证码错误或账号状态异常。
+        </div>
+        <div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION'] != null}"
+             th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}">
+          Bad credentials
+        </div>
+        <div th:if="${session['LAOKOU_AUTH_ERROR'] != null}"
+             th:text="${session['LAOKOU_AUTH_ERROR']}">
+          自定义错误
+        </div>
+      </div>
+
+      <div id="app"></div>
+
+      <form class="fallback" th:action="@{/login}" method="post" autocomplete="off">
+        <input name="tenant_code" placeholder="租户编号" th:value="${#request.getParameter('tenant_code')}"/>
+        <input name="username" placeholder="用户名" th:value="${#request.getParameter('username')}"/>
+        <input name="password" placeholder="密码" type="password"/>
+        <input name="uuid" placeholder="UUID(验证码标识)" th:value="${#request.getParameter('uuid')}"/>
+        <div class="row">
+          <input name="captcha" placeholder="验证码"/>
+          <img class="captcha-img" alt="验证码"
+               th:src="@{/api/v1/username-password/captchas/{uuid}(uuid=${#request.getParameter('uuid')})}"
+               onclick="this.src='/api/v1/username-password/captchas/' + (document.querySelector('input[name=uuid]').value || '') + '?ts=' + new Date().getTime()"/>
+        </div>
+        <button type="submit">登录</button>
+      </form>
+
+      <div class="footer">
+        <div>© Laokou</div>
+        <div>建议使用 Chrome / Edge 最新版</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@3.4.30/dist/vue.global.prod.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/element-plus@2.7.8/dist/index.full.min.js"></script>
+
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  const _initial = {
+    tenant_code: /*[[${#request.getParameter('tenant_code')}]]*/ '',
+    username: /*[[${#request.getParameter('username')}]]*/ '',
+    uuid: /*[[${#request.getParameter('uuid')}]]*/ ''
+  };
+
+  const _authErrorMessage =
+    /*[[${session['LAOKOU_AUTH_ERROR']}]]*/ null
+    || (/*[[${session['SPRING_SECURITY_LAST_EXCEPTION']}]]*/ null ? /*[[${session['SPRING_SECURITY_LAST_EXCEPTION'].message}]]*/ '' : '')
+    || (/*[[${#request.getParameter('error')}]]*/ null ? '登录失败：账号/密码/租户/验证码错误或账号状态异常。' : '');
+  /*]]>*/
+</script>
+
+<script>
+  document.body.classList.remove('nojs');
+
+  const { createApp, reactive, ref, onMounted } = Vue;
+
+  function buildUrl(base, params) {
+    const url = new URL(base, window.location.origin);
+    Object.keys(params || {}).forEach(k => {
+      const v = params[k];
+      if (v !== undefined && v !== null && String(v).length > 0) url.searchParams.set(k, v);
+    });
+    return url.toString();
+  }
+
+  createApp({
+    setup() {
+      const formRef = ref();
+
+      const model = reactive({
+        tenant_code: _initial.tenant_code || '',
+        username: _initial.username || '',
+        password: '',
+        uuid: _initial.uuid || '',
+        captcha: ''
+      });
+
+      const rules = {
+        tenant_code: [{ required: true, message: '请输入租户编号', trigger: 'blur' }],
+        username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+        password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+        uuid: [{ required: true, message: '请输入UUID（用于获取验证码）', trigger: 'blur' }],
+        captcha: [{ required: true, message: '请输入验证码', trigger: 'blur' }]
+      };
+
+      const captchaBase64 = ref('');
+
+      async function refreshCaptcha() {
+        const uuid = model.uuid || '';
+        if (!uuid) {
+          captchaBase64.value = '';
+          return;
+        }
+        const u = buildUrl('/api/v1/username-password/captchas/' + uuid, { ts: Date.now() });
+        try {
+          const resp = await fetch(u, { method: 'GET', credentials: 'include' });
+          const json = await resp.json();
+          captchaBase64.value = String((json && (json.data ?? json.result ?? json.value)) || '');
+        } catch (e) {
+          captchaBase64.value = '';
+        }
+      }
+
+      function submitNative() {
+        const f = document.createElement('form');
+        f.method = 'post';
+        f.action = '/login';
+
+        Object.entries(model).forEach(([k, v]) => {
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = k;
+          input.value = v ?? '';
+          f.appendChild(input);
+        });
+
+        document.body.appendChild(f);
+        f.submit();
+      }
+
+      async function onSubmit() {
+        await formRef.value.validate();
+        submitNative();
+      }
+
+      onMounted(async () => {
+        if (model.uuid) await refreshCaptcha();
+      });
+
+      return { formRef, model, rules, captchaBase64, refreshCaptcha, onSubmit, _authErrorMessage };
+    },
+    template: `
+      <div>
+        <el-alert v-if="_authErrorMessage && String(_authErrorMessage).trim().length"
+          title="登录失败" type="error" show-icon :closable="false"
+          :description="String(_authErrorMessage)"
+          style="margin-bottom: 12px; border-radius: 12px;"
+        />
+        <el-form ref="formRef" :model="model" :rules="rules" label-position="top">
+          <el-form-item label="租户编号" prop="tenant_code">
+            <el-input v-model="model.tenant_code" size="large" placeholder="请输入租户编号"/>
+          </el-form-item>
+          <el-form-item label="用户名" prop="username">
+            <el-input v-model="model.username" size="large" placeholder="请输入用户名"/>
+          </el-form-item>
+          <el-form-item label="密码" prop="password">
+            <el-input v-model="model.password" size="large" type="password" show-password placeholder="请输入密码"/>
+          </el-form-item>
+          <el-form-item label="UUID(验证码标识)" prop="uuid">
+            <el-input v-model="model.uuid" size="large" placeholder="请输入UUID（如：随机UUID）" @change="refreshCaptcha"/>
+          </el-form-item>
+
+          <div class="captcha-row">
+            <el-form-item label="验证码" prop="captcha" style="margin-bottom:0;">
+              <el-input v-model="model.captcha" size="large" placeholder="请输入验证码"/>
+            </el-form-item>
+            <div style="display:flex; align-items:flex-end;">
+              <img class="captcha-img"
+                   :src="captchaBase64 ? ('data:image/png;base64,' + captchaBase64) : ''"
+                   title="点击刷新验证码"
+                   @click="refreshCaptcha"/>
+            </div>
+          </div>
+
+          <div style="margin-top: 16px;">
+            <el-button type="primary" size="large" style="width:100%;" @click="onSubmit">登录</el-button>
+            <el-button size="large" style="width:100%; margin-top: 10px;" @click="refreshCaptcha">刷新验证码</el-button>
+          </div>
+        </el-form>
+      </div>
+    `
+  }).use(ElementPlus).mount('#app');
+</script>
+</body>
+</html>

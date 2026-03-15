@@ -229,6 +229,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState }: any) => {
 										logout({
 											token: getAccessToken() ?? undefined,
 										}).finally(() => {
+											clearToken();
 											history.push('/login');
 										});
 									},
