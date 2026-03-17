@@ -37,7 +37,7 @@ image:https://gitcode.com/KouShenhai_/KCloud-Platform-IoT/star/badge.svg?theme=d
 image:https://atomgit.com/KouShenhai_/KCloud-Platform-IoT/star/2025top.svg?theme=dark[GitCode star,link=https://gitcode.com/KouShenhai_/KCloud-Platform-IoT]
 
 image:https://img.shields.io/static/v1?label=Spring%20Framework&message=7.0.6&color=green[Spring Framework,link=https://spring.io/projects/spring-framework]
-image:https://img.shields.io/static/v1?label=Spring%20Security&message=7.0.3&color=green[Spring Security,link=https://spring.io/projects/spring-security]
+image:https://img.shields.io/static/v1?label=Spring%20Security&message=7.0.4&color=green[Spring Security,link=https://spring.io/projects/spring-security]
 image:https://img.shields.io/static/v1?label=Spring%20Boot&message=4.0.3&color=green[Spring Boot,link=https://spring.io/projects/spring-boot]
 image:https://img.shields.io/static/v1?label=Spring%20Cloud&message=2025.1.0&color=green[Spring Cloud,link=https://spring.io/projects/spring-cloud]
 image:https://img.shields.io/static/v1?label=Spring%20Cloud%20Alibaba&message=2025.1.0.0&color=orange[Spring Cloud Alibaba,link=https://github.com/alibaba/spring-cloud-alibaba]
@@ -150,7 +150,7 @@ image::doc/image/老寇IoT云平台业务架构图.png[架构图,align=center]
 
 |Spring Boot                 |4.0.3
 |Spring Framework            |7.0.6
-|Spring Security             |7.0.3
+|Spring Security             |7.0.4
 |Spring gRPC                 |1.0.2
 |Spring Data                 |2025.1.4
 |Spring Cloud                |2025.1.0
@@ -163,7 +163,7 @@ image::doc/image/老寇IoT云平台业务架构图.png[架构图,align=center]
 |Redis                       |8.0.1
 |Elasticsearch               |9.3.1
 |Netty                       |4.2.9.Final
-|Kafka                       |4.0.2
+|Kafka                       |4.0.4
 |Pulsar                      |4.1.2
 |EMQX                        |5.4.1
 |TimescaleDB                 |17
