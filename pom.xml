@@ -131,7 +131,7 @@
     <!--spring-grpc版本-->
     <spring-grpc.version>1.0.2</spring-grpc.version>
     <!--spring-ai版本-->
-    <spring-ai.version>1.1.2</spring-ai.version>
+    <spring-ai.version>1.1.3</spring-ai.version>
     <!--spring-ai-alibaba版本-->
     <spring-ai-alibaba.version>1.1.2.2</spring-ai-alibaba.version>
     <!--springdoc-openapi版本-->
