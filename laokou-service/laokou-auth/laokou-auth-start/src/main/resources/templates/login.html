@@ -5,116 +5,125 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1"/>
 	<title>老寇IoT云平台统一认证</title>
 	<style>
-        html, body {
-            height: 100%;
-            margin: 0;
-        }
-        body {
-            overflow-x: hidden;
-            min-height: 100vh;
-            font-family: Arial, Helvetica, sans-serif;
-            background: url('/api/img/FfdJeJRQWjEeGTpqgBKj.png') no-repeat center center;
-            background-size: cover;
-        }
+		html, body {
+			height: 100%;
+			margin: 0;
+		}
+		body {
+			overflow-x: hidden;
+			min-height: 100vh;
+			font-family: Arial, Helvetica, sans-serif;
+			background: url('/api/images/FfdJeJRQWjEeGTpqgBKj.png') no-repeat center center;
+			background-size: cover;
+
+			/* 更健壮的居中布局：适配不同屏幕尺寸 */
+			display: flex;
+			align-items: center;
+			/* 往右偏移：小屏仍保持合理边距，大屏更靠右 */
+			justify-content: flex-end;
+			/* 右侧保留更大边距；左侧用 clamp 控制最小/最大间距 */
+			padding: 24px clamp(16px, 6vw, 80px) 24px 16px;
+			box-sizing: border-box;
+		}
 		.container {
-            width: min(420px, calc(100% - 32px));
-            border-radius: 10px;
-            padding: 28px;
-            box-shadow: 0 8px 24px rgba(0,0,0,.08);
-            margin-left: 65%;
-            transform: translateY(60%);
-        }
+			width: min(420px, 100%);
+			border-radius: 10px;
+			padding: 28px;
+			box-shadow: 0 8px 24px rgba(0,0,0,.08);
+			background: rgba(255, 255, 255, 0.92);
+			backdrop-filter: blur(6px);
+		}
 		h2 {
-            margin: 0 0 18px 0;
-            font-size: 20px;
-        }
+			margin: 0 0 18px 0;
+			font-size: 20px;
+		}
 		.form-item {
-            margin-bottom: 14px;
-        }
+			margin-bottom: 14px;
+		}
 		label {
-            display:block;
-            font-size: 12px;
-            color:#666;
-            margin-bottom: 6px;
-        }
+			display:block;
+			font-size: 12px;
+			color:#666;
+			margin-bottom: 6px;
+		}
 		input {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid #dcdfe6;
-            border-radius: 6px;
-            outline: none;
-        }
+			width: 100%;
+			padding: 10px 12px;
+			border: 1px solid #dcdfe6;
+			border-radius: 6px;
+			outline: none;
+		}
 		.row {
-            display:flex;
-            gap: 10px;
-            align-items: center;
-        }
+			display:flex;
+			gap: 10px;
+			align-items: center;
+		}
 		.row input {
-            flex: 1;
-        }
+			flex: 1;
+		}
 		.captcha {
-            height: 40px;
-            width: 120px;
-            border: 1px solid #dcdfe6;
-            border-radius: 6px;
-            cursor:pointer;
-            object-fit: cover;
-            background:#fff;
-        }
+			height: 40px;
+			width: 120px;
+			border: 1px solid #dcdfe6;
+			border-radius: 6px;
+			cursor:pointer;
+			object-fit: cover;
+			background:#fff;
+		}
 		.btn {
-            width:100%;
-            height: 40px;
-            border: none;
-            border-radius: 6px;
-            background:#1677ff;
-            color:#fff;
-            cursor:pointer;
-        }
+			width:100%;
+			height: 40px;
+			border: none;
+			border-radius: 6px;
+			background:#1677ff;
+			color:#fff;
+			cursor:pointer;
+		}
 		.alert {
-            padding: 10px 12px;
-            border-radius: 6px;
-            margin-bottom: 12px;
-            font-size: 13px;
-        }
+			padding: 10px 12px;
+			border-radius: 6px;
+			margin-bottom: 12px;
+			font-size: 13px;
+		}
 		.alert-danger {
-            background:#fff1f0;
-            color:#a8071a;
-            border: 1px solid #ffa39e;
-        }
+			background:#fff1f0;
+			color:#a8071a;
+			border: 1px solid #ffa39e;
+		}
 	</style>
 </head>
 <body>
-    <div class="container">
-        <div style="text-align: center;width: 100%;">
-            <h2>老寇IoT云平台统一认证</h2>
-        </div>
+<div class="container">
+	<div style="text-align: center;width: 100%;">
+		<h2>老寇IoT云平台统一认证</h2>
+	</div>
 
-        <div class="alert alert-danger" th:if="${param.error}">
-            登录失败，请检查租户编号、用户名、密码、验证码
-        </div>
-        <form method="post" th:action="@{/login}">
-            <div class="form-item row" style="width: 100%;">
-                <input id="tenant" name="tenant" type="text" placeholder="请输入租户编号" required autofocus/>
-            </div>
+	<div class="alert alert-danger" th:if="${param.error}">
+		登录失败，请检查租户编号、用户名、密码、验证码
+	</div>
+	<form method="post" th:action="@{/login}">
+		<div class="form-item row" style="width: 100%;">
+			<input id="tenant" name="tenant" type="text" placeholder="请输入租户编号" required autofocus/>
+		</div>
 
-            <div class="form-item row" style="width: 100%;">
-                <input id="username" name="username" type="text" placeholder="请输入用户名" required/>
-            </div>
+		<div class="form-item row" style="width: 100%;">
+			<input id="username" name="username" type="text" placeholder="请输入用户名" required/>
+		</div>
 
-            <div class="form-item row" style="width: 100%;">
-                <input id="password" name="password" type="password" placeholder="请输入密码" required/>
-            </div>
+		<div class="form-item row" style="width: 100%;">
+			<input id="password" name="password" type="password" placeholder="请输入密码" required/>
+		</div>
 
-            <div class="form-item">
-                <div class="row">
-                    <input id="captcha" name="captcha" type="text" placeholder="请输入验证码" required/>
-                    <img class="captcha" th:src="@{/captcha}" alt="captcha"
-                         onclick="this.src='/captcha?ts='+Date.now()"/>
-                </div>
-            </div>
+		<div class="form-item">
+			<div class="row">
+				<input id="captcha" name="captcha" type="text" placeholder="请输入验证码" required/>
+				<img class="captcha" th:src="@{/captcha}" alt="captcha"
+					 onclick="this.src='/captcha?ts='+Date.now()"/>
+			</div>
+		</div>
 
-            <button class="btn" type="submit">登&nbsp;&nbsp;录</button>
-        </form>
-    </div>
+		<button class="btn" type="submit">登&nbsp;&nbsp;录</button>
+	</form>
+</div>
 </body>
 </html>
