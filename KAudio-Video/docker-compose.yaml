@@ -33,9 +33,9 @@ services:
     environment:
       - TZ=Asia/Shanghai
     volumes:
-      - .zlmediakit/config:/opt/media/conf    # 配置文件目录
-      - .zlmediakit/logs:/opt/media/log       # 日志目录
-      - .zlmediakit/media:/opt/media/www      # 媒体文件目录
+      - .zlmediakit/media/config:/opt/media/conf    # 配置文件目录
+      - .zlmediakit/media/logs:/opt/media/log       # 日志目录
+      - .zlmediakit/media/www:/opt/media/www        # 媒体文件目录
     networks:
       - iot_network
 networks:
