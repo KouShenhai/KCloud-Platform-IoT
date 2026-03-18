@@ -38,9 +38,12 @@ class RestClientConfig {
 
 	@Bean
 	public RestClient restClient() throws NoSuchAlgorithmException, KeyManagementException {
+		// JDK HttpClient【默认】
+		// OKHttp3Client
+		// Apache HttpClient
 		log.info("{} => Initializing Default RestClient", Thread.currentThread().getName());
-		HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
-		factory.setHttpClient(HttpUtils.getHttpClient());
+		HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory(
+				HttpUtils.getHttpClient());
 		return RestClient.builder().requestFactory(factory).build();
 	}
 
