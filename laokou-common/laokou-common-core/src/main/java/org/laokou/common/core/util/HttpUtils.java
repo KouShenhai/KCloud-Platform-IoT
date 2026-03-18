@@ -108,6 +108,7 @@ public final class HttpUtils {
 	}
 
 	public static CloseableHttpClient getHttpClient() throws NoSuchAlgorithmException, KeyManagementException {
+		DefaultClientTlsStrategy tlsStrategy = new DefaultClientTlsStrategy(SslUtils.sslContext(), NoopHostnameVerifier.INSTANCE);
 		// 请求配置
 		RequestConfig requestConfig = RequestConfig.custom()
 			.setResponseTimeout(Timeout.ofSeconds(10))
@@ -117,19 +118,19 @@ public final class HttpUtils {
 		ConnectionConfig connectionConfig = ConnectionConfig.custom()
 			.setConnectTimeout(Timeout.ofSeconds(5))
 			.setSocketTimeout(Timeout.ofSeconds(5))
+			.setTimeToLive(Timeout.ofSeconds(90))	// 连接存活最多90s，到期自动废弃
 			.build();
 		// 连接池管理配置
 		PoolingHttpClientConnectionManager cm = PoolingHttpClientConnectionManagerBuilder.create()
-			.setMaxConnTotal(500) // 设置最大连接数
-			.setMaxConnPerRoute(100) // 设置每个路由的最大连接数
+			.setMaxConnTotal(500) 		// 设置最大连接数
+			.setMaxConnPerRoute(100) 	// 设置每个路由的最大连接数
 			.setDefaultConnectionConfig(connectionConfig)
-			.setTlsSocketStrategy(new DefaultClientTlsStrategy(SslUtils.sslContext(), NoopHostnameVerifier.INSTANCE))
+			.setTlsSocketStrategy(tlsStrategy)
 			.build();
 		// HttpClient
 		return HttpClientBuilder.create()
 			.setConnectionManager(cm)
 			.setDefaultRequestConfig(requestConfig)
-			.evictExpiredConnections()
 			.build();
 	}
 

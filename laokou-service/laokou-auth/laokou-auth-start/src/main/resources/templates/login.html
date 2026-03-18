@@ -13,7 +13,7 @@
 			overflow-x: hidden;
 			min-height: 100vh;
 			font-family: Arial, Helvetica, sans-serif;
-			background: url('/api/images/FfdJeJRQWjEeGTpqgBKj.png') no-repeat center center;
+			background: url('/api/img/FfdJeJRQWjEeGTpqgBKj.png') no-repeat center center;
 			background-size: cover;
 
 			/* 更健壮的居中布局：适配不同屏幕尺寸 */
@@ -99,7 +99,7 @@
 	</div>
 
 	<div class="alert alert-danger" th:if="${param.error}">
-		登录失败，请检查租户编号、用户名、密码、验证码
+		<span th:text="${param.error[0]}"></span>
 	</div>
 	<form method="post" th:action="@{/login}">
 		<div class="form-item row" style="width: 100%;">
