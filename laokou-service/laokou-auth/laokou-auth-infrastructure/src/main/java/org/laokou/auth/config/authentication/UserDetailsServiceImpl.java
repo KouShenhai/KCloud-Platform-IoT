@@ -23,6 +23,7 @@ import org.laokou.auth.factory.DomainFactory;
 import org.laokou.common.context.util.User;
 import org.laokou.common.context.util.UserConvertor;
 import org.laokou.common.core.util.RequestUtils;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -59,14 +60,14 @@ record UserDetailsServiceImpl(
 			if (principal instanceof User user) {
 				return UserConvertor.toUserDetails(user, Collections.emptySet());
 			}
-			throw new BizException("B_OAuth2_UserNotExist", "用户不存在");
+			return new org.springframework.security.core.userdetails.User(StringConstants.EMPTY, StringConstants.EMPTY, Collections.emptyList());
 		}
-		catch (GlobalException e) {
-			throw new UsernameNotFoundException(e.getMsg(), e);
+		catch (GlobalException ex) {
+			throw new UsernameNotFoundException(ex.getMsg(), ex);
 		}
-		catch (Exception e) {
-			log.error("用户认证失败，错误信息：{}", e.getMessage(), e);
-			throw new BizException("B_OAuth2_UserAuthFailed", "用户认证失败", e);
+		catch (Exception ex) {
+			log.error("用户认证失败，错误信息：{}", ex.getMessage(), ex);
+			throw new BizException("B_OAuth2_UserAuthFailed", "用户认证失败", ex);
 		}
 	}
 

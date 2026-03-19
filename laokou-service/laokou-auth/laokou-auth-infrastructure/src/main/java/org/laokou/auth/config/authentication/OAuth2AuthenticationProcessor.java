@@ -28,7 +28,6 @@ import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.enums.MqTopic;
 import org.laokou.common.context.util.User;
 import org.laokou.common.domain.support.DomainEventPublisher;
-import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Component;
@@ -59,12 +58,10 @@ final class OAuth2AuthenticationProcessor {
 			// 认证成功，转换成认证对象【系统】
 			return new UsernamePasswordAuthenticationToken(user, user.username(), user.getAuthorities());
 		}
-		catch (GlobalException e) {
-			// 记录日志【业务异常】
-			if (e instanceof BizException ex) {
-				evt = LoginLogConvertor.toDomainEvent(request, authA, ex);
-			}
-			throw e;
+		catch (GlobalException ex) {
+			// 记录日志【登录失败】
+			evt = LoginLogConvertor.toDomainEvent(request, authA, ex);
+			throw ex;
 		}
 		finally {
 			// 发布领域事件
