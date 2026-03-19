@@ -63,6 +63,12 @@ spring:
       enabled: true
   lifecycle:
     timeout-per-shutdown-phase: 2m
+  thymeleaf:
+    cache: false
+    check-template: true
+    encoding: UTF-8
+    check-template-location: true
+    prefix: classpath:/templates/
   id-generator:
     segment:
       node-id: ${NODE_ID:1}

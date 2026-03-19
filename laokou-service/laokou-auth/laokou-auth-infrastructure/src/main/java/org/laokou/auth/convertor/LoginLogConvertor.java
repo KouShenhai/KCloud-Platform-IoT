@@ -99,7 +99,8 @@ public final class LoginLogConvertor {
 		return loginLogCO;
 	}
 
-	public static LoginEvent toDomainEvent(HttpServletRequest request, AuthA authA, GlobalException ex) throws Exception {
+	public static LoginEvent toDomainEvent(HttpServletRequest request, AuthA authA, GlobalException ex)
+			throws Exception {
 		Capabilities capabilities = RequestUtils.getCapabilities(request);
 		String ip = IpUtils.getIpAddr(request);
 		int status = LoginStatus.OK.getCode();

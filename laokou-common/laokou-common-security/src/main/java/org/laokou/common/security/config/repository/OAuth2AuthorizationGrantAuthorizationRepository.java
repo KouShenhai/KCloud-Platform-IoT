@@ -33,6 +33,7 @@
 
 package org.laokou.common.security.config.repository;
 
+import org.jspecify.annotations.NonNull;
 import org.laokou.common.security.config.entity.OAuth2AuthorizationCodeGrantAuthorization;
 import org.laokou.common.security.config.entity.OAuth2AuthorizationGrantAuthorization;
 import org.laokou.common.security.config.entity.OAuth2DeviceCodeGrantAuthorization;
@@ -46,7 +47,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface OAuth2AuthorizationGrantAuthorizationRepository
-		extends CrudRepository<OAuth2AuthorizationGrantAuthorization, String> {
+		extends CrudRepository<@NonNull OAuth2AuthorizationGrantAuthorization, @NonNull String> {
 
 	<T extends OAuth2AuthorizationCodeGrantAuthorization> T findByState(String state);
 
