@@ -21,10 +21,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.AuthA;
+import org.laokou.auth.model.valueobject.UserV;
 import org.laokou.common.context.util.User;
 import org.laokou.common.context.util.UserConvertor;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.common.exception.BizException;
+import org.laokou.common.i18n.common.exception.GlobalException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -54,14 +56,15 @@ record UserDetailsServiceImpl(
 	public UserDetails loadUserByUsername(@NonNull String username) throws UsernameNotFoundException {
 		try {
 			AuthA authA = DomainFactory.createAuth().createAuthorizationCodeAuth();
-			Object principal = authenticationProcessor.authentication(authA, RequestUtils.getHttpServletRequest())
-				.getPrincipal();
+			UserV userV = authA.getUserV();
+			Object principal = authenticationProcessor.authentication(authA, RequestUtils.getHttpServletRequest()).getPrincipal();
 			if (principal instanceof UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
 					&& usernamePasswordAuthenticationToken.getPrincipal() instanceof User user) {
 				return UserConvertor.toUserDetails(user, Collections.emptySet());
 			}
-			return new org.springframework.security.core.userdetails.User(authA.getUserV().username(),
-					authA.getUserV().password(), Collections.emptyList());
+			return new org.springframework.security.core.userdetails.User(userV.username(), userV.password(), Collections.emptyList());
+		} catch (GlobalException ex) {
+			throw ex;
 		}
 		catch (Exception ex) {
 			log.error("用户认证失败，错误信息：{}", ex.getMessage(), ex);

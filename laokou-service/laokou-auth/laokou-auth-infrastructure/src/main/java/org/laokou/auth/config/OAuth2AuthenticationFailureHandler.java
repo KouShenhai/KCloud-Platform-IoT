@@ -17,14 +17,13 @@
 
 package org.laokou.auth.config;
 
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.jspecify.annotations.NonNull;
-import org.laokou.common.core.util.ResponseUtils;
 import org.laokou.common.i18n.common.exception.GlobalException;
-import org.laokou.common.i18n.dto.Result;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -33,14 +32,15 @@ import java.io.IOException;
  * @author laokou
  */
 @Component
-final class OAuth2AuthenticationFailureHandler implements AuthenticationFailureHandler {
+final class OAuth2AuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
 	@Override
 	public void onAuthenticationFailure(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
-			@NonNull AuthenticationException ex) throws IOException {
+			@NonNull AuthenticationException ex) throws ServletException, IOException {
 		if (ex.getCause() instanceof GlobalException gex) {
-			ResponseUtils.responseOk(response, Result.fail(gex.getCode(), gex.getMsg()));
+			request.getSession().setAttribute("errorMessage", gex.getMsg());
 		}
+		super.onAuthenticationFailure(request, response, ex);
 	}
 
 }
