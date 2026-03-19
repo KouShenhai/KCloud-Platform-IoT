@@ -98,8 +98,8 @@
 		<h2>老寇IoT云平台统一认证</h2>
 	</div>
 
-	<div class="alert alert-danger" th:if="${errorMessage}">
-		<span th:text="${errorMessage}"></span>
+	<div class="alert alert-danger" th:if="${session.SPRING_SECURITY_LAST_EXCEPTION != null}">
+		<span th:text="${session.SPRING_SECURITY_LAST_EXCEPTION?.message}"></span>
 	</div>
 	<form method="post" th:action="@{/login}">
 		<div class="form-item row" style="width: 100%;">

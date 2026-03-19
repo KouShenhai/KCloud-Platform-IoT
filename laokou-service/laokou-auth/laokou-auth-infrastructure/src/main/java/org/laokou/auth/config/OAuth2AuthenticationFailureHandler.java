@@ -31,7 +31,7 @@ import java.io.IOException;
 /**
  * @author laokou
  */
-@Component
+// @Component
 final class OAuth2AuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
 	@Override
