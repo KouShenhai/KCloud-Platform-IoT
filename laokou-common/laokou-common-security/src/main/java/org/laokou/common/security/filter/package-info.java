@@ -15,30 +15,7 @@
  *
  */
 
-package org.laokou.common.domain.support;
-
-import lombok.RequiredArgsConstructor;
-import org.jspecify.annotations.NonNull;
-import org.laokou.common.i18n.dto.DomainEvent;
-import org.laokou.common.i18n.util.ObjectUtils;
-import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.stereotype.Component;
-
 /**
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class KafkaDomainEventPublisher implements DomainEventPublisher {
-
-	private final KafkaTemplate<@NonNull String, @NonNull Object> kafkaTemplate;
-
-	@Override
-	public void publish(String topic, DomainEvent payload) {
-		if (ObjectUtils.isNull(payload)) {
-			return;
-		}
-		kafkaTemplate.send(topic, payload);
-	}
-
-}
+package org.laokou.common.security.filter;

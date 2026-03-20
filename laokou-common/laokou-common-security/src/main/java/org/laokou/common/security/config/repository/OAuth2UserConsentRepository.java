@@ -33,6 +33,7 @@
 
 package org.laokou.common.security.config.repository;
 
+import org.jspecify.annotations.NonNull;
 import org.laokou.common.security.config.entity.OAuth2UserConsent;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -42,7 +43,7 @@ import org.springframework.stereotype.Repository;
  * @author laokou
  */
 @Repository
-public interface OAuth2UserConsentRepository extends CrudRepository<OAuth2UserConsent, String> {
+public interface OAuth2UserConsentRepository extends CrudRepository<@NonNull OAuth2UserConsent, @NonNull String> {
 
 	OAuth2UserConsent findByRegisteredClientIdAndPrincipalName(String registeredClientId, String principalName);
 

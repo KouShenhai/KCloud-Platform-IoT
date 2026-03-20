@@ -26,13 +26,13 @@ import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.entity.LoginLogE;
-import org.laokou.auth.model.enums.LoginStatus;
 import org.laokou.auth.model.entity.UserE;
+import org.laokou.auth.model.enums.LoginStatus;
 import org.laokou.common.core.util.AddressUtils;
 import org.laokou.common.core.util.IpUtils;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
-import org.laokou.common.i18n.common.exception.BizException;
+import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.util.ObjectUtils;
 
 import java.util.Optional;
@@ -99,7 +99,8 @@ public final class LoginLogConvertor {
 		return loginLogCO;
 	}
 
-	public static LoginEvent toDomainEvent(HttpServletRequest request, AuthA authA, BizException ex) throws Exception {
+	public static LoginEvent toDomainEvent(HttpServletRequest request, AuthA authA, GlobalException ex)
+			throws Exception {
 		Capabilities capabilities = RequestUtils.getCapabilities(request);
 		String ip = IpUtils.getIpAddr(request);
 		int status = LoginStatus.OK.getCode();

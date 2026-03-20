@@ -64,7 +64,9 @@ class OAuth2ResourceServerConfig {
 			// 自定义登录页面
 			// https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/form.html
 			// 登录页面 -> DefaultLoginPageGeneratingFilter
-			.formLogin(form -> form.loginPage("/login").permitAll())
+			.formLogin(form -> form.loginPage("/login")
+				// .failureHandler(oAuth2AuthenticationFailureHandler)
+				.permitAll())
 			// 清除 session
 			.logout(logout -> logout.clearAuthentication(true).invalidateHttpSession(true))
 			.build();

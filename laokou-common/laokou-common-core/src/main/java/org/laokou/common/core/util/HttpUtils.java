@@ -19,6 +19,8 @@ package org.laokou.common.core.util;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.config.ConnectionConfig;
+import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.client5.http.entity.mime.MultipartEntityBuilder;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
@@ -28,6 +30,7 @@ import org.apache.hc.client5.http.ssl.DefaultClientTlsStrategy;
 import org.apache.hc.client5.http.ssl.NoopHostnameVerifier;
 import org.apache.hc.core5.http.HttpEntity;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
+import org.apache.hc.core5.util.Timeout;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -105,16 +108,28 @@ public final class HttpUtils {
 	}
 
 	public static CloseableHttpClient getHttpClient() throws NoSuchAlgorithmException, KeyManagementException {
-		// 创建HttpClient对象
-		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
 		DefaultClientTlsStrategy tlsStrategy = new DefaultClientTlsStrategy(SslUtils.sslContext(),
 				NoopHostnameVerifier.INSTANCE);
-		PoolingHttpClientConnectionManager poolingHttpClientConnectionManager = PoolingHttpClientConnectionManagerBuilder
-			.create()
+		// 请求配置
+		RequestConfig requestConfig = RequestConfig.custom()
+			.setResponseTimeout(Timeout.ofSeconds(10))
+			.setConnectionRequestTimeout(Timeout.ofSeconds(5))
+			.build();
+		// 连接配置
+		ConnectionConfig connectionConfig = ConnectionConfig.custom()
+			.setConnectTimeout(Timeout.ofSeconds(5))
+			.setSocketTimeout(Timeout.ofSeconds(5))
+			.setTimeToLive(Timeout.ofSeconds(90)) // 连接存活最多90s，到期自动废弃
+			.build();
+		// 连接池管理配置
+		PoolingHttpClientConnectionManager cm = PoolingHttpClientConnectionManagerBuilder.create()
+			.setMaxConnTotal(500) // 设置最大连接数
+			.setMaxConnPerRoute(100) // 设置每个路由的最大连接数
+			.setDefaultConnectionConfig(connectionConfig)
 			.setTlsSocketStrategy(tlsStrategy)
 			.build();
-		httpClientBuilder.setConnectionManager(poolingHttpClientConnectionManager);
-		return httpClientBuilder.build();
+		// HttpClient
+		return HttpClientBuilder.create().setConnectionManager(cm).setDefaultRequestConfig(requestConfig).build();
 	}
 
 }

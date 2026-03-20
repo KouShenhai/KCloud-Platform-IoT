@@ -29,13 +29,6 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 class OAuth2ExceptionHandlerTest {
 
 	@Test
-	void test_error_url_constant() {
-		// Then
-		Assertions.assertThat(OAuth2ExceptionHandler.ERROR_URL)
-			.isEqualTo("https://datatracker.ietf.org/doc/html/rfc6749#section-5.2");
-	}
-
-	@Test
 	void test_getOAuth2AuthenticationException() {
 		// Given
 		String code = "invalid_token";

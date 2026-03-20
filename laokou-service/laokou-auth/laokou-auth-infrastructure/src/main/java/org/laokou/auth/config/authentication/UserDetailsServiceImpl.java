@@ -20,11 +20,14 @@ package org.laokou.auth.config.authentication;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.laokou.auth.factory.DomainFactory;
+import org.laokou.auth.model.AuthA;
+import org.laokou.auth.model.valueobject.UserV;
 import org.laokou.common.context.util.User;
 import org.laokou.common.context.util.UserConvertor;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.common.exception.GlobalException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -52,21 +55,20 @@ record UserDetailsServiceImpl(
 	@Override
 	public UserDetails loadUserByUsername(@NonNull String username) throws UsernameNotFoundException {
 		try {
-			Object principal = authenticationProcessor
-				.authentication(DomainFactory.createAuth().createAuthorizationCodeAuth(),
-						RequestUtils.getHttpServletRequest())
-				.getPrincipal();
-			if (principal instanceof User user) {
+			AuthA authA = DomainFactory.createAuth().createAuthorizationCodeAuth();
+			UserV userV = authA.getUserV();
+			Object principal = authenticationProcessor.authentication(authA, RequestUtils.getHttpServletRequest()).getPrincipal();
+			if (principal instanceof UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
+					&& usernamePasswordAuthenticationToken.getPrincipal() instanceof User user) {
 				return UserConvertor.toUserDetails(user, Collections.emptySet());
 			}
-			throw new BizException("B_OAuth2_UserNotExist", "用户不存在");
+			return new org.springframework.security.core.userdetails.User(userV.username(), userV.password(), Collections.emptyList());
+		} catch (GlobalException ex) {
+			throw ex;
 		}
-		catch (GlobalException e) {
-			throw new UsernameNotFoundException(e.getMsg(), e);
-		}
-		catch (Exception e) {
-			log.error("用户认证失败，错误信息：{}", e.getMessage(), e);
-			throw new BizException("B_OAuth2_UserAuthFailed", "用户认证失败", e);
+		catch (Exception ex) {
+			log.error("用户认证失败，错误信息：{}", ex.getMessage(), ex);
+			throw new BizException("B_OAuth2_AuthFailed", "认证失败", ex);
 		}
 	}
 
