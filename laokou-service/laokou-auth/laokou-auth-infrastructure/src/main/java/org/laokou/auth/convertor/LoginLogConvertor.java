@@ -20,6 +20,7 @@ package org.laokou.auth.convertor;
 import com.blueconic.browscap.Capabilities;
 import io.micrometer.common.util.StringUtils;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.dto.clientobject.LoginLogCO;
 import org.laokou.auth.dto.domainevent.LoginEvent;
 import org.laokou.auth.factory.DomainFactory;
@@ -34,12 +35,15 @@ import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.util.ObjectUtils;
+import org.lionsoul.ip2region.xdb.InetAddressException;
 
+import java.io.IOException;
 import java.util.Optional;
 
 /**
  * @author laokou
  */
+@Slf4j
 public final class LoginLogConvertor {
 
 	private LoginLogConvertor() {
@@ -99,36 +103,41 @@ public final class LoginLogConvertor {
 		return loginLogCO;
 	}
 
-	public static LoginEvent toDomainEvent(HttpServletRequest request, AuthA authA, GlobalException ex)
-			throws Exception {
-		Capabilities capabilities = RequestUtils.getCapabilities(request);
-		String ip = IpUtils.getIpAddr(request);
-		int status = LoginStatus.OK.getCode();
-		UserE userE = authA.getUserE();
-		Optional<UserE> optional = Optional.ofNullable(userE);
-		Long creator = optional.map(UserE::getId).orElse(null);
-		Long tenantId = optional.map(UserE::getTenantId).orElse(null);
-		Long deptId = optional.map(UserE::getDeptId).orElse(null);
-		String errorMessage = StringConstants.EMPTY;
-		if (ObjectUtils.isNotNull(ex)) {
-			status = LoginStatus.FAIL.getCode();
-			errorMessage = ex.getMsg();
+	public static LoginEvent toDomainEvent(HttpServletRequest request, AuthA authA, GlobalException gex) {
+		try {
+			Capabilities capabilities = RequestUtils.getCapabilities(request);
+			String ip = IpUtils.getIpAddr(request);
+			int status = LoginStatus.OK.getCode();
+			UserE userE = authA.getUserE();
+			Optional<UserE> optional = Optional.ofNullable(userE);
+			Long creator = optional.map(UserE::getId).orElse(null);
+			Long tenantId = optional.map(UserE::getTenantId).orElse(null);
+			Long deptId = optional.map(UserE::getDeptId).orElse(null);
+			String errorMessage = StringConstants.EMPTY;
+			if (ObjectUtils.isNotNull(gex)) {
+				status = LoginStatus.FAIL.getCode();
+				errorMessage = gex.getMsg();
+			}
+			return LoginEvent.builder()
+				.id(authA.getId())
+				.username(authA.getLoginName())
+				.ip(ip)
+				.address(AddressUtils.getRealAddress(ip))
+				.browser(capabilities.getBrowser())
+				.os(capabilities.getPlatform())
+				.status(status)
+				.errorMessage(errorMessage)
+				.type(authA.getGrantType().getCode())
+				.loginTime(authA.getCreateTime())
+				.tenantId(tenantId)
+				.creator(creator)
+				.deptId(deptId)
+				.build();
 		}
-		return LoginEvent.builder()
-			.id(authA.getId())
-			.username(authA.getLoginName())
-			.ip(ip)
-			.address(AddressUtils.getRealAddress(ip))
-			.browser(capabilities.getBrowser())
-			.os(capabilities.getPlatform())
-			.status(status)
-			.errorMessage(errorMessage)
-			.type(authA.getGrantType().getCode())
-			.loginTime(authA.getCreateTime())
-			.tenantId(tenantId)
-			.creator(creator)
-			.deptId(deptId)
-			.build();
+		catch (InetAddressException | IOException | InterruptedException ex) {
+			log.error("错误信息：{}", ex.getMessage(), ex);
+			throw new IllegalArgumentException();
+		}
 	}
 
 }
