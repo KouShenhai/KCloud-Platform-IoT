@@ -136,7 +136,7 @@ public final class LoginLogConvertor {
 		}
 		catch (InetAddressException | IOException | InterruptedException ex) {
 			log.error("错误信息：{}", ex.getMessage(), ex);
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException(ex.getMessage());
 		}
 	}
 
