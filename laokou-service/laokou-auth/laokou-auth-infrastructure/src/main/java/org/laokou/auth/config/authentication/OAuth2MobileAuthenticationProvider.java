@@ -50,7 +50,7 @@ final class OAuth2MobileAuthenticationProvider extends AbstractOAuth2Authenticat
 	}
 
 	@Override
-	Authentication getPrincipal(HttpServletRequest request) throws Exception {
+	Authentication getPrincipal(HttpServletRequest request) {
 		return authentication(DomainFactory.createAuth().createMobileAuth(), request);
 	}
 

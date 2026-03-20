@@ -24,7 +24,6 @@ import org.jspecify.annotations.NonNull;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 

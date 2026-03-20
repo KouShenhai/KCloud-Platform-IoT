@@ -50,7 +50,7 @@ final class OAuth2TestAuthenticationProvider extends AbstractOAuth2Authenticatio
 	}
 
 	@Override
-	Authentication getPrincipal(HttpServletRequest request) throws Exception {
+	Authentication getPrincipal(HttpServletRequest request) {
 		return authentication(DomainFactory.createAuth().createTestAuth(), request);
 	}
 

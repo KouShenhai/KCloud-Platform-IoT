@@ -45,8 +45,8 @@ final class OAuth2AuthenticationProcessor {
 
 	private final DomainEventPublisher kafkaDomainEventPublisher;
 
-	public UsernamePasswordAuthenticationToken authentication(@NonNull AuthA authA, @NonNull HttpServletRequest request)
-			throws Exception {
+	public UsernamePasswordAuthenticationToken authentication(@NonNull AuthA authA,
+			@NonNull HttpServletRequest request) {
 		LoginEvent evt = null;
 		try {
 			// 认证授权
@@ -58,10 +58,10 @@ final class OAuth2AuthenticationProcessor {
 			// 认证成功，转换成认证对象【系统】
 			return new UsernamePasswordAuthenticationToken(user, user.username(), user.getAuthorities());
 		}
-		catch (GlobalException ex) {
+		catch (GlobalException gex) {
 			// 记录日志【登录失败】
-			evt = LoginLogConvertor.toDomainEvent(request, authA, ex);
-			throw ex;
+			evt = LoginLogConvertor.toDomainEvent(request, authA, gex);
+			throw gex;
 		}
 		finally {
 			// 发布领域事件

@@ -18,6 +18,7 @@
 package org.laokou.auth.model;
 
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.constant.Constants;
@@ -70,6 +71,7 @@ import java.util.function.Supplier;
  *
  * @author laokou
  */
+@Slf4j
 @Entity
 @Getter
 public final class AuthA extends AggregateRoot implements ValidateName {
@@ -196,35 +198,35 @@ public final class AuthA extends AggregateRoot implements ValidateName {
 	}
 	// @formatter:on
 
-	public AuthA createUsernamePasswordAuth() throws Exception {
+	public AuthA createUsernamePasswordAuth() {
 		this.grantType = GrantType.USERNAME_PASSWORD;
 		this.captchaV = getCaptchaVByUsernamePasswordAuth();
 		this.userV = getUserVByUsernamePasswordAuth();
 		return create();
 	}
 
-	public AuthA createMobileAuth() throws Exception {
+	public AuthA createMobileAuth() {
 		this.grantType = GrantType.MOBILE;
 		this.captchaV = getCaptchaVByMobileAuth();
 		this.userV = getUserVByMobileAuth();
 		return create();
 	}
 
-	public AuthA createMailAuth() throws Exception {
+	public AuthA createMailAuth() {
 		this.grantType = GrantType.MAIL;
 		this.captchaV = getCaptchaVByMailAuth();
 		this.userV = getUserVByMailAuth();
 		return create();
 	}
 
-	public AuthA createAuthorizationCodeAuth() throws Exception {
+	public AuthA createAuthorizationCodeAuth() {
 		this.grantType = GrantType.AUTHORIZATION_CODE;
 		this.captchaV = getCaptchaVByAuthorizationCodeAuth();
 		this.userV = getUserVByAuthorizationCodeAuth();
 		return create();
 	}
 
-	public AuthA createTestAuth() throws Exception {
+	public AuthA createTestAuth() {
 		this.grantType = GrantType.TEST;
 		this.userV = getUserVByTestAuth();
 		return create();
@@ -430,54 +432,76 @@ public final class AuthA extends AggregateRoot implements ValidateName {
 		return CaptchaV.builder().uuid(mail).captcha(code).build();
 	}
 
-	private UserV getUserVByUsernamePasswordAuth() throws Exception {
-		String username = RSAUtils.decryptByPrivateKey(getParameterValue(Constants.USERNAME));
-		String password = RSAUtils.decryptByPrivateKey(getParameterValue(Constants.PASSWORD));
-		String tenantCode = getParameterValue(Constants.TENANT_CODE);
-		return UserV.builder()
-			.username(AESUtils.encrypt(username))
-			.password(password)
-			.tenantCode(tenantCode)
-			.mail(StringConstants.EMPTY)
-			.mobile(StringConstants.EMPTY)
-			.build();
+	private UserV getUserVByUsernamePasswordAuth() {
+		try {
+			String username = RSAUtils.decryptByPrivateKey(getParameterValue(Constants.USERNAME));
+			String password = RSAUtils.decryptByPrivateKey(getParameterValue(Constants.PASSWORD));
+			String tenantCode = getParameterValue(Constants.TENANT_CODE);
+			return UserV.builder()
+				.username(AESUtils.encrypt(username))
+				.password(password)
+				.tenantCode(tenantCode)
+				.mail(StringConstants.EMPTY)
+				.mobile(StringConstants.EMPTY)
+				.build();
+		}
+		catch (Exception ex) {
+			log.error("getUserVByUsernamePasswordAuth error: {}", ex.getMessage(), ex);
+			throw new IllegalArgumentException(ex.getMessage());
+		}
 	}
 
-	private UserV getUserVByTestAuth() throws Exception {
+	private UserV getUserVByTestAuth() {
 		return getUserVByAuthorizationCodeAuth();
 	}
 
-	private UserV getUserVByAuthorizationCodeAuth() throws Exception {
-		String username = getParameterValue(Constants.USERNAME);
-		String password = getParameterValue(Constants.PASSWORD);
-		String tenantCode = getParameterValue(Constants.TENANT_CODE);
-		return UserV.builder()
-			.username(AESUtils.encrypt(username))
-			.password(password)
-			.tenantCode(tenantCode)
-			.mail(StringConstants.EMPTY)
-			.mobile(StringConstants.EMPTY)
-			.build();
+	private UserV getUserVByAuthorizationCodeAuth() {
+		try {
+			String username = getParameterValue(Constants.USERNAME);
+			String password = getParameterValue(Constants.PASSWORD);
+			String tenantCode = getParameterValue(Constants.TENANT_CODE);
+			return UserV.builder()
+				.username(AESUtils.encrypt(username))
+				.password(password)
+				.tenantCode(tenantCode)
+				.mail(StringConstants.EMPTY)
+				.mobile(StringConstants.EMPTY)
+				.build();
+		}
+		catch (Exception ex) {
+			log.error("getUserVByAuthorizationCodeAuth error: {}", ex.getMessage(), ex);
+			throw new IllegalArgumentException(ex.getMessage());
+		}
 	}
 
-	private UserV getUserVByMobileAuth() throws Exception {
-		String tenantCode = getParameterValue(Constants.TENANT_CODE);
-		return UserV.builder()
-			.username(StringConstants.EMPTY)
-			.tenantCode(tenantCode)
-			.mail(StringConstants.EMPTY)
-			.mobile(AESUtils.encrypt(this.captchaV.uuid()))
-			.build();
+	private UserV getUserVByMobileAuth() {
+		try {
+			return UserV.builder()
+				.username(StringConstants.EMPTY)
+				.tenantCode(getParameterValue(Constants.TENANT_CODE))
+				.mail(StringConstants.EMPTY)
+				.mobile(AESUtils.encrypt(this.captchaV.uuid()))
+				.build();
+		}
+		catch (Exception ex) {
+			log.error("getUserVByMobileAuth error: {}", ex.getMessage(), ex);
+			throw new IllegalArgumentException(ex);
+		}
 	}
 
-	private UserV getUserVByMailAuth() throws Exception {
-		String tenantCode = getParameterValue(Constants.TENANT_CODE);
-		return UserV.builder()
-			.username(StringConstants.EMPTY)
-			.tenantCode(tenantCode)
-			.mail(AESUtils.encrypt(this.captchaV.uuid()))
-			.mobile(StringConstants.EMPTY)
-			.build();
+	private UserV getUserVByMailAuth() {
+		try {
+			return UserV.builder()
+				.username(StringConstants.EMPTY)
+				.tenantCode(getParameterValue(Constants.TENANT_CODE))
+				.mail(AESUtils.encrypt(this.captchaV.uuid()))
+				.mobile(StringConstants.EMPTY)
+				.build();
+		}
+		catch (Exception ex) {
+			log.error("getUserVByMailAuth error: {}", ex.getMessage(), ex);
+			throw new IllegalArgumentException(ex.getMessage());
+		}
 	}
 
 	private AuthA create() {
