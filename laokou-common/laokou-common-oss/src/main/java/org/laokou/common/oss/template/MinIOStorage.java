@@ -19,24 +19,16 @@ package org.laokou.common.oss.template;
 
 import io.minio.BucketExistsArgs;
 import io.minio.GetPresignedObjectUrlArgs;
+import io.minio.Http;
 import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
-import io.minio.errors.ErrorResponseException;
-import io.minio.errors.InsufficientDataException;
-import io.minio.errors.InternalException;
-import io.minio.errors.InvalidResponseException;
-import io.minio.errors.ServerException;
-import io.minio.errors.XmlParserException;
-import io.minio.http.Method;
+import io.minio.errors.MinioException;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.oss.model.BaseOss;
 import org.laokou.common.oss.model.FileInfo;
 import org.laokou.common.oss.model.MinIO;
 
-import java.io.IOException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -61,9 +53,7 @@ public final class MinIOStorage extends AbstractStorage<MinioClient> {
 	}
 
 	@Override
-	protected void checkBucket(MinioClient minioClient) throws ServerException, InsufficientDataException,
-			ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException,
-			InvalidResponseException, XmlParserException, InternalException {
+	protected void checkBucket(MinioClient minioClient) throws MinioException {
 		String bucketName = this.minIO.getBucketName();
 		boolean isExist = minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());
 		if (!isExist) {
@@ -73,35 +63,29 @@ public final class MinIOStorage extends AbstractStorage<MinioClient> {
 	}
 
 	@Override
-	protected void upload(MinioClient minioClient) throws ServerException, InsufficientDataException,
-			ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException,
-			InvalidResponseException, XmlParserException, InternalException {
+	protected void upload(MinioClient minioClient) throws MinioException {
 		PutObjectArgs objectArgs = PutObjectArgs.builder()
 			.bucket(this.minIO.getBucketName())
 			.object(fileInfo.name())
-			.stream(fileInfo.inputStream(), fileInfo.size(), -1)
+			.stream(fileInfo.inputStream(), fileInfo.size(), -1L)
 			.contentType(fileInfo.contentType())
 			.build();
 		minioClient.putObject(objectArgs);
 	}
 
 	@Override
-	protected String getUrl(MinioClient minioClient) throws ServerException, InsufficientDataException,
-			ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException,
-			InvalidResponseException, XmlParserException, InternalException {
+	protected String getUrl(MinioClient minioClient) throws MinioException {
 		GetPresignedObjectUrlArgs objectUrlArgs = GetPresignedObjectUrlArgs.builder()
 			.bucket(this.minIO.getBucketName())
 			.object(fileInfo.name())
-			.method(Method.GET)
+			.method(Http.Method.GET)
 			.expiry(5, TimeUnit.DAYS)
 			.build();
 		return minioClient.getPresignedObjectUrl(objectUrlArgs);
 	}
 
 	@Override
-	public void createBucket() throws ServerException, InsufficientDataException, ErrorResponseException, IOException,
-			NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException,
-			InternalException {
+	public void createBucket() throws MinioException {
 		MinioClient minioClient = getObj();
 		String bucketName = this.minIO.getBucketName();
 		boolean isExist = minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());

@@ -34,7 +34,7 @@ server:
     key-store-password: laokou
   http2:
     enabled: false
-  forward-headers-strategy: native
+  forward-headers-strategy: framework
   shutdown: graceful
   port: ${SERVER_PORT:8098}
   servlet:
@@ -157,10 +157,13 @@ spring:
               - /v3/api-docs/**=laokou-standalone-auth
               - /actuator/**=laokou-standalone-auth
               - /error=laokou-standalone-auth
-              - /v1/captchas/{uuid}=laokou-standalone-auth
+              - /v1/username-password/captchas/{uuid}=laokou-standalone-auth
+              - /v1/authorization-code/captchas/{uuid}=laokou-standalone-auth
               - /v1/secrets=laokou-standalone-auth
               - /doc.html=laokou-standalone-auth
               - /webjars/**=laokou-standalone-auth
+              - /img/**=laokou-standalone-auth
+              - /js/**=laokou-standalone-auth
             POST:
               - /v1/captchas/send/mail=laokou-standalone-auth
               - /v1/captchas/send/mobile=laokou-standalone-auth

@@ -4,6 +4,7 @@
 	<meta charset="UTF-8"/>
 	<meta name="viewport" content="width=device-width,initial-scale=1"/>
 	<title>老寇IoT云平台统一认证</title>
+	<script src="js/axios.min.js"></script>
 	<style>
 		html, body {
 			height: 100%;
@@ -13,7 +14,7 @@
 			overflow-x: hidden;
 			min-height: 100vh;
 			font-family: Arial, Helvetica, sans-serif;
-			background: url('/api/img/FfdJeJRQWjEeGTpqgBKj.png') no-repeat center center;
+			background: url('img/FfdJeJRQWjEeGTpqgBKj.png') no-repeat center center;
 			background-size: cover;
 
 			/* 更健壮的居中布局：适配不同屏幕尺寸 */
@@ -98,32 +99,56 @@
 		<h2>老寇IoT云平台统一认证</h2>
 	</div>
 
-	<div class="alert alert-danger" th:if="${errorMessage}">
-		<span th:text="${errorMessage}"></span>
+	<div class="alert alert-danger" th:if="${param.error != null and session.SPRING_SECURITY_LAST_EXCEPTION != null}">
+		<span th:text="${session.SPRING_SECURITY_LAST_EXCEPTION?.message}"></span>
 	</div>
-	<form method="post" th:action="@{/login}">
+	<form method="post" th:action="@{/login}" autocomplete="off">
+
 		<div class="form-item row" style="width: 100%;">
-			<input id="tenant" name="tenant" type="text" placeholder="请输入租户编号" required autofocus/>
+			<input id="uuid" name="uuid" type="text" autocomplete="new-password" hidden="hidden" placeholder="请输入唯一标识" required/>
 		</div>
 
 		<div class="form-item row" style="width: 100%;">
-			<input id="username" name="username" type="text" placeholder="请输入用户名" required/>
+			<input id="tenant_code" name="tenant_code" autocomplete="new-password" value="laokouyun" type="text" placeholder="请输入租户编号" required autofocus/>
 		</div>
 
 		<div class="form-item row" style="width: 100%;">
-			<input id="password" name="password" type="password" placeholder="请输入密码" required/>
+			<input id="username" name="username" type="text" autocomplete="new-password" value="admin" placeholder="请输入用户名" required/>
+		</div>
+
+		<div class="form-item row" style="width: 100%;">
+			<input id="password" name="password" type="password" autocomplete="new-password" value="admin123" placeholder="请输入密码" required/>
 		</div>
 
 		<div class="form-item">
 			<div class="row">
-				<input id="captcha" name="captcha" type="text" placeholder="请输入验证码" required/>
-				<img class="captcha" th:src="@{/captcha}" alt="captcha"
-					 onclick="this.src='/captcha?ts='+Date.now()"/>
+				<input id="captcha" name="captcha" autocomplete="new-password" type="text" placeholder="请输入验证码" required/>
+				<img id="captcha-img" class="captcha" alt="验证码" onclick="getCaptcha()"/>
 			</div>
 		</div>
 
 		<button class="btn" type="submit">登&nbsp;&nbsp;录</button>
 	</form>
 </div>
+<script>
+	function getUuid() {
+		if (window.crypto && crypto.randomUUID) {
+			return crypto.randomUUID();
+		}
+		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+			const r = Math.random() * 16 | 0;
+			const v = c === 'x' ? r : (r & 0x3 | 0x8);
+			return v.toString(16);
+		});
+	}
+	function getCaptcha() {
+		const uuid = getUuid()
+		document.getElementById("uuid").value = uuid
+		axios.get("v1/authorization-code/captchas/" + uuid).then(res => {
+			document.getElementById("captcha-img").src = res.data.data
+		})
+	}
+	getCaptcha()
+</script>
 </body>
 </html>
