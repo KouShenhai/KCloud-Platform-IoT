@@ -34,7 +34,7 @@ server:
     key-store-password: laokou
   http2:
     enabled: false
-  forward-headers-strategy: native
+  forward-headers-strategy: framework
   shutdown: graceful
   port: ${SERVER_PORT:8099}
   servlet:

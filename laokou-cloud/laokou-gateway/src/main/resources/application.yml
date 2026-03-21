@@ -40,7 +40,7 @@ server:
     key-password: laokou
   http2:
     enabled: false
-  forward-headers-strategy: native
+  forward-headers-strategy: framework
   # 优雅停机
   shutdown: graceful
   netty:
@@ -199,7 +199,6 @@ request-matcher:
       - /doc.html=laokou-gateway
       - /webjars/**=laokou-gateway
       - /ws=laokou-gateway
-      - /api/login=laokou-gateway
     POST:
       - /api/v1/captchas/send/mail=laokou-gateway
       - /api/v1/captchas/send/mobile=laokou-gateway

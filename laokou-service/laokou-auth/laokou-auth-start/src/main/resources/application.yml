@@ -34,7 +34,7 @@ server:
     key-store-password: laokou
   http2:
     enabled: false
-  forward-headers-strategy: native
+  forward-headers-strategy: framework
   shutdown: graceful
   port: ${SERVER_PORT:1111}
   servlet:
@@ -162,8 +162,8 @@ spring:
               - /v1/secrets=laokou-auth
               - /doc.html=laokou-auth
               - /webjars/**=laokou-auth
-              - /login=laokou-auth
               - /img/**=laokou-auth
+              - /js/**=laokou-auth
             POST:
               - /v1/captchas/send/mail=laokou-auth
               - /v1/captchas/send/mobile=laokou-auth
