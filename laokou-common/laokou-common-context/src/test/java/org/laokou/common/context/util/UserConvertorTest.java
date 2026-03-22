@@ -69,7 +69,7 @@ class UserConvertorTest {
 		String encryptedMail = AESUtils.encrypt("admin@example.com");
 		String encryptedMobile = AESUtils.encrypt("13800138000");
 
-		UserExtDetails userExtDetails = UserExtDetails.builder()
+		User user = User.builder()
 			.id(1L)
 			.username(encryptedUsername)
 			.password("password123")
@@ -84,7 +84,7 @@ class UserConvertorTest {
 			.build();
 
 		// When
-		OAuth2AuthenticatedExtPrincipal result = UserConvertor.toPrincipal(userExtDetails, Collections.emptySet());
+		OAuth2AuthenticatedExtPrincipal result = UserConvertor.toPrincipal(user, Collections.emptySet());
 
 		// Then
 		Assertions.assertThat(result).isNotNull();
@@ -114,7 +114,7 @@ class UserConvertorTest {
 		String encryptedMail = AESUtils.encrypt(originalMail);
 		String encryptedMobile = AESUtils.encrypt(originalMobile);
 
-		UserExtDetails userExtDetails = UserExtDetails.builder()
+		User user = User.builder()
 			.id(2L)
 			.username(encryptedUsername)
 			.mail(encryptedMail)
@@ -122,7 +122,7 @@ class UserConvertorTest {
 			.build();
 
 		// When
-		OAuth2AuthenticatedExtPrincipal result = UserConvertor.toPrincipal(userExtDetails, Collections.emptySet());
+		OAuth2AuthenticatedExtPrincipal result = UserConvertor.toPrincipal(user, Collections.emptySet());
 
 		// Then
 		Assertions.assertThat(result.getUsername()).isEqualTo(originalUsername);
@@ -134,7 +134,7 @@ class UserConvertorTest {
 	@DisplayName("Test toUserDetails with null optional fields")
 	void test_toUserDetails_with_null_optional_fields() {
 		// Given
-		UserExtDetails userExtDetails = UserExtDetails.builder()
+		User user = User.builder()
 			.id(3L)
 			.username(null)
 			.password(null)
@@ -149,7 +149,7 @@ class UserConvertorTest {
 			.build();
 
 		// When
-		OAuth2AuthenticatedExtPrincipal result = UserConvertor.toPrincipal(userExtDetails, Collections.emptySet());
+		OAuth2AuthenticatedExtPrincipal result = UserConvertor.toPrincipal(user, Collections.emptySet());
 
 		// Then
 		Assertions.assertThat(result).isNotNull();
@@ -169,14 +169,14 @@ class UserConvertorTest {
 	@DisplayName("Test toUserDetails with empty permissions set")
 	void test_toUserDetails_with_empty_permissions() throws Exception {
 		// Given
-		UserExtDetails userExtDetails = UserExtDetails.builder()
+		User user = User.builder()
 			.id(4L)
 			.username(AESUtils.encrypt("user4"))
 			.permissions(new HashSet<>())
 			.build();
 
 		// When
-		OAuth2AuthenticatedExtPrincipal result = UserConvertor.toPrincipal(userExtDetails, Collections.emptySet());
+		OAuth2AuthenticatedExtPrincipal result = UserConvertor.toPrincipal(user, Collections.emptySet());
 
 		// Then
 		Assertions.assertThat(result.getPermissions()).isNotNull().isEmpty();
@@ -186,10 +186,10 @@ class UserConvertorTest {
 	@DisplayName("Test toUserDetails uses DomainFactory template")
 	void test_toUserDetails_uses_domainFactory_template() throws Exception {
 		// Given
-		UserExtDetails userExtDetails = UserExtDetails.builder().id(5L).username(AESUtils.encrypt("user5")).build();
+		User user = User.builder().id(5L).username(AESUtils.encrypt("user5")).build();
 
 		// When
-		UserConvertor.toPrincipal(userExtDetails, Collections.emptySet());
+		UserConvertor.toPrincipal(user, Collections.emptySet());
 
 		// Then
 		domainFactoryMockedStatic.verify(DomainFactory::createPrincipal, Mockito.times(1));

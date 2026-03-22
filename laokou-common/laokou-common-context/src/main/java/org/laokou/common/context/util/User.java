@@ -27,7 +27,6 @@ import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -53,26 +52,14 @@ import java.util.Set;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
 		isGetterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
-public record UserExtDetails(Long id, String username, String password, String avatar, Boolean superAdmin,
-		Integer status, String mail, String mobile, Long tenantId, Long deptId, Set<String> permissions,
-		Set<Long> deptIds, Long creator) implements Authentication, UserDetails, Serializable {
+public record User(Long id, String username, String password, String avatar, Boolean superAdmin,
+				   Integer status, String mail, String mobile, Long tenantId, Long deptId, Set<String> permissions,
+				   Set<Long> deptIds, Long creator) implements Authentication, Serializable {
 
 	@Override
 	@NullMarked
 	public String getName() {
 		return this.username;
-	}
-
-	@Override
-	@NullMarked
-	public String getUsername() {
-		return this.username;
-	}
-
-	@Override
-	@NullMarked
-	public String getPassword() {
-		return this.password;
 	}
 
 	@Override
@@ -92,8 +79,8 @@ public record UserExtDetails(Long id, String username, String password, String a
 	}
 
 	@Override
-	public @Nullable Object getPrincipal() {
-		return this.username;
+	public Object getPrincipal() {
+		return this;
 	}
 
 	@Override

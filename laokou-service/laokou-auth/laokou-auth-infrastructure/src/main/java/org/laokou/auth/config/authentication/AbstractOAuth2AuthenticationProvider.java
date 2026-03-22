@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.constant.OAuth2Constants;
-import org.laokou.common.context.util.UserExtDetails;
+import org.laokou.common.context.util.User;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.GlobalException;
@@ -202,7 +202,7 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 	 * @param authA 认证聚合根
 	 * @return 用户信息
 	 */
-	protected UserExtDetails authentication(AuthA authA, HttpServletRequest request) {
+	protected User authentication(AuthA authA, HttpServletRequest request) {
 		return authenticationProcessor.authentication(authA, request);
 	}
 

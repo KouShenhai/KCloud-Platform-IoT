@@ -35,13 +35,13 @@ import java.util.Set;
 @DisplayName("User Record Unit Tests")
 class UserExtDetailsTest {
 
-	private UserExtDetails userExtDetails;
+	private User user;
 
 	@BeforeEach
 	void setUp() {
 		Set<String> permissions = Set.of("sys:user:query", "sys:user:add", "sys:role:query");
 
-		userExtDetails = UserExtDetails.builder()
+		user = User.builder()
 			.id(1L)
 			.username("admin")
 			.password("password123")
@@ -62,19 +62,19 @@ class UserExtDetailsTest {
 	@DisplayName("Test builder creates User with all properties")
 	void test_builder_allProperties_createsUser() {
 		// Then
-		Assertions.assertThat(userExtDetails.id()).isEqualTo(1L);
-		Assertions.assertThat(userExtDetails.username()).isEqualTo("admin");
-		Assertions.assertThat(userExtDetails.password()).isEqualTo("password123");
-		Assertions.assertThat(userExtDetails.avatar()).isEqualTo("https://example.com/avatar.png");
-		Assertions.assertThat(userExtDetails.superAdmin()).isTrue();
-		Assertions.assertThat(userExtDetails.status()).isZero();
-		Assertions.assertThat(userExtDetails.mail()).isEqualTo("admin@example.com");
-		Assertions.assertThat(userExtDetails.mobile()).isEqualTo("13800138000");
-		Assertions.assertThat(userExtDetails.tenantId()).isEqualTo(100L);
-		Assertions.assertThat(userExtDetails.deptId()).isEqualTo(10L);
-		Assertions.assertThat(userExtDetails.deptIds()).isEqualTo(Set.of(1L));
-		Assertions.assertThat(userExtDetails.creator()).isEqualTo(1L);
-		Assertions.assertThat(userExtDetails.permissions())
+		Assertions.assertThat(user.id()).isEqualTo(1L);
+		Assertions.assertThat(user.username()).isEqualTo("admin");
+		Assertions.assertThat(user.password()).isEqualTo("password123");
+		Assertions.assertThat(user.avatar()).isEqualTo("https://example.com/avatar.png");
+		Assertions.assertThat(user.superAdmin()).isTrue();
+		Assertions.assertThat(user.status()).isZero();
+		Assertions.assertThat(user.mail()).isEqualTo("admin@example.com");
+		Assertions.assertThat(user.mobile()).isEqualTo("13800138000");
+		Assertions.assertThat(user.tenantId()).isEqualTo(100L);
+		Assertions.assertThat(user.deptId()).isEqualTo(10L);
+		Assertions.assertThat(user.deptIds()).isEqualTo(Set.of(1L));
+		Assertions.assertThat(user.creator()).isEqualTo(1L);
+		Assertions.assertThat(user.permissions())
 			.hasSize(3)
 			.containsExactlyInAnyOrder("sys:user:query", "sys:user:add", "sys:role:query");
 	}
@@ -83,7 +83,7 @@ class UserExtDetailsTest {
 	@DisplayName("Test getName with valid username returns username")
 	void test_getName_withValidUsername_returnsUsername() {
 		// When
-		String name = userExtDetails.getName();
+		String name = user.getName();
 
 		// Then
 		Assertions.assertThat(name).isEqualTo("admin");
@@ -93,7 +93,7 @@ class UserExtDetailsTest {
 	@DisplayName("Test getAuthorities with valid permissions returns correct authorities")
 	void test_getAuthorities_withValidPermissions_returnsAuthorities() {
 		// When
-		Collection<GrantedAuthority> authorities = userExtDetails.getAuthorities();
+		Collection<GrantedAuthority> authorities = user.getAuthorities();
 
 		// Then
 		Assertions.assertThat(authorities).isNotNull().hasSize(0);
@@ -103,7 +103,7 @@ class UserExtDetailsTest {
 	@DisplayName("Test getCredentials with valid user returns username")
 	void test_getCredentials_withValidUser_returnsUsername() {
 		// When
-		Object credentials = userExtDetails.getCredentials();
+		Object credentials = user.getCredentials();
 
 		// Then
 		Assertions.assertThat(credentials).isEqualTo("admin");
@@ -113,7 +113,7 @@ class UserExtDetailsTest {
 	@DisplayName("Test getDetails with valid user returns username")
 	void test_getDetails_withValidUser_returnsUsername() {
 		// When
-		Object details = userExtDetails.getDetails();
+		Object details = user.getDetails();
 
 		// Then
 		Assertions.assertThat(details).isEqualTo("admin");
@@ -123,7 +123,7 @@ class UserExtDetailsTest {
 	@DisplayName("Test getPrincipal with valid user returns username")
 	void test_getPrincipal_withValidUser_returnsUsername() {
 		// When
-		Object principal = userExtDetails.getPrincipal();
+		Object principal = user.getPrincipal();
 
 		// Then
 		Assertions.assertThat(principal).isEqualTo("admin");
@@ -133,7 +133,7 @@ class UserExtDetailsTest {
 	@DisplayName("Test isAuthenticated always returns true")
 	void test_isAuthenticated_always_returnsTrue() {
 		// When
-		boolean authenticated = userExtDetails.isAuthenticated();
+		boolean authenticated = user.isAuthenticated();
 
 		// Then
 		Assertions.assertThat(authenticated).isTrue();
@@ -143,7 +143,7 @@ class UserExtDetailsTest {
 	@DisplayName("Test setAuthenticated always throws UnsupportedOperationException")
 	void test_setAuthenticated_always_throwsUnsupportedOperationException() {
 		// When & Then
-		Assertions.assertThatThrownBy(() -> userExtDetails.setAuthenticated(false))
+		Assertions.assertThatThrownBy(() -> user.setAuthenticated(false))
 			.isInstanceOf(UnsupportedOperationException.class)
 			.hasMessage("Cannot change authentication state");
 	}
@@ -152,7 +152,7 @@ class UserExtDetailsTest {
 	@DisplayName("Test builder with null values creates User with nulls")
 	void test_builder_nullValues_createsUserWithNulls() {
 		// Given
-		UserExtDetails userExtDetailsWithNulls = UserExtDetails.builder()
+		User userWithNulls = User.builder()
 			.id(2L)
 			.username("testuser")
 			.password(null)
@@ -169,33 +169,33 @@ class UserExtDetailsTest {
 			.build();
 
 		// Then
-		Assertions.assertThat(userExtDetailsWithNulls.id()).isEqualTo(2L);
-		Assertions.assertThat(userExtDetailsWithNulls.username()).isEqualTo("testuser");
-		Assertions.assertThat(userExtDetailsWithNulls.password()).isNull();
-		Assertions.assertThat(userExtDetailsWithNulls.avatar()).isNull();
-		Assertions.assertThat(userExtDetailsWithNulls.superAdmin()).isFalse();
-		Assertions.assertThat(userExtDetailsWithNulls.status()).isEqualTo(1);
-		Assertions.assertThat(userExtDetailsWithNulls.mail()).isNull();
-		Assertions.assertThat(userExtDetailsWithNulls.mobile()).isNull();
-		Assertions.assertThat(userExtDetailsWithNulls.tenantId()).isNull();
-		Assertions.assertThat(userExtDetailsWithNulls.deptId()).isNull();
-		Assertions.assertThat(userExtDetailsWithNulls.permissions()).isNull();
-		Assertions.assertThat(userExtDetailsWithNulls.deptIds()).isNull();
-		Assertions.assertThat(userExtDetailsWithNulls.creator()).isNull();
+		Assertions.assertThat(userWithNulls.id()).isEqualTo(2L);
+		Assertions.assertThat(userWithNulls.username()).isEqualTo("testuser");
+		Assertions.assertThat(userWithNulls.password()).isNull();
+		Assertions.assertThat(userWithNulls.avatar()).isNull();
+		Assertions.assertThat(userWithNulls.superAdmin()).isFalse();
+		Assertions.assertThat(userWithNulls.status()).isEqualTo(1);
+		Assertions.assertThat(userWithNulls.mail()).isNull();
+		Assertions.assertThat(userWithNulls.mobile()).isNull();
+		Assertions.assertThat(userWithNulls.tenantId()).isNull();
+		Assertions.assertThat(userWithNulls.deptId()).isNull();
+		Assertions.assertThat(userWithNulls.permissions()).isNull();
+		Assertions.assertThat(userWithNulls.deptIds()).isNull();
+		Assertions.assertThat(userWithNulls.creator()).isNull();
 	}
 
 	@Test
 	@DisplayName("Test getAuthorities with empty permissions returns empty collection")
 	void test_getAuthorities_emptyPermissions_returnsEmptyCollection() {
 		// Given
-		UserExtDetails userExtDetailsWithEmptyPerms = UserExtDetails.builder()
+		User userWithEmptyPerms = User.builder()
 			.id(3L)
 			.username("user3")
 			.permissions(new HashSet<>())
 			.build();
 
 		// When
-		Collection<GrantedAuthority> authorities = userExtDetailsWithEmptyPerms.getAuthorities();
+		Collection<GrantedAuthority> authorities = userWithEmptyPerms.getAuthorities();
 
 		// Then
 		Assertions.assertThat(authorities).isNotNull().isEmpty();
@@ -205,7 +205,7 @@ class UserExtDetailsTest {
 	@DisplayName("Test class type is Authentication implementation")
 	void test_classType_always_implementsAuthentication() {
 		// Then
-		Assertions.assertThat(userExtDetails).isInstanceOf(org.springframework.security.core.Authentication.class);
+		Assertions.assertThat(user).isInstanceOf(org.springframework.security.core.Authentication.class);
 	}
 
 }

@@ -23,7 +23,7 @@ import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.entity.UserE;
 import org.laokou.auth.model.valueobject.DataFilterV;
 import org.laokou.auth.model.valueobject.UserV;
-import org.laokou.common.context.util.UserExtDetails;
+import org.laokou.common.context.util.User;
 
 /**
  * @author laokou
@@ -33,11 +33,11 @@ public final class UserConvertor {
 	private UserConvertor() {
 	}
 
-	public static UserExtDetails toUserDetails(AuthA auth) {
+	public static User toUserDetails(AuthA auth) {
 		UserE userE = auth.getUserE();
 		UserV userV = auth.getUserV();
 		DataFilterV dataFilterV = auth.getDataFilterV();
-		return UserExtDetails.builder()
+		return User.builder()
 			.id(userE.getId())
 			.username(userE.getUsername())
 			.password(userE.getPassword())
