@@ -20,8 +20,6 @@ package org.laokou.auth.config.authentication;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.laokou.auth.factory.DomainFactory;
-import org.laokou.auth.model.AuthA;
-import org.laokou.auth.model.valueobject.UserV;
 import org.laokou.common.context.util.User;
 import org.laokou.common.context.util.UserConvertor;
 import org.laokou.common.core.util.RequestUtils;
@@ -32,6 +30,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
+
 
 /**
  * 用户认证.
@@ -52,16 +51,12 @@ record UserDetailsServiceImpl(
 	@NonNull
 	@Override
 	public UserDetails loadUserByUsername(@NonNull String username) throws UsernameNotFoundException {
-		AuthA authA = DomainFactory.createAuth().createAuthorizationCodeAuth();
-		UserV userV = authA.getUserV();
-		Object principal = authenticationProcessor.authentication(authA, RequestUtils.getHttpServletRequest())
-			.getPrincipal();
-		if (principal instanceof UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
-				&& usernamePasswordAuthenticationToken.getPrincipal() instanceof User user) {
+		UsernamePasswordAuthenticationToken token = authenticationProcessor.authentication(DomainFactory.createAuth().createAuthorizationCodeAuth(),
+				RequestUtils.getHttpServletRequest());
+		if (token.getPrincipal() instanceof User user) {
 			return UserConvertor.toUserDetails(user, Collections.emptySet());
 		}
-		return new org.springframework.security.core.userdetails.User(userV.username(), userV.password(),
-				Collections.emptyList());
+		throw new UsernameNotFoundException("Authentication failed: principal is not a valid User");
 	}
 
 }

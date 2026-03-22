@@ -130,21 +130,25 @@ spring:
               # 对client-secret进行加密【原值 => DpAkPfz4eW18d2】
               client-secret: "{bcrypt}$2a$10$i2Y4II7czKcLqwAxWLgHqeJaIczss4wHArWmthzn3QoLhpCZtdN0O"
               client-authentication-methods:
-                - none
+                - client_secret_basic
               authorization-grant-types:
                 - authorization_code
                 - refresh_token
               scopes:
                 - read
                 - write
+                - openid
+                - profile
               redirect-uris:
                 - http://127.0.0.1:8000
                 - http://127.0.0.1:8001
                 - https://laokou.org.cn
+                - https://laokou.org
               post-logout-redirect-uris:
                 - http://127.0.0.1:8000
                 - http://127.0.0.1:8001
                 - https://laokou.org.cn
+                - https://laokou.org
             # 客户端请求访问时需要授权同意
             require-authorization-consent: true
             # PKCE

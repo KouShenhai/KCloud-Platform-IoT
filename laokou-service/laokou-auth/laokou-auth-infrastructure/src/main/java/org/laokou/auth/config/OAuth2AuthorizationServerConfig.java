@@ -24,9 +24,9 @@ import org.laokou.auth.config.authentication.OAuth2MailAuthenticationConverter;
 import org.laokou.auth.config.authentication.OAuth2MobileAuthenticationConverter;
 import org.laokou.auth.config.authentication.OAuth2TestAuthenticationConverter;
 import org.laokou.auth.config.authentication.OAuth2UsernamePasswordAuthenticationConverter;
-import org.laokou.auth.model.validator.CaptchaValidator;
-import org.laokou.auth.model.function.HttpRequest;
 import org.laokou.auth.model.enums.MqTopic;
+import org.laokou.auth.model.function.HttpRequest;
+import org.laokou.auth.model.validator.CaptchaValidator;
 import org.laokou.auth.model.validator.PasswordValidator;
 import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.i18n.common.enums.BizType;
@@ -70,10 +70,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.DelegatingAuthenticationConverter;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import java.util.List;
-import java.util.Set;
 
 // @formatter:off
 /**
@@ -110,10 +108,10 @@ class OAuth2AuthorizationServerConfig {
 	SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http,
 			List<AuthenticationProvider> authenticationProviders,
 			AuthorizationServerSettings authorizationServerSettings,
-			OAuth2AuthorizationService authorizationService)
-			{
+			OAuth2AuthorizationService authorizationService) {
 		return http.oauth2AuthorizationServer((authorizationServer) -> {
 				http.securityMatcher(authorizationServer.getEndpointsMatcher());
+				// 开启OpenID Connect 1.0
 				authorizationServer.oidc(Customizer.withDefaults())
 					// https://docs.spring.io/spring-authorization-server/docs/current/reference/html/protocol-endpoints.html#oauth2-token-endpoint
 					.tokenEndpoint((tokenEndpoint) -> tokenEndpoint.accessTokenRequestConverter(new DelegatingAuthenticationConverter(
@@ -124,7 +122,9 @@ class OAuth2AuthorizationServerConfig {
 						.authenticationProviders(providers -> providers.addAll(authenticationProviders)))
 					.authorizationService(authorizationService)
 					.authorizationServerSettings(authorizationServerSettings);
-			}).exceptionHandling(configurer -> configurer.defaultAuthenticationEntryPointFor(new LoginUrlAuthenticationEntryPoint("/login"), createRequestMatcher()))
+			})
+			.authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
+			.exceptionHandling(configurer -> configurer.defaultAuthenticationEntryPointFor(new LoginUrlAuthenticationEntryPoint("/login"), new MediaTypeRequestMatcher(MediaType.TEXT_HTML)))
 			.build();
 	}
 	// @formatter:on
@@ -249,11 +249,4 @@ class OAuth2AuthorizationServerConfig {
 		}
 		return code.equalsIgnoreCase(captcha.toString());
 	}
-
-	private RequestMatcher createRequestMatcher() {
-		MediaTypeRequestMatcher requestMatcher = new MediaTypeRequestMatcher(MediaType.TEXT_HTML);
-		requestMatcher.setIgnoredMediaTypes(Set.of(MediaType.ALL));
-		return requestMatcher;
-	}
-
 }
