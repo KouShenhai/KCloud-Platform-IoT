@@ -17,38 +17,37 @@
 
 package org.laokou.common.context.util;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.jspecify.annotations.NullMarked;
-import org.laokou.common.crypto.util.AESUtils;
-import org.laokou.common.i18n.annotation.Entity;
-import org.laokou.common.i18n.common.exception.BizException;
-import org.laokou.common.i18n.util.StringExtUtils;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serial;
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author laokou
  */
-@Entity
 @Getter
+@JsonTypeName("UserDetail")
 @Builder(toBuilder = true)
+@JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class OAuth2AuthenticatedExtPrincipal implements OAuth2AuthenticatedPrincipal, Serializable {
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
+	isGetterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
+public final class UserExtDetail implements UserDetails {
 
 	@Serial
 	private static final long serialVersionUID = 3319752558160144611L;
@@ -62,6 +61,11 @@ public final class OAuth2AuthenticatedExtPrincipal implements OAuth2Authenticate
 	 * 用户名.
 	 */
 	private String username;
+
+	/**
+	 * 密码.
+	 */
+	private transient String password;
 
 	/**
 	 * 头像.
@@ -104,11 +108,6 @@ public final class OAuth2AuthenticatedExtPrincipal implements OAuth2Authenticate
 	private Set<String> permissions;
 
 	/**
-	 * 授权范围集合.
-	 */
-	private Set<String> scopes;
-
-	/**
 	 * 部门IDS.
 	 */
 	private Set<Long> deptIds;
@@ -118,61 +117,15 @@ public final class OAuth2AuthenticatedExtPrincipal implements OAuth2Authenticate
 	 */
 	private Long creator;
 
-	@Override
-	@NullMarked
-	public Collection<GrantedAuthority> getAuthorities() {
-		return AuthorityUtils.createAuthorityList(Stream.concat(this.permissions.stream(), this.scopes.stream()).collect(Collectors.toSet()));
-	}
-
-	/**
-	 * Get the OAuth 2.0 token attributes.
-	 * @return the OAuth 2.0 token attributes
-	 */
-	@Override
-	public Map<String, Object> getAttributes() {
-		return Collections.emptyMap();
-	}
-
-	@Override
 	@NullMarked
 	public String getName() {
 		return this.username;
 	}
 
-	OAuth2AuthenticatedExtPrincipal decryptUsername() {
-		if (StringExtUtils.isNotEmpty(this.username)) {
-			try {
-				this.username = AESUtils.decrypt(this.username);
-			}
-			catch (Exception ex) {
-				throw new BizException("B_User_UsernameAESDecryptFail", ex);
-			}
-		}
-		return this;
-	}
-
-	OAuth2AuthenticatedExtPrincipal decryptMail() {
-		if (StringExtUtils.isNotEmpty(this.mail)) {
-			try {
-				this.mail = AESUtils.decrypt(this.mail);
-			}
-			catch (Exception ex) {
-				throw new BizException("B_User_MailAESDecryptFail", ex);
-			}
-		}
-		return this;
-	}
-
-	OAuth2AuthenticatedExtPrincipal decryptMobile() {
-		if (StringExtUtils.isNotEmpty(this.mobile)) {
-			try {
-				this.mobile = AESUtils.decrypt(this.mobile);
-			}
-			catch (Exception ex) {
-				throw new BizException("B_User_MobileAESDecryptFail", ex);
-			}
-		}
-		return this;
+	@Override
+	@NullMarked
+	public Collection<GrantedAuthority> getAuthorities() {
+		return Collections.emptySet();
 	}
 
 }
