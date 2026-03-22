@@ -31,13 +31,13 @@ public final class UserUtils {
 	private UserUtils() {
 	}
 
-	public static UserExtDetails userDetail() {
+	public static OAuth2AuthenticatedExtPrincipal principal() {
 		Authentication authentication = getAuthentication();
 		if (ObjectUtils.isNotNull(authentication)
-				&& authentication.getPrincipal() instanceof UserExtDetails userExtDetails) {
-			return userExtDetails;
+				&& authentication.getPrincipal() instanceof OAuth2AuthenticatedExtPrincipal principal) {
+			return principal;
 		}
-		return DomainFactory.createUserDetails();
+		return DomainFactory.createPrincipal();
 	}
 
 	/**
@@ -45,7 +45,7 @@ public final class UserUtils {
 	 * @return Long
 	 */
 	public static Long getUserId() {
-		return userDetail().getId();
+		return principal().getId();
 	}
 
 	/**
@@ -53,7 +53,7 @@ public final class UserUtils {
 	 * @return String
 	 */
 	public static String getUserName() {
-		return userDetail().getUsername();
+		return principal().getUsername();
 	}
 
 	/**
@@ -61,7 +61,7 @@ public final class UserUtils {
 	 * @return Long
 	 */
 	public static Long getTenantId() {
-		return userDetail().getTenantId();
+		return principal().getTenantId();
 	}
 
 	/**
@@ -69,7 +69,7 @@ public final class UserUtils {
 	 * @return Long
 	 */
 	public static Long getDeptId() {
-		return userDetail().getDeptId();
+		return principal().getDeptId();
 	}
 
 	/**
@@ -77,7 +77,7 @@ public final class UserUtils {
 	 * @return Boolean
 	 */
 	public static Boolean isSuperAdmin() {
-		return userDetail().getSuperAdmin();
+		return principal().getSuperAdmin();
 	}
 
 	/**
@@ -85,7 +85,7 @@ public final class UserUtils {
 	 * @return List<Long>
 	 */
 	public static Set<Long> getDeptIds() {
-		return userDetail().getDeptIds();
+		return principal().getDeptIds();
 	}
 
 	/**
@@ -93,7 +93,7 @@ public final class UserUtils {
 	 * @return Long
 	 */
 	public static Long getCreator() {
-		return userDetail().getCreator();
+		return principal().getCreator();
 	}
 
 	/**

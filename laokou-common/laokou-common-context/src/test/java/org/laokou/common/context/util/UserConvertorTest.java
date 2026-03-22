@@ -43,10 +43,13 @@ class UserConvertorTest {
 	@BeforeEach
 	void setUp() {
 		// Create a template UserExtDetails that will be used by DomainFactory
-		UserExtDetails templateUserExtDetails = UserExtDetails.builder().build();
+		OAuth2AuthenticatedExtPrincipal templateOAuth2AuthenticatedExtPrincipal = OAuth2AuthenticatedExtPrincipal
+			.builder()
+			.build();
 
 		domainFactoryMockedStatic = Mockito.mockStatic(DomainFactory.class);
-		domainFactoryMockedStatic.when(DomainFactory::createUserDetails).thenReturn(templateUserExtDetails);
+		domainFactoryMockedStatic.when(DomainFactory::createPrincipal)
+			.thenReturn(templateOAuth2AuthenticatedExtPrincipal);
 	}
 
 	@AfterEach
@@ -66,7 +69,7 @@ class UserConvertorTest {
 		String encryptedMail = AESUtils.encrypt("admin@example.com");
 		String encryptedMobile = AESUtils.encrypt("13800138000");
 
-		User user = User.builder()
+		UserExtDetails userExtDetails = UserExtDetails.builder()
 			.id(1L)
 			.username(encryptedUsername)
 			.password("password123")
@@ -81,13 +84,12 @@ class UserConvertorTest {
 			.build();
 
 		// When
-		UserExtDetails result = UserConvertor.toUserDetails(user, Collections.emptySet());
+		OAuth2AuthenticatedExtPrincipal result = UserConvertor.toPrincipal(userExtDetails, Collections.emptySet());
 
 		// Then
 		Assertions.assertThat(result).isNotNull();
 		Assertions.assertThat(result.getId()).isEqualTo(1L);
 		Assertions.assertThat(result.getUsername()).isEqualTo("admin");
-		Assertions.assertThat(result.getPassword()).isEqualTo("password123");
 		Assertions.assertThat(result.getAvatar()).isEqualTo("https://example.com/avatar.png");
 		Assertions.assertThat(result.getSuperAdmin()).isTrue();
 		Assertions.assertThat(result.getStatus()).isZero();
@@ -112,7 +114,7 @@ class UserConvertorTest {
 		String encryptedMail = AESUtils.encrypt(originalMail);
 		String encryptedMobile = AESUtils.encrypt(originalMobile);
 
-		User user = User.builder()
+		UserExtDetails userExtDetails = UserExtDetails.builder()
 			.id(2L)
 			.username(encryptedUsername)
 			.mail(encryptedMail)
@@ -120,7 +122,7 @@ class UserConvertorTest {
 			.build();
 
 		// When
-		UserExtDetails result = UserConvertor.toUserDetails(user, Collections.emptySet());
+		OAuth2AuthenticatedExtPrincipal result = UserConvertor.toPrincipal(userExtDetails, Collections.emptySet());
 
 		// Then
 		Assertions.assertThat(result.getUsername()).isEqualTo(originalUsername);
@@ -132,7 +134,7 @@ class UserConvertorTest {
 	@DisplayName("Test toUserDetails with null optional fields")
 	void test_toUserDetails_with_null_optional_fields() {
 		// Given
-		User user = User.builder()
+		UserExtDetails userExtDetails = UserExtDetails.builder()
 			.id(3L)
 			.username(null)
 			.password(null)
@@ -147,13 +149,12 @@ class UserConvertorTest {
 			.build();
 
 		// When
-		UserExtDetails result = UserConvertor.toUserDetails(user, Collections.emptySet());
+		OAuth2AuthenticatedExtPrincipal result = UserConvertor.toPrincipal(userExtDetails, Collections.emptySet());
 
 		// Then
 		Assertions.assertThat(result).isNotNull();
 		Assertions.assertThat(result.getId()).isEqualTo(3L);
 		Assertions.assertThat(result.getUsername()).isNull();
-		Assertions.assertThat(result.getPassword()).isNull();
 		Assertions.assertThat(result.getAvatar()).isNull();
 		Assertions.assertThat(result.getSuperAdmin()).isFalse();
 		Assertions.assertThat(result.getStatus()).isEqualTo(1);
@@ -168,10 +169,14 @@ class UserConvertorTest {
 	@DisplayName("Test toUserDetails with empty permissions set")
 	void test_toUserDetails_with_empty_permissions() throws Exception {
 		// Given
-		User user = User.builder().id(4L).username(AESUtils.encrypt("user4")).permissions(new HashSet<>()).build();
+		UserExtDetails userExtDetails = UserExtDetails.builder()
+			.id(4L)
+			.username(AESUtils.encrypt("user4"))
+			.permissions(new HashSet<>())
+			.build();
 
 		// When
-		UserExtDetails result = UserConvertor.toUserDetails(user, Collections.emptySet());
+		OAuth2AuthenticatedExtPrincipal result = UserConvertor.toPrincipal(userExtDetails, Collections.emptySet());
 
 		// Then
 		Assertions.assertThat(result.getPermissions()).isNotNull().isEmpty();
@@ -181,13 +186,13 @@ class UserConvertorTest {
 	@DisplayName("Test toUserDetails uses DomainFactory template")
 	void test_toUserDetails_uses_domainFactory_template() throws Exception {
 		// Given
-		User user = User.builder().id(5L).username(AESUtils.encrypt("user5")).build();
+		UserExtDetails userExtDetails = UserExtDetails.builder().id(5L).username(AESUtils.encrypt("user5")).build();
 
 		// When
-		UserConvertor.toUserDetails(user, Collections.emptySet());
+		UserConvertor.toPrincipal(userExtDetails, Collections.emptySet());
 
 		// Then
-		domainFactoryMockedStatic.verify(DomainFactory::createUserDetails, Mockito.times(1));
+		domainFactoryMockedStatic.verify(DomainFactory::createPrincipal, Mockito.times(1));
 	}
 
 }

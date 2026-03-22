@@ -46,7 +46,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.context.util.UserExtDetails;
+import org.laokou.common.context.util.OAuth2AuthenticatedExtPrincipal;
 import org.laokou.common.security.config.OAuth2OpaqueTokenIntrospector;
 import org.laokou.common.testcontainers.util.DockerImageNames;
 import org.mockito.Mockito;
@@ -132,7 +132,7 @@ class WebSocketServerIntegrationTest {
 
 		// Create mock OAuth2 introspector that reads from Redis
 		OAuth2OpaqueTokenIntrospector introspector = Mockito.mock(OAuth2OpaqueTokenIntrospector.class);
-		UserExtDetails userDetails = Mockito.mock(UserExtDetails.class);
+		OAuth2AuthenticatedExtPrincipal userDetails = Mockito.mock(OAuth2AuthenticatedExtPrincipal.class);
 		Mockito.when(userDetails.getId()).thenReturn(1L);
 		Mockito.when(userDetails.getName()).thenReturn("testuser");
 

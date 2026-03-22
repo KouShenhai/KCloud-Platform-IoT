@@ -249,4 +249,5 @@ class OAuth2AuthorizationServerConfig {
 		}
 		return code.equalsIgnoreCase(captcha.toString());
 	}
+
 }

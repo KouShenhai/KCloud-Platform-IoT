@@ -22,7 +22,7 @@ import io.netty.channel.ChannelId;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.context.util.UserExtDetails;
+import org.laokou.common.context.util.OAuth2AuthenticatedExtPrincipal;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.websocket.config.WebSocketSessionHeartBeatManager;
 import org.laokou.common.websocket.config.WebSocketSessionManager;
@@ -100,7 +100,7 @@ class WebSocketTypeTest {
 	@Test
 	void test_handle_for_connect_adds_session() {
 		// Given
-		UserExtDetails userDetails = Mockito.mock(UserExtDetails.class);
+		OAuth2AuthenticatedExtPrincipal userDetails = Mockito.mock(OAuth2AuthenticatedExtPrincipal.class);
 		Mockito.when(userDetails.getId()).thenReturn(1001L);
 
 		Channel mockChannel = Mockito.mock(Channel.class);
@@ -125,7 +125,7 @@ class WebSocketTypeTest {
 	@Test
 	void test_handle_for_pong_resets_heartbeat() {
 		// Given
-		UserExtDetails userDetails = Mockito.mock(UserExtDetails.class);
+		OAuth2AuthenticatedExtPrincipal userDetails = Mockito.mock(OAuth2AuthenticatedExtPrincipal.class);
 		Channel mockChannel = Mockito.mock(Channel.class);
 		ChannelId mockChannelId = Mockito.mock(ChannelId.class);
 		Mockito.when(mockChannel.id()).thenReturn(mockChannelId);

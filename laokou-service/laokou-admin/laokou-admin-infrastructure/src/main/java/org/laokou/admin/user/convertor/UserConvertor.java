@@ -24,7 +24,7 @@ import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserRoleDO;
 import org.laokou.admin.user.model.UserA;
 import org.laokou.admin.user.model.entity.UserE;
-import org.laokou.common.context.util.UserExtDetails;
+import org.laokou.common.context.util.OAuth2AuthenticatedExtPrincipal;
 import org.laokou.common.context.util.UserUtils;
 import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.sensitive.util.SensitiveUtils;
@@ -87,13 +87,13 @@ public final class UserConvertor {
 	}
 
 	public static UserProfileCO toClientObject() {
-		UserExtDetails userExtDetails = UserUtils.userDetail();
+		OAuth2AuthenticatedExtPrincipal principal = UserUtils.principal();
 		UserProfileCO userProfileCO = new UserProfileCO();
-		userProfileCO.setId(userExtDetails.getId());
-		userProfileCO.setUsername(userExtDetails.getUsername());
-		userProfileCO.setAvatar(userExtDetails.getAvatar());
-		userProfileCO.setPermissions(userExtDetails.getPermissions());
-		userProfileCO.setScopes(userExtDetails.getScopes());
+		userProfileCO.setId(principal.getId());
+		userProfileCO.setUsername(principal.getUsername());
+		userProfileCO.setAvatar(principal.getAvatar());
+		userProfileCO.setPermissions(principal.getPermissions());
+		userProfileCO.setScopes(principal.getScopes());
 		return userProfileCO;
 	}
 

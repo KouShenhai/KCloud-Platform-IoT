@@ -46,21 +46,23 @@ class DomainFactoryTest {
 	@DisplayName("Test getUserDetails returns UserExtDetails from SpringContextUtils")
 	void test_getUserDetails_returns_userExtDetails_from_springContextUtils() {
 		// Given
-		UserExtDetails expectedUserExtDetails = UserExtDetails.builder()
+		OAuth2AuthenticatedExtPrincipal expectedOAuth2AuthenticatedExtPrincipal = OAuth2AuthenticatedExtPrincipal
+			.builder()
 			.id(1L)
 			.username("admin")
 			.tenantId(100L)
 			.build();
 
 		springContextUtilsMockedStatic = Mockito.mockStatic(SpringContextUtils.class);
-		springContextUtilsMockedStatic.when(() -> SpringContextUtils.getBeanProvider(UserExtDetails.class))
-			.thenReturn(expectedUserExtDetails);
+		springContextUtilsMockedStatic
+			.when(() -> SpringContextUtils.getBeanProvider(OAuth2AuthenticatedExtPrincipal.class))
+			.thenReturn(expectedOAuth2AuthenticatedExtPrincipal);
 
 		// When
-		UserExtDetails result = DomainFactory.createUserDetails();
+		OAuth2AuthenticatedExtPrincipal result = DomainFactory.createPrincipal();
 
 		// Then
-		Assertions.assertThat(result).isEqualTo(expectedUserExtDetails);
+		Assertions.assertThat(result).isEqualTo(expectedOAuth2AuthenticatedExtPrincipal);
 		Assertions.assertThat(result.getId()).isEqualTo(1L);
 		Assertions.assertThat(result.getUsername()).isEqualTo("admin");
 		Assertions.assertThat(result.getTenantId()).isEqualTo(100L);
@@ -71,11 +73,12 @@ class DomainFactoryTest {
 	void test_getUserDetails_returns_null_when_no_bean_found() {
 		// Given
 		springContextUtilsMockedStatic = Mockito.mockStatic(SpringContextUtils.class);
-		springContextUtilsMockedStatic.when(() -> SpringContextUtils.getBeanProvider(UserExtDetails.class))
+		springContextUtilsMockedStatic
+			.when(() -> SpringContextUtils.getBeanProvider(OAuth2AuthenticatedExtPrincipal.class))
 			.thenReturn(null);
 
 		// When
-		UserExtDetails result = DomainFactory.createUserDetails();
+		OAuth2AuthenticatedExtPrincipal result = DomainFactory.createPrincipal();
 
 		// Then
 		Assertions.assertThat(result).isNull();
@@ -86,15 +89,16 @@ class DomainFactoryTest {
 	void test_getUserDetails_calls_springContextUtils_with_correct_class() {
 		// Given
 		springContextUtilsMockedStatic = Mockito.mockStatic(SpringContextUtils.class);
-		springContextUtilsMockedStatic.when(() -> SpringContextUtils.getBeanProvider(UserExtDetails.class))
-			.thenReturn(UserExtDetails.builder().build());
+		springContextUtilsMockedStatic
+			.when(() -> SpringContextUtils.getBeanProvider(OAuth2AuthenticatedExtPrincipal.class))
+			.thenReturn(OAuth2AuthenticatedExtPrincipal.builder().build());
 
 		// When
-		DomainFactory.createUserDetails();
+		DomainFactory.createPrincipal();
 
 		// Then
-		springContextUtilsMockedStatic.verify(() -> SpringContextUtils.getBeanProvider(UserExtDetails.class),
-				Mockito.times(1));
+		springContextUtilsMockedStatic
+			.verify(() -> SpringContextUtils.getBeanProvider(OAuth2AuthenticatedExtPrincipal.class), Mockito.times(1));
 	}
 
 }

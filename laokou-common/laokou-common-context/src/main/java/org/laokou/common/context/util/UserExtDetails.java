@@ -17,133 +17,45 @@
 
 package org.laokou.common.context.util;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.jspecify.annotations.NullMarked;
-import org.laokou.common.crypto.util.AESUtils;
-import org.laokou.common.i18n.annotation.Entity;
-import org.laokou.common.i18n.common.exception.BizException;
-import org.laokou.common.i18n.util.StringExtUtils;
+import org.jspecify.annotations.Nullable;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
 import java.util.Set;
-import java.util.stream.Stream;
 
 /**
+ * @param id 用户ID.
+ * @param username 用户名.
+ * @param password 密码.
+ * @param avatar 头像.
+ * @param superAdmin 超级管理员标识.
+ * @param status 用户状态 0启用 1禁用.
+ * @param mail 邮箱.
+ * @param mobile 手机号.
+ * @param tenantId 租户ID.
+ * @param permissions 菜单权限标识集合.
+ * @param deptId 部门ID.
  * @author laokou
  */
-@Entity
-@Getter
-@Builder(toBuilder = true)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-@EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
-public final class UserExtDetails implements UserDetails, OAuth2AuthenticatedPrincipal, Serializable {
-
-	@Serial
-	private static final long serialVersionUID = 3319752558160144611L;
-
-	/**
-	 * 用户ID.
-	 */
-	@EqualsAndHashCode.Include
-	private Long id;
-
-	/**
-	 * 用户名.
-	 */
-	@EqualsAndHashCode.Include
-	private String username;
-
-	/**
-	 * 密码.
-	 */
-	private transient String password;
-
-	/**
-	 * 头像.
-	 */
-	private String avatar;
-
-	/**
-	 * 超级管理员标识.
-	 */
-	private Boolean superAdmin;
-
-	/**
-	 * 用户状态 0启用 1禁用.
-	 */
-	private Integer status;
-
-	/**
-	 * 邮箱.
-	 */
-	private String mail;
-
-	/**
-	 * 手机号.
-	 */
-	private String mobile;
-
-	/**
-	 * 租户ID.
-	 */
-	@EqualsAndHashCode.Include
-	private Long tenantId;
-
-	/**
-	 * 部门ID.
-	 */
-	@EqualsAndHashCode.Include
-	private Long deptId;
-
-	/**
-	 * 菜单权限标识集合.
-	 */
-	private Set<String> permissions;
-
-	/**
-	 * 授权范围集合.
-	 */
-	private Set<String> scopes;
-
-	/**
-	 * 部门IDS.
-	 */
-	private Set<Long> deptIds;
-
-	/**
-	 * 创建者.
-	 */
-	private Long creator;
-
-	@Override
-	@NullMarked
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return AuthorityUtils
-			.createAuthorityList(Stream.concat(this.permissions.stream(), this.scopes.stream()).toList());
-	}
-
-	/**
-	 * Get the OAuth 2.0 token attributes.
-	 * @return the OAuth 2.0 token attributes
-	 */
-	@Override
-	public Map<String, Object> getAttributes() {
-		return Collections.emptyMap();
-	}
+@Builder
+@JsonTypeName("User")
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
+		isGetterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
+public record UserExtDetails(Long id, String username, String password, String avatar, Boolean superAdmin,
+		Integer status, String mail, String mobile, Long tenantId, Long deptId, Set<String> permissions,
+		Set<Long> deptIds, Long creator) implements Authentication, UserDetails, Serializable {
 
 	@Override
 	@NullMarked
@@ -151,40 +63,47 @@ public final class UserExtDetails implements UserDetails, OAuth2AuthenticatedPri
 		return this.username;
 	}
 
-	UserExtDetails decryptUsername() {
-		if (StringExtUtils.isNotEmpty(this.username)) {
-			try {
-				this.username = AESUtils.decrypt(this.username);
-			}
-			catch (Exception ex) {
-				throw new BizException("B_User_UsernameAESDecryptFail", ex);
-			}
-		}
-		return this;
+	@Override
+	@NullMarked
+	public String getUsername() {
+		return this.username;
 	}
 
-	UserExtDetails decryptMail() {
-		if (StringExtUtils.isNotEmpty(this.mail)) {
-			try {
-				this.mail = AESUtils.decrypt(this.mail);
-			}
-			catch (Exception ex) {
-				throw new BizException("B_User_MailAESDecryptFail", ex);
-			}
-		}
-		return this;
+	@Override
+	@NullMarked
+	public String getPassword() {
+		return this.password;
 	}
 
-	UserExtDetails decryptMobile() {
-		if (StringExtUtils.isNotEmpty(this.mobile)) {
-			try {
-				this.mobile = AESUtils.decrypt(this.mobile);
-			}
-			catch (Exception ex) {
-				throw new BizException("B_User_MobileAESDecryptFail", ex);
-			}
-		}
-		return this;
+	@Override
+	@NullMarked
+	public Collection<GrantedAuthority> getAuthorities() {
+		return AuthorityUtils.createAuthorityList(this.permissions);
+	}
+
+	@Override
+	public @Nullable Object getCredentials() {
+		return this.username;
+	}
+
+	@Override
+	public @Nullable Object getDetails() {
+		return this.username;
+	}
+
+	@Override
+	public @Nullable Object getPrincipal() {
+		return this.username;
+	}
+
+	@Override
+	public boolean isAuthenticated() {
+		return true;
+	}
+
+	@Override
+	public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
+		throw new UnsupportedOperationException("Cannot change authentication state");
 	}
 
 }

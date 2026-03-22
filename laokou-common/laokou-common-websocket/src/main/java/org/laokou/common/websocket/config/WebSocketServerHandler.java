@@ -27,14 +27,13 @@ import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.util.ReferenceCountUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.context.util.UserExtDetails;
+import org.laokou.common.context.util.OAuth2AuthenticatedExtPrincipal;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.common.security.config.OAuth2OpaqueTokenIntrospector;
 import org.laokou.common.websocket.model.WebSocketMessage;
 import org.laokou.common.websocket.model.enums.WebSocketType;
-import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2Error;
 
@@ -126,10 +125,10 @@ public class WebSocketServerHandler extends ChannelInboundHandlerAdapter {
 		}
 		try {
 			WebSocketMessage wsm = JacksonUtils.toBean(str, WebSocketMessage.class);
-			OAuth2AuthenticatedPrincipal principal = opaqueTokenIntrospector.introspect(wsm.getToken());
-			UserExtDetails userExtDetails = (UserExtDetails) principal;
+			OAuth2AuthenticatedExtPrincipal principal = (OAuth2AuthenticatedExtPrincipal) opaqueTokenIntrospector
+				.introspect(wsm.getToken());
 			log.debug("【WebSocket-Server】 => 令牌校验成功，用户名：{}", principal.getName());
-			WebSocketType.getByCode(wsm.getType()).handle(userExtDetails, wsm, channel);
+			WebSocketType.getByCode(wsm.getType()).handle(principal, wsm, channel);
 		}
 		catch (OAuth2AuthenticationException ex) {
 			OAuth2Error error = ex.getError();

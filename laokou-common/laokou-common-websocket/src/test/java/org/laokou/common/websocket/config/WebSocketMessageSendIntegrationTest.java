@@ -47,7 +47,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.context.util.User;
+import org.laokou.common.context.util.UserExtDetails;
 import org.laokou.common.security.config.OAuth2OpaqueTokenIntrospector;
 import org.laokou.common.security.config.RedisOAuth2AuthorizationService;
 import org.laokou.common.security.config.entity.OAuth2AuthorizationGrantAuthorization;
@@ -222,8 +222,8 @@ class WebSocketMessageSendIntegrationTest {
 		// Create Authorization
 		OAuth2UsernamePasswordGrantAuthorization authorization = new OAuth2UsernamePasswordGrantAuthorization(
 				"auth-test-1", TEST_CLIENT_ID, TEST_USER, scopes, accessToken, refreshToken,
-				new User(1L, TEST_USER, "laokou", "https://baidu.com/avatar.png", true, 0, "2413176044@qq.com",
-						"18888888888", 0L, 1L, Set.of("sys:user:list"), Set.of(1L), null));
+				new UserExtDetails(1L, TEST_USER, "laokou", "https://baidu.com/avatar.png", true, 0,
+						"2413176044@qq.com", "18888888888", 0L, 1L, Set.of("sys:user:list"), Set.of(1L), null));
 
 		authorizationRepository.save(authorization);
 	}

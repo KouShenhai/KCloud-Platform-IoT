@@ -21,87 +21,62 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.crypto.util.AESUtils;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 /**
- * UserExtDetails test class.
+ * User record test class.
  *
  * @author laokou
  */
-@DisplayName("UserExtDetails Unit Tests")
+@DisplayName("User Record Unit Tests")
 class UserExtDetailsTest {
 
 	private UserExtDetails userExtDetails;
 
 	@BeforeEach
 	void setUp() {
-		Set<String> permissions = Set.of("sys:user:query", "sys:user:add");
+		Set<String> permissions = Set.of("sys:user:query", "sys:user:add", "sys:role:query");
 
 		userExtDetails = UserExtDetails.builder()
 			.id(1L)
-			.username("testuser")
+			.username("admin")
 			.password("password123")
-			.scopes(Set.of("read", "write"))
 			.avatar("https://example.com/avatar.png")
 			.superAdmin(true)
 			.status(0)
-			.mail("test@example.com")
+			.mail("admin@example.com")
 			.mobile("13800138000")
 			.tenantId(100L)
 			.deptId(10L)
+			.deptIds(Set.of(1L))
+			.creator(1L)
 			.permissions(permissions)
 			.build();
 	}
 
 	@Test
-	@DisplayName("Test builder creates UserExtDetails with all properties")
-	void test_builder_allProperties_createsUserExtDetails() {
+	@DisplayName("Test builder creates User with all properties")
+	void test_builder_allProperties_createsUser() {
 		// Then
-		Assertions.assertThat(userExtDetails.getId()).isEqualTo(1L);
-		Assertions.assertThat(userExtDetails.getUsername()).isEqualTo("testuser");
-		Assertions.assertThat(userExtDetails.getPassword()).isEqualTo("password123");
-		Assertions.assertThat(userExtDetails.getAvatar()).isEqualTo("https://example.com/avatar.png");
-		Assertions.assertThat(userExtDetails.getSuperAdmin()).isTrue();
-		Assertions.assertThat(userExtDetails.getStatus()).isZero();
-		Assertions.assertThat(userExtDetails.getMail()).isEqualTo("test@example.com");
-		Assertions.assertThat(userExtDetails.getMobile()).isEqualTo("13800138000");
-		Assertions.assertThat(userExtDetails.getTenantId()).isEqualTo(100L);
-		Assertions.assertThat(userExtDetails.getDeptId()).isEqualTo(10L);
-		Assertions.assertThat(userExtDetails.getPermissions())
-			.hasSize(2)
-			.containsExactlyInAnyOrder("sys:user:query", "sys:user:add");
-	}
-
-	@Test
-	@DisplayName("Test getAuthorities with valid permissions returns correct authorities")
-	void test_getAuthorities_withValidPermissions_returnsAuthorities() {
-		// When
-		Collection<? extends GrantedAuthority> authorities = userExtDetails.getAuthorities();
-
-		// Then
-		Assertions.assertThat(authorities)
-			.isNotNull()
-			.hasSize(4)
-			.extracting(GrantedAuthority::getAuthority)
-			.containsExactlyInAnyOrder("sys:user:query", "sys:user:add", "read", "write");
-	}
-
-	@Test
-	@DisplayName("Test getAttributes always returns empty map")
-	void test_getAttributes_always_returnsEmptyMap() {
-		// When
-		Map<String, Object> attributes = userExtDetails.getAttributes();
-
-		// Then
-		Assertions.assertThat(attributes).isNotNull().isEmpty();
+		Assertions.assertThat(userExtDetails.id()).isEqualTo(1L);
+		Assertions.assertThat(userExtDetails.username()).isEqualTo("admin");
+		Assertions.assertThat(userExtDetails.password()).isEqualTo("password123");
+		Assertions.assertThat(userExtDetails.avatar()).isEqualTo("https://example.com/avatar.png");
+		Assertions.assertThat(userExtDetails.superAdmin()).isTrue();
+		Assertions.assertThat(userExtDetails.status()).isZero();
+		Assertions.assertThat(userExtDetails.mail()).isEqualTo("admin@example.com");
+		Assertions.assertThat(userExtDetails.mobile()).isEqualTo("13800138000");
+		Assertions.assertThat(userExtDetails.tenantId()).isEqualTo(100L);
+		Assertions.assertThat(userExtDetails.deptId()).isEqualTo(10L);
+		Assertions.assertThat(userExtDetails.deptIds()).isEqualTo(Set.of(1L));
+		Assertions.assertThat(userExtDetails.creator()).isEqualTo(1L);
+		Assertions.assertThat(userExtDetails.permissions())
+			.hasSize(3)
+			.containsExactlyInAnyOrder("sys:user:query", "sys:user:add", "sys:role:query");
 	}
 
 	@Test
@@ -111,197 +86,126 @@ class UserExtDetailsTest {
 		String name = userExtDetails.getName();
 
 		// Then
-		Assertions.assertThat(name).isEqualTo("testuser");
+		Assertions.assertThat(name).isEqualTo("admin");
 	}
 
 	@Test
-	@DisplayName("Test toBuilder modifying properties creates new instance")
-	void test_toBuilder_modifyProperties_createsNewInstance() {
+	@DisplayName("Test getAuthorities with valid permissions returns correct authorities")
+	void test_getAuthorities_withValidPermissions_returnsAuthorities() {
 		// When
-		UserExtDetails modified = userExtDetails.toBuilder().id(999L).username("newuser").build();
+		Collection<GrantedAuthority> authorities = userExtDetails.getAuthorities();
 
 		// Then
-		Assertions.assertThat(modified.getId()).isEqualTo(999L);
-		Assertions.assertThat(modified.getUsername()).isEqualTo("newuser");
-		// Original should be unchanged
-		Assertions.assertThat(userExtDetails.getId()).isEqualTo(1L);
-		Assertions.assertThat(userExtDetails.getUsername()).isEqualTo("testuser");
+		Assertions.assertThat(authorities).isNotNull().hasSize(0);
 	}
 
 	@Test
-	@DisplayName("Test class type is UserDetails implementation")
-	void test_classType_always_implementsUserDetails() {
+	@DisplayName("Test getCredentials with valid user returns username")
+	void test_getCredentials_withValidUser_returnsUsername() {
+		// When
+		Object credentials = userExtDetails.getCredentials();
+
 		// Then
-		Assertions.assertThat(userExtDetails).isInstanceOf(UserDetails.class);
+		Assertions.assertThat(credentials).isEqualTo("admin");
 	}
 
 	@Test
-	@DisplayName("Test class type is OAuth2AuthenticatedPrincipal implementation")
-	void test_classType_always_implementsOAuth2AuthenticatedPrincipal() {
+	@DisplayName("Test getDetails with valid user returns username")
+	void test_getDetails_withValidUser_returnsUsername() {
+		// When
+		Object details = userExtDetails.getDetails();
+
 		// Then
-		Assertions.assertThat(userExtDetails).isInstanceOf(OAuth2AuthenticatedPrincipal.class);
+		Assertions.assertThat(details).isEqualTo("admin");
 	}
 
 	@Test
-	@DisplayName("Test equals with same key fields returns true")
-	void test_equals_sameKeyFields_returnsTrue() {
+	@DisplayName("Test getPrincipal with valid user returns username")
+	void test_getPrincipal_withValidUser_returnsUsername() {
+		// When
+		Object principal = userExtDetails.getPrincipal();
+
+		// Then
+		Assertions.assertThat(principal).isEqualTo("admin");
+	}
+
+	@Test
+	@DisplayName("Test isAuthenticated always returns true")
+	void test_isAuthenticated_always_returnsTrue() {
+		// When
+		boolean authenticated = userExtDetails.isAuthenticated();
+
+		// Then
+		Assertions.assertThat(authenticated).isTrue();
+	}
+
+	@Test
+	@DisplayName("Test setAuthenticated always throws UnsupportedOperationException")
+	void test_setAuthenticated_always_throwsUnsupportedOperationException() {
+		// When & Then
+		Assertions.assertThatThrownBy(() -> userExtDetails.setAuthenticated(false))
+			.isInstanceOf(UnsupportedOperationException.class)
+			.hasMessage("Cannot change authentication state");
+	}
+
+	@Test
+	@DisplayName("Test builder with null values creates User with nulls")
+	void test_builder_nullValues_createsUserWithNulls() {
 		// Given
-		UserExtDetails sameUser = UserExtDetails.builder()
-			.id(1L)
-			.username("testuser")
-			.password("different_password")
-			.avatar("different_avatar")
-			.superAdmin(false)
-			.status(1)
-			.mail("different@example.com")
-			.mobile("different_mobile")
-			.tenantId(100L)
-			.deptId(10L)
-			.permissions(new HashSet<>())
-			.build();
-
-		UserExtDetails differentUser = UserExtDetails.builder()
+		UserExtDetails userExtDetailsWithNulls = UserExtDetails.builder()
 			.id(2L)
-			.username("otheruser")
-			.tenantId(100L)
-			.deptId(10L)
-			.build();
-
-		// Then
-		Assertions.assertThat(userExtDetails).isEqualTo(sameUser);
-		Assertions.assertThat(userExtDetails.hashCode()).isEqualTo(sameUser.hashCode());
-		Assertions.assertThat(userExtDetails).isNotEqualTo(differentUser);
-	}
-
-	@Test
-	@DisplayName("Test builder with null values creates UserExtDetails with nulls")
-	void test_builder_nullValues_createsUserExtDetailsWithNulls() {
-		// Given
-		UserExtDetails nullUser = UserExtDetails.builder()
-			.id(null)
-			.username(null)
+			.username("testuser")
 			.password(null)
 			.avatar(null)
-			.superAdmin(null)
-			.status(null)
+			.superAdmin(false)
+			.status(1)
 			.mail(null)
 			.mobile(null)
 			.tenantId(null)
 			.deptId(null)
+			.deptIds(null)
+			.creator(null)
 			.permissions(null)
 			.build();
 
 		// Then
-		Assertions.assertThat(nullUser.getId()).isNull();
-		Assertions.assertThat(nullUser.getUsername()).isNull();
-		Assertions.assertThat(nullUser.getPassword()).isNull();
-		Assertions.assertThat(nullUser.getAvatar()).isNull();
-		Assertions.assertThat(nullUser.getSuperAdmin()).isNull();
-		Assertions.assertThat(nullUser.getStatus()).isNull();
-		Assertions.assertThat(nullUser.getMail()).isNull();
-		Assertions.assertThat(nullUser.getMobile()).isNull();
-		Assertions.assertThat(nullUser.getTenantId()).isNull();
-		Assertions.assertThat(nullUser.getDeptId()).isNull();
-		Assertions.assertThat(nullUser.getPermissions()).isNull();
+		Assertions.assertThat(userExtDetailsWithNulls.id()).isEqualTo(2L);
+		Assertions.assertThat(userExtDetailsWithNulls.username()).isEqualTo("testuser");
+		Assertions.assertThat(userExtDetailsWithNulls.password()).isNull();
+		Assertions.assertThat(userExtDetailsWithNulls.avatar()).isNull();
+		Assertions.assertThat(userExtDetailsWithNulls.superAdmin()).isFalse();
+		Assertions.assertThat(userExtDetailsWithNulls.status()).isEqualTo(1);
+		Assertions.assertThat(userExtDetailsWithNulls.mail()).isNull();
+		Assertions.assertThat(userExtDetailsWithNulls.mobile()).isNull();
+		Assertions.assertThat(userExtDetailsWithNulls.tenantId()).isNull();
+		Assertions.assertThat(userExtDetailsWithNulls.deptId()).isNull();
+		Assertions.assertThat(userExtDetailsWithNulls.permissions()).isNull();
+		Assertions.assertThat(userExtDetailsWithNulls.deptIds()).isNull();
+		Assertions.assertThat(userExtDetailsWithNulls.creator()).isNull();
 	}
 
 	@Test
-	@DisplayName("Test decryptUsername with encrypted username returns decrypted")
-	void test_decryptUsername_encryptedUsername_returnsDecrypted() throws Exception {
+	@DisplayName("Test getAuthorities with empty permissions returns empty collection")
+	void test_getAuthorities_emptyPermissions_returnsEmptyCollection() {
 		// Given
-		String originalUsername = "admin";
-		String encryptedUsername = AESUtils.encrypt(originalUsername);
-
-		UserExtDetails userWithEncryptedUsername = UserExtDetails.builder().id(1L).username(encryptedUsername).build();
-
-		// When
-		UserExtDetails decrypted = userWithEncryptedUsername.decryptUsername();
-
-		// Then
-		Assertions.assertThat(decrypted.getUsername()).isEqualTo(originalUsername);
-	}
-
-	@Test
-	@DisplayName("Test decryptMail with encrypted mail returns decrypted")
-	void test_decryptMail_encryptedMail_returnsDecrypted() throws Exception {
-		// Given
-		String originalMail = "test@example.com";
-		String encryptedMail = AESUtils.encrypt(originalMail);
-
-		UserExtDetails userWithEncryptedMail = UserExtDetails.builder().id(1L).mail(encryptedMail).build();
-
-		// When
-		UserExtDetails decrypted = userWithEncryptedMail.decryptMail();
-
-		// Then
-		Assertions.assertThat(decrypted.getMail()).isEqualTo(originalMail);
-	}
-
-	@Test
-	@DisplayName("Test decryptMobile with encrypted mobile returns decrypted")
-	void test_decryptMobile_encryptedMobile_returnsDecrypted() throws Exception {
-		// Given
-		String originalMobile = "13800138000";
-		String encryptedMobile = AESUtils.encrypt(originalMobile);
-
-		UserExtDetails userWithEncryptedMobile = UserExtDetails.builder().id(1L).mobile(encryptedMobile).build();
-
-		// When
-		UserExtDetails decrypted = userWithEncryptedMobile.decryptMobile();
-
-		// Then
-		Assertions.assertThat(decrypted.getMobile()).isEqualTo(originalMobile);
-	}
-
-	@Test
-	@DisplayName("Test decryptUsername with null username returns same instance")
-	void test_decryptUsername_nullUsername_returnsSameInstance() {
-		// Given
-		UserExtDetails userWithNullUsername = UserExtDetails.builder().id(1L).username(null).build();
-
-		// When
-		UserExtDetails result = userWithNullUsername.decryptUsername();
-
-		// Then
-		Assertions.assertThat(result).isSameAs(userWithNullUsername);
-		Assertions.assertThat(result.getUsername()).isNull();
-	}
-
-	@Test
-	@DisplayName("Test decryptUsername with empty username returns same instance")
-	void test_decryptUsername_emptyUsername_returnsSameInstance() {
-		// Given
-		UserExtDetails userWithEmptyUsername = UserExtDetails.builder().id(1L).username("").build();
-
-		// When
-		UserExtDetails result = userWithEmptyUsername.decryptUsername();
-
-		// Then
-		Assertions.assertThat(result).isSameAs(userWithEmptyUsername);
-	}
-
-	@Test
-	@DisplayName("Test chained decrypt methods returns fully decrypted instance")
-	void test_decryptChain_allFieldsEncrypted_returnsFullyDecrypted() throws Exception {
-		// Given
-		String originalUsername = "admin";
-		String originalMail = "admin@example.com";
-		String originalMobile = "13800138000";
-
-		UserExtDetails user = UserExtDetails.builder()
-			.id(1L)
-			.username(AESUtils.encrypt(originalUsername))
-			.mail(AESUtils.encrypt(originalMail))
-			.mobile(AESUtils.encrypt(originalMobile))
+		UserExtDetails userExtDetailsWithEmptyPerms = UserExtDetails.builder()
+			.id(3L)
+			.username("user3")
+			.permissions(new HashSet<>())
 			.build();
 
 		// When
-		UserExtDetails decrypted = user.decryptUsername().decryptMail().decryptMobile();
+		Collection<GrantedAuthority> authorities = userExtDetailsWithEmptyPerms.getAuthorities();
 
 		// Then
-		Assertions.assertThat(decrypted.getUsername()).isEqualTo(originalUsername);
-		Assertions.assertThat(decrypted.getMail()).isEqualTo(originalMail);
-		Assertions.assertThat(decrypted.getMobile()).isEqualTo(originalMobile);
+		Assertions.assertThat(authorities).isNotNull().isEmpty();
+	}
+
+	@Test
+	@DisplayName("Test class type is Authentication implementation")
+	void test_classType_always_implementsAuthentication() {
+		// Then
+		Assertions.assertThat(userExtDetails).isInstanceOf(org.springframework.security.core.Authentication.class);
 	}
 
 }

@@ -20,15 +20,11 @@ package org.laokou.auth.config.authentication;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.laokou.auth.factory.DomainFactory;
-import org.laokou.common.context.util.User;
-import org.laokou.common.context.util.UserConvertor;
 import org.laokou.common.core.util.RequestUtils;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-
 
 /**
  * 用户认证.
@@ -49,12 +45,8 @@ record UserDetailsServiceImpl(
 	@NonNull
 	@Override
 	public UserDetails loadUserByUsername(@NonNull String username) throws UsernameNotFoundException {
-		UsernamePasswordAuthenticationToken token = authenticationProcessor.authentication(DomainFactory.createAuth().createAuthorizationCodeAuth(),
+		return authenticationProcessor.authentication(DomainFactory.createAuth().createAuthorizationCodeAuth(),
 				RequestUtils.getHttpServletRequest());
-		if (token.getPrincipal() instanceof User user) {
-			return UserConvertor.toUserDetails(user, user.permissions());
-		}
-		throw new UsernameNotFoundException("Authentication failed: principal is not a valid User");
 	}
 
 }
