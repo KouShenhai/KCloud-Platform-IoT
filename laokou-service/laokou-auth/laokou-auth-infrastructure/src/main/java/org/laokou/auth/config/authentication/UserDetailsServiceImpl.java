@@ -29,8 +29,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
-
 
 /**
  * 用户认证.
@@ -54,7 +52,7 @@ record UserDetailsServiceImpl(
 		UsernamePasswordAuthenticationToken token = authenticationProcessor.authentication(DomainFactory.createAuth().createAuthorizationCodeAuth(),
 				RequestUtils.getHttpServletRequest());
 		if (token.getPrincipal() instanceof User user) {
-			return UserConvertor.toUserDetails(user, Collections.emptySet());
+			return UserConvertor.toUserDetails(user, user.permissions());
 		}
 		throw new UsernameNotFoundException("Authentication failed: principal is not a valid User");
 	}
