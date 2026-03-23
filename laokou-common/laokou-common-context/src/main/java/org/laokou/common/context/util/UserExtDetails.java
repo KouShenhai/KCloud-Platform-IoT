@@ -37,7 +37,7 @@ import java.util.Set;
  * @author laokou
  */
 @Getter
-@JsonTypeName("UserExtDetails")
+@JsonTypeName("UserDetails")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
