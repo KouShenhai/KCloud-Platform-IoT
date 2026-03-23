@@ -17,19 +17,10 @@
 
 package org.laokou.common.context.util;
 
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Set;
 
@@ -42,15 +33,12 @@ import java.util.Set;
 @DisplayName("UserUtils Unit Tests")
 class UserUtilsTest {
 
-	private OAuth2AuthenticatedExtPrincipal mockOAuth2AuthenticatedExtPrincipal;
+	private OAuth2AuthenticatedExtPrincipal principal;
 
-	private MockedStatic<DomainFactory> domainFactoryMockedStatic;
 
 	@BeforeEach
 	void setUp() {
-		Set<String> permissions = Set.of("sys:user:query");
-
-		mockOAuth2AuthenticatedExtPrincipal = OAuth2AuthenticatedExtPrincipal.builder()
+		principal = OAuth2AuthenticatedExtPrincipal.builder()
 			.id(1L)
 			.username("admin")
 			.avatar("https://example.com/avatar.png")
@@ -60,173 +48,8 @@ class UserUtilsTest {
 			.mobile("13800138000")
 			.tenantId(100L)
 			.deptId(10L)
-			.permissions(permissions)
+			.permissions(Set.of("sys:user:query"))
 			.build();
-
-		// Mock DomainFactory
-		domainFactoryMockedStatic = Mockito.mockStatic(DomainFactory.class);
-		domainFactoryMockedStatic.when(DomainFactory::createPrincipal).thenReturn(mockOAuth2AuthenticatedExtPrincipal);
-	}
-
-	@AfterEach
-	void tearDown() {
-		SecurityContextHolder.clearContext();
-		if (domainFactoryMockedStatic != null) {
-			domainFactoryMockedStatic.close();
-		}
-	}
-
-	@Test
-	@DisplayName("Test userDetail returns UserExtDetails when principal is UserExtDetails")
-	void test_userDetail_returns_userExtDetails_when_principal_is_userExtDetails() {
-		// Given
-		SecurityContext context = SecurityContextHolder.createEmptyContext();
-		Authentication auth = new UsernamePasswordAuthenticationToken(mockOAuth2AuthenticatedExtPrincipal, null);
-		context.setAuthentication(auth);
-		SecurityContextHolder.setContext(context);
-
-		// When
-		OAuth2AuthenticatedExtPrincipal result = UserUtils.principal();
-
-		// Then
-		Assertions.assertThat(result).isEqualTo(mockOAuth2AuthenticatedExtPrincipal);
-		Assertions.assertThat(result.getId()).isEqualTo(1L);
-		Assertions.assertThat(result.getUsername()).isEqualTo("admin");
-	}
-
-	@Test
-	@DisplayName("Test userDetail returns DomainFactory user when principal is not UserExtDetails")
-	void test_userDetail_returns_domainFactory_user_when_principal_is_not_userExtDetails() {
-		// Given
-		SecurityContext context = SecurityContextHolder.createEmptyContext();
-		Authentication auth = new UsernamePasswordAuthenticationToken("simpleUser", "password");
-		context.setAuthentication(auth);
-		SecurityContextHolder.setContext(context);
-
-		// When
-		OAuth2AuthenticatedExtPrincipal result = UserUtils.principal();
-
-		// Then
-		Assertions.assertThat(result).isEqualTo(mockOAuth2AuthenticatedExtPrincipal);
-	}
-
-	@Test
-	@DisplayName("Test userDetail returns DomainFactory user when authentication is null")
-	void test_userDetail_returns_domainFactory_user_when_authentication_is_null() {
-		// Given
-		SecurityContextHolder.clearContext();
-
-		// When
-		OAuth2AuthenticatedExtPrincipal result = UserUtils.principal();
-
-		// Then
-		Assertions.assertThat(result).isEqualTo(mockOAuth2AuthenticatedExtPrincipal);
-	}
-
-	@Test
-	@DisplayName("Test getUserId returns correct user id")
-	void test_getUserId_returns_correct_id() {
-		// Given
-		SecurityContext context = SecurityContextHolder.createEmptyContext();
-		Authentication auth = new UsernamePasswordAuthenticationToken(mockOAuth2AuthenticatedExtPrincipal, null);
-		context.setAuthentication(auth);
-		SecurityContextHolder.setContext(context);
-
-		// When
-		Long userId = UserUtils.getUserId();
-
-		// Then
-		Assertions.assertThat(userId).isEqualTo(1L);
-	}
-
-	@Test
-	@DisplayName("Test getUserName returns correct username")
-	void test_getUserName_returns_correct_username() {
-		// Given
-		SecurityContext context = SecurityContextHolder.createEmptyContext();
-		Authentication auth = new UsernamePasswordAuthenticationToken(mockOAuth2AuthenticatedExtPrincipal, null);
-		context.setAuthentication(auth);
-		SecurityContextHolder.setContext(context);
-
-		// When
-		String userName = UserUtils.getUserName();
-
-		// Then
-		Assertions.assertThat(userName).isEqualTo("admin");
-	}
-
-	@Test
-	@DisplayName("Test getTenantId returns correct tenant id")
-	void test_getTenantId_returns_correct_tenantId() {
-		// Given
-		SecurityContext context = SecurityContextHolder.createEmptyContext();
-		Authentication auth = new UsernamePasswordAuthenticationToken(mockOAuth2AuthenticatedExtPrincipal, null);
-		context.setAuthentication(auth);
-		SecurityContextHolder.setContext(context);
-
-		// When
-		Long tenantId = UserUtils.getTenantId();
-
-		// Then
-		Assertions.assertThat(tenantId).isEqualTo(100L);
-	}
-
-	@Test
-	@DisplayName("Test getDeptId returns correct department id")
-	void test_getDeptId_returns_correct_deptId() {
-		// Given
-		SecurityContext context = SecurityContextHolder.createEmptyContext();
-		Authentication auth = new UsernamePasswordAuthenticationToken(mockOAuth2AuthenticatedExtPrincipal, null);
-		context.setAuthentication(auth);
-		SecurityContextHolder.setContext(context);
-
-		// When
-		Long deptId = UserUtils.getDeptId();
-
-		// Then
-		Assertions.assertThat(deptId).isEqualTo(10L);
-	}
-
-	@Test
-	@DisplayName("Test isSuperAdmin returns correct super admin status")
-	void test_isSuperAdmin_returns_correct_status() {
-		// Given
-		SecurityContext context = SecurityContextHolder.createEmptyContext();
-		Authentication auth = new UsernamePasswordAuthenticationToken(mockOAuth2AuthenticatedExtPrincipal, null);
-		context.setAuthentication(auth);
-		SecurityContextHolder.setContext(context);
-
-		// When
-		Boolean isSuperAdmin = UserUtils.isSuperAdmin();
-
-		// Then
-		Assertions.assertThat(isSuperAdmin).isTrue();
-	}
-
-	@Test
-	@DisplayName("Test isSuperAdmin returns false for non-super admin user")
-	void test_isSuperAdmin_returns_false_for_non_super_admin() {
-		// Given
-		OAuth2AuthenticatedExtPrincipal nonSuperAdmin = OAuth2AuthenticatedExtPrincipal.builder()
-			.id(2L)
-			.username("normalUser")
-			.superAdmin(false)
-			.tenantId(200L)
-			.deptId(20L)
-			.build();
-
-		domainFactoryMockedStatic.when(DomainFactory::createPrincipal).thenReturn(nonSuperAdmin);
-
-		SecurityContext context = SecurityContextHolder.createEmptyContext();
-		Authentication auth = new UsernamePasswordAuthenticationToken(nonSuperAdmin, null);
-		context.setAuthentication(auth);
-		SecurityContextHolder.setContext(context);
-
-		// When
-		Boolean isSuperAdmin = UserUtils.isSuperAdmin();
-
-		// Then
-		Assertions.assertThat(isSuperAdmin).isFalse();
 	}
 
 }

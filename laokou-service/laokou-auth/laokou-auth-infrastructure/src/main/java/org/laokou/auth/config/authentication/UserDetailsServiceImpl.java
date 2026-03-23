@@ -19,11 +19,12 @@ package org.laokou.auth.config.authentication;
 
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
+import org.laokou.auth.convertor.UserConvertor;
 import org.laokou.auth.factory.DomainFactory;
+import org.laokou.auth.model.AuthA;
 import org.laokou.common.core.util.RequestUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 /**
@@ -33,20 +34,18 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-record UserDetailsServiceImpl(
-		@NonNull OAuth2AuthenticationProcessor authenticationProcessor) implements UserDetailsService {
+record UserDetailsServiceImpl(@NonNull OAuth2UsernamePasswordAuthentication oAuth2UsernamePasswordAuthentication) implements UserDetailsService {
 
 	/**
 	 * 获取用户信息.
 	 * @param username 用户名
 	 * @return 用户信息
-	 * @throws UsernameNotFoundException 异常
 	 */
 	@NonNull
 	@Override
-	public UserDetails loadUserByUsername(@NonNull String username) throws UsernameNotFoundException {
-		return authenticationProcessor.authentication(DomainFactory.createAuth().createAuthorizationCodeAuth(),
-				RequestUtils.getHttpServletRequest());
+	public UserDetails loadUserByUsername(@NonNull String username) {
+		AuthA authA = oAuth2UsernamePasswordAuthentication.authentication(DomainFactory.createAuth().createAuthorizationCodeAuth(), RequestUtils.getHttpServletRequest());
+		return UserConvertor.toUserDetails(authA);
 	}
 
 }

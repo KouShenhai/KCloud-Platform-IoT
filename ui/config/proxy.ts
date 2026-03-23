@@ -11,13 +11,13 @@
  */
 export default {
 	dev: {
-		'/apis/': {
+		'/api-proxy/': {
 			// 单体代理地址
 			// target: 'http://nginx:81',
 			// 微服务代理地址
-			target: 'http://gateway:5555',
+			target: 'http://gateway:5555/api-gateway',
 			changeOrigin: true,
-			pathRewrite: { '^/apis': '' },
+			pathRewrite: { '^/api-proxy': '' },
 		},
 	},
 };

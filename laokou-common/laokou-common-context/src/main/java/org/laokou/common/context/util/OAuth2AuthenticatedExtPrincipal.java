@@ -23,16 +23,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.jspecify.annotations.NullMarked;
-import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.i18n.annotation.Entity;
-import org.laokou.common.i18n.common.exception.BizException;
-import org.laokou.common.i18n.util.StringExtUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
-
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
@@ -48,10 +42,7 @@ import java.util.stream.Stream;
 @Builder(toBuilder = true)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class OAuth2AuthenticatedExtPrincipal implements OAuth2AuthenticatedPrincipal, Serializable {
-
-	@Serial
-	private static final long serialVersionUID = 3319752558160144611L;
+public final class OAuth2AuthenticatedExtPrincipal implements OAuth2AuthenticatedPrincipal {
 
 	/**
 	 * 用户ID.
@@ -137,42 +128,6 @@ public final class OAuth2AuthenticatedExtPrincipal implements OAuth2Authenticate
 	@NullMarked
 	public String getName() {
 		return this.username;
-	}
-
-	OAuth2AuthenticatedExtPrincipal decryptUsername() {
-		if (StringExtUtils.isNotEmpty(this.username)) {
-			try {
-				this.username = AESUtils.decrypt(this.username);
-			}
-			catch (Exception ex) {
-				throw new BizException("B_User_UsernameAESDecryptFail", ex);
-			}
-		}
-		return this;
-	}
-
-	OAuth2AuthenticatedExtPrincipal decryptMail() {
-		if (StringExtUtils.isNotEmpty(this.mail)) {
-			try {
-				this.mail = AESUtils.decrypt(this.mail);
-			}
-			catch (Exception ex) {
-				throw new BizException("B_User_MailAESDecryptFail", ex);
-			}
-		}
-		return this;
-	}
-
-	OAuth2AuthenticatedExtPrincipal decryptMobile() {
-		if (StringExtUtils.isNotEmpty(this.mobile)) {
-			try {
-				this.mobile = AESUtils.decrypt(this.mobile);
-			}
-			catch (Exception ex) {
-				throw new BizException("B_User_MobileAESDecryptFail", ex);
-			}
-		}
-		return this;
 	}
 
 }

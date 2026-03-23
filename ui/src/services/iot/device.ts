@@ -6,7 +6,7 @@ export async function modifyDevice(
 	body: API.DeviceModifyCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/iot/api/v1/devices', {
+	return request<any>('/api-proxy/iot/api/v1/devices', {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
@@ -21,7 +21,7 @@ export async function saveDevice(
 	body: API.DeviceSaveCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/iot/api/v1/devices', {
+	return request<any>('/api-proxy/iot/api/v1/devices', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ export async function removeDevice(
 	body: number[],
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/iot/api/v1/devices', {
+	return request<any>('/api-proxy/iot/api/v1/devices', {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',
@@ -53,7 +53,7 @@ export async function getDeviceById(
 	options?: { [key: string]: any },
 ) {
 	const { id: param0, ...queryParams } = params;
-	return request<API.Result>(`/apis/iot/api/v1/devices/${param0}`, {
+	return request<API.Result>(`/api-proxy/iot/api/v1/devices/${param0}`, {
 		method: 'GET',
 		params: { ...queryParams },
 		...(options || {}),
@@ -65,7 +65,7 @@ export async function exportDevice(
 	body: API.DeviceExportCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/iot/api/v1/devices/export', {
+	return request<any>('/api-proxy/iot/api/v1/devices/export', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -103,7 +103,7 @@ export async function importDevice(
 		}
 	});
 
-	return request<any>('/apis/iot/api/v1/devices/import', {
+	return request<any>('/api-proxy/iot/api/v1/devices/import', {
 		method: 'POST',
 		data: formData,
 		requestType: 'form',
@@ -116,7 +116,7 @@ export async function pageDevice(
 	body: API.DevicePageQry,
 	options?: { [key: string]: any },
 ) {
-	return request<API.Result>('/apis/iot/api/v1/devices/page', {
+	return request<API.Result>('/api-proxy/iot/api/v1/devices/page', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

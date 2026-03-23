@@ -11,7 +11,7 @@
  */
 export default {
 	dev: {
-		'/apis/': {
+		'/api-proxy/': {
 			// 要代理的地址
 			target: 'http://gateway:5555',
 			changeOrigin: true,

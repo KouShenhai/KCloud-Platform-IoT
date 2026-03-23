@@ -49,7 +49,8 @@ class OAuth2ResourceServerConfig {
 	@Bean
 	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http,
 		SpringUtils springUtils,
-		OAuth2ResourceServerProperties oAuth2ResourceServerProperties)  {
+		OAuth2ResourceServerProperties oAuth2ResourceServerProperties,
+		OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler)  {
 		return http
 			.headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer
 				.httpStrictTransportSecurity(hsts -> hsts
@@ -65,6 +66,7 @@ class OAuth2ResourceServerConfig {
 			// https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/form.html
 			// 登录页面 -> DefaultLoginPageGeneratingFilter
 			.formLogin(form -> form.loginPage("/login")
+				//.failureHandler(oAuth2AuthenticationFailureHandler)
 				.permitAll())
 			// 清除 session
 			.logout(logout -> logout.clearAuthentication(true).invalidateHttpSession(true))

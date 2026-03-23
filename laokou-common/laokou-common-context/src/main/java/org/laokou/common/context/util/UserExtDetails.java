@@ -21,33 +21,23 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.jspecify.annotations.NullMarked;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.jspecify.annotations.NonNull;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.User;
 
 import java.io.Serial;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Set;
 
 /**
  * @author laokou
  */
 @Getter
-@JsonTypeName("UserDetail")
-@Builder(toBuilder = true)
+@JsonTypeName("UserDetails")
 @JsonIgnoreProperties(ignoreUnknown = true)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
-	isGetterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
-public final class UserExtDetail implements UserDetails {
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE, isGetterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
+public final class UserExtDetails extends User {
 
 	@Serial
 	private static final long serialVersionUID = 3319752558160144611L;
@@ -55,77 +45,85 @@ public final class UserExtDetail implements UserDetails {
 	/**
 	 * 用户ID.
 	 */
-	private Long id;
+	private final Long id;
 
 	/**
 	 * 用户名.
 	 */
-	private String username;
+	private final String username;
 
 	/**
 	 * 密码.
 	 */
-	private transient String password;
+	private final transient String password;
 
 	/**
 	 * 头像.
 	 */
-	private String avatar;
+	private final String avatar;
 
 	/**
 	 * 超级管理员标识.
 	 */
-	private Boolean superAdmin;
+	private final Boolean superAdmin;
 
 	/**
 	 * 用户状态 0启用 1禁用.
 	 */
-	private Integer status;
+	private final Integer status;
 
 	/**
 	 * 邮箱.
 	 */
-	private String mail;
+	private final String mail;
 
 	/**
 	 * 手机号.
 	 */
-	private String mobile;
+	private final String mobile;
 
 	/**
 	 * 租户ID.
 	 */
-	private Long tenantId;
+	private final Long tenantId;
 
 	/**
 	 * 部门ID.
 	 */
-	private Long deptId;
+	private final Long deptId;
 
 	/**
 	 * 菜单权限标识集合.
 	 */
-	private Set<String> permissions;
+	private final Set<String> permissions;
 
 	/**
 	 * 部门IDS.
 	 */
-	private Set<Long> deptIds;
+	private final Set<Long> deptIds;
 
 	/**
 	 * 创建者.
 	 */
-	private Long creator;
+	private final Long creator;
 
-	@NullMarked
-	public String getName() {
-		return this.username;
-	}
-
-	@Override
-	@NullMarked
-	public Collection<GrantedAuthority> getAuthorities() {
-		return Collections.emptySet();
+	public UserExtDetails(@NonNull Long id, @NonNull String username, @NonNull String password, String avatar, @NonNull Boolean superAdmin,
+						  @NonNull Integer status, String mail, String mobile, @NonNull Long tenantId, @NonNull Long deptId, @NonNull Set<String> permissions,
+						  Set<Long> deptIds, Long creator) {
+		super(username, password, AuthorityUtils.createAuthorityList(permissions));
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.avatar = avatar;
+		this.superAdmin = superAdmin;
+		this.status = status;
+		this.mail = mail;
+		this.mobile = mobile;
+		this.tenantId = tenantId;
+		this.deptId = deptId;
+		this.deptIds = deptIds;
+		this.creator = creator;
+		this.permissions = permissions;
 	}
 
 }

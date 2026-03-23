@@ -17,41 +17,39 @@
 
 package org.laokou.auth.convertor;
 
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.gatewayimpl.database.dataobject.UserDO;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.entity.UserE;
 import org.laokou.auth.model.valueobject.DataFilterV;
 import org.laokou.auth.model.valueobject.UserV;
-import org.laokou.common.context.util.User;
+import org.laokou.common.context.util.UserExtDetails;
+import org.laokou.common.crypto.util.AESUtils;
 
 /**
  * @author laokou
  */
+@Slf4j
 public final class UserConvertor {
 
 	private UserConvertor() {
 	}
 
-	public static User toUserDetails(AuthA auth) {
-		UserE userE = auth.getUserE();
-		UserV userV = auth.getUserV();
-		DataFilterV dataFilterV = auth.getDataFilterV();
-		return User.builder()
-			.id(userE.getId())
-			.username(userE.getUsername())
-			.password(userE.getPassword())
-			.avatar(userV.avatar())
-			.superAdmin(userE.isSuperAdministrator())
-			.tenantId(userE.getTenantId())
-			.deptId(userE.getDeptId())
-			.permissions(userV.permissions())
-			.status(userE.getStatus())
-			.mail(userE.getMail())
-			.mobile(userE.getMobile())
-			.deptIds(dataFilterV.deptIds())
-			.creator(dataFilterV.creator())
-			.build();
+	public static UserExtDetails toUserDetails(AuthA auth) {
+		try {
+			UserE userE = auth.getUserE();
+			UserV userV = auth.getUserV();
+			DataFilterV dataFilterV = auth.getDataFilterV();
+			String username = AESUtils.decrypt(userE.getUsername());
+			String mail = AESUtils.decrypt(userE.getMail());
+			String mobile = AESUtils.decrypt(userE.getMobile());
+			return new UserExtDetails(userE.getId(), username, userE.getPassword(), userV.avatar(), userE.isSuperAdministrator(),
+				userE.getStatus(), mail, mobile, userE.getTenantId(), userE.getDeptId(), userV.permissions(), dataFilterV.deptIds(), dataFilterV.creator());
+		} catch (Exception ex) {
+			log.error("解密失败：{}", ex.getMessage());
+			throw new IllegalArgumentException(ex);
+		}
 	}
 
 	public static UserE toEntity(UserDO userDO) {

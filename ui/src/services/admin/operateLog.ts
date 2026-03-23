@@ -8,7 +8,7 @@ export async function modifyOperateLog(
 	body: API.OperateLogModifyCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/admin/api/v1/operate-logs', {
+	return request<any>('/api-proxy/admin/api/v1/operate-logs', {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
@@ -23,7 +23,7 @@ export async function saveOperateLog(
 	body: API.OperateLogSaveCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/admin/api/v1/operate-logs', {
+	return request<any>('/api-proxy/admin/api/v1/operate-logs', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ export async function removeOperateLog(
 	body: number[],
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/admin/api/v1/operate-logs', {
+	return request<any>('/api-proxy/admin/api/v1/operate-logs', {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ export async function getOperateLogById(
 	options?: { [key: string]: any },
 ) {
 	const { id: param0, ...queryParams } = params;
-	return request<API.Result>(`/apis/admin/api/v1/operate-logs/${param0}`, {
+	return request<API.Result>(`/api-proxy/admin/api/v1/operate-logs/${param0}`, {
 		method: 'GET',
 		params: { ...queryParams },
 		...(options || {}),
@@ -72,7 +72,7 @@ export async function exportOperateLog(
 			'_导出全部_' +
 			moment(new Date()).format('YYYYMMDDHHmmss') +
 			'.xlsx',
-		'/apis/admin/api/v1/operate-logs/export',
+		'/api-proxy/admin/api/v1/operate-logs/export',
 		'POST',
 		body,
 		options,
@@ -107,7 +107,7 @@ export async function importOperateLog(
 		}
 	});
 
-	return request<any>('/apis/admin/api/v1/operate-logs/import', {
+	return request<any>('/api-proxy/admin/api/v1/operate-logs/import', {
 		method: 'POST',
 		data: formData,
 		requestType: 'form',
@@ -120,7 +120,7 @@ export async function pageOperateLog(
 	body: API.OperateLogPageQry,
 	options?: { [key: string]: any },
 ) {
-	return request<API.Result>('/apis/admin/api/v1/operate-logs/page', {
+	return request<API.Result>('/api-proxy/admin/api/v1/operate-logs/page', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
