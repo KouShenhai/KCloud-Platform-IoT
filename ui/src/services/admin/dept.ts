@@ -6,7 +6,7 @@ export async function modifyDept(
 	body: API.DeptModifyCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/admin/api/v1/depts', {
+	return request<any>('/api-proxy/admin/api/v1/depts', {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
@@ -22,7 +22,7 @@ export async function saveDept(
 	requestId: string,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/admin/api/v1/depts', {
+	return request<any>('/api-proxy/admin/api/v1/depts', {
 		method: 'POST',
 		headers: {
 			'request-id': requestId,
@@ -38,7 +38,7 @@ export async function removeDept(
 	body: number[],
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/admin/api/v1/depts', {
+	return request<any>('/api-proxy/admin/api/v1/depts', {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ export async function getDeptById(
 	options?: { [key: string]: any },
 ) {
 	const { id: param0, ...queryParams } = params;
-	return request<API.Result>(`/apis/admin/api/v1/depts/${param0}`, {
+	return request<API.Result>(`/api-proxy/admin/api/v1/depts/${param0}`, {
 		method: 'GET',
 		params: { ...queryParams },
 		...(options || {}),
@@ -67,7 +67,7 @@ export async function exportDept(
 	body: API.DeptExportCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/admin/api/v1/depts/export', {
+	return request<any>('/api-proxy/admin/api/v1/depts/export', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -105,7 +105,7 @@ export async function importDept(
 		}
 	});
 
-	return request<any>('/apis/admin/api/v1/depts/import', {
+	return request<any>('/api-proxy/admin/api/v1/depts/import', {
 		method: 'POST',
 		data: formData,
 		requestType: 'form',
@@ -118,7 +118,7 @@ export async function pageDept(
 	body: API.DeptPageQry,
 	options?: { [key: string]: any },
 ) {
-	return request<API.Result>('/apis/admin/api/v1/depts/page', {
+	return request<API.Result>('/api-proxy/admin/api/v1/depts/page', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -132,7 +132,7 @@ export async function listTreeDept(
 	body: any,
 	options?: { [key: string]: any },
 ) {
-	return request<API.Result>('/apis/admin/api/v1/depts/list-tree', {
+	return request<API.Result>('/api-proxy/admin/api/v1/depts/list-tree', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -146,7 +146,7 @@ export async function listSelectTreeDept(
 	body: any,
 	options?: { [key: string]: any },
 ) {
-	return request<API.Result>('/apis/admin/api/v1/depts/list-select-tree', {
+	return request<API.Result>('/api-proxy/admin/api/v1/depts/list-select-tree', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

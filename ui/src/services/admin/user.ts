@@ -6,7 +6,7 @@ export async function modifyUser(
 	body: API.UserModifyCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/admin/api/v1/users', {
+	return request<any>('/api-proxy/admin/api/v1/users', {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
@@ -22,7 +22,7 @@ export async function saveUser(
 	requestId: string,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/admin/api/v1/users', {
+	return request<any>('/api-proxy/admin/api/v1/users', {
 		method: 'POST',
 		headers: {
 			'request-id': requestId,
@@ -38,7 +38,7 @@ export async function removeUser(
 	body: number[],
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/admin/api/v1/users', {
+	return request<any>('/api-proxy/admin/api/v1/users', {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ export async function getUserById(
 	options?: { [key: string]: any },
 ) {
 	const { id: param0, ...queryParams } = params;
-	return request<API.Result>(`/apis/admin/api/v1/users/${param0}`, {
+	return request<API.Result>(`/api-proxy/admin/api/v1/users/${param0}`, {
 		method: 'GET',
 		params: { ...queryParams },
 		...(options || {}),
@@ -67,7 +67,7 @@ export async function exportUser(
 	body: API.UserExportCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/admin/api/v1/users/export', {
+	return request<any>('/api-proxy/admin/api/v1/users/export', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -105,7 +105,7 @@ export async function importUser(
 		}
 	});
 
-	return request<any>('/apis/admin/api/v1/users/import', {
+	return request<any>('/api-proxy/admin/api/v1/users/import', {
 		method: 'POST',
 		data: formData,
 		requestType: 'form',
@@ -118,7 +118,7 @@ export async function pageUser(
 	body: API.UserPageQry,
 	options?: { [key: string]: any },
 ) {
-	return request<API.Result>('/apis/admin/api/v1/users/page', {
+	return request<API.Result>('/api-proxy/admin/api/v1/users/page', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -130,7 +130,7 @@ export async function pageUser(
 
 /** 查看个人信息 查看个人信息 GET /api/v1/users/profile */
 export async function getUserProfile(options?: { [key: string]: any }) {
-	return request<API.Result>('/apis/admin/api/v1/users/profile', {
+	return request<API.Result>('/api-proxy/admin/api/v1/users/profile', {
 		method: 'GET',
 		...(options || {}),
 	});
@@ -141,7 +141,7 @@ export async function resetUserPwd(
 	body: API.ResetPwdCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/admin/api/v1/users/reset-pwd', {
+	return request<any>('/api-proxy/admin/api/v1/users/reset-pwd', {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
@@ -156,7 +156,7 @@ export async function modifyUserAuthority(
 	body: API.UserModifyAuthorityCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/admin/api/v1/users/authority', {
+	return request<any>('/api-proxy/admin/api/v1/users/authority', {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
@@ -171,7 +171,7 @@ export async function uploadUserAvatar(
 	body: FormData,
 	options?: { [key: string]: any },
 ) {
-	return request<API.Result>('/apis/admin/api/v1/users/upload', {
+	return request<API.Result>('/api-proxy/admin/api/v1/users/upload', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'multipart/form-data',

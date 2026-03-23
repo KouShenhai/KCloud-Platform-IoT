@@ -19,19 +19,13 @@ package org.laokou.auth.config.authentication;
 
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
+import org.laokou.auth.convertor.UserConvertor;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.AuthA;
-import org.laokou.auth.model.valueobject.UserV;
-import org.laokou.common.context.util.User;
-import org.laokou.common.context.util.UserConvertor;
 import org.laokou.common.core.util.RequestUtils;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-
-import java.util.Collections;
 
 /**
  * 用户认证.
@@ -40,28 +34,21 @@ import java.util.Collections;
  */
 @Slf4j
 @Component
-record UserDetailsServiceImpl(
-		@NonNull OAuth2AuthenticationProcessor authenticationProcessor) implements UserDetailsService {
+record UserDetailsServiceImpl(@NonNull OAuth2UsernamePasswordAuthentication oAuth2UsernamePasswordAuthentication)
+		implements
+			UserDetailsService {
 
 	/**
 	 * 获取用户信息.
 	 * @param username 用户名
 	 * @return 用户信息
-	 * @throws UsernameNotFoundException 异常
 	 */
 	@NonNull
 	@Override
-	public UserDetails loadUserByUsername(@NonNull String username) throws UsernameNotFoundException {
-		AuthA authA = DomainFactory.createAuth().createAuthorizationCodeAuth();
-		UserV userV = authA.getUserV();
-		Object principal = authenticationProcessor.authentication(authA, RequestUtils.getHttpServletRequest())
-			.getPrincipal();
-		if (principal instanceof UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
-				&& usernamePasswordAuthenticationToken.getPrincipal() instanceof User user) {
-			return UserConvertor.toUserDetails(user, Collections.emptySet());
-		}
-		return new org.springframework.security.core.userdetails.User(userV.username(), userV.password(),
-				Collections.emptyList());
+	public UserDetails loadUserByUsername(@NonNull String username) {
+		AuthA authA = oAuth2UsernamePasswordAuthentication.authentication(
+				DomainFactory.createAuth().createAuthorizationCodeAuth(), RequestUtils.getHttpServletRequest());
+		return UserConvertor.toUserDetails(authA);
 	}
 
 }

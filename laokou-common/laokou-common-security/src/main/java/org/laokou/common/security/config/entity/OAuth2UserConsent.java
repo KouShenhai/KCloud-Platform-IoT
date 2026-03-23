@@ -33,14 +33,13 @@
 
 package org.laokou.common.security.config.entity;
 
-import java.util.Set;
-
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.index.Indexed;
-import org.springframework.security.core.GrantedAuthority;
+
+import java.util.Set;
 
 /**
  * @author spring-authorization-server
@@ -60,6 +59,6 @@ public final class OAuth2UserConsent {
 	@Indexed
 	private final String principalName;
 
-	private final Set<GrantedAuthority> authorities;
+	private final Set<String> authorities;
 
 }

@@ -6,7 +6,7 @@ export async function modifyRole(
 	body: API.RoleModifyCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/admin/api/v1/roles', {
+	return request<any>('/api-proxy/admin/api/v1/roles', {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
@@ -22,7 +22,7 @@ export async function saveRole(
 	requestId: string,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/admin/api/v1/roles', {
+	return request<any>('/api-proxy/admin/api/v1/roles', {
 		method: 'POST',
 		headers: {
 			'request-id': requestId,
@@ -38,7 +38,7 @@ export async function removeRole(
 	body: number[],
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/admin/api/v1/roles', {
+	return request<any>('/api-proxy/admin/api/v1/roles', {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ export async function getRoleById(
 	options?: { [key: string]: any },
 ) {
 	const { id: param0, ...queryParams } = params;
-	return request<API.Result>(`/apis/admin/api/v1/roles/${param0}`, {
+	return request<API.Result>(`/api-proxy/admin/api/v1/roles/${param0}`, {
 		method: 'GET',
 		params: { ...queryParams },
 		...(options || {}),
@@ -67,7 +67,7 @@ export async function exportRole(
 	body: API.RoleExportCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/admin/api/v1/roles/export', {
+	return request<any>('/api-proxy/admin/api/v1/roles/export', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -105,7 +105,7 @@ export async function importRole(
 		}
 	});
 
-	return request<any>('/apis/admin/api/v1/roles/import', {
+	return request<any>('/api-proxy/admin/api/v1/roles/import', {
 		method: 'POST',
 		data: formData,
 		requestType: 'form',
@@ -118,7 +118,7 @@ export async function pageRole(
 	body: API.RolePageQry,
 	options?: { [key: string]: any },
 ) {
-	return request<API.Result>('/apis/admin/api/v1/roles/page', {
+	return request<API.Result>('/api-proxy/admin/api/v1/roles/page', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -133,7 +133,7 @@ export async function modifyRoleAuthority(
 	body: API.RoleModifyAuthorityCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/admin/api/v1/roles/authority', {
+	return request<any>('/api-proxy/admin/api/v1/roles/authority', {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',

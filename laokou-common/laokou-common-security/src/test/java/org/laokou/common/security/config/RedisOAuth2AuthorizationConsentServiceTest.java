@@ -102,8 +102,8 @@ class RedisOAuth2AuthorizationConsentServiceTest {
 	@Test
 	void test_findById_returns_consent_when_found() {
 		// Given
-		Set<org.springframework.security.core.GrantedAuthority> authorities = new HashSet<>();
-		authorities.add(new SimpleGrantedAuthority("SCOPE_read"));
+		Set<String> authorities = new HashSet<>();
+		authorities.add("SCOPE_read");
 		OAuth2UserConsent userConsent = new OAuth2UserConsent("client-1:user-1", "client-1", "user-1", authorities);
 		Mockito.when(userConsentRepository.findByRegisteredClientIdAndPrincipalName("client-1", "user-1"))
 			.thenReturn(userConsent);

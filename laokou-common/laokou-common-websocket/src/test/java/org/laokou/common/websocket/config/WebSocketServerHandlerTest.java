@@ -26,7 +26,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.context.util.UserExtDetails;
+import org.laokou.common.context.util.OAuth2AuthenticatedExtPrincipal;
 import org.laokou.common.security.config.OAuth2OpaqueTokenIntrospector;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
@@ -98,7 +98,7 @@ class WebSocketServerHandlerTest {
 	@Test
 	void test_channelRead_with_valid_token() {
 		// Given
-		UserExtDetails userDetails = Mockito.mock(UserExtDetails.class);
+		OAuth2AuthenticatedExtPrincipal userDetails = Mockito.mock(OAuth2AuthenticatedExtPrincipal.class);
 		Mockito.when(userDetails.getId()).thenReturn(1001L);
 		Mockito.when(userDetails.getName()).thenReturn("testuser");
 		Mockito.when(introspector.introspect("valid-token")).thenReturn(userDetails);
@@ -187,7 +187,7 @@ class WebSocketServerHandlerTest {
 	@Test
 	void test_channelRead_with_message_type() {
 		// Given
-		UserExtDetails userDetails = Mockito.mock(UserExtDetails.class);
+		OAuth2AuthenticatedExtPrincipal userDetails = Mockito.mock(OAuth2AuthenticatedExtPrincipal.class);
 		Mockito.when(userDetails.getId()).thenReturn(1002L);
 		Mockito.when(userDetails.getName()).thenReturn("testuser");
 		Mockito.when(introspector.introspect("valid-token")).thenReturn(userDetails);
@@ -212,7 +212,7 @@ class WebSocketServerHandlerTest {
 	@Test
 	void test_channelRead_with_pong_type_resets_heartbeat() {
 		// Given
-		UserExtDetails userDetails = Mockito.mock(UserExtDetails.class);
+		OAuth2AuthenticatedExtPrincipal userDetails = Mockito.mock(OAuth2AuthenticatedExtPrincipal.class);
 		Mockito.when(userDetails.getId()).thenReturn(1003L);
 		Mockito.when(userDetails.getName()).thenReturn("testuser");
 		Mockito.when(introspector.introspect("valid-token")).thenReturn(userDetails);
@@ -239,7 +239,7 @@ class WebSocketServerHandlerTest {
 	@Test
 	void test_channelRead_connect_and_receive_message_success() {
 		// Given
-		UserExtDetails userDetails = Mockito.mock(UserExtDetails.class);
+		OAuth2AuthenticatedExtPrincipal userDetails = Mockito.mock(OAuth2AuthenticatedExtPrincipal.class);
 		Mockito.when(userDetails.getId()).thenReturn(1004L);
 		Mockito.when(userDetails.getName()).thenReturn("sender");
 		Mockito.when(introspector.introspect("sender-token")).thenReturn(userDetails);

@@ -8,7 +8,7 @@ export async function modifyLoginLog(
 	body: API.LoginLogModifyCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/admin/api/v1/login-logs', {
+	return request<any>('/api-proxy/admin/api/v1/login-logs', {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
@@ -23,7 +23,7 @@ export async function saveLoginLog(
 	body: API.LoginLogSaveCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/admin/api/v1/login-logs', {
+	return request<any>('/api-proxy/admin/api/v1/login-logs', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ export async function removeLoginLog(
 	body: number[],
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/admin/api/v1/login-logs', {
+	return request<any>('/api-proxy/admin/api/v1/login-logs', {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ export async function getLoginLogById(
 	options?: { [key: string]: any },
 ) {
 	const { id: param0, ...queryParams } = params;
-	return request<API.Result>(`/apis/admin/api/v1/login-logs/${param0}`, {
+	return request<API.Result>(`/api-proxy/admin/api/v1/login-logs/${param0}`, {
 		method: 'GET',
 		params: { ...queryParams },
 		...(options || {}),
@@ -72,7 +72,7 @@ export async function exportLoginLog(
 			'_导出全部_' +
 			moment(new Date()).format('YYYYMMDDHHmmss') +
 			'.xlsx',
-		'/apis/admin/api/v1/login-logs/export',
+		'/api-proxy/admin/api/v1/login-logs/export',
 		'POST',
 		body,
 		options,
@@ -107,7 +107,7 @@ export async function importLoginLog(
 		}
 	});
 
-	return request<any>('/apis/admin/api/v1/login-logs/import', {
+	return request<any>('/api-proxy/admin/api/v1/login-logs/import', {
 		method: 'POST',
 		data: formData,
 		requestType: 'form',
@@ -120,7 +120,7 @@ export async function pageLoginLog(
 	body: API.LoginLogPageQry,
 	options?: { [key: string]: any },
 ) {
-	return request<API.Result>('/apis/admin/api/v1/login-logs/page', {
+	return request<API.Result>('/api-proxy/admin/api/v1/login-logs/page', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

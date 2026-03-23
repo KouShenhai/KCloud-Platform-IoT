@@ -6,7 +6,7 @@ export async function modifyOss(
 	body: API.OssModifyCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/admin/api/v1/oss', {
+	return request<any>('/api-proxy/admin/api/v1/oss', {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
@@ -21,7 +21,7 @@ export async function saveOss(
 	body: API.OssSaveCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/admin/api/v1/oss', {
+	return request<any>('/api-proxy/admin/api/v1/oss', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ export async function removeOss(
 	body: number[],
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/admin/api/v1/oss', {
+	return request<any>('/api-proxy/admin/api/v1/oss', {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',
@@ -53,7 +53,7 @@ export async function getOssById(
 	options?: { [key: string]: any },
 ) {
 	const { id: param0, ...queryParams } = params;
-	return request<API.Result>(`/apis/admin/api/v1/oss/${param0}`, {
+	return request<API.Result>(`/api-proxy/admin/api/v1/oss/${param0}`, {
 		method: 'GET',
 		params: { ...queryParams },
 		...(options || {}),
@@ -65,7 +65,7 @@ export async function exportOss(
 	body: API.OssExportCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/admin/api/v1/oss/export', {
+	return request<any>('/api-proxy/admin/api/v1/oss/export', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -103,7 +103,7 @@ export async function importOss(
 		}
 	});
 
-	return request<any>('/apis/admin/api/v1/oss/import', {
+	return request<any>('/api-proxy/admin/api/v1/oss/import', {
 		method: 'POST',
 		data: formData,
 		requestType: 'form',
@@ -116,7 +116,7 @@ export async function pageOss(
 	body: API.OssPageQry,
 	options?: { [key: string]: any },
 ) {
-	return request<API.Result>('/apis/admin/api/v1/oss/page', {
+	return request<API.Result>('/api-proxy/admin/api/v1/oss/page', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

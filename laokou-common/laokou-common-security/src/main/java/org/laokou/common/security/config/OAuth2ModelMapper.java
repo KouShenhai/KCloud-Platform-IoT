@@ -46,6 +46,8 @@ import org.laokou.common.security.config.entity.OAuth2TokenExchangeGrantAuthoriz
 import org.laokou.common.security.config.entity.OAuth2UserConsent;
 import org.laokou.common.security.config.entity.OAuth2UsernamePasswordGrantAuthorization;
 import org.laokou.common.security.config.entity.OidcAuthorizationCodeGrantAuthorization;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2DeviceCode;
@@ -67,6 +69,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.security.Principal;
+import java.util.stream.Collectors;
 
 /**
  * @author spring-authorization-server
@@ -113,7 +116,11 @@ public final class OAuth2ModelMapper {
 			.concat("-")
 			.concat(authorizationConsent.getPrincipalName());
 		return new OAuth2UserConsent(id, authorizationConsent.getRegisteredClientId(),
-				authorizationConsent.getPrincipalName(), authorizationConsent.getAuthorities());
+				authorizationConsent.getPrincipalName(),
+				authorizationConsent.getAuthorities()
+					.stream()
+					.map(GrantedAuthority::getAuthority)
+					.collect(Collectors.toSet()));
 	}
 
 	static OAuth2AuthorizationGrantAuthorization convertOAuth2AuthorizationGrantAuthorization(
@@ -405,7 +412,8 @@ public final class OAuth2ModelMapper {
 
 	static OAuth2AuthorizationConsent convertOAuth2AuthorizationConsent(OAuth2UserConsent userConsent) {
 		return OAuth2AuthorizationConsent.withId(userConsent.getRegisteredClientId(), userConsent.getPrincipalName())
-			.authorities((authorities) -> authorities.addAll(userConsent.getAuthorities()))
+			.authorities((authorities) -> authorities
+				.addAll(AuthorityUtils.createAuthorityList(userConsent.getAuthorities())))
 			.build();
 	}
 

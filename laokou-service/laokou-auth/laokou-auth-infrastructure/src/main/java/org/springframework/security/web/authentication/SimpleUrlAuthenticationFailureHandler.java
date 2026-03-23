@@ -1,0 +1,180 @@
+/*
+ * Copyright (c) 2022-2026 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+/*
+ * Copyright 2004-present the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package org.springframework.security.web.authentication;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+import org.laokou.common.i18n.util.StringExtUtils;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.DefaultRedirectStrategy;
+import org.springframework.security.web.RedirectStrategy;
+import org.springframework.security.web.WebAttributes;
+import org.springframework.security.web.util.UrlUtils;
+import org.springframework.util.Assert;
+
+import java.io.IOException;
+
+/**
+ * <tt>AuthenticationFailureHandler</tt> which performs a redirect to the value of the
+ * {@link #setDefaultFailureUrl defaultFailureUrl} property when the
+ * <tt>onAuthenticationFailure</tt> method is called. If the property has not been set it
+ * will send a 401 response to the client, with the error message from the
+ * <tt>AuthenticationException</tt> which caused the failure.
+ * <p>
+ * If the {@code useForward} property is set, a {@code RequestDispatcher.forward} call
+ * will be made to the destination instead of a redirect.
+ *
+ * @author Luke Taylor
+ * @author laokou
+ * @since 3.0
+ */
+@Slf4j
+@Data
+public class SimpleUrlAuthenticationFailureHandler implements AuthenticationFailureHandler {
+
+	private @Nullable String defaultFailureUrl;
+
+	private boolean forwardToDestination = false;
+
+	private boolean allowSessionCreation = true;
+
+	/**
+	 * -- SETTER -- Allows overriding of the behaviour when redirecting to a target URL.
+	 */
+	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+
+	public SimpleUrlAuthenticationFailureHandler() {
+	}
+
+	public SimpleUrlAuthenticationFailureHandler(String defaultFailureUrl) {
+		setDefaultFailureUrl(defaultFailureUrl);
+	}
+
+	/**
+	 * Performs the redirect or forward to the {@code defaultFailureUrl} if set, otherwise
+	 * returns a 401 error code.
+	 * <p>
+	 * If redirecting or forwarding, {@code saveException} will be called to cache the
+	 * exception for use in the target view.
+	 */
+	@Override
+	public void onAuthenticationFailure(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
+			@NonNull AuthenticationException exception) throws IOException, ServletException {
+		if (this.defaultFailureUrl == null) {
+			if (log.isTraceEnabled()) {
+				log.trace("Sending 401 Unauthorized error since no failure URL is set");
+			}
+			else {
+				log.debug("Sending 401 Unauthorized error");
+			}
+			response.sendError(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED.getReasonPhrase());
+			return;
+		}
+		saveException(request, exception);
+		if (this.forwardToDestination) {
+			String failureUrl = getFailureUrl(request);
+			log.debug("Forwarding to {}", failureUrl);
+			request.getRequestDispatcher(getFailureUrl(request)).forward(request, response);
+		}
+		else {
+			this.redirectStrategy.sendRedirect(request, response, getFailureUrl(request));
+		}
+	}
+
+	/**
+	 * Caches the {@code AuthenticationException} for use in view rendering.
+	 * <p>
+	 * If {@code forwardToDestination} is set to true, request scope will be used,
+	 * otherwise it will attempt to store the exception in the session. If there is no
+	 * session and {@code allowSessionCreation} is {@code true} a session will be created.
+	 * Otherwise the exception will not be stored.
+	 */
+	protected final void saveException(HttpServletRequest request, AuthenticationException exception) {
+		if (this.forwardToDestination) {
+			request.setAttribute(WebAttributes.AUTHENTICATION_EXCEPTION, exception);
+			return;
+		}
+		HttpSession session = request.getSession(false);
+		if (session != null || this.allowSessionCreation) {
+			request.getSession().setAttribute(WebAttributes.AUTHENTICATION_EXCEPTION, exception);
+		}
+	}
+
+	/**
+	 * The URL which will be used as the failure destination.
+	 * @param defaultFailureUrl the failure URL, for example "/loginFailed.jsp".
+	 */
+	public void setDefaultFailureUrl(String defaultFailureUrl) {
+		Assert.isTrue(UrlUtils.isValidRedirectUrl(defaultFailureUrl),
+				() -> "'" + defaultFailureUrl + "' is not a valid redirect URL");
+		this.defaultFailureUrl = defaultFailureUrl;
+	}
+
+	protected boolean isUseForward() {
+		return this.forwardToDestination;
+	}
+
+	/**
+	 * If set to <tt>true</tt>, performs a forward to the failure destination URL instead
+	 * of a redirect. Defaults to <tt>false</tt>.
+	 */
+	public void setUseForward(boolean forwardToDestination) {
+		this.forwardToDestination = forwardToDestination;
+	}
+
+	protected RedirectStrategy getRedirectStrategy() {
+		return this.redirectStrategy;
+	}
+
+	protected boolean isAllowSessionCreation() {
+		return this.allowSessionCreation;
+	}
+
+	private String getFailureUrl(HttpServletRequest request) {
+		String failureUrl = request.getContextPath() + this.defaultFailureUrl;
+		String requestPrefix = request.getHeader("X-Forwarded-Prefix");
+		if (StringExtUtils.isNotEmpty(requestPrefix)) {
+			failureUrl = requestPrefix + failureUrl;
+		}
+		return failureUrl;
+	}
+
+}

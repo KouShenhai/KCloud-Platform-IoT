@@ -6,7 +6,7 @@ export async function modifyMenu(
 	body: API.MenuModifyCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/admin/api/v1/menus', {
+	return request<any>('/api-proxy/admin/api/v1/menus', {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
@@ -22,7 +22,7 @@ export async function saveMenu(
 	requestId: string,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/admin/api/v1/menus', {
+	return request<any>('/api-proxy/admin/api/v1/menus', {
 		method: 'POST',
 		headers: {
 			'request-id': requestId,
@@ -38,7 +38,7 @@ export async function removeMenu(
 	body: number[],
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/admin/api/v1/menus', {
+	return request<any>('/api-proxy/admin/api/v1/menus', {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ export async function getMenuById(
 	options?: { [key: string]: any },
 ) {
 	const { id: param0, ...queryParams } = params;
-	return request<API.Result>(`/apis/admin/api/v1/menus/${param0}`, {
+	return request<API.Result>(`/api-proxy/admin/api/v1/menus/${param0}`, {
 		method: 'GET',
 		params: { ...queryParams },
 		...(options || {}),
@@ -67,7 +67,7 @@ export async function exportMenu(
 	body: API.MenuExportCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/admin/api/v1/menus/export', {
+	return request<any>('/api-proxy/admin/api/v1/menus/export', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -105,7 +105,7 @@ export async function importMenu(
 		}
 	});
 
-	return request<any>('/apis/admin/api/v1/menus/import', {
+	return request<any>('/api-proxy/admin/api/v1/menus/import', {
 		method: 'POST',
 		data: formData,
 		requestType: 'form',
@@ -118,7 +118,7 @@ export async function pageMenu(
 	body: API.MenuPageQry,
 	options?: { [key: string]: any },
 ) {
-	return request<API.Result>('/apis/admin/api/v1/menus/page', {
+	return request<API.Result>('/api-proxy/admin/api/v1/menus/page', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -132,7 +132,7 @@ export async function listTreeMenu(
 	body: any,
 	options?: { [key: string]: any },
 ) {
-	return request<API.Result>('/apis/admin/api/v1/menus/list-tree', {
+	return request<API.Result>('/api-proxy/admin/api/v1/menus/list-tree', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -146,7 +146,7 @@ export async function listUserTreeMenu(
 	body: any,
 	options?: { [key: string]: any },
 ) {
-	return request<API.Result>('/apis/admin/api/v1/menus/list-user-tree', {
+	return request<API.Result>('/api-proxy/admin/api/v1/menus/list-user-tree', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -160,7 +160,7 @@ export async function listSelectTreeMenu(
 	body: any,
 	options?: { [key: string]: any },
 ) {
-	return request<API.Result>('/apis/admin/api/v1/menus/list-select-tree', {
+	return request<API.Result>('/api-proxy/admin/api/v1/menus/list-select-tree', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

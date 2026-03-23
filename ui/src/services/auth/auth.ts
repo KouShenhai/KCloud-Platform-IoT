@@ -1,7 +1,7 @@
 import { request } from '@umijs/max';
 
 async function getToken(params: any, options?: { [key: string]: any }) {
-	return request<API.Result>(`/apis/auth/api/v1/oauth2/token`, {
+	return request<API.Result>(`/api-proxy/auth/api/v1/oauth2/token`, {
 		method: 'POST',
 		data: params,
 		// 设置序列化请求函数
@@ -41,7 +41,7 @@ export async function logout(
 	body: API.LogoutParam,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/auth/api/v1/tokens', {
+	return request<any>('/api-proxy/auth/api/v1/tokens', {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',

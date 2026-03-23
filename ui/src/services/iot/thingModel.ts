@@ -6,7 +6,7 @@ export async function modifyThingModel(
 	body: API.ThingModelModifyCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/iot/api/v1/thing-models', {
+	return request<any>('/api-proxy/iot/api/v1/thing-models', {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
@@ -22,7 +22,7 @@ export async function saveThingModel(
 	requestId: string,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/iot/api/v1/thing-models', {
+	return request<any>('/api-proxy/iot/api/v1/thing-models', {
 		method: 'POST',
 		headers: {
 			'request-id': requestId,
@@ -38,7 +38,7 @@ export async function removeThingModel(
 	body: number[],
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/iot/api/v1/thing-models', {
+	return request<any>('/api-proxy/iot/api/v1/thing-models', {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ export async function getThingModelById(
 	options?: { [key: string]: any },
 ) {
 	const { id: param0, ...queryParams } = params;
-	return request<API.Result>(`/apis/iot/api/v1/thing-models/${param0}`, {
+	return request<API.Result>(`/api-proxy/iot/api/v1/thing-models/${param0}`, {
 		method: 'GET',
 		params: { ...queryParams },
 		...(options || {}),
@@ -67,7 +67,7 @@ export async function exportThingModel(
 	body: API.ThingThingModelExportCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/iot/api/v1/thing-models/export', {
+	return request<any>('/api-proxy/iot/api/v1/thing-models/export', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -105,7 +105,7 @@ export async function importThingModel(
 		}
 	});
 
-	return request<any>('/apis/iot/api/v1/thing-models/import', {
+	return request<any>('/api-proxy/iot/api/v1/thing-models/import', {
 		method: 'POST',
 		data: formData,
 		requestType: 'form',
@@ -118,7 +118,7 @@ export async function pageThingModel(
 	body: API.ThingModelPageQry,
 	options?: { [key: string]: any },
 ) {
-	return request<API.Result>('/apis/iot/api/v1/thing-models/page', {
+	return request<API.Result>('/api-proxy/iot/api/v1/thing-models/page', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

@@ -27,27 +27,23 @@ public final class UserConvertor {
 	private UserConvertor() {
 	}
 
-	public static UserExtDetails toUserDetails(User user, Set<String> scopes) {
-		return DomainFactory.createUserDetails()
+	public static OAuth2AuthenticatedExtPrincipal toPrincipal(OAuth2Authentication authentication, Set<String> scopes) {
+		return DomainFactory.createPrincipal()
 			.toBuilder()
-			.id(user.id())
-			.username(user.username())
-			.password(user.password())
-			.avatar(user.avatar())
-			.superAdmin(user.superAdmin())
-			.tenantId(user.tenantId())
-			.permissions(user.permissions())
+			.id(authentication.getId())
+			.username(authentication.getUsername())
+			.avatar(authentication.getAvatar())
+			.superAdmin(authentication.getSuperAdmin())
+			.tenantId(authentication.getTenantId())
+			.permissions(authentication.getPermissions())
 			.scopes(scopes)
-			.status(user.status())
-			.mail(user.mail())
-			.mobile(user.mobile())
-			.deptId(user.deptId())
-			.deptIds(user.deptIds())
-			.creator(user.creator())
-			.build()
-			.decryptUsername()
-			.decryptMail()
-			.decryptMobile();
+			.status(authentication.getStatus())
+			.mail(authentication.getMail())
+			.mobile(authentication.getMobile())
+			.deptId(authentication.getDeptId())
+			.deptIds(authentication.getDeptIds())
+			.creator(authentication.getCreator())
+			.build();
 	}
 
 }

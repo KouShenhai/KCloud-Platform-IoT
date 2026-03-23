@@ -35,7 +35,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.convert.RedisCustomConversions;
 import org.springframework.data.redis.core.mapping.RedisMappingContext;
 import org.springframework.data.redis.repository.support.RedisRepositoryFactory;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -80,9 +79,9 @@ class OAuth2UserConsentRepositoryIntegrationTest {
 	@DisplayName("Test save and findByRegisteredClientIdAndPrincipalName")
 	void test_save_and_findByRegisteredClientIdAndPrincipalName() {
 		// Given
-		Set<GrantedAuthority> authorities = new HashSet<>();
-		authorities.add(new SimpleGrantedAuthority("SCOPE_read"));
-		authorities.add(new SimpleGrantedAuthority("SCOPE_write"));
+		Set<String> authorities = new HashSet<>();
+		authorities.add("SCOPE_read");
+		authorities.add("SCOPE_write");
 		OAuth2UserConsent consent = new OAuth2UserConsent("client-1:user-1", "client-1", "user-1", authorities);
 
 		// When
@@ -93,10 +92,7 @@ class OAuth2UserConsentRepositoryIntegrationTest {
 		Assertions.assertThat(result).isNotNull().isInstanceOf(OAuth2UserConsent.class);
 		Assertions.assertThat(result.getRegisteredClientId()).isEqualTo("client-1");
 		Assertions.assertThat(result.getPrincipalName()).isEqualTo("user-1");
-		Assertions.assertThat(result.getAuthorities())
-			.hasSize(2)
-			.contains(new SimpleGrantedAuthority("SCOPE_read"))
-			.contains(new SimpleGrantedAuthority("SCOPE_write"));
+		Assertions.assertThat(result.getAuthorities()).hasSize(2).contains("SCOPE_read").contains("SCOPE_write");
 	}
 
 	@Test
@@ -113,8 +109,8 @@ class OAuth2UserConsentRepositoryIntegrationTest {
 	@DisplayName("Test deleteByRegisteredClientIdAndPrincipalName")
 	void test_deleteByRegisteredClientIdAndPrincipalName() {
 		// Given
-		Set<GrantedAuthority> authorities = new HashSet<>();
-		authorities.add(new SimpleGrantedAuthority("SCOPE_read"));
+		Set<String> authorities = new HashSet<>();
+		authorities.add("SCOPE_read");
 		OAuth2UserConsent consent = new OAuth2UserConsent("client-2:user-2", "client-2", "user-2", authorities);
 		repository.save(consent);
 
@@ -127,19 +123,19 @@ class OAuth2UserConsentRepositoryIntegrationTest {
 		Assertions.assertThat(result.getId()).isEqualTo("client-2:user-2");
 		Assertions.assertThat(result.getRegisteredClientId()).isEqualTo("client-2");
 		Assertions.assertThat(result.getPrincipalName()).isEqualTo("user-2");
-		Assertions.assertThat(result.getAuthorities()).hasSize(1).contains(new SimpleGrantedAuthority("SCOPE_read"));
+		Assertions.assertThat(result.getAuthorities()).hasSize(1).contains("SCOPE_read");
 	}
 
 	@Test
 	@DisplayName("Test save multiple consents for same client different users")
 	void test_save_multiple_consents() {
 		// Given
-		Set<GrantedAuthority> authorities1 = new HashSet<>();
-		authorities1.add(new SimpleGrantedAuthority("SCOPE_read"));
+		Set<String> authorities1 = new HashSet<>();
+		authorities1.add("SCOPE_read");
 		OAuth2UserConsent consent1 = new OAuth2UserConsent("client-3:user-a", "client-3", "user-a", authorities1);
 
-		Set<GrantedAuthority> authorities2 = new HashSet<>();
-		authorities2.add(new SimpleGrantedAuthority("SCOPE_write"));
+		Set<String> authorities2 = new HashSet<>();
+		authorities2.add("SCOPE_write");
 		OAuth2UserConsent consent2 = new OAuth2UserConsent("client-3:user-b", "client-3", "user-b", authorities2);
 
 		// When

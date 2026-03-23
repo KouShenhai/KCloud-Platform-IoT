@@ -6,7 +6,7 @@ export async function modifyOssLog(
 	body: API.OssLogModifyCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/admin/api/v1/oss-logs', {
+	return request<any>('/api-proxy/admin/api/v1/oss-logs', {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
@@ -21,7 +21,7 @@ export async function saveOssLog(
 	body: API.OssLogSaveCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/admin/api/v1/oss-logs', {
+	return request<any>('/api-proxy/admin/api/v1/oss-logs', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ export async function removeOssLog(
 	body: number[],
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/admin/api/v1/oss-logs', {
+	return request<any>('/api-proxy/admin/api/v1/oss-logs', {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',
@@ -53,7 +53,7 @@ export async function getOssLogById(
 	options?: { [key: string]: any },
 ) {
 	const { id: param0, ...queryParams } = params;
-	return request<API.Result>(`/apis/admin/api/v1/oss-logs/${param0}`, {
+	return request<API.Result>(`/api-proxy/admin/api/v1/oss-logs/${param0}`, {
 		method: 'GET',
 		params: { ...queryParams },
 		...(options || {}),
@@ -65,7 +65,7 @@ export async function exportOssLog(
 	body: API.OssLogExportCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/admin/api/v1/oss-logs/export', {
+	return request<any>('/api-proxy/admin/api/v1/oss-logs/export', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -103,7 +103,7 @@ export async function importOssLog(
 		}
 	});
 
-	return request<any>('/apis/admin/api/v1/oss-logs/import', {
+	return request<any>('/api-proxy/admin/api/v1/oss-logs/import', {
 		method: 'POST',
 		data: formData,
 		requestType: 'form',
@@ -116,7 +116,7 @@ export async function pageOssLog(
 	body: API.OssLogPageQry,
 	options?: { [key: string]: any },
 ) {
-	return request<API.Result>('/apis/admin/api/v1/oss-logs/page', {
+	return request<API.Result>('/api-proxy/admin/api/v1/oss-logs/page', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

@@ -27,8 +27,8 @@ public final class DomainFactory {
 	private DomainFactory() {
 	}
 
-	public static UserExtDetails createUserDetails() {
-		return SpringContextUtils.getBeanProvider(UserExtDetails.class);
+	public static OAuth2AuthenticatedExtPrincipal createPrincipal() {
+		return SpringContextUtils.getBeanProvider(OAuth2AuthenticatedExtPrincipal.class);
 	}
 
 }

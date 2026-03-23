@@ -26,37 +26,32 @@ import org.laokou.auth.convertor.UserConvertor;
 import org.laokou.auth.dto.domainevent.LoginEvent;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.enums.MqTopic;
-import org.laokou.common.context.util.User;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.common.exception.GlobalException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 /**
- * 认证授权处理器.
+ * 认证授权.
  *
  * @author laokou
  */
 @Component
 @RequiredArgsConstructor
-final class OAuth2AuthenticationProcessor {
+final class OAuth2UsernamePasswordAuthentication {
 
 	private final DomainService domainService;
 
 	private final DomainEventPublisher kafkaDomainEventPublisher;
 
-	public UsernamePasswordAuthenticationToken authentication(@NonNull AuthA authA,
-			@NonNull HttpServletRequest request) {
+	public AuthA authentication(@NonNull AuthA authA, @NonNull HttpServletRequest request) {
 		LoginEvent evt = null;
 		try {
 			// 认证授权
 			domainService.auth(authA);
 			// 记录日志【登录成功】
 			evt = LoginLogConvertor.toDomainEvent(request, authA, null);
-			// 登录成功，转换成用户对象【业务】
-			User user = UserConvertor.toUser(authA);
-			// 认证成功，转换成认证对象【系统】
-			return new UsernamePasswordAuthenticationToken(user, user.username(), user.getAuthorities());
+			return authA;
 		}
 		catch (GlobalException gex) {
 			// 记录日志【登录失败】
@@ -67,6 +62,10 @@ final class OAuth2AuthenticationProcessor {
 			// 发布领域事件
 			kafkaDomainEventPublisher.publish(MqTopic.LOGIN_LOG.getTopic(), evt);
 		}
+	}
+
+	public Authentication authentication(AuthA authA) {
+		return UserConvertor.toOAuth2Authentication(authA);
 	}
 
 }

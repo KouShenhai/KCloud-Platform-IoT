@@ -39,9 +39,9 @@ import org.springframework.stereotype.Component;
 final class OAuth2MobileAuthenticationProvider extends AbstractOAuth2AuthenticationProvider {
 
 	public OAuth2MobileAuthenticationProvider(OAuth2AuthorizationService authorizationService,
-			OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator,
-			OAuth2AuthenticationProcessor authenticationProcessor) {
-		super(authorizationService, tokenGenerator, authenticationProcessor);
+			OAuth2TokenGenerator<OAuth2Token> tokenGenerator,
+			OAuth2UsernamePasswordAuthentication oAuth2UsernamePasswordAuthentication) {
+		super(authorizationService, tokenGenerator, oAuth2UsernamePasswordAuthentication);
 	}
 
 	@Override
@@ -50,7 +50,7 @@ final class OAuth2MobileAuthenticationProvider extends AbstractOAuth2Authenticat
 	}
 
 	@Override
-	Authentication getPrincipal(HttpServletRequest request) {
+	Authentication authenticate(HttpServletRequest request) {
 		return authentication(DomainFactory.createAuth().createMobileAuth(), request);
 	}
 

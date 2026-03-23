@@ -6,7 +6,7 @@ export async function modifyProductCategory(
 	body: API.ProductCategoryModifyCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/iot/api/v1/product-categorys', {
+	return request<any>('/api-proxy/iot/api/v1/product-categorys', {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
@@ -22,7 +22,7 @@ export async function saveProductCategory(
 	requestId: string,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/iot/api/v1/product-categorys', {
+	return request<any>('/api-proxy/iot/api/v1/product-categorys', {
 		method: 'POST',
 		headers: {
 			'request-id': requestId,
@@ -38,7 +38,7 @@ export async function removeProductCategory(
 	body: number[],
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/iot/api/v1/product-categorys', {
+	return request<any>('/api-proxy/iot/api/v1/product-categorys', {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ export async function getProductCategoryById(
 	options?: { [key: string]: any },
 ) {
 	const { id: param0, ...queryParams } = params;
-	return request<API.Result>(`/apis/iot/api/v1/product-categorys/${param0}`, {
+	return request<API.Result>(`/api-proxy/iot/api/v1/product-categorys/${param0}`, {
 		method: 'GET',
 		params: { ...queryParams },
 		...(options || {}),
@@ -67,7 +67,7 @@ export async function exportProductCategory(
 	body: API.ProductCategoryExportCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/apis/iot/api/v1/product-categorys/export', {
+	return request<any>('/api-proxy/iot/api/v1/product-categorys/export', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -105,7 +105,7 @@ export async function importProductCategory(
 		}
 	});
 
-	return request<any>('/apis/iot/api/v1/product-categorys/import', {
+	return request<any>('/api-proxy/iot/api/v1/product-categorys/import', {
 		method: 'POST',
 		data: formData,
 		requestType: 'form',
@@ -118,7 +118,7 @@ export async function pageProductCategory(
 	body: API.ProductCategoryPageQry,
 	options?: { [key: string]: any },
 ) {
-	return request<API.Result>('/apis/iot/api/v1/product-categorys/page', {
+	return request<API.Result>('/api-proxy/iot/api/v1/product-categorys/page', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -132,7 +132,7 @@ export async function listTreeProductCategory(
 	body: any,
 	options?: { [key: string]: any },
 ) {
-	return request<API.Result>('/apis/iot/api/v1/product-categorys/list-tree', {
+	return request<API.Result>('/api-proxy/iot/api/v1/product-categorys/list-tree', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

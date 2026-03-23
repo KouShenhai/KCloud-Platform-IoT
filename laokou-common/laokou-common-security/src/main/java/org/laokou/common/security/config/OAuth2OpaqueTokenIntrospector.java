@@ -18,8 +18,8 @@
 package org.laokou.common.security.config;
 
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.context.util.User;
 import org.laokou.common.context.util.UserConvertor;
+import org.laokou.common.context.util.OAuth2Authentication;
 import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
@@ -32,7 +32,6 @@ import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
 
 import java.security.Principal;
-import java.util.stream.Collectors;
 
 /**
  * @author laokou
@@ -53,8 +52,8 @@ public record OAuth2OpaqueTokenIntrospector(
 		if (ObjectUtils.isNull(accessToken) || ObjectUtils.isNull(refreshToken)) {
 			throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED);
 		}
-		if (accessToken.isActive() && refreshToken.isActive() && authorization.getAttribute(Principal.class.getName()) instanceof User user) {
-			return UserConvertor.toUserDetails(user, authorization.getAuthorizedScopes().stream().collect(Collectors.toSet()));
+		if (accessToken.isActive() && refreshToken.isActive() && authorization.getAttribute(Principal.class.getName()) instanceof OAuth2Authentication authentication) {
+			return UserConvertor.toPrincipal(authentication, authorization.getAuthorizedScopes());
 		}
 		authorizationService.remove(authorization);
 		throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED);
