@@ -35,7 +35,6 @@ class UserUtilsTest {
 
 	private OAuth2AuthenticatedExtPrincipal principal;
 
-
 	@BeforeEach
 	void setUp() {
 		principal = OAuth2AuthenticatedExtPrincipal.builder()

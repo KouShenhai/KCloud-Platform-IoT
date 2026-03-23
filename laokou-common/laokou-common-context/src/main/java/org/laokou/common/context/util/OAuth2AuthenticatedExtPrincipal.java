@@ -112,7 +112,8 @@ public final class OAuth2AuthenticatedExtPrincipal implements OAuth2Authenticate
 	@Override
 	@NullMarked
 	public Collection<GrantedAuthority> getAuthorities() {
-		return AuthorityUtils.createAuthorityList(Stream.concat(this.permissions.stream(), this.scopes.stream()).collect(Collectors.toSet()));
+		return AuthorityUtils.createAuthorityList(
+				Stream.concat(this.permissions.stream(), this.scopes.stream()).collect(Collectors.toSet()));
 	}
 
 	/**

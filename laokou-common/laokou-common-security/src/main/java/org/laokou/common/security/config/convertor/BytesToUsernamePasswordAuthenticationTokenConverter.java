@@ -38,7 +38,6 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
 import org.springframework.data.redis.serializer.JacksonJsonRedisSerializer;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.jackson.SecurityJacksonModules;
 import tools.jackson.databind.ObjectMapper;
 import tools.jackson.databind.json.JsonMapper;
@@ -57,7 +56,6 @@ public final class BytesToUsernamePasswordAuthenticationTokenConverter
 		ObjectMapper objectMapper = JsonMapper.builder()
 			.addModules(SecurityJacksonModules
 				.getModules(BytesToUsernamePasswordAuthenticationTokenConverter.class.getClassLoader()))
-			.addMixIn(SimpleGrantedAuthority.class, SimpleGrantedAuthorityMixin.class)
 			.build();
 		this.serializer = new JacksonJsonRedisSerializer<>(objectMapper, UsernamePasswordAuthenticationToken.class);
 	}

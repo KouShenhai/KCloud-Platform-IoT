@@ -34,7 +34,9 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-record UserDetailsServiceImpl(@NonNull OAuth2UsernamePasswordAuthentication oAuth2UsernamePasswordAuthentication) implements UserDetailsService {
+record UserDetailsServiceImpl(@NonNull OAuth2UsernamePasswordAuthentication oAuth2UsernamePasswordAuthentication)
+		implements
+			UserDetailsService {
 
 	/**
 	 * 获取用户信息.
@@ -44,7 +46,8 @@ record UserDetailsServiceImpl(@NonNull OAuth2UsernamePasswordAuthentication oAut
 	@NonNull
 	@Override
 	public UserDetails loadUserByUsername(@NonNull String username) {
-		AuthA authA = oAuth2UsernamePasswordAuthentication.authentication(DomainFactory.createAuth().createAuthorizationCodeAuth(), RequestUtils.getHttpServletRequest());
+		AuthA authA = oAuth2UsernamePasswordAuthentication.authentication(
+				DomainFactory.createAuth().createAuthorizationCodeAuth(), RequestUtils.getHttpServletRequest());
 		return UserConvertor.toUserDetails(authA);
 	}
 

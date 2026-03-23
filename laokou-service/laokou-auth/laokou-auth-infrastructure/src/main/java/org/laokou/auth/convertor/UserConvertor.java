@@ -24,6 +24,7 @@ import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.entity.UserE;
 import org.laokou.auth.model.valueobject.DataFilterV;
 import org.laokou.auth.model.valueobject.UserV;
+import org.laokou.common.context.util.OAuth2Authentication;
 import org.laokou.common.context.util.UserExtDetails;
 import org.laokou.common.crypto.util.AESUtils;
 
@@ -36,6 +37,24 @@ public final class UserConvertor {
 	private UserConvertor() {
 	}
 
+	public static OAuth2Authentication toOAuth2Authentication(AuthA auth) {
+		try {
+			UserE userE = auth.getUserE();
+			UserV userV = auth.getUserV();
+			DataFilterV dataFilterV = auth.getDataFilterV();
+			String username = AESUtils.decrypt(userE.getUsername());
+			String mail = AESUtils.decrypt(userE.getMail());
+			String mobile = AESUtils.decrypt(userE.getMobile());
+			return new OAuth2Authentication(userE.getId(), username, userE.getPassword(), userV.avatar(),
+					userE.isSuperAdministrator(), userE.getStatus(), mail, mobile, userE.getTenantId(),
+					userE.getDeptId(), userV.permissions(), dataFilterV.deptIds(), dataFilterV.creator());
+		}
+		catch (Exception ex) {
+			log.error("解密失败：{}", ex.getMessage());
+			throw new IllegalArgumentException(ex);
+		}
+	}
+
 	public static UserExtDetails toUserDetails(AuthA auth) {
 		try {
 			UserE userE = auth.getUserE();
@@ -44,9 +63,11 @@ public final class UserConvertor {
 			String username = AESUtils.decrypt(userE.getUsername());
 			String mail = AESUtils.decrypt(userE.getMail());
 			String mobile = AESUtils.decrypt(userE.getMobile());
-			return new UserExtDetails(userE.getId(), username, userE.getPassword(), userV.avatar(), userE.isSuperAdministrator(),
-				userE.getStatus(), mail, mobile, userE.getTenantId(), userE.getDeptId(), userV.permissions(), dataFilterV.deptIds(), dataFilterV.creator());
-		} catch (Exception ex) {
+			return new UserExtDetails(userE.getId(), username, userE.getPassword(), userV.avatar(),
+					userE.isSuperAdministrator(), userE.getStatus(), mail, mobile, userE.getTenantId(),
+					userE.getDeptId(), userV.permissions(), dataFilterV.deptIds(), dataFilterV.creator());
+		}
+		catch (Exception ex) {
 			log.error("解密失败：{}", ex.getMessage());
 			throw new IllegalArgumentException(ex);
 		}

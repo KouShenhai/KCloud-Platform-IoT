@@ -83,8 +83,6 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 
 	private final OAuth2UsernamePasswordAuthentication oAuth2UsernamePasswordAuthentication;
 
-	private final AuthenticationProvider daoAuthenticationProvider;
-
 	/**
 	 * 认证授权.
 	 * @param authentication 认证对象
@@ -121,23 +119,24 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 	 */
 	abstract AuthorizationGrantType getGrantType();
 
-
 	/**
 	 * 获取用户信息.
 	 * @param authA 认证聚合根
 	 * @return 认证信息
 	 */
 	protected Authentication authentication(AuthA authA, HttpServletRequest request) {
-		return oAuth2UsernamePasswordAuthentication.authentication(oAuth2UsernamePasswordAuthentication.authentication(authA, request));
+		return oAuth2UsernamePasswordAuthentication
+			.authentication(oAuth2UsernamePasswordAuthentication.authentication(authA, request));
 	}
 
 	/**
 	 * 获取令牌.
 	 * @param authentication 认证对象
-	 * @param usernamePasswordAuthenticationToken 认证对象
+	 * @param usernamePasswordAuthentication 认证对象
 	 * @return 令牌
 	 */
-	protected Authentication authentication(Authentication authentication, @NonNull Authentication usernamePasswordAuthenticationToken) {
+	protected Authentication authentication(Authentication authentication,
+			@NonNull Authentication usernamePasswordAuthentication) {
 		// 查看 OAuth2DeviceCodeAuthenticationProvider#authenticate(Authentication)
 		AbstractOAuth2AuthenticationToken abstractOAuth2Authentication = (AbstractOAuth2AuthenticationToken) authentication;
 		OAuth2ClientAuthenticationToken clientPrincipal = getAuthenticatedClientElseThrowInvalidClient(
@@ -146,12 +145,10 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 		if (ObjectUtils.isNull(registeredClient)) {
 			throw OAuth2ExceptionHandler.getException(OAuth2Constants.REGISTERED_CLIENT_NOT_FOUND);
 		}
-		// 认证授权
-		Authentication usernamePassowordAuthentication = daoAuthenticationProvider.authenticate(usernamePasswordAuthenticationToken);
 		// 获取认证范围
 		Set<String> authorizedScopes = new LinkedHashSet<>(registeredClient.getScopes());
 		// 登录名称
-		String loginName = Optional.ofNullable(usernamePasswordAuthenticationToken.getPrincipal())
+		String loginName = Optional.ofNullable(usernamePasswordAuthentication.getName())
 			.map(Object::toString)
 			.orElse(StringConstants.EMPTY);
 		// 认证类型
@@ -161,7 +158,7 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 		// 获取上下文
 		DefaultOAuth2TokenContext.Builder tokenContextBuilder = DefaultOAuth2TokenContext.builder()
 			.registeredClient(registeredClient)
-			.principal(usernamePassowordAuthentication)
+			.principal(usernamePasswordAuthentication)
 			.tokenType(OAuth2TokenType.ACCESS_TOKEN)
 			.authorizedScopes(authorizedScopes)
 			.authorizationServerContext(AuthorizationServerContextHolder.getContext())
@@ -194,7 +191,7 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 			authorizationBuilder.refreshToken(refreshToken);
 		}
 		// 存储认证信息
-		authorizationBuilder.attribute(Principal.class.getName(), usernamePassowordAuthentication);
+		authorizationBuilder.attribute(Principal.class.getName(), usernamePasswordAuthentication);
 		authorizationService.save(authorizationBuilder.build());
 		return new OAuth2AccessTokenAuthenticationToken(registeredClient, clientPrincipal, accessToken, refreshToken);
 	}

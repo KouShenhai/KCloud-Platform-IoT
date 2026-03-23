@@ -27,22 +27,22 @@ public final class UserConvertor {
 	private UserConvertor() {
 	}
 
-	public static OAuth2AuthenticatedExtPrincipal toPrincipal(UserExtDetails userExtDetails, Set<String> scopes) {
+	public static OAuth2AuthenticatedExtPrincipal toPrincipal(OAuth2Authentication authentication, Set<String> scopes) {
 		return DomainFactory.createPrincipal()
 			.toBuilder()
-			.id(userExtDetails.getId())
-			.username(userExtDetails.getUsername())
-			.avatar(userExtDetails.getAvatar())
-			.superAdmin(userExtDetails.getSuperAdmin())
-			.tenantId(userExtDetails.getTenantId())
-			.permissions(userExtDetails.getPermissions())
+			.id(authentication.getId())
+			.username(authentication.getUsername())
+			.avatar(authentication.getAvatar())
+			.superAdmin(authentication.getSuperAdmin())
+			.tenantId(authentication.getTenantId())
+			.permissions(authentication.getPermissions())
 			.scopes(scopes)
-			.status(userExtDetails.getStatus())
-			.mail(userExtDetails.getMail())
-			.mobile(userExtDetails.getMobile())
-			.deptId(userExtDetails.getDeptId())
-			.deptIds(userExtDetails.getDeptIds())
-			.creator(userExtDetails.getCreator())
+			.status(authentication.getStatus())
+			.mail(authentication.getMail())
+			.mobile(authentication.getMobile())
+			.deptId(authentication.getDeptId())
+			.deptIds(authentication.getDeptIds())
+			.creator(authentication.getCreator())
 			.build();
 	}
 

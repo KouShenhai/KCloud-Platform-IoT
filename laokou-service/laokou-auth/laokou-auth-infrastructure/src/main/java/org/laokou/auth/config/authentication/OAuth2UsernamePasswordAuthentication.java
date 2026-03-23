@@ -22,18 +22,18 @@ import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import org.laokou.auth.ability.DomainService;
 import org.laokou.auth.convertor.LoginLogConvertor;
+import org.laokou.auth.convertor.UserConvertor;
 import org.laokou.auth.dto.domainevent.LoginEvent;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.enums.MqTopic;
-import org.laokou.auth.model.valueobject.UserV;
 import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.common.exception.GlobalException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 /**
  * 认证授权.
+ *
  * @author laokou
  */
 @Component
@@ -44,7 +44,7 @@ final class OAuth2UsernamePasswordAuthentication {
 
 	private final DomainEventPublisher kafkaDomainEventPublisher;
 
-	public final AuthA authentication(@NonNull AuthA authA, @NonNull HttpServletRequest request) {
+	public AuthA authentication(@NonNull AuthA authA, @NonNull HttpServletRequest request) {
 		LoginEvent evt = null;
 		try {
 			// 认证授权
@@ -64,9 +64,8 @@ final class OAuth2UsernamePasswordAuthentication {
 		}
 	}
 
-	public final UsernamePasswordAuthenticationToken authentication(@NonNull AuthA authA) {
-		UserV userV = authA.getUserV();
-		return new UsernamePasswordAuthenticationToken(userV.username(), userV.password(), AuthorityUtils.createAuthorityList(userV.permissions()));
+	public Authentication authentication(AuthA authA) {
+		return UserConvertor.toOAuth2Authentication(authA);
 	}
 
 }

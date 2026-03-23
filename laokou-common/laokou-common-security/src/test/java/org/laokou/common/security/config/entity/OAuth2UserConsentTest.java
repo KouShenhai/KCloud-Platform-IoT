@@ -19,8 +19,6 @@ package org.laokou.common.security.config.entity;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -38,9 +36,9 @@ class OAuth2UserConsentTest {
 		String id = "client-1-user-1";
 		String registeredClientId = "client-1";
 		String principalName = "user-1";
-		Set<GrantedAuthority> authorities = new HashSet<>();
-		authorities.add(new SimpleGrantedAuthority("SCOPE_read"));
-		authorities.add(new SimpleGrantedAuthority("SCOPE_write"));
+		Set<String> authorities = new HashSet<>();
+		authorities.add("SCOPE_read");
+		authorities.add("SCOPE_write");
 
 		// When
 		OAuth2UserConsent userConsent = new OAuth2UserConsent(id, registeredClientId, principalName, authorities);
@@ -59,7 +57,7 @@ class OAuth2UserConsentTest {
 		String id = "client-1-user-1";
 		String registeredClientId = "client-1";
 		String principalName = "user-1";
-		Set<GrantedAuthority> authorities = new HashSet<>();
+		Set<String> authorities = new HashSet<>();
 
 		// When
 		OAuth2UserConsent userConsent = new OAuth2UserConsent(id, registeredClientId, principalName, authorities);
@@ -74,15 +72,14 @@ class OAuth2UserConsentTest {
 		String id = "client-1-user-1";
 		String registeredClientId = "client-1";
 		String principalName = "user-1";
-		Set<GrantedAuthority> authorities = new HashSet<>();
-		SimpleGrantedAuthority readAuthority = new SimpleGrantedAuthority("SCOPE_read");
-		authorities.add(readAuthority);
+		Set<String> authorities = new HashSet<>();
+		authorities.add("SCOPE_read");
 
 		// When
 		OAuth2UserConsent userConsent = new OAuth2UserConsent(id, registeredClientId, principalName, authorities);
 
 		// Then
-		Assertions.assertThat(userConsent.getAuthorities()).contains(readAuthority);
+		Assertions.assertThat(userConsent.getAuthorities()).contains("SCOPE_read");
 	}
 
 }

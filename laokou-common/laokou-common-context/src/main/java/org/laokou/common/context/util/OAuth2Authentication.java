@@ -24,9 +24,9 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import lombok.Getter;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.NullMarked;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serial;
 import java.util.Collection;
@@ -37,12 +37,12 @@ import java.util.Set;
  * @author laokou
  */
 @Getter
-@JsonTypeName("UserExtDetails")
+@JsonTypeName("OAuth2Authentication")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
 		isGetterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
-public final class UserExtDetails extends User {
+public final class OAuth2Authentication implements UserDetails, Authentication {
 
 	@Serial
 	private static final long serialVersionUID = 3319752558160144611L;
@@ -51,6 +51,16 @@ public final class UserExtDetails extends User {
 	 * 用户ID.
 	 */
 	private final Long id;
+
+	/**
+	 * 用户名.
+	 */
+	private final String username;
+
+	/**
+	 * 密码.
+	 */
+	private final transient String password;
 
 	/**
 	 * 头像.
@@ -102,11 +112,12 @@ public final class UserExtDetails extends User {
 	 */
 	private final Long creator;
 
-	public UserExtDetails(@NonNull Long id, @NonNull String username, @NonNull String password, String avatar,
+	public OAuth2Authentication(@NonNull Long id, @NonNull String username, @NonNull String password, String avatar,
 			@NonNull Boolean superAdmin, @NonNull Integer status, String mail, String mobile, @NonNull Long tenantId,
 			@NonNull Long deptId, @NonNull Set<String> permissions, Set<Long> deptIds, Long creator) {
-		super(username, password, AuthorityUtils.createAuthorityList(permissions));
 		this.id = id;
+		this.username = username;
+		this.password = password;
 		this.avatar = avatar;
 		this.superAdmin = superAdmin;
 		this.status = status;
@@ -123,6 +134,36 @@ public final class UserExtDetails extends User {
 	@NullMarked
 	public Collection<GrantedAuthority> getAuthorities() {
 		return Collections.emptySet();
+	}
+
+	@Override
+	public Object getCredentials() {
+		return this.username;
+	}
+
+	@Override
+	public Object getDetails() {
+		return this.username;
+	}
+
+	@Override
+	@NonNull public Object getPrincipal() {
+		return this;
+	}
+
+	@Override
+	public boolean isAuthenticated() {
+		return true;
+	}
+
+	@Override
+	public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public String getName() {
+		return this.username;
 	}
 
 }

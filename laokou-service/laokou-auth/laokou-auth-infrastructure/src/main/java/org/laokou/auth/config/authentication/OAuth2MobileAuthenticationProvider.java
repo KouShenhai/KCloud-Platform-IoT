@@ -22,7 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.common.security.config.OAuth2ModelMapper;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2Token;
@@ -39,8 +38,10 @@ import org.springframework.stereotype.Component;
 @Component
 final class OAuth2MobileAuthenticationProvider extends AbstractOAuth2AuthenticationProvider {
 
-	public OAuth2MobileAuthenticationProvider(OAuth2AuthorizationService authorizationService, OAuth2TokenGenerator<OAuth2Token> tokenGenerator, OAuth2UsernamePasswordAuthentication oAuth2UsernamePasswordAuthentication, AuthenticationProvider daoAuthenticationProvider) {
-		super(authorizationService, tokenGenerator, oAuth2UsernamePasswordAuthentication, daoAuthenticationProvider);
+	public OAuth2MobileAuthenticationProvider(OAuth2AuthorizationService authorizationService,
+			OAuth2TokenGenerator<OAuth2Token> tokenGenerator,
+			OAuth2UsernamePasswordAuthentication oAuth2UsernamePasswordAuthentication) {
+		super(authorizationService, tokenGenerator, oAuth2UsernamePasswordAuthentication);
 	}
 
 	@Override

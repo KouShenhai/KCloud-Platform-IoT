@@ -21,7 +21,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -33,10 +32,8 @@ public class LoginController {
 
 	@GetMapping("/login")
 	@Operation(summary = "登录", description = "登录")
-	public ModelAndView require(ModelAndView mv,
-								@RequestParam(required = false) String error) {
+	public ModelAndView require(ModelAndView mv) {
 		mv.setViewName("login");
-		mv.addObject("error", error);
 		return mv;
 	}
 
