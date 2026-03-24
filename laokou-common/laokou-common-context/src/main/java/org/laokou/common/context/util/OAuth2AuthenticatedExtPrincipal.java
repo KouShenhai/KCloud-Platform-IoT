@@ -128,7 +128,7 @@ public final class OAuth2AuthenticatedExtPrincipal implements OAuth2Authenticate
 	@Override
 	@NullMarked
 	public String getName() {
-		return this.username;
+		return this.id.toString();
 	}
 
 }

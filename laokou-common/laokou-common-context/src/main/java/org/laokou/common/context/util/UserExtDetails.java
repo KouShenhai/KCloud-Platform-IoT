@@ -23,14 +23,10 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import lombok.Getter;
 import org.jspecify.annotations.NonNull;
-import org.jspecify.annotations.NullMarked;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 
 import java.io.Serial;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Set;
 
 /**
@@ -117,12 +113,6 @@ public final class UserExtDetails extends User {
 		this.deptIds = deptIds;
 		this.creator = creator;
 		this.permissions = permissions;
-	}
-
-	@Override
-	@NullMarked
-	public Collection<GrantedAuthority> getAuthorities() {
-		return Collections.emptySet();
 	}
 
 }
