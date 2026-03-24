@@ -140,15 +140,19 @@ spring:
                 - openid
                 - profile
               redirect-uris:
-                - http://127.0.0.1:8000
-                - http://127.0.0.1:8001
-                - https://laokou.org.cn
-                - https://laokou.org
+                - http://127.0.0.1:8000/loading
+                - http://127.0.0.1:8001/loading
+                - http://localhost:8000/loading
+                - http://localhost:8001/loading
+                - https://laokou.org.cn/loading
+                - https://laokou.org/loading
               post-logout-redirect-uris:
-                - http://127.0.0.1:8000
-                - http://127.0.0.1:8001
-                - https://laokou.org.cn
-                - https://laokou.org
+                - http://127.0.0.1:8000/login
+                - http://127.0.0.1:8001/login
+                - http://localhost:8000/login
+                - http://localhost:8001/login
+                - https://laokou.org.cn/login
+                - https://laokou.org/login
             # 客户端请求访问时需要授权同意
             require-authorization-consent: true
             # PKCE

@@ -25,7 +25,7 @@ import {
 import { history } from '@umijs/max';
 import { Col, Divider, Image, message, Row, Space, Tabs } from 'antd';
 import { JSEncrypt } from 'jsencrypt';
-import { CSSProperties, useEffect, useRef, useState } from 'react';
+import { CSSProperties, useEffect, useRef, useState} from 'react';
 import { v7 as uuidV7 } from 'uuid';
 
 const USERNAME_PASSWORD = {
@@ -60,7 +60,6 @@ export default () => {
 	const formRef = useRef<ProFormInstance>(null);
 	const mailCaptchaRef = useRef<CaptFieldRef | null | undefined>(null);
 	const mobileCaptchaRef = useRef<CaptFieldRef | null | undefined>(null);
-
 	const setFormField = (form: API.LoginParam) => {
 		formRef?.current?.setFieldsValue(form);
 	};
@@ -175,6 +174,18 @@ export default () => {
 			: t('login.greeting.evening');
 	};
 
+	const authorizationCodeLogin = () => {
+		const redirectUri = encodeURIComponent(`${window.location.origin}/loading`);
+		const state = encodeURIComponent(1234);
+		const clientId = encodeURIComponent('eb7Ded5bbFbd7896f8a2cfdDc9');
+		const scope = encodeURIComponent('read write');
+		const responseType = encodeURIComponent('code');
+		const code_verifier = encodeURIComponent('3n0j2P8n0kL4Y7Xw9R8xK1aFvQpLzE2dR1o8YtUqZsM');
+		const code_challenge = encodeURIComponent('mY8d2sK0VbC9Zkq5nZC7b4l4tCwY5hJ9l6gP8XyTQ1U');
+		const code_challenge_method = encodeURIComponent('S256');
+		window.location.href = `http://auth:1111/api/v1/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}&state=${state}&code_verifier=${code_verifier}&code_challenge=${code_challenge}&code_challenge_method=${code_challenge_method}`;
+	};
+
 	useEffect(() => {
 		// 如果已有 token 且未过期：访问 /login 直接跳转首页（避免重复登录）
 		const token = getAccessToken();
@@ -183,7 +194,6 @@ export default () => {
 			history.replace('/');
 			return;
 		}
-
 		// 无有效 token 才初始化登录页
 		clearToken();
 		getPublicKey().catch(console.log);
@@ -209,8 +219,9 @@ export default () => {
 					);
 					// 获取跳转地址
 					const urlParams = new URL(window.location.href).searchParams;
+					const redirectUrl = urlParams.get('redirect') || '/';
 					// 跳转路由
-					history.push(urlParams.get('redirect') || '/');
+					history.push(redirectUrl);
 					// 1.5秒后刷新页面
 					setTimeout(() => {
 						window.location.reload();
@@ -279,6 +290,7 @@ export default () => {
 									border: '1px solid #D4D8DD',
 									borderRadius: '50%',
 								}}
+								onClick={authorizationCodeLogin}
 							>
 								<SafetyCertificateOutlined
 									style={{ ...iconStyles, color: '#1191ff' }}
