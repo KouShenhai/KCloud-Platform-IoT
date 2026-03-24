@@ -2571,7 +2571,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (31, 'router
       {
         "name": "Path",
         "args": {
-          "pattern": "/auth/**"
+          "pattern": "/api-gateway/auth/**"
         }
       },
       {
@@ -2586,13 +2586,13 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (31, 'router
       {
         "name": "StripPrefix",
         "args": {
-          "parts": "1"
+          "parts": "2"
         }
       },
       {
         "name": "RewritePath",
         "args": {
-          "_genkey_0": "/auth/(?<path>.*)",
+          "_genkey_0": "/api-gateway/auth/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
         }
       }
@@ -2609,7 +2609,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (31, 'router
       {
         "name": "Path",
         "args": {
-          "pattern": "/admin/**"
+          "pattern": "/api-gateway/admin/**"
         }
       },
       {
@@ -2624,13 +2624,13 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (31, 'router
       {
         "name": "StripPrefix",
         "args": {
-          "parts": "1"
+          "parts": "2"
         }
       },
       {
         "name": "RewritePath",
         "args": {
-          "_genkey_0": "/admin/(?<path>.*)",
+          "_genkey_0": "/api-gateway/admin/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
         }
       }
@@ -2647,7 +2647,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (31, 'router
       {
         "name": "Path",
         "args": {
-          "pattern": "/iot/**"
+          "pattern": "/api-gateway/iot/**"
         }
       },
       {
@@ -2662,13 +2662,13 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (31, 'router
       {
         "name": "StripPrefix",
         "args": {
-          "parts": "1"
+          "parts": "2"
         }
       },
       {
         "name": "RewritePath",
         "args": {
-          "_genkey_0": "/iot/(?<path>.*)",
+          "_genkey_0": "/api-gateway/iot/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
         }
       }
@@ -2685,7 +2685,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (31, 'router
       {
         "name": "Path",
         "args": {
-          "pattern": "/generator/**"
+          "pattern": "/api-gateway/generator/**"
         }
       },
       {
@@ -2700,13 +2700,13 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (31, 'router
       {
         "name": "StripPrefix",
         "args": {
-          "parts": "1"
+          "parts": "2"
         }
       },
       {
         "name": "RewritePath",
         "args": {
-          "_genkey_0": "/generator/(?<path>.*)",
+          "_genkey_0": "/api-gateway/generator/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
         }
       }
@@ -2723,7 +2723,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (31, 'router
       {
         "name": "Path",
         "args": {
-          "pattern": "/iot-websocket/**"
+          "pattern": "/api-gateway/iot-websocket/**"
         }
       },
       {
@@ -2738,13 +2738,13 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (31, 'router
       {
         "name": "StripPrefix",
         "args": {
-          "parts": "1"
+          "parts": "2"
         }
       },
       {
         "name": "RewritePath",
         "args": {
-          "_genkey_0": "/iot-websocket/(?<path>.*)",
+          "_genkey_0": "/api-gateway/iot-websocket/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
         }
       }
@@ -2764,7 +2764,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (26, 'router
       {
         "name": "Path",
         "args": {
-          "pattern": "/auth/**"
+          "pattern": "/api-gateway/auth/**"
         }
       },
       {
@@ -2779,13 +2779,13 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (26, 'router
       {
         "name": "StripPrefix",
         "args": {
-          "parts": "1"
+          "parts": "2"
         }
       },
       {
         "name": "RewritePath",
         "args": {
-          "_genkey_0": "/auth/(?<path>.*)",
+          "_genkey_0": "/api-gateway/auth/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
         }
       }
@@ -2802,7 +2802,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (26, 'router
       {
         "name": "Path",
         "args": {
-          "pattern": "/admin/**"
+          "pattern": "/api-gateway/admin/**"
         }
       },
       {
@@ -2817,13 +2817,13 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (26, 'router
       {
         "name": "StripPrefix",
         "args": {
-          "parts": "1"
+          "parts": "2"
         }
       },
       {
         "name": "RewritePath",
         "args": {
-          "_genkey_0": "/admin/(?<path>.*)",
+          "_genkey_0": "/api-gateway/admin/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
         }
       }
@@ -2840,7 +2840,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (26, 'router
       {
         "name": "Path",
         "args": {
-          "pattern": "/iot/**"
+          "pattern": "/api-gateway/iot/**"
         }
       },
       {
@@ -2855,13 +2855,13 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (26, 'router
       {
         "name": "StripPrefix",
         "args": {
-          "parts": "1"
+          "parts": "2"
         }
       },
       {
         "name": "RewritePath",
         "args": {
-          "_genkey_0": "/iot/(?<path>.*)",
+          "_genkey_0": "/api-gateway/iot/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
         }
       }
@@ -2878,7 +2878,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (26, 'router
       {
         "name": "Path",
         "args": {
-          "pattern": "/generator/**"
+          "pattern": "/api-gateway/generator/**"
         }
       },
       {
@@ -2893,13 +2893,13 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (26, 'router
       {
         "name": "StripPrefix",
         "args": {
-          "parts": "1"
+          "parts": "2"
         }
       },
       {
         "name": "RewritePath",
         "args": {
-          "_genkey_0": "/generator/(?<path>.*)",
+          "_genkey_0": "/api-gateway/generator/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
         }
       }
@@ -2916,7 +2916,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (26, 'router
       {
         "name": "Path",
         "args": {
-          "pattern": "/iot-websocket/**"
+          "pattern": "/api-gateway/iot-websocket/**"
         }
       },
       {
@@ -2931,13 +2931,13 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (26, 'router
       {
         "name": "StripPrefix",
         "args": {
-          "parts": "1"
+          "parts": "2"
         }
       },
       {
         "name": "RewritePath",
         "args": {
-          "_genkey_0": "/iot-websocket/(?<path>.*)",
+          "_genkey_0": "/api-gateway/iot-websocket/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
         }
       }
@@ -2957,7 +2957,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (30, 'router
       {
         "name": "Path",
         "args": {
-          "pattern": "/auth/**"
+          "pattern": "/api-gateway/auth/**"
         }
       },
       {
@@ -2972,13 +2972,13 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (30, 'router
       {
         "name": "StripPrefix",
         "args": {
-          "parts": "1"
+          "parts": "2"
         }
       },
       {
         "name": "RewritePath",
         "args": {
-          "_genkey_0": "/auth/(?<path>.*)",
+          "_genkey_0": "/api-gateway/auth/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
         }
       }
@@ -2995,7 +2995,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (30, 'router
       {
         "name": "Path",
         "args": {
-          "pattern": "/admin/**"
+          "pattern": "/api-gateway/admin/**"
         }
       },
       {
@@ -3010,13 +3010,13 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (30, 'router
       {
         "name": "StripPrefix",
         "args": {
-          "parts": "1"
+          "parts": "2"
         }
       },
       {
         "name": "RewritePath",
         "args": {
-          "_genkey_0": "/admin/(?<path>.*)",
+          "_genkey_0": "/api-gateway/admin/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
         }
       }
@@ -3033,7 +3033,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (30, 'router
       {
         "name": "Path",
         "args": {
-          "pattern": "/iot/**"
+          "pattern": "/api-gateway/iot/**"
         }
       },
       {
@@ -3048,13 +3048,13 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (30, 'router
       {
         "name": "StripPrefix",
         "args": {
-          "parts": "1"
+          "parts": "2"
         }
       },
       {
         "name": "RewritePath",
         "args": {
-          "_genkey_0": "/iot/(?<path>.*)",
+          "_genkey_0": "/api-gateway/iot/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
         }
       }
@@ -3071,7 +3071,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (30, 'router
       {
         "name": "Path",
         "args": {
-          "pattern": "/generator/**"
+          "pattern": "/api-gateway/generator/**"
         }
       },
       {
@@ -3086,13 +3086,13 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (30, 'router
       {
         "name": "StripPrefix",
         "args": {
-          "parts": "1"
+          "parts": "2"
         }
       },
       {
         "name": "RewritePath",
         "args": {
-          "_genkey_0": "/generator/(?<path>.*)",
+          "_genkey_0": "/api-gateway/generator/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
         }
       }
@@ -3109,7 +3109,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (30, 'router
       {
         "name": "Path",
         "args": {
-          "pattern": "/iot-websocket/**"
+          "pattern": "/api-gateway/iot-websocket/**"
         }
       },
       {
@@ -3124,13 +3124,13 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (30, 'router
       {
         "name": "StripPrefix",
         "args": {
-          "parts": "1"
+          "parts": "2"
         }
       },
       {
         "name": "RewritePath",
         "args": {
-          "_genkey_0": "/iot-websocket/(?<path>.*)",
+          "_genkey_0": "/api-gateway/iot-websocket/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
         }
       }

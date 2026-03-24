@@ -138,12 +138,12 @@ public final class OAuth2Authentication implements UserDetails, Authentication {
 
 	@Override
 	public Object getCredentials() {
-		return this.username;
+		return this.id.toString();
 	}
 
 	@Override
 	public Object getDetails() {
-		return this.username;
+		return this.id.toString();
 	}
 
 	@Override
@@ -163,7 +163,7 @@ public final class OAuth2Authentication implements UserDetails, Authentication {
 
 	@Override
 	public String getName() {
-		return this.username;
+		return this.id.toString();
 	}
 
 }
