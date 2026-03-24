@@ -31,6 +31,13 @@ export default [
 		layout: false,
 	},
 	{
+		name: 'menu.test',
+		title: 'menu.test',
+		path: '/test',
+		component: './Test',
+		layout: false,
+	},
+	{
 		name: 'menu.sys',
 		title: 'menu.sys',
 		path: '/sys',

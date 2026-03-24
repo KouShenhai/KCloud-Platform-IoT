@@ -401,6 +401,7 @@ export default {
 	// menu (routes)
 	'menu.home': '首页',
 	'menu.login': '登录',
+	'menu.test': '测试',
 	'menu.sys': '系统管理',
 	'menu.sys.permission': '权限管理',
 	'menu.sys.permission.menu': '菜单',

@@ -174,8 +174,8 @@ export default () => {
 			: t('login.greeting.evening');
 	};
 
-	const authorizationCodeLogin = () => {
-		const redirectUri = encodeURIComponent(`${window.location.origin}/loading`);
+	const authorizationCodeAuth = () => {
+		const redirectUri = encodeURIComponent(`${window.location.origin}/test`);
 		const state = encodeURIComponent(1234);
 		const clientId = encodeURIComponent('eb7Ded5bbFbd7896f8a2cfdDc9');
 		const scope = encodeURIComponent('read write');
@@ -290,7 +290,7 @@ export default () => {
 									border: '1px solid #D4D8DD',
 									borderRadius: '50%',
 								}}
-								onClick={authorizationCodeLogin}
+								onClick={authorizationCodeAuth}
 							>
 								<SafetyCertificateOutlined
 									style={{ ...iconStyles, color: '#1191ff' }}
