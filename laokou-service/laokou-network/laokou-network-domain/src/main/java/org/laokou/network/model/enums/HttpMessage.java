@@ -15,20 +15,27 @@
  *
  */
 
-package org.laokou.network.model;
+package org.laokou.network.model.enums;
 
 import lombok.Getter;
 
 /**
+ * http消息枚举.
+ *
  * @author laokou
  */
 @Getter
-public enum WebsocketMessageEnum {
+public enum HttpMessage {
 
 	UP_PROPERTY_REPORT("up_property_report", "属性上报【上行】") {
 		@Override
-		public String getPath() {
-			return "^\\/\\d+\\/\\d+\\/ws$";
+		public String getRouter() {
+			return "/:productId/:deviceId/up/property/report";
+		}
+
+		@Override
+		public String getMqTopic() {
+			return "up-property-report";
 		}
 	};
 
@@ -36,11 +43,13 @@ public enum WebsocketMessageEnum {
 
 	private final String desc;
 
-	WebsocketMessageEnum(String code, String desc) {
+	HttpMessage(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}
 
-	public abstract String getPath();
+	public abstract String getRouter();
+
+	public abstract String getMqTopic();
 
 }
