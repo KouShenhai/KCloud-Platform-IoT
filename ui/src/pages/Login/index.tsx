@@ -1,4 +1,4 @@
-import { clearToken, getAccessToken, getExpireTime, setToken } from '@/access';
+import { getAccessToken, getExpireTime, setToken } from '@/access';
 import { login } from '@/services/auth/auth';
 import { getUsernamePasswordAuthCaptchaByUuid, sendCaptcha} from '@/services/auth/captcha';
 import { getSecretInfo } from '@/services/auth/secret';
@@ -174,7 +174,7 @@ export default () => {
 			: t('login.greeting.evening');
 	};
 
-	const authorizationCodeAuth = () => {
+	const toAuthorizationCodeAuth = () => {
 		const redirectUri = encodeURIComponent(`${window.location.origin}/test`);
 		const state = encodeURIComponent(1234);
 		const clientId = encodeURIComponent('eb7Ded5bbFbd7896f8a2cfdDc9');
@@ -186,16 +186,24 @@ export default () => {
 		window.location.href = `http://auth:1111/api/v1/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}&state=${state}&code_verifier=${code_verifier}&code_challenge=${code_challenge}&code_challenge_method=${code_challenge_method}`;
 	};
 
-	useEffect(() => {
-		// 如果已有 token 且未过期：访问 /login 直接跳转首页（避免重复登录）
+	const authorizationCodeAuth = () => {
+
+	}
+
+	const toHome =() => {
 		const token = getAccessToken();
 		const expireTime = getExpireTime();
 		if (token && expireTime && expireTime > Date.now()) {
 			history.replace('/');
 			return;
 		}
-		// 无有效 token 才初始化登录页
-		clearToken();
+	}
+
+	useEffect(() => {
+		// 授权码登录
+		authorizationCodeAuth();
+		// 如果已有 token 且未过期：访问 /login 直接跳转首页（避免重复登录）
+		toHome();
 		getPublicKey().catch(console.log);
 		getCaptchaImage().catch(console.log);
 	}, []);
@@ -290,7 +298,7 @@ export default () => {
 									border: '1px solid #D4D8DD',
 									borderRadius: '50%',
 								}}
-								onClick={authorizationCodeAuth}
+								onClick={toAuthorizationCodeAuth}
 							>
 								<SafetyCertificateOutlined
 									style={{ ...iconStyles, color: '#1191ff' }}

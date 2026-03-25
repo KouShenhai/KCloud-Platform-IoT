@@ -227,9 +227,9 @@ export const layout: RunTimeLayoutConfig = ({ initialState }: any) => {
 										if (refreshTimeoutRef) {
 											clearTimeout(refreshTimeoutRef);
 										}
-										// @ts-ignore
 										logout({
-											token: getAccessToken() ?? undefined,
+											// @ts-ignore
+											token: getAccessToken(),
 										}).finally(() => {
 											clearToken();
 											history.push('/login');

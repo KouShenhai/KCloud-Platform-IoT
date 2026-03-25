@@ -138,12 +138,12 @@ spring:
                 - read
                 - write
               redirect-uris:
-                - http://127.0.0.1:8000/test
-                - http://127.0.0.1:8001/test
-                - http://localhost:8000/test
-                - http://localhost:8001/test
-                - https://laokou.org.cn/test
-                - https://laokou.org/test
+                - http://127.0.0.1:8000/login
+                - http://127.0.0.1:8001/login
+                - http://localhost:8000/login
+                - http://localhost:8001/login
+                - https://laokou.org.cn/login
+                - https://laokou.org/login
               post-logout-redirect-uris:
                 - http://127.0.0.1:8000/login
                 - http://127.0.0.1:8001/login

@@ -401,7 +401,6 @@ export default {
 	// menu (routes)
 	'menu.home': 'Home',
 	'menu.login': 'Login',
-	'menu.test': 'Test',
 	'menu.sys': 'System',
 	'menu.sys.permission': 'Permission',
 	'menu.sys.permission.menu': 'Menus',
