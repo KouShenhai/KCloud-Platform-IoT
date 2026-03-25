@@ -28,6 +28,8 @@ let refreshTokenFlag = false;
 
 let refreshTimeoutRef: any = null;
 
+let whiteList = ['/login'];
+
 const getIcon = (icon: string) => {
 	switch (icon) {
 		case 'SettingOutlined':
@@ -225,9 +227,9 @@ export const layout: RunTimeLayoutConfig = ({ initialState }: any) => {
 										if (refreshTimeoutRef) {
 											clearTimeout(refreshTimeoutRef);
 										}
-										// @ts-ignore
 										logout({
-											token: getAccessToken() ?? undefined,
+											// @ts-ignore
+											token: getAccessToken(),
 										}).finally(() => {
 											clearToken();
 											history.push('/login');
@@ -373,10 +375,12 @@ export const request: {
 					data: data,
 				};
 			} else if (status === 200 && data.code !== 'OK') {
-				if (data.code === 'Unauthorized') {
-					history.push('/login');
-				} else {
+				if (data.code !== 'Unauthorized') {
 					message.error(data.msg).then();
+				} else {
+					if (!whiteList.includes(location.pathname)) {
+						history.push('/login');
+					}
 				}
 			}
 			return response;

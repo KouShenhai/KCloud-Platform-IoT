@@ -126,9 +126,9 @@ export default {
 	'home.deviceCount': 'Device Count',
 	'home.online': 'Online',
 	'home.offline': 'Offline',
-	'home.todayDeviceMessageCount': "Today's device msg count",
+	"home.todayDeviceMessageCount": "Today's device msg count",
 	'home.monthDeviceMessageCount': 'Monthly device msg count',
-	'home.todayDeviceAlarmCount': "Today's device alarm count",
+	"home.todayDeviceAlarmCount": "Today's device alarm count",
 	'home.monthDeviceAlarmCount': 'Monthly device alarm count',
 	'home.deviceMessage': 'Device Messages',
 	'home.deviceDistribution': 'Device Distribution',
@@ -395,6 +395,8 @@ export default {
 	'login.greeting.afternoon': 'Good afternoon',
 	'login.greeting.evening': 'Good evening',
 	'login.welcomeBack': '{greeting}, welcome back',
+	'auth.loading.title': 'Signing in with SSO',
+	'auth.loading.description': 'Redirecting to the identity provider and completing authorization. Please wait...',
 
 	// menu (routes)
 	'menu.home': 'Home',

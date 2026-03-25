@@ -395,6 +395,8 @@ export default {
 	'login.greeting.afternoon': '下午好',
 	'login.greeting.evening': '晚上好',
 	'login.welcomeBack': '{greeting}，欢迎回来',
+	'auth.loading.title': '统一认证登录中',
+	'auth.loading.description': '正在跳转到认证中心并完成授权，请稍候...',
 
 	// menu (routes)
 	'menu.home': '首页',
