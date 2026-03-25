@@ -104,6 +104,7 @@ export default {
 	'error.network': 'Network request error. Please try again later.',
 	'error.refreshTokenFailed': 'Token refresh failed. Please log in again.',
 	'error.resourceNotFound': 'Resource not found: {url}',
+	'error.invalidGrant': 'Invalid grant. Please check the auth server configuration.',
 	'error.invalidClient': 'Invalid client. Please check the auth server configuration.',
 
 	// confirm & toast

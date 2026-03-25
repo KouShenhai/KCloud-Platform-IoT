@@ -5,7 +5,7 @@
 import {
 	clearToken,
 	getAccessToken,
-	getExpireTime,
+	getExpireTime, getGrantType,
 	getRefreshToken,
 	setToken,
 } from '@/access';
@@ -95,11 +95,12 @@ const refreshToken = async (refreshToken: string | null) => {
 		refresh({ refresh_token: refreshToken, grant_type: 'refresh_token' })
 			.then((res) => {
 				if (res.code === 'OK') {
-					// console.log('刷新令牌成功')
 					// 清除令牌
 					clearToken();
 					// 存储令牌
 					setToken(
+						// @ts-ignore
+						getGrantType(),
 						res.data?.access_token,
 						res.data?.refresh_token,
 						res.data?.expires_in * 1000 + new Date().getTime(),
@@ -315,7 +316,7 @@ export const request: {
 				response.status === 400 &&
 				response.data.error === 'invalid_grant'
 			) {
-				errorMessage = t('error.refreshTokenFailed');
+				errorMessage = t('error.invalidGrant');
 			}
 			if (response && response.status === 404) {
 				errorMessage = t('error.resourceNotFound', {

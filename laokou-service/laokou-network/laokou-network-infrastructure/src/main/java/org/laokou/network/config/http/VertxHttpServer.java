@@ -25,8 +25,8 @@ import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.BodyHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.RegexUtils;
-import org.laokou.network.model.HttpMessageEnum;
-import org.laokou.network.model.WebsocketMessageEnum;
+import org.laokou.network.model.enums.HttpMessage;
+import org.laokou.network.model.enums.WebsocketMessage;
 import org.laokou.network.config.AbstractVertxService;
 
 /**
@@ -70,7 +70,7 @@ final class VertxHttpServer extends AbstractVertxService<HttpServer> {
 	@Override
 	public Future<HttpServer> doStart() {
 		return super.vertx.createHttpServer(httpServerOptions).webSocketHandler(serverWebSocket -> {
-			if (!RegexUtils.matches(WebsocketMessageEnum.UP_PROPERTY_REPORT.getPath(), serverWebSocket.path())) {
+			if (!RegexUtils.matches(WebsocketMessage.UP_PROPERTY_REPORT.getPath(), serverWebSocket.path())) {
 				serverWebSocket.close();
 				return;
 			}
@@ -105,7 +105,7 @@ final class VertxHttpServer extends AbstractVertxService<HttpServer> {
 	private Router getRouter() {
 		Router router = Router.router(super.vertx);
 		router.route().handler(BodyHandler.create());
-		router.post(HttpMessageEnum.UP_PROPERTY_REPORT.getRouter()).handler(ctx -> {
+		router.post(HttpMessage.UP_PROPERTY_REPORT.getRouter()).handler(ctx -> {
 			String body = ctx.body().asString();
 			Long productId = Long.valueOf(ctx.pathParam("productId"));
 			Long deviceId = Long.valueOf(ctx.pathParam("deviceId"));

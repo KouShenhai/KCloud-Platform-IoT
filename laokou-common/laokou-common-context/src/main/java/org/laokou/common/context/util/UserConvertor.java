@@ -46,4 +46,23 @@ public final class UserConvertor {
 			.build();
 	}
 
+	public static OAuth2AuthenticatedExtPrincipal toPrincipal(UserExtDetails userExtDetails, Set<String> scopes) {
+		return DomainFactory.createPrincipal()
+			.toBuilder()
+			.id(userExtDetails.getId())
+			.username(userExtDetails.getUsername())
+			.avatar(userExtDetails.getAvatar())
+			.superAdmin(userExtDetails.getSuperAdmin())
+			.tenantId(userExtDetails.getTenantId())
+			.permissions(userExtDetails.getPermissions())
+			.scopes(scopes)
+			.status(userExtDetails.getStatus())
+			.mail(userExtDetails.getMail())
+			.mobile(userExtDetails.getMobile())
+			.deptId(userExtDetails.getDeptId())
+			.deptIds(userExtDetails.getDeptIds())
+			.creator(userExtDetails.getCreator())
+			.build();
+	}
+
 }

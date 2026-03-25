@@ -14,9 +14,8 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-algorithm</artifactId>
-      <version>${project.version}</version>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
     </dependency>
   </dependencies>
 
