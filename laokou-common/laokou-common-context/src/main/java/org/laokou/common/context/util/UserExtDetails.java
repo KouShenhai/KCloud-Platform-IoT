@@ -25,11 +25,13 @@ import lombok.Getter;
 import org.jspecify.annotations.NonNull;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.jackson.CoreJacksonModule;
 
 import java.io.Serial;
 import java.util.Set;
 
 /**
+ * @see CoreJacksonModule
  * @author laokou
  */
 @Getter

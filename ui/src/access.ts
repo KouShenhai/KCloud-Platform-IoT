@@ -173,13 +173,19 @@ export default (initialState: any) => {
 };
 
 export function setToken(
+	grant_type: string,
 	access_token: string,
 	refresh_token: string,
 	expire_time: number,
 ): void {
+	localStorage.setItem("grant_type", grant_type)
 	localStorage.setItem('access_token', access_token);
 	localStorage.setItem('refresh_token', refresh_token);
 	localStorage.setItem('expire_time', `${expire_time}`);
+}
+
+export function getGrantType() {
+	return localStorage.getItem('grant_type');
 }
 
 export function getAccessToken() {
@@ -195,6 +201,7 @@ export function getExpireTime() {
 }
 
 export function clearToken() {
+	localStorage.removeItem('grant_type');
 	localStorage.removeItem('access_token');
 	localStorage.removeItem('refresh_token');
 	localStorage.removeItem('expire_time');

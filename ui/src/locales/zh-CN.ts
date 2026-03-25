@@ -104,6 +104,7 @@ export default {
 	'error.network': '网络请求错误，请稍后再试',
 	'error.refreshTokenFailed': '令牌续期失败，请重新登录',
 	'error.resourceNotFound': '无法找到 {url} 请求的资源',
+	'error.invalidGrant': '无效授权，请检查认证服务器配置',
 	'error.invalidClient': '无效客户端，请检查认证服务器配置',
 
 	// confirm & toast

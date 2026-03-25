@@ -1,6 +1,6 @@
-import { getAccessToken, getExpireTime, setToken } from '@/access';
-import { login } from '@/services/auth/auth';
-import { getUsernamePasswordAuthCaptchaByUuid, sendCaptcha} from '@/services/auth/captcha';
+import { clearToken, getAccessToken, getExpireTime, setToken } from '@/access';
+import { login, loginByAuthorizationCode } from '@/services/auth/auth';
+import { getUsernamePasswordAuthCaptchaByUuid, sendCaptcha } from '@/services/auth/captcha';
 import { getSecretInfo } from '@/services/auth/secret';
 import { SelectLang, useIntl } from '@@/exports';
 import {
@@ -174,20 +174,58 @@ export default () => {
 			: t('login.greeting.evening');
 	};
 
-	const toAuthorizationCodeAuth = () => {
-		const redirectUri = encodeURIComponent(`${window.location.origin}/test`);
-		const state = encodeURIComponent(1234);
-		const clientId = encodeURIComponent('eb7Ded5bbFbd7896f8a2cfdDc9');
-		const scope = encodeURIComponent('read write');
-		const responseType = encodeURIComponent('code');
-		const code_verifier = encodeURIComponent('3n0j2P8n0kL4Y7Xw9R8xK1aFvQpLzE2dR1o8YtUqZsM');
-		const code_challenge = encodeURIComponent('mY8d2sK0VbC9Zkq5nZC7b4l4tCwY5hJ9l6gP8XyTQ1U');
-		const code_challenge_method = encodeURIComponent('S256');
+	const toAuthorizationCodeAuth = async () => {
+		const redirectUri = encodeURIComponent(`${window.location.origin}/login`);
+		const state = 1234;
+		const clientId = 'eb7Ded5bbFbd7896f8a2cfdDc9';
+		const scope = 'read write';
+		const responseType = 'code';
+		const code_verifier = 'kLuxodK9s4LWHEY8OklbjgdszkhYrNJ6may5BqreBhc';
+		const code_challenge = '324fId--lUav-XBoHqEsCNJl6RdCo6tUKQWtJJYXY40';
+		const code_challenge_method = 'S256';
 		window.location.href = `http://auth:1111/api/v1/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}&state=${state}&code_verifier=${code_verifier}&code_challenge=${code_challenge}&code_challenge_method=${code_challenge_method}`;
 	};
 
-	const authorizationCodeAuth = () => {
+	const getParamsByAuthorizationCode = (code: string) => {
+		return {
+			'grant_type': 'authorization_code',
+			'code': code,
+			// @ts-ignore
+			'redirect_uri': `${window.location.origin}/login`,
+			'state': 1234,
+			'code_verifier': 'kLuxodK9s4LWHEY8OklbjgdszkhYrNJ6may5BqreBhc',
+			'code_challenge': '324fId--lUav-XBoHqEsCNJl6RdCo6tUKQWtJJYXY40',
+			'code_challenge_method': 'S256'
+		}
+	}
 
+	const authorizationCodeAuth = () => {
+		const urlParams = new URL(window.location.href).searchParams;
+		const code = urlParams.get('code')
+		if (code) {
+			setLoading(true);
+			const params = getParamsByAuthorizationCode(code);
+			loginByAuthorizationCode({ ...params }).then(res => {
+				if (res?.code === 'OK') {
+					message.success(t('login.welcomeBack', { greeting: timeFix() })).then();
+					setToken(
+						'authorization_code',
+						res.data?.access_token,
+						res.data?.refresh_token,
+						res.data?.expires_in * 1000 + new Date().getTime(),
+					);
+					// 获取跳转地址
+					const urlParams = new URL(window.location.href).searchParams;
+					const redirectUrl = urlParams.get('redirect') || '/';
+					// 跳转路由
+					history.push(redirectUrl);
+					setTimeout(() => {
+						window.location.reload();
+					}, 1500);
+				}
+			}).finally(() => setLoading(false));
+			return;
+		}
 	}
 
 	const toHome =() => {
@@ -199,13 +237,19 @@ export default () => {
 		}
 	}
 
+	const init = () => {
+		clearToken();
+		getPublicKey().catch(console.log);
+		getCaptchaImage().catch(console.log);
+	}
+
 	useEffect(() => {
 		// 授权码登录
 		authorizationCodeAuth();
 		// 如果已有 token 且未过期：访问 /login 直接跳转首页（避免重复登录）
 		toHome();
-		getPublicKey().catch(console.log);
-		getCaptchaImage().catch(console.log);
+		// 初始化
+		init();
 	}, []);
 
 	const onSubmit = async (form: API.LoginParam) => {
@@ -221,6 +265,8 @@ export default () => {
 						.then();
 					// 登录成功，存储令牌
 					setToken(
+						// @ts-ignore
+						params.grant_type,
 						res.data?.access_token,
 						res.data?.refresh_token,
 						res.data?.expires_in * 1000 + new Date().getTime(),

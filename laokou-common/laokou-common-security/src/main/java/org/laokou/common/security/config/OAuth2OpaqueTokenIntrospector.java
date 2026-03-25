@@ -20,6 +20,7 @@ package org.laokou.common.security.config;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.context.util.UserConvertor;
 import org.laokou.common.context.util.OAuth2Authentication;
+import org.laokou.common.context.util.UserExtDetails;
 import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
@@ -54,6 +55,9 @@ public record OAuth2OpaqueTokenIntrospector(
 		}
 		if (accessToken.isActive() && refreshToken.isActive() && authorization.getAttribute(Principal.class.getName()) instanceof OAuth2Authentication authentication) {
 			return UserConvertor.toPrincipal(authentication, authorization.getAuthorizedScopes());
+		}
+		if (accessToken.isActive() && refreshToken.isActive() && authorization.getAttribute(Principal.class.getName()) instanceof UserExtDetails userExtDetails) {
+			return UserConvertor.toPrincipal(userExtDetails, authorization.getAuthorizedScopes());
 		}
 		authorizationService.remove(authorization);
 		throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED);
