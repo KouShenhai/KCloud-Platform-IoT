@@ -105,7 +105,7 @@ Content-Disposition: form-data; name="tenant_code"
 # 授权码模式(默认数据库)
 # 用户名/密码：admin/admin123
 # 获取code地址：https://127.0.0.1:1111/oauth2/authorize?client_id=eb7Ded5bbFbd7896f8a2cfdDc9&response_type=code&scope=read write&redirect_uri=http://127.0.0.1:8000
-# 获取code地址：http://127.0.0.1:8098/api/v1/oauth2/authorize?client_id=eb7Ded5bbFbd7896f8a2cfdDc9&response_type=code&scope=read write&redirect_uri=http://127.0.0.1:8000&state=123&code_challenge_method=S256&code_verifier=3n0j2P8n0kL4Y7Xw9R8xK1aFvQpLzE2dR1o8YtUqZsM&code_challenge=mY8d2sK0VbC9Zkq5nZC7b4l4tCwY5hJ9l6gP8XyTQ1U
+# 获取code地址：http://127.0.0.1:8098/api/v1/oauth2/authorize?client_id=eb7Ded5bbFbd7896f8a2cfdDc9&response_type=code&scope=read write&redirect_uri=http://127.0.0.1:8000/login&state=123&code_challenge_method=S256&code_verifier=3n0j2P8n0kL4Y7Xw9R8xK1aFvQpLzE2dR1o8YtUqZsM&code_challenge=mY8d2sK0VbC9Zkq5nZC7b4l4tCwY5hJ9l6gP8XyTQ1U
 POST {{schema}}{{host}}/oauth2/token
 Authorization: {{Authorization}}
 Content-Type: multipart/form-data; boundary=WebAppBoundary
