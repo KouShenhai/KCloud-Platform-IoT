@@ -71,7 +71,7 @@ services:
       - MYSQL_ROOT_PASSWORD=laokou123
       - TZ=Asia/Shanghai
   loki:
-    image: grafana/loki:3.6.7
+    image: grafana/loki:3.6.8
     container_name: loki
     # 保持容器在没有守护程序的情况下运行
     tty: true
@@ -89,7 +89,7 @@ services:
     networks:
       - iot_network
   promtail:
-    image: grafana/promtail:3.6.7
+    image: grafana/promtail:3.6.8
     container_name: promtail
     # 保持容器在没有守护程序的情况下运行
     tty: true
@@ -110,7 +110,7 @@ services:
   # 默认账号/密码 admin/admin
   # 新密码 laokou123
   grafana:
-    image: grafana/grafana:12.4.1
+    image: grafana/grafana:12.4.2
     container_name: grafana
     # 保持容器在没有守护程序的情况下运行
     tty: true
