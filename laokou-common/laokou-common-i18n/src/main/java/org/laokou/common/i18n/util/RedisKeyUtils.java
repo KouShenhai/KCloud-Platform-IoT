@@ -25,6 +25,10 @@ public final class RedisKeyUtils {
 	private RedisKeyUtils() {
 	}
 
+	public static String getUserDetailKey(String username) {
+		return "auth:user-detail:" + username;
+	}
+
 	/**
 	 * 验证码Key.
 	 * @param uuid UUID

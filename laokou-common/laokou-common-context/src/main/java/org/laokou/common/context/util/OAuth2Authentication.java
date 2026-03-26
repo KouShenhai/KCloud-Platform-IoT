@@ -21,7 +21,6 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import lombok.Getter;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.NullMarked;
 import org.springframework.security.core.Authentication;
@@ -34,106 +33,48 @@ import java.util.Collections;
 import java.util.Set;
 
 /**
+ * @param id 用户ID.
+ * @param username 用户名.
+ * @param password 密码.
+ * @param avatar 头像.
+ * @param superAdmin 超级管理员标识.
+ * @param status 用户状态 0启用 1禁用.
+ * @param mail 邮箱.
+ * @param mobile 手机号.
+ * @param tenantId 租户ID.
+ * @param deptId 部门ID.
+ * @param permissions 菜单权限标识集合.
+ * @param deptIds 部门IDS.
+ * @param creator 创建者.
  * @author laokou
  */
-@Getter
 @JsonTypeName("OAuth2Authentication")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
 		isGetterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
-public final class OAuth2Authentication implements UserDetails, Authentication {
+public record OAuth2Authentication(Long id, String username, String password, String avatar, Boolean superAdmin,
+		Integer status, String mail, String mobile, Long tenantId, Long deptId, Set<String> permissions,
+		Set<Long> deptIds, Long creator) implements UserDetails, Authentication {
 
 	@Serial
 	private static final long serialVersionUID = 3319752558160144611L;
-
-	/**
-	 * 用户ID.
-	 */
-	private final Long id;
-
-	/**
-	 * 用户名.
-	 */
-	private final String username;
-
-	/**
-	 * 密码.
-	 */
-	private final transient String password;
-
-	/**
-	 * 头像.
-	 */
-	private final String avatar;
-
-	/**
-	 * 超级管理员标识.
-	 */
-	private final Boolean superAdmin;
-
-	/**
-	 * 用户状态 0启用 1禁用.
-	 */
-	private final Integer status;
-
-	/**
-	 * 邮箱.
-	 */
-	private final String mail;
-
-	/**
-	 * 手机号.
-	 */
-	private final String mobile;
-
-	/**
-	 * 租户ID.
-	 */
-	private final Long tenantId;
-
-	/**
-	 * 部门ID.
-	 */
-	private final Long deptId;
-
-	/**
-	 * 菜单权限标识集合.
-	 */
-	private final Set<String> permissions;
-
-	/**
-	 * 部门IDS.
-	 */
-	private final Set<Long> deptIds;
-
-	/**
-	 * 创建者.
-	 */
-	private final Long creator;
-
-	public OAuth2Authentication(@NonNull Long id, @NonNull String username, @NonNull String password, String avatar,
-			@NonNull Boolean superAdmin, @NonNull Integer status, String mail, String mobile, @NonNull Long tenantId,
-			@NonNull Long deptId, @NonNull Set<String> permissions, Set<Long> deptIds, Long creator) {
-		this.id = id;
-		this.username = username;
-		this.password = password;
-		this.avatar = avatar;
-		this.superAdmin = superAdmin;
-		this.status = status;
-		this.mail = mail;
-		this.mobile = mobile;
-		this.tenantId = tenantId;
-		this.deptId = deptId;
-		this.deptIds = deptIds;
-		this.creator = creator;
-		this.permissions = permissions;
-	}
 
 	@Override
 	@NullMarked
 	public Collection<GrantedAuthority> getAuthorities() {
 		return Collections.emptySet();
+	}
+
+	@Override
+	public String getPassword() {
+		return this.password;
+	}
+
+	@Override
+	@NullMarked
+	public String getUsername() {
+		return this.username;
 	}
 
 	@Override

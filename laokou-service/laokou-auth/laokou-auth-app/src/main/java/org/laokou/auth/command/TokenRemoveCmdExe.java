@@ -76,7 +76,7 @@ public class TokenRemoveCmdExe {
 
 	private void evictCache(OAuth2Authorization authorization) {
 		if (authorization.getAttribute(Principal.class.getName()) instanceof OAuth2Authentication authentication) {
-			OperateType.getCache(redisCacheManager, NameConstants.USER_MENU).evict(authentication.getId());
+			OperateType.getCache(redisCacheManager, NameConstants.USER_MENU).evict(authentication.id());
 			LockSupport.parkNanos(TimeUnit.MILLISECONDS.toNanos(200));
 		}
 	}

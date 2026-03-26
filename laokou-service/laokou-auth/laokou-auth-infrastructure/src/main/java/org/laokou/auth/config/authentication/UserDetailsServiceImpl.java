@@ -22,7 +22,13 @@ import org.jspecify.annotations.NonNull;
 import org.laokou.auth.convertor.UserConvertor;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.AuthA;
+import org.laokou.common.context.util.UserExtDetails;
 import org.laokou.common.core.util.RequestUtils;
+import org.laokou.common.i18n.util.JacksonUtils;
+import org.laokou.common.i18n.util.RedisKeyUtils;
+import org.laokou.common.redis.util.RedisUtils;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
@@ -34,9 +40,8 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-record UserDetailsServiceImpl(@NonNull OAuth2UsernamePasswordAuthentication oAuth2UsernamePasswordAuthentication)
-		implements
-			UserDetailsService {
+record UserDetailsServiceImpl(@NonNull OAuth2UsernamePasswordAuthentication oAuth2UsernamePasswordAuthentication,
+		RedisUtils redisUtils) implements UserDetailsService {
 
 	/**
 	 * 获取用户信息.
@@ -48,7 +53,12 @@ record UserDetailsServiceImpl(@NonNull OAuth2UsernamePasswordAuthentication oAut
 	public UserDetails loadUserByUsername(@NonNull String username) {
 		AuthA authA = oAuth2UsernamePasswordAuthentication.authentication(
 				DomainFactory.createAuth().createAuthorizationCodeAuth(), RequestUtils.getHttpServletRequest());
-		return UserConvertor.toUserDetails(authA);
+		UserExtDetails userDetails = UserConvertor.toUserDetails(authA);
+		String userDetailKey = RedisKeyUtils.getUserDetailKey(username);
+		redisUtils.del(userDetailKey);
+		redisUtils.set(userDetailKey, JacksonUtils.toJsonStr(userDetails), RedisUtils.DEFAULT_EXPIRE);
+		return new User(userDetails.username(), userDetails.password(),
+				AuthorityUtils.createAuthorityList(userDetails.permissions()));
 	}
 
 }
