@@ -6,13 +6,13 @@ settings:
 
 dependencies:
   '@ant-design/icons':
-    specifier: ^6.0.0
-    version: 6.1.0(react-dom@18.3.1)(react@18.3.1)
+    specifier: ^6.1.1
+    version: 6.1.1(react-dom@18.3.1)(react@18.3.1)
   '@ant-design/pro-components':
     specifier: ^2.4.4
     version: 2.8.10(antd@5.29.3)(rc-field-form@2.7.1)(react-dom@18.3.1)(react@18.3.1)
   '@umijs/max':
-    specifier: ^4.6.36
+    specifier: ^4.6.24
     version: 4.6.36(@babel/core@7.29.0)(@types/react-dom@18.3.7)(@types/react@18.3.28)(dva@2.5.0-beta.2)(prettier@2.8.8)(rc-field-form@2.7.1)(react-dom@18.3.1)(react@18.3.1)(resolve-url-loader@5.0.0)(sass@1.54.0)(styled-jsx@5.1.7)(typescript@5.9.3)(webpack@5.105.4)
   antd:
     specifier: ^5.4.0
@@ -83,7 +83,7 @@ packages:
   /@ant-design/colors@8.0.1:
     resolution: {integrity: sha512-foPVl0+SWIslGUtD/xBr1p9U4AKzPhNYEseXYRRo5QSzGACYZrQbe11AYJbYfAWnWSpGBx6JjBmSeugUsD9vqQ==, tarball: https://registry.npmjs.org/@ant-design/colors/-/colors-8.0.1.tgz}
     dependencies:
-      '@ant-design/fast-color': 3.0.0
+      '@ant-design/fast-color': 3.0.1
     dev: false
 
   /@ant-design/cssinjs-utils@1.1.3(react-dom@18.3.1)(react@18.3.1):
@@ -123,8 +123,8 @@ packages:
       '@babel/runtime': 7.28.6
     dev: false
 
-  /@ant-design/fast-color@3.0.0:
-    resolution: {integrity: sha512-eqvpP7xEDm2S7dUzl5srEQCBTXZMmY3ekf97zI+M2DHOYyKdJGH0qua0JACHTqbkRnD/KHFQP9J1uMJ/XWVzzA==, tarball: https://registry.npmjs.org/@ant-design/fast-color/-/fast-color-3.0.0.tgz}
+  /@ant-design/fast-color@3.0.1:
+    resolution: {integrity: sha512-esKJegpW4nckh0o6kV3Tkb7NPIZYbPnnFxmQDUmL08ukXZAvV85TZBr70eGuke/CIArLaP6aw8lt9KILjnWuOw==, tarball: https://registry.npmjs.org/@ant-design/fast-color/-/fast-color-3.0.1.tgz}
     engines: {node: '>=8.x'}
     dev: false
 
@@ -165,8 +165,8 @@ packages:
       react-dom: 18.3.1(react@18.3.1)
     dev: false
 
-  /@ant-design/icons@6.1.0(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-KrWMu1fIg3w/1F2zfn+JlfNDU8dDqILfA5Tg85iqs1lf8ooyGlbkA+TkwfOKKgqpUmAiRY1PTFpuOU2DAIgSUg==, tarball: https://registry.npmjs.org/@ant-design/icons/-/icons-6.1.0.tgz}
+  /@ant-design/icons@6.1.1(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-AMT4N2y++TZETNHiM77fs4a0uPVCJGuL5MTonk13Pvv7UN7sID1cNEZOc1qNqx6zLKAOilTEFAdAoAFKa0U//Q==, tarball: https://registry.npmjs.org/@ant-design/icons/-/icons-6.1.1.tgz}
     engines: {node: '>=8'}
     peerDependencies:
       react: '>=16.0.0'
@@ -174,7 +174,7 @@ packages:
     dependencies:
       '@ant-design/colors': 8.0.1
       '@ant-design/icons-svg': 4.4.2
-      '@rc-component/util': 1.7.0(react-dom@18.3.1)(react@18.3.1)
+      '@rc-component/util': 1.10.0(react-dom@18.3.1)(react@18.3.1)
       clsx: 2.1.1
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
@@ -2491,8 +2491,8 @@ packages:
       react-dom: 18.3.1(react@18.3.1)
     dev: false
 
-  /@rc-component/util@1.7.0(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-tIvIGj4Vl6fsZFvWSkYw9sAfiCKUXMyhVz6kpKyZbwyZyRPqv2vxYZROdaO1VB4gqTNvUZFXh6i3APUiterw5g==, tarball: https://registry.npmjs.org/@rc-component/util/-/util-1.7.0.tgz}
+  /@rc-component/util@1.10.0(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-aY9GLBuiUdpyfIUpAWSYer4Tu3mVaZCo5A0q9NtXcazT3MRiI3/WNHCR+DUn5VAtR6iRRf0ynCqQUcHli5UdYw==, tarball: https://registry.npmjs.org/@rc-component/util/-/util-1.10.0.tgz}
     peerDependencies:
       react: '>=18.0.0'
       react-dom: '>=18.0.0'
