@@ -11,7 +11,7 @@ import {
 } from '@/access';
 import { listUserTreeMenu } from '@/services/admin/menu';
 import { getUserProfile } from '@/services/admin/user';
-import { logout, refresh } from '@/services/auth/auth';
+import {logout, refresh, refreshByAuthorizationCode} from '@/services/auth/auth';
 import { history, SelectLang } from '@@/exports';
 import { RunTimeLayoutConfig } from '@@/plugin-layout/types';
 import {
@@ -91,29 +91,56 @@ const refreshToken = async (refreshToken: string | null) => {
 	if (refreshToken && !refreshTokenFlag) {
 		// console.log('开始刷新令牌')
 		refreshTokenFlag = true;
-		// 刷新令牌
-		refresh({ refresh_token: refreshToken, grant_type: 'refresh_token' })
-			.then((res) => {
-				if (res.code === 'OK') {
-					// 清除令牌
-					clearToken();
-					// 存储令牌
-					setToken(
-						// @ts-ignore
-						getGrantType(),
-						res.data?.access_token,
-						res.data?.refresh_token,
-						res.data?.expires_in * 1000 + new Date().getTime(),
-					);
-					// 定时刷新令牌
-					// eslint-disable-next-line @typescript-eslint/no-use-before-define
-					scheduleRefreshToken().catch(console.log);
-				}
-			})
-			.finally(() => {
-				refreshTokenFlag = false;
-				// console.log('刷新令牌结束')
-			});
+		const grantType = getGrantType();
+		if (grantType === "authorization_code") {
+			// 刷新令牌
+			refreshByAuthorizationCode({ refresh_token: refreshToken, grant_type: 'refresh_token' })
+				.then((res) => {
+					if (res.code === 'OK') {
+						// 清除令牌
+						clearToken();
+						// 存储令牌
+						setToken(
+							// @ts-ignore
+							"authorization_code",
+							res.data?.access_token,
+							res.data?.refresh_token,
+							res.data?.expires_in * 1000 + new Date().getTime(),
+						);
+						// 定时刷新令牌
+						// eslint-disable-next-line @typescript-eslint/no-use-before-define
+						scheduleRefreshToken().catch(console.log);
+					}
+				})
+				.finally(() => {
+					refreshTokenFlag = false;
+					// console.log('刷新令牌结束')
+				});
+		} else {
+			// 刷新令牌
+			refresh({ refresh_token: refreshToken, grant_type: 'refresh_token' })
+				.then((res) => {
+					if (res.code === 'OK') {
+						// 清除令牌
+						clearToken();
+						// 存储令牌
+						setToken(
+							// @ts-ignore
+							grantType,
+							res.data?.access_token,
+							res.data?.refresh_token,
+							res.data?.expires_in * 1000 + new Date().getTime(),
+						);
+						// 定时刷新令牌
+						// eslint-disable-next-line @typescript-eslint/no-use-before-define
+						scheduleRefreshToken().catch(console.log);
+					}
+				})
+				.finally(() => {
+					refreshTokenFlag = false;
+					// console.log('刷新令牌结束')
+				});
+		}
 	}
 };
 

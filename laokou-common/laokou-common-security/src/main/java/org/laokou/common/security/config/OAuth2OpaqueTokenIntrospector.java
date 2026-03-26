@@ -18,12 +18,17 @@
 package org.laokou.common.security.config;
 
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.context.util.UserConvertor;
 import org.laokou.common.context.util.OAuth2Authentication;
+import org.laokou.common.context.util.UserConvertor;
 import org.laokou.common.context.util.UserExtDetails;
 import org.laokou.common.i18n.common.exception.StatusCode;
+import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.i18n.util.RedisKeyUtils;
+import org.laokou.common.redis.util.RedisUtils;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.security.oauth2.core.OAuth2RefreshToken;
@@ -38,8 +43,8 @@ import java.security.Principal;
  * @author laokou
  */
 @Slf4j
-public record OAuth2OpaqueTokenIntrospector(
-		OAuth2AuthorizationService authorizationService) implements OpaqueTokenIntrospector {
+public record OAuth2OpaqueTokenIntrospector(OAuth2AuthorizationService authorizationService,
+		RedisUtils redisUtils) implements OpaqueTokenIntrospector {
 
 	// @formatter:off
 	@Override
@@ -53,11 +58,15 @@ public record OAuth2OpaqueTokenIntrospector(
 		if (ObjectUtils.isNull(accessToken) || ObjectUtils.isNull(refreshToken)) {
 			throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED);
 		}
-		if (accessToken.isActive() && refreshToken.isActive() && authorization.getAttribute(Principal.class.getName()) instanceof OAuth2Authentication authentication) {
+		if (accessToken.isActive() && refreshToken.isActive()
+			&& authorization.getAttribute(Principal.class.getName()) instanceof OAuth2Authentication authentication) {
 			return UserConvertor.toPrincipal(authentication, authorization.getAuthorizedScopes());
 		}
-		if (accessToken.isActive() && refreshToken.isActive() && authorization.getAttribute(Principal.class.getName()) instanceof UserExtDetails userExtDetails) {
-			return UserConvertor.toPrincipal(userExtDetails, authorization.getAuthorizedScopes());
+		if (accessToken.isActive() && refreshToken.isActive()
+			&& authorization.getAttribute(Principal.class.getName()) instanceof UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
+			&& usernamePasswordAuthenticationToken.getPrincipal() instanceof User user
+		    && redisUtils.get(RedisKeyUtils.getUserDetailKey(user.getUsername())) instanceof String str) {
+			return UserConvertor.toPrincipal(JacksonUtils.toBean(str, UserExtDetails.class), authorization.getAuthorizedScopes());
 		}
 		authorizationService.remove(authorization);
 		throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED);
