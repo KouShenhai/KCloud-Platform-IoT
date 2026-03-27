@@ -24,7 +24,6 @@ import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.AuthA;
 import org.laokou.common.context.util.UserExtDetails;
 import org.laokou.common.core.util.RequestUtils;
-import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.laokou.common.redis.util.RedisUtils;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -56,9 +55,9 @@ record UserDetailsServiceImpl(@NonNull OAuth2UsernamePasswordAuthentication oAut
 		UserExtDetails userDetails = UserConvertor.toUserDetails(authA);
 		String userDetailKey = RedisKeyUtils.getUserDetailKey(username);
 		redisUtils.del(userDetailKey);
-		redisUtils.set(userDetailKey, JacksonUtils.toJsonStr(userDetails), RedisUtils.DEFAULT_EXPIRE);
-		return new User(userDetails.username(), userDetails.password(),
-				AuthorityUtils.createAuthorityList(userDetails.permissions()));
+		redisUtils.set(userDetailKey, userDetails, RedisUtils.DEFAULT_EXPIRE);
+		return new User(userDetails.getUsername(), userDetails.getPassword(),
+				AuthorityUtils.createAuthorityList(userDetails.getPermissions()));
 	}
 
 }
