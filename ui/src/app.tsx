@@ -109,7 +109,7 @@ const refreshToken = async (refreshToken: string | null) => {
 						);
 						// 定时刷新令牌
 						// eslint-disable-next-line @typescript-eslint/no-use-before-define
-						scheduleRefreshToken().catch(console.log);
+						await scheduleRefreshToken().catch(console.log);
 					}
 				})
 				.finally(() => {
