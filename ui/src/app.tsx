@@ -343,7 +343,7 @@ export const request: {
 				response.status === 400 &&
 				response.data.error === 'invalid_grant'
 			) {
-				errorMessage = t('error.invalidGrant');
+				errorMessage = t('error.refreshTokenFailed');
 			}
 			if (response && response.status === 404) {
 				errorMessage = t('error.resourceNotFound', {

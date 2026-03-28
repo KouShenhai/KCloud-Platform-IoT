@@ -56,13 +56,13 @@ public class HttpMessageConverterConfig {
 	@Order(Ordered.LOWEST_PRECEDENCE - 10000)
 	public JacksonJsonHttpMessageConverter jacksonJsonHttpMessageConverter() {
 		log.info("{} => jackson配置加载完毕", Thread.currentThread().getName());
-		JacksonJsonHttpMessageConverter jacksonJsonHttpMessageConverter = new JacksonJsonHttpMessageConverter(getJsonMapper());
+		JacksonJsonHttpMessageConverter jacksonJsonHttpMessageConverter = new JacksonJsonHttpMessageConverter(getJsonMapperBuilder());
 		jacksonJsonHttpMessageConverter.setSupportedMediaTypes(Collections.singletonList(MediaType.APPLICATION_JSON));
 		return jacksonJsonHttpMessageConverter;
 	}
 	// @formatter:on
 
-	public static JsonMapper getJsonMapper() {
+	public static JsonMapper.Builder getJsonMapperBuilder() {
 		// 时区
 		TimeZone timeZone = TimeZone.getTimeZone(DateConstants.DEFAULT_TIMEZONE);
 		DateTimeFormatter dateTimeFormatter = InstantUtils
@@ -87,8 +87,7 @@ public class HttpMessageConverterConfig {
 			.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 			.defaultDateFormat(simpleDateFormat)
 			.defaultTimeZone(timeZone)
-			.addModule(simpleModule)
-			.build();
+			.addModule(simpleModule);
 	}
 
 }

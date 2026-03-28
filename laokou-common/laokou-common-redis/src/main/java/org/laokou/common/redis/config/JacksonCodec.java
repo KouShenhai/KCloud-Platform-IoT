@@ -17,13 +17,31 @@
 
 package org.laokou.common.redis.config;
 
+import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.config.HttpMessageConverterConfig;
 import org.redisson.codec.JsonJackson3Codec;
+import org.springframework.data.redis.serializer.JacksonJsonRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
+
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author laokou
  */
 public final class JacksonCodec extends JsonJackson3Codec {
+
+	/**
+	 * 对象序列化.
+	 */
+	public static final RedisSerializer<@NonNull Object> OBJECT_REDIS_SERIALIZER = new JacksonJsonRedisSerializer<>(
+			HttpMessageConverterConfig.getJsonMapper(), Object.class);
+
+	/**
+	 * string序列化.
+	 */
+	public static final StringRedisSerializer STRING_REDIS_SERIALIZER = new Sha512DigestStringRedisSerializer(
+			StandardCharsets.UTF_8);
 
 	/**
 	 * 实例.

@@ -87,7 +87,7 @@ public class SpringRedissonProperties implements InitializingBean {
 
 	private boolean useThreadClassLoader = true;
 
-	private CodecTypeEnum codec = CodecTypeEnum.FORY;
+	private CodecType codec = CodecType.JACKSON;
 
 	private Node node = new Node();
 
@@ -143,7 +143,7 @@ public class SpringRedissonProperties implements InitializingBean {
 	@Data
 	public static class Node {
 
-		private NodeTypeEnum type = NodeTypeEnum.SINGLE;
+		private NodeType type = NodeType.SINGLE;
 
 		private Single single;
 
@@ -256,7 +256,7 @@ public class SpringRedissonProperties implements InitializingBean {
 		/**
 		 * Сonnection load balancer for multiple Redis slave servers.
 		 */
-		private LoadBalancerTypeEnum loadBalancer = LoadBalancerTypeEnum.RANDOM;
+		private LoadBalancerType loadBalancer = LoadBalancerType.RANDOM;
 
 		/**
 		 * Redis 'slave' node minimum idle connection amount for <b>each</b> slave node.

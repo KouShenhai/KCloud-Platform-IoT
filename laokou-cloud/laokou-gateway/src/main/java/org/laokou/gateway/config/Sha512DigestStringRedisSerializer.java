@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.redis.config;
+package org.laokou.gateway.config;
 
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.Nullable;
