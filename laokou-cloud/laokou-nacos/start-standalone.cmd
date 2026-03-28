@@ -24,6 +24,8 @@ set JAVA_OPT=-Xms512m -Xmx512m -XX:+UseG1GC -XX:+ZGenerational
 set JAVA_OPT=%JAVA_OPT% -Dnacos.standalone=true
 set JAVA_OPT=%JAVA_OPT% -Dnacos.mode=standalone
 set JAVA_OPT=%JAVA_OPT% -Dfile.encoding=UTF-8
+set JAVA_OPT=%JAVA_OPT% --add-opens java.base/java.util=ALL-UNNAMED
+set JAVA_OPT=%JAVA_OPT% --add-opens java.base/java.lang=ALL-UNNAMED
 
 set JAR_FILE=%~dp0target\laokou-nacos.jar
 

@@ -62,7 +62,11 @@ public class HttpMessageConverterConfig {
 	}
 	// @formatter:on
 
-	public static JsonMapper.Builder getJsonMapperBuilder() {
+	public static JsonMapper getJsonMapper() {
+		return getJsonMapperBuilder().build();
+	}
+
+	private static JsonMapper.Builder getJsonMapperBuilder() {
 		// 时区
 		TimeZone timeZone = TimeZone.getTimeZone(DateConstants.DEFAULT_TIMEZONE);
 		DateTimeFormatter dateTimeFormatter = InstantUtils
