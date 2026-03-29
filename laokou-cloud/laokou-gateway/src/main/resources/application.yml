@@ -196,14 +196,11 @@ request-matcher:
       - /actuator/**=laokou-gateway
       - /favicon.ico=laokou-gateway
       - /api/v1/username-password/captchas/{uuid}=laokou-gateway
-      - /api/v1/authorization-code/captchas/{uuid}=laokou-gateway
       - /api/v1/secrets=laokou-gateway
       - /doc.html=laokou-gateway
       - /webjars/**=laokou-gateway
       - /ws=laokou-gateway
     POST:
-      - /api/v1/captchas/send/mail=laokou-gateway
-      - /api/v1/captchas/send/mobile=laokou-gateway
+      - /api/v1/captchas/send-mail=laokou-gateway
+      - /api/v1/captchas/send-mobile=laokou-gateway
       - /api/v1/oauth2/token=laokou-gateway
-    DELETE:
-      - /api/v1/tokens=laokou-gateway

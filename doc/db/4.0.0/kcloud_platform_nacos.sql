@@ -1065,7 +1065,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (11, 'gatewa
 ]', '5e013d830e3af21e5e321c0f4910fda0', '2024-05-25 18:12:47.358', '2024-11-11 20:51:44.543', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'gateway sentinel flow rule', '', '', 'json', '', '');
 INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (38, 'auth-flow.json', 'IOT_GROUP', '[
   {
-    "resource": "/api/v1/captchas/{uuid}",
+    "resource": "/api/v1/username-password/captchas/{uuid}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1073,7 +1073,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (38, 'auth-f
     "controlBehavior": 0
   },
   {
-    "resource": "/api/v1/captchas/send/mobile",
+    "resource": "/api/v1/captchas/send-mobile",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1081,7 +1081,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (38, 'auth-f
     "controlBehavior": 0
   },
     {
-    "resource": "/api/v1/captchas/send/mail",
+    "resource": "/api/v1/captchas/send-mail",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1108,7 +1108,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (38, 'auth-f
 ', '2bb6ed92c98b4a1693426dadf1c96a30', '2024-11-11 21:17:37.578', '2024-11-11 21:18:17.553', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-auth', '8140e92b-fb43-48f5-b63b-7506185206a5', 'auth sentinel flow rule', '', '', 'json', '', '');
 INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES (39, 'auth-flow.json', 'IOT_GROUP', '[
   {
-    "resource": "/api/v1/captchas/{uuid}",
+    "resource": "/api/v1/username-password/captchas/{uuid}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1116,7 +1116,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES (39, 'auth-fl
     "controlBehavior": 0
   },
   {
-    "resource": "/api/v1/captchas/send/mobile",
+    "resource": "/api/v1/captchas/send-mobile",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -1124,7 +1124,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES (39, 'auth-fl
     "controlBehavior": 0
   },
     {
-    "resource": "/api/v1/captchas/send/mail",
+    "resource": "/api/v1/captchas/send-mail",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2453,7 +2453,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (41, 'admin-
 ', '546e2d9817dd516db763f5ef3ef3a756', '2024-11-11 21:20:18.495', '2024-11-12 11:14:01.899', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-admin', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'admin sentinel flow rule', '', '', 'json', '', '');
 INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (43, 'auth-flow.json', 'IOT_GROUP', '[
   {
-    "resource": "/api/v1/captchas/{uuid}",
+    "resource": "/api/v1/username-password/captchas/{uuid}",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2461,7 +2461,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (43, 'auth-f
     "controlBehavior": 0
   },
   {
-    "resource": "/api/v1/captchas/send/mobile",
+    "resource": "/api/v1/captchas/send-mobile",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -2469,7 +2469,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (43, 'auth-f
     "controlBehavior": 0
   },
     {
-    "resource": "/api/v1/captchas/send/mail",
+    "resource": "/api/v1/captchas/send-mail",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,

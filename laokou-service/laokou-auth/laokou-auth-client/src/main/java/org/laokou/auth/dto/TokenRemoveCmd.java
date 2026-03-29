@@ -17,7 +17,9 @@
 
 package org.laokou.auth.dto;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
@@ -25,7 +27,9 @@ import org.laokou.common.i18n.dto.CommonCommand;
  *
  * @author laokou
  */
-@Data
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class TokenRemoveCmd extends CommonCommand {
 
 	/**

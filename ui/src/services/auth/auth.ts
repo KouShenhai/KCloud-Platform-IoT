@@ -57,7 +57,6 @@ export async function refresh(
 
 /** 清除令牌 清除令牌 DELETE /api/v1/logouts */
 export async function logout(
-	body: API.LogoutParam,
 	options?: { [key: string]: any },
 ) {
 	return request<any>('/api-proxy/auth/api/v1/tokens', {
@@ -65,7 +64,6 @@ export async function logout(
 		headers: {
 			'Content-Type': 'application/json',
 		},
-		data: body,
 		...(options || {}),
 	});
 }

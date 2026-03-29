@@ -39,6 +39,12 @@ server:
   port: ${SERVER_PORT:1111}
   servlet:
     context-path: /api
+    session:
+      cookie:
+        same-site: none
+        secure: true
+        http-only: true
+      timeout: 30m
   tomcat:
     threads:
       # 工作线程池的最大线程数
@@ -173,8 +179,8 @@ spring:
               - /img/**=laokou-auth
               - /js/**=laokou-auth
             POST:
-              - /v1/captchas/send/mail=laokou-auth
-              - /v1/captchas/send/mobile=laokou-auth
+              - /v1/captchas/send-mail=laokou-auth
+              - /v1/captchas/send-mobile=laokou-auth
             DELETE:
               - /v1/tokens=laokou-auth
   cloud:
@@ -199,6 +205,12 @@ spring:
     configs:
       oss_resource:
         ttl: 5m
+  session:
+    timeout: 30m
+    data:
+      redis:
+        flush-mode: on-save
+        repository-type: indexed
 # actuator
 management:
   endpoints:

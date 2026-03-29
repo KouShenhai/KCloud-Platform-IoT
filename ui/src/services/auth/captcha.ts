@@ -21,7 +21,7 @@ export async function sendCaptcha(
 	requestId: string,
 	options?: { [key: string]: any },
 ) {
-	return request<any>(`/api-proxy/auth/api/v1/captchas/send/${type}`, {
+	return request<any>(`/api-proxy/auth/api/v1/captchas/send-${type}`, {
 		method: 'POST',
 		headers: {
 			'request-id': requestId,

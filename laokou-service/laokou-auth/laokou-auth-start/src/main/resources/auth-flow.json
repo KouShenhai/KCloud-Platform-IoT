@@ -8,7 +8,7 @@
     "controlBehavior": 0
   },
   {
-    "resource": "/api/v1/captchas/send/mobile",
+    "resource": "/api/v1/captchas/send-mobile",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,
@@ -16,7 +16,7 @@
     "controlBehavior": 0
   },
   {
-    "resource": "/api/v1/captchas/send/mail",
+    "resource": "/api/v1/captchas/send-mail",
     "limitApp": "default",
     "count": 100000,
     "grade": 1,

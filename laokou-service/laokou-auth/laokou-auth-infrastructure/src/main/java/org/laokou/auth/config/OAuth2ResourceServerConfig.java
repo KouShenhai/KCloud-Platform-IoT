@@ -25,7 +25,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.logout.HeaderWriterLogoutHandler;
+import org.springframework.security.web.header.writers.ClearSiteDataHeaderWriter;
 
 /**
  * 资源服务器配置.
@@ -61,13 +64,20 @@ class OAuth2ResourceServerConfig {
 			.csrf(AbstractHttpConfigurer::disable)
 			.httpBasic(AbstractHttpConfigurer::disable)
 			.rememberMe(AbstractHttpConfigurer::disable)
+			.sessionManagement(session -> session
+				.sessionFixation().migrateSession()
+				.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+			)
 			// 自定义登录页面
 			// https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/form.html
 			// 登录页面 -> DefaultLoginPageGeneratingFilter
 			.formLogin(form -> form.loginPage("/login")
 				.permitAll())
 			// 清除 session
-			.logout(logout -> logout.clearAuthentication(true).invalidateHttpSession(true))
+			.logout(logout -> logout
+				.deleteCookies("JSESSIONID")
+				.addLogoutHandler(new HeaderWriterLogoutHandler(new ClearSiteDataHeaderWriter(ClearSiteDataHeaderWriter.Directive.COOKIES)))
+				.clearAuthentication(true).invalidateHttpSession(true))
 			.build();
 	}
 
