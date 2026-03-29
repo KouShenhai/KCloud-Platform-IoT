@@ -17,12 +17,16 @@
 
 package org.laokou.common.redis.config;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.config.HttpMessageConverterConfig;
 import org.redisson.codec.JsonJackson3Codec;
 import org.springframework.data.redis.serializer.JacksonJsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import tools.jackson.databind.DefaultTyping;
+import tools.jackson.databind.json.JsonMapper;
+import tools.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
 
 import java.nio.charset.StandardCharsets;
 
@@ -31,11 +35,15 @@ import java.nio.charset.StandardCharsets;
  */
 public final class JacksonCodec extends JsonJackson3Codec {
 
+	private JacksonCodec() {
+		super(getJsonMapper());
+	}
+
 	/**
 	 * 对象序列化.
 	 */
 	public static final RedisSerializer<@NonNull Object> OBJECT_REDIS_SERIALIZER = new JacksonJsonRedisSerializer<>(
-			HttpMessageConverterConfig.getJsonMapper(), Object.class);
+			getJsonMapper(), Object.class);
 
 	/**
 	 * string序列化.
@@ -48,8 +56,15 @@ public final class JacksonCodec extends JsonJackson3Codec {
 	 */
 	public static final JacksonCodec INSTANCE = new JacksonCodec();
 
-	private JacksonCodec() {
-		super(HttpMessageConverterConfig.getJsonMapper());
+	private static JsonMapper getJsonMapper() {
+		JsonMapper.Builder builder = HttpMessageConverterConfig.getJsonMapperBuilder();
+		BasicPolymorphicTypeValidator validator = BasicPolymorphicTypeValidator.builder()
+			.allowIfSubType("org.laokou")
+			.allowIfSubType("org.springframework.cloud.gateway")
+			.allowIfSubType("java.util")
+			.build();
+		builder.activateDefaultTyping(validator, DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
+		return builder.build();
 	}
 
 }

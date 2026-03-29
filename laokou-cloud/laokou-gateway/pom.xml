@@ -32,6 +32,17 @@
 
   <dependencies>
     <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-redis</artifactId>
+      <version>${project.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.tomcat.embed</groupId>
+          <artifactId>tomcat-embed-el</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
       <groupId>com.github.xiaoymin</groupId>
       <artifactId>knife4j-gateway-spring-boot-starter</artifactId>
     </dependency>
@@ -142,12 +153,6 @@
       <version>${project.version}</version>
       <scope>test</scope>
       <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.glassfish</groupId>
-      <artifactId>jakarta.el</artifactId>
-      <version>5.0.0-M1</version>
-      <scope>compile</scope>
     </dependency>
   </dependencies>
   <build>

@@ -71,7 +71,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 
 	public NacosRouteDefinitionRepository(@NonNull NacosConfigManager nacosConfigManager,
 			ExecutorService virtualThreadExecutor,
-			@NonNull ReactiveRedisTemplate<@NonNull String, @NonNull RouteDefinition> reactiveRedisTemplate) {
+			@NonNull ReactiveRedisTemplate<@NonNull String, @NonNull Object> reactiveRedisTemplate) {
 		this.dataId = "router.json";
 		this.groupName = nacosConfigManager.getNacosConfigProperties().getGroup();
 		this.configService = nacosConfigManager.getConfigService();

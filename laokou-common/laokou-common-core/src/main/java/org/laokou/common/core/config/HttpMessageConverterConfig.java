@@ -62,11 +62,7 @@ public class HttpMessageConverterConfig {
 	}
 	// @formatter:on
 
-	public static JsonMapper getJsonMapper() {
-		return getJsonMapperBuilder().build();
-	}
-
-	private static JsonMapper.Builder getJsonMapperBuilder() {
+	public static JsonMapper.Builder getJsonMapperBuilder() {
 		// 时区
 		TimeZone timeZone = TimeZone.getTimeZone(DateConstants.DEFAULT_TIMEZONE);
 		DateTimeFormatter dateTimeFormatter = InstantUtils
@@ -86,12 +82,12 @@ public class HttpMessageConverterConfig {
 		simpleModule.addDeserializer(Instant.class,
 				new CustomInstantDeserializer(InstantDeserializer.INSTANT, dateTimeFormatter));
 		return JsonMapper.builder()
-			.findAndAddModules()
 			// 反序列化时，属性不存在的兼容处理
 			.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 			.defaultDateFormat(simpleDateFormat)
 			.defaultTimeZone(timeZone)
-			.addModule(simpleModule);
+			.addModule(simpleModule)
+			.findAndAddModules();
 	}
 
 }

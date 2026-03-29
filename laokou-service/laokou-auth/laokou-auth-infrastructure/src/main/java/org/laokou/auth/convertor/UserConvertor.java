@@ -27,6 +27,7 @@ import org.laokou.auth.model.valueobject.UserV;
 import org.laokou.common.context.util.OAuth2Authentication;
 import org.laokou.common.context.util.UserExtDetails;
 import org.laokou.common.crypto.util.AESUtils;
+import org.laokou.common.i18n.common.exception.GlobalException;
 
 /**
  * @author laokou
@@ -49,6 +50,9 @@ public final class UserConvertor {
 					userE.isSuperAdministrator(), userE.getStatus(), mail, mobile, userE.getTenantId(),
 					userE.getDeptId(), userV.permissions(), dataFilterV.deptIds(), dataFilterV.creator());
 		}
+		catch (GlobalException gex) {
+			throw gex;
+		}
 		catch (Exception ex) {
 			log.error("解密失败：{}", ex.getMessage());
 			throw new IllegalArgumentException(ex);
@@ -63,21 +67,12 @@ public final class UserConvertor {
 			String username = AESUtils.decrypt(userE.getUsername());
 			String mail = AESUtils.decrypt(userE.getMail());
 			String mobile = AESUtils.decrypt(userE.getMobile());
-			return UserExtDetails.builder()
-				.id(userE.getId())
-				.username(username)
-				.password(userE.getPassword())
-				.avatar(userV.avatar())
-				.superAdmin(userE.isSuperAdministrator())
-				.status(userE.getStatus())
-				.mail(mail)
-				.mobile(mobile)
-				.tenantId(userE.getTenantId())
-				.deptId(userE.getDeptId())
-				.permissions(userV.permissions())
-				.deptIds(dataFilterV.deptIds())
-				.creator(dataFilterV.creator())
-				.build();
+			return new UserExtDetails(userE.getId(), username, userE.getPassword(), userV.avatar(),
+				userE.isSuperAdministrator(), userE.getStatus(), mail, mobile, userE.getTenantId(),
+				userE.getDeptId(), userV.permissions(), dataFilterV.deptIds(), dataFilterV.creator());
+		}
+		catch (GlobalException gex) {
+			throw gex;
 		}
 		catch (Exception ex) {
 			log.error("解密失败：{}", ex.getMessage());

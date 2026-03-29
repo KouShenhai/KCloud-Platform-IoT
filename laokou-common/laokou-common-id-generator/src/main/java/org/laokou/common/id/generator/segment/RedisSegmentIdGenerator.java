@@ -249,8 +249,7 @@ public class RedisSegmentIdGenerator implements IdGenerator {
 						segment = new Segment(minId, maxId, curId, config.getStep(), config.getLoadFactor());
 					}
 					else {
-						long maxId = redisUtils.execute(segmentAllocScript, List.of(config.getKey()),
-								String.valueOf(config.getStep()));
+						long maxId = redisUtils.execute(segmentAllocScript, List.of(config.getKey()), config.getStep());
 						segment = new Segment(maxId, config.getStep(), config.getLoadFactor());
 					}
 					segmentBuffer = new SegmentBuffer();
@@ -258,8 +257,7 @@ public class RedisSegmentIdGenerator implements IdGenerator {
 					buffers.put(bizType, segmentBuffer);
 				}
 				else {
-					Long maxId = redisUtils.execute(segmentAllocScript, List.of(config.getKey()),
-							String.valueOf(config.getStep()));
+					Long maxId = redisUtils.execute(segmentAllocScript, List.of(config.getKey()), config.getStep());
 					segment = new Segment(maxId, config.getStep(), config.getLoadFactor());
 					segmentBuffer.setNext(segment);
 				}
