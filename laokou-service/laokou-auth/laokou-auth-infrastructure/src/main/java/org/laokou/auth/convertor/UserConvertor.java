@@ -68,8 +68,8 @@ public final class UserConvertor {
 			String mail = AESUtils.decrypt(userE.getMail());
 			String mobile = AESUtils.decrypt(userE.getMobile());
 			return new UserExtDetails(userE.getId(), username, userE.getPassword(), userV.avatar(),
-				userE.isSuperAdministrator(), userE.getStatus(), mail, mobile, userE.getTenantId(),
-				userE.getDeptId(), userV.permissions(), dataFilterV.deptIds(), dataFilterV.creator());
+					userE.isSuperAdministrator(), userE.getStatus(), mail, mobile, userE.getTenantId(),
+					userE.getDeptId(), userV.permissions(), dataFilterV.deptIds(), dataFilterV.creator());
 		}
 		catch (GlobalException gex) {
 			throw gex;
