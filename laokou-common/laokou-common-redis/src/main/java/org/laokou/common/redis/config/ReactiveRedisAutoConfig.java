@@ -30,7 +30,6 @@ import org.springframework.data.redis.connection.ReactiveRedisConnectionFactory;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.data.redis.core.ReactiveStringRedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
 import reactor.core.publisher.Flux;
 
 /**
@@ -46,16 +45,12 @@ public class ReactiveRedisAutoConfig {
 	@Bean("reactiveRedisTemplate")
 	public ReactiveRedisTemplate<@NonNull String, @NonNull Object> reactiveRedisTemplate(
 			ReactiveRedisConnectionFactory reactiveRedisConnectionFactory) {
-		// fory序列化
-		ForyRedisSerializer foryRedisSerializer = ForyRedisSerializer.foryRedisSerializer();
-		// string序列化
-		StringRedisSerializer stringRedisSerializer = ForyRedisSerializer.getStringRedisSerializer();
 		RedisSerializationContext<@NonNull String, @NonNull Object> serializationContext = RedisSerializationContext
 			.<String, Object>newSerializationContext()
-			.key(stringRedisSerializer)
-			.value(foryRedisSerializer)
-			.hashKey(stringRedisSerializer)
-			.hashValue(foryRedisSerializer)
+			.key(JacksonCodec.STRING_REDIS_SERIALIZER)
+			.value(JacksonCodec.OBJECT_REDIS_SERIALIZER)
+			.hashKey(JacksonCodec.STRING_REDIS_SERIALIZER)
+			.hashValue(JacksonCodec.OBJECT_REDIS_SERIALIZER)
 			.build();
 		return new ReactiveRedisTemplate<>(reactiveRedisConnectionFactory, serializationContext);
 	}

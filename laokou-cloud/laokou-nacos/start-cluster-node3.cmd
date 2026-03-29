@@ -30,6 +30,8 @@ set JAVA_OPT=%JAVA_OPT% -Dnacos.inetutils.ip-address=%NACOS_IP%
 set JAVA_OPT=%JAVA_OPT% -Dnacos.core.member.lookup.type=file
 set JAVA_OPT=%JAVA_OPT% -Dnacos.member.list=%NACOS_MEMBER_LIST%
 set JAVA_OPT=%JAVA_OPT% -Dfile.encoding=UTF-8
+set JAVA_OPT=%JAVA_OPT% --add-opens java.base/java.util=ALL-UNNAMED
+set JAVA_OPT=%JAVA_OPT% --add-opens java.base/java.lang=ALL-UNNAMED
 
 set JAR_FILE=%~dp0target\laokou-nacos.jar
 

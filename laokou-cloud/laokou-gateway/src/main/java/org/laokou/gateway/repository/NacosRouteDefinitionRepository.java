@@ -24,17 +24,17 @@ import com.alibaba.nacos.api.exception.NacosException;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
-import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.laokou.common.i18n.util.SpringContextUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
-import org.laokou.common.redis.util.ReactiveRedisUtils;
-import org.redisson.api.RMapReactive;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionRepository;
+import org.springframework.data.redis.core.ReactiveHashOperations;
+import org.springframework.data.redis.core.ReactiveRedisTemplate;
+import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -59,28 +59,23 @@ import java.util.concurrent.Executors;
 @Repository
 public class NacosRouteDefinitionRepository implements RouteDefinitionRepository {
 
-	static {
-		ForyFactory.INSTANCE.register(org.springframework.cloud.gateway.route.RouteDefinition.class);
-		ForyFactory.INSTANCE.register(org.springframework.cloud.gateway.filter.FilterDefinition.class);
-		ForyFactory.INSTANCE.register(org.springframework.cloud.gateway.handler.predicate.PredicateDefinition.class);
-	}
-
 	private final String dataId;
 
 	private final String groupName;
 
 	private final ConfigService configService;
 
-	private final RMapReactive<String, RouteDefinition> reactiveMap;
+	private final ReactiveHashOperations<@NonNull String, @NonNull String, @NonNull RouteDefinition> reactiveHashOperations;
 
 	private final ExecutorService virtualThreadExecutor;
 
-	public NacosRouteDefinitionRepository(NacosConfigManager nacosConfigManager, ReactiveRedisUtils reactiveRedisUtils,
-			ExecutorService virtualThreadExecutor) {
+	public NacosRouteDefinitionRepository(@NonNull NacosConfigManager nacosConfigManager,
+			ExecutorService virtualThreadExecutor,
+			@NonNull ReactiveRedisTemplate<@NonNull String, @NonNull RouteDefinition> reactiveRedisTemplate) {
 		this.dataId = "router.json";
 		this.groupName = nacosConfigManager.getNacosConfigProperties().getGroup();
 		this.configService = nacosConfigManager.getConfigService();
-		this.reactiveMap = reactiveRedisUtils.getMap(RedisKeyUtils.getRouteDefinitionHashKey());
+		this.reactiveHashOperations = reactiveRedisTemplate.opsForHash();
 		this.virtualThreadExecutor = virtualThreadExecutor;
 	}
 
@@ -119,8 +114,8 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	@NonNull
 	@Override
 	public Flux<@NonNull RouteDefinition> getRouteDefinitions() {
-		return reactiveMap.entryIterator()
-			.mapNotNull(Map.Entry::getValue)
+		return reactiveHashOperations.scan(RedisKeyUtils.getRouteDefinitionHashKey(), getScanOptions())
+			.map(Map.Entry::getValue)
 			.onErrorContinue((throwable, _) -> {
 				if (log.isErrorEnabled()) {
 					log.error("从Redis获取路由失败，错误信息：{}", throwable.getMessage(), throwable);
@@ -155,15 +150,19 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	 * @return 同步结果
 	 */
 	private Mono<@NonNull Void> syncRouter(@NonNull Collection<RouteDefinition> routes) {
-		return reactiveMap.delete()
+		return reactiveHashOperations.scan(RedisKeyUtils.getRouteDefinitionHashKey(), getScanOptions())
+			.buffer(500)
+			.flatMap(batch -> reactiveHashOperations.remove(RedisKeyUtils.getRouteDefinitionHashKey(),
+					batch.stream().map(Map.Entry::getKey).toArray()))
 			.doOnError(throwable -> log.error("删除路由失败，错误信息：{}", throwable.getMessage(), throwable))
-			.doOnSuccess(_ -> publishRefreshRoutesEvent())
+			.doOnNext(_ -> publishRefreshRoutesEvent())
 			.thenMany(Flux.fromIterable(routes))
 			.flatMap(router -> {
 				if (StringExtUtils.isEmpty(router.getId())) {
 					return Mono.empty();
 				}
-				return reactiveMap.putIfAbsent(router.getId(), router)
+				return reactiveHashOperations
+					.putIfAbsent(RedisKeyUtils.getRouteDefinitionHashKey(), router.getId(), router)
 					.doOnError(throwable -> log.error("保存路由失败，错误信息：{}", throwable.getMessage(), throwable));
 			})
 			.then()
@@ -201,6 +200,13 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	private void publishRefreshRoutesEvent() {
 		// 刷新事件
 		SpringContextUtils.publishEvent(new RefreshRoutesEvent(this));
+	}
+
+	private ScanOptions getScanOptions() {
+		return ScanOptions.scanOptions()
+			.match("*")
+			.count(500)
+			.build();
 	}
 	// @formatter:on
 

@@ -27,7 +27,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
  * Redis配置.
@@ -48,18 +47,14 @@ public class RedisAutoConfig {
 	public RedisTemplate<String, Object> redisTemplate(LettuceConnectionFactory lettuceConnectionFactory) {
 		RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
 		redisTemplate.setConnectionFactory(lettuceConnectionFactory);
-		// fory序列化
-		ForyRedisSerializer foryRedisSerializer = ForyRedisSerializer.foryRedisSerializer();
-		// string序列化
-		StringRedisSerializer stringRedisSerializer = ForyRedisSerializer.getStringRedisSerializer();
 		// key
-		redisTemplate.setKeySerializer(stringRedisSerializer);
+		redisTemplate.setKeySerializer(JacksonCodec.STRING_REDIS_SERIALIZER);
 		// value
-		redisTemplate.setValueSerializer(foryRedisSerializer);
+		redisTemplate.setValueSerializer(JacksonCodec.OBJECT_REDIS_SERIALIZER);
 		// hash-key
-		redisTemplate.setHashKeySerializer(stringRedisSerializer);
+		redisTemplate.setHashKeySerializer(JacksonCodec.STRING_REDIS_SERIALIZER);
 		// hash-value
-		redisTemplate.setHashValueSerializer(foryRedisSerializer);
+		redisTemplate.setHashValueSerializer(JacksonCodec.OBJECT_REDIS_SERIALIZER);
 		// 初始化
 		redisTemplate.afterPropertiesSet();
 		return redisTemplate;

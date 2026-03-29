@@ -63,9 +63,21 @@ public final class UserConvertor {
 			String username = AESUtils.decrypt(userE.getUsername());
 			String mail = AESUtils.decrypt(userE.getMail());
 			String mobile = AESUtils.decrypt(userE.getMobile());
-			return new UserExtDetails(userE.getId(), username, userE.getPassword(), userV.avatar(),
-					userE.isSuperAdministrator(), userE.getStatus(), mail, mobile, userE.getTenantId(),
-					userE.getDeptId(), userV.permissions(), dataFilterV.deptIds(), dataFilterV.creator());
+			return UserExtDetails.builder()
+				.id(userE.getId())
+				.username(username)
+				.password(userE.getPassword())
+				.avatar(userV.avatar())
+				.superAdmin(userE.isSuperAdministrator())
+				.status(userE.getStatus())
+				.mail(mail)
+				.mobile(mobile)
+				.tenantId(userE.getTenantId())
+				.deptId(userE.getDeptId())
+				.permissions(userV.permissions())
+				.deptIds(dataFilterV.deptIds())
+				.creator(dataFilterV.creator())
+				.build();
 		}
 		catch (Exception ex) {
 			log.error("解密失败：{}", ex.getMessage());

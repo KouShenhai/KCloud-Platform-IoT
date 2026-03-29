@@ -25,7 +25,7 @@ import org.redisson.config.Config;
 import java.util.concurrent.ExecutorService;
 
 @Getter
-public enum NodeTypeEnum {
+public enum NodeType {
 
 	SINGLE("single", "单机模式") {
 		@Override
@@ -66,7 +66,7 @@ public enum NodeTypeEnum {
 
 	private final String desc;
 
-	NodeTypeEnum(String code, String desc) {
+	NodeType(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}

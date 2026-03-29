@@ -22,7 +22,6 @@ import org.laokou.common.context.util.OAuth2Authentication;
 import org.laokou.common.context.util.UserConvertor;
 import org.laokou.common.context.util.UserExtDetails;
 import org.laokou.common.i18n.common.exception.StatusCode;
-import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.laokou.common.redis.util.RedisUtils;
@@ -65,8 +64,8 @@ public record OAuth2OpaqueTokenIntrospector(OAuth2AuthorizationService authoriza
 		if (accessToken.isActive() && refreshToken.isActive()
 			&& authorization.getAttribute(Principal.class.getName()) instanceof UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
 			&& usernamePasswordAuthenticationToken.getPrincipal() instanceof User user
-		    && redisUtils.get(RedisKeyUtils.getUserDetailKey(user.getUsername())) instanceof String str) {
-			return UserConvertor.toPrincipal(JacksonUtils.toBean(str, UserExtDetails.class), authorization.getAuthorizedScopes());
+		    && redisUtils.get(RedisKeyUtils.getUserDetailKey(user.getUsername())) instanceof UserExtDetails userExtDetails) {
+			return UserConvertor.toPrincipal(userExtDetails, authorization.getAuthorizedScopes());
 		}
 		authorizationService.remove(authorization);
 		throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED);
