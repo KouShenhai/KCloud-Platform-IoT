@@ -65,9 +65,10 @@ public class TokenRemoveCmdExe {
 		if (StringExtUtils.isEmpty(token)) {
 			return;
 		}
-		OAuth2Authorization authorization = authorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
+		OAuth2Authorization authorization = authorizationService.findByToken(token.substring(7),
+				OAuth2TokenType.ACCESS_TOKEN);
 		if (ObjectUtils.isNotNull(authorization)) {
-			// 移除缓存
+			// 移除菜单缓存
 			evictCache(authorization);
 			// 删除token
 			authorizationService.remove(authorization);

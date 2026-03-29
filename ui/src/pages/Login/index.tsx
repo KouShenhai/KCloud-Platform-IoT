@@ -183,7 +183,7 @@ export default () => {
 		const code_verifier = 'kLuxodK9s4LWHEY8OklbjgdszkhYrNJ6may5BqreBhc';
 		const code_challenge = '324fId--lUav-XBoHqEsCNJl6RdCo6tUKQWtJJYXY40';
 		const code_challenge_method = 'S256';
-		window.location.href = `http://auth:1111/api/v1/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}&state=${state}&code_verifier=${code_verifier}&code_challenge=${code_challenge}&code_challenge_method=${code_challenge_method}`;
+		window.location.href = `http://127.0.0.1:1111/api/v1/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}&state=${state}&code_verifier=${code_verifier}&code_challenge=${code_challenge}&code_challenge_method=${code_challenge_method}`;
 	};
 
 	const getParamsByAuthorizationCode = (code: string) => {

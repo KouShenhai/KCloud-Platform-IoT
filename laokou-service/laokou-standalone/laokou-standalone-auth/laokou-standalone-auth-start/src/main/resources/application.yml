@@ -171,8 +171,8 @@ spring:
               - /img/**=laokou-standalone-auth
               - /js/**=laokou-standalone-auth
             POST:
-              - /v1/captchas/send/mail=laokou-standalone-auth
-              - /v1/captchas/send/mobile=laokou-standalone-auth
+              - /v1/captchas/send-mail=laokou-standalone-auth
+              - /v1/captchas/send-mobile=laokou-standalone-auth
             DELETE:
               - /v1/tokens=laokou-standalone-auth
   cache:

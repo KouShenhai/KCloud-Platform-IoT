@@ -487,12 +487,12 @@ class OAuth2ApiTest {
 
 	public String getSendMailCaptchaUrl() {
 		return getSchema(disabledSsl()) + "auth" + StringConstants.RISK + serverProperties.getPort()
-				+ "/api/v1/captchas/send/mail";
+				+ "/api/v1/captchas/send-mail";
 	}
 
 	public String getSendMobileCaptchaUrl() {
 		return getSchema(disabledSsl()) + "auth" + StringConstants.RISK + serverProperties.getPort()
-				+ "/api/v1/captchas/send/mobile";
+				+ "/api/v1/captchas/send-mobile";
 	}
 
 	private String getSchema(boolean disabled) {

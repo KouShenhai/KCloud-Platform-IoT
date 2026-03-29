@@ -65,7 +65,7 @@ public class CaptchasController {
 	}
 
 	@Idempotent
-	@PostMapping("/v1/captchas/send/mobile")
+	@PostMapping("/v1/captchas/send-mobile")
 	@RateLimiter(key = "SEND_MOBILE_CAPTCHA", type = Type.IP)
 	@Operation(summary = "根据UUID发送手机验证码", description = "根据UUID发送手机验证码")
 	public void sendMobileCaptchaByUuid(@RequestBody CaptchaSendCmd cmd) {
@@ -74,7 +74,7 @@ public class CaptchasController {
 	}
 
 	@Idempotent
-	@PostMapping("/v1/captchas/send/mail")
+	@PostMapping("/v1/captchas/send-mail")
 	@RateLimiter(key = "SEND_MAIL_CAPTCHA", type = Type.IP)
 	@Operation(summary = "根据UUID发送邮箱验证码", description = "根据UUID发送邮箱验证码")
 	public void sendMailCaptchaByUuid(@RequestBody CaptchaSendCmd cmd) {

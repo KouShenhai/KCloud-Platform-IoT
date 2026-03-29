@@ -25,6 +25,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 
 /**
@@ -61,13 +62,17 @@ class OAuth2ResourceServerConfig {
 			.csrf(AbstractHttpConfigurer::disable)
 			.httpBasic(AbstractHttpConfigurer::disable)
 			.rememberMe(AbstractHttpConfigurer::disable)
+			.sessionManagement(session -> session
+				.sessionFixation().migrateSession()
+				.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+			)
 			// 自定义登录页面
 			// https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/form.html
 			// 登录页面 -> DefaultLoginPageGeneratingFilter
 			.formLogin(form -> form.loginPage("/login")
 				.permitAll())
 			// 清除 session
-			.logout(logout -> logout.clearAuthentication(true).invalidateHttpSession(true))
+			.logout(logout -> logout.logoutUrl("/logout").clearAuthentication(true).invalidateHttpSession(true))
 			.build();
 	}
 
