@@ -39,8 +39,6 @@ import org.springframework.stereotype.Component;
 
 import java.security.Principal;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.LockSupport;
 
 /**
  * 退出登录执行器.
@@ -90,7 +88,6 @@ public class TokenRemoveCmdExe {
 	private void evictCache(OAuth2Authorization authorization) {
 		if (authorization.getAttribute(Principal.class.getName()) instanceof OAuth2Authentication authentication) {
 			OperateType.getCache(redisCacheManager, NameConstants.USER_MENU).evict(authentication.id());
-			LockSupport.parkNanos(TimeUnit.MILLISECONDS.toNanos(200));
 		}
 		if (authorization
 			.getAttribute(Principal.class
@@ -102,7 +99,6 @@ public class TokenRemoveCmdExe {
 			Map<String, RedisIndexedSessionRepository.RedisSession> sessionMap = redisIndexedSessionRepository
 				.findByPrincipalName(user.getUsername());
 			sessionMap.forEach((sessionId, _) -> redisIndexedSessionRepository.deleteById(sessionId));
-			LockSupport.parkNanos(TimeUnit.MILLISECONDS.toNanos(200));
 		}
 	}
 
