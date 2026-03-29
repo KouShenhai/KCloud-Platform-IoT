@@ -17,6 +17,9 @@
 
 package org.laokou.common.context.util;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.springframework.security.jackson.CoreJacksonModule;
 
 import java.io.Serial;
@@ -40,6 +43,10 @@ import java.util.Set;
  * @author laokou
  * @see CoreJacksonModule
  */
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
+		isGetterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
 public record UserExtDetails(Long id, String username, String password, String avatar, Boolean superAdmin,
 		Integer status, String mail, String mobile, Long tenantId, Long deptId, Set<String> permissions,
 		Set<Long> deptIds, Long creator) implements Serializable {
