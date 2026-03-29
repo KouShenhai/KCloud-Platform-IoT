@@ -87,7 +87,7 @@
     <!--maven-checkstyle-plugin版本-->
     <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
     <!--spotbugs-maven-plugin版本-->
-    <spotbugs-maven-plugin.version>4.9.8.2</spotbugs-maven-plugin.version>
+    <spotbugs-maven-plugin.version>4.9.8.3</spotbugs-maven-plugin.version>
     <!--native-maven-plugin版本-->
     <native-maven-plugin.version>1.0.0</native-maven-plugin.version>
     <!--versions-maven-plugin版本-->
@@ -107,7 +107,7 @@
     <!--spring-asciidoctor-backends版本-->
     <spring-asciidoctor-backends.version>0.0.7</spring-asciidoctor-backends.version>
     <!--protobuf-maven-plugin版本-->
-    <protobuf-maven-plugin.version>5.1.0</protobuf-maven-plugin.version>
+    <protobuf-maven-plugin.version>5.1.1</protobuf-maven-plugin.version>
     <!--central-publishing-maven-plugin版本-->
     <central-publishing-maven-plugin.version>0.10.0</central-publishing-maven-plugin.version>
     <!--maven-source-plugin版本-->
