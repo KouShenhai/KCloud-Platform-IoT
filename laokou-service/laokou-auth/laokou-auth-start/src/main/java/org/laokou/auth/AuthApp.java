@@ -31,7 +31,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import org.springframework.util.StopWatch;
 
 import java.net.InetAddress;
@@ -52,7 +51,6 @@ import java.security.NoSuchAlgorithmException;
 @EnableEncryptableProperties
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy
-@EnableRedisHttpSession
 @SpringBootApplication(scanBasePackages = "org.laokou")
 class AuthApp {
 

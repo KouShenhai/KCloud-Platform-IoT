@@ -27,6 +27,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.logout.HeaderWriterLogoutHandler;
+import org.springframework.security.web.header.writers.ClearSiteDataHeaderWriter;
 
 /**
  * 资源服务器配置.
@@ -72,7 +74,10 @@ class OAuth2ResourceServerConfig {
 			.formLogin(form -> form.loginPage("/login")
 				.permitAll())
 			// 清除 session
-			.logout(logout -> logout.logoutUrl("/logout").clearAuthentication(true).invalidateHttpSession(true))
+			.logout(logout -> logout
+				.deleteCookies("JSESSIONID")
+				.addLogoutHandler(new HeaderWriterLogoutHandler(new ClearSiteDataHeaderWriter(ClearSiteDataHeaderWriter.Directive.COOKIES)))
+				.clearAuthentication(true).invalidateHttpSession(true))
 			.build();
 	}
 

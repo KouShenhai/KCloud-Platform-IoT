@@ -19,20 +19,26 @@ package org.laokou.auth.command;
 
 import org.laokou.auth.dto.TokenRemoveCmd;
 import org.laokou.common.context.util.OAuth2Authentication;
+import org.laokou.common.context.util.UserExtDetails;
 import org.laokou.common.data.cache.aspectj.OperateType;
 import org.laokou.common.data.cache.constant.NameConstants;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
+import org.laokou.common.redis.util.RedisUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.CacheManager;
-import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
+import org.springframework.session.data.redis.RedisIndexedSessionRepository;
 import org.springframework.stereotype.Component;
 
 import java.security.Principal;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.LockSupport;
 
@@ -48,17 +54,23 @@ public class TokenRemoveCmdExe {
 
 	private final OAuth2AuthorizationService authorizationService;
 
+	private final RedisUtils redisUtils;
+
+	private final RedisIndexedSessionRepository redisIndexedSessionRepository;
+
 	public TokenRemoveCmdExe(@Qualifier("redisCacheManager") CacheManager redisCacheManager,
-			OAuth2AuthorizationService authorizationService) {
+			OAuth2AuthorizationService authorizationService, RedisUtils redisUtils,
+			RedisIndexedSessionRepository redisIndexedSessionRepository) {
 		this.redisCacheManager = redisCacheManager;
 		this.authorizationService = authorizationService;
+		this.redisUtils = redisUtils;
+		this.redisIndexedSessionRepository = redisIndexedSessionRepository;
 	}
 
 	/**
 	 * 执行退出登录.
 	 * @param cmd 退出登录参数
 	 */
-	@Async("virtualThreadExecutor")
 	@CommandLog
 	public void executeVoid(TokenRemoveCmd cmd) {
 		String token = cmd.getToken();
@@ -78,6 +90,18 @@ public class TokenRemoveCmdExe {
 	private void evictCache(OAuth2Authorization authorization) {
 		if (authorization.getAttribute(Principal.class.getName()) instanceof OAuth2Authentication authentication) {
 			OperateType.getCache(redisCacheManager, NameConstants.USER_MENU).evict(authentication.id());
+			LockSupport.parkNanos(TimeUnit.MILLISECONDS.toNanos(200));
+		}
+		if (authorization
+			.getAttribute(Principal.class
+				.getName()) instanceof UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
+				&& usernamePasswordAuthenticationToken.getPrincipal() instanceof User user && redisUtils
+					.get(RedisKeyUtils.getUserDetailKey(user.getUsername())) instanceof UserExtDetails userExtDetails) {
+			OperateType.getCache(redisCacheManager, NameConstants.USER_MENU).evict(userExtDetails.id());
+			redisUtils.del(RedisKeyUtils.getUserDetailKey(user.getUsername()));
+			Map<String, RedisIndexedSessionRepository.RedisSession> sessionMap = redisIndexedSessionRepository
+				.findByPrincipalName(user.getUsername());
+			sessionMap.forEach((sessionId, _) -> redisIndexedSessionRepository.deleteById(sessionId));
 			LockSupport.parkNanos(TimeUnit.MILLISECONDS.toNanos(200));
 		}
 	}

@@ -46,7 +46,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.test.context.TestConstructor;
 import org.springframework.util.Assert;
@@ -97,8 +96,6 @@ class OAuth2ApiTest {
 	private final ServerProperties serverProperties;
 
 	private final RestClient restClient;
-
-	private final JwtDecoder jwtDecoder;
 
 	private final PasswordEncoder passwordEncoder;
 
@@ -265,8 +262,7 @@ class OAuth2ApiTest {
 	void test_logoutApi() {
 		log.info("---------- 登录已注销，开始清除令牌 ----------");
 		String apiUrl = getTokenUrlV3();
-		TokenRemoveCmd cmd = new TokenRemoveCmd();
-		cmd.setToken(TOKEN);
+		TokenRemoveCmd cmd = new TokenRemoveCmd(TOKEN);
 		restClient.method(HttpMethod.DELETE)
 			.uri(apiUrl)
 			.body(cmd)
