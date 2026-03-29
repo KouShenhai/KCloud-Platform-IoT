@@ -64,7 +64,7 @@ public record OAuth2OpaqueTokenIntrospector(OAuth2AuthorizationService authoriza
 		if (accessToken.isActive() && refreshToken.isActive()
 			&& authorization.getAttribute(Principal.class.getName()) instanceof UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
 			&& usernamePasswordAuthenticationToken.getPrincipal() instanceof User user
-		    && redisUtils.get(RedisKeyUtils.getUserDetailKey(user.getUsername())) instanceof UserExtDetails userExtDetails) {
+			&& redisUtils.get(RedisKeyUtils.getUserDetailKey(user.getUsername())) instanceof UserExtDetails userExtDetails) {
 			return UserConvertor.toPrincipal(userExtDetails, authorization.getAuthorizedScopes());
 		}
 		authorizationService.remove(authorization);

@@ -208,10 +208,11 @@ export const layout: RunTimeLayoutConfig = ({ initialState }: any) => {
 				require('@@/exports').getLocale?.() || 'zh-CN'
 			}`,
 			request: async () => {
-				const result = await listUserTreeMenu({ code: 0 }).catch(
-					console.log,
-				);
-				return getRouters(result?.data);
+				listUserTreeMenu({ code: 0 })
+					.then(result => {
+						return getRouters(result?.data);
+					})
+					.catch(console.log);
 			},
 		},
 		layout: 'mix',

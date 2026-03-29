@@ -17,15 +17,10 @@
 
 package org.laokou.common.context.util;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.NullMarked;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serial;
 import java.util.Collection;
@@ -48,14 +43,9 @@ import java.util.Set;
  * @param creator 创建者.
  * @author laokou
  */
-@JsonTypeName("OAuth2Authentication")
-@JsonIgnoreProperties(ignoreUnknown = true)
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
-		isGetterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
 public record OAuth2Authentication(Long id, String username, String password, String avatar, Boolean superAdmin,
 		Integer status, String mail, String mobile, Long tenantId, Long deptId, Set<String> permissions,
-		Set<Long> deptIds, Long creator) implements UserDetails, Authentication {
+		Set<Long> deptIds, Long creator) implements Authentication {
 
 	@Serial
 	private static final long serialVersionUID = 3319752558160144611L;
@@ -64,17 +54,6 @@ public record OAuth2Authentication(Long id, String username, String password, St
 	@NullMarked
 	public Collection<GrantedAuthority> getAuthorities() {
 		return Collections.emptySet();
-	}
-
-	@Override
-	public String getPassword() {
-		return this.password;
-	}
-
-	@Override
-	@NullMarked
-	public String getUsername() {
-		return this.username;
 	}
 
 	@Override

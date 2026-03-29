@@ -93,6 +93,7 @@ public class OAuth2ResourceServerConfig {
                                             SpringUtils springUtils, OAuth2ResourceServerProperties oAuth2ResourceServerProperties, HttpSecurity http)
 			{
 		return http
+			.authorizeHttpRequests(customizer(oAuth2ResourceServerProperties, springUtils))
 			.headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer
 				.httpStrictTransportSecurity(hsts -> hsts
 					.includeSubDomains(true)
@@ -106,7 +107,6 @@ public class OAuth2ResourceServerConfig {
 			.rememberMe(AbstractHttpConfigurer::disable)
 			// 基于token，关闭session
 			.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-			.authorizeHttpRequests(customizer(oAuth2ResourceServerProperties, springUtils))
 			// https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/opaque-token.html
 			// 提供自定义OpaqueTokenIntrospector，否则回退到NimbusOpaqueTokenIntrospector
 			.oauth2ResourceServer(resource -> resource

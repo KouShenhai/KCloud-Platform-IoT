@@ -78,7 +78,7 @@ class ReactiveRedisUtilsTest {
 		// Configure ReactiveRedisTemplate
 		StringRedisSerializer keySerializer = new StringRedisSerializer();
 		GenericJacksonJsonRedisSerializer valueSerializer = new GenericJacksonJsonRedisSerializer(
-				HttpMessageConverterConfig.getJsonMapper());
+				HttpMessageConverterConfig.getJsonMapperBuilder().build());
 
 		RedisSerializationContext<@NonNull String, @NonNull Object> serializationContext = RedisSerializationContext
 			.<String, Object>newSerializationContext()

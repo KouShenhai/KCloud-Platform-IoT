@@ -56,8 +56,8 @@ record UserDetailsServiceImpl(@NonNull OAuth2UsernamePasswordAuthentication oAut
 		String userDetailKey = RedisKeyUtils.getUserDetailKey(username);
 		redisUtils.del(userDetailKey);
 		redisUtils.set(userDetailKey, userDetails, RedisUtils.DEFAULT_EXPIRE);
-		return new User(userDetails.getUsername(), userDetails.getPassword(),
-				AuthorityUtils.createAuthorityList(userDetails.getPermissions()));
+		return new User(userDetails.username(), userDetails.password(),
+				AuthorityUtils.createAuthorityList(userDetails.permissions()));
 	}
 
 }

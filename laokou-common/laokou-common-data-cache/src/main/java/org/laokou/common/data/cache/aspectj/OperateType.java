@@ -54,13 +54,13 @@ public enum OperateType {
 				}
 				return oldValue;
 			}
-			catch (GlobalException e) {
+			catch (GlobalException gex) {
 				// 系统异常/业务异常/参数异常直接捕获并抛出
-				throw e;
+				throw gex;
 			}
-			catch (Throwable e) {
-				log.error("获取缓存失败", e);
-				throw new SystemException("S_Cache_GetError", "获取缓存失败", e);
+			catch (Throwable ex) {
+				log.error("获取缓存失败", ex);
+				throw new SystemException("S_Cache_GetError", "获取缓存失败", ex);
 			}
 		}
 	},

@@ -51,6 +51,7 @@ import org.laokou.common.i18n.common.IdGenerator;
 import org.laokou.common.i18n.common.ValidateName;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.enums.BizType;
+import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.util.InstantUtils;
@@ -445,6 +446,9 @@ public final class AuthA extends AggregateRoot implements ValidateName {
 				.mobile(StringConstants.EMPTY)
 				.build();
 		}
+		catch (GlobalException gex) {
+			throw gex;
+		}
 		catch (Exception ex) {
 			log.error("getUserVByUsernamePasswordAuth error: {}", ex.getMessage(), ex);
 			throw new IllegalArgumentException(ex.getMessage());
@@ -468,6 +472,9 @@ public final class AuthA extends AggregateRoot implements ValidateName {
 				.mobile(StringConstants.EMPTY)
 				.build();
 		}
+		catch (GlobalException gex) {
+			throw gex;
+		}
 		catch (Exception ex) {
 			log.error("getUserVByAuthorizationCodeAuth error: {}", ex.getMessage(), ex);
 			throw new IllegalArgumentException(ex.getMessage());
@@ -483,6 +490,9 @@ public final class AuthA extends AggregateRoot implements ValidateName {
 				.mobile(AESUtils.encrypt(this.captchaV.uuid()))
 				.build();
 		}
+		catch (GlobalException gex) {
+			throw gex;
+		}
 		catch (Exception ex) {
 			log.error("getUserVByMobileAuth error: {}", ex.getMessage(), ex);
 			throw new IllegalArgumentException(ex);
@@ -497,6 +507,9 @@ public final class AuthA extends AggregateRoot implements ValidateName {
 				.mail(AESUtils.encrypt(this.captchaV.uuid()))
 				.mobile(StringConstants.EMPTY)
 				.build();
+		}
+		catch (GlobalException gex) {
+			throw gex;
 		}
 		catch (Exception ex) {
 			log.error("getUserVByMailAuth error: {}", ex.getMessage(), ex);
