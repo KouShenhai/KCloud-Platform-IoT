@@ -88,6 +88,7 @@ public class TokenRemoveCmdExe {
 	private void evictCache(OAuth2Authorization authorization) {
 		if (authorization.getAttribute(Principal.class.getName()) instanceof OAuth2Authentication authentication) {
 			OperateType.getCache(redisCacheManager, NameConstants.USER_MENU).evict(authentication.id());
+			return;
 		}
 		if (authorization
 			.getAttribute(Principal.class
@@ -98,7 +99,7 @@ public class TokenRemoveCmdExe {
 			redisUtils.del(RedisKeyUtils.getUserDetailKey(user.getUsername()));
 			Map<String, RedisIndexedSessionRepository.RedisSession> sessionMap = redisIndexedSessionRepository
 				.findByPrincipalName(user.getUsername());
-			sessionMap.forEach((sessionId, _) -> redisIndexedSessionRepository.deleteById(sessionId));
+			sessionMap.keySet().forEach(redisIndexedSessionRepository::deleteById);
 		}
 	}
 

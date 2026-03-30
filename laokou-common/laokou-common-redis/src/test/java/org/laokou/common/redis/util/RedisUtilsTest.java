@@ -939,14 +939,13 @@ class RedisUtilsTest {
 		Object result = redisUtils.get(key);
 		// Note: Without type information in Jackson config, objects are deserialized as
 		// LinkedHashMap
-		Assertions.assertThat(result).isInstanceOf(Map.class);
+		Assertions.assertThat(result).isInstanceOf(TestUser.class);
 
-		@SuppressWarnings("unchecked")
-		Map<String, Object> retrievedUser = (Map<String, Object>) result;
-		Assertions.assertThat(retrievedUser.get("id")).isEqualTo(user.getId());
-		Assertions.assertThat(retrievedUser.get("name")).isEqualTo(user.getName());
-		Assertions.assertThat(retrievedUser.get("age")).isEqualTo(user.getAge());
-		Assertions.assertThat(retrievedUser.get("email")).isEqualTo(user.getEmail());
+		TestUser retrievedUser = (TestUser) result;
+		Assertions.assertThat(retrievedUser.id).isEqualTo(user.getId());
+		Assertions.assertThat(retrievedUser.name).isEqualTo(user.getName());
+		Assertions.assertThat(retrievedUser.age).isEqualTo(user.getAge());
+		Assertions.assertThat(retrievedUser.email).isEqualTo(user.getEmail());
 	}
 
 	@Test
@@ -962,12 +961,11 @@ class RedisUtilsTest {
 		Object result = redisUtils.hGet(key, field);
 		// Note: Without type information in Jackson config, objects are deserialized as
 		// LinkedHashMap
-		Assertions.assertThat(result).isInstanceOf(Map.class);
+		Assertions.assertThat(result).isInstanceOf(TestUser.class);
 
-		@SuppressWarnings("unchecked")
-		Map<String, Object> retrievedUser = (Map<String, Object>) result;
-		Assertions.assertThat(retrievedUser.get("id")).isEqualTo(user.getId());
-		Assertions.assertThat(retrievedUser.get("name")).isEqualTo(user.getName());
+		TestUser retrievedUser = (TestUser) result;
+		Assertions.assertThat(retrievedUser.id).isEqualTo(user.getId());
+		Assertions.assertThat(retrievedUser.name).isEqualTo(user.getName());
 	}
 
 	@Test
@@ -985,8 +983,8 @@ class RedisUtilsTest {
 		Assertions.assertThat(result).hasSize(2);
 		// Note: Without type information in Jackson config, objects are deserialized as
 		// LinkedHashMap
-		Assertions.assertThat(result.get(0)).isInstanceOf(Map.class);
-		Assertions.assertThat(result.get(1)).isInstanceOf(Map.class);
+		Assertions.assertThat(result.get(0)).isInstanceOf(TestUser.class);
+		Assertions.assertThat(result.get(1)).isInstanceOf(TestUser.class);
 	}
 
 	// ==================== Edge Cases and Error Scenarios ====================
