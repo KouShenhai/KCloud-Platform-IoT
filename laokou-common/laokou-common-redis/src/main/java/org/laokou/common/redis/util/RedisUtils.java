@@ -18,7 +18,6 @@
 package org.laokou.common.redis.util;
 
 import lombok.extern.slf4j.Slf4j;
-import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
@@ -347,7 +346,7 @@ public record RedisUtils(RedisTemplate<String, Object> redisTemplate, RedissonCl
 		return dataMap;
 	}
 
-	public Long execute(RedisScript<@NonNull Long> script, List<String> keys, Object... args) {
+	public Long execute(RedisScript<Long> script, List<String> keys, Object... args) {
 		return redisTemplate.execute(script, keys, args);
 	}
 
