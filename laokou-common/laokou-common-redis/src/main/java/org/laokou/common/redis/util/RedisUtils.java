@@ -347,7 +347,7 @@ public record RedisUtils(RedisTemplate<String, Object> redisTemplate, RedissonCl
 		return dataMap;
 	}
 
-	public <T> T execute(@NonNull RedisScript<T> script, List<String> keys, Object... args) {
+	public Long execute(RedisScript<@NonNull Long> script, List<String> keys, Object... args) {
 		return redisTemplate.execute(script, keys, args);
 	}
 
