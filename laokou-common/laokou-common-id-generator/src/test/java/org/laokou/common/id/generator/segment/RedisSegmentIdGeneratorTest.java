@@ -77,9 +77,9 @@ class RedisSegmentIdGeneratorTest {
 		redisTemplate.setConnectionFactory(connectionFactory);
 		StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
 		redisTemplate.setKeySerializer(stringRedisSerializer);
-		redisTemplate.setValueSerializer(stringRedisSerializer);
+		redisTemplate.setValueSerializer(JacksonCodec.OBJECT_REDIS_SERIALIZER);
 		redisTemplate.setHashKeySerializer(stringRedisSerializer);
-		redisTemplate.setHashValueSerializer(stringRedisSerializer);
+		redisTemplate.setHashValueSerializer(JacksonCodec.OBJECT_REDIS_SERIALIZER);
 		redisTemplate.afterPropertiesSet();
 
 		// Configure Redisson
