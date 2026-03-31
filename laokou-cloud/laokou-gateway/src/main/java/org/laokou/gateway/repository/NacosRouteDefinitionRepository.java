@@ -106,9 +106,8 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	 * 2.通过CompositeRouteDefinitionLocator合并定义的路由规则.
 	 * 3.加载所有的定义的路由规则，使用配置的断言工厂和过滤器工厂来创建路由.
 	 * 4.将路由缓存，提高路由查找性能.
-	 * <p>
-	 * 获取动态路由（避免集群中网关频繁调用Redis，需要本地缓存）.
-	 * {@link org.springframework.cloud.gateway.config.GatewayAutoConfiguration
+	 * <p> 获取动态路由（避免集群中网关频繁调用Redis，需要本地缓存）</p>.
+	 * {@link org.springframework.cloud.gateway.config.GatewayAutoConfiguration}
 	 * @return 定义的路由规则
 	 */
 	@NonNull
