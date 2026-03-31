@@ -84,8 +84,7 @@ public final class XssRequestWrapper extends HttpServletRequestWrapper {
 	}
 
 	/**
-	 * @see org.springframework.web.multipart.support.DefaultMultipartHttpServletRequest#getParameterMap().
-	 * @return Map<String,String[]>
+	 * {@link org.springframework.web.multipart.support.DefaultMultipartHttpServletRequest#getParameterMap()}.
 	 */
 	@Override
 	public Map<String, String[]> getParameterMap() {
