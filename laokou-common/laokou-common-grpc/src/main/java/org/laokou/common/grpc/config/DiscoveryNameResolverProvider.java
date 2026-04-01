@@ -44,7 +44,7 @@ public final class DiscoveryNameResolverProvider extends NameResolverProvider {
 	public DiscoveryNameResolverProvider(DiscoveryClient discoveryClient, ExecutorService executorService) {
 		this.discoveryClient = discoveryClient;
 		this.executorService = executorService;
-		this.discoveryNameResolvers = new HashSet<>();
+		this.discoveryNameResolvers = new HashSet<>(512);
 	}
 
 	@Override

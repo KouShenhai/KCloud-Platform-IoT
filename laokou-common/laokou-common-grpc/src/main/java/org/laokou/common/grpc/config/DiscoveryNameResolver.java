@@ -59,7 +59,7 @@ final class DiscoveryNameResolver extends NameResolver {
 		this.serviceId = serviceId;
 		this.discoveryClient = discoveryClient;
 		this.executorService = executorService;
-		this.serviceInstanceReference = new AtomicReference<>(Collections.emptyList());
+		this.serviceInstanceReference = new AtomicReference<>(new ArrayList<>(1024));
 		this.resolving = new AtomicBoolean(false);
 	}
 
