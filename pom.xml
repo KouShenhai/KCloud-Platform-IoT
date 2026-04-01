@@ -183,7 +183,7 @@
     <!--fesod版本-->
     <fesod.version>2.0.1-incubating</fesod.version>
     <!--s3版本-->
-    <s3.version>2.42.24</s3.version>
+    <s3.version>2.42.25</s3.version>
     <!--dynamic-datasource版本-->
     <dynamic-datasource.version>4.5.0</dynamic-datasource.version>
     <!--httpclient5版本-->
@@ -211,7 +211,7 @@
     <!--browscap-java版本-->
     <browscap-java.version>1.5.1</browscap-java.version>
     <!--flyway版本-->
-    <flyway.version>12.2.0</flyway.version>
+    <flyway.version>12.3.0</flyway.version>
     <!--snail-job版本-->
     <snail-job.version>1.9.0-jdk8</snail-job.version>
     <!--archunit-junit5版本-->
@@ -229,7 +229,7 @@
     <!--wiremock版本-->
     <wiremock.version>4.0.0-beta.30</wiremock.version>
     <!--jsch版本-->
-    <jsch.version>2.27.9</jsch.version>
+    <jsch.version>2.28.0</jsch.version>
     <!--jSerialComm版本-->
     <jSerialComm.version>2.11.4</jSerialComm.version>
     <!--californium版本-->
@@ -241,7 +241,7 @@
     <!--modbus4j版本-->
     <modbus4j.version>v3.1.0</modbus4j.version>
     <!--swagger-annotations-jakarta版本-->
-    <swagger-annotations-jakarta.version>2.2.45</swagger-annotations-jakarta.version>
+    <swagger-annotations-jakarta.version>2.2.46</swagger-annotations-jakarta.version>
     <!--jsqlparser版本-->
     <jsqlparser.version>5.3</jsqlparser.version>
     <!--commons-io-->
