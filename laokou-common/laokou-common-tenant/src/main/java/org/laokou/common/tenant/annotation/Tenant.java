@@ -17,9 +17,6 @@
 
 package org.laokou.common.tenant.annotation;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
-import org.laokou.common.tenant.constant.DSConstants;
-
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -27,14 +24,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Master数据源注解.
+ * 租户注解.
  *
  * @author laokou
  */
 @Documented
-@DS(DSConstants.MASTER)
 @Target({ ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Master {
+public @interface Tenant {
 
 }

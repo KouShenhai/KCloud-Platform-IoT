@@ -15,26 +15,29 @@
  *
  */
 
-package org.laokou.common.tenant.annotation;
+package org.laokou.common.tenant.aspectj;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
-import org.laokou.common.tenant.constant.DSConstants;
-
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.laokou.common.context.util.UserUtils;
+import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.tenant.annotation.Tenant;
+import org.springframework.stereotype.Component;
 
 /**
- * Master数据源注解.
- *
  * @author laokou
  */
-@Documented
-@DS(DSConstants.MASTER)
-@Target({ ElementType.METHOD })
-@Retention(RetentionPolicy.RUNTIME)
-public @interface Master {
+@Aspect
+@Component
+public class TenantAspectj {
+
+	@Before("@annotation(tenant)")
+	public void doBefore(JoinPoint joinPoint, Tenant tenant) {
+		Object arg = joinPoint.getArgs()[0];
+		if (arg instanceof PageQuery pageQuery) {
+			pageQuery.getParams().put("tenantId", UserUtils.getTenantId());
+		}
+	}
 
 }
