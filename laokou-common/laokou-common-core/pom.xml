@@ -56,6 +56,12 @@
       <distribution>repo</distribution>
       <comments>A business-friendly OSS license</comments>
     </license>
+    <license>
+      <name>MIT License</name>
+      <url>https://opensource.org/licenses/MIT</url>
+      <distribution>repo</distribution>
+      <comments>A business-friendly OSS license</comments>
+    </license>
   </licenses>
   <dependencies>
     <!-- 解析客户端操作系统、浏览器等 -->

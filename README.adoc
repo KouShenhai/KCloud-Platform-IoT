@@ -168,7 +168,7 @@ image::doc/image/老寇IoT云平台业务架构图.png[架构图,align=center]
 |EMQX                        |5.4.1
 |TimescaleDB                 |17
 |TDengine                    |3.3.5.0
-|Flyway                      |12.1.1
+|Flyway                      |12.3.0
 |Snail Job                   |1.8.0
 |Sentinel                    |1.8.9
 |===

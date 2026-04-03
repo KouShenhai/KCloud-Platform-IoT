@@ -53,9 +53,7 @@ record UserDetailsServiceImpl(@NonNull OAuth2UsernamePasswordAuthentication oAut
 		AuthA authA = oAuth2UsernamePasswordAuthentication.authentication(
 				DomainFactory.createAuth().createAuthorizationCodeAuth(), RequestUtils.getHttpServletRequest());
 		UserExtDetails userDetails = UserConvertor.toUserDetails(authA);
-		String userDetailKey = RedisKeyUtils.getUserDetailKey(username);
-		redisUtils.del(userDetailKey);
-		redisUtils.set(userDetailKey, userDetails, RedisUtils.DEFAULT_EXPIRE);
+		redisUtils.set(RedisKeyUtils.getUserDetailKey(username), userDetails, RedisUtils.DEFAULT_EXPIRE);
 		return new User(userDetails.username(), userDetails.password(),
 				AuthorityUtils.createAuthorityList(userDetails.permissions()));
 	}
