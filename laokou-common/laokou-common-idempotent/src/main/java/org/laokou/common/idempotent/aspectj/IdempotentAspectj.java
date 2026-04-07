@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.laokou.common.core.config.SystemSettingProperties;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.RedisKeyUtils;
@@ -42,6 +43,8 @@ public class IdempotentAspectj {
 
 	private final RedisUtils redisUtils;
 
+	private final SystemSettingProperties systemSettingProperties;
+
 	private static final String REQUEST_ID = "request-id";
 
 	@Before("@annotation(org.laokou.common.idempotent.annotation.Idempotent)")
@@ -51,7 +54,7 @@ public class IdempotentAspectj {
 			throw new SystemException("S_Idempotent_RequestIDIsNull", "请求ID不能为空");
 		}
 		String apiIdempotentKey = RedisKeyUtils.getApiIdempotentKey(requestId);
-		if (!redisUtils.setIfAbsent(apiIdempotentKey, 0, RedisUtils.FIVE_MINUTE_EXPIRE)) {
+		if (!redisUtils.setIfAbsent(apiIdempotentKey, 0, systemSettingProperties.getIdempotentExpire().toSeconds())) {
 			throw new SystemException("S_Idempotent_RequestRepeatedSubmit", "不可重复提交请求");
 		}
 	}

@@ -21,6 +21,7 @@ import com.wf.captcha.GifCaptcha;
 import com.wf.captcha.base.Captcha;
 import lombok.RequiredArgsConstructor;
 import org.laokou.auth.dto.CaptchaGetQry;
+import org.laokou.common.core.config.SystemSettingProperties;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.redis.util.RedisUtils;
 import org.springframework.stereotype.Component;
@@ -37,6 +38,8 @@ public class CaptchaGetQryExe {
 
 	private final RedisUtils redisUtils;
 
+	private final SystemSettingProperties systemSettingProperties;
+
 	/**
 	 * 执行获取验证码.
 	 * @param qry 获取验证码参数
@@ -46,7 +49,7 @@ public class CaptchaGetQryExe {
 		Captcha ca = generate();
 		String captcha = ca.text();
 		String base64 = ca.toBase64();
-		redisUtils.set(qry.getKey(), captcha, RedisUtils.FIVE_MINUTE_EXPIRE);
+		redisUtils.set(qry.getKey(), captcha, systemSettingProperties.getCaptchaExpire().toSeconds());
 		return Result.ok(base64);
 	}
 

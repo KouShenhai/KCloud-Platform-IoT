@@ -103,7 +103,6 @@ spring:
               - /v3/api-docs/**=laokou-standalone-admin
               - /actuator/**=laokou-standalone-admin
               - /doc.html=laokou-standalone-admin
-              - /webjars/**=laokou-standalone-admin
   cache:
     configs:
       users:

@@ -56,22 +56,25 @@
       <distribution>repo</distribution>
       <comments>A business-friendly OSS license</comments>
     </license>
+    <license>
+      <name>MIT License</name>
+      <url>https://opensource.org/licenses/MIT</url>
+      <distribution>repo</distribution>
+      <comments>A business-friendly OSS license</comments>
+    </license>
   </licenses>
   <dependencies>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>
-      <version>${spring-framework.version}</version>
     </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>${lombok.version}</version>
     </dependency>
     <dependency>
       <groupId>org.hibernate.validator</groupId>
       <artifactId>hibernate-validator</artifactId>
-      <version>${hibernate-validator.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
@@ -127,8 +130,6 @@
     <dependency>
       <groupId>jakarta.servlet</groupId>
       <artifactId>jakarta.servlet-api</artifactId>
-      <scope>provided</scope>
-      <optional>true</optional>
     </dependency>
   </dependencies>
 

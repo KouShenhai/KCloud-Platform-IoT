@@ -26,6 +26,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * IoT数据源注解.
+ *
+ * @author laokou
+ */
 @Documented
 @DS(DSConstants.IOT)
 @Target({ ElementType.METHOD })

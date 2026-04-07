@@ -58,6 +58,12 @@
       <distribution>repo</distribution>
       <comments>A business-friendly OSS license</comments>
     </license>
+    <license>
+      <name>MIT License</name>
+      <url>https://opensource.org/licenses/MIT</url>
+      <distribution>repo</distribution>
+      <comments>A business-friendly OSS license</comments>
+    </license>
   </licenses>
   <properties>
     <!--项目版本-->
@@ -135,7 +141,7 @@
     <!--spring-ai-alibaba版本-->
     <spring-ai-alibaba.version>1.1.2.2</spring-ai-alibaba.version>
     <!--springdoc-openapi版本-->
-    <springdoc-openapi.version>3.0.2</springdoc-openapi.version>
+    <springdoc-openapi.version>3.0.3-SNAPSHOT</springdoc-openapi.version>
     <!--testcontainers版本-->
     <testcontainers.version>2.0.4</testcontainers.version>
     <!--vertx版本-->

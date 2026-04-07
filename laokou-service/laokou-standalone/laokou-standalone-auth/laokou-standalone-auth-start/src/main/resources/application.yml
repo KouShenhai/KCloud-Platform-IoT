@@ -167,7 +167,6 @@ spring:
               - /v1/authorization-code/captchas/{uuid}=laokou-standalone-auth
               - /v1/secrets=laokou-standalone-auth
               - /doc.html=laokou-standalone-auth
-              - /webjars/**=laokou-standalone-auth
               - /img/**=laokou-standalone-auth
               - /js/**=laokou-standalone-auth
             POST:

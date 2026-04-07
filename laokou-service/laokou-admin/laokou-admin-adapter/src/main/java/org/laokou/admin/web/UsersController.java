@@ -43,6 +43,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.mybatisplus.annotation.DataFilter;
+import org.laokou.common.tenant.annotation.Tenant;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -131,6 +132,7 @@ public class UsersController {
 	}
 
 	@TraceLog
+	@Tenant
 	@DataFilter
 	@PostMapping("/v1/users/page")
 	@PreAuthorize("hasAuthority('read') and hasAuthority('sys:user:page')")

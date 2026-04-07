@@ -15,32 +15,26 @@
  *
  */
 
-package org.laokou.auth.gatewayimpl;
+package org.laokou.common.core.config;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.gateway.CaptchaGateway;
-import org.laokou.common.core.config.SystemSettingProperties;
-import org.laokou.common.redis.util.RedisUtils;
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.time.Duration;
+
 /**
- * 验证码.
- *
  * @author laokou
  */
-@Slf4j
+@Data
 @Component
-@RequiredArgsConstructor
-public class CaptchaGatewayImpl implements CaptchaGateway {
+@ConfigurationProperties(prefix = "system.setting")
+public class SystemSettingProperties {
 
-	private final RedisUtils redisUtils;
+	private Duration captchaExpire = Duration.ofMinutes(5);
 
-	private final SystemSettingProperties systemSettingProperties;
+	private Duration idempotentExpire = Duration.ofMinutes(5);
 
-	@Override
-	public void createCaptcha(String uuid, String captcha) {
-		redisUtils.set(uuid, captcha, systemSettingProperties.getCaptchaExpire().toSeconds());
-	}
+	private Duration profileExpire = Duration.ofHours(6);
 
 }

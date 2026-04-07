@@ -15,32 +15,29 @@
  *
  */
 
-package org.laokou.auth.gatewayimpl;
+package org.laokou.common.tenant.aspectj;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.laokou.auth.gateway.CaptchaGateway;
-import org.laokou.common.core.config.SystemSettingProperties;
-import org.laokou.common.redis.util.RedisUtils;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.laokou.common.context.util.UserUtils;
+import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.tenant.annotation.Tenant;
 import org.springframework.stereotype.Component;
 
 /**
- * 验证码.
- *
  * @author laokou
  */
-@Slf4j
+@Aspect
 @Component
-@RequiredArgsConstructor
-public class CaptchaGatewayImpl implements CaptchaGateway {
+public class TenantAspectj {
 
-	private final RedisUtils redisUtils;
-
-	private final SystemSettingProperties systemSettingProperties;
-
-	@Override
-	public void createCaptcha(String uuid, String captcha) {
-		redisUtils.set(uuid, captcha, systemSettingProperties.getCaptchaExpire().toSeconds());
+	@Before("@annotation(tenant)")
+	public void doBefore(JoinPoint joinPoint, Tenant tenant) {
+		Object arg = joinPoint.getArgs()[0];
+		if (arg instanceof PageQuery pageQuery) {
+			pageQuery.getParams().put("tenantId", UserUtils.getTenantId());
+		}
 	}
 
 }

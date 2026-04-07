@@ -165,40 +165,13 @@ management:
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml
 
-knife4j:
-  gateway:
-    enabled: true
-    tags-sorter: order
-    operations-sorter: order
-    # 手动
-    strategy: manual
-    routes:
-      - name: 认证授权服务
-        url: /auth/api/v3/api-docs?group=default
-        service-name: laokou-auth
-        context-path: /auth/api
-        order: 1
-      - name: 后台管理服务
-        url: /admin/api/v3/api-docs?group=default
-        service-name: laokou-admin
-        context-path: /admin/api
-        order: 2
-      - name: 物联网服务
-        url: /iot/api/v3/api-docs?group=default
-        service-name: laokou-iot
-        context-path: /iot/api
-        order: 2
-
 request-matcher:
   ignore-patterns:
     GET:
-      - /**/v3/api-docs/**=laokou-gateway
       - /actuator/**=laokou-gateway
       - /favicon.ico=laokou-gateway
       - /api/v1/username-password/captchas/{uuid}=laokou-gateway
       - /api/v1/secrets=laokou-gateway
-      - /doc.html=laokou-gateway
-      - /webjars/**=laokou-gateway
       - /ws=laokou-gateway
     POST:
       - /api/v1/captchas/send-mail=laokou-gateway

@@ -42,7 +42,7 @@ class ConfigUtilsTest {
 	private ConfigService configService;
 
 	@Container
-	static final NacosContainer nacos = new NacosContainer(DockerImageNames.nacos("v3.1.0"), 38848, 39848);
+	static final NacosContainer nacos = new NacosContainer(DockerImageNames.nacos(), 38848, 39848);
 
 	@BeforeEach
 	void setUp() throws NacosException {
