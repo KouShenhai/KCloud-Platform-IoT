@@ -165,7 +165,7 @@
     <!--protobuf版本-->
     <protobuf.version>3.25.9</protobuf.version>
     <!--redisson版本-->
-    <redisson.version>4.3.0</redisson.version>
+    <redisson.version>4.3.1</redisson.version>
     <!--lombok版本-->
     <lombok.version>1.18.44</lombok.version>
     <!--postgresql版本-->
@@ -181,7 +181,7 @@
     <!--guava版本-->
     <guava.version>33.5.0-jre</guava.version>
     <!--oshi版本-->
-    <oshi.version>6.10.0</oshi.version>
+    <oshi.version>6.11.0</oshi.version>
     <!--elasticsearch版本-->
     <elasticsearch.version>9.3.3</elasticsearch.version>
     <!--jakarta.servlet-api版本-->
@@ -189,7 +189,7 @@
     <!--fesod版本-->
     <fesod.version>2.0.1-incubating</fesod.version>
     <!--s3版本-->
-    <s3.version>2.42.27</s3.version>
+    <s3.version>2.42.28</s3.version>
     <!--dynamic-datasource版本-->
     <dynamic-datasource.version>4.5.0</dynamic-datasource.version>
     <!--httpclient5版本-->
@@ -199,7 +199,7 @@
     <!--hibernate-validator版本-->
     <hibernate-validator.version>9.1.0.Final</hibernate-validator.version>
     <!--ip2region版本-->
-    <ip2region.version>3.3.6</ip2region.version>
+    <ip2region.version>3.3.7</ip2region.version>
     <!--spring-kafka版本-->
     <spring-kafka.version>4.0.4</spring-kafka.version>
     <!--disruptor版本-->
