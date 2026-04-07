@@ -23,6 +23,7 @@ import org.laokou.auth.convertor.UserConvertor;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.AuthA;
 import org.laokou.common.context.util.UserExtDetails;
+import org.laokou.common.core.config.SystemSettingProperties;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.laokou.common.redis.util.RedisUtils;
@@ -40,7 +41,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 record UserDetailsServiceImpl(@NonNull OAuth2UsernamePasswordAuthentication oAuth2UsernamePasswordAuthentication,
-		RedisUtils redisUtils) implements UserDetailsService {
+		RedisUtils redisUtils, SystemSettingProperties systemSettingProperties) implements UserDetailsService {
 
 	/**
 	 * 获取用户信息.
@@ -53,7 +54,8 @@ record UserDetailsServiceImpl(@NonNull OAuth2UsernamePasswordAuthentication oAut
 		AuthA authA = oAuth2UsernamePasswordAuthentication.authentication(
 				DomainFactory.createAuth().createAuthorizationCodeAuth(), RequestUtils.getHttpServletRequest());
 		UserExtDetails userDetails = UserConvertor.toUserDetails(authA);
-		redisUtils.set(RedisKeyUtils.getUserDetailKey(username), userDetails, RedisUtils.DEFAULT_EXPIRE);
+		redisUtils.set(RedisKeyUtils.getUserDetailKey(username), userDetails,
+				systemSettingProperties.getProfileExpire().toSeconds());
 		return new User(userDetails.username(), userDetails.password(),
 				AuthorityUtils.createAuthorityList(userDetails.permissions()));
 	}
