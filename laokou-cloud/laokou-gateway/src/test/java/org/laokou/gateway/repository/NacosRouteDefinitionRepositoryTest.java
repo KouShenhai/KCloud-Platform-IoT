@@ -20,11 +20,16 @@ package org.laokou.gateway.repository;
 import com.alibaba.cloud.nacos.NacosConfigManager;
 import com.alibaba.cloud.nacos.NacosConfigProperties;
 import com.redis.testcontainers.RedisStackContainer;
+import org.jspecify.annotations.NonNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.laokou.common.redis.config.JacksonCodec;
 import org.laokou.common.testcontainers.container.NacosContainer;
 import org.laokou.common.testcontainers.util.DockerImageNames;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
+import org.springframework.data.redis.core.ReactiveRedisTemplate;
+import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
@@ -43,6 +48,8 @@ public class NacosRouteDefinitionRepositoryTest {
 
 	private NacosConfigManager nacosConfigManager;
 
+	private ReactiveRedisTemplate<@NonNull String, @NonNull Object> reactiveRedisTemplate;
+
 	@BeforeEach
 	void setUp() {
 		NacosConfigProperties nacosConfigProperties = new NacosConfigProperties();
@@ -52,10 +59,19 @@ public class NacosRouteDefinitionRepositoryTest {
 		nacosConfigProperties.setUsername("nacos");
 		nacosConfigProperties.setPassword("nacos");
 		nacosConfigManager = new NacosConfigManager(nacosConfigProperties);
+		LettuceConnectionFactory lettuceConnectionFactory = new LettuceConnectionFactory(redisContainer.getHost(), redisContainer.getRedisPort());
+		RedisSerializationContext<@NonNull String, @NonNull Object> serializationContext = RedisSerializationContext
+			.<String, Object>newSerializationContext()
+			.key(JacksonCodec.STRING_REDIS_SERIALIZER)
+			.value(JacksonCodec.OBJECT_REDIS_SERIALIZER)
+			.hashKey(JacksonCodec.STRING_REDIS_SERIALIZER)
+			.hashValue(JacksonCodec.OBJECT_REDIS_SERIALIZER)
+			.build();
+		reactiveRedisTemplate = new ReactiveRedisTemplate<>(lettuceConnectionFactory, serializationContext);
 	}
 
 	@Test
-	void testSyncRouter() {
+	void test() {
 	}
 
 }
