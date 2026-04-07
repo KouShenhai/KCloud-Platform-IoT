@@ -24,8 +24,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.JacksonJsonHttpMessageConverter;
 import tools.jackson.databind.DeserializationFeature;
 import tools.jackson.databind.ext.javatime.deser.InstantDeserializer;
 import tools.jackson.databind.ext.javatime.deser.LocalDateTimeDeserializer;
@@ -39,7 +37,6 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Collections;
 import java.util.TimeZone;
 
 /**
@@ -52,13 +49,11 @@ import java.util.TimeZone;
 public class HttpMessageConverterConfig {
 
 	// @formatter:off
-	@Bean("jackson2HttpMessageConverter")
+	@Bean("jsonMapper")
 	@Order(Ordered.LOWEST_PRECEDENCE - 10000)
-	public JacksonJsonHttpMessageConverter jacksonJsonHttpMessageConverter() {
-		log.info("{} => jackson配置加载完毕", Thread.currentThread().getName());
-		JacksonJsonHttpMessageConverter jacksonJsonHttpMessageConverter = new JacksonJsonHttpMessageConverter(getJsonMapperBuilder());
-		jacksonJsonHttpMessageConverter.setSupportedMediaTypes(Collections.singletonList(MediaType.APPLICATION_JSON));
-		return jacksonJsonHttpMessageConverter;
+	public JsonMapper jsonMapper() {
+		log.info("{} => jsonMapper配置加载完毕", Thread.currentThread().getName());
+		return getJsonMapperBuilder().build();
 	}
 	// @formatter:on
 

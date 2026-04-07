@@ -106,8 +106,8 @@ spring:
             GET:
               - /v3/api-docs/**=laokou-admin
               - /actuator/**=laokou-admin
-              - /doc.html=laokou-admin
-              - /webjars/**=laokou-admin
+              - /scalar/**=laokou-admin
+              - /favicon.svg=laokou-admin
   cloud:
     loadbalancer:
       nacos:
@@ -156,20 +156,15 @@ spring:
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml
 
+scalar:
+  enabled: true
 springdoc:
   swagger-ui:
-    path: /swagger-ui.html
-    tags-sorter: alpha
-    operations-sorter: alpha
+    enabled: false
   api-docs:
     enabled: true
     path: /v3/api-docs
-  group-configs:
-    - group: default
-      paths-to-match:
-        - /**
-      packages-to-scan:
-        - org.laokou.admin.web
+    version: openapi_3_1
 
 # mybatis-plus
 mybatis-plus:
@@ -221,10 +216,3 @@ management:
   metrics:
     tags:
       application: ${spring.application.name}
-
-
-# knife4j的增强配置，不需要增强可以不配
-knife4j:
-  enable: false
-  setting:
-    language: zh_cn

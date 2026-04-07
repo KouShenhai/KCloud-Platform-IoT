@@ -64,7 +64,6 @@ spring:
               - /v3/api-docs/**=laokou-iot
               - /actuator/**=laokou-iot
               - /doc.html=laokou-iot
-              - /webjars/**=laokou-iot
   datasource:
     dynamic:
       # 默认false,建议线上关闭

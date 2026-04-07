@@ -26,7 +26,6 @@ import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
@@ -39,7 +38,6 @@ import org.springframework.http.HttpHeaders;
 public class OpenApiDocAutoConfig {
 
 	@Bean
-	@ConditionalOnMissingBean(OpenAPI.class)
 	OpenAPI openApi() {
 		return new OpenAPI()
 			.info(new Info().title("API文档")
