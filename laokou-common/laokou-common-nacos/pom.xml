@@ -43,10 +43,6 @@
       <artifactId>spring-cloud-loadbalancer</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-aspectj</artifactId>
       <exclusions>
@@ -65,9 +61,9 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>jakarta.servlet</groupId>
-      <artifactId>jakarta.servlet-api</artifactId>
-      <scope>provided</scope>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-reactor</artifactId>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -90,8 +86,10 @@
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-reactor</artifactId>
+      <artifactId>laokou-common-log4j2</artifactId>
       <version>${project.version}</version>
+      <scope>test</scope>
+      <optional>true</optional>
     </dependency>
   </dependencies>
 
