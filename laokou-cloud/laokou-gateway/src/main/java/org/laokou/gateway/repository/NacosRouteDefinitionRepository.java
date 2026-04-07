@@ -149,10 +149,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	 * @return 同步结果
 	 */
 	private Mono<@NonNull Void> syncRouter(@NonNull Collection<RouteDefinition> routes) {
-		return reactiveHashOperations.scan(RedisKeyUtils.getRouteDefinitionHashKey(), getScanOptions())
-			.buffer(500)
-			.flatMap(batch -> reactiveHashOperations.remove(RedisKeyUtils.getRouteDefinitionHashKey(),
-					batch.stream().map(Map.Entry::getKey).toArray()))
+		return reactiveHashOperations.delete(RedisKeyUtils.getRouteDefinitionHashKey())
 			.doOnError(throwable -> log.error("删除路由失败，错误信息：{}", throwable.getMessage(), throwable))
 			.doOnNext(_ -> publishRefreshRoutesEvent())
 			.thenMany(Flux.fromIterable(routes))
