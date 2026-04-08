@@ -55,7 +55,7 @@ import java.util.concurrent.Executors;
  */
 @Testcontainers
 @DisplayName("Nacos Route Definition Repository Tests")
-public class NacosRouteDefinitionRepositoryTest {
+class NacosRouteDefinitionRepositoryTest {
 
 	@Container
 	static NacosContainer nacosContainer = new NacosContainer(DockerImageNames.nacos(), 18848, 19848);
