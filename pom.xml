@@ -183,7 +183,7 @@
     <!--oshi版本-->
     <oshi.version>6.11.1</oshi.version>
     <!--elasticsearch版本-->
-    <elasticsearch.version>9.3.3</elasticsearch.version>
+    <elasticsearch.version>9.3.4</elasticsearch.version>
     <!--jakarta.servlet-api版本-->
     <jakarta-servlet-api.version>6.1.0</jakarta-servlet-api.version>
     <!--fesod版本-->
