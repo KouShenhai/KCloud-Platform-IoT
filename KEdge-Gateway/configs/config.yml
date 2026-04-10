@@ -37,7 +37,7 @@ log:
   # 日志保留时间【单位天】
   max-age: 30
   # 是否压缩
-  compress: gzip
+  compression: gzip
   # 本地时间，默认值：false（使用UTC）
   local-time: true
   # json格式
