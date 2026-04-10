@@ -18,10 +18,18 @@
 package main
 
 import (
-	"KEdge-Gateway/internal/config"
+	"KEdge-Gateway/internal/pkg/config"
+	"log"
 )
 
 func main() {
 	cfg := config.Load()
-	println(cfg)
+	logger, cleanup, err := cfg.Log.InitLogger()
+	if err != nil {
+		log.Fatalf("init logger failed: %v", err)
+	}
+	if cleanup != nil {
+		defer cleanup()
+	}
+	logger.Debug("init logger success")
 }

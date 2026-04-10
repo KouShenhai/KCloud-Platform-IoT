@@ -20,3 +20,35 @@ server:
 db:
   sqlite:
     url: jdbc:sqlite:db/kedge-gateway.db
+
+log:
+  # 级别【debug/info/error】
+  level: debug
+  # 环境
+  profile: dev
+  # 日志格式
+  pattern: 2006-01-02 15:04:05.000
+  # 日志文件路径
+  file-path: logs/app.log
+  # 日志最大容量【单位M】
+  max-size: 500
+  # 日志最大数量
+  max-backups: 10
+  # 日志保留时间【单位天】
+  max-age: 30
+  # 是否压缩
+  compress: gzip
+  # 本地时间，默认值：false（使用UTC）
+  local-time: true
+  # json格式
+  json-format: false
+  # 转换频率
+  rotation-interval: 24h
+  # 转换时间【分钟】
+  rotate-at-minutes:
+    - 0
+    - 15
+    - 30
+    - 45
+  # 日志时间格式
+  backup-time-format: 2006-01-02-15-04-05
