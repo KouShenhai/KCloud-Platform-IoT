@@ -17,10 +17,57 @@
 
 package config
 
+import (
+	"errors"
+	"log"
+	"os"
+
+	"gopkg.in/yaml.v3"
+)
+
 type Config struct {
 	Server ServerConfig `yaml:"server"`
+	DB     DBConfig     `yaml:"db"`
 }
 
 type ServerConfig struct {
 	Port int `yaml:"port"`
+}
+
+type DBConfig struct {
+	Sqlite SqliteConfig `yaml:"sqlite"`
+}
+
+type SqliteConfig struct {
+	Url string `yaml:"url"`
+}
+
+func Load() *Config {
+	config, err := load("KEdge-Gateway/configs/config.yml")
+	if err != nil {
+		log.Fatalf("failed to load config: %v", err)
+		return nil
+	}
+	err = config.check()
+	if err != nil {
+		log.Fatalf("failed to check config: %v", err)
+	}
+	return config
+}
+
+func (*Config) check() error {
+	return nil
+}
+
+func load(path string) (*Config, error) {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return nil, errors.New("failed to read the file")
+	}
+	config := &Config{}
+	err = yaml.Unmarshal(data, &config)
+	if err != nil {
+		return nil, errors.New("deserialization failed")
+	}
+	return config, nil
 }

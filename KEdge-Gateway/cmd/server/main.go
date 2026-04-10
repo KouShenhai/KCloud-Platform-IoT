@@ -17,6 +17,11 @@
 
 package main
 
-func main() {
+import (
+	"KEdge-Gateway/internal/config"
+)
 
+func main() {
+	cfg := config.Load()
+	println(cfg)
 }

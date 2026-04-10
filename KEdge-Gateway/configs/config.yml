@@ -16,3 +16,7 @@
 #    */
 server:
   port: 8010
+
+db:
+  sqlite:
+    url: jdbc:sqlite:db/kedge-gateway.db
