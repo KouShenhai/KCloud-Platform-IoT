@@ -20,7 +20,7 @@ package org.laokou.auth.gatewayimpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.auth.gateway.CaptchaGateway;
-import org.laokou.common.core.config.SystemSettingProperties;
+import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.common.redis.util.RedisUtils;
 import org.springframework.stereotype.Component;
 
@@ -36,11 +36,11 @@ public class CaptchaGatewayImpl implements CaptchaGateway {
 
 	private final RedisUtils redisUtils;
 
-	private final SystemSettingProperties systemSettingProperties;
+	private final SystemSettingsProperties systemSettingsProperties;
 
 	@Override
 	public void createCaptcha(String uuid, String captcha) {
-		redisUtils.set(uuid, captcha, systemSettingProperties.getCaptchaExpire().toSeconds());
+		redisUtils.set(uuid, captcha, systemSettingsProperties.getCaptchaExpire().toSeconds());
 	}
 
 }

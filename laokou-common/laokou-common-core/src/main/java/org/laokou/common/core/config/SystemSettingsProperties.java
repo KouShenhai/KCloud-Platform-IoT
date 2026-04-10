@@ -28,8 +28,8 @@ import java.time.Duration;
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = "system.setting")
-public class SystemSettingProperties {
+@ConfigurationProperties(prefix = "system.settings")
+public class SystemSettingsProperties {
 
 	private Duration captchaExpire = Duration.ofMinutes(5);
 
