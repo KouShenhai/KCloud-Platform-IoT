@@ -27,9 +27,8 @@ func main() {
 	logger, cleanup, err := cfg.Log.InitLogger()
 	if err != nil {
 		log.Fatalf("init logger failed: %v", err)
+		return
 	}
-	if cleanup != nil {
-		defer cleanup()
-	}
+	defer cleanup()
 	logger.Debug("init logger success")
 }
