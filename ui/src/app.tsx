@@ -259,7 +259,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState }: any) => {
 									key: 'logout',
 									icon: <LogoutOutlined />,
 									// eslint-disable-next-line @typescript-eslint/no-use-before-define
-									label: t('user.logout'),
+									label: t('sys.user.logout'),
 									onClick: async () => {
 										if (refreshTimeoutRef) {
 											clearTimeout(refreshTimeoutRef);

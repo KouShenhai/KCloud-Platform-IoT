@@ -246,7 +246,7 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({
 					rules={[
 						{
 							required: true,
-							message: t('role.validate.createTimeRequired'),
+							message: t('sys.role.validate.createTimeRequired'),
 						},
 					]}
 					label={t('common.createTime')}

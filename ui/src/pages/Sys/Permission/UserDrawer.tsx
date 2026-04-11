@@ -142,54 +142,54 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({
 
 			<ProFormText
 				name="username"
-				label={t('user.username')}
-				tooltip={t('user.tooltip.username')}
+				label={t('sys.user.username')}
+				tooltip={t('sys.user.tooltip.username')}
 				disabled={edit}
 				readonly={readOnly}
-				placeholder={t('user.placeholder.username')}
+				placeholder={t('sys.user.placeholder.username')}
 				rules={[
-					{ required: true, message: t('user.required.username') },
+					{ required: true, message: t('sys.user.required.username') },
 				]}
 			/>
 
 			{ saveOnly && (<ProFormText.Password
 				initialValue={'laokou123'}
 				name="password"
-				label={t('user.password')}
-				tooltip={t('user.tooltip.password')}
-				placeholder={t('user.placeholder.password')}
+				label={t('sys.user.password')}
+				tooltip={t('sys.user.tooltip.password')}
+				placeholder={t('sys.user.placeholder.password')}
 				rules={[
-					{ required: true, message: t('user.required.password') },
+					{ required: true, message: t('sys.user.required.password') },
 				]}
 			/>)}
 
 			<ProFormText
 				disabled={loading}
 				name="mail"
-				label={t('user.mail')}
-				tooltip={t('user.tooltip.mail')}
+				label={t('sys.user.mail')}
+				tooltip={t('sys.user.tooltip.mail')}
 				readonly={readOnly}
-				placeholder={t('user.placeholder.mail')}
+				placeholder={t('sys.user.placeholder.mail')}
 			/>
 
 			<ProFormText
 				disabled={loading}
 				name="mobile"
-				label={t('user.mobile')}
-				tooltip={t('user.tooltip.mobile')}
+				label={t('sys.user.mobile')}
+				tooltip={t('sys.user.tooltip.mobile')}
 				readonly={readOnly}
-				placeholder={t('user.placeholder.mobile')}
+				placeholder={t('sys.user.placeholder.mobile')}
 			/>
 
 			<ProFormTreeSelect
 				disabled={loading}
 				readonly={readOnly}
 				name="deptId"
-				label={t('user.dept')}
+				label={t('sys.user.dept')}
 				allowClear={true}
-				placeholder={t('user.placeholder.dept')}
+				placeholder={t('sys.user.placeholder.dept')}
 				rules={[
-					{ required: true, message: t('user.required.dept') },
+					{ required: true, message: t('sys.user.required.dept') },
 				]}
 				fieldProps={{
 					fieldNames: {
@@ -206,7 +206,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({
 			{!readOnly &&
 				(access.canUserModify || access.canUserModify) &&
 				access.canOssUpload && (
-					<ProFormItem label={t('user.avatar')}>
+					<ProFormItem label={t('sys.user.avatar')}>
 						<UploadAvatarDrawer
 							setPreviewImage={setPreviewImage}
 							setPreviewOpen={setPreviewOpen}
@@ -218,7 +218,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({
 				)}
 
 			{readOnly && fileList.length > 0 && (
-				<ProFormItem label={t('user.avatar')}>
+				<ProFormItem label={t('sys.user.avatar')}>
 					<Image width={100} src={fileList[0].url} />
 				</ProFormItem>
 			)}
@@ -226,10 +226,10 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({
 			<ProFormRadio.Group
 				disabled={loading}
 				name="status"
-				label={t('user.status')}
+				label={t('sys.user.status')}
 				readonly={readOnly}
 				rules={[
-					{ required: true, message: t('user.required.status') },
+					{ required: true, message: t('sys.user.required.status') },
 				]}
 				options={[
 					{ label: t('common.enable'), value: 0 },
@@ -255,13 +255,13 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({
 					disabled={loading}
 					name="roleIds"
 					allowClear={true}
-					label={t('user.roles')}
+					label={t('sys.user.roles')}
 					mode={'multiple'}
 					readonly={readOnly}
 					options={roleList}
-					placeholder={t('user.placeholder.roles')}
+					placeholder={t('sys.user.placeholder.roles')}
 					rules={[
-						{ required: true, message: t('user.required.roles') },
+						{ required: true, message: t('sys.user.required.roles') },
 					]}
 					fieldProps={{
 						fieldNames: {
@@ -280,7 +280,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({
 					rules={[
 						{
 							required: true,
-							message: t('role.validate.createTimeRequired'),
+							message: t('sys.role.validate.createTimeRequired'),
 						},
 					]}
 					label={t('common.createTime')}

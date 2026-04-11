@@ -6,7 +6,7 @@ export async function modifyI18nMenu(
 	body: API.I18nMenuModifyCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/api/v1/i18n-menus', {
+	return request<any>('/api-proxy/admin/api/v1/i18n-menus', {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
@@ -21,7 +21,7 @@ export async function saveI18nMenu(
 	body: API.I18nMenuSaveCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/api/v1/i18n-menus', {
+	return request<any>('/api-proxy/admin/api/v1/i18n-menus', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ export async function removeI18nMenu(
 	body: number[],
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/api/v1/i18n-menus', {
+	return request<any>('/api-proxy/admin/api/v1/i18n-menus', {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',
@@ -53,7 +53,7 @@ export async function getI18nMenuById(
 	options?: { [key: string]: any },
 ) {
 	const { id: param0, ...queryParams } = params;
-	return request<API.Result>(`/api/v1/i18n-menus/${param0}`, {
+	return request<API.Result>(`/api-proxy/admin/api/v1/i18n-menus/${param0}`, {
 		method: 'GET',
 		params: { ...queryParams },
 		...(options || {}),
@@ -65,7 +65,7 @@ export async function exportI18nMenu(
 	body: API.I18nMenuExportCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/api/v1/i18n-menus/export', {
+	return request<any>('/api-proxy/admin/api/v1/i18n-menus/export', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -103,7 +103,7 @@ export async function importI18nMenu(
 		}
 	});
 
-	return request<any>('/api/v1/i18n-menus/import', {
+	return request<any>('/api-proxy/admin/api/v1/i18n-menus/import', {
 		method: 'POST',
 		data: formData,
 		requestType: 'form',
@@ -116,7 +116,7 @@ export async function pageI18nMenu(
 	body: API.I18nMenuPageQry,
 	options?: { [key: string]: any },
 ) {
-	return request<API.Result>('/api/v1/i18n-menus/page', {
+	return request<API.Result>('/api-proxy/admin/api/v1/i18n-menus/page', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

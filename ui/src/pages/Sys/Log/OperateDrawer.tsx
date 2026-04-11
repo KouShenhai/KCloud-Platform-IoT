@@ -46,7 +46,7 @@ export const OperateLogDrawer: React.FC<OperateLogDrawerProps> = ({
 	return (
 		<DrawerForm<TableColumns>
 			open={modalVisit}
-			title={t('sys.log.operate.drawer.title')}
+			title={t('sys.operateLog.drawer.title')}
 			drawerProps={{
 				destroyOnClose: true,
 				closable: true,
@@ -66,11 +66,11 @@ export const OperateLogDrawer: React.FC<OperateLogDrawerProps> = ({
 			<ProFormText
 				readonly={true}
 				name="name"
-				label={t('sys.log.operate.name')}
+				label={t('sys.operateLog.name')}
 				rules={[
 					{
 						required: true,
-						message: t('sys.log.operate.required.name'),
+						message: t('sys.operateLog.required.name'),
 					},
 				]}
 			/>
@@ -78,11 +78,11 @@ export const OperateLogDrawer: React.FC<OperateLogDrawerProps> = ({
 			<ProFormText
 				readonly={true}
 				name="moduleName"
-				label={t('sys.log.operate.moduleName')}
+				label={t('sys.operateLog.moduleName')}
 				rules={[
 					{
 						required: true,
-						message: t('sys.log.operate.required.moduleName'),
+						message: t('sys.operateLog.required.moduleName'),
 					},
 				]}
 			/>
@@ -90,11 +90,11 @@ export const OperateLogDrawer: React.FC<OperateLogDrawerProps> = ({
 			<ProFormText
 				readonly={true}
 				name="operator"
-				label={t('sys.log.operate.operator')}
+				label={t('sys.operateLog.operator')}
 				rules={[
 					{
 						required: true,
-						message: t('sys.log.operate.required.operator'),
+						message: t('sys.operateLog.required.operator'),
 					},
 				]}
 			/>
@@ -102,11 +102,11 @@ export const OperateLogDrawer: React.FC<OperateLogDrawerProps> = ({
 			<ProFormText
 				readonly={true}
 				name="uri"
-				label={t('sys.log.operate.uri')}
+				label={t('sys.operateLog.uri')}
 				rules={[
 					{
 						required: true,
-						message: t('sys.log.operate.required.uri'),
+						message: t('sys.operateLog.required.uri'),
 					},
 				]}
 			/>
@@ -114,11 +114,11 @@ export const OperateLogDrawer: React.FC<OperateLogDrawerProps> = ({
 			<ProFormText
 				readonly={true}
 				name="requestType"
-				label={t('sys.log.operate.requestType')}
+				label={t('sys.operateLog.requestType')}
 				rules={[
 					{
 						required: true,
-						message: t('sys.log.operate.required.requestType'),
+						message: t('sys.operateLog.required.requestType'),
 					},
 				]}
 			/>
@@ -126,11 +126,11 @@ export const OperateLogDrawer: React.FC<OperateLogDrawerProps> = ({
 			<ProFormText
 				readonly={true}
 				name="requestParams"
-				label={t('sys.log.operate.requestParams')}
+				label={t('sys.operateLog.requestParams')}
 				rules={[
 					{
 						required: true,
-						message: t('sys.log.operate.required.requestParams'),
+						message: t('sys.operateLog.required.requestParams'),
 					},
 				]}
 			/>
@@ -138,11 +138,11 @@ export const OperateLogDrawer: React.FC<OperateLogDrawerProps> = ({
 			<ProFormText
 				readonly={true}
 				name="methodName"
-				label={t('sys.log.operate.methodName')}
+				label={t('sys.operateLog.methodName')}
 				rules={[
 					{
 						required: true,
-						message: t('sys.log.operate.required.methodName'),
+						message: t('sys.operateLog.required.methodName'),
 					},
 				]}
 			/>
@@ -150,11 +150,11 @@ export const OperateLogDrawer: React.FC<OperateLogDrawerProps> = ({
 			<ProFormText
 				readonly={true}
 				name="userAgent"
-				label={t('sys.log.operate.userAgent')}
+				label={t('sys.operateLog.userAgent')}
 				rules={[
 					{
 						required: true,
-						message: t('sys.log.operate.required.userAgent'),
+						message: t('sys.operateLog.required.userAgent'),
 					},
 				]}
 			/>
@@ -162,11 +162,11 @@ export const OperateLogDrawer: React.FC<OperateLogDrawerProps> = ({
 			<ProFormText
 				readonly={true}
 				name="ip"
-				label={t('sys.log.operate.ip')}
+				label={t('sys.operateLog.ip')}
 				rules={[
 					{
 						required: true,
-						message: t('sys.log.operate.required.ip'),
+						message: t('sys.operateLog.required.ip'),
 					},
 				]}
 			/>
@@ -174,11 +174,11 @@ export const OperateLogDrawer: React.FC<OperateLogDrawerProps> = ({
 			<ProFormText
 				readonly={true}
 				name="address"
-				label={t('sys.log.operate.address')}
+				label={t('sys.operateLog.address')}
 				rules={[
 					{
 						required: true,
-						message: t('sys.log.operate.required.address'),
+						message: t('sys.operateLog.required.address'),
 					},
 				]}
 			/>
@@ -186,11 +186,11 @@ export const OperateLogDrawer: React.FC<OperateLogDrawerProps> = ({
 			<ProFormText
 				readonly={true}
 				name="status"
-				label={t('sys.log.operate.status')}
+				label={t('sys.operateLog.status')}
 				rules={[
 					{
 						required: true,
-						message: t('sys.log.operate.required.status'),
+						message: t('sys.operateLog.required.status'),
 					},
 				]}
 				convertValue={(value) => {
@@ -201,11 +201,11 @@ export const OperateLogDrawer: React.FC<OperateLogDrawerProps> = ({
 			<ProFormText
 				readonly={true}
 				name="profile"
-				label={t('sys.log.operate.profile')}
+				label={t('sys.operateLog.profile')}
 				rules={[
 					{
 						required: true,
-						message: t('sys.log.operate.required.profile'),
+						message: t('sys.operateLog.required.profile'),
 					},
 				]}
 			/>
@@ -213,11 +213,11 @@ export const OperateLogDrawer: React.FC<OperateLogDrawerProps> = ({
 			<ProFormText
 				readonly={true}
 				name="serviceId"
-				label={t('sys.log.operate.serviceId')}
+				label={t('sys.operateLog.serviceId')}
 				rules={[
 					{
 						required: true,
-						message: t('sys.log.operate.required.serviceId'),
+						message: t('sys.operateLog.required.serviceId'),
 					},
 				]}
 			/>
@@ -225,11 +225,11 @@ export const OperateLogDrawer: React.FC<OperateLogDrawerProps> = ({
 			<ProFormText
 				readonly={true}
 				name="serviceAddress"
-				label={t('sys.log.operate.serviceAddress')}
+				label={t('sys.operateLog.serviceAddress')}
 				rules={[
 					{
 						required: true,
-						message: t('sys.log.operate.required.serviceAddress'),
+						message: t('sys.operateLog.required.serviceAddress'),
 					},
 				]}
 			/>
@@ -237,11 +237,11 @@ export const OperateLogDrawer: React.FC<OperateLogDrawerProps> = ({
 			<ProFormText
 				readonly={true}
 				name="errorMessage"
-				label={t('sys.log.operate.errorMessage')}
+				label={t('sys.operateLog.errorMessage')}
 				rules={[
 					{
 						required: true,
-						message: t('sys.log.operate.required.errorMessage'),
+						message: t('sys.operateLog.required.errorMessage'),
 					},
 				]}
 			/>
@@ -249,11 +249,11 @@ export const OperateLogDrawer: React.FC<OperateLogDrawerProps> = ({
 			<ProFormTextArea
 				readonly={true}
 				name="stackTrace"
-				label={t('sys.log.operate.stackTrace')}
+				label={t('sys.operateLog.stackTrace')}
 				rules={[
 					{
 						required: true,
-						message: t('sys.log.operate.required.stackTrace'),
+						message: t('sys.operateLog.required.stackTrace'),
 					},
 				]}
 			/>
@@ -265,7 +265,7 @@ export const OperateLogDrawer: React.FC<OperateLogDrawerProps> = ({
 				rules={[
 					{
 						required: true,
-						message: t('sys.log.operate.required.createTime'),
+						message: t('sys.operateLog.required.createTime'),
 					},
 				]}
 			/>

@@ -86,12 +86,12 @@ export const UserModifyAuthorityDrawer: React.FC<UserAuthorityProps> = ({
 
 			<ProFormText
 				name="username"
-				label={t('user.username')}
-				tooltip={t('user.tooltip.username')}
+				label={t('sys.user.username')}
+				tooltip={t('sys.user.tooltip.username')}
 				disabled={true}
-				placeholder={t('user.placeholder.username')}
+				placeholder={t('sys.user.placeholder.username')}
 				rules={[
-					{ required: true, message: t('user.required.username') },
+					{ required: true, message: t('sys.user.required.username') },
 				]}
 			/>
 
@@ -99,11 +99,11 @@ export const UserModifyAuthorityDrawer: React.FC<UserAuthorityProps> = ({
 				disabled={loading}
 				name="roleIds"
 				allowClear={true}
-				label={t('user.roles')}
+				label={t('sys.user.roles')}
 				mode={'multiple'}
-				placeholder={t('user.placeholder.roles')}
+				placeholder={t('sys.user.placeholder.roles')}
 				rules={[
-					{ required: true, message: t('user.required.roles') },
+					{ required: true, message: t('sys.user.required.roles') },
 				]}
 				options={roleList}
 				fieldProps={{

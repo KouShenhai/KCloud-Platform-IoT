@@ -42,8 +42,8 @@ export default () => {
 
 	const getStatus = (status: string) => {
 		return {
-			'0': t('sys.log.common.success'),
-			'1': t('sys.log.common.fail'),
+			'0': t('sys.commonLog.success'),
+			'1': t('sys.commonLog.fail'),
 		}[status];
 	};
 
@@ -81,59 +81,59 @@ export default () => {
 			width: 85,
 		},
 		{
-			title: t('sys.log.operate.moduleName'),
+			title: t('sys.operateLog.moduleName'),
 			dataIndex: 'moduleName',
 			ellipsis: true,
 			valueType: 'text',
 			fieldProps: {
-				placeholder: t('sys.log.operate.placeholder.moduleName'),
+				placeholder: t('sys.operateLog.placeholder.moduleName'),
 			},
 		},
 		{
-			title: t('sys.log.operate.name'),
+			title: t('sys.operateLog.name'),
 			dataIndex: 'name',
 			ellipsis: true,
 			valueType: 'text',
 			width: 130,
 			fieldProps: {
-				placeholder: t('sys.log.operate.placeholder.name'),
+				placeholder: t('sys.operateLog.placeholder.name'),
 			},
 		},
 		{
-			title: t('sys.log.operate.requestType'),
+			title: t('sys.operateLog.requestType'),
 			dataIndex: 'requestType',
 			ellipsis: true,
 			valueType: 'text',
 			fieldProps: {
-				placeholder: t('sys.log.operate.placeholder.requestType'),
+				placeholder: t('sys.operateLog.placeholder.requestType'),
 			},
 		},
 		{
-			title: t('sys.log.operate.operator'),
+			title: t('sys.operateLog.operator'),
 			dataIndex: 'operator',
 			ellipsis: true,
 			valueType: 'text',
 			fieldProps: {
-				placeholder: t('sys.log.operate.placeholder.operator'),
+				placeholder: t('sys.operateLog.placeholder.operator'),
 			},
 		},
 		{
-			title: t('sys.log.operate.ip'),
+			title: t('sys.operateLog.ip'),
 			dataIndex: 'ip',
 			ellipsis: true,
 			valueType: 'text',
 			fieldProps: {
-				placeholder: t('sys.log.operate.placeholder.ip'),
+				placeholder: t('sys.operateLog.placeholder.ip'),
 			},
 		},
 		{
-			title: t('sys.log.operate.address'),
+			title: t('sys.operateLog.address'),
 			dataIndex: 'address',
 			ellipsis: true,
 			hideInSearch: true,
 		},
 		{
-			title: t('sys.log.operate.status'),
+			title: t('sys.operateLog.status'),
 			dataIndex: 'statusValue',
 			valueType: 'select',
 			hideInTable: true,
@@ -142,39 +142,39 @@ export default () => {
 				mode: 'single',
 				options: [
 					{
-						label: t('sys.log.common.success'),
+						label: t('sys.commonLog.success'),
 						value: '0',
 					},
 					{
-						label: t('sys.log.common.fail'),
+						label: t('sys.commonLog.fail'),
 						value: '1',
 					},
 				],
-				placeholder: t('sys.log.operate.placeholder.status'),
+				placeholder: t('sys.operateLog.placeholder.status'),
 			},
 		},
 		{
-			title: t('sys.log.operate.status'),
+			title: t('sys.operateLog.status'),
 			dataIndex: 'status',
 			hideInSearch: true,
 			ellipsis: true,
 			valueEnum: {
-				'0': { text: t('sys.log.common.success'), status: 'Success' },
-				'1': { text: t('sys.log.common.fail'), status: 'Error' },
+				'0': { text: t('sys.commonLog.success'), status: 'Success' },
+				'1': { text: t('sys.commonLog.fail'), status: 'Error' },
 			},
 			width: 80,
 		},
 		{
-			title: t('sys.log.operate.errorMessage'),
+			title: t('sys.operateLog.errorMessage'),
 			dataIndex: 'errorMessage',
 			ellipsis: true,
 			valueType: 'text',
 			fieldProps: {
-				placeholder: t('sys.log.operate.placeholder.errorMessage'),
+				placeholder: t('sys.operateLog.placeholder.errorMessage'),
 			},
 		},
 		{
-			title: t('sys.log.operate.costTime'),
+			title: t('sys.operateLog.costTime'),
 			dataIndex: 'costTime',
 			hideInSearch: true,
 			ellipsis: true,
@@ -303,25 +303,25 @@ export default () => {
 									'createTime',
 								],
 								sheetHeader: [
-									t('sys.log.operate.moduleName'),
-									t('sys.log.operate.name'),
-									t('sys.log.operate.requestType'),
-									t('sys.log.operate.operator'),
-									t('sys.log.operate.ip'),
-									t('sys.log.operate.address'),
-									t('sys.log.operate.status'),
-									t('sys.log.operate.errorMessage'),
-									t('sys.log.operate.costTime'),
+									t('sys.operateLog.moduleName'),
+									t('sys.operateLog.name'),
+									t('sys.operateLog.requestType'),
+									t('sys.operateLog.operator'),
+									t('sys.operateLog.ip'),
+									t('sys.operateLog.address'),
+									t('sys.operateLog.status'),
+									t('sys.operateLog.errorMessage'),
+									t('sys.operateLog.costTime'),
 									t('common.createTime'),
 								],
 								fileName:
-									t('sys.log.operate.exportFilePrefix') +
+									t('sys.operateLog.exportFilePrefix') +
 									moment(new Date()).format('YYYYMMDDHHmmss'),
-								sheetName: t('sys.log.operate.title'),
+								sheetName: t('sys.operateLog.title'),
 							});
 						}}
 					>
-						{t('sys.log.common.export')}
+						{t('sys.commonLog.export')}
 					</Button>,
 					access.canOperateLogExport && (
 						<Button
@@ -336,7 +336,7 @@ export default () => {
 								});
 							}}
 						>
-							{t('sys.log.common.exportAll')}
+							{t('sys.commonLog.exportAll')}
 						</Button>
 					),
 				]}

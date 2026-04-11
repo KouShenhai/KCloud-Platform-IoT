@@ -23,7 +23,7 @@ export const UserResetPwdDrawer: React.FC<UserResetPwdDrawerProps> = ({
 	return (
 		<DrawerForm
 			open={visible}
-			title={t('user.resetPwd.title')}
+			title={t('sys.user.resetPwd.title')}
 			drawerProps={{
 				destroyOnClose: true,
 				closable: true,
@@ -43,13 +43,13 @@ export const UserResetPwdDrawer: React.FC<UserResetPwdDrawerProps> = ({
 				setLoading(true);
 				const { password, confirmPassword } = value;
 				if (password !== confirmPassword) {
-					message.error(t('user.resetPwd.passwordNotMatch'));
+					message.error(t('sys.user.resetPwd.passwordNotMatch'));
 					return;
 				}
 				resetUserPwd({ id: value?.id, password })
 					.then((res) => {
 						if (res.code === 'OK') {
-							message.success(t('user.resetPwd.success'));
+							message.success(t('sys.user.resetPwd.success'));
 							setVisible(false);
 							return true;
 						}
@@ -63,40 +63,40 @@ export const UserResetPwdDrawer: React.FC<UserResetPwdDrawerProps> = ({
 
 			<ProFormText
 				name="username"
-				label={t('user.username')}
-				tooltip={t('user.tooltip.username')}
+				label={t('sys.user.username')}
+				tooltip={t('sys.user.tooltip.username')}
 				disabled={true}
-				placeholder={t('user.placeholder.username')}
+				placeholder={t('sys.user.placeholder.username')}
 				rules={[
-					{ required: true, message: t('user.required.username') },
+					{ required: true, message: t('sys.user.required.username') },
 				]}
 			/>
 
 			<ProFormText.Password
 				disabled={loading}
 				name="password"
-				label={t('user.resetPwd.password')}
-				tooltip={t('user.tooltip.password')}
-				placeholder={t('user.resetPwd.placeholder.password')}
+				label={t('sys.user.resetPwd.password')}
+				tooltip={t('sys.user.tooltip.password')}
+				placeholder={t('sys.user.resetPwd.placeholder.password')}
 				fieldProps={{ autoComplete: 'new-password' }}
 				rules={[
 					{
 						required: true,
-						message: t('user.resetPwd.required.password'),
+						message: t('sys.user.resetPwd.required.password'),
 					},
 				]}
 			/>
 			<ProFormText.Password
 				disabled={loading}
 				name="confirmPassword"
-				label={t('user.resetPwd.confirmPassword')}
-				tooltip={t('user.tooltip.password')}
-				placeholder={t('user.resetPwd.placeholder.confirmPassword')}
+				label={t('sys.user.resetPwd.confirmPassword')}
+				tooltip={t('sys.user.tooltip.password')}
+				placeholder={t('sys.user.resetPwd.placeholder.confirmPassword')}
 				fieldProps={{ autoComplete: 'new-password' }}
 				rules={[
 					{
 						required: true,
-						message: t('user.resetPwd.required.confirmPassword'),
+						message: t('sys.user.resetPwd.required.confirmPassword'),
 					},
 				]}
 			/>

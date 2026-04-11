@@ -37,14 +37,14 @@ export default () => {
 			username_password: t('login.usernamePassword'),
 			mobile: t('login.mobile'),
 			mail: t('login.mail'),
-			authorization_code: t('sys.log.login.type.authorizationCode'),
+			authorization_code: t('sys.loginLog.type.authorizationCode'),
 		}[type];
 	};
 
 	const getLoginStatus = (status: string) => {
 		return {
-			'0': t('sys.log.login.status.success'),
-			'1': t('sys.log.login.status.fail'),
+			'0': t('sys.loginLog.status.success'),
+			'1': t('sys.loginLog.status.fail'),
 		}[status];
 	};
 
@@ -82,52 +82,52 @@ export default () => {
 			width: 85,
 		},
 		{
-			title: t('user.username'),
+			title: t('sys.user.username'),
 			dataIndex: 'username',
 			ellipsis: true,
 			valueType: 'text',
 			fieldProps: {
-				placeholder: t('user.placeholder.username'),
+				placeholder: t('sys.user.placeholder.username'),
 			},
 		},
 		{
-			title: t('sys.log.login.ip'),
+			title: t('sys.loginLog.ip'),
 			dataIndex: 'ip',
 			ellipsis: true,
 			valueType: 'text',
 			fieldProps: {
-				placeholder: t('sys.log.login.placeholder.ip'),
+				placeholder: t('sys.loginLog.placeholder.ip'),
 			},
 		},
 		{
-			title: t('sys.log.login.address'),
+			title: t('sys.loginLog.address'),
 			dataIndex: 'address',
 			ellipsis: true,
 			valueType: 'text',
 			fieldProps: {
-				placeholder: t('sys.log.login.placeholder.address'),
+				placeholder: t('sys.loginLog.placeholder.address'),
 			},
 		},
 		{
-			title: t('sys.log.login.browser'),
+			title: t('sys.loginLog.browser'),
 			dataIndex: 'browser',
 			ellipsis: true,
 			valueType: 'text',
 			fieldProps: {
-				placeholder: t('sys.log.login.placeholder.browser'),
+				placeholder: t('sys.loginLog.placeholder.browser'),
 			},
 		},
 		{
-			title: t('sys.log.login.os'),
+			title: t('sys.loginLog.os'),
 			dataIndex: 'os',
 			ellipsis: true,
 			valueType: 'text',
 			fieldProps: {
-				placeholder: t('sys.log.login.placeholder.os'),
+				placeholder: t('sys.loginLog.placeholder.os'),
 			},
 		},
 		{
-			title: t('sys.log.login.status'),
+			title: t('sys.loginLog.status'),
 			key: 'statusValue',
 			dataIndex: 'statusValue',
 			valueType: 'select',
@@ -138,37 +138,37 @@ export default () => {
 				options: [
 					{
 						value: '0',
-						label: t('sys.log.login.status.success'),
+						label: t('sys.loginLog.status.success'),
 					},
 					{
 						value: '1',
-						label: t('sys.log.login.status.fail'),
+						label: t('sys.loginLog.status.fail'),
 					},
 				],
-				placeholder: t('sys.log.login.placeholder.status'),
+				placeholder: t('sys.loginLog.placeholder.status'),
 			},
 		},
 		{
-			title: t('sys.log.login.status'),
+			title: t('sys.loginLog.status'),
 			dataIndex: 'status',
 			hideInSearch: true,
 			valueEnum: {
-				'0': { text: t('sys.log.login.status.success'), status: 'Success' },
-				'1': { text: t('sys.log.login.status.fail'), status: 'Error' },
+				'0': { text: t('sys.loginLog.status.success'), status: 'Success' },
+				'1': { text: t('sys.loginLog.status.fail'), status: 'Error' },
 			},
 			ellipsis: true,
 		},
 		{
-			title: t('sys.log.login.errorMessage'),
+			title: t('sys.loginLog.errorMessage'),
 			dataIndex: 'errorMessage',
 			ellipsis: true,
 			valueType: 'text',
 			fieldProps: {
-				placeholder: t('sys.log.login.placeholder.errorMessage'),
+				placeholder: t('sys.loginLog.placeholder.errorMessage'),
 			},
 		},
 		{
-			title: t('sys.log.login.type'),
+			title: t('sys.loginLog.type'),
 			key: 'typeValue',
 			dataIndex: 'typeValue',
 			valueType: 'select',
@@ -191,19 +191,19 @@ export default () => {
 					},
 					{
 						value: 'authorization_code',
-						label: t('sys.log.login.type.authorizationCode'),
+						label: t('sys.loginLog.type.authorizationCode'),
 					},
 				],
-				placeholder: t('sys.log.login.placeholder.type'),
+				placeholder: t('sys.loginLog.placeholder.type'),
 			},
 		},
 		{
-			title: t('sys.log.login.type'),
+			title: t('sys.loginLog.type'),
 			dataIndex: 'type',
 			hideInSearch: true,
 			valueEnum: {
 				authorization_code: {
-					text: t('sys.log.login.type.authorizationCode'),
+					text: t('sys.loginLog.type.authorizationCode'),
 					status: 'Error',
 				},
 				mail: { text: t('login.mail'), status: 'Success' },
@@ -217,7 +217,7 @@ export default () => {
 			ellipsis: true,
 		},
 		{
-			title: t('sys.log.login.loginTime'),
+			title: t('sys.loginLog.loginTime'),
 			key: 'createTime',
 			dataIndex: 'createTime',
 			valueType: 'dateTime',
@@ -226,7 +226,7 @@ export default () => {
 			ellipsis: true,
 		},
 		{
-			title: t('sys.log.login.loginTime'),
+			title: t('sys.loginLog.loginTime'),
 			dataIndex: 'createTimeValue',
 			valueType: 'dateRange',
 			hideInTable: true,
@@ -303,24 +303,24 @@ export default () => {
 								'createTime',
 							],
 							sheetHeader: [
-								t('user.username'),
-								t('sys.log.login.ip'),
-								t('sys.log.login.address'),
-								t('sys.log.login.browser'),
-								t('sys.log.login.os'),
-								t('sys.log.login.status'),
-								t('sys.log.login.errorMessage'),
-								t('sys.log.login.type'),
-								t('sys.log.login.loginTime'),
+								t('sys.user.username'),
+								t('sys.loginLog.ip'),
+								t('sys.loginLog.address'),
+								t('sys.loginLog.browser'),
+								t('sys.loginLog.os'),
+								t('sys.loginLog.status'),
+								t('sys.loginLog.errorMessage'),
+								t('sys.loginLog.type'),
+								t('sys.loginLog.loginTime'),
 							],
 							fileName:
-								t('sys.log.login.exportFilePrefix') +
+								t('sys.loginLog.exportFilePrefix') +
 								moment(new Date()).format('YYYYMMDDHHmmss'),
-							sheetName: t('sys.log.login.title'),
+							sheetName: t('sys.loginLog.title'),
 						});
 					}}
 				>
-					{t('sys.log.common.export')}
+					{t('sys.commonLog.export')}
 				</Button>,
 				access.canLoginLogExport && (
 					<Button
@@ -335,7 +335,7 @@ export default () => {
 							});
 						}}
 					>
-						{t('sys.log.common.exportAll')}
+						{t('sys.commonLog.exportAll')}
 					</Button>
 				),
 			]}

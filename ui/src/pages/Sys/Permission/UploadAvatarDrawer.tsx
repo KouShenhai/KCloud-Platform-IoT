@@ -81,7 +81,7 @@ export const UploadAvatarDrawer: React.FC<UploadAvatarDrawerProps> = ({
 						});
 				}}
 			>
-				{fileList.length < 1 && t('user.avatar.upload')}
+				{fileList.length < 1 && t('sys.user.avatar.upload')}
 			</Upload>
 		</ImgCrop>
 	);

@@ -179,7 +179,7 @@ export const ProductCategoryDrawer: React.FC<ProductCategoryDrawerProps> = ({
 					rules={[
 						{
 							required: true,
-							message: t('role.validate.createTimeRequired'),
+							message: t('sys.role.validate.createTimeRequired'),
 						},
 					]}
 					label={t('common.createTime')}

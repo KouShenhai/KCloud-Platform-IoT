@@ -102,47 +102,47 @@ export default () => {
 			width: 85,
 		},
 		{
-			title: t('user.username'),
+			title: t('sys.user.username'),
 			dataIndex: 'username',
-			tooltip: t('user.tooltipFuzzyQueryFourChars'),
+			tooltip: t('sys.user.tooltipFuzzyQueryFourChars'),
 			valueType: 'text',
 			ellipsis: true,
 			width: 120,
 			fieldProps: {
-				placeholder: t('user.placeholder.username'),
+				placeholder: t('sys.user.placeholder.username'),
 			},
 		},
 		{
-			title: t('user.mail'),
+			title: t('sys.user.mail'),
 			dataIndex: 'mail',
-			tooltip: t('user.tooltipFuzzyQueryFourChars'),
+			tooltip: t('sys.user.tooltipFuzzyQueryFourChars'),
 			valueType: 'text',
 			width: 120,
 			fieldProps: {
-				placeholder: t('user.placeholder.mail'),
+				placeholder: t('sys.user.placeholder.mail'),
 			},
 			ellipsis: true,
 		},
 		{
-			title: t('user.mobile'),
+			title: t('sys.user.mobile'),
 			dataIndex: 'mobile',
-			tooltip: t('user.tooltipFuzzyQueryThreeOrFourChars'),
+			tooltip: t('sys.user.tooltipFuzzyQueryThreeOrFourChars'),
 			valueType: 'text',
 			width: 120,
 			fieldProps: {
-				placeholder: t('user.placeholder.mobile'),
+				placeholder: t('sys.user.placeholder.mobile'),
 			},
 			ellipsis: true,
 		},
 		{
-			title: t('user.superAdmin'),
+			title: t('sys.user.superAdmin'),
 			dataIndex: 'superAdmin',
 			valueType: 'select',
 			hideInTable: true,
 			fieldProps: {
 				valueType: 'select',
 				mode: 'single',
-				placeholder: t('user.placeholder.superAdmin'),
+				placeholder: t('sys.user.placeholder.superAdmin'),
 				options: [
 					{
 						label: t('common.no'),
@@ -158,7 +158,7 @@ export default () => {
 		},
 		{
 			disable: true,
-			title: t('user.superAdmin'),
+			title: t('sys.user.superAdmin'),
 			dataIndex: 'superAdmin',
 			hideInSearch: true,
 			width: 120,
@@ -181,14 +181,14 @@ export default () => {
 			),
 		},
 		{
-			title: t('user.status'),
+			title: t('sys.user.status'),
 			dataIndex: 'status',
 			hideInTable: true,
 			valueType: 'select',
 			fieldProps: {
 				valueType: 'select',
 				mode: 'single',
-				placeholder: t('user.placeholder.status'),
+				placeholder: t('sys.user.placeholder.status'),
 				options: [
 					{
 						label: t('common.enable'),
@@ -204,7 +204,7 @@ export default () => {
 			width: 100,
 		},
 		{
-			title: t('user.status'),
+			title: t('sys.user.status'),
 			dataIndex: 'status',
 			hideInSearch: true,
 			render: (_, record) => (
@@ -258,7 +258,7 @@ export default () => {
 						onClick={() => {
 							getUserById({ id: record?.id }).then((res) => {
 								if (res.code === 'OK') {
-									setTitle(t('user.view'));
+									setTitle(t('sys.user.view'));
 									setModalVisit(true);
 									setReadOnly(true);
 									setDataSource(res?.data);
@@ -268,7 +268,7 @@ export default () => {
 										setFileList([
 											{
 												uid: '-1',
-												name: t('user.avatarFileName'),
+												name: t('sys.user.avatarFileName'),
 												status: 'done',
 												url: avatarUrl,
 											},
@@ -290,7 +290,7 @@ export default () => {
 							getUserById({ id: record?.id }).then((res) => {
 								if (res.code === 'OK') {
 									setSaveOnly(false)
-									setTitle(t('user.modify'));
+									setTitle(t('sys.user.modify'));
 									setModalVisit(true);
 									setReadOnly(false);
 									setEdit(true);
@@ -300,7 +300,7 @@ export default () => {
 										setFileList([
 											{
 												uid: '-1',
-												name: t('user.avatarFileName'),
+												name: t('sys.user.avatarFileName'),
 												status: 'done',
 												url: avatarUrl,
 											},
@@ -320,7 +320,7 @@ export default () => {
 						key={'modifyAuthority'}
 						onClick={() => {
 							getUserById({ id: record?.id }).then((res) => {
-								setTitle(t('user.assignAuthority'));
+								setTitle(t('sys.user.assignAuthority'));
 								setModalModifyAuthorityVisit(true);
 								setDataSource(res?.data);
 							});
@@ -334,7 +334,7 @@ export default () => {
 						key={'resetPwd'}
 						onClick={() => {
 							getUserById({ id: record?.id }).then((res) => {
-								setTitle(t('user.resetPwd.title'));
+								setTitle(t('sys.user.resetPwd.title'));
 								setModalRestPwdVisit(true);
 								setDataSource(res?.data);
 							});
@@ -444,7 +444,7 @@ export default () => {
 							icon={<PlusOutlined />}
 							onClick={() => {
 								setSaveOnly(true)
-								setTitle(t('user.insert'));
+								setTitle(t('sys.user.insert'));
 								setRequestId(uuidV7());
 								setReadOnly(false);
 								setModalVisit(true);
