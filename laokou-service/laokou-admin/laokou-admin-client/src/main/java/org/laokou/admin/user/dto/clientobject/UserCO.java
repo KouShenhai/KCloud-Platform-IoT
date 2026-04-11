@@ -17,6 +17,9 @@
 
 package org.laokou.admin.user.dto.clientobject;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.i18n.dto.ClientObject;
@@ -31,6 +34,10 @@ import java.util.List;
  */
 @Data
 @Schema(name = "用户客户端对象", description = "用户客户端对象")
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
+	isGetterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
 public class UserCO extends ClientObject {
 
 	@Schema(name = "用户ID", description = "用户ID")

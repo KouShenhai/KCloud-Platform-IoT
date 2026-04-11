@@ -502,7 +502,7 @@ export default () => {
 				dateFormatter="string"
 				toolbar={{
 					title: t('menu.sys.permission.user'),
-					tooltip: t('user.tooltipDefaultPwd'),
+					tooltip: t('menu.sys.permission.user'),
 				}}
 			/>
 		</>

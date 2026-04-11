@@ -33,7 +33,7 @@ set JAVA_OPT=%JAVA_OPT% -Dfile.encoding=UTF-8
 set JAVA_OPT=%JAVA_OPT% --add-opens java.base/java.util=ALL-UNNAMED
 set JAVA_OPT=%JAVA_OPT% --add-opens java.base/java.lang=ALL-UNNAMED
 
-set JAR_FILE=%~dp0target\laokou-nacos.jar
+set JAR_FILE=%~dp0..\..\target\laokou-nacos.jar
 
 if not exist "%NACOS_HOME%" mkdir "%NACOS_HOME%"
 

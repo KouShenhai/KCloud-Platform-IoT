@@ -34,6 +34,7 @@ interface UserDrawerProps {
 type TableColumns = {
 	id: number;
 	username: string | undefined;
+	password: string | undefined;
 	status: number | undefined;
 	mail: string | undefined;
 	mobile: string | undefined;
@@ -145,6 +146,17 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({
 				placeholder={t('user.placeholder.username')}
 				rules={[
 					{ required: true, message: t('user.required.username') },
+				]}
+			/>
+
+			<ProFormText.Password
+				initialValue={'laokou123'}
+				name="password"
+				label={t('user.password')}
+				tooltip={t('user.tooltip.password')}
+				placeholder={t('user.placeholder.password')}
+				rules={[
+					{ required: true, message: t('user.required.password') },
 				]}
 			/>
 

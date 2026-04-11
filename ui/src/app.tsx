@@ -123,7 +123,7 @@ const refreshTokenByUsernamePassword = (refreshToken: string) => {
 				// 存储令牌
 				setToken(
 					// @ts-ignore
-					grantType,
+					getGrantType(),
 					res.data?.access_token,
 					res.data?.refresh_token,
 					res.data?.expires_in * 1000 + new Date().getTime(),
