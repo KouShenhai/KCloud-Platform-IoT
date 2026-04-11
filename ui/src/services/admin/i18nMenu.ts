@@ -4,11 +4,13 @@ import { request } from '@umijs/max';
 /** 修改国际化菜单 修改国际化菜单 PUT /api/v1/i18n-menus */
 export async function modifyI18nMenu(
 	body: API.I18nMenuModifyCmd,
+	requestId: string,
 	options?: { [key: string]: any },
 ) {
 	return request<any>('/api-proxy/admin/api/v1/i18n-menus', {
 		method: 'PUT',
 		headers: {
+			'request-id': requestId,
 			'Content-Type': 'application/json',
 		},
 		data: body,
@@ -19,11 +21,13 @@ export async function modifyI18nMenu(
 /** 保存国际化菜单 保存国际化菜单 POST /api/v1/i18n-menus */
 export async function saveI18nMenu(
 	body: API.I18nMenuSaveCmd,
+	requestId: string,
 	options?: { [key: string]: any },
 ) {
 	return request<any>('/api-proxy/admin/api/v1/i18n-menus', {
 		method: 'POST',
 		headers: {
+			'request-id': requestId,
 			'Content-Type': 'application/json',
 		},
 		data: body,

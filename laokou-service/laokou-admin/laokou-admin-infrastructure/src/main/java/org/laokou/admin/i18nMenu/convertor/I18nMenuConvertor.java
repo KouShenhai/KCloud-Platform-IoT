@@ -38,7 +38,7 @@ public final class I18nMenuConvertor {
 	public static I18nMenuDO toDataObject(I18nMenuA i18nMenuA) {
 		I18nMenuE i18nMenuE = i18nMenuA.getI18nMenuE();
 		I18nMenuDO i18nMenuDO = new I18nMenuDO();
-		i18nMenuDO.setId(i18nMenuE.getId());
+		i18nMenuDO.setId(i18nMenuA.getId());
 		i18nMenuDO.setCode(i18nMenuE.getCode());
 		i18nMenuDO.setName(i18nMenuE.getName());
 		i18nMenuDO.setCreateTime(i18nMenuA.getCreateTime());

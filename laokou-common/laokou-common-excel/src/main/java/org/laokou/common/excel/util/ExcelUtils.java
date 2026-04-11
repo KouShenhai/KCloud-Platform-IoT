@@ -23,7 +23,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.fesod.common.util.ListUtils;
 import org.apache.fesod.sheet.ExcelWriter;
-import org.apache.fesod.sheet.FastExcel;
 import org.apache.fesod.sheet.FesodSheet;
 import org.apache.fesod.sheet.context.AnalysisContext;
 import org.apache.fesod.sheet.read.builder.ExcelReaderBuilder;
@@ -35,7 +34,6 @@ import org.laokou.common.excel.validator.ExcelValidator;
 import org.laokou.common.i18n.common.constant.DateConstants;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.BizException;
-import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.util.InstantUtils;
@@ -46,6 +44,7 @@ import org.laokou.common.mybatisplus.mapper.BaseDO;
 import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.laokou.common.mybatisplus.util.MybatisUtils;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
@@ -86,7 +85,7 @@ public final class ExcelUtils {
 			ExcelConvertor<DO, EXCEL> convert, InputStream inputStream, Class<MAPPER> clazz,
 			BiConsumer<MAPPER, DO> consumer, MybatisUtils mybatisUtils, ExcelValidator<EXCEL> validator,
 			Class<?>... groups) {
-		ExcelReaderBuilder builder = FastExcel.read(inputStream, excel,
+		ExcelReaderBuilder builder = FesodSheet.read(inputStream, excel,
 				new DataListener<>(clazz, consumer, mybatisUtils, convert, validator, groups));
 		if (StringExtUtils.isNotEmpty(sheetName)) {
 			builder.sheet(sheetName).doRead();
@@ -98,25 +97,18 @@ public final class ExcelUtils {
 
 	public static <EXCEL, DO extends BaseDO> void doExport(String fileName, String sheetName,
 			HttpServletResponse response, PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper,
-			Class<EXCEL> clazz, ExcelConvertor<DO, EXCEL> convertor) {
+			Class<EXCEL> clazz, ExcelConvertor<DO, EXCEL> convertor) throws IOException {
 		doExport(fileName, sheetName, BATCH_SIZE, response, pageQuery, crudMapper, clazz, convertor);
 	}
 
 	public static <EXCEL, DO extends BaseDO> void doExport(String fileName, String sheetName, int size,
 			HttpServletResponse response, PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper,
-			Class<EXCEL> clazz, ExcelConvertor<DO, EXCEL> convertor) {
+			Class<EXCEL> clazz, ExcelConvertor<DO, EXCEL> convertor) throws IOException {
 		// 设置请求头
 		setHeader(fileName, response);
 		// 写入数据
 		try (ServletOutputStream outputStream = response.getOutputStream()) {
 			doExport(sheetName, size, outputStream, pageQuery, crudMapper, clazz, convertor);
-		}
-		catch (GlobalException e) {
-			throw e;
-		}
-		catch (Exception e) {
-			log.error("Excel导出失败，错误信息：{}", e.getMessage(), e);
-			throw new SystemException("S_Excel_ExportFailed", "Excel导出失败，系统繁忙", e);
 		}
 	}
 
@@ -143,7 +135,7 @@ public final class ExcelUtils {
 							}).toList();
 							virtualTaskExecutor.invokeAll(futures);
 						}
-						catch (InterruptedException e) {
+						catch (Exception e) {
 							Thread.currentThread().interrupt();
 							log.error("Excel导出失败，错误信息：{}", e.getMessage(), e);
 							throw new SystemException("S_Excel_ExportFailed", e.getMessage(), e);
@@ -161,9 +153,6 @@ public final class ExcelUtils {
 				// 刷新数据
 				excelWriter.finish();
 			}
-		}
-		else {
-			throw new SystemException("S_Excel_DataIsEmpty", "Excel导出失败，数据不能为空");
 		}
 	}
 

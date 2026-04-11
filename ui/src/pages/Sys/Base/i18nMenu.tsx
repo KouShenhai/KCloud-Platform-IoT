@@ -10,6 +10,8 @@ import type {ActionType, ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
 import {Button, message, Modal} from 'antd';
 import {useRef, useState} from 'react';
+import {I18nMenuDrawer} from "@/pages/Sys/Base/I18nMenuDrawer";
+import {v7 as uuidV7} from "uuid";
 
 export default () => {
 	type TableColumns = {
@@ -29,6 +31,7 @@ export default () => {
 	const [dataSource, setDataSource] = useState<any>({});
 	const [ids, setIds] = useState<number[]>([]);
 	const [title, setTitle] = useState('');
+	const [requestId, setRequestId] = useState('');
 
 	const getPageQueryParam = (params: any) => {
 		return {
@@ -170,6 +173,19 @@ export default () => {
 
 	return (
 		<>
+			<I18nMenuDrawer
+				modalVisit={modalVisit}
+				setModalVisit={setModalVisit}
+				title={title}
+				readOnly={readOnly}
+				dataSource={dataSource}
+				requestId={requestId}
+				setRequestId={setRequestId}
+				onComponent={async () => {
+					// @ts-ignore
+					actionRef?.current?.reload();
+				}}
+			/>
 			<ProTable<TableColumns>
 				actionRef={actionRef}
 				columns={columns}
@@ -202,6 +218,7 @@ export default () => {
 								setTitle(t('sys.i18nMenu.insert'));
 								setReadOnly(false);
 								setModalVisit(true);
+								setRequestId(uuidV7());
 								setDataSource({
 									id: undefined,
 									code: '',

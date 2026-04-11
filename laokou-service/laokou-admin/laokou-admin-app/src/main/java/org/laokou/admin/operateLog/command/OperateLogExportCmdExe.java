@@ -46,8 +46,9 @@ public class OperateLogExportCmdExe {
 			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);
 			ExcelUtils.doExport("操作日志", "操作日志", ResponseUtils.getHttpServletResponse(), cmd, operateLogMapper,
 					OperateLogExcel.class, OperateLogConvertor.INSTANCE);
-		}
-		finally {
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		} finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 	}
