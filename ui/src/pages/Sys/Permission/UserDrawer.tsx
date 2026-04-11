@@ -19,6 +19,7 @@ interface UserDrawerProps {
 	setModalVisit: (visible: boolean) => void;
 	title: string;
 	readOnly: boolean;
+	saveOnly: boolean;
 	dataSource: TableColumns;
 	onComponent: () => void;
 	deptTreeList: any[];
@@ -60,6 +61,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({
 	setRequestId,
 	logId,
 	setLogId,
+	saveOnly
 }) => {
 	const access = useAccess();
 	const intl = useIntl();
@@ -94,6 +96,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({
 				const co = {
 					id: value?.id,
 					username: value.username,
+					password: value?.password,
 					status: value?.status,
 					mail: value?.mail,
 					mobile: value?.mobile,
@@ -149,7 +152,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({
 				]}
 			/>
 
-			<ProFormText.Password
+			{ saveOnly && (<ProFormText.Password
 				initialValue={'laokou123'}
 				name="password"
 				label={t('user.password')}
@@ -158,7 +161,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({
 				rules={[
 					{ required: true, message: t('user.required.password') },
 				]}
-			/>
+			/>)}
 
 			<ProFormText
 				disabled={loading}

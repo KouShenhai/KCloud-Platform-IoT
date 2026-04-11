@@ -17,6 +17,11 @@
 
 package org.laokou.common.i18n.dto;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.i18n.common.exception.StatusCode;
@@ -32,6 +37,10 @@ import java.io.Serializable;
  * @author laokou
  */
 @Data
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
+	isGetterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
 public final class Result<T> implements Serializable {
 
 	@Serial
@@ -52,7 +61,8 @@ public final class Result<T> implements Serializable {
 	@Schema(name = "标签ID", description = "标签ID")
 	private String spanId;
 
-	private Result(String code, String msg, T data) {
+	@JsonCreator
+	private Result(@JsonProperty("code") String code, @JsonProperty("msg") String msg, @JsonProperty("data") T data) {
 		this.code = code;
 		this.msg = msg;
 		this.data = data;

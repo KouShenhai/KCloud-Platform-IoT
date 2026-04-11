@@ -134,6 +134,7 @@ public final class UserConvertor {
 			.toBuilder()
 			.id(userCO.getId())
 			.username(userCO.getUsername())
+			.password(userCO.getPassword())
 			.superAdmin(userCO.getSuperAdmin())
 			.mail(userCO.getMail())
 			.mobile(userCO.getMobile())

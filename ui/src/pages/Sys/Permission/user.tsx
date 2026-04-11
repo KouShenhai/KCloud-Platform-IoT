@@ -44,6 +44,7 @@ export default () => {
 	const [fileList, setFileList] = useState<UploadFile[]>([]);
 	const [requestId, setRequestId] = useState('');
 	const [logId, setLogId] = useState<number>(1);
+	const [saveOnly, setSaveOnly] = useState(false);
 
 	const getDeptTreeList = async () => {
 		listSelectTreeDept({}).then((res) => {
@@ -288,6 +289,7 @@ export default () => {
 						onClick={() => {
 							getUserById({ id: record?.id }).then((res) => {
 								if (res.code === 'OK') {
+									setSaveOnly(false)
 									setTitle(t('user.modify'));
 									setModalVisit(true);
 									setReadOnly(false);
@@ -400,6 +402,7 @@ export default () => {
 				setRequestId={setRequestId}
 				setLogId={setLogId}
 				logId={logId}
+				saveOnly={saveOnly}
 			/>
 
 			<UserModifyAuthorityDrawer
@@ -440,6 +443,7 @@ export default () => {
 							type="primary"
 							icon={<PlusOutlined />}
 							onClick={() => {
+								setSaveOnly(true)
 								setTitle(t('user.insert'));
 								setRequestId(uuidV7());
 								setReadOnly(false);
