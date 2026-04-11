@@ -50,6 +50,8 @@ final class ModifyProjectBoot {
 
 	private static final String MODIFY_XML_FILE_SUFFIX = ".xml";
 
+	private static final String MODIFY_IMPORTS_FILE_SUFFIX = ".imports";
+
 	// 新模块名称
 	private static final String NEW_MODULE_NAME = "newlaokou";
 
@@ -95,8 +97,8 @@ final class ModifyProjectBoot {
 				else if (filePath.endsWith(MODIFY_POM_FILE_SUFFIX)) {
 					buff = getPomFileAsByte(filePath);
 				}
-				else if (filePath.endsWith(MODIFY_XML_FILE_SUFFIX)) {
-					buff = getXmlFileAsByte(filePath);
+				else if (filePath.endsWith(MODIFY_XML_FILE_SUFFIX) || filePath.endsWith(MODIFY_IMPORTS_FILE_SUFFIX)) {
+					buff = getFileAsByte(filePath);
 				}
 				else {
 					buff = FileUtils.getBytes(Paths.get(filePath));
@@ -159,7 +161,7 @@ final class ModifyProjectBoot {
 			.getBytes(StandardCharsets.UTF_8);
 	}
 
-	private static byte[] getXmlFileAsByte(String path) throws IOException {
+	private static byte[] getFileAsByte(String path) throws IOException {
 		String str = FileUtils.readString(Path.of(path));
 		return str.replaceAll("org.laokou", NEW_PACKAGE_NAME).getBytes(StandardCharsets.UTF_8);
 	}

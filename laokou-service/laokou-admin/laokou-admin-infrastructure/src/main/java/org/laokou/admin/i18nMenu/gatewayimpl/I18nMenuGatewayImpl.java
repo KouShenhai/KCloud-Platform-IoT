@@ -22,7 +22,7 @@ import org.laokou.admin.i18nMenu.convertor.I18nMenuConvertor;
 import org.laokou.admin.i18nMenu.gateway.I18nMenuGateway;
 import org.laokou.admin.i18nMenu.gatewayimpl.database.I18nMenuMapper;
 import org.laokou.admin.i18nMenu.gatewayimpl.database.dataobject.I18nMenuDO;
-import org.laokou.admin.i18nMenu.model.I18nMenuE;
+import org.laokou.admin.i18nMenu.model.I18nMenuA;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -39,14 +39,14 @@ public class I18nMenuGatewayImpl implements I18nMenuGateway {
 	private final I18nMenuMapper i18nMenuMapper;
 
 	@Override
-	public void createI18nMenu(I18nMenuE i18nMenuE) {
-		i18nMenuMapper.insert(I18nMenuConvertor.toDataObject(1L, i18nMenuE));
+	public void createI18nMenu(I18nMenuA i18nMenuA) {
+		i18nMenuMapper.insert(I18nMenuConvertor.toDataObject(i18nMenuA));
 	}
 
 	@Override
-	public void updateI18nMenu(I18nMenuE i18nMenuE) {
-		I18nMenuDO i18nMenuDO = I18nMenuConvertor.toDataObject(null, i18nMenuE);
-		i18nMenuDO.setVersion(i18nMenuMapper.selectVersion(i18nMenuE.getId()));
+	public void updateI18nMenu(I18nMenuA i18nMenuA) {
+		I18nMenuDO i18nMenuDO = I18nMenuConvertor.toDataObject(i18nMenuA);
+		i18nMenuDO.setVersion(i18nMenuMapper.selectVersion(i18nMenuA.getId()));
 		i18nMenuMapper.updateById(i18nMenuDO);
 	}
 

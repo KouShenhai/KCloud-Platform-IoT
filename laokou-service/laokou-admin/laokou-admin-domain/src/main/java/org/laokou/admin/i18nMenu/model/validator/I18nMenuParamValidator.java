@@ -15,34 +15,15 @@
  *
  */
 
-package org.laokou.admin.i18nMenu.ability;
+package org.laokou.admin.i18nMenu.model.validator;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.admin.i18nMenu.gateway.I18nMenuGateway;
 import org.laokou.admin.i18nMenu.model.I18nMenuA;
-import org.springframework.stereotype.Component;
 
 /**
- * 国际化菜单领域服务.
- *
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class I18nMenuDomainService {
+public interface I18nMenuParamValidator {
 
-	private final I18nMenuGateway i18nMenuGateway;
-
-	public void createI18nMenu(I18nMenuA i18nMenuA) {
-		i18nMenuGateway.createI18nMenu(i18nMenuA);
-	}
-
-	public void updateI18nMenu(I18nMenuA i18nMenuA) {
-		i18nMenuGateway.updateI18nMenu(i18nMenuA);
-	}
-
-	public void deleteI18nMenu(Long[] ids) {
-		i18nMenuGateway.deleteI18nMenu(ids);
-	}
+	void validateI18nMenu(I18nMenuA i18nMenuA);
 
 }

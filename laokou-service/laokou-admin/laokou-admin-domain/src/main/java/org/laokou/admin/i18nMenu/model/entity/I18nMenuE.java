@@ -15,17 +15,30 @@
  *
  */
 
-package org.laokou.admin.i18nMenu.model;
+package org.laokou.admin.i18nMenu.model.entity;
 
-import lombok.Data;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.annotation.Entity;
+
+import java.io.Serializable;
 
 /**
  * 国际化菜单领域对象【实体】.
  *
  * @author laokou
  */
-@Data
-public class I18nMenuE {
+@Entity("i18nMenuE")
+@Getter
+@Builder(toBuilder = true)
+@EqualsAndHashCode(callSuper = false)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class I18nMenuE implements Serializable {
 
 	/**
 	 * ID.
@@ -38,13 +51,8 @@ public class I18nMenuE {
 	private String code;
 
 	/**
-	 * 中文.
+	 * 名称.
 	 */
-	private String zhMessage;
-
-	/**
-	 * 英文.
-	 */
-	private String enMessage;
+	private String name;
 
 }

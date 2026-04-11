@@ -15,34 +15,27 @@
  *
  */
 
-package org.laokou.admin.i18nMenu.ability;
+package org.laokou.admin.i18nMenu.model.enums;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.admin.i18nMenu.gateway.I18nMenuGateway;
-import org.laokou.admin.i18nMenu.model.I18nMenuA;
-import org.springframework.stereotype.Component;
+import lombok.Getter;
 
 /**
- * 国际化菜单领域服务.
- *
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class I18nMenuDomainService {
+@Getter
+public enum OperateType {
 
-	private final I18nMenuGateway i18nMenuGateway;
+	SAVE("save", "保存国际化菜单"),
 
-	public void createI18nMenu(I18nMenuA i18nMenuA) {
-		i18nMenuGateway.createI18nMenu(i18nMenuA);
-	}
+	MODIFY("modify", "修改国际化菜单");
 
-	public void updateI18nMenu(I18nMenuA i18nMenuA) {
-		i18nMenuGateway.updateI18nMenu(i18nMenuA);
-	}
+	private final String code;
 
-	public void deleteI18nMenu(Long[] ids) {
-		i18nMenuGateway.deleteI18nMenu(ids);
+	private final String desc;
+
+	OperateType(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
 	}
 
 }

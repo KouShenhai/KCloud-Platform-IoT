@@ -10,7 +10,7 @@ import { useIntl } from '@@/exports';
 import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ModalForm, ProFormText, ProTable } from '@ant-design/pro-components';
-import { Button, message, Modal, Space } from 'antd';
+import { Button, message, Modal } from 'antd';
 import { useRef, useState } from 'react';
 
 export default () => {
@@ -130,52 +130,6 @@ export default () => {
 
 	return (
 		<>
-			<ModalForm
-				title={title}
-				open={modalVisit}
-				modalProps={{
-					destroyOnClose: true,
-					onCancel: () => setModalVisit(false),
-				}}
-				submitTimeout={2000}
-				readonly={readOnly}
-				initialValues={dataSource}
-				onFinish={async (values: any) => {
-					const api = values?.id ? modifyI18nMenu : saveI18nMenu;
-					return api({
-						...values,
-						id: values?.id,
-						code: trim(values?.code),
-						name: trim(values?.name),
-					}).then((res: any) => {
-						if (res.code === 'OK') {
-							message.success(t('toast.saveSuccess')).then();
-							setModalVisit(false);
-							// @ts-ignore
-							actionRef?.current?.reload();
-							return true;
-						}
-						return false;
-					});
-				}}
-			>
-				<ProFormText name="id" hidden />
-				<ProFormText
-					name="code"
-					label={t('sys.i18nMenu.code')}
-					placeholder={t('sys.i18nMenu.placeholder.code')}
-					disabled={readOnly}
-					rules={[{ required: true, message: t('toast.required') }]}
-				/>
-				<ProFormText
-					name="name"
-					label={t('sys.i18nMenu.name')}
-					placeholder={t('sys.i18nMenu.placeholder.name')}
-					disabled={readOnly}
-					rules={[{ required: true, message: t('toast.required') }]}
-				/>
-			</ModalForm>
-
 			<ProTable<TableColumns>
 				actionRef={actionRef}
 				columns={columns}

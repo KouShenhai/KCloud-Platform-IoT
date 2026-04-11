@@ -15,34 +15,26 @@
  *
  */
 
-package org.laokou.admin.i18nMenu.ability;
+package org.laokou.admin.i18nMenu.factory;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.admin.i18nMenu.gateway.I18nMenuGateway;
 import org.laokou.admin.i18nMenu.model.I18nMenuA;
-import org.springframework.stereotype.Component;
+import org.laokou.admin.i18nMenu.model.entity.I18nMenuE;
+import org.laokou.common.i18n.util.SpringContextUtils;
 
 /**
- * 国际化菜单领域服务.
- *
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class I18nMenuDomainService {
+public final class I18nMenuDomainFactory {
 
-	private final I18nMenuGateway i18nMenuGateway;
-
-	public void createI18nMenu(I18nMenuA i18nMenuA) {
-		i18nMenuGateway.createI18nMenu(i18nMenuA);
+	private I18nMenuDomainFactory() {
 	}
 
-	public void updateI18nMenu(I18nMenuA i18nMenuA) {
-		i18nMenuGateway.updateI18nMenu(i18nMenuA);
+	public static I18nMenuE createI18nMenuE() {
+		return SpringContextUtils.getBeanProvider(I18nMenuE.class);
 	}
 
-	public void deleteI18nMenu(Long[] ids) {
-		i18nMenuGateway.deleteI18nMenu(ids);
+	public static I18nMenuA createI18nMenuA() {
+		return SpringContextUtils.getBeanProvider(I18nMenuA.class);
 	}
 
 }

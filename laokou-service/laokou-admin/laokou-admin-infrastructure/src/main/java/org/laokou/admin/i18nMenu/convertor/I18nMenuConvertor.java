@@ -18,10 +18,12 @@
 package org.laokou.admin.i18nMenu.convertor;
 
 import org.laokou.admin.i18nMenu.dto.clientobject.I18nMenuCO;
+import org.laokou.admin.i18nMenu.factory.I18nMenuDomainFactory;
 import org.laokou.admin.i18nMenu.gatewayimpl.database.dataobject.I18nMenuDO;
-import org.laokou.admin.i18nMenu.model.I18nMenuE;
-import org.laokou.common.core.util.ConvertUtils;
-import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.admin.i18nMenu.model.I18nMenuA;
+import org.laokou.admin.i18nMenu.model.entity.I18nMenuE;
+
+import java.util.List;
 
 /**
  * 国际化菜单转换器.
@@ -33,20 +35,35 @@ public final class I18nMenuConvertor {
 	private I18nMenuConvertor() {
 	}
 
-	public static I18nMenuDO toDataObject(Long id, I18nMenuE i18nMenuE) {
-		I18nMenuDO i18nMenuDO = ConvertUtils.sourceToTarget(i18nMenuE, I18nMenuDO.class);
-		if (ObjectUtils.isNull(i18nMenuDO.getId())) {
-			i18nMenuDO.setId(id);
-		}
+	public static I18nMenuDO toDataObject(I18nMenuA i18nMenuA) {
+		I18nMenuE i18nMenuE = i18nMenuA.getI18nMenuE();
+		I18nMenuDO i18nMenuDO = new I18nMenuDO();
+		i18nMenuDO.setId(i18nMenuE.getId());
+		i18nMenuDO.setCode(i18nMenuE.getCode());
+		i18nMenuDO.setName(i18nMenuE.getName());
+		i18nMenuDO.setCreateTime(i18nMenuA.getCreateTime());
 		return i18nMenuDO;
 	}
 
 	public static I18nMenuCO toClientObject(I18nMenuDO i18nMenuDO) {
-		return ConvertUtils.sourceToTarget(i18nMenuDO, I18nMenuCO.class);
+		I18nMenuCO i18nMenuCO = new I18nMenuCO();
+		i18nMenuCO.setId(i18nMenuDO.getId());
+		i18nMenuCO.setCode(i18nMenuDO.getCode());
+		i18nMenuCO.setName(i18nMenuDO.getName());
+		i18nMenuCO.setCreateTime(i18nMenuDO.getCreateTime());
+		return i18nMenuCO;
+	}
+	public static List<I18nMenuCO> toClientObjectList(List<I18nMenuDO> list) {
+		return list.stream().map(I18nMenuConvertor::toClientObject).toList();
 	}
 
 	public static I18nMenuE toEntity(I18nMenuCO i18nMenuCO) {
-		return ConvertUtils.sourceToTarget(i18nMenuCO, I18nMenuE.class);
+		return I18nMenuDomainFactory.createI18nMenuE()
+			.toBuilder()
+			.id(i18nMenuCO.getId())
+			.code(i18nMenuCO.getCode())
+			.name(i18nMenuCO.getName())
+			.build();
 	}
 
 }

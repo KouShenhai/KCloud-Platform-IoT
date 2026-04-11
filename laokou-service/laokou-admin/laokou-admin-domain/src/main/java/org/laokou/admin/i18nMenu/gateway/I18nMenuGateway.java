@@ -17,7 +17,7 @@
 
 package org.laokou.admin.i18nMenu.gateway;
 
-import org.laokou.admin.i18nMenu.model.I18nMenuE;
+import org.laokou.admin.i18nMenu.model.I18nMenuA;
 
 /**
  * 国际化菜单网关【防腐】.
@@ -29,12 +29,12 @@ public interface I18nMenuGateway {
 	/**
 	 * 新增国际化菜单.
 	 */
-	void createI18nMenu(I18nMenuE i18nMenuE);
+	void createI18nMenu(I18nMenuA i18nMenuA);
 
 	/**
 	 * 修改国际化菜单.
 	 */
-	void updateI18nMenu(I18nMenuE i18nMenuE);
+	void updateI18nMenu(I18nMenuA i18nMenuA);
 
 	/**
 	 * 删除国际化菜单.
