@@ -362,6 +362,10 @@ export default {
 	'sys.i18nMenu.view': 'View I18n Menu',
 	'sys.i18nMenu.modify': 'Modify I18n Menu',
 
+	// sys/apiDoc
+	'sys.apiDoc.auth': 'Auth',
+	'sys.apiDoc.admin': 'Admin',
+
 	// login
 	'login.subtitle': 'Enterprise level multi tenant IoT cloud platform',
 	'login.usernamePassword': 'Password login',
@@ -417,6 +421,7 @@ export default {
 	'menu.sys.oss.log': 'OSS Logs',
 	'menu.sys.config': 'System Config',
 	'menu.sys.config.generator': 'Code Generator',
+	'menu.sys.config.apiDoc': 'API Doc',
 	'menu.iot': 'IoT',
 	'menu.iot.device': 'Devices',
 	'menu.iot.device.thingModel': 'Thing Model',

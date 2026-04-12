@@ -362,6 +362,10 @@ export default {
 	'sys.i18nMenu.view': '查看国际化菜单',
 	'sys.i18nMenu.modify': '修改国际化菜单',
 
+	// sys/apiDoc
+	'sys.apiDoc.auth': '认证授权',
+	'sys.apiDoc.admin': '后台管理',
+
 	// login
 	'login.subtitle': '企业级多租户IoT云平台',
 	'login.usernamePassword': '用户名密码登录',
@@ -417,6 +421,7 @@ export default {
 	'menu.sys.oss.log': '对象存储日志',
 	'menu.sys.config': '系统配置',
 	'menu.sys.config.generator': '代码生成器',
+	'menu.sys.config.apiDoc': 'API文档',
 	'menu.iot': '物联管理',
 	'menu.iot.device': '设备管理',
 	'menu.iot.device.thingModel': '物模型',

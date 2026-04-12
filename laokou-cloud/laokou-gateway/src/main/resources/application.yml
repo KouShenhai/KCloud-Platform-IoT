@@ -121,6 +121,19 @@ spring:
               enabled: true
             retry:
               enabled: true
+          routes:
+            - id: laokou-auth-scalar
+              uri: lb://laokou-auth
+              predicates:
+                - Path=/api-gateway/auth/scalar
+              filters:
+                - name: Scalar
+            - id: laokou-admin-scalar
+              uri: lb://laokou-admin
+              predicates:
+                - Path=/api-gateway/admin/scalar
+              filters:
+                - name: Scalar
     # sentinel配置
     sentinel:
       filter:
@@ -168,6 +181,7 @@ logging:
 request-matcher:
   ignore-patterns:
     GET:
+      - /api/v3/api-docs/**=laokou-gateway
       - /actuator/**=laokou-gateway
       - /favicon.ico=laokou-gateway
       - /api/v1/username-password/captchas/{uuid}=laokou-gateway

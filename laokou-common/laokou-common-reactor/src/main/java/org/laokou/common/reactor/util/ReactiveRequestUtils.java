@@ -43,10 +43,20 @@ public class ReactiveRequestUtils {
 	 * @return 参数值
 	 */
 	public static String getHeaderValue(ServerHttpRequest request, String headerName) {
-		// 从header中获取
 		List<String> headerValues = request.getHeaders().get(headerName);
 		return CollectionExtUtils.isEmpty(headerValues) ? StringConstants.EMPTY
 				: String.join(StringConstants.COMMA, headerValues).trim();
+	}
+
+	/**
+	 * 获取参数值.
+	 * @param request 请求对象
+	 * @param paramName 请求参数名称
+	 * @return 参数值
+	 */
+	public static String getParamValue(ServerHttpRequest request, String paramName) {
+		List<String> paramValues = request.getQueryParams().get(paramName);
+		return CollectionExtUtils.isEmpty(paramValues) ? StringConstants.EMPTY : String.join(StringConstants.COMMA, paramValues).trim();
 	}
 
 	/**
@@ -112,7 +122,7 @@ public class ReactiveRequestUtils {
 	 * @param url 路径URL
 	 * @return 匹配结果
 	 */
-	private static boolean pathMatcher(String url, String requestURL) {
+	public static boolean pathMatcher(String url, String requestURL) {
 		return ANT_PATH_MATCHER.match(url, requestURL);
 	}
 

@@ -80,6 +80,10 @@ const getRouters = (menus: any[]) => {
 			path: '/home',
 			icon: <HomeOutlined />,
 		},
+		{
+			name: '测试',
+			path: '/sys/config/apiDoc',
+		},
 	];
 	if (menus.length > 0) {
 		routers.push(...mapMenuTreeI18n(menus));

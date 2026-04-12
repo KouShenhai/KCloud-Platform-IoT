@@ -134,7 +134,7 @@ public class UsersController {
 	@TraceLog
 	@Tenant
 	@DataFilter
-	@PostMapping("/v1/users/page")
+	@PostMapping(value = "/v1/users/page", produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasAuthority('read') and hasAuthority('sys:user:page')")
 	@Operation(summary = "分页查询用户列表", description = "分页查询用户列表")
 	public Result<Page<UserCO>> pageUser(@Validated @RequestBody UserPageQry qry) {
@@ -142,7 +142,7 @@ public class UsersController {
 	}
 
 	@TraceLog
-	@GetMapping("/v1/users/{id}")
+	@GetMapping(value = "/v1/users/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@DataCache(name = NameConstants.USERS, key = "#id")
 	@PreAuthorize("hasAuthority('read') and hasAuthority('sys:user:detail')")
 	@Operation(summary = "查看用户详情", description = "查看用户详情")
@@ -151,14 +151,14 @@ public class UsersController {
 	}
 
 	@TraceLog
-	@GetMapping("/v1/users/profile")
+	@GetMapping(value = "/v1/users/profile", produces = MediaType.APPLICATION_JSON_VALUE)
 	@Operation(summary = "查看个人信息", description = "查看个人信息")
 	public Result<UserProfileCO> getUserProfile() {
 		return usersServiceI.getUserProfile();
 	}
 
 	@TraceLog
-	@PostMapping(value = "/v1/users/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value = "/v1/users/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("(hasAuthority('write') and hasAuthority('sys:oss:upload') or hasAuthority('sys:oss:save')) and hasAuthority('sys:user:modify')")
 	@Operation(summary = "上传用户头像", description = "上传用户头像")
 	@OperateLog(module = "用户管理", operation = "上传用户头像")

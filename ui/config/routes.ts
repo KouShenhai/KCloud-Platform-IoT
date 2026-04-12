@@ -135,6 +135,12 @@ export default [
 						path: '/sys/config/generator',
 						component: './Sys/Config/generator',
 					},
+					{
+						name: '测试',
+						title: '测试',
+						path: '/sys/config/apiDoc',
+						component: './Sys/Config/apiDoc',
+					},
 				],
 			},
 		],
