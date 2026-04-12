@@ -8,6 +8,9 @@ export default defineConfig({
 	antd: {
 		// theme: {}
 	},
+	jsMinifierOptions: {
+		target: ['chrome80', 'es2020'],
+	},
 	// esbuild helpers冲突 => Cu和Go这两个helpers中存在冲突
 	esbuildMinifyIIFE: true,
 	access: {},
