@@ -53,6 +53,7 @@ public final class I18nMenuConvertor {
 		i18nMenuCO.setCreateTime(i18nMenuDO.getCreateTime());
 		return i18nMenuCO;
 	}
+
 	public static List<I18nMenuCO> toClientObjectList(List<I18nMenuDO> list) {
 		return list.stream().map(I18nMenuConvertor::toClientObject).toList();
 	}

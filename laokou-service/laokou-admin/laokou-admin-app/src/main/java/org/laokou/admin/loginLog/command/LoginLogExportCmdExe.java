@@ -46,9 +46,11 @@ public class LoginLogExportCmdExe {
 			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);
 			ExcelUtils.doExport("登录日志", "登录日志", ResponseUtils.getHttpServletResponse(), cmd, adminLoginLogMapper,
 					LoginLogExcel.class, LoginLogConvertor.INSTANCE);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			throw new RuntimeException(e);
-		} finally {
+		}
+		finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 	}

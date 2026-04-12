@@ -158,7 +158,8 @@ public class UsersController {
 	}
 
 	@TraceLog
-	@PostMapping(value = "/v1/users/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/v1/users/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("(hasAuthority('write') and hasAuthority('sys:oss:upload') or hasAuthority('sys:oss:save')) and hasAuthority('sys:user:modify')")
 	@Operation(summary = "上传用户头像", description = "上传用户头像")
 	@OperateLog(module = "用户管理", operation = "上传用户头像")

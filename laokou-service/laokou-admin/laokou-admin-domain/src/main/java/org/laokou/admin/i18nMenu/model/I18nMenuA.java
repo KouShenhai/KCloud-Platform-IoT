@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2026 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,6 +34,7 @@ import java.time.Instant;
 
 /**
  * 国际化菜单聚合根.
+ *
  * @author laokou
  */
 @Entity
@@ -54,8 +55,8 @@ public class I18nMenuA extends AggregateRoot implements ValidateName {
 	private final I18nMenuParamValidator modifyI18nMenuParamValidator;
 
 	public I18nMenuA(@Qualifier("commonIdGenerator") IdGenerator commonIdGenerator,
-					 @Qualifier("saveI18nMenuParamValidator") I18nMenuParamValidator saveI18nMenuParamValidator,
-					 @Qualifier("modifyI18nMenuParamValidator") I18nMenuParamValidator modifyI18nMenuParamValidator) {
+			@Qualifier("saveI18nMenuParamValidator") I18nMenuParamValidator saveI18nMenuParamValidator,
+			@Qualifier("modifyI18nMenuParamValidator") I18nMenuParamValidator modifyI18nMenuParamValidator) {
 		this.commonIdGenerator = commonIdGenerator;
 		this.saveI18nMenuParamValidator = saveI18nMenuParamValidator;
 		this.modifyI18nMenuParamValidator = modifyI18nMenuParamValidator;

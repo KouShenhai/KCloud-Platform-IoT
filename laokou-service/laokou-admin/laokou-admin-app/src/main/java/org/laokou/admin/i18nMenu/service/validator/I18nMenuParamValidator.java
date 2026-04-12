@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2026 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,6 +30,7 @@ import org.laokou.common.i18n.util.StringExtUtils;
  * @author laokou
  */
 final class I18nMenuParamValidator {
+
 	private I18nMenuParamValidator() {
 	}
 
@@ -62,10 +63,15 @@ final class I18nMenuParamValidator {
 		String name = i18nMenuE.getName();
 		Long id = i18nMenuE.getId();
 		if (StringExtUtils.isNotEmpty(code) && StringExtUtils.isNotEmpty(name)) {
-			if (i18nMenuA.isSave() && i18nMenuMapper.selectCount(Wrappers.lambdaQuery(I18nMenuDO.class).eq(I18nMenuDO::getCode, code).eq(I18nMenuDO::getName, name)) > 0) {
+			if (i18nMenuA.isSave() && i18nMenuMapper.selectCount(Wrappers.lambdaQuery(I18nMenuDO.class)
+				.eq(I18nMenuDO::getCode, code)
+				.eq(I18nMenuDO::getName, name)) > 0) {
 				return ParamValidator.invalidate("国际化菜单编码和名称已存在");
 			}
-			if (i18nMenuA.isModify() && i18nMenuMapper.selectCount(Wrappers.lambdaQuery(I18nMenuDO.class).eq(I18nMenuDO::getCode, code).eq(I18nMenuDO::getName, name).ne(I18nMenuDO::getId, id)) > 0) {
+			if (i18nMenuA.isModify() && i18nMenuMapper.selectCount(Wrappers.lambdaQuery(I18nMenuDO.class)
+				.eq(I18nMenuDO::getCode, code)
+				.eq(I18nMenuDO::getName, name)
+				.ne(I18nMenuDO::getId, id)) > 0) {
 				return ParamValidator.invalidate("国际化菜单编码和名称已存在");
 			}
 		}

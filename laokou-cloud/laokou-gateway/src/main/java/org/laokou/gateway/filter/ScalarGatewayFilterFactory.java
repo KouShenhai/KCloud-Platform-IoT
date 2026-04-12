@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2026 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,7 +33,8 @@ import java.net.URI;
  */
 @Slf4j
 @Component
-public class ScalarGatewayFilterFactory extends AbstractGatewayFilterFactory<ScalarGatewayFilterFactory.@NonNull Config> implements Ordered {
+public class ScalarGatewayFilterFactory extends AbstractGatewayFilterFactory<ScalarGatewayFilterFactory.@NonNull Config>
+		implements Ordered {
 
 	public ScalarGatewayFilterFactory() {
 		super(Config.class);
@@ -53,14 +54,17 @@ public class ScalarGatewayFilterFactory extends AbstractGatewayFilterFactory<Sca
 			String requestURL = ReactiveRequestUtils.getRequestURL(request);
 			// scalar重写地址
 			if (ReactiveRequestUtils.pathMatcher("/**/scalar", requestURL)) {
-				String scalarUrl = ReactiveRequestUtils.getParamValue(request,"scalar_url");
+				String scalarUrl = ReactiveRequestUtils.getParamValue(request, "scalar_url");
 				URI uri = URI.create(scalarUrl);
-				return chain.filter(exchange.mutate().request(request.mutate().uri(uri).path(uri.getPath()).build()).build());
+				return chain
+					.filter(exchange.mutate().request(request.mutate().uri(uri).path(uri.getPath()).build()).build());
 			}
 			return chain.filter(exchange);
 		};
 	}
 
-	public static class Config {}
+	public static class Config {
+
+	}
 
 }

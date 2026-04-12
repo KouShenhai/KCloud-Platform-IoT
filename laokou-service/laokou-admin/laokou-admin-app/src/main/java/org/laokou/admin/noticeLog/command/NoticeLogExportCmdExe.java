@@ -47,9 +47,11 @@ public class NoticeLogExportCmdExe {
 			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);
 			ExcelUtils.doExport("通知日志", "通知日志", ResponseUtils.getHttpServletResponse(), cmd, adminNoticeLogMapper,
 					NoticeLogExcel.class, NoticeLogConvertor.INSTANCE);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			throw new RuntimeException(e);
-		} finally {
+		}
+		finally {
 			DynamicDataSourceContextHolder.clear();
 		}
 	}

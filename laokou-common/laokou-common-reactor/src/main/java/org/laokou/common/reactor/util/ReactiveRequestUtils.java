@@ -56,7 +56,8 @@ public class ReactiveRequestUtils {
 	 */
 	public static String getParamValue(ServerHttpRequest request, String paramName) {
 		List<String> paramValues = request.getQueryParams().get(paramName);
-		return CollectionExtUtils.isEmpty(paramValues) ? StringConstants.EMPTY : String.join(StringConstants.COMMA, paramValues).trim();
+		return CollectionExtUtils.isEmpty(paramValues) ? StringConstants.EMPTY
+				: String.join(StringConstants.COMMA, paramValues).trim();
 	}
 
 	/**

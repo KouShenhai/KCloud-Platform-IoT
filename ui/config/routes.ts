@@ -136,8 +136,8 @@ export default [
 						component: './Sys/Config/generator',
 					},
 					{
-						name: '测试',
-						title: '测试',
+						name: 'menu.sys.config.apiDoc',
+						title: 'menu.sys.config.apiDoc',
 						path: '/sys/config/apiDoc',
 						component: './Sys/Config/apiDoc',
 					},

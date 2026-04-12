@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022-2024 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ * Copyright (c) 2022-2026 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
  */
 
 package org.laokou.admin.i18nMenu.service.validator;
+
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.i18nMenu.gatewayimpl.database.I18nMenuMapper;
 import org.laokou.admin.i18nMenu.model.I18nMenuA;
@@ -35,14 +36,15 @@ public class SaveI18nMenuParamValidator implements I18nMenuParamValidator {
 	@Override
 	public void validateI18nMenu(I18nMenuA i18nMenuA) {
 		ParamValidator.validate(i18nMenuA.getValidateName(),
-			// 校验ID
-			org.laokou.admin.i18nMenu.service.validator.I18nMenuParamValidator.validateId(i18nMenuA),
-			// 校验编码
-			org.laokou.admin.i18nMenu.service.validator.I18nMenuParamValidator.validateCode(i18nMenuA),
-			// 校验名称
-			org.laokou.admin.i18nMenu.service.validator.I18nMenuParamValidator.validateName(i18nMenuA),
-			// 校验编码和名称
-			org.laokou.admin.i18nMenu.service.validator.I18nMenuParamValidator.validateCodeAndName(i18nMenuA, i18nMenuMapper));
+				// 校验ID
+				org.laokou.admin.i18nMenu.service.validator.I18nMenuParamValidator.validateId(i18nMenuA),
+				// 校验编码
+				org.laokou.admin.i18nMenu.service.validator.I18nMenuParamValidator.validateCode(i18nMenuA),
+				// 校验名称
+				org.laokou.admin.i18nMenu.service.validator.I18nMenuParamValidator.validateName(i18nMenuA),
+				// 校验编码和名称
+				org.laokou.admin.i18nMenu.service.validator.I18nMenuParamValidator.validateCodeAndName(i18nMenuA,
+						i18nMenuMapper));
 	}
 
 }

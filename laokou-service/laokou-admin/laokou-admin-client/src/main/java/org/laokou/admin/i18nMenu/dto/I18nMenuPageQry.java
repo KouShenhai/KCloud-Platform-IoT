@@ -30,6 +30,7 @@ import org.laokou.common.i18n.util.StringExtUtils;
 public class I18nMenuPageQry extends PageQuery {
 
 	private String code;
+
 	private String name;
 
 	public void setName(String name) {

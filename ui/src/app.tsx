@@ -79,11 +79,7 @@ const getRouters = (menus: any[]) => {
 			name: t('menu.home'),
 			path: '/home',
 			icon: <HomeOutlined />,
-		},
-		{
-			name: '测试',
-			path: '/sys/config/apiDoc',
-		},
+		}
 	];
 	if (menus.length > 0) {
 		routers.push(...mapMenuTreeI18n(menus));
@@ -220,11 +216,8 @@ export const layout: RunTimeLayoutConfig = ({ initialState }: any) => {
 				require('@@/exports').getLocale?.() || 'zh-CN'
 			}`,
 			request: async () => {
-				listUserTreeMenu({ code: 0 })
-					.then(result => {
-						return getRouters(result?.data);
-					})
-					.catch(console.log);
+				const res = await listUserTreeMenu({ code: 0 }).catch(console.log);
+				return getRouters(res?.data);
 			},
 		},
 		layout: 'mix',
