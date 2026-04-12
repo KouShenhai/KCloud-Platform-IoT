@@ -19,6 +19,21 @@ export default (initialState: any) => {
 		canMenuSave:
 			permissions?.includes('sys:menu:save') && scopes?.includes('write'),
 
+		canI18nMenuGetDetail:
+			permissions?.includes('sys:i18n-menu:detail') &&
+			scopes?.includes('read'),
+
+		canI18nMenuModify:
+			permissions?.includes('sys:i18n-menu:modify') &&
+			scopes?.includes('write'),
+
+		canI18nMenuRemove:
+			permissions?.includes('sys:i18n-menu:remove') &&
+			scopes?.includes('write'),
+
+		canI18nMenuSave:
+			permissions?.includes('sys:i18n-menu:save') && scopes?.includes('write'),
+
 		canDeptGetDetail:
 			permissions?.includes('sys:dept:detail') &&
 			scopes?.includes('read'),

@@ -79,7 +79,7 @@ const getRouters = (menus: any[]) => {
 			name: t('menu.home'),
 			path: '/home',
 			icon: <HomeOutlined />,
-		},
+		}
 	];
 	if (menus.length > 0) {
 		routers.push(...mapMenuTreeI18n(menus));
@@ -123,7 +123,7 @@ const refreshTokenByUsernamePassword = (refreshToken: string) => {
 				// 存储令牌
 				setToken(
 					// @ts-ignore
-					grantType,
+					getGrantType(),
 					res.data?.access_token,
 					res.data?.refresh_token,
 					res.data?.expires_in * 1000 + new Date().getTime(),
@@ -216,11 +216,8 @@ export const layout: RunTimeLayoutConfig = ({ initialState }: any) => {
 				require('@@/exports').getLocale?.() || 'zh-CN'
 			}`,
 			request: async () => {
-				listUserTreeMenu({ code: 0 })
-					.then(result => {
-						return getRouters(result?.data);
-					})
-					.catch(console.log);
+				const res = await listUserTreeMenu({ code: 0 }).catch(console.log);
+				return getRouters(res?.data);
 			},
 		},
 		layout: 'mix',
@@ -259,7 +256,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState }: any) => {
 									key: 'logout',
 									icon: <LogoutOutlined />,
 									// eslint-disable-next-line @typescript-eslint/no-use-before-define
-									label: t('user.logout'),
+									label: t('sys.user.logout'),
 									onClick: async () => {
 										if (refreshTimeoutRef) {
 											clearTimeout(refreshTimeoutRef);

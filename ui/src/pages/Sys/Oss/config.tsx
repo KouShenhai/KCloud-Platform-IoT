@@ -47,16 +47,16 @@ export default () => {
 			width: 85,
 		},
 		{
-			title: t('sys.oss.config.name'),
+			title: t('sys.ossConfig.name'),
 			dataIndex: 'name',
 			ellipsis: true,
 			valueType: 'text',
 			fieldProps: {
-				placeholder: t('sys.oss.config.placeholder.name'),
+				placeholder: t('sys.ossConfig.placeholder.name'),
 			},
 		},
 		{
-			title: t('sys.oss.config.type'),
+			title: t('sys.ossConfig.type'),
 			key: 'typeValue',
 			dataIndex: 'typeValue',
 			hideInTable: true,
@@ -64,15 +64,15 @@ export default () => {
 			fieldProps: {
 				valueType: 'select',
 				mode: 'single',
-				placeholder: t('sys.oss.config.placeholder.type'),
+				placeholder: t('sys.ossConfig.placeholder.type'),
 				options: [
 					{
 						value: 'amazon_s3',
-						label: t('sys.oss.config.type.amazonS3'),
+						label: t('sys.ossConfig.type.amazonS3'),
 					},
 					{
 						value: 'local',
-						label: t('sys.oss.config.type.local'),
+						label: t('sys.ossConfig.type.local'),
 					},
 					{
 						value: 'minio',
@@ -84,7 +84,7 @@ export default () => {
 		},
 		{
 			disable: true,
-			title: t('sys.oss.config.type'),
+			title: t('sys.ossConfig.type'),
 			dataIndex: 'type',
 			hideInSearch: true,
 			renderFormItem: (_, { defaultRender }) => {
@@ -94,12 +94,12 @@ export default () => {
 				<Space>
 					{record?.type === 'amazon_s3' && (
 						<Tag color={'rgb(51 114 253)'} key={'amazon_s3'}>
-							{t('sys.oss.config.type.amazonS3')}
+							{t('sys.ossConfig.type.amazonS3')}
 						</Tag>
 					)}
 					{record?.type === 'local' && (
 						<Tag color={'#fd5251'} key={'local'}>
-							{t('sys.oss.config.type.local')}
+							{t('sys.ossConfig.type.local')}
 						</Tag>
 					)}
 					{record?.type === 'minio' && (
@@ -111,7 +111,7 @@ export default () => {
 			),
 		},
 		{
-			title: t('sys.oss.config.status'),
+			title: t('sys.ossConfig.status'),
 			key: 'statusValue',
 			dataIndex: 'statusValue',
 			hideInTable: true,
@@ -119,7 +119,7 @@ export default () => {
 			fieldProps: {
 				valueType: 'select',
 				mode: 'single',
-				placeholder: t('sys.oss.config.placeholder.status'),
+				placeholder: t('sys.ossConfig.placeholder.status'),
 				options: [
 					{
 						value: 0,
@@ -134,7 +134,7 @@ export default () => {
 			ellipsis: true,
 		},
 		{
-			title: t('sys.oss.config.status'),
+			title: t('sys.ossConfig.status'),
 			dataIndex: 'status',
 			hideInSearch: true,
 			render: (_, record) => (

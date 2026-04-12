@@ -193,7 +193,7 @@ CREATE TABLE "public"."sys_i18n_menu" (
   "tenant_id" int8 NOT NULL DEFAULT 0,
   "dept_id" int8 NOT NULL DEFAULT 1,
   "code" varchar(50) NOT NULL,
-  "menu" varchar(50) NOT NULL
+  "name" varchar(50) NOT NULL
 );
 COMMENT ON COLUMN "public"."sys_i18n_menu"."id" IS 'ID';
 COMMENT ON COLUMN "public"."sys_i18n_menu"."creator" IS '创建人';
@@ -205,14 +205,14 @@ COMMENT ON COLUMN "public"."sys_i18n_menu"."version" IS '版本号';
 COMMENT ON COLUMN "public"."sys_i18n_menu"."tenant_id" IS '租户ID';
 COMMENT ON COLUMN "public"."sys_i18n_menu"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."sys_i18n_menu"."code" IS '编码';
-COMMENT ON COLUMN "public"."sys_i18n_menu"."menu" IS '菜单';
+COMMENT ON COLUMN "public"."sys_i18n_menu"."name" IS '名称';
 COMMENT ON TABLE "public"."sys_i18n_menu" IS '国际化菜单';
 
-CREATE INDEX "sys_i18n_menu_code_menu_idx" ON "public"."sys_i18n_menu" USING btree (
+CREATE INDEX "sys_i18n_menu_code_name_idx" ON "public"."sys_i18n_menu" USING btree (
   "code",
-  "menu"
+  "name"
 );
-COMMENT ON INDEX "public"."sys_i18n_menu_code_menu_idx" IS '编码_菜单_唯一索引';
+COMMENT ON INDEX "public"."sys_i18n_menu_code_name_idx" IS '编码_名称_唯一索引';
 
 ALTER TABLE "public"."sys_i18n_menu" ADD CONSTRAINT "sys_i18n_menu_pkey" PRIMARY KEY ("id");
 

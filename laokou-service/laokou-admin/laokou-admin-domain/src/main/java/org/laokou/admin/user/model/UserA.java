@@ -104,11 +104,12 @@ public class UserA extends AggregateRoot implements ValidateName {
 		String username = this.userE.getUsername();
 		String mail = this.userE.getMail();
 		String mobile = this.userE.getMobile();
+		String password = this.userE.getPassword();
 		this.userE = this.userE.toBuilder()
 			.superAdmin(SuperAdmin.NO.getCode())
 			.username(AESUtils.encrypt(username))
 			.usernamePhrase(encryptPhrase(username))
-			.password(encodedPassword("laokou123"))
+			.password(passwordEncoder.encode(password))
 			.mail(AESUtils.encrypt(mail))
 			.mobile(AESUtils.encrypt(mobile))
 			.mobilePhrase(encryptMobile(mobile))
@@ -139,7 +140,7 @@ public class UserA extends AggregateRoot implements ValidateName {
 			.mobile(null)
 			.mobilePhrase(null)
 			.mailPhrase(null)
-			.password(encodedPassword(this.userE.getPassword()))
+			.password(passwordEncoder.encode(this.userE.getPassword()))
 			.mail(null)
 			.build();
 		return this;
@@ -182,13 +183,6 @@ public class UserA extends AggregateRoot implements ValidateName {
 			list.add(AESUtils.encrypt(phrase.substring(i, i + 4)));
 		}
 		return StringExtUtils.collectionToDelimitedString(list, "~");
-	}
-
-	private String encodedPassword(String password) {
-		if (StringExtUtils.isEmpty(password)) {
-			return null;
-		}
-		return passwordEncoder.encode(password);
 	}
 
 	public Instant getCreateTime() {

@@ -135,6 +135,12 @@ export default [
 						path: '/sys/config/generator',
 						component: './Sys/Config/generator',
 					},
+					{
+						name: 'menu.sys.config.apiDoc',
+						title: 'menu.sys.config.apiDoc',
+						path: '/sys/config/apiDoc',
+						component: './Sys/Config/apiDoc',
+					},
 				],
 			},
 		],

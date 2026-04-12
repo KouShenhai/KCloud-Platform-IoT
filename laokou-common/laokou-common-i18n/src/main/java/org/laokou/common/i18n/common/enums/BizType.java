@@ -36,7 +36,11 @@ public enum BizType {
 
 	MENU("menu", "菜单"),
 
+	DICT("dict", "字典"),
+
 	OPERATE_LOG("operate_log", "操作日志"),
+
+	I18N_MENU("i18n_menu", "国际化菜单"),
 
 	THING_MODEL("thing_model", "物模型"),
 

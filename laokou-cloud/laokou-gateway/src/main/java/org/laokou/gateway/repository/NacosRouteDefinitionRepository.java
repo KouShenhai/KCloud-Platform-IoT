@@ -38,13 +38,11 @@ import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Schedulers;
 
 import java.time.Duration;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 // @formatter:off
@@ -67,16 +65,12 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 
 	private final ReactiveHashOperations<@NonNull String, @NonNull String, @NonNull RouteDefinition> reactiveHashOperations;
 
-	private final ExecutorService virtualThreadExecutor;
-
 	public NacosRouteDefinitionRepository(@NonNull NacosConfigManager nacosConfigManager,
-			ExecutorService virtualThreadExecutor,
 			@NonNull ReactiveRedisTemplate<@NonNull String, @NonNull Object> reactiveRedisTemplate) {
 		this.dataId = "router.json";
 		this.groupName = nacosConfigManager.getNacosConfigProperties().getGroup();
 		this.configService = nacosConfigManager.getConfigService();
 		this.reactiveHashOperations = reactiveRedisTemplate.opsForHash();
-		this.virtualThreadExecutor = virtualThreadExecutor;
 	}
 
 	@PostConstruct
@@ -91,10 +85,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 			@Override
 			public void receiveConfigInfo(String routes) {
 				log.info("监听路由配置信息，开始同步路由配置：{}", routes);
-				// 15s后自动释放内存
-				virtualThreadExecutor.execute(() -> syncRouter(getRoutes(routes)).take(Duration.ofSeconds(15))
-					.subscribeOn(Schedulers.boundedElastic())
-					.subscribe());
+				syncRouter(getRoutes(routes)).timeout(Duration.ofSeconds(15)).block();
 			}
 		});
 	}

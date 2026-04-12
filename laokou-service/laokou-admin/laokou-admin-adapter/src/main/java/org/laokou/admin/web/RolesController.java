@@ -31,6 +31,9 @@ import org.laokou.admin.role.dto.RolePageQry;
 import org.laokou.admin.role.dto.RoleRemoveCmd;
 import org.laokou.admin.role.dto.RoleSaveCmd;
 import org.laokou.admin.role.dto.clientobject.RoleCO;
+import org.laokou.common.data.cache.annotation.DataCache;
+import org.laokou.common.data.cache.aspectj.OperateType;
+import org.laokou.common.data.cache.constant.NameConstants;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
@@ -76,6 +79,7 @@ public class RolesController {
 	@PreAuthorize("hasAuthority('write') and hasAuthority('sys:role:modify')")
 	@OperateLog(module = "角色管理", operation = "修改角色")
 	@Operation(summary = "修改角色", description = "修改角色")
+	@DataCache(name = NameConstants.ROLES, key = "#cmd.co.id", operateType = OperateType.DEL)
 	public void modifyRole(@RequestBody RoleModifyCmd cmd) {
 		rolesServiceI.modifyRole(cmd);
 	}
@@ -123,6 +127,7 @@ public class RolesController {
 
 	@TraceLog
 	@GetMapping("/v1/roles/{id}")
+	@DataCache(name = NameConstants.ROLES, key = "#id")
 	@PreAuthorize("hasAuthority('read') and hasAuthority('sys:role:detail')")
 	@Operation(summary = "查看角色详情", description = "查看角色详情")
 	public Result<RoleCO> getRoleById(@PathVariable("id") Long id) {

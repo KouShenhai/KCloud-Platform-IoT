@@ -19,6 +19,7 @@ package org.laokou.admin.i18nMenu.dto;
 
 import lombok.Data;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.util.StringExtUtils;
 
 /**
  * 分页查询国际化菜单命令.
@@ -27,5 +28,17 @@ import org.laokou.common.i18n.dto.PageQuery;
  */
 @Data
 public class I18nMenuPageQry extends PageQuery {
+
+	private String code;
+
+	private String name;
+
+	public void setName(String name) {
+		this.name = StringExtUtils.like(StringExtUtils.trim(name));
+	}
+
+	public void setCode(String code) {
+		this.code = StringExtUtils.like(StringExtUtils.trim(code));
+	}
 
 }

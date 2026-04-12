@@ -43,7 +43,7 @@ public class I18nMenuPageQryExe {
 	public Result<Page<I18nMenuCO>> execute(I18nMenuPageQry qry) {
 		List<I18nMenuDO> list = i18nMenuMapper.selectObjectPage(qry);
 		long total = i18nMenuMapper.selectObjectCount(qry);
-		return Result.ok(Page.create(list.stream().map(I18nMenuConvertor::toClientObject).toList(), total));
+		return Result.ok(Page.create(I18nMenuConvertor.toClientObjectList(list), total));
 	}
 
 }

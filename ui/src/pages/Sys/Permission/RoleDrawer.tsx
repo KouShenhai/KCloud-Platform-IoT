@@ -119,24 +119,24 @@ export const RoleDrawer: React.FC<RoleDrawerProps> = ({
 			<ProFormText
 				disabled={loading}
 				name="name"
-				label={t('role.name')}
+				label={t('sys.role.name')}
 				readonly={readOnly}
-				placeholder={t('role.placeholder.name')}
+				placeholder={t('sys.role.placeholder.name')}
 				rules={[
-					{ required: true, message: t('role.validate.nameRequired') },
+					{ required: true, message: t('sys.role.validate.nameRequired') },
 				]}
 			/>
 
 			<ProFormDigit
 				disabled={loading}
 				name="sort"
-				label={t('role.sort')}
+				label={t('sys.role.sort')}
 				readonly={readOnly}
-				placeholder={t('role.placeholder.sort')}
+				placeholder={t('sys.role.placeholder.sort')}
 				min={1}
 				max={99999}
 				rules={[
-					{ required: true, message: t('role.validate.sortRequired') },
+					{ required: true, message: t('sys.role.validate.sortRequired') },
 				]}
 			/>
 
@@ -144,21 +144,21 @@ export const RoleDrawer: React.FC<RoleDrawerProps> = ({
 				<ProFormSelect
 					disabled={loading}
 					name="dataScope"
-					label={t('role.dataScope')}
+					label={t('sys.role.dataScope')}
 					readonly={readOnly}
-					placeholder={t('role.placeholder.dataScope')}
+					placeholder={t('sys.role.placeholder.dataScope')}
 					rules={[
 						{
 							required: true,
-							message: t('role.validate.dataScopeRequired'),
+							message: t('sys.role.validate.dataScopeRequired'),
 						},
 					]}
 					options={[
-						{ value: 'all', label: t('role.dataScope.all') },
-						{ value: 'custom', label: t('role.dataScope.custom') },
-						{ value: 'dept_self', label: t('role.dataScope.selfDept') },
-						{ value: 'dept', label: t('role.dataScope.belowDept') },
-						{ value: 'self', label: t('role.dataScope.self') },
+						{ value: 'all', label: t('sys.role.dataScope.all') },
+						{ value: 'custom', label: t('sys.role.dataScope.custom') },
+						{ value: 'dept_self', label: t('sys.role.dataScope.selfDept') },
+						{ value: 'dept', label: t('sys.role.dataScope.belowDept') },
+						{ value: 'self', label: t('sys.role.dataScope.self') },
 					]}
 				/>
 			)}
@@ -167,14 +167,14 @@ export const RoleDrawer: React.FC<RoleDrawerProps> = ({
 				<ProFormTreeSelect
 					disabled={loading}
 					name="menuIds"
-					label={t('role.menuAuthority')}
+					label={t('sys.role.menuAuthority')}
 					readonly={readOnly}
 					allowClear={true}
-					placeholder={t('role.placeholder.menuAuthority')}
+					placeholder={t('sys.role.placeholder.menuAuthority')}
 					rules={[
 						{
 							required: true,
-							message: t('role.validate.menuAuthorityRequired'),
+							message: t('sys.role.validate.menuAuthorityRequired'),
 						},
 					]}
 					fieldProps={{
@@ -194,14 +194,14 @@ export const RoleDrawer: React.FC<RoleDrawerProps> = ({
 				<ProFormTreeSelect
 					disabled={loading}
 					name="deptIds"
-					label={t('role.deptAuthority')}
+					label={t('sys.role.deptAuthority')}
 					readonly={readOnly}
 					allowClear={true}
-					placeholder={t('role.placeholder.deptAuthority')}
+					placeholder={t('sys.role.placeholder.deptAuthority')}
 					rules={[
 						{
 							required: true,
-							message: t('role.validate.deptAuthorityRequired'),
+							message: t('sys.role.validate.deptAuthorityRequired'),
 						},
 					]}
 					fieldProps={{
@@ -223,7 +223,7 @@ export const RoleDrawer: React.FC<RoleDrawerProps> = ({
 					readonly={true}
 					name="createTime"
 					rules={[
-						{ required: true, message: t('role.validate.createTimeRequired') },
+						{ required: true, message: t('sys.role.validate.createTimeRequired') },
 					]}
 					label={t('common.createTime')}
 				/>

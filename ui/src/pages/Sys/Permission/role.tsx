@@ -97,49 +97,49 @@ export default () => {
 			width: 85,
 		},
 		{
-			title: t('role.name'),
+			title: t('sys.role.name'),
 			dataIndex: 'name',
 			valueType: 'text',
 			fieldProps: {
-				placeholder: t('role.placeholder.name'),
+				placeholder: t('sys.role.placeholder.name'),
 			},
 			width: 220,
 		},
 		{
-			title: t('role.dataScope'),
+			title: t('sys.role.dataScope'),
 			dataIndex: 'dataScope',
 			valueType: 'select',
 			width: 200,
 			fieldProps: {
 				valueType: 'select',
 				mode: 'single',
-				placeholder: t('role.placeholder.dataScope'),
+				placeholder: t('sys.role.placeholder.dataScope'),
 				options: [
 					{
 						value: 'all',
-						label: t('role.dataScope.all'),
+						label: t('sys.role.dataScope.all'),
 					},
 					{
 						value: 'custom',
-						label: t('role.dataScope.custom'),
+						label: t('sys.role.dataScope.custom'),
 					},
 					{
 						value: 'self_dept',
-						label: t('role.dataScope.selfDept'),
+						label: t('sys.role.dataScope.selfDept'),
 					},
 					{
 						value: 'below_dept',
-						label: t('role.dataScope.belowDept'),
+						label: t('sys.role.dataScope.belowDept'),
 					},
 					{
 						value: 'self',
-						label: t('role.dataScope.self'),
+						label: t('sys.role.dataScope.self'),
 					},
 				],
 			},
 		},
 		{
-			title: t('role.sort'),
+			title: t('sys.role.sort'),
 			dataIndex: 'sort',
 			hideInSearch: true,
 			ellipsis: true,
@@ -182,7 +182,7 @@ export default () => {
 						onClick={() => {
 							getRoleById({ id: record?.id }).then((res) => {
 								if (res.code === 'OK') {
-									setTitle(t('role.view'));
+									setTitle(t('sys.role.view'));
 									setModalVisit(true);
 									setReadOnly(true);
 									setDataSource(res?.data);
@@ -199,7 +199,7 @@ export default () => {
 						onClick={() => {
 							getRoleById({ id: record?.id }).then((res) => {
 								if (res.code === 'OK') {
-									setTitle(t('role.modify'));
+									setTitle(t('sys.role.modify'));
 									setModalVisit(true);
 									setReadOnly(false);
 									setDataSource(res?.data);
@@ -215,7 +215,7 @@ export default () => {
 						key={'modifyAuthority'}
 						onClick={() => {
 							getRoleById({ id: record?.id }).then((res) => {
-								setTitle(t('role.assignAuthority'));
+								setTitle(t('sys.role.assignAuthority'));
 								setModalModifyAuthorityVisit(true);
 								setDataSource(res?.data);
 								setTypeValue(res?.data?.dataScope);
@@ -312,7 +312,7 @@ export default () => {
 							type="primary"
 							icon={<PlusOutlined />}
 							onClick={() => {
-								setTitle(t('role.insert'));
+								setTitle(t('sys.role.insert'));
 								setRequestId(uuidV7());
 								setReadOnly(false);
 								setModalVisit(true);

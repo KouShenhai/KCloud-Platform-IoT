@@ -32,7 +32,7 @@ export const NoticeLogDrawer: React.FC<NoticeLogDrawerProps> = ({
 	return (
 		<DrawerForm<TableColumns>
 			open={modalVisit}
-			title={t('sys.log.notice.drawer.title')}
+			title={t('sys.noticeLog.drawer.title')}
 			drawerProps={{
 				destroyOnClose: true,
 				closable: true,
@@ -51,11 +51,11 @@ export const NoticeLogDrawer: React.FC<NoticeLogDrawerProps> = ({
 			<ProFormText
 				readonly={true}
 				name="code"
-				label={t('sys.log.notice.code')}
+				label={t('sys.noticeLog.code')}
 				rules={[
 					{
 						required: true,
-						message: t('sys.log.notice.required.code'),
+						message: t('sys.noticeLog.required.code'),
 					},
 				]}
 			/>
@@ -63,11 +63,11 @@ export const NoticeLogDrawer: React.FC<NoticeLogDrawerProps> = ({
 			<ProFormText
 				readonly={true}
 				name="name"
-				label={t('sys.log.notice.name')}
+				label={t('sys.noticeLog.name')}
 				rules={[
 					{
 						required: true,
-						message: t('sys.log.notice.required.name'),
+						message: t('sys.noticeLog.required.name'),
 					},
 				]}
 			/>
@@ -75,11 +75,11 @@ export const NoticeLogDrawer: React.FC<NoticeLogDrawerProps> = ({
 			<ProFormText
 				readonly={true}
 				name="status"
-				label={t('sys.log.notice.status')}
+				label={t('sys.noticeLog.status')}
 				rules={[
 					{
 						required: true,
-						message: t('sys.log.notice.required.status'),
+						message: t('sys.noticeLog.required.status'),
 					},
 				]}
 				convertValue={(value) => {
@@ -90,11 +90,11 @@ export const NoticeLogDrawer: React.FC<NoticeLogDrawerProps> = ({
 			<ProFormText
 				readonly={true}
 				name="param"
-				label={t('sys.log.notice.param')}
+				label={t('sys.noticeLog.param')}
 				rules={[
 					{
 						required: true,
-						message: t('sys.log.notice.required.param'),
+						message: t('sys.noticeLog.required.param'),
 					},
 				]}
 			/>
@@ -102,11 +102,11 @@ export const NoticeLogDrawer: React.FC<NoticeLogDrawerProps> = ({
 			<ProFormText
 				readonly={true}
 				name="errorMessage"
-				label={t('sys.log.notice.errorMessage')}
+				label={t('sys.noticeLog.errorMessage')}
 				rules={[
 					{
 						required: true,
-						message: t('sys.log.notice.required.errorMessage'),
+						message: t('sys.noticeLog.required.errorMessage'),
 					},
 				]}
 			/>
@@ -118,7 +118,7 @@ export const NoticeLogDrawer: React.FC<NoticeLogDrawerProps> = ({
 				rules={[
 					{
 						required: true,
-						message: t('sys.log.notice.required.createTime'),
+						message: t('sys.noticeLog.required.createTime'),
 					},
 				]}
 			/>

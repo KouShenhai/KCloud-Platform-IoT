@@ -49,7 +49,7 @@ final class UserParamValidator {
 	}
 
 	public static ParamValidator.Validate validatePassword(UserA userA, PasswordEncoder passwordEncoder,
-			UserMapper adminUserMapper) {
+			UserMapper adminUserMapper, boolean isResetPwd) {
 		String password = userA.getUserE().getPassword();
 		if (StringExtUtils.isEmpty(password)) {
 			return ParamValidator.invalidate("用户密码不能为空");
@@ -57,12 +57,14 @@ final class UserParamValidator {
 		if (password.length() < 6 || password.length() > 30) {
 			return ParamValidator.invalidate("用户密码长度为6-30个字符");
 		}
-		UserDO userDO = adminUserMapper.selectById(userA.getId());
-		if (ObjectUtils.isNull(userDO)) {
-			return ParamValidator.invalidate("用户不存在");
-		}
-		if (passwordEncoder.matches(password, userDO.getPassword())) {
-			return ParamValidator.invalidate("用户新密码不能与旧密码相同");
+		if (isResetPwd) {
+			UserDO userDO = adminUserMapper.selectById(userA.getId());
+			if (ObjectUtils.isNull(userDO)) {
+				return ParamValidator.invalidate("用户不存在");
+			}
+			if (passwordEncoder.matches(password, userDO.getPassword())) {
+				return ParamValidator.invalidate("用户新密码不能与旧密码相同");
+			}
 		}
 		return ParamValidator.validate();
 	}

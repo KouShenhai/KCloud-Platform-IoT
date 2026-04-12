@@ -48,7 +48,7 @@ export default () => {
 			width: 85,
 		},
 		{
-			title: t('sys.oss.log.name'),
+			title: t('sys.ossLog.name'),
 			dataIndex: 'name',
 			ellipsis: true,
 			valueType: 'text',
@@ -62,21 +62,21 @@ export default () => {
 			hideInSearch: true,
 		},
 		{
-			title: t('sys.oss.log.size'),
+			title: t('sys.ossLog.size'),
 			dataIndex: 'size',
 			ellipsis: true,
 			valueType: 'text',
 			hideInSearch: true,
 		},
 		{
-			title: t('sys.oss.log.contentType'),
+			title: t('sys.ossLog.contentType'),
 			dataIndex: 'contentType',
 			ellipsis: true,
 			valueType: 'text',
 			hideInSearch: true,
 		},
 		{
-			title: t('sys.oss.log.type'),
+			title: t('sys.ossLog.type'),
 			dataIndex: 'type',
 			ellipsis: true,
 			valueType: 'text',
@@ -87,24 +87,24 @@ export default () => {
 				<Space>
 					{record?.type === 'image' && (
 						<Tag color={'rgb(51 114 253)'} key={'image'}>
-							{t('sys.oss.log.type.image')}
+							{t('sys.ossLog.type.image')}
 						</Tag>
 					)}
 					{record?.type === 'video' && (
 						<Tag color={'#fd5251'} key={'video'}>
-							{t('sys.oss.log.type.video')}
+							{t('sys.ossLog.type.video')}
 						</Tag>
 					)}
 					{record?.type === 'audio' && (
 						<Tag color={'#ffa500'} key={'audio'}>
-							{t('sys.oss.log.type.audio')}
+							{t('sys.ossLog.type.audio')}
 						</Tag>
 					)}
 				</Space>
 			),
 		},
 		{
-			title: t('sys.oss.log.format'),
+			title: t('sys.ossLog.format'),
 			dataIndex: 'format',
 			ellipsis: true,
 			valueType: 'text',

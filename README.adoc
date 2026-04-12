@@ -75,6 +75,7 @@ image:doc/image/img.png[COLA架构图,400,400,align=center]
 |image:doc/image/project/5.png[用户页面]    |image:doc/image/project/6.png[登录日志页面]
 |image:doc/image/project/7.png[通知日志页面]    |image:doc/image/project/8.png[操作日志页面]
 |image:doc/image/project/9.png[物模型页面]    |image:doc/image/project/10.png[产品类别页面]
+|image:doc/image/project/11.png[国际化菜单]    |image:doc/image/project/12.png[API文档]
 |===
 
 === 🌿 服务器配置
@@ -135,6 +136,8 @@ https://docs.qq.com/sheet/DUGhCdGVZWmVxT0VJ[开发计划（需要登录）]
 
 🚀 产品类别管理【查询/保存/修改/删除/查看】
 
+🚀 国际化菜单管理【查询/保存/修改/删除/查看】
+
 === 💡 系统架构
 
 image::doc/image/老寇IoT云平台架构图.png[架构图,align=center]
@@ -156,7 +159,7 @@ image::doc/image/老寇IoT云平台业务架构图.png[架构图,align=center]
 |Spring Cloud                |2025.1.0
 |Spring Cloud Alibaba        |2025.1.0.0
 |Spring Boot Admin           |4.0.2
-|Jackson                     |3.1.0
+|Jackson                     |3.1.2
 |Mybatis Plus                |3.5.16
 |Nacos                       |3.1.0
 |gRPC                        |1.77.0

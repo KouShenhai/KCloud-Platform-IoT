@@ -27,7 +27,7 @@ import org.laokou.common.mybatisplus.mapper.BaseDO;
  * @author laokou
  */
 @Data
-@TableName("sys_i18n_message")
+@TableName("sys_i18n_menu")
 public class I18nMenuDO extends BaseDO {
 
 	/**
@@ -36,13 +36,8 @@ public class I18nMenuDO extends BaseDO {
 	private String code;
 
 	/**
-	 * 中文.
+	 * 名称.
 	 */
-	private String zhMessage;
-
-	/**
-	 * 英文.
-	 */
-	private String enMessage;
+	private String name;
 
 }

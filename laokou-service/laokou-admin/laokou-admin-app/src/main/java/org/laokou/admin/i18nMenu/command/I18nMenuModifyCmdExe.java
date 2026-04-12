@@ -21,6 +21,8 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.i18nMenu.ability.I18nMenuDomainService;
 import org.laokou.admin.i18nMenu.convertor.I18nMenuConvertor;
 import org.laokou.admin.i18nMenu.dto.I18nMenuModifyCmd;
+import org.laokou.admin.i18nMenu.factory.I18nMenuDomainFactory;
+import org.laokou.admin.i18nMenu.model.I18nMenuA;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.stereotype.Component;
@@ -40,9 +42,10 @@ public class I18nMenuModifyCmdExe {
 
 	@CommandLog
 	public void executeVoid(I18nMenuModifyCmd cmd) {
+		I18nMenuA i18nMenuA = I18nMenuDomainFactory.createI18nMenuA().create(I18nMenuConvertor.toEntity(cmd.getCo()));
 		// 校验参数
-		transactionalUtils
-			.executeInTransaction(() -> i18nMenuDomainService.updateI18nMenu(I18nMenuConvertor.toEntity(cmd.getCo())));
+		i18nMenuA.checkDeptParam();
+		transactionalUtils.executeInTransaction(() -> i18nMenuDomainService.updateI18nMenu(i18nMenuA));
 	}
 
 }

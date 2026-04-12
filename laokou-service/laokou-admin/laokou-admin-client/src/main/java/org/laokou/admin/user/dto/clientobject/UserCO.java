@@ -17,8 +17,10 @@
 
 package org.laokou.admin.user.dto.clientobject;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import org.laokou.common.i18n.common.constant.DateConstants;
 import org.laokou.common.i18n.dto.ClientObject;
 
 import java.time.Instant;
@@ -58,6 +60,7 @@ public class UserCO extends ClientObject {
 	private String username;
 
 	@Schema(name = "创建时间", description = "创建时间")
+	@JsonFormat(pattern = DateConstants.YYYY_B_MM_B_DD_HH_R_MM_R_SS, timezone = DateConstants.DEFAULT_TIMEZONE)
 	private Instant createTime;
 
 	@Schema(name = "角色IDS", description = "角色IDS")

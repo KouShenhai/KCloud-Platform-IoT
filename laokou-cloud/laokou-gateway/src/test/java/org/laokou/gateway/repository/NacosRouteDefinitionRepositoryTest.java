@@ -47,8 +47,6 @@ import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * @author laokou
@@ -68,8 +66,6 @@ class NacosRouteDefinitionRepositoryTest {
 	private NacosRouteDefinitionRepository nacosRouteDefinitionRepository;
 
 	private LettuceConnectionFactory lettuceConnectionFactory;
-
-	private ExecutorService virtualThreadExecutor;
 
 	@BeforeEach
 	void setUp() throws Exception {
@@ -95,11 +91,8 @@ class NacosRouteDefinitionRepositoryTest {
 			.build();
 		ReactiveRedisTemplate<@NonNull String, @NonNull Object> reactiveRedisTemplate = new ReactiveRedisTemplate<>(
 				lettuceConnectionFactory, serializationContext);
-		// 初始化虚拟线程执行器
-		virtualThreadExecutor = Executors.newVirtualThreadPerTaskExecutor();
 		// 初始化NacosRouteDefinitionRepository
-		nacosRouteDefinitionRepository = new NacosRouteDefinitionRepository(nacosConfigManager, virtualThreadExecutor,
-				reactiveRedisTemplate);
+		nacosRouteDefinitionRepository = new NacosRouteDefinitionRepository(nacosConfigManager, reactiveRedisTemplate);
 		// 设置ApplicationContext（syncRouter内部会调用SpringContextUtils.publishEvent）
 		Field applicationContextField = SpringContextUtils.class.getDeclaredField("applicationContext");
 		applicationContextField.setAccessible(true);
@@ -110,9 +103,6 @@ class NacosRouteDefinitionRepositoryTest {
 	void tearDown() {
 		if (lettuceConnectionFactory != null) {
 			lettuceConnectionFactory.destroy();
-		}
-		if (virtualThreadExecutor != null) {
-			virtualThreadExecutor.shutdown();
 		}
 	}
 

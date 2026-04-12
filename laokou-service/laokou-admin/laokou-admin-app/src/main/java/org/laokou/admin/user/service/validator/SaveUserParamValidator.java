@@ -39,6 +39,8 @@ public class SaveUserParamValidator implements UserParamValidator {
 				// 校验用户名
 				org.laokou.admin.user.service.validator.UserParamValidator.validateUsername(userA, adminUserMapper,
 						true),
+				// 校验密码
+				org.laokou.admin.user.service.validator.UserParamValidator.validatePassword(userA, null, null, false),
 				// 校验邮箱
 				org.laokou.admin.user.service.validator.UserParamValidator.validateMail(userA, adminUserMapper, true),
 				// 校验手机号

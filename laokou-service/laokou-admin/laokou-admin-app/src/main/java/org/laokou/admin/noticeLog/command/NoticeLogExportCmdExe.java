@@ -48,6 +48,9 @@ public class NoticeLogExportCmdExe {
 			ExcelUtils.doExport("通知日志", "通知日志", ResponseUtils.getHttpServletResponse(), cmd, adminNoticeLogMapper,
 					NoticeLogExcel.class, NoticeLogConvertor.INSTANCE);
 		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 		finally {
 			DynamicDataSourceContextHolder.clear();
 		}

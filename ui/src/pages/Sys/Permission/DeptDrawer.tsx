@@ -159,7 +159,7 @@ export const DeptDrawer: React.FC<DeptDrawerProps> = ({
 					rules={[
 						{
 							required: true,
-							message: t('role.validate.createTimeRequired'),
+							message: t('sys.role.validate.createTimeRequired'),
 						},
 					]}
 					label={t('common.createTime')}

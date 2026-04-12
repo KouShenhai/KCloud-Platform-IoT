@@ -47,6 +47,9 @@ public class OperateLogExportCmdExe {
 			ExcelUtils.doExport("操作日志", "操作日志", ResponseUtils.getHttpServletResponse(), cmd, operateLogMapper,
 					OperateLogExcel.class, OperateLogConvertor.INSTANCE);
 		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 		finally {
 			DynamicDataSourceContextHolder.clear();
 		}

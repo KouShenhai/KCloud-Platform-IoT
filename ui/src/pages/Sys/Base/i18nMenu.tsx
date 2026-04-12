@@ -1,35 +1,37 @@
 import {
 	getI18nMenuById,
-	modifyI18nMenu,
 	pageI18nMenu,
 	removeI18nMenu,
-	saveI18nMenu,
 } from '@/services/admin/i18nMenu';
-import { trim } from '@/utils/format';
-import { useIntl } from '@@/exports';
-import { PlusOutlined } from '@ant-design/icons';
-import type { ActionType, ProColumns } from '@ant-design/pro-components';
-import { ModalForm, ProFormText, ProTable } from '@ant-design/pro-components';
-import { Button, message, Modal, Space } from 'antd';
-import { useRef, useState } from 'react';
+import {trim} from '@/utils/format';
+import {useAccess, useIntl} from '@@/exports';
+import {PlusOutlined} from '@ant-design/icons';
+import type {ActionType, ProColumns} from '@ant-design/pro-components';
+import {ProTable} from '@ant-design/pro-components';
+import {Button, message, Modal} from 'antd';
+import {useRef, useState} from 'react';
+import {I18nMenuDrawer} from "@/pages/Sys/Base/I18nMenuDrawer";
+import {v7 as uuidV7} from "uuid";
 
 export default () => {
 	type TableColumns = {
 		id: number | undefined;
 		code: string | undefined;
 		name: string | undefined;
+		createTime: string | undefined;
 	};
-
+	const access = useAccess();
 	const intl = useIntl();
 	const t = (id: string, values?: Record<string, any>) =>
-		intl.formatMessage({ id }, values);
+		intl.formatMessage({id}, values);
 
 	const actionRef = useRef<ActionType | null>(null);
-
-	const [modalVisit, setModalVisit] = useState(false);
 	const [readOnly, setReadOnly] = useState(false);
-	const [title, setTitle] = useState('');
+	const [modalVisit, setModalVisit] = useState(false);
 	const [dataSource, setDataSource] = useState<any>({});
+	const [ids, setIds] = useState<number[]>([]);
+	const [title, setTitle] = useState('');
+	const [requestId, setRequestId] = useState('');
 
 	const getPageQueryParam = (params: any) => {
 		return {
@@ -38,6 +40,14 @@ export default () => {
 			pageIndex: params?.pageSize * (params?.current - 1),
 			code: trim(params?.code),
 			name: trim(params?.name),
+			params: {
+				startTime: params?.startDate
+					? `${params.startDate} 00:00:00`
+					: undefined,
+				endTime: params?.endDate
+					? `${params.endDate} 23:59:59`
+					: undefined,
+			},
 		};
 	};
 
@@ -46,12 +56,13 @@ export default () => {
 			title: t('common.number'),
 			dataIndex: 'index',
 			valueType: 'indexBorder',
-			width: 110,
+			width: 85,
 		},
 		{
 			title: t('sys.i18nMenu.code'),
 			dataIndex: 'code',
 			ellipsis: true,
+			width: 120,
 			valueType: 'text',
 			fieldProps: {
 				placeholder: t('sys.i18nMenu.placeholder.code'),
@@ -61,9 +72,35 @@ export default () => {
 			title: t('sys.i18nMenu.name'),
 			dataIndex: 'name',
 			ellipsis: true,
-			valueType: 'text',
+			width: 120,
 			fieldProps: {
 				placeholder: t('sys.i18nMenu.placeholder.name'),
+			},
+		},
+		{
+			title: t('common.createTime'),
+			key: 'createTime',
+			dataIndex: 'createTime',
+			valueType: 'dateTime',
+			hideInSearch: true,
+			width: 160,
+			ellipsis: true,
+		},
+		{
+			title: t('common.createTime'),
+			dataIndex: 'createTimeValue',
+			valueType: 'dateRange',
+			hideInTable: true,
+			fieldProps: {
+				placeholder: [t('common.selectStartTime'), t('common.selectEndTime')],
+			},
+			search: {
+				transform: (value) => {
+					return {
+						startDate: value[0],
+						endDate: value[1],
+					};
+				},
 			},
 		},
 		{
@@ -71,58 +108,64 @@ export default () => {
 			valueType: 'option',
 			key: 'option',
 			render: (_, record) => [
-				<a
-					key="get"
-					onClick={() => {
-						getI18nMenuById({ id: record?.id as number }).then((res) => {
-							if (res.code === 'OK') {
-								setTitle(t('sys.i18nMenu.view'));
-								setModalVisit(true);
-								setReadOnly(true);
-								setDataSource(res?.data);
-							}
-						});
-					}}
-				>
-					{t('common.view')}
-				</a>,
-				<a
-					key="modify"
-					onClick={() => {
-						getI18nMenuById({ id: record?.id as number }).then((res) => {
-							if (res.code === 'OK') {
-								setTitle(t('sys.i18nMenu.modify'));
-								setModalVisit(true);
-								setReadOnly(false);
-								setDataSource(res?.data);
-							}
-						});
-					}}
-				>
-					{t('common.modify')}
-				</a>,
-				<a
-					key="remove"
-					onClick={() => {
-						Modal.confirm({
-							title: t('confirm.deleteTitle'),
-							content: t('confirm.deleteContent'),
-							okText: t('common.ok'),
-							cancelText: t('common.cancel'),
-							onOk: () => {
-								removeI18nMenu([record?.id as number]).then((res) => {
-									if (res.code === 'OK') {
-										message.success(t('toast.deleteSuccess')).then();
-										// @ts-ignore
-										actionRef?.current?.reload();
-									}
-								});
-							},
-						});
-					}}
-				>
-					{t('common.delete')}
-				</a>,
+				access.canI18nMenuGetDetail && (
+					<a
+						key="get"
+						onClick={() => {
+							getI18nMenuById({id: record?.id as number}).then((res) => {
+								if (res.code === 'OK') {
+									setTitle(t('sys.i18nMenu.view'));
+									setModalVisit(true);
+									setReadOnly(true);
+									setDataSource(res?.data);
+								}
+							});
+						}}
+					>
+						{t('common.view')}
+					</a>
+				),
+				access.canI18nMenuModify && (
+					<a
+						key="modify"
+						onClick={() => {
+							getI18nMenuById({id: record?.id as number}).then((res) => {
+								if (res.code === 'OK') {
+									setTitle(t('sys.i18nMenu.modify'));
+									setModalVisit(true);
+									setReadOnly(false);
+									setDataSource(res?.data);
+								}
+							});
+						}}
+					>
+						{t('common.modify')}
+					</a>
+				),
+				access.canI18nMenuRemove && (
+					<a
+						key="remove"
+						onClick={() => {
+							Modal.confirm({
+								title: t('confirm.deleteTitle'),
+								content: t('confirm.deleteContent'),
+								okText: t('common.ok'),
+								cancelText: t('common.cancel'),
+								onOk: () => {
+									removeI18nMenu([record?.id as number]).then((res) => {
+										if (res.code === 'OK') {
+											message.success(t('toast.deleteSuccess')).then();
+											// @ts-ignore
+											actionRef?.current?.reload();
+										}
+									});
+								},
+							});
+						}}
+					>
+						{t('common.delete')}
+					</a>
+				),
 			],
 			width: 190,
 		},
@@ -130,52 +173,19 @@ export default () => {
 
 	return (
 		<>
-			<ModalForm
+			<I18nMenuDrawer
+				modalVisit={modalVisit}
+				setModalVisit={setModalVisit}
 				title={title}
-				open={modalVisit}
-				modalProps={{
-					destroyOnClose: true,
-					onCancel: () => setModalVisit(false),
+				readOnly={readOnly}
+				dataSource={dataSource}
+				requestId={requestId}
+				setRequestId={setRequestId}
+				onComponent={async () => {
+					// @ts-ignore
+					actionRef?.current?.reload();
 				}}
-				submitTimeout={2000}
-				readonly={readOnly}
-				initialValues={dataSource}
-				onFinish={async (values: any) => {
-					const api = values?.id ? modifyI18nMenu : saveI18nMenu;
-					return api({
-						...values,
-						id: values?.id,
-						code: trim(values?.code),
-						name: trim(values?.name),
-					}).then((res: any) => {
-						if (res.code === 'OK') {
-							message.success(t('toast.saveSuccess')).then();
-							setModalVisit(false);
-							// @ts-ignore
-							actionRef?.current?.reload();
-							return true;
-						}
-						return false;
-					});
-				}}
-			>
-				<ProFormText name="id" hidden />
-				<ProFormText
-					name="code"
-					label={t('sys.i18nMenu.code')}
-					placeholder={t('sys.i18nMenu.placeholder.code')}
-					disabled={readOnly}
-					rules={[{ required: true, message: t('toast.required') }]}
-				/>
-				<ProFormText
-					name="name"
-					label={t('sys.i18nMenu.name')}
-					placeholder={t('sys.i18nMenu.placeholder.name')}
-					disabled={readOnly}
-					rules={[{ required: true, message: t('toast.required') }]}
-				/>
-			</ModalForm>
-
+			/>
 			<ProTable<TableColumns>
 				actionRef={actionRef}
 				columns={columns}
@@ -199,23 +209,26 @@ export default () => {
 					defaultCollapsed: true,
 				}}
 				toolBarRender={() => [
-					<Button
-						key="save"
-						type="primary"
-						icon={<PlusOutlined />}
-						onClick={() => {
-							setTitle(t('sys.i18nMenu.insert'));
-							setReadOnly(false);
-							setModalVisit(true);
-							setDataSource({
-								id: undefined,
-								code: '',
-								name: '',
-							});
-						}}
-					>
-						{t('common.insert')}
-					</Button>,
+					access.canI18nMenuSave && (
+						<Button
+							key="save"
+							type="primary"
+							icon={<PlusOutlined/>}
+							onClick={() => {
+								setTitle(t('sys.i18nMenu.insert'));
+								setReadOnly(false);
+								setModalVisit(true);
+								setRequestId(uuidV7());
+								setDataSource({
+									id: undefined,
+									code: '',
+									name: '',
+								});
+							}}
+						>
+							{t('common.insert')}
+						</Button>
+					),
 				]}
 				dateFormatter="string"
 				toolbar={{

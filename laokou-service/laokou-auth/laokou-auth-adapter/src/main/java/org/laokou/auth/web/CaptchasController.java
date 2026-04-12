@@ -30,6 +30,7 @@ import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.ratelimiter.annotation.RateLimiter;
 import org.laokou.common.ratelimiter.aspectj.Type;
 import org.laokou.common.trace.annotation.TraceLog;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,7 +48,7 @@ public class CaptchasController {
 	private final CaptchasServiceI captchasServiceI;
 
 	@TraceLog
-	@GetMapping("/v1/username-password/captchas/{uuid}")
+	@GetMapping(value = "/v1/username-password/captchas/{uuid}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@RateLimiter(key = "GET_USERNAME_PASSWORD_CAPTCHA", type = Type.IP)
 	@Operation(summary = "根据UUID获取用户名密码登录验证码", description = "根据UUID获取用户名密码登录验证码")
 	public Result<String> getUsernamePasswordAuthCaptchaByUuid(@PathVariable("uuid") String uuid) {
@@ -56,7 +57,7 @@ public class CaptchasController {
 	}
 
 	@TraceLog
-	@GetMapping("/v1/authorization-code/captchas/{uuid}")
+	@GetMapping(value = "/v1/authorization-code/captchas/{uuid}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@RateLimiter(key = "GET_AUTHORIZATION_CODE_CAPTCHA", type = Type.IP)
 	@Operation(summary = "根据UUID获取授权码登录验证码", description = "根据UUID获取授权码登录验证码")
 	public Result<String> getAuthorizationCodeAuthCaptchaByUuid(@PathVariable("uuid") String uuid) {

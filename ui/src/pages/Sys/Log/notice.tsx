@@ -38,8 +38,8 @@ export default () => {
 
 	const getStatus = (status: string) => {
 		return {
-			'0': t('sys.log.common.success'),
-			'1': t('sys.log.common.fail'),
+			'0': t('sys.commonLog.success'),
+			'1': t('sys.commonLog.fail'),
 		}[status];
 	};
 
@@ -73,25 +73,25 @@ export default () => {
 			width: 85,
 		},
 		{
-			title: t('sys.log.notice.code'),
+			title: t('sys.noticeLog.code'),
 			dataIndex: 'code',
 			ellipsis: true,
 			valueType: 'text',
 			fieldProps: {
-				placeholder: t('sys.log.notice.placeholder.code'),
+				placeholder: t('sys.noticeLog.placeholder.code'),
 			},
 		},
 		{
-			title: t('sys.log.notice.name'),
+			title: t('sys.noticeLog.name'),
 			dataIndex: 'name',
 			ellipsis: true,
 			valueType: 'text',
 			fieldProps: {
-				placeholder: t('sys.log.notice.placeholder.name'),
+				placeholder: t('sys.noticeLog.placeholder.name'),
 			},
 		},
 		{
-			title: t('sys.log.notice.status'),
+			title: t('sys.noticeLog.status'),
 			key: 'statusValue',
 			dataIndex: 'statusValue',
 			hideInTable: true,
@@ -99,36 +99,36 @@ export default () => {
 			fieldProps: {
 				valueType: 'select',
 				mode: 'single',
-				placeholder: t('sys.log.notice.placeholder.status'),
+				placeholder: t('sys.noticeLog.placeholder.status'),
 				options: [
 					{
-						label: t('sys.log.common.success'),
+						label: t('sys.commonLog.success'),
 						value: '0',
 					},
 					{
-						label: t('sys.log.common.fail'),
+						label: t('sys.commonLog.fail'),
 						value: '1',
 					},
 				],
 			},
 		},
 		{
-			title: t('sys.log.notice.status'),
+			title: t('sys.noticeLog.status'),
 			dataIndex: 'status',
 			hideInSearch: true,
 			valueEnum: {
-				'0': { text: t('sys.log.common.success'), status: 'Success' },
-				'1': { text: t('sys.log.common.fail'), status: 'Error' },
+				'0': { text: t('sys.commonLog.success'), status: 'Success' },
+				'1': { text: t('sys.commonLog.fail'), status: 'Error' },
 			},
 			ellipsis: true,
 		},
 		{
-			title: t('sys.log.notice.errorMessage'),
+			title: t('sys.noticeLog.errorMessage'),
 			dataIndex: 'errorMessage',
 			ellipsis: true,
 			valueType: 'text',
 			fieldProps: {
-				placeholder: t('sys.log.notice.placeholder.errorMessage'),
+				placeholder: t('sys.noticeLog.placeholder.errorMessage'),
 			},
 		},
 		{
@@ -248,21 +248,21 @@ export default () => {
 									'createTime',
 								],
 								sheetHeader: [
-									t('sys.log.notice.code'),
-									t('sys.log.notice.name'),
-									t('sys.log.notice.status'),
-									t('sys.log.notice.param'),
-									t('sys.log.notice.errorMessage'),
+									t('sys.noticeLog.code'),
+									t('sys.noticeLog.name'),
+									t('sys.noticeLog.status'),
+									t('sys.noticeLog.param'),
+									t('sys.noticeLog.errorMessage'),
 									t('common.createTime'),
 								],
 								fileName:
-									t('sys.log.notice.exportFilePrefix') +
+									t('sys.noticeLog.exportFilePrefix') +
 									moment(new Date()).format('YYYYMMDDHHmmss'),
-								sheetName: t('sys.log.notice.title'),
+								sheetName: t('sys.noticeLog.title'),
 							});
 						}}
 					>
-						{t('sys.log.common.export')}
+						{t('sys.commonLog.export')}
 					</Button>,
 					access.canNoticeLogExport && (
 						<Button
@@ -277,7 +277,7 @@ export default () => {
 								});
 							}}
 						>
-							{t('sys.log.common.exportAll')}
+							{t('sys.commonLog.exportAll')}
 						</Button>
 					),
 				]}

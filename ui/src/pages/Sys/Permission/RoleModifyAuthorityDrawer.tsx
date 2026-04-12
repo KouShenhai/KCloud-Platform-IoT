@@ -107,22 +107,22 @@ export const RoleModifyAuthorityDrawer: React.FC<RoleAuthorityProps> = ({
 
 			<ProFormText
 				name="name"
-				label={t('role.name')}
+				label={t('sys.role.name')}
 				disabled={true}
-				placeholder={t('role.placeholder.name')}
+				placeholder={t('sys.role.placeholder.name')}
 				rules={[
-					{ required: true, message: t('role.validate.nameRequired') },
+					{ required: true, message: t('sys.role.validate.nameRequired') },
 				]}
 			/>
 
 			<ProFormTreeSelect
 				disabled={loading}
 				name="menuIds"
-				label={t('role.menuAuthority')}
+				label={t('sys.role.menuAuthority')}
 				allowClear={true}
-				placeholder={t('role.placeholder.menuAuthority')}
+				placeholder={t('sys.role.placeholder.menuAuthority')}
 				rules={[
-					{ required: true, message: t('role.validate.menuAuthorityRequired') },
+					{ required: true, message: t('sys.role.validate.menuAuthorityRequired') },
 				]}
 				fieldProps={{
 					fieldNames: {
@@ -157,23 +157,23 @@ export const RoleModifyAuthorityDrawer: React.FC<RoleAuthorityProps> = ({
 			<ProFormSelect
 				disabled={loading}
 				name="dataScope"
-				label={t('role.dataScope')}
-				placeholder={t('role.placeholder.dataScope')}
+				label={t('sys.role.dataScope')}
+				placeholder={t('sys.role.placeholder.dataScope')}
 				rules={[
 					{
 						required: true,
-						message: t('role.validate.dataScopeRequired'),
+						message: t('sys.role.validate.dataScopeRequired'),
 					},
 				]}
 				onChange={(value: string) => {
 					setTypeValue(value);
 				}}
 				options={[
-					{ value: 'all', label: t('role.dataScope.all') },
-					{ value: 'custom', label: t('role.dataScope.custom') },
-					{ value: 'self_dept', label: t('role.dataScope.selfDept') },
-					{ value: 'below_dept', label: t('role.dataScope.belowDept') },
-					{ value: 'self', label: t('role.dataScope.self') },
+					{ value: 'all', label: t('sys.role.dataScope.all') },
+					{ value: 'custom', label: t('sys.role.dataScope.custom') },
+					{ value: 'self_dept', label: t('sys.role.dataScope.selfDept') },
+					{ value: 'below_dept', label: t('sys.role.dataScope.belowDept') },
+					{ value: 'self', label: t('sys.role.dataScope.self') },
 				]}
 			/>
 
@@ -181,13 +181,13 @@ export const RoleModifyAuthorityDrawer: React.FC<RoleAuthorityProps> = ({
 				<ProFormTreeSelect
 					disabled={loading}
 					name="deptIds"
-					label={t('role.deptAuthority')}
+					label={t('sys.role.deptAuthority')}
 					allowClear={true}
-					placeholder={t('role.placeholder.deptAuthority')}
+					placeholder={t('sys.role.placeholder.deptAuthority')}
 					rules={[
 						{
 							required: true,
-							message: t('role.validate.deptAuthorityRequired'),
+							message: t('sys.role.validate.deptAuthorityRequired'),
 						},
 					]}
 					fieldProps={{

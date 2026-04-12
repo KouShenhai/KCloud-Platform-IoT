@@ -26,6 +26,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.ratelimiter.annotation.RateLimiter;
 import org.laokou.common.ratelimiter.aspectj.Type;
 import org.laokou.common.trace.annotation.TraceLog;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,7 +41,7 @@ public class SecretsController {
 	private final SecretsServiceI secretsServiceI;
 
 	@TraceLog
-	@GetMapping("/v1/secrets")
+	@GetMapping(value = "/v1/secrets", produces = MediaType.APPLICATION_JSON_VALUE)
 	@Operation(summary = "获取密钥", description = "获取密钥")
 	@RateLimiter(key = "AUTH_SECRET", type = Type.IP)
 	public Result<SecretCO> getSecretInfo() {

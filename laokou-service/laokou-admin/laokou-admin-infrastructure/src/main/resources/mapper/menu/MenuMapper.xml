@@ -85,7 +85,7 @@
            m."path",
            m.icon
     from sys_menu m
-    join sys_i18n_menu im on m."name" = im.menu
+    join sys_i18n_menu im on m."name" = im.name
     where m."type" = 0 and m.status = 0 and m.del_flag = 0 and m.tenant_id = 0
     order by m."sort" desc
   </select>
@@ -100,7 +100,7 @@
     from sys_menu m
     join sys_role_menu rm on m.id = rm.menu_id
     join sys_user_role ur on rm.role_id = ur.role_id
-    join sys_i18n_menu im on m."name" = im.menu
+    join sys_i18n_menu im on m."name" = im.name
     where ur.user_id = #{userId} and m."type" = 0 and m.status = 0 and m.del_flag = 0 and m.tenant_id = 0
     order by m."sort" desc
   </select>

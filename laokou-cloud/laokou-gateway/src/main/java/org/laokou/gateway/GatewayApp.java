@@ -32,14 +32,12 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.util.StopWatch;
 import reactor.core.publisher.Hooks;
-import reactor.core.scheduler.Schedulers;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.time.Duration;
-import java.util.concurrent.ExecutorService;
 
 /**
  * 网关服务启动类. exposeProxy=true => 使用Cglib代理，在切面中暴露代理对象，进行方法增强
@@ -56,8 +54,6 @@ import java.util.concurrent.ExecutorService;
 class GatewayApp implements CommandLineRunner {
 
 	private final NacosRouteDefinitionRepository nacosRouteDefinitionRepository;
-
-	private final ExecutorService virtualThreadExecutor;
 
 	// @formatter:off
 	static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
@@ -82,11 +78,9 @@ class GatewayApp implements CommandLineRunner {
 
 	@Override
 	public void run(@NotNull String... args) {
-		// 执行同步路由任务【15s后自动释放内存】
-		virtualThreadExecutor.execute(() -> nacosRouteDefinitionRepository.syncRouter()
-			.take(Duration.ofSeconds(15))
-			.subscribeOn(Schedulers.boundedElastic())
-			.subscribe());
+		nacosRouteDefinitionRepository.syncRouter()
+			.timeout(Duration.ofSeconds(15))
+			.block();
 	}
 	// @formatter:on
 

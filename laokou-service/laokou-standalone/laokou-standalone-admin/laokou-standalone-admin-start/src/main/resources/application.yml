@@ -92,6 +92,11 @@ spring:
           cursor-key: id-generator:segment:cursor:${spring.application.name}:operate-log:${spring.id-generator.segment.node-id}
           step: 10000
           load-factor: 0.8
+        i18n_menu:
+          key: id-generator:segment:${spring.application.name}:i18n-menu
+          cursor-key: id-generator:segment:cursor:${spring.application.name}:i18n-menu:${spring.id-generator.segment.node-id}
+          step: 10000
+          load-factor: 0.8
   # security
   security:
     oauth2:

@@ -19,7 +19,7 @@ package org.laokou.admin.i18nMenu.ability;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.i18nMenu.gateway.I18nMenuGateway;
-import org.laokou.admin.i18nMenu.model.I18nMenuE;
+import org.laokou.admin.i18nMenu.model.I18nMenuA;
 import org.springframework.stereotype.Component;
 
 /**
@@ -33,12 +33,12 @@ public class I18nMenuDomainService {
 
 	private final I18nMenuGateway i18nMenuGateway;
 
-	public void createI18nMenu(I18nMenuE i18nMenuE) {
-		i18nMenuGateway.createI18nMenu(i18nMenuE);
+	public void createI18nMenu(I18nMenuA i18nMenuA) {
+		i18nMenuGateway.createI18nMenu(i18nMenuA);
 	}
 
-	public void updateI18nMenu(I18nMenuE i18nMenuE) {
-		i18nMenuGateway.updateI18nMenu(i18nMenuE);
+	public void updateI18nMenu(I18nMenuA i18nMenuA) {
+		i18nMenuGateway.updateI18nMenu(i18nMenuA);
 	}
 
 	public void deleteI18nMenu(Long[] ids) {
