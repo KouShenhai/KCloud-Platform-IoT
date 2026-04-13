@@ -80,7 +80,7 @@ importers:
         version: 19.2.3(@types/react@19.2.14)
       '@umijs/lint':
         specifier: ^4.6.42
-        version: 4.6.42(eslint@8.35.0)(stylelint@14.8.2)(typescript@5.9.3)
+        version: 4.6.43(eslint@8.35.0)(stylelint@14.8.2)(typescript@5.9.3)
       husky:
         specifier: ^9.1.7
         version: 9.1.7
@@ -2134,6 +2134,9 @@ packages:
   '@umijs/babel-preset-umi@4.6.42':
     resolution: {integrity: sha512-U2WyOneBM/Pmxj3sf51m1csMhk/fVkKvDpuXS+6W6cMY4pHh+Ea6UqYdJDZhum1xF81a+Oc0AAWwLTJyr8RffQ==}
 
+  '@umijs/babel-preset-umi@4.6.43':
+    resolution: {integrity: sha512-EmfzpRHTUWF2B6gZkd2+e77k28gK3d5P1FPegrlK7Eevj8pA/M1KvcEDV8c0NLiS6VFvO4P3GnnCjQogvDDUIg==}
+
   '@umijs/bundler-esbuild@4.6.42':
     resolution: {integrity: sha512-y8zsCOXR+8RAVFpn9H0iL0ifQRxUx5YIIYshuY8RiWKhdr4T1hlTrtF6LuQyuMfpn030GxNrxsvJra2R8Bix6A==}
     hasBin: true
@@ -2143,6 +2146,9 @@ packages:
 
   '@umijs/bundler-utils@4.6.42':
     resolution: {integrity: sha512-ZANnWins/PZt8nqFhLVzvf3GmMtpehDdTc1n6DBESaPR2O3/G1uT2J2SCxDGdiI3PHu0kyLRApJ+b4qGAxhbcg==}
+
+  '@umijs/bundler-utils@4.6.43':
+    resolution: {integrity: sha512-+Nkt9BOjXC2RBo76so+hUoReHoytjsuZR7RkQnxXQdaUxwTMRxJf5iHl6drtGBpxyQ5t+pStm223aNlB1BZKWA==}
 
   '@umijs/bundler-utoopack@4.6.42':
     resolution: {integrity: sha512-eSk8llaeY9oMwjZdXPQ8dCLnXZYYWARoVXm510xf3DpXCBRUORXx1Ye18J/57oEWu5et6GkOvlXZn13OcUaZhw==}
@@ -2231,6 +2237,9 @@ packages:
 
   '@umijs/lint@4.6.42':
     resolution: {integrity: sha512-XFKK7INlg6fElr0NBsvWlEJg9x4teaq0up9evuS/HyM+iJqHwEEShIS/rAkTBL7GmrPvdQH+y22axsMf/2PQdg==}
+
+  '@umijs/lint@4.6.43':
+    resolution: {integrity: sha512-EmbCqcC9HAPCCVm5/PZn7JV0HuOKdr8l22PiLTw79JXF4SvxOCBYaYv4fupp+kWaTS3iCUV1/y/AUwUPwmm9sQ==}
 
   '@umijs/mako-darwin-arm64@0.11.10':
     resolution: {integrity: sha512-kCn0mJx2Hq4RIkMNIzMDOdO4JSWq120auFmSEleHkfrFFFqSWX2qgz5mR5VI7kaPH0GUh0+hwfRkjEVGysJGjA==}
@@ -2365,6 +2374,9 @@ packages:
 
   '@umijs/utils@4.6.42':
     resolution: {integrity: sha512-Wu2Ebg8q6Lx05lkd7kp/xJqN7j6zKmKDVAfXFkN37G0TMyT/mUlaYZPGPugUyDWYXIzUkx4xv8dK2cDkV2ZtLg==}
+
+  '@umijs/utils@4.6.43':
+    resolution: {integrity: sha512-LZXp36AdxykTDgV5GhK8+x3DFvCg5ixMjhYFbGEi9Z+LVob+rn90YzYx+rv0CqGpcF+nIAd/I65IAafV6p3JRw==}
 
   '@umijs/valtio@1.0.4':
     resolution: {integrity: sha512-2PmAU4rNQbBqrWpJ86Si9UGC23JapkYw8k7Hna6V8DHLaEYJENdp2e/IKLPHSPghzrdQtbUHSoOAUsBd4i4OzQ==}
@@ -11287,6 +11299,16 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@umijs/babel-preset-umi@4.6.43':
+    dependencies:
+      '@babel/runtime': 7.23.6
+      '@bloomberg/record-tuple-polyfill': 0.0.4
+      '@umijs/bundler-utils': 4.6.43
+      '@umijs/utils': 4.6.43
+      core-js: 3.34.0
+    transitivePeerDependencies:
+      - supports-color
+
   '@umijs/bundler-esbuild@4.6.42':
     dependencies:
       '@umijs/bundler-utils': 4.6.42
@@ -11325,6 +11347,16 @@ snapshots:
   '@umijs/bundler-utils@4.6.42':
     dependencies:
       '@umijs/utils': 4.6.42
+      esbuild: 0.21.4
+      regenerate: 1.4.2
+      regenerate-unicode-properties: 10.1.1
+      spdy: 4.0.2
+    transitivePeerDependencies:
+      - supports-color
+
+  '@umijs/bundler-utils@4.6.43':
+    dependencies:
+      '@umijs/utils': 4.6.43
       esbuild: 0.21.4
       regenerate: 1.4.2
       regenerate-unicode-properties: 10.1.1
@@ -11485,6 +11517,32 @@ snapshots:
       '@typescript-eslint/eslint-plugin': 5.62.0(@typescript-eslint/parser@5.62.0(eslint@8.35.0)(typescript@5.9.3))(eslint@8.35.0)(typescript@5.9.3)
       '@typescript-eslint/parser': 5.62.0(eslint@8.35.0)(typescript@5.9.3)
       '@umijs/babel-preset-umi': 4.6.42
+      eslint-plugin-jest: 27.2.3(@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0(eslint@8.35.0)(typescript@5.9.3))(eslint@8.35.0)(typescript@5.9.3))(eslint@8.35.0)(typescript@5.9.3)
+      eslint-plugin-react: 7.33.2(eslint@8.35.0)
+      eslint-plugin-react-hooks: 4.6.0(eslint@8.35.0)
+      postcss: 8.5.9
+      postcss-syntax: 0.36.2(postcss@8.5.9)
+      stylelint-config-standard: 25.0.0(stylelint@14.8.2)
+    transitivePeerDependencies:
+      - eslint
+      - jest
+      - postcss-html
+      - postcss-jsx
+      - postcss-less
+      - postcss-markdown
+      - postcss-scss
+      - stylelint
+      - supports-color
+      - typescript
+
+  '@umijs/lint@4.6.43(eslint@8.35.0)(stylelint@14.8.2)(typescript@5.9.3)':
+    dependencies:
+      '@babel/core': 7.23.6
+      '@babel/eslint-parser': 7.23.3(@babel/core@7.23.6)(eslint@8.35.0)
+      '@stylelint/postcss-css-in-js': 0.38.0(postcss-syntax@0.36.2(postcss@8.5.9))(postcss@8.5.9)
+      '@typescript-eslint/eslint-plugin': 5.62.0(@typescript-eslint/parser@5.62.0(eslint@8.35.0)(typescript@5.9.3))(eslint@8.35.0)(typescript@5.9.3)
+      '@typescript-eslint/parser': 5.62.0(eslint@8.35.0)(typescript@5.9.3)
+      '@umijs/babel-preset-umi': 4.6.43
       eslint-plugin-jest: 27.2.3(@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0(eslint@8.35.0)(typescript@5.9.3))(eslint@8.35.0)(typescript@5.9.3))(eslint@8.35.0)(typescript@5.9.3)
       eslint-plugin-react: 7.33.2(eslint@8.35.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@8.35.0)
@@ -11840,6 +11898,11 @@ snapshots:
       react: 18.3.1
 
   '@umijs/utils@4.6.42':
+    dependencies:
+      chokidar: 3.5.3
+      pino: 7.11.0
+
+  '@umijs/utils@4.6.43':
     dependencies:
       chokidar: 3.5.3
       pino: 7.11.0
