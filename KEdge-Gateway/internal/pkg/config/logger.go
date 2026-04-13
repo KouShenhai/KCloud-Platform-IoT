@@ -28,7 +28,7 @@ import (
 	"time"
 )
 
-func (c *LogConfig) InitLogger() (*zap.Logger, func() error, error) {
+func (c *LogConfig) InitLogger() (*zap.Logger, func() shutdown, error) {
 	if c.FilePath == "" {
 		return nil, nil, errors.New("log file path is empty")
 	}
@@ -82,7 +82,7 @@ func (c *LogConfig) InitLogger() (*zap.Logger, func() error, error) {
 
 	logger := zap.New(core, zap.AddCaller())
 
-	cleanup := func() error {
+	cleanup := func() shutdown {
 		_ = logger.Sync()
 		return timberjackLogger.Close()
 	}
