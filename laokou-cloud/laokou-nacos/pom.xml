@@ -35,7 +35,7 @@
     <!--postgresql版本-->
     <postgresql.version>42.7.10</postgresql.version>
     <!--client-java版本-->
-    <client-java.version>22.0.0</client-java.version>
+    <client-java.version>26.0.0</client-java.version>
     <!--lombok版本-->
     <lombok.version>1.18.44</lombok.version>
     <!--jasypt版本-->
