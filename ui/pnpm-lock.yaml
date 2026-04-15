@@ -80,7 +80,7 @@ importers:
         version: 19.2.3(@types/react@19.2.14)
       '@umijs/lint':
         specifier: ^4.6.42
-        version: 4.6.42(eslint@8.35.0)(stylelint@14.8.2)(typescript@5.9.3)
+        version: 4.6.44(eslint@8.35.0)(stylelint@14.8.2)(typescript@5.9.3)
       husky:
         specifier: ^9.1.7
         version: 9.1.7
@@ -2134,6 +2134,9 @@ packages:
   '@umijs/babel-preset-umi@4.6.42':
     resolution: {integrity: sha512-U2WyOneBM/Pmxj3sf51m1csMhk/fVkKvDpuXS+6W6cMY4pHh+Ea6UqYdJDZhum1xF81a+Oc0AAWwLTJyr8RffQ==}
 
+  '@umijs/babel-preset-umi@4.6.44':
+    resolution: {integrity: sha512-eCUHY9QFD6VaCWsEFzPNu/v9XbSaUf7XlhU9yUowz5w2PcAqQqE/4LFxx1xEWXSlwMmuaG1dEDxTNIBTMIJSzQ==}
+
   '@umijs/bundler-esbuild@4.6.42':
     resolution: {integrity: sha512-y8zsCOXR+8RAVFpn9H0iL0ifQRxUx5YIIYshuY8RiWKhdr4T1hlTrtF6LuQyuMfpn030GxNrxsvJra2R8Bix6A==}
     hasBin: true
@@ -2143,6 +2146,9 @@ packages:
 
   '@umijs/bundler-utils@4.6.42':
     resolution: {integrity: sha512-ZANnWins/PZt8nqFhLVzvf3GmMtpehDdTc1n6DBESaPR2O3/G1uT2J2SCxDGdiI3PHu0kyLRApJ+b4qGAxhbcg==}
+
+  '@umijs/bundler-utils@4.6.44':
+    resolution: {integrity: sha512-zByYZFVysdRi3I2gvpW/r5JAYAr4q2t3kj0YJy+gFQR+UkrCB9gvRUwu/m57uy0O7OM5uKnCrLtLzDAWfXIINg==}
 
   '@umijs/bundler-utoopack@4.6.42':
     resolution: {integrity: sha512-eSk8llaeY9oMwjZdXPQ8dCLnXZYYWARoVXm510xf3DpXCBRUORXx1Ye18J/57oEWu5et6GkOvlXZn13OcUaZhw==}
@@ -2231,6 +2237,9 @@ packages:
 
   '@umijs/lint@4.6.42':
     resolution: {integrity: sha512-XFKK7INlg6fElr0NBsvWlEJg9x4teaq0up9evuS/HyM+iJqHwEEShIS/rAkTBL7GmrPvdQH+y22axsMf/2PQdg==}
+
+  '@umijs/lint@4.6.44':
+    resolution: {integrity: sha512-mv034MqGtBuCjJYwIAAFHFwOSKpn3lk6pEC7JUwA2DZmqOZFYOKv0WN6oKMSMSBpJM6kZ/0K2IAuSaMX0F14GA==}
 
   '@umijs/mako-darwin-arm64@0.11.10':
     resolution: {integrity: sha512-kCn0mJx2Hq4RIkMNIzMDOdO4JSWq120auFmSEleHkfrFFFqSWX2qgz5mR5VI7kaPH0GUh0+hwfRkjEVGysJGjA==}
@@ -2365,6 +2374,9 @@ packages:
 
   '@umijs/utils@4.6.42':
     resolution: {integrity: sha512-Wu2Ebg8q6Lx05lkd7kp/xJqN7j6zKmKDVAfXFkN37G0TMyT/mUlaYZPGPugUyDWYXIzUkx4xv8dK2cDkV2ZtLg==}
+
+  '@umijs/utils@4.6.44':
+    resolution: {integrity: sha512-+XkLHYDy23vsRIFhK5kFLrkZfQkUI6wbmnEWzjHQiD0uGVXI7pKLrwbmOR/xicRzNhhHkx59AR6lgw0rypkMtw==}
 
   '@umijs/valtio@1.0.4':
     resolution: {integrity: sha512-2PmAU4rNQbBqrWpJ86Si9UGC23JapkYw8k7Hna6V8DHLaEYJENdp2e/IKLPHSPghzrdQtbUHSoOAUsBd4i4OzQ==}
@@ -2895,8 +2907,8 @@ packages:
   base64-js@1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
 
-  baseline-browser-mapping@2.10.18:
-    resolution: {integrity: sha512-VSnGQAOLtP5mib/DPyg2/t+Tlv65NTBz83BJBJvmLVHHuKJVaDOBvJJykiT5TR++em5nfAySPccDZDa4oSrn8A==}
+  baseline-browser-mapping@2.10.19:
+    resolution: {integrity: sha512-qCkNLi2sfBOn8XhZQ0FXsT1Ki/Yo5P90hrkRamVFRS7/KV9hpfA4HkoWNU152+8w0zPjnxo5psx5NL3PSGgv5g==}
     engines: {node: '>=6.0.0'}
     hasBin: true
 
@@ -3035,8 +3047,8 @@ packages:
   camelize@1.0.1:
     resolution: {integrity: sha512-dU+Tx2fsypxTgtLoE36npi3UqcjSSMNYfkqgmoEhtZrraP5VWq0K7FkWVTYa8eMPtnU/G2txVsfdCJTn9uzpuQ==}
 
-  caniuse-lite@1.0.30001787:
-    resolution: {integrity: sha512-mNcrMN9KeI68u7muanUpEejSLghOKlVhRqS/Za2IeyGllJ9I9otGpR9g3nsw7n4W378TE/LyIteA0+/FOZm4Kg==}
+  caniuse-lite@1.0.30001788:
+    resolution: {integrity: sha512-6q8HFp+lOQtcf7wBK+uEenxymVWkGKkjFpCvw5W25cmMwEDU45p1xQFBQv8JDlMMry7eNxyBaR+qxgmTUZkIRQ==}
 
   ccount@2.0.1:
     resolution: {integrity: sha512-eyrF0jiFpY+3drT6383f1qhkbGsLSifNAjA61IUjZjmLCWjItY6LB9ft9YhoDgwfmclB2zhu51Lc7+95b8NRAg==}
@@ -3792,8 +3804,8 @@ packages:
   ee-first@1.1.1:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
 
-  electron-to-chromium@1.5.335:
-    resolution: {integrity: sha512-q9n5T4BR4Xwa2cwbrwcsDJtHD/enpQ5S1xF1IAtdqf5AAgqDFmR/aakqH3ChFdqd/QXJhS3rnnXFtexU7rax6Q==}
+  electron-to-chromium@1.5.336:
+    resolution: {integrity: sha512-AbH9q9J455r/nLmdNZes0G0ZKcRX73FicwowalLs6ijwOmCJSRRrLX63lcAlzy9ux3dWK1w1+1nsBJEWN11hcQ==}
 
   elliptic@6.6.1:
     resolution: {integrity: sha512-RaddvvMatK2LJHqFJ+YA4WysVN5Ita9E35botqIYspQ4TkRAlCicdzKOjlyv/1Za5RyTNn7di//eEV0uTAfe3g==}
@@ -11287,6 +11299,16 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@umijs/babel-preset-umi@4.6.44':
+    dependencies:
+      '@babel/runtime': 7.23.6
+      '@bloomberg/record-tuple-polyfill': 0.0.4
+      '@umijs/bundler-utils': 4.6.44
+      '@umijs/utils': 4.6.44
+      core-js: 3.34.0
+    transitivePeerDependencies:
+      - supports-color
+
   '@umijs/bundler-esbuild@4.6.42':
     dependencies:
       '@umijs/bundler-utils': 4.6.42
@@ -11325,6 +11347,16 @@ snapshots:
   '@umijs/bundler-utils@4.6.42':
     dependencies:
       '@umijs/utils': 4.6.42
+      esbuild: 0.21.4
+      regenerate: 1.4.2
+      regenerate-unicode-properties: 10.1.1
+      spdy: 4.0.2
+    transitivePeerDependencies:
+      - supports-color
+
+  '@umijs/bundler-utils@4.6.44':
+    dependencies:
+      '@umijs/utils': 4.6.44
       esbuild: 0.21.4
       regenerate: 1.4.2
       regenerate-unicode-properties: 10.1.1
@@ -11485,6 +11517,32 @@ snapshots:
       '@typescript-eslint/eslint-plugin': 5.62.0(@typescript-eslint/parser@5.62.0(eslint@8.35.0)(typescript@5.9.3))(eslint@8.35.0)(typescript@5.9.3)
       '@typescript-eslint/parser': 5.62.0(eslint@8.35.0)(typescript@5.9.3)
       '@umijs/babel-preset-umi': 4.6.42
+      eslint-plugin-jest: 27.2.3(@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0(eslint@8.35.0)(typescript@5.9.3))(eslint@8.35.0)(typescript@5.9.3))(eslint@8.35.0)(typescript@5.9.3)
+      eslint-plugin-react: 7.33.2(eslint@8.35.0)
+      eslint-plugin-react-hooks: 4.6.0(eslint@8.35.0)
+      postcss: 8.5.9
+      postcss-syntax: 0.36.2(postcss@8.5.9)
+      stylelint-config-standard: 25.0.0(stylelint@14.8.2)
+    transitivePeerDependencies:
+      - eslint
+      - jest
+      - postcss-html
+      - postcss-jsx
+      - postcss-less
+      - postcss-markdown
+      - postcss-scss
+      - stylelint
+      - supports-color
+      - typescript
+
+  '@umijs/lint@4.6.44(eslint@8.35.0)(stylelint@14.8.2)(typescript@5.9.3)':
+    dependencies:
+      '@babel/core': 7.23.6
+      '@babel/eslint-parser': 7.23.3(@babel/core@7.23.6)(eslint@8.35.0)
+      '@stylelint/postcss-css-in-js': 0.38.0(postcss-syntax@0.36.2(postcss@8.5.9))(postcss@8.5.9)
+      '@typescript-eslint/eslint-plugin': 5.62.0(@typescript-eslint/parser@5.62.0(eslint@8.35.0)(typescript@5.9.3))(eslint@8.35.0)(typescript@5.9.3)
+      '@typescript-eslint/parser': 5.62.0(eslint@8.35.0)(typescript@5.9.3)
+      '@umijs/babel-preset-umi': 4.6.44
       eslint-plugin-jest: 27.2.3(@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0(eslint@8.35.0)(typescript@5.9.3))(eslint@8.35.0)(typescript@5.9.3))(eslint@8.35.0)(typescript@5.9.3)
       eslint-plugin-react: 7.33.2(eslint@8.35.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@8.35.0)
@@ -11840,6 +11898,11 @@ snapshots:
       react: 18.3.1
 
   '@umijs/utils@4.6.42':
+    dependencies:
+      chokidar: 3.5.3
+      pino: 7.11.0
+
+  '@umijs/utils@4.6.44':
     dependencies:
       chokidar: 3.5.3
       pino: 7.11.0
@@ -12432,7 +12495,7 @@ snapshots:
   autoprefixer@10.4.27(postcss@8.5.9):
     dependencies:
       browserslist: 4.28.2
-      caniuse-lite: 1.0.30001787
+      caniuse-lite: 1.0.30001788
       fraction.js: 5.3.4
       picocolors: 1.1.1
       postcss: 8.5.9
@@ -12554,7 +12617,7 @@ snapshots:
 
   base64-js@1.5.1: {}
 
-  baseline-browser-mapping@2.10.18: {}
+  baseline-browser-mapping@2.10.19: {}
 
   big-integer@1.6.52: {}
 
@@ -12652,9 +12715,9 @@ snapshots:
 
   browserslist@4.28.2:
     dependencies:
-      baseline-browser-mapping: 2.10.18
-      caniuse-lite: 1.0.30001787
-      electron-to-chromium: 1.5.335
+      baseline-browser-mapping: 2.10.19
+      caniuse-lite: 1.0.30001788
+      electron-to-chromium: 1.5.336
       node-releases: 2.0.37
       update-browserslist-db: 1.2.3(browserslist@4.28.2)
 
@@ -12726,7 +12789,7 @@ snapshots:
 
   camelize@1.0.1: {}
 
-  caniuse-lite@1.0.30001787: {}
+  caniuse-lite@1.0.30001788: {}
 
   ccount@2.0.1: {}
 
@@ -13478,7 +13541,7 @@ snapshots:
 
   ee-first@1.1.1: {}
 
-  electron-to-chromium@1.5.335: {}
+  electron-to-chromium@1.5.336: {}
 
   elliptic@6.6.1:
     dependencies:
