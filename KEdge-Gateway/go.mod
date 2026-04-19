@@ -1,6 +1,6 @@
 module KEdge-Gateway
 
-go 1.24.2
+go 1.26.2
 
 require (
 	github.com/DeRuina/timberjack v1.4.1
