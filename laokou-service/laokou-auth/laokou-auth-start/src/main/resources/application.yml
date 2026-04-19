@@ -101,7 +101,7 @@ spring:
             registration:
               # Base64编码 OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=
               client-id: 95TxSsTPFA3tF12TBSMmUVK0da
-              client-name: OAuth2.1认证【用户名密码/邮箱/手机号/测试/设备授权码/客户端】
+              client-name: OAuth2.1认证【用户名密码/邮箱/手机号/测试/客户端】
               # 对client-secret进行加密【原值 => FpHwIfw4wY92dO】
               client-secret: "{bcrypt}$2a$10$BDcxgmL3WYk7G.QEDTqlBeSudNlV3KUU/V6iC.hKlAbGAC.jbX2fO"
               client-authentication-methods:
@@ -113,7 +113,6 @@ spring:
                 - test
                 - refresh_token
                 - client_credentials
-                - urn:ietf:params:oauth:grant-type:device_code
                 - urn:ietf:params:oauth:grant-type:jwt-bearer
                 - urn:ietf:params:oauth:grant-type:token-exchange
               scopes:
@@ -132,7 +131,7 @@ spring:
             registration:
               # Base64编码 ZWI3RGVkNWJiRmJkNzg5NmY4YTJjZmREYzk6RHBBa1BmejRlVzE4ZDI=
               client-id: eb7Ded5bbFbd7896f8a2cfdDc9
-              client-name: OAuth2.1认证【授权码】
+              client-name: OAuth2.1认证【授权码/设备授权码】
               # 对client-secret进行加密【原值 => DpAkPfz4eW18d2】
               client-secret: "{bcrypt}$2a$10$i2Y4II7czKcLqwAxWLgHqeJaIczss4wHArWmthzn3QoLhpCZtdN0O"
               client-authentication-methods:
@@ -140,11 +139,11 @@ spring:
               authorization-grant-types:
                 - authorization_code
                 - refresh_token
+                - urn:ietf:params:oauth:grant-type:device_code
+                - urn:ietf:params:oauth:grant-type:jwt-bearer
               scopes:
                 - read
                 - write
-                - openid
-                - profile
               redirect-uris:
                 - http://127.0.0.1:8000/login
                 - http://127.0.0.1:8001/login
