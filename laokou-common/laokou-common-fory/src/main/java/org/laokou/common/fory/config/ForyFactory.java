@@ -49,7 +49,7 @@ public final class ForyFactory {
 		// enable async multi-threaded compilation.
 		.withAsyncCompilation(true)
 		.requireClassRegistration(true)
-		.buildThreadSafeForyPool(50, 1024);
+		.buildThreadSafeForyPool(50);
 
 	public <T> void register(Class<T> clazz) {
 		fory.register(clazz);
