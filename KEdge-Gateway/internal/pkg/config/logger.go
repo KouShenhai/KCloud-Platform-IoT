@@ -20,15 +20,16 @@ package config
 import (
 	"errors"
 	"fmt"
-	"github.com/DeRuina/timberjack"
-	"go.uber.org/zap"
-	"go.uber.org/zap/zapcore"
 	"os"
 	"path/filepath"
 	"time"
+
+	"github.com/DeRuina/timberjack"
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 )
 
-func (c *LogConfig) InitLogger() (*zap.Logger, func() shutdown, error) {
+func (c *LogConfig) InitLogger() (*zap.Logger, func() error, error) {
 	if c.FilePath == "" {
 		return nil, nil, errors.New("log file path is empty")
 	}
@@ -82,7 +83,7 @@ func (c *LogConfig) InitLogger() (*zap.Logger, func() shutdown, error) {
 
 	logger := zap.New(core, zap.AddCaller())
 
-	cleanup := func() shutdown {
+	cleanup := func() error {
 		_ = logger.Sync()
 		return timberjackLogger.Close()
 	}
