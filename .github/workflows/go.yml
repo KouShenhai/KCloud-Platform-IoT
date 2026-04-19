@@ -34,7 +34,8 @@ jobs:
             ${{ runner.os }}-go-
 
       - name: Install
-        run: go mod tidy ./KEdge-Gateway
+        run: go mod tidy
+        working-directory: ./KEdge-Gateway
 
       - name: Build
         run: |
