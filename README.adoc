@@ -175,6 +175,7 @@ image::doc/image/老寇IoT云平台业务架构图.png[架构图,align=center]
 |Flyway                      |12.3.0
 |Snail Job                   |1.8.0
 |Sentinel                    |1.8.9
+|Fory                        |0.17.0
 |===
 
 ==== 🍺 相关技术
