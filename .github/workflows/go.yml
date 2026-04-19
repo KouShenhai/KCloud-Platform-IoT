@@ -39,4 +39,5 @@ jobs:
 
       - name: Build
         run: |
-          GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} go build -o app-${{ matrix.goos }}-${{ matrix.goarch }} -v ./KEdge-Gateway/cmd/server
+          GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} go build -o app-${{ matrix.goos }}-${{ matrix.goarch }} -v ./cmd/server
+        working-directory: ./KEdge-Gateway
