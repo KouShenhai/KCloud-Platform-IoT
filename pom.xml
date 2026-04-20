@@ -241,7 +241,7 @@
     <!--californium版本-->
     <californium.version>4.0.0-M6</californium.version>
     <!--jsoup版本-->
-    <jsoup.version>1.22.1</jsoup.version>
+    <jsoup.version>1.22.2</jsoup.version>
     <!--minio版本-->
     <minio.version>9.0.0</minio.version>
     <!--modbus4j版本-->
