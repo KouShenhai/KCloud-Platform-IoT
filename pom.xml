@@ -167,7 +167,7 @@
     <!--redisson版本-->
     <redisson.version>4.3.1</redisson.version>
     <!--lombok版本-->
-    <lombok.version>1.18.44</lombok.version>
+    <lombok.version>1.18.46</lombok.version>
     <!--postgresql版本-->
     <postgresql.version>42.7.10</postgresql.version>
     <!--admin版本-->
