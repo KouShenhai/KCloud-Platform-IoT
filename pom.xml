@@ -189,7 +189,7 @@
     <!--fesod版本-->
     <fesod.version>2.0.1-incubating</fesod.version>
     <!--s3版本-->
-    <s3.version>2.42.37</s3.version>
+    <s3.version>2.42.38</s3.version>
     <!--dynamic-datasource版本-->
     <dynamic-datasource.version>4.5.0</dynamic-datasource.version>
     <!--httpclient5版本-->
