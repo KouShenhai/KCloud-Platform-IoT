@@ -251,7 +251,7 @@
     <!--jsqlparser版本-->
     <jsqlparser.version>5.3</jsqlparser.version>
     <!--commons-io-->
-    <commons-io.version>2.21.0</commons-io.version>
+    <commons-io.version>2.22.0</commons-io.version>
     <!--commons-logging版本-->
     <commons-logging.version>1.3.6</commons-logging.version>
     <!--spotbugs版本-->
