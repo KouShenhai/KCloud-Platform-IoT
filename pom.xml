@@ -189,7 +189,7 @@
     <!--fesod版本-->
     <fesod.version>2.0.1-incubating</fesod.version>
     <!--s3版本-->
-    <s3.version>2.42.38</s3.version>
+    <s3.version>2.42.41</s3.version>
     <!--dynamic-datasource版本-->
     <dynamic-datasource.version>4.5.0</dynamic-datasource.version>
     <!--httpclient5版本-->
@@ -219,7 +219,7 @@
     <!--flyway版本-->
     <flyway.version>12.5.0</flyway.version>
     <!--snail-job版本-->
-    <snail-job.version>1.9.0-jdk8</snail-job.version>
+    <snail-job.version>1.10.0</snail-job.version>
     <!--archunit-junit5版本-->
     <archunit-junit5.version>1.4.2</archunit-junit5.version>
     <!--caffeine版本-->
