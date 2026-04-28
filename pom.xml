@@ -219,7 +219,7 @@
     <!--flyway版本-->
     <flyway.version>12.4.0</flyway.version>
     <!--snail-job版本-->
-    <snail-job.version>1.9.0-jdk8</snail-job.version>
+    <snail-job.version>1.10.0</snail-job.version>
     <!--archunit-junit5版本-->
     <archunit-junit5.version>1.4.2</archunit-junit5.version>
     <!--caffeine版本-->
