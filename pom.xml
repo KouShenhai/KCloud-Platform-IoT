@@ -169,7 +169,7 @@
     <!--lombok版本-->
     <lombok.version>1.18.46</lombok.version>
     <!--postgresql版本-->
-    <postgresql.version>42.7.10</postgresql.version>
+    <postgresql.version>42.7.11</postgresql.version>
     <!--admin版本-->
     <spring-boot-admin.version>4.0.4</spring-boot-admin.version>
     <!--jsoup版本-->
