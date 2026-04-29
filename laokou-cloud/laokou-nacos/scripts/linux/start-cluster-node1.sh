@@ -10,7 +10,7 @@ echo "Starting Nacos Cluster Node 1..."
 # ========================
 export NACOS_CONSOLE_PORT=8048
 export NACOS_SERVER_PORT=8848
-export NACOS_MCP_REGISTRY_PORT=9080
+export NACOS_AI_REGISTRY_PORT=9080
 export NACOS_DEPLOYMENT_TYPE=merged
 
 export NACOS_LOG_PATH=./logs/nacos-node1

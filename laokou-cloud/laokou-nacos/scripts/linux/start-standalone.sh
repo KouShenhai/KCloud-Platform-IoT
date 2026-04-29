@@ -8,7 +8,7 @@ echo "Nacos Standalone Mode"
 # ========== 基础配置 ==========
 export NACOS_CONSOLE_PORT=8048
 export NACOS_SERVER_PORT=8848
-export NACOS_MCP_REGISTRY_PORT=9080
+export NACOS_AI_REGISTRY_PORT=9080
 export NACOS_DEPLOYMENT_TYPE=merged
 export NACOS_LOG_PATH=./logs/nacos
 export NACOS_HOME=$(cd "$(dirname "$0")"; pwd)/logs/nacos
@@ -48,7 +48,7 @@ echo "  Nacos Standalone Mode Starting..."
 echo "========================================"
 echo "  Console Port: $NACOS_CONSOLE_PORT"
 echo "  Server Port:  $NACOS_SERVER_PORT"
-echo "  MCP Port:     $NACOS_MCP_REGISTRY_PORT"
+echo "  AI Port:     $NACOS_AI_REGISTRY_PORT"
 echo "========================================"
 echo
 

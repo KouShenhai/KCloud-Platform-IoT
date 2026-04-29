@@ -31,7 +31,7 @@
     <!--spring-boot版本-->
     <spring-boot-old.version>3.5.14</spring-boot-old.version>
     <!--pig-nacos版本-->
-    <pig-nacos.version>3.1.0</pig-nacos.version>
+    <pig-nacos.version>3.2.1</pig-nacos.version>
     <!--postgresql版本-->
     <postgresql.version>42.7.10</postgresql.version>
     <!--client-java版本-->
@@ -64,7 +64,7 @@
     </dependency>
     <dependency>
       <groupId>io.github.pig-mesh.nacos</groupId>
-      <artifactId>nacos-mcp-registry-adaptor</artifactId>
+      <artifactId>nacos-ai-registry-adaptor</artifactId>
       <version>${pig-nacos.version}</version>
     </dependency>
     <dependency>
