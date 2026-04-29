@@ -18,11 +18,11 @@ package org.laokou.nacos;
 
 import com.alibaba.nacos.NacosServerBasicApplication;
 import com.alibaba.nacos.NacosServerWebApplication;
+import com.alibaba.nacos.airegistry.NacosAiRegistry;
 import com.alibaba.nacos.common.packagescan.util.ResourceUtils;
 import com.alibaba.nacos.console.NacosConsole;
 import com.alibaba.nacos.core.listener.startup.NacosStartUp;
 import com.alibaba.nacos.core.listener.startup.NacosStartUpManager;
-import com.alibaba.nacos.mcpregistry.NacosMcpRegistry;
 import com.alibaba.nacos.sys.env.Constants;
 import com.alibaba.nacos.sys.env.DeploymentType;
 import com.alibaba.nacos.sys.env.EnvUtil;
@@ -77,10 +77,10 @@ class NacosApp {
 				.run(args);
 		}
 
-		// MCP Registry【Nacos Server with MCP Registry】
+		// AI Registry【Nacos Server with AI Registry】
 		if (List.of(DeploymentType.MERGED, DeploymentType.SERVER_WITH_MCP).contains(deploymentType)) {
-			NacosStartUpManager.start(NacosStartUp.MCP_REGISTRY_START_UP_PHASE);
-			new SpringApplicationBuilder(NacosMcpRegistry.class).parent(coreContext)
+			NacosStartUpManager.start(NacosStartUp.AI_REGISTRY_START_UP_PHASE);
+			new SpringApplicationBuilder(NacosAiRegistry.class).parent(coreContext)
 				.banner(new ResourceBanner(new ClassPathResource("banner.txt")))
 				.run(args);
 		}

@@ -8,7 +8,7 @@ chcp 65001 > nul
 
 set NACOS_CONSOLE_PORT=8048
 set NACOS_SERVER_PORT=8848
-set NACOS_MCP_REGISTRY_PORT=9080
+set NACOS_AI_REGISTRY_PORT=9080
 set NACOS_DEPLOYMENT_TYPE=merged
 set NACOS_LOG_PATH=./logs/nacos
 set NACOS_HOME=%~dp0/logs/nacos
@@ -44,7 +44,7 @@ echo   Nacos Standalone Mode Starting...
 echo ========================================
 echo   Console Port: %NACOS_CONSOLE_PORT%
 echo   Server Port:  %NACOS_SERVER_PORT%
-echo   MCP Port:     %NACOS_MCP_REGISTRY_PORT%
+echo   AI Port:     %NACOS_AI_REGISTRY_PORT%
 echo ========================================
 echo.
 
