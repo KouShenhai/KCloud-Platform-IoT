@@ -25,7 +25,7 @@ import lombok.Getter;
  * @author laokou
  */
 @Getter
-public enum PluginStateEnum {
+public enum PluginState {
 
 	INIT("init", "初始化状态"),
 
@@ -43,7 +43,7 @@ public enum PluginStateEnum {
 
 	private final String desc;
 
-	PluginStateEnum(String code, String desc) {
+	PluginState(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}

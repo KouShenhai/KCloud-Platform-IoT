@@ -37,8 +37,8 @@ public class ReadPropertyMessage extends DeviceMessage {
 	private List<String> properties;
 
 	@Override
-	protected MessageTypeEnum getMessageType() {
-		return MessageTypeEnum.DOWN_PROPERTY_READ;
+	protected MessageType getMessageType() {
+		return MessageType.DOWN_PROPERTY_READ;
 	}
 
 }

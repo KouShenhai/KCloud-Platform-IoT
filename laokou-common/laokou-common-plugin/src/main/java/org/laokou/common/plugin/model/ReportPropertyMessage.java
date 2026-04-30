@@ -37,8 +37,8 @@ public class ReportPropertyMessage extends DeviceMessage {
 	private Map<String, Object> properties;
 
 	@Override
-	protected MessageTypeEnum getMessageType() {
-		return MessageTypeEnum.UP_PROPERTY_REPORT;
+	protected MessageType getMessageType() {
+		return MessageType.UP_PROPERTY_REPORT;
 	}
 
 }
