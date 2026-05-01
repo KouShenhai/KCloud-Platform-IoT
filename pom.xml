@@ -157,7 +157,7 @@
     <!--netty版本-->
     <netty.version>4.2.12.Final</netty.version>
     <!--grpc版本-->
-    <grpc.version>1.80.0</grpc.version>
+    <grpc.version>1.81.0</grpc.version>
     <!--jackson版本-->
     <jackson.version>3.1.2</jackson.version>
     <!--okhttp版本-->
