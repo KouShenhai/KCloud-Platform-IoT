@@ -18,8 +18,37 @@
 package org.laokou.common.plugin;
 
 /**
+ * 插件基类，所有插件必须继承此类.
+ * <p>
+ * 生命周期：INIT → LOADED（onLoad）→ STARTED（onStart）→ STOPPED（onStop）→ DESTROYED（onDestroy）
+ * </p>
+ *
  * @author laokou
  */
 public abstract class Plugin {
+
+	/**
+	 * 插件加载完成后调用（类加载、实例化完成）.
+	 */
+	public void onLoad() {
+	}
+
+	/**
+	 * 插件启动时调用（容器启动后）.
+	 */
+	public void onStart() {
+	}
+
+	/**
+	 * 插件停止时调用（容器关闭前）.
+	 */
+	public void onStop() {
+	}
+
+	/**
+	 * 插件销毁时调用（资源释放）.
+	 */
+	public void onDestroy() {
+	}
 
 }

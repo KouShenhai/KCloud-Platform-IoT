@@ -19,7 +19,7 @@ package org.laokou.common.plugin.codec.mqtt;
 
 import io.vertx.core.buffer.Buffer;
 import org.laokou.common.plugin.codec.CodecPlugin;
-import org.laokou.common.plugin.model.ProtocolTypeEnum;
+import org.laokou.common.plugin.model.ProtocolType;
 
 /**
  * @author laokou
@@ -37,8 +37,8 @@ public class MqttCodec extends CodecPlugin<MqttMessage> {
 	}
 
 	@Override
-	public ProtocolTypeEnum getProtocolType() {
-		return ProtocolTypeEnum.MQTT;
+	public ProtocolType getProtocolType() {
+		return ProtocolType.MQTT;
 	}
 
 }

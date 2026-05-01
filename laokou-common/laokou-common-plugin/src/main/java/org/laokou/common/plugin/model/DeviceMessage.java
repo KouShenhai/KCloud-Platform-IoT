@@ -42,6 +42,6 @@ abstract class DeviceMessage implements Message {
 
 	protected Long timestamp;
 
-	protected abstract MessageTypeEnum getMessageType();
+	protected abstract MessageType getMessageType();
 
 }

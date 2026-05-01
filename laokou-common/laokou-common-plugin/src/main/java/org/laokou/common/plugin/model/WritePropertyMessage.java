@@ -37,8 +37,8 @@ public class WritePropertyMessage extends DeviceMessage {
 	private Map<String, Object> properties;
 
 	@Override
-	protected MessageTypeEnum getMessageType() {
-		return MessageTypeEnum.DOWN_PROPERTY_WRITE;
+	protected MessageType getMessageType() {
+		return MessageType.DOWN_PROPERTY_WRITE;
 	}
 
 }

@@ -23,7 +23,7 @@ import lombok.Getter;
  * @author laokou
  */
 @Getter
-public enum ProtocolTypeEnum {
+public enum ProtocolType {
 
 	TCP("tcp", "TCP协议"),
 
@@ -33,7 +33,7 @@ public enum ProtocolTypeEnum {
 
 	private final String desc;
 
-	ProtocolTypeEnum(String code, String desc) {
+	ProtocolType(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}

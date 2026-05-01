@@ -18,7 +18,7 @@
 package org.laokou.common.plugin.codec;
 
 import io.vertx.core.buffer.Buffer;
-import org.laokou.common.plugin.model.ProtocolTypeEnum;
+import org.laokou.common.plugin.model.ProtocolType;
 
 /**
  * 协议编解码器接口.
@@ -32,6 +32,6 @@ public interface ProtocolCodec<T> {
 
 	Buffer encode(T message);
 
-	ProtocolTypeEnum getProtocolType();
+	ProtocolType getProtocolType();
 
 }
