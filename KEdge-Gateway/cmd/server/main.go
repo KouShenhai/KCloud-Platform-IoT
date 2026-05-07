@@ -30,6 +30,7 @@ func main() {
 			log.Fatalf("init logger failed: %v", err)
 		}
 		defer cleanup()
+		config.Logger = logger
 		logger.Debug("init logger success")
 	}
 }

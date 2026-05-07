@@ -29,6 +29,8 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
+var Logger *zap.Logger
+
 func (c *LogConfig) InitLogger() (*zap.Logger, func() error, error) {
 	if c.FilePath == "" {
 		return nil, nil, errors.New("log file path is empty")
@@ -82,12 +84,10 @@ func (c *LogConfig) InitLogger() (*zap.Logger, func() error, error) {
 	)
 
 	logger := zap.New(core, zap.AddCaller())
-
 	cleanup := func() error {
 		_ = logger.Sync()
 		return timberjackLogger.Close()
 	}
-
 	return logger, cleanup, nil
 }
 
