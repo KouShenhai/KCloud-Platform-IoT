@@ -19,6 +19,7 @@ package org.laokou.common.plugin;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.util.ThreadUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,7 +32,9 @@ import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * 插件目录热加载监听器.
@@ -61,11 +64,11 @@ public class PluginWatcher {
 
 	private final long pollInterval;
 
-	private volatile boolean running = false;
+	private final AtomicBoolean running = new AtomicBoolean(true);
 
-	private Thread watchThread;
+	private final ExecutorService virtualThreadExecutor;
 
-	private WatchService watchService;
+	private volatile WatchService watchService;
 
 	/**
 	 * JAR 文件名 → 插件 ID 的映射，用于删除时找到对应插件 ID.
@@ -82,62 +85,52 @@ public class PluginWatcher {
 		this.pluginDir = pluginDir;
 		this.pluginManager = pluginManager;
 		this.pollInterval = pollInterval;
+		this.virtualThreadExecutor = ThreadUtils.newVirtualTaskExecutor();
 	}
 
 	/**
 	 * 启动目录监听（在守护线程中运行）.
 	 */
-	public synchronized void start() {
-		if (running) {
+	public void start() {
+		if (running.compareAndSet(false, true)) {
+			if (!pluginDir.exists() || !pluginDir.isDirectory()) {
+				log.warn("[插件热加载] 插件目录不存在或不是目录，无法启动监听: {}", pluginDir.getAbsolutePath());
+				return;
+			}
+			try {
+				watchService = FileSystems.getDefault().newWatchService();
+				pluginDir.toPath()
+					.register(watchService, StandardWatchEventKinds.ENTRY_CREATE, StandardWatchEventKinds.ENTRY_DELETE,
+							StandardWatchEventKinds.ENTRY_MODIFY);
+				running.set(true);
+				virtualThreadExecutor.execute(this::watchLoop);
+				log.info("[插件热加载] 目录监听已启动: {}", pluginDir.getAbsolutePath());
+			}
+			catch (IOException ex) {
+				log.error("[插件热加载] 启动监听失败", ex);
+			}
+		}
+		else {
 			log.warn("[插件热加载] 监听器已在运行中，跳过重复启动");
-			return;
-		}
-		if (!pluginDir.exists() || !pluginDir.isDirectory()) {
-			log.warn("[插件热加载] 插件目录不存在或不是目录，无法启动监听: {}", pluginDir.getAbsolutePath());
-			return;
-		}
-		try {
-			watchService = FileSystems.getDefault().newWatchService();
-			pluginDir.toPath()
-				.register(watchService, StandardWatchEventKinds.ENTRY_CREATE, StandardWatchEventKinds.ENTRY_DELETE,
-						StandardWatchEventKinds.ENTRY_MODIFY);
-			running = true;
-			watchThread = new Thread(this::watchLoop, "plugin-watcher");
-			watchThread.setDaemon(true);
-			watchThread.start();
-			log.info("[插件热加载] 目录监听已启动: {}", pluginDir.getAbsolutePath());
-		}
-		catch (IOException ex) {
-			log.error("[插件热加载] 启动监听失败", ex);
 		}
 	}
 
 	/**
 	 * 停止目录监听.
 	 */
-	public synchronized void stop() {
-		if (!running) {
-			return;
+	public void stop() {
+		if (running.compareAndSet(true, false)) {
+			if (watchService != null) {
+				try {
+					watchService.close();
+				}
+				catch (IOException ex) {
+					log.warn("[插件热加载] 关闭 WatchService 失败", ex);
+				}
+			}
+			ThreadUtils.shutdown(virtualThreadExecutor, 5000);
+			log.info("【插件热加载】 目录监听已停止");
 		}
-		running = false;
-		if (watchService != null) {
-			try {
-				watchService.close();
-			}
-			catch (IOException ex) {
-				log.warn("[插件热加载] 关闭 WatchService 失败", ex);
-			}
-		}
-		if (watchThread != null) {
-			watchThread.interrupt();
-			try {
-				watchThread.join(3000);
-			}
-			catch (InterruptedException ex) {
-				Thread.currentThread().interrupt();
-			}
-		}
-		log.info("[插件热加载] 目录监听已停止");
 	}
 
 	/**
@@ -145,7 +138,7 @@ public class PluginWatcher {
 	 */
 	private void watchLoop() {
 		log.debug("[插件热加载] 监听线程启动");
-		while (running) {
+		while (running.get()) {
 			try {
 				WatchKey key = watchService.poll(pollInterval, TimeUnit.MILLISECONDS);
 				if (key == null) {

@@ -96,7 +96,7 @@ public class PluginAutoConfiguration {
 			@Override
 			public void stop() {
 				// 1. 停止热加载监听
-				if (watcher != null && watcher.isRunning()) {
+				if (watcher != null && watcher.getRunning().get()) {
 					watcher.stop();
 				}
 
