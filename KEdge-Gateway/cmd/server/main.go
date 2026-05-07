@@ -24,10 +24,12 @@ import (
 
 func main() {
 	cfg := config.Load()
-	logger, cleanup, err := cfg.Log.InitLogger()
-	if err != nil {
-		log.Fatalf("init logger failed: %v", err)
+	if cfg != nil {
+		logger, cleanup, err := cfg.Log.InitLogger()
+		if err != nil {
+			log.Fatalf("init logger failed: %v", err)
+		}
+		defer cleanup()
+		logger.Debug("init logger success")
 	}
-	defer cleanup()
-	logger.Debug("init logger success")
 }

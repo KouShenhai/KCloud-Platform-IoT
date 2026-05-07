@@ -4,6 +4,10 @@
 
 ```shell
 go mod tidy
+
+cd cmd/server
+
+go run main.go -c configs
 ```
 
 ## 项目说明
