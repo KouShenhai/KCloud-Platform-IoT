@@ -26,7 +26,7 @@ import java.util.StringJoiner;
  * mqtt消息枚举.
  */
 @Getter
-public enum MessageTypeEnum {
+public enum MessageType {
 
 	UP_PROPERTY_REPORT("up_property_report", "上报属性【上行】") {
 		@Override
@@ -164,7 +164,7 @@ public enum MessageTypeEnum {
 
 	private final String desc;
 
-	MessageTypeEnum(String code, String desc) {
+	MessageType(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}

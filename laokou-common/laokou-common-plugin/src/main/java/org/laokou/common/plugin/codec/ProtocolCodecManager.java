@@ -18,37 +18,64 @@
 package org.laokou.common.plugin.codec;
 
 import io.vertx.core.buffer.Buffer;
-import org.laokou.common.plugin.codec.mqtt.MqttCodec;
-import org.laokou.common.plugin.codec.tcp.TcpCodec;
-import org.laokou.common.plugin.model.ProtocolTypeEnum;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.plugin.model.ProtocolType;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
+ * 协议编解码器管理器.
+ *
+ * <p>
+ * 支持动态注册/注销 {@link ProtocolCodec}，插件加载时调用 {@link #registerCodec(ProtocolCodec)} 将 Codec
+ * 注入， 插件卸载时调用 {@link #unregisterCodec(ProtocolType)} 移除。
+ * </p>
+ *
  * @author laokou
  */
+@Slf4j
 public final class ProtocolCodecManager {
 
+	private static final ConcurrentMap<ProtocolType, ProtocolCodec<?>> PROTOCOL_CODECS = new ConcurrentHashMap<>();
+
 	private ProtocolCodecManager() {
-		registerCodec(new MqttCodec());
-		registerCodec(new TcpCodec());
 	}
 
-	private static final Map<ProtocolTypeEnum, ProtocolCodec<?>> PROTOCOL_CODECS = HashMap.newHashMap(2);
+	/**
+	 * 动态注册编解码器（幂等，重复注册时跳过并警告）.
+	 * @param codec 编解码器实例
+	 */
+	public static void registerCodec(ProtocolCodec<?> codec) {
+		ProtocolType type = codec.getProtocolType();
+		ProtocolCodec<?> existing = PROTOCOL_CODECS.putIfAbsent(type, codec);
+		if (existing != null) {
+			log.warn("[编解码器] 已存在同类型编解码器，跳过注册: type={}", type);
+		}
+		else {
+			log.info("[编解码器] 注册成功: type={}, codec={}", type, codec.getClass().getName());
+		}
+	}
+
+	/**
+	 * 动态注销编解码器.
+	 * @param type 协议类型
+	 */
+	public static void unregisterCodec(ProtocolType type) {
+		if (PROTOCOL_CODECS.remove(type) != null) {
+			log.info("[编解码器] 注销成功: type={}", type);
+		}
+	}
 
 	/**
 	 * 解码字节流.
 	 * @param type 协议类型
 	 * @param buffer 字节缓冲区
 	 * @return 消息对象
+	 * @throws IllegalArgumentException 若未注册对应编解码器
 	 */
-	public static Object decode(ProtocolTypeEnum type, Buffer buffer) {
-		ProtocolCodec<?> codec = getCodec(type);
-		if (codec == null) {
-			throw new IllegalArgumentException("No codec found for protocol: " + type);
-		}
-		return codec.decode(buffer);
+	public static Object decode(ProtocolType type, Buffer buffer) {
+		return getCodec(type).decode(buffer);
 	}
 
 	/**
@@ -56,27 +83,29 @@ public final class ProtocolCodecManager {
 	 * @param type 协议类型
 	 * @param message 消息对象
 	 * @return 字节缓冲区
+	 * @throws IllegalArgumentException 若未注册对应编解码器
 	 */
-	public static <T> Buffer encode(ProtocolTypeEnum type, T message) {
+	public static <T> Buffer encode(ProtocolType type, T message) {
 		ProtocolCodec<T> codec = getCodec(type);
-		if (codec == null) {
-			throw new IllegalArgumentException("No codec found for protocol: " + type);
-		}
 		return codec.encode(message);
 	}
 
 	/**
-	 * 获取编解码器.
+	 * 检查是否已注册指定类型的编解码器.
 	 * @param type 协议类型
-	 * @return 编解码器
+	 * @return 是否存在
 	 */
-	@SuppressWarnings("unchecked")
-	private static <T> ProtocolCodec<T> getCodec(ProtocolTypeEnum type) {
-		return (ProtocolCodec<T>) PROTOCOL_CODECS.get(type);
+	public static boolean hasCodec(ProtocolType type) {
+		return PROTOCOL_CODECS.containsKey(type);
 	}
 
-	private static void registerCodec(ProtocolCodec<?> codec) {
-		PROTOCOL_CODECS.put(codec.getProtocolType(), codec);
+	@SuppressWarnings("unchecked")
+	private static <T> ProtocolCodec<T> getCodec(ProtocolType type) {
+		ProtocolCodec<?> codec = PROTOCOL_CODECS.get(type);
+		if (codec == null) {
+			throw new IllegalArgumentException("No codec registered for protocol: " + type);
+		}
+		return (ProtocolCodec<T>) codec;
 	}
 
 }

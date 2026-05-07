@@ -37,8 +37,8 @@ public class ReadPropertyReplyMessage extends DeviceMessage {
 	private Map<String, Object> properties;
 
 	@Override
-	protected MessageTypeEnum getMessageType() {
-		return MessageTypeEnum.UP_PROPERTY_READ_REPLY;
+	protected MessageType getMessageType() {
+		return MessageType.UP_PROPERTY_READ_REPLY;
 	}
 
 }

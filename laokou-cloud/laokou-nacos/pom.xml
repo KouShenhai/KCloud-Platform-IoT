@@ -28,18 +28,8 @@
   <artifactId>laokou-nacos</artifactId>
 
   <properties>
-    <!--spring-boot版本-->
-    <spring-boot-old.version>3.5.14</spring-boot-old.version>
     <!--pig-nacos版本-->
     <pig-nacos.version>3.2.1</pig-nacos.version>
-    <!--postgresql版本-->
-    <postgresql.version>42.7.11</postgresql.version>
-    <!--client-java版本-->
-    <client-java.version>22.0.0</client-java.version>
-    <!--lombok版本-->
-    <lombok.version>1.18.46</lombok.version>
-    <!--jasypt版本-->
-    <jasypt.version>4.0.4</jasypt.version>
   </properties>
 
   <dependencies>
@@ -56,10 +46,6 @@
           <groupId>org.apache.commons</groupId>
           <artifactId>commons-collections4</artifactId>
         </exclusion>
-        <exclusion>
-          <groupId>com.google.protobuf</groupId>
-          <artifactId>protobuf-java</artifactId>
-        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
@@ -73,48 +59,23 @@
       <version>${pig-nacos.version}</version>
     </dependency>
     <dependency>
-      <groupId>io.kubernetes</groupId>
-      <artifactId>client-java-api</artifactId>
-      <version>${client-java.version}</version>
-    </dependency>
-    <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
-      <version>${postgresql.version}</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>${lombok.version}</version>
     </dependency>
     <dependency>
       <groupId>com.github.ulisesbocchio</groupId>
       <artifactId>jasypt-spring-boot-starter</artifactId>
-      <version>${jasypt.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-security</artifactId>
-      <version>${spring-boot-old.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.google.protobuf</groupId>
-      <artifactId>protobuf-java</artifactId>
     </dependency>
   </dependencies>
-
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-dependencies</artifactId>
-        <version>${spring-boot-old.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
 
   <build>
     <finalName>${project.artifactId}</finalName>
@@ -140,10 +101,14 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <version>${spring-boot-old.version}</version>
         <configuration>
           <!-- main方法的地址 只需要修改这个地址-->
           <mainClass>org.laokou.nacos.NacosApp</mainClass>
+          <jvmArguments>
+            --add-opens=java.base/java.lang=ALL-UNNAMED
+            --add-opens=java.base/java.lang.reflect=ALL-UNNAMED
+            --add-opens=java.base/java.util=ALL-UNNAMED
+          </jvmArguments>
         </configuration>
         <executions>
           <execution>

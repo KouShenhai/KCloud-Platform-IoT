@@ -63,5 +63,3 @@ spring:
       cache:
         enabled: true
         maximum-size: 1000
-
-app-id: ${APP_ID:1}

@@ -31,8 +31,8 @@ import org.springframework.pulsar.annotation.PulsarMessage;
 public class ReportFirmwareMessage extends DeviceMessage {
 
 	@Override
-	protected MessageTypeEnum getMessageType() {
-		return MessageTypeEnum.UP_FIRMWARE_REPORT;
+	protected MessageType getMessageType() {
+		return MessageType.UP_FIRMWARE_REPORT;
 	}
 
 }

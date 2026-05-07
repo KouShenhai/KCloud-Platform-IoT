@@ -40,6 +40,11 @@
         <artifactId>spring-boot-maven-plugin</artifactId>
         <version>${spring-boot-maven-plugin.version}</version>
         <configuration>
+          <jvmArguments>
+            --add-opens=java.base/java.lang=ALL-UNNAMED
+            --add-opens=java.base/java.lang.reflect=ALL-UNNAMED
+            --add-opens=java.base/java.util=ALL-UNNAMED
+          </jvmArguments>
           <!-- main方法的地址 只需要修改这个地址-->
           <mainClass>org.laokou.auth.AuthApp</mainClass>
           <!-- Docker镜像名称 -->

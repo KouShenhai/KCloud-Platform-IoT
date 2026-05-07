@@ -21,12 +21,22 @@ import java.net.URL;
 import java.net.URLClassLoader;
 
 /**
+ * 插件类加载器，隔离插件依赖，支持动态添加 JAR.
+ *
  * @author laokou
  */
 public class PluginClassLoader extends URLClassLoader {
 
-	public PluginClassLoader(ClassLoader classLoader) {
-		super(new URL[0], classLoader);
+	public PluginClassLoader(ClassLoader parent) {
+		super(new URL[0], parent);
+	}
+
+	/**
+	 * 向此 ClassLoader 添加 JAR 文件.
+	 * @param url JAR 文件的 URL
+	 */
+	public void addJar(URL url) {
+		addURL(url);
 	}
 
 }
