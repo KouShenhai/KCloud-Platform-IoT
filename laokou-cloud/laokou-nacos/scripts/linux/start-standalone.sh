@@ -10,8 +10,8 @@ export NACOS_CONSOLE_PORT=8048
 export NACOS_SERVER_PORT=8848
 export NACOS_AI_REGISTRY_PORT=9080
 export NACOS_DEPLOYMENT_TYPE=merged
-export NACOS_LOG_PATH=./logs/nacos
-export NACOS_HOME=$(cd "$(dirname "$0")"; pwd)/logs/nacos
+export NACOS_LOG_PATH=./logs/nacos-standalone
+export NACOS_HOME=$(cd "$(dirname "$0")"; pwd)/logs/nacos-standalone
 
 # ========== 数据源 ==========
 export NACOS_DS_PLATFORM=postgresql
