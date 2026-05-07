@@ -19,8 +19,10 @@ package config
 
 import (
 	"errors"
+	"flag"
 	"log"
 	"os"
+	"path/filepath"
 	"time"
 
 	"gopkg.in/yaml.v3"
@@ -74,7 +76,12 @@ type LogConfig struct {
 }
 
 func Load() *Config {
-	config, err := load("configs/config.yml")
+	configPath, err := getConfigPath()
+	if err != nil {
+		log.Fatalf("failed to get config path: %v", err)
+		return nil
+	}
+	config, err := load(configPath)
 	if err != nil {
 		log.Fatalf("failed to load config: %v", err)
 		return nil
@@ -101,4 +108,21 @@ func load(path string) (*Config, error) {
 		return nil, errors.New("deserialization failed")
 	}
 	return config, nil
+}
+
+func getConfigPath() (string, error) {
+	configDir := flag.String("c", "", "配置文件目录")
+	flag.Parse()
+	if *configDir == "" {
+		return "", errors.New("config directory is empty")
+	}
+	dir, err := filepath.Abs(*configDir)
+	if err != nil {
+		return "", errors.New("failed to get absolute path")
+	}
+	info, err := os.Stat(dir)
+	if err != nil || !info.IsDir() {
+		return "", errors.New("config directory is not exist")
+	}
+	return filepath.Join(dir, "config.yml"), nil
 }
