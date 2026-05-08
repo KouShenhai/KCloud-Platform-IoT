@@ -8,11 +8,35 @@ package engine
 #include <lauxlib.h>
 #include <lualib.h>
 #include <stdlib.h>
+
+// ---------------- wrapper ----------------
+
+static int lua_dostring_wrap(lua_State *L, const char *s) {
+	return luaL_dostring(L, s);
+}
+
+static void lua_getglobal_wrap(lua_State *L, const char *name) {
+	lua_getglobal(L, name);
+}
+
+static int lua_isfunction_wrap(lua_State *L, int idx) {
+	return lua_isfunction(L, idx);
+}
+
+static void lua_pop_wrap(lua_State *L, int n) {
+	lua_pop(L, n);
+}
+
+static const char* lua_tostring_wrap(lua_State *L, int idx) {
+	return lua_tostring(L, idx);
+}
+
 */
 import "C"
 import (
 	"KEdge-Gateway/internal/pkg/config"
 	"errors"
+	"go.uber.org/zap"
 	"sync"
 	"unsafe"
 )
@@ -35,23 +59,23 @@ func (e *LuaEngine) Load(script string) error {
 	defer e.mu.Unlock()
 	cscript := C.CString(script)
 	defer C.free(unsafe.Pointer(cscript))
-	if C.luaL_dostring(e.L, cscript) != 0 {
-		err := C.GoString(C.lua_tostring(e.L, -1))
-		C.lua_pop(e.L, 1)
-		config.Logger.Error("lua load error", err)
+	if C.lua_dostring_wrap(e.L, cscript) != 0 {
+		err := C.GoString(C.lua_tostring_wrap(e.L, -1))
+		C.lua_pop_wrap(e.L, 1)
+		config.Logger.Error("lua load error", zap.String("error", err))
 		return errors.New(err)
 	}
 	return nil
 }
 
-func (e *LuaEngine) Call(funcName string, jsonData string) (string, error) {
+func (e *LuaEngine) Execute(funcName string, jsonData string) (string, error) {
 	e.mu.Lock()
 	defer e.mu.Unlock()
 	cFuncName := C.CString(funcName)
 	defer C.free(unsafe.Pointer(cFuncName))
-	C.lua_getglobal(e.L, cFuncName)
-	if C.lua_isfunction(e.L, -1) == 0 {
-		C.lua_pop(e.L, 1)
+	C.lua_getglobal_wrap(e.L, cFuncName)
+	if C.lua_isfunction_wrap(e.L, -1) == 0 {
+		C.lua_pop_wrap(e.L, 1)
 		config.Logger.Error("function not found: " + funcName)
 		return "", errors.New("function not found: " + funcName)
 	}
@@ -59,12 +83,12 @@ func (e *LuaEngine) Call(funcName string, jsonData string) (string, error) {
 	defer C.free(unsafe.Pointer(cJson))
 	C.lua_pushstring(e.L, cJson)
 	if C.lua_pcall(e.L, 1, 1, 0) != 0 {
-		errMsg := C.GoString(C.lua_tostring(e.L, -1))
-		C.lua_pop(e.L, 1)
-		config.Logger.Error("lua call error", errMsg)
+		errMsg := C.GoString(C.lua_tostring_wrap(e.L, -1))
+		C.lua_pop_wrap(e.L, 1)
+		config.Logger.Error("lua call error", zap.String("error", errMsg))
 		return "", errors.New(errMsg)
 	}
-	result := C.GoString(C.lua_tostring(e.L, -1))
-	C.lua_pop(e.L, 1)
+	result := C.GoString(C.lua_tostring_wrap(e.L, -1))
+	C.lua_pop_wrap(e.L, 1)
 	return result, nil
 }

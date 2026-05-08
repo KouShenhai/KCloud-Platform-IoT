@@ -31,14 +31,14 @@ import (
 
 var Logger *zap.Logger
 
-func (c *LogConfig) InitLogger() (*zap.Logger, func() error, error) {
+func (c *LogConfig) InitLogger() (func() error, error) {
 	if c.FilePath == "" {
-		return nil, nil, errors.New("log file path is empty")
+		return nil, errors.New("log file path is empty")
 	}
 
 	dir := filepath.Dir(c.FilePath)
 	if err := os.MkdirAll(dir, 0755); err != nil {
-		return nil, nil, fmt.Errorf("create log dir failed: %w", err)
+		return nil, fmt.Errorf("create log dir failed: %w", err)
 	}
 
 	timberjackLogger := &timberjack.Logger{
@@ -56,7 +56,7 @@ func (c *LogConfig) InitLogger() (*zap.Logger, func() error, error) {
 	levelConfig := zap.NewAtomicLevel()
 	level, err := zapcore.ParseLevel(c.Level)
 	if err != nil {
-		return nil, nil, fmt.Errorf("invalid log level: %w", err)
+		return nil, fmt.Errorf("invalid log level: %w", err)
 	}
 	levelConfig.SetLevel(level)
 
@@ -88,7 +88,8 @@ func (c *LogConfig) InitLogger() (*zap.Logger, func() error, error) {
 		_ = logger.Sync()
 		return timberjackLogger.Close()
 	}
-	return logger, cleanup, nil
+	Logger = logger
+	return cleanup, nil
 }
 
 func (c *LogConfig) customTimeEncoder(t time.Time, enc zapcore.PrimitiveArrayEncoder) {

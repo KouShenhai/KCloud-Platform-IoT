@@ -3,12 +3,9 @@
 ## 快速启动
 
 ```shell
-# 编译LuaJIT源码
-git clone https://github.com/LuaJIT/LuaJIT.git
-cd LuaJIT
-make
-sudo make install
-luajit -v
+sudo apt install luajit
+sudo apt install lua-cjson
+sudo apt install libluajit-5.1-dev
 ```
 
 ```shell

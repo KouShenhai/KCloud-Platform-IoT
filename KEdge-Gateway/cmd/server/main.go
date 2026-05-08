@@ -19,18 +19,56 @@ package main
 
 import (
 	"KEdge-Gateway/internal/pkg/config"
+	"KEdge-Gateway/internal/pkg/engine"
+	"fmt"
 	"log"
 )
 
 func main() {
 	cfg := config.Load()
-	if cfg != nil {
-		logger, cleanup, err := cfg.Log.InitLogger()
-		if err != nil {
-			log.Fatalf("init logger failed: %v", err)
-		}
-		defer cleanup()
-		config.Logger = logger
-		logger.Debug("init logger success")
+	if cfg == nil {
+		return
 	}
+	cleanup, err := cfg.Log.InitLogger()
+	if err != nil {
+		log.Fatalf("init logger failed: %v", err)
+	}
+	defer cleanup()
+	config.Logger.Debug("init logger success")
+	luaEngine := engine.NewLuaEngine()
+
+	script := `
+	package.cpath = "/usr/lib/x86_64-linux-gnu/lua/5.1/?.so;" .. package.cpath
+	local cjson = require("cjson")
+	function parse(data)
+		local obj = cjson.decode(data)
+		return "temp:" .. obj.temp
+	end
+	`
+
+	luaEngine.Load(script)
+
+	script2 := `
+	package.cpath = "/usr/lib/x86_64-linux-gnu/lua/5.1/?.so;" .. package.cpath
+	local cjson = require("cjson")
+	function parse(data)
+		local obj = cjson.decode(data)
+		return "temp2222:" .. obj.temp
+	end
+	`
+
+	luaEngine.Load(script2)
+
+	result, _ := luaEngine.Execute(
+		"parse",
+		`{"temp":26}`,
+	)
+
+	result2, _ := luaEngine.Execute(
+		"parse",
+		`{"temp":333}`,
+	)
+
+	fmt.Println("result =", result)
+	fmt.Println("result =", result2)
 }
