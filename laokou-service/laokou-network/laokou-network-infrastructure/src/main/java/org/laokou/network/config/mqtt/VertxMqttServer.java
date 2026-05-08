@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author laokou
@@ -55,12 +56,15 @@ final class VertxMqttServer extends AbstractVertxService<MqttServer> {
 
 	private final MqttServerOptions mqttServerOptions;
 
+	private final ExecutorService virtualTaskExecutor;
+
 	VertxMqttServer(final Vertx vertx, final MqttServerProperties mqttServerProperties,
-			final List<MqttMessageHandler> mqttMessageHandlers) {
+			final List<MqttMessageHandler> mqttMessageHandlers, ExecutorService virtualTaskExecutor) {
 		super(vertx);
 		this.mqttServerProperties = mqttServerProperties;
 		this.mqttServerOptions = getMqttServerOptions(mqttServerProperties);
 		this.mqttMessageHandlers = mqttMessageHandlers;
+		this.virtualTaskExecutor = virtualTaskExecutor;
 	}
 
 	public void publish(@NonNull PublishDTO dto) {
@@ -132,11 +136,13 @@ final class VertxMqttServer extends AbstractVertxService<MqttServer> {
 							endpoint.publishReceived(messageId);
 							log.debug("【Vertx-MQTT-Server】 => 发送PUBREL数据包给客户端【Qos=2】，消息ID：{}【客户端发布】", messageId);
 						}
-						for (MqttMessageHandler mqttMessageHandler : mqttMessageHandlers) {
-							if (mqttMessageHandler.isSubscribe(mqttPublishMessage.topicName())) {
-								mqttMessageHandler.handle(new MqttMessage(mqttPublishMessage.payload(), mqttPublishMessage.topicName())).thenAcceptAsync(messageId0 -> log.debug("【Vertx-MQTT-Server】 => 消息发布到Pulsar成功，消息ID：{}", messageId0));
+						virtualTaskExecutor.execute(() -> {
+							for (MqttMessageHandler mqttMessageHandler : mqttMessageHandlers) {
+								if (mqttMessageHandler.isSubscribe(mqttPublishMessage.topicName())) {
+									mqttMessageHandler.handle(new MqttMessage(mqttPublishMessage.payload(), mqttPublishMessage.topicName())).thenAcceptAsync(messageId0 -> log.debug("【Vertx-MQTT-Server】 => 消息发布到Pulsar成功，消息ID：{}", messageId0));
+								}
 							}
-						}
+						});
 					})
 					// 【Vertx-MQTT-Server】 => 接收 PUBREC 响应并回复客户端，【服务端发布】"
 					.publishReceivedHandler(mqttEndpoint::publishRelease)
