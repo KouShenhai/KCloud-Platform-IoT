@@ -24,6 +24,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.FileUtils;
+import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.excel.util.ExcelUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.dto.PageQuery;
@@ -118,7 +119,8 @@ class ExcelTest {
 		Assertions.assertThat(count).isEqualTo(7);
 		Assertions.assertThatNoException()
 			.isThrownBy(() -> ExcelUtils.doExport("测试用户Sheet页", 1000, new FileOutputStream("test.xlsx"),
-					new PageQuery(), testUserMapper, TestUserExcel.class, TestUserConvertor.INSTANCE));
+					new PageQuery(), testUserMapper, TestUserExcel.class, TestUserConvertor.INSTANCE,
+					ThreadUtils.newVirtualTaskExecutor()));
 		Assertions.assertThatNoException().isThrownBy(() -> FileUtils.deleteIfExists(Path.of("test.xlsx")));
 		Assertions.assertThatNoException().isThrownBy(() -> testUserMapper.deleteUser(List.of(2L, 3L, 4L, 5L, 6L, 7L)));
 		count = testUserMapper.selectObjectCount(new PageQuery());
