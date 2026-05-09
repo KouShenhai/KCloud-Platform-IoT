@@ -19,7 +19,6 @@ package org.laokou.common.id.generator.segment;
 
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
-import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.i18n.common.enums.BizType;
 import org.laokou.common.i18n.util.ResourceExtUtils;
 import org.laokou.common.id.generator.IdGenerator;
@@ -31,7 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;
@@ -74,8 +72,6 @@ public class RedisSegmentIdGenerator implements IdGenerator {
 	 */
 	private final AtomicBoolean initialized = new AtomicBoolean(false);
 
-	private final ExecutorService virtualThreadExecutor;
-
 	private final RedisUtils redisUtils;
 
 	private final SpringSegmentProperties springSegmentProperties;
@@ -91,7 +87,6 @@ public class RedisSegmentIdGenerator implements IdGenerator {
 	public RedisSegmentIdGenerator(RedisUtils redisUtils, SpringSegmentProperties springSegmentProperties) {
 		this.redisUtils = redisUtils;
 		this.springSegmentProperties = springSegmentProperties;
-		this.virtualThreadExecutor = ThreadUtils.newVirtualTaskExecutor();
 		this.segmentAllocScript = new DefaultRedisScript<>();
 		this.segmentAllocScript.setLocation(ResourceExtUtils.getResource("lua/segment_alloc.lua"));
 		this.segmentAllocScript.setResultType(Long.class);
@@ -119,7 +114,6 @@ public class RedisSegmentIdGenerator implements IdGenerator {
 	public void close() {
 		initialized.set(false);
 		springSegmentProperties.getConfigs().forEach(this::flushCursor);
-		ThreadUtils.shutdown(virtualThreadExecutor, 15);
 		log.info("RedisSegmentIdGenerator closed.");
 	}
 
@@ -220,7 +214,7 @@ public class RedisSegmentIdGenerator implements IdGenerator {
 
 	private void triggerAsyncLoad(BizType bizType, SegmentBuffer segmentBuffer) {
 		if (segmentBuffer.trySetLoading()) {
-			virtualThreadExecutor.execute(() -> {
+			Thread.startVirtualThread(() -> {
 				try {
 					loadSegmentSync(false, bizType, segmentBuffer,
 							springSegmentProperties.getConfigs().get(bizType.getCode()));

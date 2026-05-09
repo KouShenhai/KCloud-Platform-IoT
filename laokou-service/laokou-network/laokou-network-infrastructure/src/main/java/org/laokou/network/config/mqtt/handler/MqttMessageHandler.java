@@ -17,18 +17,15 @@
 
 package org.laokou.network.config.mqtt.handler;
 
-import org.apache.pulsar.client.api.MessageId;
 import org.laokou.network.model.MqttMessage;
-
-import java.util.concurrent.CompletableFuture;
 
 /**
  * @author laokou
  */
 public interface MqttMessageHandler {
 
-	boolean isSubscribe(String topic);
+	void handle(String topic, MqttMessage mqttMessage);
 
-	CompletableFuture<MessageId> handle(MqttMessage mqttMessage);
+	boolean isSubscribe(String topic);
 
 }

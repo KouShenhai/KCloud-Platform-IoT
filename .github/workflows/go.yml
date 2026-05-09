@@ -11,10 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        goos: [linux, windows, darwin]
+        goos: [linux]
         goarch: [amd64, arm64]
 
     steps:
+      - name: Install Ubuntu Packages
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y luajit lua-cjson libluajit-5.1-dev
       - name: Checkout code
         uses: actions/checkout@v6
 

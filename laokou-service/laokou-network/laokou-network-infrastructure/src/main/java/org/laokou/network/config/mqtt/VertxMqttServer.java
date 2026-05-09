@@ -132,11 +132,11 @@ final class VertxMqttServer extends AbstractVertxService<MqttServer> {
 							endpoint.publishReceived(messageId);
 							log.debug("【Vertx-MQTT-Server】 => 发送PUBREL数据包给客户端【Qos=2】，消息ID：{}【客户端发布】", messageId);
 						}
-						for (MqttMessageHandler mqttMessageHandler : mqttMessageHandlers) {
-							if (mqttMessageHandler.isSubscribe(mqttPublishMessage.topicName())) {
-								mqttMessageHandler.handle(new MqttMessage(mqttPublishMessage.payload(), mqttPublishMessage.topicName())).thenAcceptAsync(messageId0 -> log.debug("【Vertx-MQTT-Server】 => 消息发布到Pulsar成功，消息ID：{}", messageId0));
+						Thread.startVirtualThread(() -> {
+							for (MqttMessageHandler mqttMessageHandler : mqttMessageHandlers) {
+								Thread.startVirtualThread(() -> mqttMessageHandler.handle(mqttPublishMessage.topicName(), new MqttMessage(mqttPublishMessage.payload(), mqttPublishMessage.topicName())));
 							}
-						}
+						});
 					})
 					// 【Vertx-MQTT-Server】 => 接收 PUBREC 响应并回复客户端，【服务端发布】"
 					.publishReceivedHandler(mqttEndpoint::publishRelease)

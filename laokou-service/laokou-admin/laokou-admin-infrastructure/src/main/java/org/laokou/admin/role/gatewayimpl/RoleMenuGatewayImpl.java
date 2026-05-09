@@ -29,6 +29,7 @@ import org.laokou.common.mybatisplus.util.MybatisUtils;
 import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author laokou
@@ -41,6 +42,8 @@ public class RoleMenuGatewayImpl implements RoleMenuGateway {
 	private final MybatisUtils mybatisUtils;
 
 	private final RoleMenuMapper roleMenuMapper;
+
+	private final ExecutorService virtualTaskExecutor;
 
 	@Override
 	public void updateRoleMenu(RoleA roleA) {
@@ -57,7 +60,7 @@ public class RoleMenuGatewayImpl implements RoleMenuGateway {
 		// 新增角色菜单关联表
 		List<RoleMenuDO> list = RoleConvertor.toDataObjects(roleA);
 		if (CollectionExtUtils.isNotEmpty(list)) {
-			mybatisUtils.batch(list, RoleMenuMapper.class, RoleMenuMapper::insert);
+			mybatisUtils.batch(list, RoleMenuMapper.class, RoleMenuMapper::insert, virtualTaskExecutor);
 		}
 	}
 
@@ -65,7 +68,7 @@ public class RoleMenuGatewayImpl implements RoleMenuGateway {
 		// 删除角色菜单关联表
 		List<RoleMenuDO> list = RoleConvertor.toDataObjects(roleMenuIds);
 		if (CollectionExtUtils.isNotEmpty(list)) {
-			mybatisUtils.batch(list, RoleMenuMapper.class, RoleMenuMapper::deleteRoleMenuById);
+			mybatisUtils.batch(list, RoleMenuMapper.class, RoleMenuMapper::deleteRoleMenuById, virtualTaskExecutor);
 		}
 	}
 

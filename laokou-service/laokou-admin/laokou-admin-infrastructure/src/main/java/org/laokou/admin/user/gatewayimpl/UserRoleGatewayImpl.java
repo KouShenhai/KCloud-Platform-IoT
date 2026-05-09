@@ -29,6 +29,7 @@ import org.laokou.common.mybatisplus.util.MybatisUtils;
 import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author laokou
@@ -41,6 +42,8 @@ public class UserRoleGatewayImpl implements UserRoleGateway {
 	private final MybatisUtils mybatisUtils;
 
 	private final UserRoleMapper userRoleMapper;
+
+	private final ExecutorService virtualTaskExecutor;
 
 	@Override
 	public void updateUserRole(UserA userA) {
@@ -57,7 +60,7 @@ public class UserRoleGatewayImpl implements UserRoleGateway {
 		// 新增用户角色关联表
 		List<UserRoleDO> list = UserConvertor.toDataObjects(userA);
 		if (CollectionExtUtils.isNotEmpty(list)) {
-			mybatisUtils.batch(list, UserRoleMapper.class, UserRoleMapper::insert);
+			mybatisUtils.batch(list, UserRoleMapper.class, UserRoleMapper::insert, virtualTaskExecutor);
 		}
 	}
 
@@ -65,7 +68,7 @@ public class UserRoleGatewayImpl implements UserRoleGateway {
 		// 删除用户角色关联表
 		List<UserRoleDO> list = UserConvertor.toDataObjects(userRoleIds);
 		if (CollectionExtUtils.isNotEmpty(list)) {
-			mybatisUtils.batch(list, UserRoleMapper.class, UserRoleMapper::deleteUserRoleById);
+			mybatisUtils.batch(list, UserRoleMapper.class, UserRoleMapper::deleteUserRoleById, virtualTaskExecutor);
 		}
 	}
 

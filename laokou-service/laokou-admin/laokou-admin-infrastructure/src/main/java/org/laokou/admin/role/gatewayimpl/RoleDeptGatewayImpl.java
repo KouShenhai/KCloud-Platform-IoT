@@ -29,6 +29,7 @@ import org.laokou.common.mybatisplus.util.MybatisUtils;
 import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author laokou
@@ -41,6 +42,8 @@ public class RoleDeptGatewayImpl implements RoleDeptGateway {
 	private final RoleDeptMapper roleDeptMapper;
 
 	private final MybatisUtils mybatisUtils;
+
+	private final ExecutorService virtualTaskExecutor;
 
 	@Override
 	public void updateRoleDept(RoleA roleA) {
@@ -57,7 +60,7 @@ public class RoleDeptGatewayImpl implements RoleDeptGateway {
 		// 新增角色菜单关联表
 		List<RoleDeptDO> list = RoleConvertor.toDataObjs(roleA);
 		if (CollectionExtUtils.isNotEmpty(list)) {
-			mybatisUtils.batch(list, RoleDeptMapper.class, RoleDeptMapper::insert);
+			mybatisUtils.batch(list, RoleDeptMapper.class, RoleDeptMapper::insert, virtualTaskExecutor);
 		}
 	}
 
@@ -65,7 +68,7 @@ public class RoleDeptGatewayImpl implements RoleDeptGateway {
 		// 删除角色菜单关联表
 		List<RoleDeptDO> list = RoleConvertor.toDataObjs(roleDeptIds);
 		if (CollectionExtUtils.isNotEmpty(list)) {
-			mybatisUtils.batch(list, RoleDeptMapper.class, RoleDeptMapper::deleteRoleDeptById);
+			mybatisUtils.batch(list, RoleDeptMapper.class, RoleDeptMapper::deleteRoleDeptById, virtualTaskExecutor);
 		}
 	}
 

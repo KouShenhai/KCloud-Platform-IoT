@@ -18,12 +18,9 @@
 package org.laokou.network.config.mqtt.handler;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.pulsar.client.api.MessageId;
 import org.laokou.network.model.MqttMessage;
 import org.springframework.pulsar.core.PulsarTemplate;
 import org.springframework.stereotype.Component;
-
-import java.util.concurrent.CompletableFuture;
 
 /**
  * 属性上报【上行】处理器.
@@ -44,8 +41,7 @@ public class UpPropertyReportMqttMessageHandler implements MqttMessageHandler {
 	}
 
 	@Override
-	public CompletableFuture<MessageId> handle(MqttMessage mqttMessage) {
-		return null;
+	public void handle(String topic, MqttMessage mqttMessage) {
 		// MqttMessageEnum upPropertyReport = MqttMessageEnum.UP_PROPERTY_REPORT;
 		// String topic = TopicUtils.getTopic("laokouyun", "mqtt",
 		// upPropertyReport.getMqTopic());

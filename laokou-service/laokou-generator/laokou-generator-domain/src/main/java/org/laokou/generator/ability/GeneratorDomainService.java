@@ -21,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.FileUtils;
 import org.laokou.common.core.util.TemplateUtils;
-import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.ResourceExtUtils;
@@ -65,6 +64,8 @@ public class GeneratorDomainService {
 
 	private final TableGateway tableGateway;
 
+	private final ExecutorService virtualTaskExecutor;
+
 	public void generateCode(GeneratorA generatorA) {
 		// 表信息
 		List<TableV> tables = tableGateway.list(generatorA.getTableE());
@@ -84,7 +85,7 @@ public class GeneratorDomainService {
 	}
 
 	private void generateCode(GeneratorA generatorA, TableV tableV, List<Template> templates) {
-		try (ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor()) {
+		try {
 			// 更新表信息
 			generatorA.updateTable(tableV);
 			// 根据模板批量生成代码
