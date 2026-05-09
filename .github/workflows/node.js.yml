@@ -24,10 +24,7 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm
       - name: Install UI
-        run: |
-          HUSKY=0 pnpm install
-          pnpm config set ignore-scripts false
-          pnpm run max setup
+        run: pnpm install --dangerously-allow-all-builds
         working-directory: ./ui
       - name: Build UI
         run: pnpm build
@@ -41,10 +38,7 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm
       - name: Install BigScreen
-        run: |
-          HUSKY=0 pnpm install
-          pnpm config set ignore-scripts false
-          pnpm run max setup
+        run: pnpm install --dangerously-allow-all-builds
         working-directory: ./bigScreen
       - name: Build BigScreen
         run: pnpm build
