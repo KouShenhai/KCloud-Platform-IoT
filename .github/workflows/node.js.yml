@@ -24,9 +24,7 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm
       - name: Install UI
-        run: |
-          echo "ignore-scripts=false" >> .npmrc
-          pnpm install
+        run: pnpm install
         working-directory: ./ui
       - name: Build UI
         run: pnpm build
@@ -40,9 +38,7 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm
       - name: Install BigScreen
-        run: |
-          echo "ignore-scripts=false" >> .npmrc
-          pnpm install
+        run: pnpm install
         working-directory: ./bigScreen
       - name: Build BigScreen
         run: pnpm build
