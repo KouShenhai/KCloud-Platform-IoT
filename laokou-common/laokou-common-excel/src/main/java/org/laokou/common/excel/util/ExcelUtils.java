@@ -111,13 +111,13 @@ public final class ExcelUtils {
 		setHeader(fileName, response);
 		// 写入数据
 		try (ServletOutputStream outputStream = response.getOutputStream()) {
-			doExport(sheetName, size, outputStream, pageQuery, crudMapper, clazz, convertor);
+			doExport(sheetName, size, outputStream, pageQuery, crudMapper, clazz, convertor, virtualTaskExecutor);
 		}
 	}
 
 	public static <EXCEL, DO extends BaseDO> void doExport(String sheetName, int size, OutputStream out,
 			PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper, Class<EXCEL> clazz,
-			ExcelConvertor<DO, EXCEL> convertor) {
+			ExcelConvertor<DO, EXCEL> convertor, ExecutorService virtualTaskExecutor) {
 		if (crudMapper.selectObjectCount(pageQuery) > 0) {
 			try (ExcelWriter excelWriter = FesodSheet.write(out, clazz).build()) {
 				// https://idev.cn/fastexcel/zh-CN/docs/write/write_hard
