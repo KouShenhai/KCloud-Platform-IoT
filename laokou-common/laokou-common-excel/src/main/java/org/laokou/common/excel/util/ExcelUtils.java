@@ -97,13 +97,16 @@ public final class ExcelUtils {
 
 	public static <EXCEL, DO extends BaseDO> void doExport(String fileName, String sheetName,
 			HttpServletResponse response, PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper,
-			Class<EXCEL> clazz, ExcelConvertor<DO, EXCEL> convertor) throws IOException {
-		doExport(fileName, sheetName, BATCH_SIZE, response, pageQuery, crudMapper, clazz, convertor);
+			Class<EXCEL> clazz, ExcelConvertor<DO, EXCEL> convertor, ExecutorService virtualTaskExecutor)
+			throws IOException {
+		doExport(fileName, sheetName, BATCH_SIZE, response, pageQuery, crudMapper, clazz, convertor,
+				virtualTaskExecutor);
 	}
 
 	public static <EXCEL, DO extends BaseDO> void doExport(String fileName, String sheetName, int size,
 			HttpServletResponse response, PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper,
-			Class<EXCEL> clazz, ExcelConvertor<DO, EXCEL> convertor) throws IOException {
+			Class<EXCEL> clazz, ExcelConvertor<DO, EXCEL> convertor, ExecutorService virtualTaskExecutor)
+			throws IOException {
 		// 设置请求头
 		setHeader(fileName, response);
 		// 写入数据
@@ -116,8 +119,7 @@ public final class ExcelUtils {
 			PageQuery pageQuery, CrudMapper<Long, Integer, DO> crudMapper, Class<EXCEL> clazz,
 			ExcelConvertor<DO, EXCEL> convertor) {
 		if (crudMapper.selectObjectCount(pageQuery) > 0) {
-			try (ExcelWriter excelWriter = FesodSheet.write(out, clazz).build();
-					ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor()) {
+			try (ExcelWriter excelWriter = FesodSheet.write(out, clazz).build()) {
 				// https://idev.cn/fastexcel/zh-CN/docs/write/write_hard
 				List<DO> list = Collections.synchronizedList(new ArrayList<>(size));
 				// 设置sheet页
@@ -246,9 +248,11 @@ public final class ExcelUtils {
 						ERRORS.subList(0, Math.min(ERRORS.size(), 100)));
 			}
 			if (CollectionExtUtils.isNotEmpty(CACHED_DATA_LIST)) {
-				mybatisUtils.batch(CACHED_DATA_LIST, clazz, consumer);
-				// 清除数据
-				CACHED_DATA_LIST.clear();
+				try (ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor()) {
+					mybatisUtils.batch(CACHED_DATA_LIST, clazz, consumer, virtualTaskExecutor);
+					// 清除数据
+					CACHED_DATA_LIST.clear();
+				}
 			}
 		}
 

@@ -21,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.user.gateway.UserGateway;
 import org.laokou.admin.user.gateway.UserRoleGateway;
 import org.laokou.admin.user.model.UserA;
-import org.laokou.common.core.util.ThreadUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -42,6 +41,8 @@ public class UserDomainService {
 
 	private final UserRoleGateway userRoleGateway;
 
+	private final ExecutorService virtualTaskExecutor;
+
 	public void createUser(UserA userA) {
 		adminUserGateway.createUser(userA);
 	}
@@ -56,9 +57,7 @@ public class UserDomainService {
 			userRoleGateway.updateUserRole(userA);
 			return true;
 		});
-		try (ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor()) {
-			virtualTaskExecutor.invokeAll(futures);
-		}
+		virtualTaskExecutor.invokeAll(futures);
 	}
 
 	public void deleteUser(Long[] ids) throws InterruptedException {
@@ -71,9 +70,7 @@ public class UserDomainService {
 			userRoleGateway.deleteUserRole(ids);
 			return true;
 		});
-		try (ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor()) {
-			virtualTaskExecutor.invokeAll(futures);
-		}
+		virtualTaskExecutor.invokeAll(futures);
 	}
 
 }

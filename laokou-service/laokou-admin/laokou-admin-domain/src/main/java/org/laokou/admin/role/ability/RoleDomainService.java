@@ -22,7 +22,6 @@ import org.laokou.admin.role.gateway.RoleDeptGateway;
 import org.laokou.admin.role.gateway.RoleGateway;
 import org.laokou.admin.role.gateway.RoleMenuGateway;
 import org.laokou.admin.role.model.RoleA;
-import org.laokou.common.core.util.ThreadUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -44,6 +43,8 @@ public class RoleDomainService {
 	private final RoleMenuGateway roleMenuGateway;
 
 	private final RoleDeptGateway roleDeptGateway;
+
+	private final ExecutorService virtualTaskExecutor;
 
 	public void createRole(RoleA roleA) {
 		adminRoleGateway.createRole(roleA);
@@ -68,9 +69,7 @@ public class RoleDomainService {
 			roleDeptGateway.updateRoleDept(roleA);
 			return true;
 		});
-		try (ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor()) {
-			virtualTaskExecutor.invokeAll(futures);
-		}
+		virtualTaskExecutor.invokeAll(futures);
 	}
 
 	public void deleteRole(Long[] ids) throws InterruptedException {
@@ -87,9 +86,7 @@ public class RoleDomainService {
 			roleDeptGateway.deleteRoleDept(ids);
 			return true;
 		});
-		try (ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor()) {
-			virtualTaskExecutor.invokeAll(futures);
-		}
+		virtualTaskExecutor.invokeAll(futures);
 	}
 
 }

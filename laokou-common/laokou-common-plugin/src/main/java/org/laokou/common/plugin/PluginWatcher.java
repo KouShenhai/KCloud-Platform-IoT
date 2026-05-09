@@ -19,8 +19,6 @@ package org.laokou.common.plugin;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.util.ThreadUtils;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.ClosedWatchServiceException;
@@ -32,7 +30,6 @@ import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -66,8 +63,6 @@ public class PluginWatcher {
 
 	private final AtomicBoolean running = new AtomicBoolean(true);
 
-	private final ExecutorService virtualThreadExecutor;
-
 	private volatile WatchService watchService;
 
 	/**
@@ -85,7 +80,6 @@ public class PluginWatcher {
 		this.pluginDir = pluginDir;
 		this.pluginManager = pluginManager;
 		this.pollInterval = pollInterval;
-		this.virtualThreadExecutor = ThreadUtils.newVirtualTaskExecutor();
 	}
 
 	/**
@@ -103,7 +97,7 @@ public class PluginWatcher {
 					.register(watchService, StandardWatchEventKinds.ENTRY_CREATE, StandardWatchEventKinds.ENTRY_DELETE,
 							StandardWatchEventKinds.ENTRY_MODIFY);
 				running.set(true);
-				virtualThreadExecutor.execute(this::watchLoop);
+				Thread.startVirtualThread(this::watchLoop);
 				log.info("[插件热加载] 目录监听已启动: {}", pluginDir.getAbsolutePath());
 			}
 			catch (IOException ex) {
@@ -128,7 +122,6 @@ public class PluginWatcher {
 					log.warn("[插件热加载] 关闭 WatchService 失败", ex);
 				}
 			}
-			ThreadUtils.shutdown(virtualThreadExecutor, 5000);
 			log.info("【插件热加载】 目录监听已停止");
 		}
 	}

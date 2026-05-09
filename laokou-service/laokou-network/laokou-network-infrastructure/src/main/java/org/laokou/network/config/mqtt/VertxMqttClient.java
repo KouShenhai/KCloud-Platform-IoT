@@ -30,7 +30,6 @@ import org.laokou.network.util.VertxMqttUtils;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -45,19 +44,16 @@ final class VertxMqttClient extends AbstractVertxService<Void> {
 
 	private final List<MqttMessageHandler> mqttMessageHandlers;
 
-	private final ExecutorService executorService;
-
 	private final MqttClient mqttClient;
 
 	private final AtomicBoolean disconnect;
 
 	VertxMqttClient(Vertx vertx, MqttClientProperties mqttClientProperties,
-			List<MqttMessageHandler> mqttMessageHandlers, ExecutorService executorService) {
+			List<MqttMessageHandler> mqttMessageHandlers) {
 		super(vertx);
 		this.mqttClientOptions = getMqttClientOptions(mqttClientProperties);
 		this.mqttClientProperties = mqttClientProperties;
 		this.mqttMessageHandlers = mqttMessageHandlers;
-		this.executorService = executorService;
 		this.mqttClient = init();
 		this.disconnect = new AtomicBoolean(false);
 	}
@@ -137,7 +133,7 @@ final class VertxMqttClient extends AbstractVertxService<Void> {
 			return;
 		}
 		log.debug("【Vertx-MQTT-Client】 => MQTT尝试重连");
-		vertx.setTimer(mqttClientProperties.getReconnectInterval(), _ -> executorService.execute(this::doStart));
+		vertx.setTimer(mqttClientProperties.getReconnectInterval(), _ -> Thread.startVirtualThread(this::doStart));
 	}
 
 	private void subscribe() {
@@ -161,12 +157,12 @@ final class VertxMqttClient extends AbstractVertxService<Void> {
 		}).publishHandler(publishHandler -> {
 			String topic = publishHandler.topicName();
 			log.debug("【Vertx-MQTT-Client】 => MQTT接收到消息，Topic：{}", topic);
-			for (MqttMessageHandler mqttMessageHandler : mqttMessageHandlers) {
-				if (mqttMessageHandler.isSubscribe(topic)) {
-					mqttMessageHandler.handle(new MqttMessage(publishHandler.payload(), topic))
-						.thenRunAsync(() -> log.debug("Pulsar消息发送完毕"));
+			Thread.startVirtualThread(() -> {
+				for (MqttMessageHandler mqttMessageHandler : mqttMessageHandlers) {
+					Thread.startVirtualThread(
+							() -> mqttMessageHandler.handle(topic, new MqttMessage(publishHandler.payload(), topic)));
 				}
-			}
+			});
 		})
 			// 仅接收QoS1和QoS2的数据包
 			.publishCompletionHandler(

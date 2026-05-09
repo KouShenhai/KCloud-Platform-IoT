@@ -21,6 +21,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.FileUtils;
+import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.i18n.util.SystemUtils;
 import org.laokou.common.i18n.util.SslUtils;
 import org.springframework.boot.system.SystemProperties;
@@ -110,7 +111,8 @@ class FileUtilsTest {
 			.isThrownBy(() -> FileUtils.chunkWrite(Path.of(testPath, "upload", "test2.txt").toFile(),
 					List.of(new FileUtils.Chunk(Path.of(testPath, "upload", "test2.txt_a").toFile(), 0, 1),
 							new FileUtils.Chunk(Path.of(testPath, "upload", "test2.txt_b").toFile(), 1, 1),
-							new FileUtils.Chunk(Path.of(testPath, "upload", "test2.txt_c").toFile(), 2, 1))));
+							new FileUtils.Chunk(Path.of(testPath, "upload", "test2.txt_c").toFile(), 2, 1)),
+					ThreadUtils.newVirtualTaskExecutor()));
 		Assertions.assertThat(FileUtils.exists(Path.of(testPath, "upload", "test2.txt"))).isTrue();
 		Assertions.assertThat(FileUtils.readString((Path.of(testPath, "upload", "test2.txt")))).isEqualTo("abc");
 

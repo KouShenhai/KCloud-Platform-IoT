@@ -26,7 +26,6 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.laokou.common.core.util.CollectionExtUtils;
-import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.springframework.stereotype.Component;
@@ -55,18 +54,19 @@ public class MybatisUtils {
 	private final SqlSessionFactory sqlSessionFactory;
 
 	public <DO, MAPPER extends CrudMapper<?, ?, DO>> void batch(List<DO> dataList, int partitionSize, int batchSize,
-			int timeout, Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer) {
-		batch(dataList, partitionSize, batchSize, timeout, clazz, DdConstants.MASTER, consumer);
+			int timeout, Class<MAPPER> clazz, BiConsumer<MAPPER, DO> consumer, ExecutorService virtualTaskExecutor) {
+		batch(dataList, partitionSize, batchSize, timeout, clazz, DdConstants.MASTER, consumer, virtualTaskExecutor);
 	}
 
 	public <DO, MAPPER extends CrudMapper<?, ?, DO>> void batch(List<DO> dataList, Class<MAPPER> clazz,
-			BiConsumer<MAPPER, DO> consumer) {
-		batch(dataList, DEFAULT_PARTITION_SIZE, DEFAULT_BATCH_SIZE, 180, clazz, DdConstants.MASTER, consumer);
+			BiConsumer<MAPPER, DO> consumer, ExecutorService virtualTaskExecutor) {
+		batch(dataList, DEFAULT_PARTITION_SIZE, DEFAULT_BATCH_SIZE, 180, clazz, DdConstants.MASTER, consumer,
+				virtualTaskExecutor);
 	}
 
 	public <DO, MAPPER extends CrudMapper<?, ?, DO>> void batch(List<DO> dataList, Class<MAPPER> clazz, String ds,
-			BiConsumer<MAPPER, DO> consumer) {
-		batch(dataList, DEFAULT_PARTITION_SIZE, DEFAULT_BATCH_SIZE, 180, clazz, ds, consumer);
+			BiConsumer<MAPPER, DO> consumer, ExecutorService virtualTaskExecutor) {
+		batch(dataList, DEFAULT_PARTITION_SIZE, DEFAULT_BATCH_SIZE, 180, clazz, ds, consumer, virtualTaskExecutor);
 	}
 
 	/**
@@ -82,13 +82,14 @@ public class MybatisUtils {
 	 * @param batchSize 批次大小
 	 */
 	public <DO, MAPPER extends CrudMapper<?, ?, DO>> void batch(List<DO> dataList, int partitionSize, int batchSize,
-			int timeout, Class<MAPPER> clazz, String ds, BiConsumer<MAPPER, DO> consumer) {
+			int timeout, Class<MAPPER> clazz, String ds, BiConsumer<MAPPER, DO> consumer,
+			ExecutorService virtualTaskExecutor) {
 		if (CollectionExtUtils.isNotEmpty(dataList)) {
 			// 数据分组
 			List<List<DO>> partition = Lists.partition(dataList, partitionSize);
 			AtomicBoolean rollback = new AtomicBoolean(false);
 			CyclicBarrier cyclicBarrier = new CyclicBarrier(partition.size());
-			try (ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor()) {
+			try {
 				// 虚拟线程
 				List<Callable<Boolean>> futures = partition.stream().map(item -> (Callable<Boolean>) () -> {
 					handleBatch(timeout, batchSize, item, clazz, consumer, rollback, ds, cyclicBarrier);

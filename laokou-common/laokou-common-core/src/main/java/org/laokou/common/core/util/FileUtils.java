@@ -145,8 +145,8 @@ public final class FileUtils {
 		}
 	}
 
-	public static void chunkWrite(File file, List<Chunk> chunks) {
-		try (ExecutorService virtualTaskExecutor = ThreadUtils.newVirtualTaskExecutor()) {
+	public static void chunkWrite(File file, List<Chunk> chunks, ExecutorService virtualTaskExecutor) {
+		try {
 			List<Callable<Boolean>> futures = new ArrayList<>(chunks.size());
 			for (Chunk chunk : chunks) {
 				futures.add(() -> {

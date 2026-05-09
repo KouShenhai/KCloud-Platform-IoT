@@ -29,6 +29,8 @@ import org.laokou.common.excel.util.ExcelUtils;
 import org.laokou.common.tenant.constant.DSConstants;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.ExecutorService;
+
 /**
  * 导出通知日志命令执行器.
  *
@@ -40,13 +42,15 @@ public class NoticeLogExportCmdExe {
 
 	private final NoticeLogMapper adminNoticeLogMapper;
 
+	private final ExecutorService virtualTaskExecutor;
+
 	@CommandLog
 	public void executeVoid(NoticeLogExportCmd cmd) {
 		// 校验参数
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);
 			ExcelUtils.doExport("通知日志", "通知日志", ResponseUtils.getHttpServletResponse(), cmd, adminNoticeLogMapper,
-					NoticeLogExcel.class, NoticeLogConvertor.INSTANCE);
+					NoticeLogExcel.class, NoticeLogConvertor.INSTANCE, virtualTaskExecutor);
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
