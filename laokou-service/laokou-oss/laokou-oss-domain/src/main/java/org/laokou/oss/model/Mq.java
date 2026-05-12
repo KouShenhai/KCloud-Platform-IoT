@@ -15,36 +15,14 @@
  *
  */
 
-package org.laokou.common.elasticsearch.config;
+package org.laokou.oss.model;
 
-import lombok.Getter;
+public enum Mq {
 
-/**
- * @author laokou
- */
-@Getter
-public enum ProtocolEnum {
+	;
 
-	HTTP("http", "HTTP协议"),
+	public static final String OSS_LOG_TOPIC = "oss-log";
 
-	HTTPS("https", "HTTPS协议");
-
-	private final String scheme;
-
-	private final String description;
-
-	ProtocolEnum(String scheme, String description) {
-		this.scheme = scheme;
-		this.description = description;
-	}
-
-	public static ProtocolEnum forScheme(String scheme) {
-		for (ProtocolEnum protocol : values()) {
-			if (protocol.scheme.equals(scheme)) {
-				return protocol;
-			}
-		}
-		throw new IllegalArgumentException(String.format("Unknown protocol: %s", scheme));
-	}
+	public static final String OSS_LOG_CONSUMER_GROUP = "oss-log-consumer-group";
 
 }

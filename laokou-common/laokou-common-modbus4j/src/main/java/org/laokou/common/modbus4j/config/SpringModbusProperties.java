@@ -29,7 +29,7 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "spring.modbus")
 public class SpringModbusProperties {
 
-	private ModbusTypeEnum type = ModbusTypeEnum.TCP_MASTER;
+	private ModbusType type = ModbusType.TCP_MASTER;
 
 	private int timeout = 5000;
 

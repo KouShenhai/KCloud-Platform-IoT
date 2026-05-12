@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.laokou.common.modbus4j.config.Modbus;
-import org.laokou.common.modbus4j.config.ModbusTypeEnum;
+import org.laokou.common.modbus4j.config.ModbusType;
 import org.laokou.common.modbus4j.config.SpringModbusProperties;
 import org.laokou.common.testcontainers.container.ModbusContainer;
 import org.laokou.common.testcontainers.util.DockerImageNames;
@@ -92,7 +92,7 @@ class ModbusTest {
 	@DisplayName("Test Modbus TCP - Read Holding Registers")
 	void test_tcp_read_holding_registers() throws ModbusInitException, ModbusTransportException {
 		configureTcp(tcpContainer.getHost(), tcpContainer.getModbusTcpPort());
-		Modbus modbus = createModbus(ModbusTypeEnum.TCP_MASTER);
+		Modbus modbus = createModbus(ModbusType.TCP_MASTER);
 		try {
 			modbus.open();
 			ModbusResponse response = modbus.sendReadHoldingRegistersRequest(1, 0, 1);
@@ -111,7 +111,7 @@ class ModbusTest {
 	@DisplayName("Test Modbus TCP - Read Coils")
 	void test_tcp_read_coils() throws ModbusInitException, ModbusTransportException {
 		configureTcp(tcpContainer.getHost(), tcpContainer.getModbusTcpPort());
-		Modbus modbus = createModbus(ModbusTypeEnum.TCP_MASTER);
+		Modbus modbus = createModbus(ModbusType.TCP_MASTER);
 		try {
 			modbus.open();
 			ModbusResponse response = modbus.sendReadCoilsRequest(1, 0, 1);
@@ -130,7 +130,7 @@ class ModbusTest {
 	@DisplayName("Test Modbus TCP - Read Input Registers")
 	void test_tcp_read_input_registers() throws ModbusInitException, ModbusTransportException {
 		configureTcp(tcpContainer.getHost(), tcpContainer.getModbusTcpPort());
-		Modbus modbus = createModbus(ModbusTypeEnum.TCP_MASTER);
+		Modbus modbus = createModbus(ModbusType.TCP_MASTER);
 		try {
 			modbus.open();
 			ModbusResponse response = modbus.sendReadInputRegistersRequest(1, 0, 1);
@@ -149,7 +149,7 @@ class ModbusTest {
 	@DisplayName("Test Modbus TCP - Read Discrete Inputs")
 	void test_tcp_read_discrete_inputs() throws ModbusInitException, ModbusTransportException {
 		configureTcp(tcpContainer.getHost(), tcpContainer.getModbusTcpPort());
-		Modbus modbus = createModbus(ModbusTypeEnum.TCP_MASTER);
+		Modbus modbus = createModbus(ModbusType.TCP_MASTER);
 		try {
 			modbus.open();
 			ModbusResponse response = modbus.sendReadDiscreteInputsRequest(1, 0, 1);
@@ -170,7 +170,7 @@ class ModbusTest {
 	@DisplayName("Test Modbus UDP - Read Holding Registers")
 	void test_udp_read_holding_registers() throws ModbusInitException, ModbusTransportException {
 		configureUdp(udpContainer.getHost(), udpContainer.getModbusPort());
-		Modbus modbus = createModbus(ModbusTypeEnum.UDP_MASTER);
+		Modbus modbus = createModbus(ModbusType.UDP_MASTER);
 		try {
 			modbus.open();
 			ModbusResponse response = modbus.sendReadHoldingRegistersRequest(1, 0, 1);
@@ -191,7 +191,7 @@ class ModbusTest {
 	@DisplayName("Test Modbus UDP - Read Coils")
 	void test_udp_read_coils() throws ModbusInitException, ModbusTransportException {
 		configureUdp(udpContainer.getHost(), udpContainer.getModbusPort());
-		Modbus modbus = createModbus(ModbusTypeEnum.UDP_MASTER);
+		Modbus modbus = createModbus(ModbusType.UDP_MASTER);
 		try {
 			modbus.open();
 			ModbusResponse response = modbus.sendReadCoilsRequest(1, 0, 1);
@@ -210,7 +210,7 @@ class ModbusTest {
 	@DisplayName("Test Modbus UDP - Read Input Registers")
 	void test_udp_read_input_registers() throws ModbusInitException, ModbusTransportException {
 		configureUdp(udpContainer.getHost(), udpContainer.getModbusPort());
-		Modbus modbus = createModbus(ModbusTypeEnum.UDP_MASTER);
+		Modbus modbus = createModbus(ModbusType.UDP_MASTER);
 		try {
 			modbus.open();
 			ModbusResponse response = modbus.sendReadInputRegistersRequest(1, 0, 1);
@@ -229,7 +229,7 @@ class ModbusTest {
 	@DisplayName("Test Modbus UDP - Read Discrete Inputs")
 	void test_udp_read_discrete_inputs() throws ModbusInitException, ModbusTransportException {
 		configureUdp(udpContainer.getHost(), udpContainer.getModbusPort());
-		Modbus modbus = createModbus(ModbusTypeEnum.UDP_MASTER);
+		Modbus modbus = createModbus(ModbusType.UDP_MASTER);
 		try {
 			modbus.open();
 			ModbusResponse response = modbus.sendReadDiscreteInputsRequest(1, 0, 1);
@@ -252,7 +252,7 @@ class ModbusTest {
 	void test_rtu_read_holding_registers() throws ModbusInitException, ModbusTransportException {
 		springModbusProperties.getRtu().setCommPortId("COM1");
 		springModbusProperties.getRtu().setBaudRate(9600);
-		Modbus modbus = createModbus(ModbusTypeEnum.RTU_MASTER);
+		Modbus modbus = createModbus(ModbusType.RTU_MASTER);
 		try {
 			modbus.open();
 			ModbusResponse response = modbus.sendReadHoldingRegistersRequest(1, 0, 1);
@@ -269,7 +269,7 @@ class ModbusTest {
 	@DisplayName("Test Modbus RTU - Read Coils")
 	void test_rtu_read_coils() throws ModbusInitException, ModbusTransportException {
 		springModbusProperties.getRtu().setCommPortId("COM1");
-		Modbus modbus = createModbus(ModbusTypeEnum.RTU_MASTER);
+		Modbus modbus = createModbus(ModbusType.RTU_MASTER);
 		try {
 			modbus.open();
 			ModbusResponse response = modbus.sendReadCoilsRequest(1, 0, 1);
@@ -288,7 +288,7 @@ class ModbusTest {
 	@DisplayName("Test Modbus ASCII - Read Holding Registers")
 	void test_ascii_read_holding_registers() throws ModbusInitException, ModbusTransportException {
 		springModbusProperties.getAscii().setCommPortId("COM1");
-		Modbus modbus = createModbus(ModbusTypeEnum.ASCII_MASTER);
+		Modbus modbus = createModbus(ModbusType.ASCII_MASTER);
 		try {
 			modbus.open();
 			ModbusResponse response = modbus.sendReadHoldingRegistersRequest(1, 0, 1);
@@ -305,7 +305,7 @@ class ModbusTest {
 	@DisplayName("Test Modbus ASCII - Read Coils")
 	void test_ascii_read_coils() throws ModbusInitException, ModbusTransportException {
 		springModbusProperties.getAscii().setCommPortId("COM1");
-		Modbus modbus = createModbus(ModbusTypeEnum.ASCII_MASTER);
+		Modbus modbus = createModbus(ModbusType.ASCII_MASTER);
 		try {
 			modbus.open();
 			ModbusResponse response = modbus.sendReadCoilsRequest(1, 0, 1);
@@ -328,7 +328,7 @@ class ModbusTest {
 		springModbusProperties.getUdp().setPort(port);
 	}
 
-	private Modbus createModbus(ModbusTypeEnum typeEnum) {
+	private Modbus createModbus(ModbusType typeEnum) {
 		springModbusProperties.setType(typeEnum);
 		return typeEnum.getModbus(modbusFactory, springModbusProperties);
 	}

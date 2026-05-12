@@ -37,4 +37,10 @@ public class SystemSettingsProperties {
 
 	private Duration profileExpire = Duration.ofHours(6);
 
+	private Long defaultTenantValue = 0L;
+
+	private String defaultTenantCode = "laokouyun";
+
+	private String tenantCode = "laokouyun";
+
 }

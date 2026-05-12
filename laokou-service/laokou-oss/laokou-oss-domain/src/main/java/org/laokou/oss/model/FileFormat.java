@@ -23,7 +23,7 @@ import org.laokou.common.i18n.util.EnumParser;
 import java.util.List;
 
 @Getter
-public enum FileFormatEnum {
+public enum FileFormat {
 
 	VIDEO("video", "视频") {
 		@Override
@@ -50,13 +50,13 @@ public enum FileFormatEnum {
 
 	private final String desc;
 
-	FileFormatEnum(String code, String desc) {
+	FileFormat(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}
 
-	public static FileFormatEnum getByCode(String code) {
-		return EnumParser.parse(FileFormatEnum.class, FileFormatEnum::getCode, code);
+	public static FileFormat getByCode(String code) {
+		return EnumParser.parse(FileFormat.class, FileFormat::getCode, code);
 	}
 
 	abstract List<String> getExtNames();

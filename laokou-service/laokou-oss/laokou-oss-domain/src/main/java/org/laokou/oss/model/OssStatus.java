@@ -25,7 +25,7 @@ import lombok.Getter;
  * @author laokou
  */
 @Getter
-public enum OssStatusEnum {
+public enum OssStatus {
 
 	// @formatter:off
 	ENABLE(0, "启用"),
@@ -36,7 +36,7 @@ public enum OssStatusEnum {
 
 	private final String desc;
 
-	OssStatusEnum(int code, String desc) {
+	OssStatus(int code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}

@@ -19,6 +19,7 @@ package org.laokou.common.elasticsearch.config;
 
 import lombok.Data;
 import org.jspecify.annotations.Nullable;
+import org.laokou.common.elasticsearch.annotation.Constants;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -59,7 +60,7 @@ public class SpringElasticsearchProperties {
 
 	private final RestClient restClient = new RestClient();
 
-	public record Node(String hostname, int port, ProtocolEnum protocol) {
+	public record Node(String hostname, int port, Protocol protocol) {
 	}
 
 	public Set<Node> getNodes() {
@@ -67,14 +68,14 @@ public class SpringElasticsearchProperties {
 	}
 
 	private Node createNode(String uri) {
-		if (!(uri.startsWith("http://") || uri.startsWith("https://"))) {
-			uri = "http://" + uri;
+		if (!(uri.startsWith(Constants.HTTP_SCHEME) || uri.startsWith(Constants.HTTPS_SCHEME))) {
+			uri = Constants.HTTP_SCHEME + uri;
 		}
 		return createNode(URI.create(uri));
 	}
 
 	private Node createNode(URI uri) {
-		return new Node(uri.getHost(), uri.getPort(), ProtocolEnum.forScheme(uri.getScheme()));
+		return new Node(uri.getHost(), uri.getPort(), Protocol.forScheme(uri.getScheme()));
 	}
 
 	@Data

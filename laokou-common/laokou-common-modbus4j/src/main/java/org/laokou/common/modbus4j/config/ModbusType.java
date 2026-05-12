@@ -25,7 +25,7 @@ import org.laokou.common.i18n.util.EnumParser;
  * @author laokou
  */
 @Getter
-public enum ModbusTypeEnum {
+public enum ModbusType {
 
 	RTU_MASTER("rtu_master", "RTU MASTER") {
 		@Override
@@ -59,13 +59,13 @@ public enum ModbusTypeEnum {
 
 	private final String desc;
 
-	ModbusTypeEnum(String code, String desc) {
+	ModbusType(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}
 
-	public static ModbusTypeEnum getByCode(String code) {
-		return EnumParser.parse(ModbusTypeEnum.class, ModbusTypeEnum::getCode, code);
+	public static ModbusType getByCode(String code) {
+		return EnumParser.parse(ModbusType.class, ModbusType::getCode, code);
 	}
 
 	public abstract Modbus getModbus(ModbusFactory modbusFactory, SpringModbusProperties properties);

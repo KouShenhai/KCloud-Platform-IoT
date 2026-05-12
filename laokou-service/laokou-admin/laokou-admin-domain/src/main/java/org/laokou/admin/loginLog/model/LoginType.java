@@ -26,7 +26,7 @@ import org.laokou.common.i18n.util.EnumParser;
  * @author laokou
  */
 @Getter
-public enum LoginTypeEnum {
+public enum LoginType {
 
 	// @formatter:off
 	USERNAME_PASSWORD("username_password", "用户名密码登录"),
@@ -43,13 +43,13 @@ public enum LoginTypeEnum {
 
 	private final String desc;
 
-	LoginTypeEnum(String code, String desc) {
+	LoginType(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}
 
-	public static LoginTypeEnum getByCode(String code) {
-		return EnumParser.parse(LoginTypeEnum.class, LoginTypeEnum::getCode, code);
+	public static LoginType getByCode(String code) {
+		return EnumParser.parse(LoginType.class, LoginType::getCode, code);
 	}
 	// @formatter:on
 

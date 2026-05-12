@@ -26,7 +26,7 @@ import org.laokou.common.i18n.util.EnumParser;
  * @author laokou
  */
 @Getter
-public enum LoginStatusEnum {
+public enum LoginStatus {
 
 	// @formatter:off
 	OK(0, "登录成功"),
@@ -37,13 +37,13 @@ public enum LoginStatusEnum {
 
 	private final String desc;
 
-	LoginStatusEnum(int code, String desc) {
+	LoginStatus(int code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}
 
-	public static LoginStatusEnum getByCode(int code) {
-		return EnumParser.parse(LoginStatusEnum.class, LoginStatusEnum::getCode, code);
+	public static LoginStatus getByCode(int code) {
+		return EnumParser.parse(LoginStatus.class, LoginStatus::getCode, code);
 	}
 
 	// @formatter:on

@@ -15,14 +15,32 @@
  *
  */
 
-package org.laokou.oss.model;
+package org.laokou.common.elasticsearch.config;
 
-public enum MqEnum {
+import lombok.Getter;
+import org.laokou.common.i18n.util.EnumParser;
 
-	;
+/**
+ * @author laokou
+ */
+@Getter
+public enum Protocol {
 
-	public static final String OSS_LOG_TOPIC = "oss-log";
+	HTTP("http", "HTTP协议"),
 
-	public static final String OSS_LOG_CONSUMER_GROUP = "oss-log-consumer-group";
+	HTTPS("https", "HTTPS协议");
+
+	private final String code;
+
+	private final String desc;
+
+	Protocol(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
+
+	public static Protocol forScheme(String code) {
+		return EnumParser.parse(Protocol.class, Protocol::getCode, code);
+	}
 
 }
