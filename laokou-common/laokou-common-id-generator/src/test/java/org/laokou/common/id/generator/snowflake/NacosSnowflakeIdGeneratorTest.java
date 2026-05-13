@@ -88,8 +88,8 @@ class NacosSnowflakeIdGeneratorTest {
 
 		// Configure start timestamp
 		SpringSnowflakeProperties springSnowflakeProperties = new SpringSnowflakeProperties();
-		springSnowflakeProperties.setStartTimestamp(1609459200000L); // 2021-01-01
-																		// 00:00:00 UTC
+		// 2021-01-01 00:00:00 UTC
+		springSnowflakeProperties.setStartTimestamp(1609459200000L);
 
 		generator = new NacosSnowflakeIdGenerator(nacosConfigManager, nacosServiceManager, springSnowflakeProperties,
 				environment);

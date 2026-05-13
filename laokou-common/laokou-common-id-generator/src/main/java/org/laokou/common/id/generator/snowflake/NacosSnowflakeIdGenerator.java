@@ -421,14 +421,13 @@ public class NacosSnowflakeIdGenerator implements IdGenerator {
 
 	private boolean hasConflict() throws NacosException {
 		List<Instance> instances = namingService.getAllInstances(serviceId, groupName);
-		long count = instances.stream()
+		return instances.stream()
 			.map(Instance::getMetadata)
 			.filter(MapUtils::isNotEmpty)
 			.filter(meta -> ObjectUtils.equals(String.valueOf(this.datacenterId),
 					meta.getOrDefault(DATACENTER_ID_KEY, "0"))
 					&& ObjectUtils.equals(String.valueOf(this.machineId), meta.getOrDefault(MACHINE_ID_KEY, "0")))
-			.count();
-		return count > 1;
+			.count() > 1;
 	}
 
 	private void unregisterMetadata() {

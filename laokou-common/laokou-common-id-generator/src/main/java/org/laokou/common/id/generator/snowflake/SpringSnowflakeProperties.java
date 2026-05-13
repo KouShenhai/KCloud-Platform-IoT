@@ -29,12 +29,16 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "spring.id-generator.snowflake")
 public class SpringSnowflakeProperties {
 
+	private Integer datacenterId;
+
+	private Integer machineId;
+
 	/**
-	 * 起始时间戳（默认：2020-06-15 00:00:00）.
+	 * 起始时间戳（默认：2026-05-13 21:30:00）.
 	 * <p>
 	 * 雪花ID的时间戳部分是相对于这个起始时间的偏移量。 设置一个较近的起始时间可以让ID更短，但不能超过当前时间。 一旦设定不建议修改，否则可能产生重复ID。
 	 * </p>
 	 */
-	private long startTimestamp = 1592150400000L;
+	private long startTimestamp = 1778679000000L;
 
 }
