@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.network.util;
+package org.laokou.network.config.util;
 
 import io.netty.handler.codec.mqtt.MqttQoS;
 

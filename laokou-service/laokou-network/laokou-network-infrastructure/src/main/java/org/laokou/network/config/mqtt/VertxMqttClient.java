@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.network.config.AbstractVertxService;
 import org.laokou.network.config.mqtt.handler.MqttMessageHandler;
 import org.laokou.network.model.valueobject.MqttMessageV;
-import org.laokou.network.util.VertxMqttUtils;
+import org.laokou.network.config.util.VertxMqttUtils;
 
 import java.util.List;
 import java.util.Map;

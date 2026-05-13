@@ -33,7 +33,7 @@ import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.network.config.AbstractVertxService;
 import org.laokou.network.config.mqtt.handler.MqttMessageHandler;
 import org.laokou.network.model.valueobject.MqttMessageV;
-import org.laokou.network.util.VertxMqttUtils;
+import org.laokou.network.config.util.VertxMqttUtils;
 
 import java.io.Serializable;
 import java.util.List;
