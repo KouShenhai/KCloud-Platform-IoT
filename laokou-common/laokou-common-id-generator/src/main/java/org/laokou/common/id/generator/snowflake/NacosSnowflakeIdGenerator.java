@@ -25,10 +25,8 @@ import com.alibaba.nacos.api.naming.pojo.Instance;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.util.MapUtils;
-import org.laokou.common.i18n.common.enums.BizType;
 import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.id.generator.IdGenerator;
 import org.springframework.core.env.Environment;
 
 import java.net.InetAddress;
@@ -54,7 +52,7 @@ import java.util.stream.LongStream;
  * @author laokou
  */
 @Slf4j
-public class NacosSnowflakeIdGenerator implements IdGenerator {
+public final class NacosSnowflakeIdGenerator {
 
 	private static final String DATACENTER_ID_KEY = "datacenter_id";
 
@@ -169,7 +167,6 @@ public class NacosSnowflakeIdGenerator implements IdGenerator {
 		this.initialized = new AtomicBoolean(false);
 	}
 
-	@Override
 	public synchronized void init() throws Exception {
 		if (initialized.get()) {
 			log.warn("NacosSnowflakeGenerator has already been initialized.");
@@ -204,7 +201,6 @@ public class NacosSnowflakeIdGenerator implements IdGenerator {
 		}
 	}
 
-	@Override
 	public synchronized void close() throws NacosException {
 		namingService.unsubscribe(serviceId, groupName,
 				_ -> log.debug(
@@ -217,8 +213,7 @@ public class NacosSnowflakeIdGenerator implements IdGenerator {
 	 * 生成雪花ID.
 	 * @return 雪花ID
 	 */
-	@Override
-	public synchronized long nextId(BizType bizType) {
+	public synchronized long nextId() {
 		if (!initialized.get()) {
 			throw new IllegalStateException("NacosSnowflakeGenerator not initialized, please call init() first");
 		}
@@ -274,16 +269,14 @@ public class NacosSnowflakeIdGenerator implements IdGenerator {
 				| sequence;
 	}
 
-	@Override
-	public List<Long> nextIds(BizType bizType, int num) {
+	public List<Long> nextIds(int num) {
 		List<Long> ids = new ArrayList<>(num);
 		for (int i = 0; i < num; i++) {
-			ids.add(nextId(bizType));
+			ids.add(nextId());
 		}
 		return ids;
 	}
 
-	@Override
 	public Instant getInstant(long snowflakeId) {
 		return InstantUtils.getInstantOfTimestamp(getTimestamp(snowflakeId));
 	}
@@ -293,7 +286,6 @@ public class NacosSnowflakeIdGenerator implements IdGenerator {
 	 * @param snowflakeId 雪花ID
 	 * @return datacenterId
 	 */
-	@Override
 	public long getDatacenterId(long snowflakeId) {
 		return (snowflakeId >> (sequenceBit + machineBit)) & maxDatacenterId;
 	}
@@ -303,7 +295,6 @@ public class NacosSnowflakeIdGenerator implements IdGenerator {
 	 * @param snowflakeId 雪花ID
 	 * @return workerId
 	 */
-	@Override
 	public long getWorkerId(long snowflakeId) {
 		return (snowflakeId >> sequenceBit) & maxMachineId;
 	}
@@ -313,7 +304,6 @@ public class NacosSnowflakeIdGenerator implements IdGenerator {
 	 * @param snowflakeId 雪花ID
 	 * @return 序列号
 	 */
-	@Override
 	public long getSequence(long snowflakeId) {
 		return snowflakeId & maxSequence;
 	}

@@ -31,7 +31,6 @@ import org.laokou.auth.model.validator.PasswordValidator;
 import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.i18n.common.enums.BizType;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.id.generator.IdGenerator;
 import org.laokou.common.id.generator.segment.RedisSegmentIdGenerator;
 import org.laokou.common.id.generator.segment.SpringSegmentProperties;
 import org.laokou.common.redis.util.RedisUtils;
