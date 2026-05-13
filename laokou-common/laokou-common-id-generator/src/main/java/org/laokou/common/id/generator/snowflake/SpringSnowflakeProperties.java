@@ -29,10 +29,6 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "spring.id-generator.snowflake")
 public class SpringSnowflakeProperties {
 
-	private Integer datacenterId;
-
-	private Integer machineId;
-
 	/**
 	 * 起始时间戳（默认：2026-05-13 21:30:00）.
 	 * <p>
