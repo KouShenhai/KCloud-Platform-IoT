@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.laokou.network.model.entity.DeviceMessage;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * 读取设备属性消息【下行】.
@@ -37,6 +37,6 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class DownReadPropertiesDeviceMessage extends DeviceMessage {
 
-	private List<String> properties;
+	private Set<String> properties;
 
 }

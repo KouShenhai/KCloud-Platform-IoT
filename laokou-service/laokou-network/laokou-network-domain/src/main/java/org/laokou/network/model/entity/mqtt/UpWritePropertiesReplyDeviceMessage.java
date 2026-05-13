@@ -37,6 +37,6 @@ import java.util.Map;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class UpWritePropertiesReplyDeviceMessage extends DeviceMessage {
 
-	private Map<String, Object> properties;
+	private Map<String, String> properties;
 
 }

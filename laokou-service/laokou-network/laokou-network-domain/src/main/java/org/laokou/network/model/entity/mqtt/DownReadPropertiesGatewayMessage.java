@@ -23,8 +23,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.laokou.network.model.entity.GatewayMessage;
-
-import java.util.List;
+import java.util.Set;
 
 /**
  * 读取网关属性消息【下行】.
@@ -37,6 +36,6 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class DownReadPropertiesGatewayMessage extends GatewayMessage {
 
-	private List<String> properties;
+	private Set<String> properties;
 
 }
