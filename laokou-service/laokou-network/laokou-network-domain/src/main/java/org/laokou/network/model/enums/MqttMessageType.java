@@ -49,6 +49,90 @@ public enum MqttMessageType {
 		}
 	},
 
+	DOWN_COMMAND_GATEWAY_MESSAGE("down_command_gateway_message", "网关指令【下行】") {
+		@Override
+		public String getTopic() {
+			return "/down/+/+/command";
+		}
+
+		@Override
+		public String getMqTopic() {
+			return "iot-down-command-gateway-message";
+		}
+	},
+
+	UP_COMMAND_REPLY_GATEWAY_MESSAGE("up_command_reply_gateway_message", "网关指令回复【上行】") {
+		@Override
+		public String getTopic() {
+			return "/up/+/+/command/reply";
+		}
+
+		@Override
+		public String getMqTopic() {
+			return "iot-up-command-reply-gateway-message";
+		}
+	},
+
+	UP_REPORT_OTA_GATEWAY_MESSAGE("up_report_ota_gateway_message", "上报网关固件信息【上行】") {
+		@Override
+		public String getTopic() {
+			return "/up/+/+/ota/report";
+		}
+
+		@Override
+		public String getMqTopic() {
+			return "iot-up-report-ota-gateway-message";
+		}
+	},
+
+	DOWN_REPORT_OTA_REPLY_GATEWAY_MESSAGE("down_report_ota_reply_gateway_message", "上报网关固件信息回复【下行】") {
+		@Override
+		public String getTopic() {
+			return "/up/+/+/ota/report/reply";
+		}
+
+		@Override
+		public String getMqTopic() {
+			return "iot-down-report-ota-reply-gateway-message";
+		}
+	},
+
+	UP_UPGRADE_OTA_GATEWAY_MESSAGE("up_upgrade_ota_gateway_message", "升级网关固件【上行】") {
+		@Override
+		public String getTopic() {
+			return "/up/+/+/ota/upgrade";
+		}
+
+		@Override
+		public String getMqTopic() {
+			return "iot-up-upgrade-ota-gateway-message";
+		}
+	},
+
+	DOWN_UPGRADE_OTA_REPLY_GATEWAY_MESSAGE("down_upgrade_ota_reply_gateway_message", "升级网关固件回复【下行】") {
+		@Override
+		public String getTopic() {
+			return "/down/+/+/ota/upgrade/reply";
+		}
+
+		@Override
+		public String getMqTopic() {
+			return "iot-down-upgrade-ota-reply-gateway-message";
+		}
+	},
+
+	UP_UPGRADE_OTA_PROGRESS_GATEWAY_MESSAGE("up_upgrade_ota_progress_gateway_message", "升级网关固件进度【上行】") {
+		@Override
+		public String getTopic() {
+			return "/up/+/+/ota/upgrade/process";
+		}
+
+		@Override
+		public String getMqTopic() {
+			return "iot-up-upgrade-ota-process-gateway-message";
+		}
+	},
+
 	UP_HEARTBEAT_GATEWAY_MESSAGE("up_heartbeat_gateway_message", "网关心跳【上行】") {
 		@Override
 		public String getTopic() {
@@ -118,66 +202,6 @@ public enum MqttMessageType {
 		@Override
 		public String getMqTopic() {
 			return "iot-up-write-properties-reply-device-message";
-		}
-	},
-
-	UP_REPORT_OTA_GATEWAY_MESSAGE("up_report_ota_gateway_message", "上报网关固件信息【上行】") {
-		@Override
-		public String getTopic() {
-			return "/up/+/+/ota/report";
-		}
-
-		@Override
-		public String getMqTopic() {
-			return "iot-up-report-ota-gateway-message";
-		}
-	},
-
-	DOWN_REPORT_OTA_REPLY_GATEWAY_MESSAGE("down_report_ota_reply_gateway_message", "上报网关固件信息回复【下行】") {
-		@Override
-		public String getTopic() {
-			return "/up/+/+/ota/report/reply";
-		}
-
-		@Override
-		public String getMqTopic() {
-			return "iot-down-report-ota-reply-gateway-message";
-		}
-	},
-
-	UP_UPGRADE_OTA_GATEWAY_MESSAGE("up_upgrade_ota_gateway_message", "升级网关固件【上行】") {
-		@Override
-		public String getTopic() {
-			return "/up/+/+/ota/upgrade";
-		}
-
-		@Override
-		public String getMqTopic() {
-			return "iot-up-upgrade-ota-gateway-message";
-		}
-	},
-
-	DOWN_UPGRADE_OTA_REPLY_GATEWAY_MESSAGE("down_upgrade_ota_reply_gateway_message", "升级网关固件回复【下行】") {
-		@Override
-		public String getTopic() {
-			return "/down/+/+/ota/upgrade/reply";
-		}
-
-		@Override
-		public String getMqTopic() {
-			return "iot-down-upgrade-ota-reply-gateway-message";
-		}
-	},
-
-	UP_UPGRADE_OTA_PROGRESS_GATEWAY_MESSAGE("up_upgrade_ota_progress_gateway_message", "升级网关固件进度【上行】") {
-		@Override
-		public String getTopic() {
-			return "/up/+/+/ota/upgrade/process";
-		}
-
-		@Override
-		public String getMqTopic() {
-			return "iot-up-upgrade-ota-process-gateway-message";
 		}
 	},
 
