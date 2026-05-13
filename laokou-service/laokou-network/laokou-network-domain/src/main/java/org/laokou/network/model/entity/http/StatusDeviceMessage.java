@@ -15,17 +15,26 @@
  *
  */
 
-package org.laokou.network.config.mqtt.handler;
+package org.laokou.network.model.entity.http;
 
-import org.laokou.network.model.valueobject.MqttMessageV;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+import org.laokou.network.model.entity.DeviceMessage;
 
 /**
+ * 设备状态消息.
+ *
  * @author laokou
  */
-public interface MqttMessageHandler {
+@Getter
+@SuperBuilder(toBuilder = true)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class StatusDeviceMessage extends DeviceMessage {
 
-	void handle(String topic, MqttMessageV mqttMessageV);
-
-	boolean isSubscribe(String topic);
+	private Integer status;
 
 }

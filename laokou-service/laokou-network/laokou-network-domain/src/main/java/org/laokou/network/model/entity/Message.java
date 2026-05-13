@@ -15,17 +15,15 @@
  *
  */
 
-package org.laokou.network.config.mqtt.handler;
+package org.laokou.network.model.entity;
 
-import org.laokou.network.model.valueobject.MqttMessageV;
+import java.io.Serializable;
 
 /**
+ * 消息.
+ *
  * @author laokou
  */
-public interface MqttMessageHandler {
-
-	void handle(String topic, MqttMessageV mqttMessageV);
-
-	boolean isSubscribe(String topic);
+interface Message extends Serializable {
 
 }

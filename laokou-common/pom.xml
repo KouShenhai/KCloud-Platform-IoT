@@ -101,18 +101,14 @@
     <module>laokou-common-xss</module>
     <module>laokou-common-banner</module>
     <module>laokou-common-influxdb</module>
-    <module>laokou-common-storage</module>
     <module>laokou-common-reactor</module>
     <module>laokou-common-ai</module>
     <module>laokou-common-csv</module>
     <module>laokou-common-sftp</module>
     <module>laokou-common-websocket</module>
     <module>laokou-common-pulsar</module>
-    <module>laokou-common-coap</module>
     <module>laokou-common-fory</module>
-    <module>laokou-common-plugin</module>
     <module>laokou-common-context</module>
-    <module>laokou-common-modbus4j</module>
     <module>laokou-common-testcontainers</module>
     <module>laokou-common-mongodb</module>
     <module>laokou-common-grpc</module>

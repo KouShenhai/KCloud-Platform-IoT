@@ -15,17 +15,24 @@
  *
  */
 
-package org.laokou.network.config.mqtt.handler;
+package org.laokou.network.model.entity.http;
 
-import org.laokou.network.model.valueobject.MqttMessageV;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+import org.laokou.network.model.entity.DeviceMessage;
 
 /**
+ * 设备事件消息.
+ *
  * @author laokou
  */
-public interface MqttMessageHandler {
-
-	void handle(String topic, MqttMessageV mqttMessageV);
-
-	boolean isSubscribe(String topic);
+@Getter
+@SuperBuilder(toBuilder = true)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+public class EventDeviceMessage extends DeviceMessage {
 
 }

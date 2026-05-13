@@ -15,17 +15,38 @@
  *
  */
 
-package org.laokou.network.config.mqtt.handler;
+package org.laokou.network.model.entity;
 
-import org.laokou.network.model.valueobject.MqttMessageV;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 /**
+ * 设备消息.
+ *
  * @author laokou
  */
-public interface MqttMessageHandler {
+@Getter
+@SuperBuilder(toBuilder = true)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+public abstract class DeviceMessage extends GatewayMessage {
 
-	void handle(String topic, MqttMessageV mqttMessageV);
+	/**
+	 * 产品ID.
+	 */
+	protected Long productId;
 
-	boolean isSubscribe(String topic);
+	/**
+	 * 设备ID.
+	 */
+	protected Long deviceId;
+
+	/**
+	 * 设备名称.
+	 */
+	protected String deviceName;
 
 }

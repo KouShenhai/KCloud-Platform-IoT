@@ -15,17 +15,28 @@
  *
  */
 
-package org.laokou.network.config.mqtt.handler;
+package org.laokou.network.model.entity.http;
 
-import org.laokou.network.model.valueobject.MqttMessageV;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+import org.laokou.network.model.entity.GatewayMessage;
+
+import java.util.Map;
 
 /**
+ * 上报网关属性消息.
+ *
  * @author laokou
  */
-public interface MqttMessageHandler {
+@Getter
+@SuperBuilder(toBuilder = true)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class ReportPropertiesGatewayMessage extends GatewayMessage {
 
-	void handle(String topic, MqttMessageV mqttMessageV);
-
-	boolean isSubscribe(String topic);
+	private Map<String, Object> properties;
 
 }

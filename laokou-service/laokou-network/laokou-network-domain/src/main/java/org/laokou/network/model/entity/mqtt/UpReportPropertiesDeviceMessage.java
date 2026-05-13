@@ -15,17 +15,28 @@
  *
  */
 
-package org.laokou.network.config.mqtt.handler;
+package org.laokou.network.model.entity.mqtt;
 
-import org.laokou.network.model.valueobject.MqttMessageV;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+import org.laokou.network.model.entity.DeviceMessage;
+
+import java.util.Map;
 
 /**
+ * 上报设备属性消息【上行】.
+ *
  * @author laokou
  */
-public interface MqttMessageHandler {
+@Getter
+@SuperBuilder(toBuilder = true)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class UpReportPropertiesDeviceMessage extends DeviceMessage {
 
-	void handle(String topic, MqttMessageV mqttMessageV);
-
-	boolean isSubscribe(String topic);
+	private Map<String, Object> properties;
 
 }

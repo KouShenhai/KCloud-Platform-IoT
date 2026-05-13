@@ -32,7 +32,7 @@ import org.jspecify.annotations.NonNull;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.network.config.AbstractVertxService;
 import org.laokou.network.config.mqtt.handler.MqttMessageHandler;
-import org.laokou.network.model.MqttMessage;
+import org.laokou.network.model.valueobject.MqttMessageV;
 import org.laokou.network.util.VertxMqttUtils;
 
 import java.io.Serializable;
@@ -134,7 +134,7 @@ final class VertxMqttServer extends AbstractVertxService<MqttServer> {
 						}
 						Thread.startVirtualThread(() -> {
 							for (MqttMessageHandler mqttMessageHandler : mqttMessageHandlers) {
-								Thread.startVirtualThread(() -> mqttMessageHandler.handle(mqttPublishMessage.topicName(), new MqttMessage(mqttPublishMessage.payload(), mqttPublishMessage.topicName())));
+								Thread.startVirtualThread(() -> mqttMessageHandler.handle(mqttPublishMessage.topicName(), MqttMessageV.builder().topic(mqttPublishMessage.topicName()).payload(mqttPublishMessage.payload()).build()));
 							}
 						});
 					})

@@ -18,7 +18,7 @@
 package org.laokou.network.config.mqtt.handler;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.network.model.MqttMessage;
+import org.laokou.network.model.valueobject.MqttMessageV;
 import org.springframework.pulsar.core.PulsarTemplate;
 import org.springframework.stereotype.Component;
 
@@ -42,7 +42,7 @@ public class DownPropertyReadReplyMqttMessageHandler implements MqttMessageHandl
 	}
 
 	@Override
-	public void handle(String topic, MqttMessage mqttMessage) {
+	public void handle(String topic, MqttMessageV mqttMessageV) {
 		// MqttMessageEnum upPropertyReadReply = MqttMessageEnum.UP_PROPERTY_READ_REPLY;
 		// String topic = TopicUtils.getTopic("laokouyun", "mqtt",
 		// upPropertyReadReply.getMqTopic());

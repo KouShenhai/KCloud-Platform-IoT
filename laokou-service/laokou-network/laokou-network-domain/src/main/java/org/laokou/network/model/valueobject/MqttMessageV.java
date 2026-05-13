@@ -15,17 +15,14 @@
  *
  */
 
-package org.laokou.network.config.mqtt.handler;
+package org.laokou.network.model.valueobject;
 
-import org.laokou.network.model.valueobject.MqttMessageV;
+import io.vertx.core.buffer.Buffer;
+import lombok.Builder;
 
 /**
  * @author laokou
  */
-public interface MqttMessageHandler {
-
-	void handle(String topic, MqttMessageV mqttMessageV);
-
-	boolean isSubscribe(String topic);
-
+@Builder(toBuilder = true)
+public record MqttMessageV(Buffer payload, String topic) {
 }
