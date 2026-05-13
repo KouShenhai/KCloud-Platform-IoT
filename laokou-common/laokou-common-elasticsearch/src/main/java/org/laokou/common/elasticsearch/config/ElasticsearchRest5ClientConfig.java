@@ -40,6 +40,7 @@ import org.apache.hc.core5.http.message.BasicHeader;
 import org.apache.hc.core5.reactor.IOReactorConfig;
 import org.apache.hc.core5.reactor.ssl.SSLBufferMode;
 import org.apache.hc.core5.util.Timeout;
+import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.util.ArrayUtils;
 import org.laokou.common.core.util.Base64Utils;
 import org.laokou.common.i18n.common.constant.StringConstants;
@@ -85,14 +86,15 @@ class ElasticsearchRest5ClientConfig {
 		private final SpringElasticsearchProperties springElasticsearchProperties;
 
 		@Bean
-		Rest5ClientBuilderCustomizer defaultRestClientBuilderCustomizer(ObjectProvider<SslBundles> objectProvider) {
+		Rest5ClientBuilderCustomizer defaultRestClientBuilderCustomizer(
+				ObjectProvider<@NonNull SslBundles> objectProvider) {
 			return new DefaultRest5ClientBuilderCustomizer(springElasticsearchProperties,
 					objectProvider.getIfAvailable());
 		}
 
 		@Bean
 		Rest5ClientBuilder elasticsearchRest5ClientBuilder(
-				ObjectProvider<Rest5ClientBuilderCustomizer> builderCustomizers) {
+				ObjectProvider<@NonNull Rest5ClientBuilderCustomizer> builderCustomizers) {
 			Rest5ClientBuilder builder = Rest5Client.builder(getHttpHosts());
 			builder.setHttpClientConfigCallback((httpClientBuilder) -> builderCustomizers.orderedStream()
 				.forEach((customizer) -> customizer.customize(httpClientBuilder)));
@@ -247,7 +249,7 @@ class ElasticsearchRest5ClientConfig {
 
 		@Bean
 		Rest5ClientTransport rest5ClientTransport(Rest5Client restClient, JsonpMapper jsonMapper,
-				ObjectProvider<Rest5ClientOptions> restClientOptions) {
+				ObjectProvider<@NonNull Rest5ClientOptions> restClientOptions) {
 			return new Rest5ClientTransport(restClient, jsonMapper, restClientOptions.getIfAvailable());
 		}
 

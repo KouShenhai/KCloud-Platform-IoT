@@ -22,8 +22,8 @@ import org.laokou.admin.loginLog.dto.excel.LoginLogExcel;
 import org.laokou.admin.loginLog.factory.LoginLogDomainFactory;
 import org.laokou.admin.loginLog.gatewayimpl.database.dataobject.LoginLogDO;
 import org.laokou.admin.loginLog.model.LoginLogE;
-import org.laokou.admin.loginLog.model.LoginStatusEnum;
-import org.laokou.admin.loginLog.model.LoginTypeEnum;
+import org.laokou.admin.loginLog.model.LoginStatus;
+import org.laokou.admin.loginLog.model.LoginType;
 import org.laokou.common.excel.util.ExcelUtils;
 import org.laokou.common.i18n.common.constant.DateConstants;
 import org.laokou.common.i18n.util.InstantUtils;
@@ -107,8 +107,8 @@ public final class LoginLogConvertor implements ExcelUtils.ExcelConvertor<LoginL
 	}
 
 	private LoginLogExcel toExcel(LoginLogDO loginLogDO) {
-		LoginTypeEnum type = LoginTypeEnum.getByCode(loginLogDO.getType());
-		LoginStatusEnum status = LoginStatusEnum.getByCode(loginLogDO.getStatus());
+		LoginType type = LoginType.getByCode(loginLogDO.getType());
+		LoginStatus status = LoginStatus.getByCode(loginLogDO.getStatus());
 		Assert.notNull(type, "登录类型不存在");
 		Assert.notNull(status, "登录状态不存在");
 		LoginLogExcel loginLogExcel = new LoginLogExcel();

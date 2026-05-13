@@ -28,7 +28,7 @@ import org.laokou.oss.gateway.OssGateway;
 import org.laokou.oss.gatewayimpl.database.OssMapper;
 import org.laokou.oss.gatewayimpl.database.dataobject.OssDO;
 import org.laokou.oss.model.OssA;
-import org.laokou.oss.model.OssStatusEnum;
+import org.laokou.oss.model.OssStatus;
 import org.laokou.oss.model.OssUploadV;
 import org.springframework.stereotype.Component;
 
@@ -51,7 +51,7 @@ public class OssGatewayImpl implements OssGateway {
 					OssConvertor.toFileInfo(ossA.getBuffer(), ossA.getSize(), ossA.getContentType(), ossA.getName(),
 							ossA.getExtName()),
 					OssConvertor.toBaseOssList(ossMapper.selectList(Wrappers.lambdaQuery(OssDO.class)
-						.eq(OssDO::getStatus, OssStatusEnum.ENABLE.getCode())
+						.eq(OssDO::getStatus, OssStatus.ENABLE.getCode())
 						.select(OssDO::getParam, OssDO::getType, OssDO::getName, OssDO::getId)))));
 		}
 		catch (GlobalException ex) {

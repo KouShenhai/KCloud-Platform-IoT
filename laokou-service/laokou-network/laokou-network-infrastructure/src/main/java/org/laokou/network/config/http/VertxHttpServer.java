@@ -24,9 +24,6 @@ import io.vertx.core.http.HttpServerOptions;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.BodyHandler;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.util.RegexUtils;
-import org.laokou.network.model.enums.HttpMessage;
-import org.laokou.network.model.enums.WebsocketMessage;
 import org.laokou.network.config.AbstractVertxService;
 
 /**
@@ -70,10 +67,11 @@ final class VertxHttpServer extends AbstractVertxService<HttpServer> {
 	@Override
 	public Future<HttpServer> doStart() {
 		return super.vertx.createHttpServer(httpServerOptions).webSocketHandler(serverWebSocket -> {
-			if (!RegexUtils.matches(WebsocketMessage.UP_PROPERTY_REPORT.getPath(), serverWebSocket.path())) {
-				serverWebSocket.close();
-				return;
-			}
+			// if (!RegexUtils.matches(WebsocketMessage.UP_PROPERTY_REPORT.getPath(),
+			// serverWebSocket.path())) {
+			// serverWebSocket.close();
+			// return;
+			// }
 			serverWebSocket.textMessageHandler(message -> log.info("【Vertx-WebSocket-Server】 => 收到消息：{}", message))
 				.closeHandler(_ -> log.error("【Vertx-WebSocket-Server】 => 断开连接"))
 				.exceptionHandler(err -> log.error("【Vertx-WebSocket-Server】 => 错误信息：{}", err.getMessage(), err))
@@ -105,13 +103,13 @@ final class VertxHttpServer extends AbstractVertxService<HttpServer> {
 	private Router getRouter() {
 		Router router = Router.router(super.vertx);
 		router.route().handler(BodyHandler.create());
-		router.post(HttpMessage.UP_PROPERTY_REPORT.getRouter()).handler(ctx -> {
-			String body = ctx.body().asString();
-			Long productId = Long.valueOf(ctx.pathParam("productId"));
-			Long deviceId = Long.valueOf(ctx.pathParam("deviceId"));
-			log.debug("productId:{}，deviceId:{}，body：{}", productId, deviceId, body);
-			ctx.response().end();
-		});
+		// router.post(HttpMessageType.UP_PROPERTY_REPORT.getRouter()).handler(ctx -> {
+		// String body = ctx.body().asString();
+		// Long productId = Long.valueOf(ctx.pathParam("productId"));
+		// Long deviceId = Long.valueOf(ctx.pathParam("deviceId"));
+		// log.debug("productId:{}，deviceId:{}，body：{}", productId, deviceId, body);
+		// ctx.response().end();
+		// });
 		return router;
 	}
 
