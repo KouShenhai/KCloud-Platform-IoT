@@ -52,9 +52,9 @@ public abstract class GatewayMessage implements Message {
 	protected Long timestamp;
 
 	/**
-	 * 请求ID.
+	 * 消息ID.
 	 */
-	protected String requestId;
+	protected Long messageId;
 
 	/**
 	 * 扩展元数据.
