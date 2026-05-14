@@ -18,7 +18,7 @@ spring:
   config:
     import:
       # 临时配置文件【解决拉取nacos配置文件时，group默认为DEFAULT_GROUP问题】
-      - optional:nacos:laokou-snowflake.yaml?refreshEnabled=true&group=${NACOS_GROUP:IOT_GROUP}
+      - optional:nacos:laokou-snowflake-id.yaml?refreshEnabled=true&group=${NACOS_GROUP:IOT_GROUP}
   cloud:
     nacos:
       discovery:

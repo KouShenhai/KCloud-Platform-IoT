@@ -17,11 +17,7 @@
 
 package org.laokou.network.model.entity.mqtt;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
+import lombok.Data;
 import org.laokou.network.model.entity.DeviceMessage;
 
 /**
@@ -29,10 +25,7 @@ import org.laokou.network.model.entity.DeviceMessage;
  *
  * @author laokou
  */
-@Getter
-@SuperBuilder(toBuilder = true)
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Data
 public class UpEventDeviceMessage extends DeviceMessage {
 
 }

@@ -216,7 +216,7 @@ class OAuth2AuthorizationServerConfig {
 				new NewTopic(MqTopic.MOBILE_CAPTCHA_TOPIC, 3, (short) 1));
 	}
 
-	@Bean("idGenerator")
+	@Bean(name = "idGenerator")
 	@ConditionalOnProperty(prefix = "spring.cloud.nacos.discovery", name = "server-addr")
 	IdGenerator idGeneratorMapper() {
 		return new IdGeneratorMapper();

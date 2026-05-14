@@ -14,6 +14,37 @@
 #    * limitations under the License.
 #    *
 #    */
+server:
+  port: ${SERVER_PORT:9094}
+  ssl:
+    # 开启证书
+    enabled: false
+    # 证书位置
+    key-store: classpath:scg-keystore.p12
+    # 证书别名
+    key-alias: ${spring.application.name}
+    # 秘钥类型
+    key-store-type: PKCS12
+    # 证书密码
+    key-store-password: laokou
+  http2:
+    enabled: false
+  forward-headers-strategy: native
+  shutdown: graceful
+  tomcat:
+    threads:
+      # 工作线程池的最大线程数
+      max: 500
+      # 工作线程池的最小备用线程数
+      min-spare: 50
+    # 最大连接数
+    max-connections: 10000
+    # 当所有工作线程都在忙时，允许等待处理的最大连接数
+    accept-count: 200
+    # URI编码
+    uri-encoding: UTF-8
+    # 连接超时时间
+    connection-timeout: 60s
 spring:
   application:
     name: ${SERVICE_ID:laokou-snowflake-id}

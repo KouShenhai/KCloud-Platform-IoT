@@ -111,7 +111,7 @@ class ElasticsearchRest5ClientConfig {
 		private HttpHost[] getHttpHosts() {
 			return springElasticsearchProperties.getNodes()
 				.stream()
-				.map(node -> new HttpHost(node.protocol().getScheme(), node.hostname(), node.port()))
+				.map(node -> new HttpHost(node.protocol().getCode(), node.hostname(), node.port()))
 				.toArray(HttpHost[]::new);
 		}
 

@@ -21,6 +21,7 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
 import java.time.Duration;
 
 /**
@@ -29,7 +30,7 @@ import java.time.Duration;
 @Data
 @Component
 @ConfigurationProperties(prefix = "system.settings")
-public class SystemSettingsProperties {
+public class SystemSettingsProperties implements Serializable {
 
 	private Long dataId = 1L;
 

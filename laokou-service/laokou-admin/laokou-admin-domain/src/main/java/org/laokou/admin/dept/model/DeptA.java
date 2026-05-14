@@ -24,7 +24,6 @@ import org.laokou.admin.dept.model.validator.DeptParamValidator;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.IdGenerator;
 import org.laokou.common.i18n.common.ValidateName;
-import org.laokou.common.i18n.common.enums.BizType;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -48,16 +47,16 @@ public class DeptA extends AggregateRoot implements ValidateName {
 	 */
 	private OperateType operateType;
 
-	private final IdGenerator commonIdGenerator;
+	private final IdGenerator idGenerator;
 
 	private final DeptParamValidator saveDeptParamValidator;
 
 	private final DeptParamValidator modifyDeptParamValidator;
 
-	public DeptA(@Qualifier("commonIdGenerator") IdGenerator commonIdGenerator,
+	public DeptA(@Qualifier("idGenerator") IdGenerator idGenerator,
 			@Qualifier("modifyDeptParamValidator") DeptParamValidator saveDeptParamValidator,
 			@Qualifier("saveDeptParamValidator") DeptParamValidator modifyDeptParamValidator) {
-		this.commonIdGenerator = commonIdGenerator;
+		this.idGenerator = idGenerator;
 		this.saveDeptParamValidator = saveDeptParamValidator;
 		this.modifyDeptParamValidator = modifyDeptParamValidator;
 	}
@@ -66,7 +65,7 @@ public class DeptA extends AggregateRoot implements ValidateName {
 		this.deptE = deptE;
 		Long primaryKey = this.deptE.getId();
 		super.createTime = InstantUtils.now();
-		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : commonIdGenerator.getId(BizType.DEPT);
+		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : idGenerator.getId();
 		this.operateType = ObjectUtils.isNotNull(primaryKey) ? OperateType.MODIFY : OperateType.SAVE;
 		return this;
 	}

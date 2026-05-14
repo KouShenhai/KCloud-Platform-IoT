@@ -17,11 +17,7 @@
 
 package org.laokou.network.model.entity.http;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
+import lombok.Data;
 import org.laokou.network.model.entity.DeviceMessage;
 
 import java.util.Map;
@@ -31,10 +27,7 @@ import java.util.Map;
  *
  * @author laokou
  */
-@Getter
-@SuperBuilder(toBuilder = true)
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Data
 public class ReportPropertiesDeviceMessage extends DeviceMessage {
 
 	private Map<String, String> properties;

@@ -24,7 +24,6 @@ import org.laokou.admin.role.model.validator.RoleParamValidator;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.IdGenerator;
 import org.laokou.common.i18n.common.ValidateName;
-import org.laokou.common.i18n.common.enums.BizType;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -46,7 +45,7 @@ public class RoleA extends AggregateRoot implements ValidateName {
 
 	private OperateType operateType;
 
-	private final IdGenerator commonIdGenerator;
+	private final IdGenerator idGenerator;
 
 	private final RoleParamValidator saveRoleParamValidator;
 
@@ -54,11 +53,11 @@ public class RoleA extends AggregateRoot implements ValidateName {
 
 	private final RoleParamValidator modifyRoleAuthorityParamValidator;
 
-	public RoleA(@Qualifier("commonIdGenerator") IdGenerator commonIdGenerator,
+	public RoleA(@Qualifier("idGenerator") IdGenerator idGenerator,
 			@Qualifier("saveRoleParamValidator") RoleParamValidator saveRoleParamValidator,
 			@Qualifier("modifyRoleParamValidator") RoleParamValidator modifyRoleParamValidator,
 			@Qualifier("modifyRoleAuthorityParamValidator") RoleParamValidator modifyRoleAuthorityParamValidator) {
-		this.commonIdGenerator = commonIdGenerator;
+		this.idGenerator = idGenerator;
 		this.saveRoleParamValidator = saveRoleParamValidator;
 		this.modifyRoleParamValidator = modifyRoleParamValidator;
 		this.modifyRoleAuthorityParamValidator = modifyRoleAuthorityParamValidator;
@@ -68,7 +67,7 @@ public class RoleA extends AggregateRoot implements ValidateName {
 		this.roleE = roleE;
 		Long primaryKey = this.roleE.getId();
 		super.createTime = InstantUtils.now();
-		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : commonIdGenerator.getId(BizType.ROLE);
+		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : idGenerator.getId();
 		this.operateType = operateType;
 		return this;
 	}
@@ -83,11 +82,11 @@ public class RoleA extends AggregateRoot implements ValidateName {
 	}
 
 	public List<Long> createBatchRoleMenuIds(int num) {
-		return commonIdGenerator.getIds(BizType.ROLE, num);
+		return idGenerator.getIds(num);
 	}
 
 	public List<Long> createBatchRoleDeptIds(int num) {
-		return commonIdGenerator.getIds(BizType.ROLE, num);
+		return idGenerator.getIds(num);
 	}
 
 	@Override

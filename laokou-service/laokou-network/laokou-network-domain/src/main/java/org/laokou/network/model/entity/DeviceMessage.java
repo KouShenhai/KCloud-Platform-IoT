@@ -17,21 +17,14 @@
 
 package org.laokou.network.model.entity;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
+import lombok.Data;
 
 /**
  * 设备消息.
  *
  * @author laokou
  */
-@Getter
-@SuperBuilder(toBuilder = true)
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Data
 public abstract class DeviceMessage extends GatewayMessage {
 
 	/**
