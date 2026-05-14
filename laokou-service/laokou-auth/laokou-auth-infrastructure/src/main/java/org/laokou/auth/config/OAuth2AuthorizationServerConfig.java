@@ -42,6 +42,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
@@ -216,6 +217,7 @@ class OAuth2AuthorizationServerConfig {
 				new NewTopic(MqTopic.MOBILE_CAPTCHA_TOPIC, 3, (short) 1));
 	}
 
+	@Lazy
 	@Bean(name = "idGenerator")
 	@ConditionalOnProperty(prefix = "spring.cloud.nacos.discovery", name = "server-addr")
 	IdGenerator idGeneratorMapper() {

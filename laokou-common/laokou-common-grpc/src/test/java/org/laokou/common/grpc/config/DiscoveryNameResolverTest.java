@@ -32,8 +32,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * @author laokou
@@ -51,13 +49,12 @@ class DiscoveryNameResolverTest {
 	@BeforeEach
 	void setUp() {
 		discoveryClient = Mockito.mock(DiscoveryClient.class);
-		ExecutorService executorService = Executors.newSingleThreadExecutor();
 		NameResolver.Args args = Mockito.mock(NameResolver.Args.class);
 		listener = Mockito.mock(NameResolver.Listener2.class);
 
 		Mockito.when(args.getServiceConfigParser()).thenReturn(Mockito.mock(NameResolver.ServiceConfigParser.class));
 
-		resolver = new DiscoveryNameResolver(serviceId, discoveryClient, executorService);
+		resolver = new DiscoveryNameResolver(serviceId, discoveryClient);
 	}
 
 	@Test

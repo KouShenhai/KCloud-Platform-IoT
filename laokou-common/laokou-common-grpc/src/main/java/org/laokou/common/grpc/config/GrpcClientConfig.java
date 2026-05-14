@@ -29,7 +29,6 @@ import org.springframework.grpc.client.GrpcChannelBuilderCustomizer;
 import org.springframework.grpc.client.GrpcClientFactory;
 
 import java.util.List;
-import java.util.concurrent.ExecutorService;
 
 /**
  * @author laokou
@@ -39,9 +38,8 @@ import java.util.concurrent.ExecutorService;
 public class GrpcClientConfig {
 
 	@Bean
-	DiscoveryNameResolverProvider discoveryNameResolverProvider(DiscoveryClient discoveryClient,
-			ExecutorService virtualThreadExecutor) {
-		return new DiscoveryNameResolverProvider(discoveryClient, virtualThreadExecutor);
+	DiscoveryNameResolverProvider discoveryNameResolverProvider(DiscoveryClient discoveryClient) {
+		return new DiscoveryNameResolverProvider(discoveryClient);
 	}
 
 	@Bean

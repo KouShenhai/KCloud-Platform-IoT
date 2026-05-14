@@ -18,6 +18,7 @@
 package org.laokou.snowflake.id.config;
 
 import com.alibaba.cloud.nacos.NacosConfigManager;
+import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import com.alibaba.cloud.nacos.NacosServiceManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,7 +32,9 @@ public class SnowflakeIdConfig {
 
 	@Bean(initMethod = "init", destroyMethod = "close")
 	public IdGenerator idGenerator(NacosConfigManager nacosConfigManager, NacosServiceManager nacosServiceManager,
-			SpringSnowflakeIdProperties springSnowflakeIdProperties, Environment environment) {
+			SpringSnowflakeIdProperties springSnowflakeIdProperties, Environment environment,
+			NacosDiscoveryProperties nacosDiscoveryProperties) {
+		nacosServiceManager.setNacosDiscoveryProperties(nacosDiscoveryProperties);
 		return new NacosSnowflakeIdGenerator(nacosConfigManager, nacosServiceManager, springSnowflakeIdProperties,
 				environment);
 	}
