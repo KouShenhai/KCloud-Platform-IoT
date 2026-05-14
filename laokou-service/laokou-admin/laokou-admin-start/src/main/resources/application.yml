@@ -187,3 +187,7 @@ management:
   metrics:
     tags:
       application: ${spring.application.name}
+
+system:
+  settings:
+    node-id: 1
