@@ -18,7 +18,7 @@
 package org.laokou.network.config.mqtt.handler;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.network.model.MqttMessage;
+import org.laokou.network.model.valueobject.MqttMessageV;
 import org.springframework.pulsar.core.PulsarTemplate;
 import org.springframework.stereotype.Component;
 
@@ -41,7 +41,7 @@ public class UpPropertyReportMqttMessageHandler implements MqttMessageHandler {
 	}
 
 	@Override
-	public void handle(String topic, MqttMessage mqttMessage) {
+	public void handle(String topic, MqttMessageV mqttMessageV) {
 		// MqttMessageEnum upPropertyReport = MqttMessageEnum.UP_PROPERTY_REPORT;
 		// String topic = TopicUtils.getTopic("laokouyun", "mqtt",
 		// upPropertyReport.getMqTopic());

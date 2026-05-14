@@ -26,8 +26,6 @@ import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.client.discovery.event.HeartbeatEvent;
 
 import java.net.URI;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * @author laokou
@@ -39,8 +37,7 @@ class DiscoveryNameResolverProviderTest {
 	@BeforeEach
 	void setUp() {
 		DiscoveryClient discoveryClient = Mockito.mock(DiscoveryClient.class);
-		ExecutorService executorService = Executors.newSingleThreadExecutor();
-		provider = new DiscoveryNameResolverProvider(discoveryClient, executorService);
+		provider = new DiscoveryNameResolverProvider(discoveryClient);
 	}
 
 	@Test

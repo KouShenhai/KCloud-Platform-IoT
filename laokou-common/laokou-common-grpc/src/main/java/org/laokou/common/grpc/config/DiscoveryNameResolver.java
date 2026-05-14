@@ -33,9 +33,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 /**
@@ -47,19 +46,16 @@ final class DiscoveryNameResolver extends NameResolver {
 
 	private final DiscoveryClient discoveryClient;
 
-	private final ExecutorService executorService;
-
-	private final AtomicReference<List<ServiceInstance>> serviceInstanceReference;
+	private final List<ServiceInstance> serviceInstances;
 
 	private final AtomicBoolean resolving;
 
 	private Listener2 listener;
 
-	public DiscoveryNameResolver(String serviceId, DiscoveryClient discoveryClient, ExecutorService executorService) {
+	public DiscoveryNameResolver(String serviceId, DiscoveryClient discoveryClient) {
 		this.serviceId = serviceId;
 		this.discoveryClient = discoveryClient;
-		this.executorService = executorService;
-		this.serviceInstanceReference = new AtomicReference<>(new ArrayList<>(1024));
+		this.serviceInstances = new CopyOnWriteArrayList<>();
 		this.resolving = new AtomicBoolean(false);
 	}
 
@@ -70,7 +66,7 @@ final class DiscoveryNameResolver extends NameResolver {
 
 	@Override
 	public void shutdown() {
-		this.serviceInstanceReference.set(null);
+		this.serviceInstances.clear();
 	}
 
 	@Override
@@ -85,7 +81,7 @@ final class DiscoveryNameResolver extends NameResolver {
 	}
 
 	public void refreshFromExternal() {
-		executorService.execute(() -> {
+		Thread.startVirtualThread(() -> {
 			if (ObjectUtils.isNotNull(listener)) {
 				resolve();
 			}
@@ -94,15 +90,14 @@ final class DiscoveryNameResolver extends NameResolver {
 
 	private void resolve() {
 		if (this.resolving.compareAndSet(false, true)) {
-			this.executorService.execute(() -> {
-				this.serviceInstanceReference.set(resolveInternal());
+			Thread.startVirtualThread(() -> {
+				this.serviceInstances.addAll(resolveInternal());
 				this.resolving.set(false);
 			});
 		}
 	}
 
 	private List<ServiceInstance> resolveInternal() {
-		List<ServiceInstance> serviceInstances = serviceInstanceReference.get();
 		List<ServiceInstance> newServiceInstanceList = this.discoveryClient.getInstances(this.serviceId);
 		if (CollectionExtUtils.isEmpty(newServiceInstanceList)) {
 			listener.onError(Status.UNAVAILABLE.withDescription("No servers found for " + serviceId));

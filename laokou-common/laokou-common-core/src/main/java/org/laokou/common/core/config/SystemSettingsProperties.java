@@ -21,6 +21,7 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
 import java.time.Duration;
 
 /**
@@ -29,12 +30,24 @@ import java.time.Duration;
 @Data
 @Component
 @ConfigurationProperties(prefix = "system.settings")
-public class SystemSettingsProperties {
+public class SystemSettingsProperties implements Serializable {
+
+	private Long dataId = 1L;
+
+	private Long workId = 1L;
+
+	private Long nodeId = 1L;
 
 	private Duration captchaExpire = Duration.ofMinutes(5);
 
 	private Duration idempotentExpire = Duration.ofMinutes(5);
 
 	private Duration profileExpire = Duration.ofHours(6);
+
+	private Long defaultTenantValue = 1L;
+
+	private String defaultTenantCode = "laokouyun";
+
+	private String tenantCode = "laokouyun";
 
 }

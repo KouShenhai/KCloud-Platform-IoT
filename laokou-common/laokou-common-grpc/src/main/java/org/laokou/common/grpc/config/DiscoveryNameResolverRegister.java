@@ -24,7 +24,7 @@ import org.springframework.beans.factory.InitializingBean;
 /**
  * @author laokou
  */
-public record DiscoveryNameResolverRegister(
+record DiscoveryNameResolverRegister(
 		DiscoveryNameResolverProvider discoveryNameResolverProvider) implements InitializingBean, DisposableBean {
 
 	@Override

@@ -17,14 +17,14 @@
 
 package org.laokou.network.config.mqtt.handler;
 
-import org.laokou.network.model.MqttMessage;
+import org.laokou.network.model.valueobject.MqttMessageV;
 
 /**
  * @author laokou
  */
 public interface MqttMessageHandler {
 
-	void handle(String topic, MqttMessage mqttMessage);
+	void handle(String topic, MqttMessageV mqttMessageV);
 
 	boolean isSubscribe(String topic);
 

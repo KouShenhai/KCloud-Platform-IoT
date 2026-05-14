@@ -162,10 +162,10 @@ spring:
         heart-beat:
           # 开启心跳检测
           enabled: true
-        # 每10秒发送一次心跳【单位毫秒】
-        heart-beat-interval: 10000
-        # 超过30秒，则标记为不健康
-        heart-beat-timeout: 30000
+        # 每30秒发送一次心跳【单位毫秒】
+        heart-beat-interval: 30000
+        # 超过60秒，则标记为不健康
+        heart-beat-timeout: 60000
         # 元数据
         metadata:
           node_id: ${spring.id-generator.segment.node-id}

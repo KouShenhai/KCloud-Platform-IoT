@@ -17,8 +17,6 @@
 
 package org.laokou.common.i18n.common;
 
-import org.laokou.common.i18n.common.enums.BizType;
-
 import java.util.List;
 
 /**
@@ -26,8 +24,8 @@ import java.util.List;
  */
 public interface IdGenerator {
 
-	Long getId(BizType bizType);
+	Long getId();
 
-	List<Long> getIds(BizType bizType, int num);
+	List<Long> getIds(int num);
 
 }

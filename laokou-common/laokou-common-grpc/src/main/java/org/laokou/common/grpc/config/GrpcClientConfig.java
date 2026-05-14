@@ -20,6 +20,7 @@ package org.laokou.common.grpc.config;
 import io.grpc.netty.NettyChannelBuilder;
 import org.jspecify.annotations.NonNull;
 import org.laokou.common.grpc.annotation.GrpcClientBeanPostProcessor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,18 +29,17 @@ import org.springframework.grpc.client.GrpcChannelBuilderCustomizer;
 import org.springframework.grpc.client.GrpcClientFactory;
 
 import java.util.List;
-import java.util.concurrent.ExecutorService;
 
 /**
  * @author laokou
  */
 @Configuration(proxyBeanMethods = false)
+@ConditionalOnClass(DiscoveryClient.class)
 public class GrpcClientConfig {
 
 	@Bean
-	DiscoveryNameResolverProvider discoveryNameResolverProvider(DiscoveryClient discoveryClient,
-			ExecutorService virtualThreadExecutor) {
-		return new DiscoveryNameResolverProvider(discoveryClient, virtualThreadExecutor);
+	DiscoveryNameResolverProvider discoveryNameResolverProvider(DiscoveryClient discoveryClient) {
+		return new DiscoveryNameResolverProvider(discoveryClient);
 	}
 
 	@Bean

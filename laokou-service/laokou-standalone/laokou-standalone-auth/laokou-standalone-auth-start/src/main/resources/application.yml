@@ -69,15 +69,6 @@ spring:
     encoding: UTF-8
     check-template-location: true
     prefix: classpath:/templates/
-  id-generator:
-    segment:
-      node-id: ${NODE_ID:1}
-      configs:
-        auth:
-          key: id-generator:segment:${spring.application.name}:auth
-          cursor-key: id-generator:segment:cursor:${spring.application.name}:auth:${spring.id-generator.segment.node-id}
-          step: 10000
-          load-factor: 0.8
   # security
   security:
     oauth2:
@@ -206,12 +197,6 @@ management:
   metrics:
     tags:
       application: ${spring.application.name}
-
-# knife4j的增强配置，不需要增强可以不配
-knife4j:
-  enable: false
-  setting:
-    language: zh_cn
 
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml

@@ -24,7 +24,6 @@ import org.laokou.admin.i18nMenu.model.validator.I18nMenuParamValidator;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.IdGenerator;
 import org.laokou.common.i18n.common.ValidateName;
-import org.laokou.common.i18n.common.enums.BizType;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -48,16 +47,16 @@ public class I18nMenuA extends AggregateRoot implements ValidateName {
 	 */
 	private OperateType operateType;
 
-	private final IdGenerator commonIdGenerator;
+	private final IdGenerator idGenerator;
 
 	private final I18nMenuParamValidator saveI18nMenuParamValidator;
 
 	private final I18nMenuParamValidator modifyI18nMenuParamValidator;
 
-	public I18nMenuA(@Qualifier("commonIdGenerator") IdGenerator commonIdGenerator,
+	public I18nMenuA(@Qualifier("idGenerator") IdGenerator idGenerator,
 			@Qualifier("saveI18nMenuParamValidator") I18nMenuParamValidator saveI18nMenuParamValidator,
 			@Qualifier("modifyI18nMenuParamValidator") I18nMenuParamValidator modifyI18nMenuParamValidator) {
-		this.commonIdGenerator = commonIdGenerator;
+		this.idGenerator = idGenerator;
 		this.saveI18nMenuParamValidator = saveI18nMenuParamValidator;
 		this.modifyI18nMenuParamValidator = modifyI18nMenuParamValidator;
 	}
@@ -66,7 +65,7 @@ public class I18nMenuA extends AggregateRoot implements ValidateName {
 		this.i18nMenuE = i18nMenuE;
 		Long primaryKey = this.i18nMenuE.getId();
 		super.createTime = InstantUtils.now();
-		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : commonIdGenerator.getId(BizType.I18N_MENU);
+		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : idGenerator.getId();
 		this.operateType = ObjectUtils.isNotNull(primaryKey) ? OperateType.MODIFY : OperateType.SAVE;
 		return this;
 	}

@@ -51,6 +51,7 @@ public class WebSocketServerConfig {
 	@Bean
 	@ConditionalOnNacosDiscoveryEnabled
 	public WebSocketRegister webSocketRegister(NacosDiscoveryProperties nacosDiscoveryProperties, SpringWebSocketServerProperties springWebSocketServerProperties, NacosServiceManager nacosServiceManager) {
+		nacosServiceManager.setNacosDiscoveryProperties(nacosDiscoveryProperties);
 		return new WebSocketRegister(nacosDiscoveryProperties, springWebSocketServerProperties, nacosServiceManager.getNamingService());
 	}
 

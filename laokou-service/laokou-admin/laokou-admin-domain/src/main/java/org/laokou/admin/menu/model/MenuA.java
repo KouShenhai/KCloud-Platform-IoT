@@ -26,7 +26,6 @@ import org.laokou.admin.menu.model.validator.MenuParamValidator;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.IdGenerator;
 import org.laokou.common.i18n.common.ValidateName;
-import org.laokou.common.i18n.common.enums.BizType;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -54,7 +53,7 @@ public class MenuA extends AggregateRoot implements ValidateName {
 	/*
 	 * ID生成器.
 	 */
-	private final IdGenerator commonIdGenerator;
+	private final IdGenerator idGenerator;
 
 	/*
 	 * 新增参数校验器.
@@ -66,10 +65,10 @@ public class MenuA extends AggregateRoot implements ValidateName {
 	 */
 	private final MenuParamValidator modifyMenuParamValidator;
 
-	public MenuA(@Qualifier("commonIdGenerator") IdGenerator commonIdGenerator,
+	public MenuA(@Qualifier("idGenerator") IdGenerator idGenerator,
 			@Qualifier("saveMenuParamValidator") MenuParamValidator saveMenuParamValidator,
 			@Qualifier("modifyMenuParamValidator") MenuParamValidator modifyMenuParamValidator) {
-		this.commonIdGenerator = commonIdGenerator;
+		this.idGenerator = idGenerator;
 		this.saveMenuParamValidator = saveMenuParamValidator;
 		this.modifyMenuParamValidator = modifyMenuParamValidator;
 	}
@@ -78,7 +77,7 @@ public class MenuA extends AggregateRoot implements ValidateName {
 		this.menuE = menuE;
 		Long primaryKey = this.menuE.getId();
 		super.createTime = InstantUtils.now();
-		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : commonIdGenerator.getId(BizType.MENU);
+		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : idGenerator.getId();
 		this.operateType = ObjectUtils.isNotNull(primaryKey) ? OperateType.MODIFY : OperateType.SAVE;
 		return this;
 	}

@@ -17,6 +17,7 @@
 
 package org.laokou.common.reactor.util;
 
+import org.jspecify.annotations.NonNull;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
@@ -33,11 +34,11 @@ import java.nio.charset.StandardCharsets;
  */
 public class ReactiveResponseUtils {
 
-	public static Mono<Void> responseOk(ServerWebExchange exchange, Object data) {
+	public static Mono<@NonNull Void> responseOk(ServerWebExchange exchange, Object data) {
 		return responseOk(exchange, JacksonUtils.toJsonStr(data), MediaType.APPLICATION_JSON);
 	}
 
-	public static Mono<Void> responseOk(ServerWebExchange exchange, String str, MediaType contentType) {
+	public static Mono<@NonNull Void> responseOk(ServerWebExchange exchange, String str, MediaType contentType) {
 		DataBuffer buffer = exchange.getResponse().bufferFactory().wrap(str.getBytes(StandardCharsets.UTF_8));
 		ServerHttpResponse response = exchange.getResponse();
 		response.setStatusCode(HttpStatus.OK);

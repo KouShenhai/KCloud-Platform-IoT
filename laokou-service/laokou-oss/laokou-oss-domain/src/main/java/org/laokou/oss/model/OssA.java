@@ -32,7 +32,7 @@ import java.util.function.Supplier;
 @Getter
 public class OssA extends AggregateRoot {
 
-	private FileFormatEnum fileFormatEnum;
+	private FileFormat fileFormat;
 
 	private String extName;
 
@@ -47,8 +47,6 @@ public class OssA extends AggregateRoot {
 	private String url;
 
 	private String md5;
-
-	private String fileFormat;
 
 	private boolean publishEvent = false;
 
@@ -65,7 +63,7 @@ public class OssA extends AggregateRoot {
 	}
 
 	public void checkExt() {
-		if (!fileFormatEnum.getExtNames().contains(extName)) {
+		if (!fileFormat.getExtNames().contains(extName)) {
 			throw new BizException("B_Oss_FileExtFormatError", "文件扩展格式错误");
 		}
 	}

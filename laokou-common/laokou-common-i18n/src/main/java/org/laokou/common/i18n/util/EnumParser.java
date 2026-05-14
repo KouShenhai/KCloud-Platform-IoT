@@ -37,7 +37,7 @@ public final class EnumParser {
 			.filter(e -> ObjectUtils.equals(field.apply(e), value))
 			.findFirst()
 			.orElseThrow(() -> new BizException("B_Enum_TypeNotExist",
-					String.format("枚举类型不存在 - enum class: %s, invalid value: %s", clazz.getName(), value)));
+					String.format("enum class: %s, invalid value: %s", clazz.getName(), value)));
 	}
 
 }

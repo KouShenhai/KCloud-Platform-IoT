@@ -25,7 +25,7 @@ import org.laokou.oss.ability.OssDomainService;
 import org.laokou.oss.convertor.OssConvertor;
 import org.laokou.oss.dto.OssUploadCmd;
 import org.laokou.oss.dto.clientobject.OssUploadCO;
-import org.laokou.oss.model.MqEnum;
+import org.laokou.oss.model.Mq;
 import org.laokou.oss.model.OssA;
 import org.springframework.stereotype.Component;
 
@@ -58,7 +58,7 @@ public class OssUploadCmdExe {
 		finally {
 			// 发布领域事件
 			if (ossA.isPublishEvent()) {
-				domainEventPublisher.publish(MqEnum.OSS_LOG_TOPIC, OssConvertor.toDomainEvent(ossA));
+				domainEventPublisher.publish(Mq.OSS_LOG_TOPIC, OssConvertor.toDomainEvent(ossA));
 			}
 		}
 	}

@@ -27,23 +27,19 @@ import org.springframework.context.event.EventListener;
 import java.net.URI;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.ExecutorService;
 
 /**
  * @author laokou
  */
 @Slf4j
-public final class DiscoveryNameResolverProvider extends NameResolverProvider {
+final class DiscoveryNameResolverProvider extends NameResolverProvider {
 
 	private final DiscoveryClient discoveryClient;
 
-	private final ExecutorService executorService;
-
 	private final Set<DiscoveryNameResolver> discoveryNameResolvers;
 
-	public DiscoveryNameResolverProvider(DiscoveryClient discoveryClient, ExecutorService executorService) {
+	public DiscoveryNameResolverProvider(DiscoveryClient discoveryClient) {
 		this.discoveryClient = discoveryClient;
-		this.executorService = executorService;
 		this.discoveryNameResolvers = new HashSet<>(512);
 	}
 
@@ -59,8 +55,7 @@ public final class DiscoveryNameResolverProvider extends NameResolverProvider {
 
 	@Override
 	public NameResolver newNameResolver(URI uri, NameResolver.Args args) {
-		DiscoveryNameResolver discoveryNameResolver = new DiscoveryNameResolver(uri.getHost(), discoveryClient,
-				executorService);
+		DiscoveryNameResolver discoveryNameResolver = new DiscoveryNameResolver(uri.getHost(), discoveryClient);
 		discoveryNameResolvers.add(discoveryNameResolver);
 		return discoveryNameResolver;
 	}

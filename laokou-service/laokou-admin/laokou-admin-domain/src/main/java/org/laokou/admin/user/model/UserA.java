@@ -27,7 +27,6 @@ import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.IdGenerator;
 import org.laokou.common.i18n.common.ValidateName;
 import org.laokou.common.i18n.common.constant.StringConstants;
-import org.laokou.common.i18n.common.enums.BizType;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -55,7 +54,7 @@ public class UserA extends AggregateRoot implements ValidateName {
 	 */
 	private OperateType operateType;
 
-	private final IdGenerator commonIdGenerator;
+	private final IdGenerator idGenerator;
 
 	private final UserParamValidator saveUserParamValidator;
 
@@ -67,13 +66,13 @@ public class UserA extends AggregateRoot implements ValidateName {
 
 	private final PasswordEncoder passwordEncoder;
 
-	public UserA(@Qualifier("commonIdGenerator") IdGenerator commonIdGenerator,
+	public UserA(@Qualifier("idGenerator") IdGenerator idGenerator,
 			@Qualifier("saveUserParamValidator") UserParamValidator saveUserParamValidator,
 			@Qualifier("modifyUserParamValidator") UserParamValidator modifyUserParamValidator,
 			@Qualifier("resetUserPwdParamValidator") UserParamValidator resetUserPwdParamValidator,
 			@Qualifier("modifyUserAuthorityParamValidator") UserParamValidator modifyUserAuthorityParamValidator,
 			PasswordEncoder passwordEncoder) {
-		this.commonIdGenerator = commonIdGenerator;
+		this.idGenerator = idGenerator;
 		this.saveUserParamValidator = saveUserParamValidator;
 		this.modifyUserParamValidator = modifyUserParamValidator;
 		this.resetUserPwdParamValidator = resetUserPwdParamValidator;
@@ -95,7 +94,7 @@ public class UserA extends AggregateRoot implements ValidateName {
 		this.userE = userE;
 		Long primaryKey = this.userE.getId();
 		super.createTime = InstantUtils.now();
-		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : commonIdGenerator.getId(BizType.USER);
+		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : idGenerator.getId();
 		this.operateType = operateType;
 		return this;
 	}
@@ -147,7 +146,7 @@ public class UserA extends AggregateRoot implements ValidateName {
 	}
 
 	public List<Long> createBatchUserRoleIds(int num) {
-		return commonIdGenerator.getIds(BizType.USER, num);
+		return idGenerator.getIds(num);
 	}
 
 	public boolean isSave() {
