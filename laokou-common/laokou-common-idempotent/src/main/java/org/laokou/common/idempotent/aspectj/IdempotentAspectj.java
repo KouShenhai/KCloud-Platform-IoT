@@ -22,16 +22,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
-import org.laokou.common.redis.util.RedisUtils;
+import org.laokou.common.idempotent.util.IdempotentUtils;
 import org.springframework.stereotype.Component;
 
 /**
- * 幂等性Aop.
+ * 幂等Aop.
  *
  * @author laokou
  */
@@ -41,20 +39,13 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class IdempotentAspectj {
 
-	private final RedisUtils redisUtils;
-
-	private final SystemSettingsProperties systemSettingsProperties;
-
 	private static final String REQUEST_ID = "request-id";
+
+	private final IdempotentUtils idempotentUtils;
 
 	@Before("@annotation(org.laokou.common.idempotent.annotation.Idempotent)")
 	public void doBefore() {
-		String requestId = getRequestId();
-		if (StringExtUtils.isEmpty(requestId)) {
-			throw new SystemException("S_Idempotent_RequestIDIsNull", "请求ID不能为空");
-		}
-		String apiIdempotentKey = RedisKeyUtils.getApiIdempotentKey(requestId);
-		if (!redisUtils.setIfAbsent(apiIdempotentKey, 0, systemSettingsProperties.getIdempotentExpire().toSeconds())) {
+		if (idempotentUtils.isRepeatSubmit(getRequestId())) {
 			throw new SystemException("S_Idempotent_RequestRepeatedSubmit", "不可重复提交请求");
 		}
 	}
