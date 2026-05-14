@@ -27,9 +27,6 @@ import org.laokou.snowflake.id.proto.GenerateBatchIdsResponse;
 import org.laokou.snowflake.id.proto.GenerateIdRequest;
 import org.laokou.snowflake.id.proto.GenerateIdResponse;
 import org.laokou.snowflake.id.proto.SnowflakeIdServiceIGrpc;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -37,8 +34,6 @@ import java.util.List;
  * @author laokou
  */
 @Slf4j
-@Component("idGenerator")
-@ConditionalOnClass(DiscoveryClient.class)
 public class IdGeneratorMapper implements IdGenerator {
 
 	@GrpcClient(serviceId = "laokou-snowflake-id")
