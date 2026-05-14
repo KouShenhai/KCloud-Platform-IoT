@@ -15,32 +15,25 @@
  *
  */
 
-package org.laokou.common.log.config;
+package org.laokou.snowflake.id.config;
 
-import org.apache.kafka.clients.admin.NewTopic;
-import org.laokou.common.i18n.common.IdGenerator;
-import org.laokou.common.log.model.enums.Mq;
-import org.laokou.common.log.rpc.IdGeneratorMapper;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import com.alibaba.cloud.nacos.NacosConfigManager;
+import com.alibaba.cloud.nacos.NacosServiceManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.kafka.core.KafkaAdmin;
+import org.springframework.core.env.Environment;
 
 /**
  * @author laokou
  */
 @Configuration
-public class OperateLogConfig {
+public class SnowflakeConfig {
 
-	@Bean
-	public KafkaAdmin.NewTopics newTopics() {
-		return new KafkaAdmin.NewTopics(new NewTopic(Mq.OPERATE_LOG_TOPIC, 3, (short) 1));
-	}
-
-	@Bean("idGenerator")
-	@ConditionalOnProperty(prefix = "spring.cloud.nacos.discovery", name = "server-addr")
-	IdGenerator idGeneratorMapper() {
-		return new IdGeneratorMapper();
+	@Bean(initMethod = "init", destroyMethod = "close")
+	public IdGenerator idGenerator(NacosConfigManager nacosConfigManager, NacosServiceManager nacosServiceManager,
+			SpringSnowflakeProperties springSnowflakeProperties, Environment environment) {
+		return new NacosSnowflakeIdGenerator(nacosConfigManager, nacosServiceManager, springSnowflakeProperties,
+				environment);
 	}
 
 }

@@ -144,7 +144,7 @@
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-snowflake-proto</artifactId>
+      <artifactId>laokou-snowflake-id-proto</artifactId>
       <version>${project.version}</version>
     </dependency>
   </dependencies>

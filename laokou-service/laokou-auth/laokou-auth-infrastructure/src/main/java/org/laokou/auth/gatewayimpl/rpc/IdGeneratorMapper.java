@@ -20,12 +20,14 @@ package org.laokou.auth.gatewayimpl.rpc;
 import io.grpc.StatusException;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.grpc.annotation.GrpcClient;
+import org.laokou.common.grpc.exception.ServiceNotFoundException;
 import org.laokou.common.i18n.common.IdGenerator;
-import org.laokou.snowflake.proto.GenerateBatchIdsRequest;
-import org.laokou.snowflake.proto.GenerateBatchIdsResponse;
-import org.laokou.snowflake.proto.GenerateIdRequest;
-import org.laokou.snowflake.proto.GenerateIdResponse;
-import org.laokou.snowflake.proto.SnowflakeServiceIGrpc;
+import org.laokou.snowflake.id.proto.GenerateBatchIdsRequest;
+import org.laokou.snowflake.id.proto.GenerateBatchIdsResponse;
+import org.laokou.snowflake.id.proto.GenerateIdRequest;
+import org.laokou.snowflake.id.proto.GenerateIdResponse;
+import org.laokou.snowflake.id.proto.SnowflakeIdServiceIGrpc;
+
 import java.util.List;
 
 /**
@@ -34,32 +36,32 @@ import java.util.List;
 @Slf4j
 public class IdGeneratorMapper implements IdGenerator {
 
-	@GrpcClient(serviceId = "laokou-snowflake")
-	private SnowflakeServiceIGrpc.SnowflakeServiceIBlockingV2Stub snowflakeServiceIBlockingV2Stub;
+	@GrpcClient(serviceId = "laokou-snowflake-id")
+	private SnowflakeIdServiceIGrpc.SnowflakeIdServiceIBlockingV2Stub snowflakeIdServiceIBlockingV2Stub;
 
 	@Override
 	public Long getId() {
 		try {
-			GenerateIdResponse generateIdResponse = snowflakeServiceIBlockingV2Stub
+			GenerateIdResponse generateIdResponse = snowflakeIdServiceIBlockingV2Stub
 				.generateId(GenerateIdRequest.newBuilder().build());
 			return generateIdResponse.getData();
 		}
-		catch (StatusException e) {
-			log.error("生成雪花ID失败，错误信息：{}", e.getMessage(), e);
-			throw new RuntimeException(e);
+		catch (StatusException ex) {
+			log.error("生成雪花ID失败，错误信息：{}", ex.getMessage(), ex);
+			throw new ServiceNotFoundException("B_Service_GenerateSnowflakeIdNotFound", "调用生成雪花ID服务失败，请联系管理员", ex);
 		}
 	}
 
 	@Override
 	public List<Long> getIds(int num) {
 		try {
-			GenerateBatchIdsResponse generateBatchIdsResponse = snowflakeServiceIBlockingV2Stub
+			GenerateBatchIdsResponse generateBatchIdsResponse = snowflakeIdServiceIBlockingV2Stub
 				.generateBatchIds(GenerateBatchIdsRequest.newBuilder().setNum(num).build());
 			return generateBatchIdsResponse.getDataList();
 		}
-		catch (StatusException e) {
-			log.error("批量生成雪花IDS失败，错误信息：{}", e.getMessage(), e);
-			throw new RuntimeException(e);
+		catch (StatusException ex) {
+			log.error("批量生成雪花IDS失败，错误信息：{}", ex.getMessage(), ex);
+			throw new ServiceNotFoundException("B_Service_GenerateSnowflakeIdsNotFound", "调用生成雪花IDS服务失败，请联系管理员", ex);
 		}
 	}
 

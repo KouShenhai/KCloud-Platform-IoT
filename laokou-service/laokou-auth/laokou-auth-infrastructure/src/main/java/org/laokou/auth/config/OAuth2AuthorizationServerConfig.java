@@ -40,7 +40,6 @@ import org.laokou.common.security.config.repository.OAuth2UserConsentRepository;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -218,7 +217,7 @@ class OAuth2AuthorizationServerConfig {
 	}
 
 	@Bean("idGenerator")
-	@ConditionalOnClass(DiscoveryClient.class)
+	@ConditionalOnProperty(prefix = "spring.cloud.nacos.discovery", name = "server-addr")
 	IdGenerator idGeneratorMapper() {
 		return new IdGeneratorMapper();
 	}

@@ -17,6 +17,7 @@
 
 package org.laokou.common.grpc.config;
 
+import com.alibaba.cloud.nacos.discovery.NacosDiscoveryClient;
 import io.grpc.netty.NettyChannelBuilder;
 import org.jspecify.annotations.NonNull;
 import org.laokou.common.grpc.annotation.GrpcClientBeanPostProcessor;
@@ -35,7 +36,7 @@ import java.util.concurrent.ExecutorService;
  * @author laokou
  */
 @Configuration(proxyBeanMethods = false)
-@ConditionalOnClass(DiscoveryClient.class)
+@ConditionalOnClass(NacosDiscoveryClient.class)
 public class GrpcClientConfig {
 
 	@Bean
