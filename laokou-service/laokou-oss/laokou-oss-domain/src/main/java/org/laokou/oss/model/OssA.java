@@ -48,8 +48,6 @@ public class OssA extends AggregateRoot {
 
 	private String md5;
 
-	private String fileFormat;
-
 	private boolean publishEvent = false;
 
 	private Long ossId;

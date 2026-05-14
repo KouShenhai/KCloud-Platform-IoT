@@ -35,10 +35,9 @@ public class KafkaDomainEventPublisher implements DomainEventPublisher {
 
 	@Override
 	public void publish(String topic, DomainEvent payload) {
-		if (ObjectUtils.isNull(payload)) {
-			return;
+		if (ObjectUtils.isNotNull(payload)) {
+			kafkaTemplate.send(topic, payload);
 		}
-		kafkaTemplate.send(topic, payload);
 	}
 
 }
