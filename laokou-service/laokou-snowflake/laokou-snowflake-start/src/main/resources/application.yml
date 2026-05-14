@@ -34,7 +34,7 @@ spring:
     server:
       servlet:
         enabled: false
-      port: ${GRPC_PORT:9094}
+      port: ${GRPC_PORT:19094}
 
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml

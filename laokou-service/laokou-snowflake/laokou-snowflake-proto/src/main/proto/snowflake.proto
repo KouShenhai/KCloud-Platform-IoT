@@ -23,7 +23,7 @@ message GenerateBatchIdsResponse {
 	repeated int64 data = 3;
 }
 
-service DistributedIdServiceI {
+service SnowflakeServiceI {
 	rpc generateId(GenerateIdRequest) returns (GenerateIdResponse);
 	rpc generateBatchIds(GenerateBatchIdsRequest) returns (GenerateBatchIdsResponse);
 }

@@ -43,6 +43,7 @@ import org.laokou.auth.model.validator.PasswordValidator;
 import org.laokou.auth.model.valueobject.CaptchaV;
 import org.laokou.auth.model.valueobject.DataFilterV;
 import org.laokou.auth.model.valueobject.UserV;
+import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.common.core.util.RandomStringUtils;
 import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.crypto.util.RSAUtils;
@@ -50,7 +51,6 @@ import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.IdGenerator;
 import org.laokou.common.i18n.common.ValidateName;
 import org.laokou.common.i18n.common.constant.StringConstants;
-import org.laokou.common.i18n.common.enums.BizType;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.dto.AggregateRoot;
@@ -120,7 +120,7 @@ public final class AuthA extends AggregateRoot implements ValidateName {
 	/**
 	 * ID生成器.
 	 */
-	private final transient IdGenerator authIdGenerator;
+	private final transient IdGenerator idGenerator;
 
 	/**
 	 * 请求值Map映射.
@@ -172,8 +172,14 @@ public final class AuthA extends AggregateRoot implements ValidateName {
 	 */
 	private final CaptchaParamValidator mobileCaptchaParamValidator;
 
+	/**
+	 * 系统设置属性.
+	 */
+	private final SystemSettingsProperties systemSettingsProperties;
+
 	// @formatter:off
-	AuthA(@Qualifier("authIdGenerator") @NonNull IdGenerator authIdGenerator,
+	AuthA(
+		@Qualifier("idGenerator") @NonNull IdGenerator idGenerator,
 		@NonNull HttpRequest httpRequest,
 		@NonNull PasswordValidator passwordValidator,
 		@NonNull CaptchaValidator captchaValidator,
@@ -183,8 +189,9 @@ public final class AuthA extends AggregateRoot implements ValidateName {
 		@Qualifier("testAuthParamValidator") @NonNull AuthParamValidator testAuthParamValidator,
 		@Qualifier("usernamePasswordAuthParamValidator") @NonNull AuthParamValidator usernamePasswordAuthParamValidator,
 		@Qualifier("mailCaptchaParamValidator") @NonNull CaptchaParamValidator mailCaptchaParamValidator,
-		@Qualifier("mobileCaptchaParamValidator") @NonNull CaptchaParamValidator mobileCaptchaParamValidator) {
-		this.authIdGenerator = authIdGenerator;
+		@Qualifier("mobileCaptchaParamValidator") @NonNull CaptchaParamValidator mobileCaptchaParamValidator,
+		@NonNull SystemSettingsProperties systemSettingsProperties) {
+		this.idGenerator = idGenerator;
 		this.parameterMap = httpRequest.getParameterMap();
 		this.userE = DomainFactory.createUser();
 		this.passwordValidator = passwordValidator;
@@ -196,6 +203,7 @@ public final class AuthA extends AggregateRoot implements ValidateName {
 		this.usernamePasswordAuthParamValidator = usernamePasswordAuthParamValidator;
 		this.mailCaptchaParamValidator = mailCaptchaParamValidator;
 		this.mobileCaptchaParamValidator = mobileCaptchaParamValidator;
+		this.systemSettingsProperties = systemSettingsProperties;
 	}
 	// @formatter:on
 
@@ -404,7 +412,7 @@ public final class AuthA extends AggregateRoot implements ValidateName {
 	}
 
 	private boolean isDefaultTenant() {
-		return ObjectUtils.equals(Constants.DEFAULT_TENANT, this.userV.tenantCode());
+		return ObjectUtils.equals(systemSettingsProperties.getDefaultTenantCode(), this.userV.tenantCode());
 	}
 
 	private String getParameterValue(String key) {
@@ -518,7 +526,7 @@ public final class AuthA extends AggregateRoot implements ValidateName {
 	}
 
 	private AuthA create() {
-		super.id = authIdGenerator.getId(BizType.AUTH);
+		super.id = idGenerator.getId();
 		super.createTime = InstantUtils.now();
 		return this;
 	}

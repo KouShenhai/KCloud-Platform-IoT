@@ -23,6 +23,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.util.MessageUtils;
 import org.laokou.snowflake.config.IdGenerator;
+import org.laokou.snowflake.proto.GenerateBatchIdsRequest;
+import org.laokou.snowflake.proto.GenerateBatchIdsResponse;
+import org.laokou.snowflake.proto.GenerateIdRequest;
+import org.laokou.snowflake.proto.GenerateIdResponse;
+import org.laokou.snowflake.proto.SnowflakeServiceIGrpc;
 import org.springframework.grpc.server.service.GrpcService;
 
 /**

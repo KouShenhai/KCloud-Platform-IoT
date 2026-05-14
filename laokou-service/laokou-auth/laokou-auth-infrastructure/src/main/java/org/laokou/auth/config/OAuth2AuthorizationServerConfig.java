@@ -24,15 +24,14 @@ import org.laokou.auth.config.authentication.OAuth2MailAuthenticationConverter;
 import org.laokou.auth.config.authentication.OAuth2MobileAuthenticationConverter;
 import org.laokou.auth.config.authentication.OAuth2TestAuthenticationConverter;
 import org.laokou.auth.config.authentication.OAuth2UsernamePasswordAuthenticationConverter;
+import org.laokou.auth.gatewayimpl.rpc.IdGeneratorMapper;
 import org.laokou.auth.model.enums.MqTopic;
 import org.laokou.auth.model.function.HttpRequest;
 import org.laokou.auth.model.validator.CaptchaValidator;
 import org.laokou.auth.model.validator.PasswordValidator;
 import org.laokou.common.fory.config.ForyFactory;
-import org.laokou.common.i18n.common.enums.BizType;
+import org.laokou.common.i18n.common.IdGenerator;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.id.generator.segment.RedisSegmentIdGenerator;
-import org.laokou.common.id.generator.segment.SpringSegmentProperties;
 import org.laokou.common.redis.util.RedisUtils;
 import org.laokou.common.security.config.RedisOAuth2AuthorizationConsentService;
 import org.laokou.common.security.config.RedisRegisteredClientRepository;
@@ -41,6 +40,7 @@ import org.laokou.common.security.config.repository.OAuth2UserConsentRepository;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -210,31 +210,17 @@ class OAuth2AuthorizationServerConfig {
 		return request::getParameterMap;
 	}
 
-	@Bean("authNewTopics")
+	@Bean("newTopics")
 	KafkaAdmin.NewTopics newTopics() {
 		return new KafkaAdmin.NewTopics(new NewTopic(MqTopic.LOGIN_LOG_TOPIC, 3, (short) 1),
 				new NewTopic(MqTopic.MAIL_CAPTCHA_TOPIC, 3, (short) 1),
 				new NewTopic(MqTopic.MOBILE_CAPTCHA_TOPIC, 3, (short) 1));
 	}
 
-	@Bean(name = "authRedisSegmentIdGenerator", initMethod = "init", destroyMethod = "close")
-	IdGenerator authRedisSegmentIdGenerator(RedisUtils redisUtils, SpringSegmentProperties springSegmentProperties) {
-		return new RedisSegmentIdGenerator(redisUtils, springSegmentProperties);
-	}
-
-	@Bean(name = "authIdGenerator")
-	org.laokou.common.i18n.common.IdGenerator authIdGenerator(IdGenerator authRedisSegmentIdGenerator) {
-		return new org.laokou.common.i18n.common.IdGenerator() {
-			@Override
-			public Long getId(BizType bizType) {
-				return authRedisSegmentIdGenerator.nextId(bizType);
-			}
-
-			@Override
-			public List<Long> getIds(BizType bizType, int num) {
-				return authRedisSegmentIdGenerator.nextIds(bizType, num);
-			}
-		};
+	@Bean("idGenerator")
+	@ConditionalOnClass(DiscoveryClient.class)
+	IdGenerator idGeneratorMapper() {
+		return new IdGeneratorMapper();
 	}
 
 	private Boolean validateCaptcha(String key, String code) {

@@ -21,7 +21,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.IdGenerator;
-import org.laokou.common.i18n.common.enums.BizType;
 import org.laokou.iot.thingModel.model.enums.OperateType;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -114,7 +113,7 @@ public class ThingModelE {
 	}
 
 	public Long getPrimaryKey() {
-		return idGenerator.getId(BizType.THING_MODEL);
+		return idGenerator.getId();
 	}
 
 	public void checkThingModelParam() throws Exception {

@@ -17,7 +17,6 @@
 
 package org.laokou.snowflake;
 
-import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.WebApplicationType;
@@ -37,7 +36,6 @@ import java.net.UnknownHostException;
  * @author laokou
  */
 @Slf4j
-@EnableEncryptableProperties
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy
 @RequiredArgsConstructor
