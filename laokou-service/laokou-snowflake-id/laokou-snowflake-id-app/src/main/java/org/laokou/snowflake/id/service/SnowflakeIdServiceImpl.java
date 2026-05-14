@@ -38,7 +38,7 @@ import org.springframework.grpc.server.service.GrpcService;
 @Slf4j
 @GrpcService
 @RequiredArgsConstructor
-public class SnowflakeServiceImpl extends SnowflakeIdServiceIGrpc.SnowflakeIdServiceIImplBase {
+public class SnowflakeIdServiceImpl extends SnowflakeIdServiceIGrpc.SnowflakeIdServiceIImplBase {
 
 	private final IdGenerator idGenerator;
 

@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.snowflake;
+package org.laokou.snowflake.id;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +41,7 @@ import java.net.UnknownHostException;
 @RequiredArgsConstructor
 @EnableDiscoveryClient(autoRegister = false)
 @SpringBootApplication(scanBasePackages = "org.laokou")
-class SnowflakeApp {
+class SnowflakeIdApp {
 
 	// @formatter:off
 	static void main(String[] args) throws UnknownHostException {
@@ -52,7 +52,7 @@ class SnowflakeApp {
 		System.setProperty("nacos.logging.default.config.enabled", "false");
 		// 关闭sentinel健康检查 https://github.com/alibaba/Sentinel/issues/1494
 		System.setProperty("management.health.sentinel.enabled", "false");
-		new SpringApplicationBuilder(SnowflakeApp.class).web(WebApplicationType.SERVLET).run(args);
+		new SpringApplicationBuilder(SnowflakeIdApp.class).web(WebApplicationType.SERVLET).run(args);
 		stopWatch.stop();
 		log.info("{}", stopWatch.prettyPrint());
 	}

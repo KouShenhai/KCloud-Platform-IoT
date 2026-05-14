@@ -26,8 +26,8 @@ import org.springframework.stereotype.Component;
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = "spring.snowflake")
-public class SpringSnowflakeProperties {
+@ConfigurationProperties(prefix = "spring.snowflake-id")
+public class SpringSnowflakeIdProperties {
 
 	/**
 	 * 起始时间戳（默认：2026-05-14 12:30:00）.

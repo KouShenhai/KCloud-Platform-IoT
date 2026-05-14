@@ -27,12 +27,12 @@ import org.springframework.core.env.Environment;
  * @author laokou
  */
 @Configuration
-public class SnowflakeConfig {
+public class SnowflakeIdConfig {
 
 	@Bean(initMethod = "init", destroyMethod = "close")
 	public IdGenerator idGenerator(NacosConfigManager nacosConfigManager, NacosServiceManager nacosServiceManager,
-			SpringSnowflakeProperties springSnowflakeProperties, Environment environment) {
-		return new NacosSnowflakeIdGenerator(nacosConfigManager, nacosServiceManager, springSnowflakeProperties,
+								   SpringSnowflakeIdProperties springSnowflakeIdProperties, Environment environment) {
+		return new NacosSnowflakeIdGenerator(nacosConfigManager, nacosServiceManager, springSnowflakeIdProperties,
 				environment);
 	}
 

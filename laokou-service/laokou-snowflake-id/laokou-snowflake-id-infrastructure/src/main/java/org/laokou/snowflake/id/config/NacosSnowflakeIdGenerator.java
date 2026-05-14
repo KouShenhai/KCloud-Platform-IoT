@@ -151,15 +151,15 @@ public final class NacosSnowflakeIdGenerator implements IdGenerator {
 	private int currentPort;
 
 	public NacosSnowflakeIdGenerator(@NonNull NacosConfigManager nacosConfigManager,
-			@NonNull NacosServiceManager nacosServiceManager,
-			@NonNull SpringSnowflakeProperties springSnowflakeProperties, @NonNull Environment environment) {
+									 @NonNull NacosServiceManager nacosServiceManager,
+									 @NonNull SpringSnowflakeIdProperties springSnowflakeIdProperties, @NonNull Environment environment) {
 		this.machineBit = 5L;
 		this.datacenterBit = 5L;
 		this.sequenceBit = 13L;
 		this.maxMachineId = ~(-1L << machineBit);
 		this.maxDatacenterId = ~(-1L << datacenterBit);
 		this.maxSequence = ~(-1L << sequenceBit);
-		this.startTimestamp = springSnowflakeProperties.getStartTimestamp();
+		this.startTimestamp = springSnowflakeIdProperties.getStartTimestamp();
 		this.environment = environment;
 		this.serviceId = getServiceId();
 		this.groupName = nacosConfigManager.getNacosConfigProperties().getGroup();
