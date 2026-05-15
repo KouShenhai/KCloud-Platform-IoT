@@ -10,9 +10,12 @@ sudo apt install libluajit-5.1-dev
 
 ```shell
 go mod tidy
+```
+
+```shell
 cd cmd/server
-go run main.go -c configs
 go build -o app main.go
+go run main.go -c configs
 ```
 
 ## 项目说明

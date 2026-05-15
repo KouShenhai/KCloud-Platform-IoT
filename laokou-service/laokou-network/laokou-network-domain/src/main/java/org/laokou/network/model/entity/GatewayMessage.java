@@ -45,9 +45,9 @@ public abstract class GatewayMessage implements Message {
 	protected Long timestamp;
 
 	/**
-	 * 消息ID.
+	 * 请求ID.
 	 */
-	protected Long messageId;
+	protected Long requestId;
 
 	/**
 	 * 扩展元数据.

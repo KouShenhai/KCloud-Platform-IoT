@@ -19,8 +19,6 @@ package main
 
 import (
 	"KEdge-Gateway/internal/pkg/config"
-	"KEdge-Gateway/internal/pkg/engine"
-	"fmt"
 	"log"
 )
 
@@ -35,40 +33,4 @@ func main() {
 	}
 	defer cleanup()
 	config.Logger.Debug("init logger success")
-	luaEngine := engine.NewLuaEngine()
-
-	script := `
-	package.cpath = "/usr/lib/x86_64-linux-gnu/lua/5.1/?.so;" .. package.cpath
-	local cjson = require("cjson")
-	function parse(data)
-		local obj = cjson.decode(data)
-		return "temp:" .. obj.temp
-	end
-	`
-
-	luaEngine.Load(script)
-
-	script2 := `
-	package.cpath = "/usr/lib/x86_64-linux-gnu/lua/5.1/?.so;" .. package.cpath
-	local cjson = require("cjson")
-	function parse(data)
-		local obj = cjson.decode(data)
-		return "temp2222:" .. obj.temp
-	end
-	`
-
-	luaEngine.Load(script2)
-
-	result, _ := luaEngine.Execute(
-		"parse",
-		`{"temp":26}`,
-	)
-
-	result2, _ := luaEngine.Execute(
-		"parse",
-		`{"temp":333}`,
-	)
-
-	fmt.Println("result =", result)
-	fmt.Println("result =", result2)
 }
