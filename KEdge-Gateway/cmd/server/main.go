@@ -18,7 +18,7 @@
 package main
 
 import (
-	"KEdge-Gateway/internal/pkg/config"
+	"github.com/KouShenhai/KCloud-Platform-IoT/KEdge-Gateway/internal/pkg/config"
 	"log"
 )
 

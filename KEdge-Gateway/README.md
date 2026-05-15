@@ -3,12 +3,6 @@
 ## 快速启动
 
 ```shell
-sudo apt install luajit
-sudo apt install lua-cjson
-sudo apt install libluajit-5.1-dev
-```
-
-```shell
 go mod tidy
 ```
 
@@ -16,6 +10,10 @@ go mod tidy
 cd cmd/server
 go build -o app main.go
 go run main.go -c configs
+```
+
+```shell
+cd cmd/server
 ```
 
 ## 项目说明

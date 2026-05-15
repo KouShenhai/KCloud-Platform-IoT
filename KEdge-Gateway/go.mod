@@ -1,4 +1,4 @@
-module KEdge-Gateway
+module github.com/KouShenhai/KCloud-Platform-IoT/KEdge-Gateway
 
 go 1.26.2
 
