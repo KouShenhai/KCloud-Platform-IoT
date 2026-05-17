@@ -164,9 +164,7 @@ class TtlThreadContextMapTest {
 	void testThreadLocalIsolation() {
 		contextMap.put("mainKey", "mainValue");
 
-		CompletableFuture.runAsync(() -> {
-			contextMap.put("childKey", "childValue");
-		}).join();
+		CompletableFuture.runAsync(() -> contextMap.put("childKey", "childValue")).join();
 
 		// Main thread should have its value (TTL transmits to child)
 		Assertions.assertThat(contextMap.get("mainKey")).isEqualTo("mainValue");
