@@ -47,7 +47,7 @@ final class TestUserConvertor implements ExcelUtils.ExcelConvertor<TestUserDO, T
 		testUserDO.setCreateTime(InstantUtils.now());
 		testUserDO.setUpdateTime(InstantUtils.now());
 		testUserDO.setVersion(0);
-		testUserDO.setTenantId(0L);
+		testUserDO.setTenantId(1L);
 		testUserDO.setDeptId(1L);
 		testUserDO.setDelFlag(0);
 		return testUserDO;
