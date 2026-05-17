@@ -17,8 +17,8 @@
     "antd": "^5.4.0"
   },
   "devDependencies": {
-    "@types/react": "^18.0.33",
-    "@types/react-dom": "^18.0.11",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
     "husky": "^9",
     "lint-staged": "^16.0.0",
     "prettier": "^2.8.7",
