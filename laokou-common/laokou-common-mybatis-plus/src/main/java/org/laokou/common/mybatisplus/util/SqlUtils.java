@@ -61,11 +61,26 @@ public class SqlUtils {
 		Object parameterObject = boundSql.getParameterObject();
 		MetaObject metaObject = ObjectUtils.isNotNull(parameterObject) ? SystemMetaObject.forObject(parameterObject)
 				: null;
+		int cursor = 0;
+		int estimatedCapacity = sql.length() + (parameterMappings.size() * 16);
+		StringBuilder resultSql = new StringBuilder(estimatedCapacity);
 		for (ParameterMapping parameterMapping : parameterMappings) {
 			Object value = getParameterValue(boundSql, parameterMapping, metaObject);
-			sql = sql.replaceFirst("\\?", Matcher.quoteReplacement(formatValue(value)));
+			String formattedValue = Matcher.quoteReplacement(formatValue(value));
+			int questionMarkIndex = sql.indexOf('?', cursor);
+			if (questionMarkIndex != -1) {
+				resultSql.append(sql, cursor, questionMarkIndex);
+				resultSql.append(formattedValue);
+				cursor = questionMarkIndex + 1;
+			}
+			else {
+				break;
+			}
 		}
-		return sql;
+		if (cursor < sql.length()) {
+			resultSql.append(sql, cursor, sql.length());
+		}
+		return resultSql.toString();
 	}
 
 	/**

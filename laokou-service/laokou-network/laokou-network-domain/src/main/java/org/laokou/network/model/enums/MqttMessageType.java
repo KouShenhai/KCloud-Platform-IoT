@@ -17,7 +17,10 @@
 
 package org.laokou.network.model.enums;
 
+import com.google.common.collect.Maps;
 import lombok.Getter;
+
+import java.util.Map;
 
 /***
  * mqtt消息类型枚举.
@@ -242,5 +245,19 @@ public enum MqttMessageType {
 	public abstract String getTopic();
 
 	public abstract String getMqTopic();
+
+	private static final MqttMessageType[] VALUES = values();
+
+	public static Map<String, Integer> getTopics(Long tenantId, Integer qos) {
+		Map<String, Integer> topics = Maps.newHashMapWithExpectedSize(VALUES.length);
+		for (MqttMessageType messageType : VALUES) {
+			String topic = messageType.getTopic();
+			int plusIndex = topic.indexOf('+');
+			String replacedTopic = plusIndex >= 0
+					? topic.substring(0, plusIndex) + tenantId.toString() + topic.substring(plusIndex + 1) : topic;
+			topics.put(replacedTopic, qos);
+		}
+		return topics;
+	}
 
 }

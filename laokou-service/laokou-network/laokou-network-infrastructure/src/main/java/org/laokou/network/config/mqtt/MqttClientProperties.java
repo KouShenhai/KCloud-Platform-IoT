@@ -18,10 +18,7 @@
 package org.laokou.network.config.mqtt;
 
 import lombok.Data;
-import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.core.util.UUIDGenerator;
-
-import java.util.Map;
 
 /**
  * @author laokou
@@ -65,8 +62,6 @@ public class MqttClientProperties {
 	private long reconnectInterval = 1000;
 
 	private int reconnectAttempts = Integer.MAX_VALUE;
-
-	private Map<String, Integer> topics = MapUtils.newHashMap(0);
 
 	private int willQos = 1;
 
