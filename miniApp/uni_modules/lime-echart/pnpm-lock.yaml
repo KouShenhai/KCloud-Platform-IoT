@@ -6,7 +6,7 @@ specifiers:
 
 dependencies:
   echarts: 6.0.0
-  zrender: 6.0.0
+  zrender: 6.1.0
 
 packages:
 
@@ -23,6 +23,12 @@ packages:
 
   /zrender/6.0.0:
     resolution: {integrity: sha512-41dFXEEXuJpNecuUQq6JlbybmnHaqqpGlbH1yxnA5V9MMP4SbohSVZsJIwz+zdjQXSSlR1Vc34EgH1zxyTDvhg==}
+    dependencies:
+      tslib: 2.3.0
+    dev: false
+
+  /zrender/6.1.0:
+    resolution: {integrity: sha512-oEGMDB6pOP2S6OwRR4PdVv610zrjnA3Bh+JnSG12fYJlBKjtNAoEb5fSUoCOOINlH96I2fU38/A2UpRKs67xYQ==}
     dependencies:
       tslib: 2.3.0
     dev: false
