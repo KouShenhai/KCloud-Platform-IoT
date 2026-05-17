@@ -21,11 +21,11 @@ import lombok.Data;
 import org.laokou.network.model.entity.DeviceMessage;
 
 /**
- * 设备事件消息.
+ * 设备预警/报警事件消息.
  *
  * @author laokou
  */
 @Data
-public class EventDeviceMessage extends DeviceMessage {
+public class AlarmEventDeviceMessage extends DeviceMessage {
 
 }
