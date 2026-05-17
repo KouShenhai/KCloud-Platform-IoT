@@ -50,4 +50,6 @@ public class SystemSettingsProperties implements Serializable {
 
 	private String tenantCode = "laokouyun";
 
+	private Long tenantValue = 1L;
+
 }

@@ -17,13 +17,16 @@
 
 package org.laokou.network.config.mqtt;
 
+import io.netty.handler.codec.mqtt.MqttQoS;
 import io.vertx.core.Future;
 import io.vertx.core.Vertx;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.mqtt.MqttClient;
 import io.vertx.mqtt.MqttClientOptions;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.network.config.AbstractVertxService;
+import org.laokou.network.model.enums.MqttMessageType;
 import org.laokou.network.model.valueobject.MqttMessageV;
 import org.laokou.network.config.util.VertxMqttUtils;
 
@@ -47,13 +50,17 @@ final class VertxMqttClient extends AbstractVertxService<Void> {
 
 	private final AtomicBoolean disconnect;
 
-	VertxMqttClient(Vertx vertx, MqttClientProperties mqttClientProperties, List<MessageHandler> messageHandlers) {
+	private final SystemSettingsProperties systemSettingsProperties;
+
+	VertxMqttClient(Vertx vertx, MqttClientProperties mqttClientProperties, List<MessageHandler> messageHandlers,
+			SystemSettingsProperties systemSettingsProperties) {
 		super(vertx);
 		this.mqttClientOptions = getMqttClientOptions(mqttClientProperties);
 		this.mqttClientProperties = mqttClientProperties;
 		this.messageHandlers = messageHandlers;
 		this.mqttClient = init();
 		this.disconnect = new AtomicBoolean(false);
+		this.systemSettingsProperties = systemSettingsProperties;
 	}
 
 	@Override
@@ -135,7 +142,8 @@ final class VertxMqttClient extends AbstractVertxService<Void> {
 	}
 
 	private void subscribe() {
-		Map<String, Integer> topics = mqttClientProperties.getTopics();
+		Map<String, Integer> topics = MqttMessageType.getTopics(systemSettingsProperties.getTenantValue(),
+				MqttQoS.AT_MOST_ONCE.value());
 		mqttClient.subscribe(topics).onComplete(subscribeResult -> {
 			if (subscribeResult.succeeded()) {
 				log.info("【Vertx-MQTT-Client】 => MQTT订阅成功，主题: {}", String.join("、", topics.keySet()));
