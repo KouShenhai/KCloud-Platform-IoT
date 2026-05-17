@@ -37,11 +37,11 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级单体架构和微�
 <a href="https://gitcode.com/KouShenhai_/KCloud-Platform-IoT" target="_blank"><img src="https://gitcode.com/KouShenhai_/KCloud-Platform-IoT/star/badge.svg?theme=dark" alt="GitCode star"/></a>
 <a href="https://gitcode.com/KouShenhai_/KCloud-Platform-IoT" target="_blank"><img src="https://atomgit.com/KouShenhai_/KCloud-Platform-IoT/star/2025top.svg?theme=dark" alt="GitCode star"/></a>
 
-<a href="https://spring.io/projects/spring-framework" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Framework&messageHandler=7.0.7&color=green" alt="Spring Framework"/></a>
-<a href="https://spring.io/projects/spring-authorization-server" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Security&messageHandler=7.0.4&color=green" alt="Spring Security"/></a>
-<a href="https://spring.io/projects/spring-boot" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Boot&messageHandler=4.0.6&color=green" alt="Spring Boot"/></a>
-<a href="https://spring.io/projects/spring-cloud" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Cloud&messageHandler=2025.1.0&color=green" alt="Spring Cloud"/></a>
-<a href="https://github.com/alibaba/spring-cloud-alibaba" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Cloud%20Alibaba&messageHandler=2025.1.0.0&color=orange" alt="Spring Cloud Alibaba"/></a>
+<a href="https://spring.io/projects/spring-framework" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Framework&message=7.0.7&color=green" alt="Spring Framework"/></a>
+<a href="https://spring.io/projects/spring-authorization-server" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Security&message=7.0.4&color=green" alt="Spring Security"/></a>
+<a href="https://spring.io/projects/spring-boot" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Boot&message=4.0.6&color=green" alt="Spring Boot"/></a>
+<a href="https://spring.io/projects/spring-cloud" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Cloud&message=2025.1.0&color=green" alt="Spring Cloud"/></a>
+<a href="https://github.com/alibaba/spring-cloud-alibaba" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Cloud%20Alibaba&message=2025.1.0.0&color=orange" alt="Spring Cloud Alibaba"/></a>
 
 <a href="https://www.graalvm.org/downloads" target="_blank"><img src="https://img.shields.io/badge/GraalVM-25.0.0-blue.svg" alt="GraalVM"/></a>
 <a href="https://maven.apache.org/" target="_blank"><img src="https://img.shields.io/badge/Maven-3.9.11-blue" alt="Maven"/></a>

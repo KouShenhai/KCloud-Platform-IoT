@@ -266,7 +266,7 @@ CREATE TABLE sj_retry_task_log_message
 	group_name    varchar(64) NOT NULL,
 	retry_id      bigint      NOT NULL,
 	retry_task_id bigint      NOT NULL,
-	messageHandler       text        NOT NULL,
+	message       text        NOT NULL,
 	log_num       int         NOT NULL DEFAULT 1,
 	real_time     bigint      NOT NULL DEFAULT 0,
 	create_dt     timestamp   NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -280,7 +280,7 @@ COMMENT ON COLUMN sj_retry_task_log_message.namespace_id IS '命名空间id';
 COMMENT ON COLUMN sj_retry_task_log_message.group_name IS '组名称';
 COMMENT ON COLUMN sj_retry_task_log_message.retry_id IS '重试信息Id';
 COMMENT ON COLUMN sj_retry_task_log_message.retry_task_id IS '重试任务Id';
-COMMENT ON COLUMN sj_retry_task_log_message.messageHandler IS '异常信息';
+COMMENT ON COLUMN sj_retry_task_log_message.message IS '异常信息';
 COMMENT ON COLUMN sj_retry_task_log_message.log_num IS '日志数量';
 COMMENT ON COLUMN sj_retry_task_log_message.real_time IS '上报时间';
 COMMENT ON COLUMN sj_retry_task_log_message.create_dt IS '创建时间';
@@ -515,7 +515,7 @@ CREATE TABLE sj_job_log_message
 	job_id        bigint       NOT NULL,
 	task_batch_id bigint       NOT NULL,
 	task_id       bigint       NOT NULL,
-	messageHandler       text         NOT NULL,
+	message       text         NOT NULL,
 	log_num       int          NOT NULL DEFAULT 1,
 	real_time     bigint       NOT NULL DEFAULT 0,
 	ext_attrs     varchar(256) NULL     DEFAULT '',
@@ -532,7 +532,7 @@ COMMENT ON COLUMN sj_job_log_message.group_name IS '组名称';
 COMMENT ON COLUMN sj_job_log_message.job_id IS '任务信息id';
 COMMENT ON COLUMN sj_job_log_message.task_batch_id IS '任务批次id';
 COMMENT ON COLUMN sj_job_log_message.task_id IS '调度任务id';
-COMMENT ON COLUMN sj_job_log_message.messageHandler IS '调度信息';
+COMMENT ON COLUMN sj_job_log_message.message IS '调度信息';
 COMMENT ON COLUMN sj_job_log_message.log_num IS '日志数量';
 COMMENT ON COLUMN sj_job_log_message.real_time IS '上报时间';
 COMMENT ON COLUMN sj_job_log_message.ext_attrs IS '扩展字段';

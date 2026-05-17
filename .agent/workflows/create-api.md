@@ -28,7 +28,7 @@ import lombok.Data;
 @Schema(description = "{功能}命令")
 public class {功能名}Cmd {
 
-    @NotBlank(messageHandler = "名称不能为空")
+    @NotBlank(message = "名称不能为空")
     @Schema(description = "名称")
     private String name;
 

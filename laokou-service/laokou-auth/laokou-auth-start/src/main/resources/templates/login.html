@@ -100,7 +100,7 @@
 	</div>
 
 	<div class="alert alert-danger" th:if="${param.error != null and session.SPRING_SECURITY_LAST_EXCEPTION != null}">
-		<span th:text="${session.SPRING_SECURITY_LAST_EXCEPTION?.messageHandler}"></span>
+		<span th:text="${session.SPRING_SECURITY_LAST_EXCEPTION?.message}"></span>
 	</div>
 	<form method="post" th:action="@{/login}" autocomplete="off">
 
