@@ -26,6 +26,7 @@ import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInt
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
 import com.github.benmanes.caffeine.cache.Caffeine;
+import org.laokou.common.core.config.SystemSettingsProperties;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -74,14 +75,15 @@ public class MybatisPlusAutoConfig {
 	// @formatter:on
 	@Bean
 	@ConditionalOnMissingBean(MybatisPlusInterceptor.class)
-	public MybatisPlusInterceptor mybatisPlusInterceptor(MybatisPlusExtProperties mybatisPlusExtProperties) {
+	public MybatisPlusInterceptor mybatisPlusInterceptor(MybatisPlusExtProperties mybatisPlusExtProperties,
+			SystemSettingsProperties systemSettingsProperties) {
 		MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
 		// 数据权限插件
 		interceptor.addInnerInterceptor(new DataFilterInterceptor());
 		// 多租户插件
 		if (mybatisPlusExtProperties.getTenant().isEnabled()) {
-			interceptor.addInnerInterceptor(new TenantLineInnerInterceptor(
-					new GlobalTenantLineHandler(mybatisPlusExtProperties.getTenant().getIgnoreTables())));
+			interceptor.addInnerInterceptor(new TenantLineInnerInterceptor(new GlobalTenantLineHandler(
+					mybatisPlusExtProperties.getTenant().getIgnoreTables(), systemSettingsProperties)));
 		}
 		// 动态表名插件
 		interceptor.addInnerInterceptor(new DynamicTableNameInnerInterceptor(new DynamicTableNameHandler()));
