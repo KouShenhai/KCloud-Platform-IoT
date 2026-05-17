@@ -27,6 +27,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.i18n.util.ResourceExtUtils;
 import org.laokou.common.i18n.util.SpringContextUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
@@ -92,7 +93,8 @@ class NacosRouteDefinitionRepositoryTest {
 		ReactiveRedisTemplate<@NonNull String, @NonNull Object> reactiveRedisTemplate = new ReactiveRedisTemplate<>(
 				lettuceConnectionFactory, serializationContext);
 		// 初始化NacosRouteDefinitionRepository
-		nacosRouteDefinitionRepository = new NacosRouteDefinitionRepository(nacosConfigManager, reactiveRedisTemplate);
+		nacosRouteDefinitionRepository = new NacosRouteDefinitionRepository(nacosConfigManager, reactiveRedisTemplate,
+				ThreadUtils.newVirtualTaskExecutor());
 		// 设置ApplicationContext（syncRouter内部会调用SpringContextUtils.publishEvent）
 		Field applicationContextField = SpringContextUtils.class.getDeclaredField("applicationContext");
 		applicationContextField.setAccessible(true);

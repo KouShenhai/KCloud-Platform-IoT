@@ -43,7 +43,7 @@ import java.time.Duration;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
+import java.util.concurrent.ExecutorService;
 
 // @formatter:off
 /**
@@ -63,14 +63,18 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 
 	private final ConfigService configService;
 
+	private final ExecutorService virtualThreadExecutor;
+
 	private final ReactiveHashOperations<@NonNull String, @NonNull String, @NonNull RouteDefinition> reactiveHashOperations;
 
 	public NacosRouteDefinitionRepository(@NonNull NacosConfigManager nacosConfigManager,
-			@NonNull ReactiveRedisTemplate<@NonNull String, @NonNull Object> reactiveRedisTemplate) {
+			@NonNull ReactiveRedisTemplate<@NonNull String, @NonNull Object> reactiveRedisTemplate,
+			ExecutorService virtualThreadExecutor) {
 		this.dataId = "router.json";
 		this.groupName = nacosConfigManager.getNacosConfigProperties().getGroup();
 		this.configService = nacosConfigManager.getConfigService();
 		this.reactiveHashOperations = reactiveRedisTemplate.opsForHash();
+		this.virtualThreadExecutor = virtualThreadExecutor;
 	}
 
 	@PostConstruct
@@ -79,7 +83,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 		configService.addListener(dataId, groupName, new Listener() {
 			@Override
 			public Executor getExecutor() {
-				return Executors.newSingleThreadExecutor();
+				return virtualThreadExecutor;
 			}
 
 			@Override
