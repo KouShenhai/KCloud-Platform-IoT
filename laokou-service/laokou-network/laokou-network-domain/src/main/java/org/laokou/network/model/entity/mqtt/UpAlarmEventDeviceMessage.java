@@ -18,14 +18,14 @@
 package org.laokou.network.model.entity.mqtt;
 
 import lombok.Data;
-import org.laokou.network.model.entity.DeviceMessage;
+import org.laokou.network.model.entity.EventDeviceMessage;
 
 /**
- * 设备事件消息【上行】.
+ * 设备预警/报警事件消息【上行】.
  *
  * @author laokou
  */
 @Data
-public class UpEventDeviceMessage extends DeviceMessage {
+public class UpAlarmEventDeviceMessage extends EventDeviceMessage {
 
 }
