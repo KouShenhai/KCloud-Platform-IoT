@@ -12,7 +12,7 @@ dependencies:
     specifier: ^2.4.4
     version: 2.8.10(antd@5.29.3)(rc-field-form@2.7.1)(react-dom@18.3.1)(react@18.3.1)
   '@umijs/max':
-    specifier: ^4.6.42
+    specifier: ^4.6.24
     version: 4.6.42(@babel/core@7.29.0)(@types/react-dom@18.3.7)(@types/react@18.3.28)(dva@2.5.0-beta.2)(prettier@2.8.8)(rc-field-form@2.7.1)(react-dom@18.3.1)(react@18.3.1)(resolve-url-loader@5.0.0)(sass@1.54.0)(styled-jsx@5.1.7)(typescript@5.9.3)(webpack@5.106.0)
   antd:
     specifier: ^5.4.0
@@ -29,8 +29,8 @@ devDependencies:
     specifier: ^9
     version: 9.1.7
   lint-staged:
-    specifier: ^16.0.0
-    version: 16.4.0
+    specifier: ^17.0.0
+    version: 17.0.5
   prettier:
     specifier: ^2.8.7
     version: 2.8.8
@@ -1932,6 +1932,7 @@ packages:
   /@hono/node-ws@1.3.0(@hono/node-server@1.19.13)(hono@4.12.12):
     resolution: {integrity: sha512-ju25YbbvLuXdqBCmLZLqnNYu1nbHIQjoyUqA8ApZOeL1k4skuiTcw5SW77/5SUYo2Xi2NVBJoVlfQurnKEp03Q==, tarball: https://registry.npmjs.org/@hono/node-ws/-/node-ws-1.3.0.tgz}
     engines: {node: '>=18.14.1'}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
     peerDependencies:
       '@hono/node-server': ^1.19.2
       hono: ^4.6.0
@@ -2116,7 +2117,7 @@ packages:
     peerDependencies:
       react: '>=16.3.0'
     dependencies:
-      '@babel/runtime': 7.23.6
+      '@babel/runtime': 7.29.2
       hoist-non-react-statics: 3.3.2
       react: 18.3.1
       react-is: 16.13.1
@@ -2382,7 +2383,7 @@ packages:
     resolution: {integrity: sha512-n4HcR5siNUXRX23nDizbZBQPO0ZM/5oTtmKZ6/eqL0L2bo747cklFdZGRN2f+c9qWGICwDzrhW0H7tE9PptdcA==}
     engines: {node: '>=14.x'}
     dependencies:
-      '@babel/runtime': 7.28.6
+      '@babel/runtime': 7.29.2
     dev: false
 
   /@rc-component/color-picker@2.0.1(react-dom@18.3.1)(react@18.3.1):
@@ -2405,7 +2406,7 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
     dependencies:
-      '@babel/runtime': 7.28.6
+      '@babel/runtime': 7.29.2
       rc-util: 5.44.4(react-dom@18.3.1)(react@18.3.1)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
@@ -2415,7 +2416,7 @@ packages:
     resolution: {integrity: sha512-jS4E7T9Li2GuYwI6PyiVXmxTiM6b07rlD9Ge8uGZSCz3WlzcG5ZK7g5bbuKNeZ9pgUuPK/5guV781ujdVpm4HQ==}
     engines: {node: '>=8.x'}
     dependencies:
-      '@babel/runtime': 7.28.6
+      '@babel/runtime': 7.29.2
     dev: false
 
   /@rc-component/mutate-observer@1.1.0(react-dom@18.3.1)(react@18.3.1):
@@ -2519,7 +2520,7 @@ packages:
       postcss: '>=7.0.0'
       postcss-syntax: '>=0.36.2'
     dependencies:
-      '@babel/core': 7.23.6
+      '@babel/core': 7.29.0
       postcss: 8.5.9
       postcss-syntax: 0.36.2(postcss@8.5.9)
     transitivePeerDependencies:
@@ -2784,7 +2785,7 @@ packages:
     resolution: {integrity: sha512-hy8b7Y1J8OGe6LbAjj3xniQrj3v6lsivCcrmf4TzSgPzLkhIeKgc5IZnT7ReIqmEuodjfO8EYAuoFvIrHi/+jQ==, tarball: https://registry.npmjs.org/@types/history/-/history-5.0.0.tgz}
     deprecated: This is a stub types definition. history provides its own type definitions, so you do not need this installed.
     dependencies:
-      history: 4.10.1
+      history: 5.3.0
     dev: false
 
   /@types/hoist-non-react-statics@3.3.7(@types/react@18.3.28):
@@ -2877,7 +2878,7 @@ packages:
       '@types/history': 4.7.11
       '@types/react': 18.3.28
       '@types/react-router': 5.1.20
-      redux: 3.7.2
+      redux: 4.2.1
     dev: false
 
   /@types/react-router@5.1.20:
@@ -3347,7 +3348,7 @@ packages:
   /@umijs/history@5.3.1:
     resolution: {integrity: sha512-/e0cEGrR2bIWQD7pRl3dl9dcyRGeC9hoW0OCvUTT/hjY0EfUrkd6G8ZanVghPMpDuY5usxq9GVcvrT8KNXLWvA==, tarball: https://registry.npmjs.org/@umijs/history/-/history-5.3.1.tgz}
     dependencies:
-      '@babel/runtime': 7.23.6
+      '@babel/runtime': 7.29.2
       query-string: 6.14.1
     dev: false
 
@@ -5043,21 +5044,12 @@ packages:
     resolution: {integrity: sha512-jeC1axXpnb0/2nn/Y1LPuLdgXBLH7aDcHu4KEKfqw3CUhX7ZpfBSlPKyqXE6btIgEzfWtrX3/tyBCaCvXvMkOw==, tarball: https://registry.npmjs.org/colord/-/colord-2.9.3.tgz}
     dev: false
 
-  /colorette@2.0.20:
-    resolution: {integrity: sha512-IfEDxwoWIjkeXL1eXcDiow4UbKjhLdq6/EuSVR9GMN7KVH3r9gQ83e73hsz1Nd1T3ijd5xv1wcWRYO+D6kCI2w==, tarball: https://registry.npmjs.org/colorette/-/colorette-2.0.20.tgz}
-    dev: true
-
   /combined-stream@1.0.8:
     resolution: {integrity: sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==, tarball: https://registry.npmjs.org/combined-stream/-/combined-stream-1.0.8.tgz}
     engines: {node: '>= 0.8'}
     dependencies:
       delayed-stream: 1.0.0
     dev: false
-
-  /commander@14.0.3:
-    resolution: {integrity: sha512-H+y0Jo/T1RZ9qPP4Eh1pkcQcLRglraJaSLoyOtHxu6AapkjWVCy2Sit1QQ4x3Dng8qDlSsZEet7g5Pq06MvTgw==, tarball: https://registry.npmjs.org/commander/-/commander-14.0.3.tgz}
-    engines: {node: '>=20'}
-    dev: true
 
   /commander@2.20.3:
     resolution: {integrity: sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==, tarball: https://registry.npmjs.org/commander/-/commander-2.20.3.tgz}
@@ -7163,7 +7155,7 @@ packages:
   /history@5.3.0:
     resolution: {integrity: sha512-ZqaKwjjrAYUYfLG+htGaIIZ4nioX2L70ZUMIFysS3xvBsSG4x/n1V6TXV3N8ZYNuFGlDirFg32T7B6WOUPDYcQ==, tarball: https://registry.npmjs.org/history/-/history-5.3.0.tgz}
     dependencies:
-      '@babel/runtime': 7.23.6
+      '@babel/runtime': 7.29.2
     dev: false
 
   /hmac-drbg@1.0.1:
@@ -8231,29 +8223,28 @@ packages:
     resolution: {integrity: sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==, tarball: https://registry.npmjs.org/lines-and-columns/-/lines-and-columns-1.2.4.tgz}
     dev: false
 
-  /lint-staged@16.4.0:
-    resolution: {integrity: sha512-lBWt8hujh/Cjysw5GYVmZpFHXDCgZzhrOm8vbcUdobADZNOK/bRshr2kM3DfgrrtR1DQhfupW9gnIXOfiFi+bw==, tarball: https://registry.npmjs.org/lint-staged/-/lint-staged-16.4.0.tgz}
-    engines: {node: '>=20.17'}
+  /lint-staged@17.0.5:
+    resolution: {integrity: sha512-d12yC+/e8RhBjZtaxZn71FyrgU/P5e+uAPifhCLwdosQZP/zamSdKRWDC30ocVIbzDKiFG1McHc/LUgB92GIPw==, tarball: https://registry.npmjs.org/lint-staged/-/lint-staged-17.0.5.tgz}
+    engines: {node: '>=22.22.1'}
     hasBin: true
     dependencies:
-      commander: 14.0.3
-      listr2: 9.0.5
-      picomatch: 4.0.3
+      listr2: 10.2.1
+      picomatch: 4.0.4
       string-argv: 0.3.2
-      tinyexec: 1.0.4
-      yaml: 2.8.2
+      tinyexec: 1.1.2
+    optionalDependencies:
+      yaml: 2.9.0
     dev: true
 
-  /listr2@9.0.5:
-    resolution: {integrity: sha512-ME4Fb83LgEgwNw96RKNvKV4VTLuXfoKudAmm2lP8Kk87KaMK0/Xrx/aAkMWmT8mDb+3MlFDspfbCs7adjRxA2g==, tarball: https://registry.npmjs.org/listr2/-/listr2-9.0.5.tgz}
-    engines: {node: '>=20.0.0'}
+  /listr2@10.2.1:
+    resolution: {integrity: sha512-7I5knELsJKTUjXG+A6BkKAiGkW1i25fNa/xlUl9hFtk15WbE9jndA89xu5FzQKrY5llajE1hfZZFMILXkDHk/Q==, tarball: https://registry.npmjs.org/listr2/-/listr2-10.2.1.tgz}
+    engines: {node: '>=22.13.0'}
     dependencies:
       cli-truncate: 5.2.0
-      colorette: 2.0.20
       eventemitter3: 5.0.4
       log-update: 6.1.0
       rfdc: 1.4.1
-      wrap-ansi: 9.0.2
+      wrap-ansi: 10.0.0
     dev: true
 
   /loader-runner@4.3.1:
@@ -8401,7 +8392,7 @@ packages:
   /md5.js@1.3.5:
     resolution: {integrity: sha512-xitP+WxNPcTTOgnTJcrhM0xvdPepipPSf3I8EIpGKeFLjt3PlJLIDG3u8EX53ZIubkb+5U2+3rELYpEhHhzdkg==, tarball: https://registry.npmjs.org/md5.js/-/md5.js-1.3.5.tgz}
     dependencies:
-      hash-base: 3.0.5
+      hash-base: 3.1.2
       inherits: 2.0.4
       safe-buffer: 5.2.1
     dev: false
@@ -9125,6 +9116,11 @@ packages:
 
   /picomatch@4.0.3:
     resolution: {integrity: sha512-5gTmgEY/sqK6gFXLIsQNH19lWb4ebPDLA4SdLP7dsWkIXHWlG66oPuVvXSGFPppYZz8ZDZq0dYYrbHfBCVUb1Q==, tarball: https://registry.npmjs.org/picomatch/-/picomatch-4.0.3.tgz}
+    engines: {node: '>=12'}
+    dev: true
+
+  /picomatch@4.0.4:
+    resolution: {integrity: sha512-QP88BAKvMam/3NxH6vj2o21R6MjxZUAd6nlwAS/pnGvN9IVLocLHxGYIzFhg6fUQ+5th6P4dv4eW9jX3DSIj7A==, tarball: https://registry.npmjs.org/picomatch/-/picomatch-4.0.4.tgz}
     engines: {node: '>=12'}
     dev: true
 
@@ -10446,7 +10442,7 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
     dependencies:
-      '@babel/runtime': 7.28.6
+      '@babel/runtime': 7.29.2
       classnames: 2.5.1
       rc-util: 5.44.4(react-dom@18.3.1)(react@18.3.1)
       react: 18.3.1
@@ -10906,7 +10902,7 @@ packages:
       react: ^16.6.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.6.0 || ^17.0.0 || ^18.0.0
     dependencies:
-      '@babel/runtime': 7.23.6
+      '@babel/runtime': 7.29.2
       invariant: 2.2.4
       prop-types: 15.8.1
       react: 18.3.1
@@ -12407,8 +12403,8 @@ packages:
     resolution: {integrity: sha512-XPaBkWQJdsf3pLKJV9p4qN/S+fm2Oj8AIPo1BTUhg5oxkvm9+SVEGFdhyOz7tTdUTfvxMiAs4sp6/eZO2Ew+pw==}
     dev: false
 
-  /tinyexec@1.0.4:
-    resolution: {integrity: sha512-u9r3uZC0bdpGOXtlxUIdwf9pkmvhqJdrVCH9fapQtgy/OeTTMZ1nqH7agtvEfmGui6e1XxjcdrlxvxJvc3sMqw==, tarball: https://registry.npmjs.org/tinyexec/-/tinyexec-1.0.4.tgz}
+  /tinyexec@1.1.2:
+    resolution: {integrity: sha512-dAqSqE/RabpBKI8+h26GfLq6Vb3JVXs30XYQjdMjaj/c2tS8IYYMbIzP599KtRj7c57/wYApb3QjgRgXmrCukA==, tarball: https://registry.npmjs.org/tinyexec/-/tinyexec-1.1.2.tgz}
     engines: {node: '>=18'}
     dev: true
 
@@ -13032,6 +13028,15 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: false
 
+  /wrap-ansi@10.0.0:
+    resolution: {integrity: sha512-SGcvg80f0wUy2/fXES19feHMz8E0JoXv2uNgHOu4Dgi2OrCy1lqwFYEJz1BLbDI0exjPMe/ZdzZ/YpGECBG/aQ==, tarball: https://registry.npmjs.org/wrap-ansi/-/wrap-ansi-10.0.0.tgz}
+    engines: {node: '>=20'}
+    dependencies:
+      ansi-styles: 6.2.3
+      string-width: 8.2.0
+      strip-ansi: 7.2.0
+    dev: true
+
   /wrap-ansi@7.0.0:
     resolution: {integrity: sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==, tarball: https://registry.npmjs.org/wrap-ansi/-/wrap-ansi-7.0.0.tgz}
     engines: {node: '>=10'}
@@ -13107,11 +13112,13 @@ packages:
     engines: {node: '>= 6'}
     dev: false
 
-  /yaml@2.8.2:
-    resolution: {integrity: sha512-mplynKqc1C2hTVYxd0PU2xQAc22TI1vShAYGksCCfxbn/dFwnHTNi1bvYsBTkhdUNtGIf5xNOg938rrSSYvS9A==, tarball: https://registry.npmjs.org/yaml/-/yaml-2.8.2.tgz}
+  /yaml@2.9.0:
+    resolution: {integrity: sha512-2AvhNX3mb8zd6Zy7INTtSpl1F15HW6Wnqj0srWlkKLcpYl/gMIMJiyuGq2KeI2YFxUPjdlB+3Lc10seMLtL4cA==, tarball: https://registry.npmjs.org/yaml/-/yaml-2.9.0.tgz}
     engines: {node: '>= 14.6'}
     hasBin: true
+    requiresBuild: true
     dev: true
+    optional: true
 
   /yargs-parser@20.2.9:
     resolution: {integrity: sha512-y11nGElTIV+CT3Zv9t7VKl+Q3hTQoT9a1Qzezhhl6Rp21gJ/IVTW7Z3y9EWXhuUBC2Shnf+DX0antecpAwSP8w==, tarball: https://registry.npmjs.org/yargs-parser/-/yargs-parser-20.2.9.tgz}
