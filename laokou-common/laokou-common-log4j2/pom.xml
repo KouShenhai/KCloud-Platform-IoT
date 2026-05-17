@@ -43,6 +43,10 @@
       <optional>true</optional>
     </dependency>
     <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-layout-template-json</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-test</artifactId>
       <version>${project.version}</version>

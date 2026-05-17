@@ -24,7 +24,7 @@ CREATE TABLE "public"."iot_device_event_log" (
 "update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 "del_flag" int2 NOT NULL DEFAULT 0,
 "version" int4 NOT NULL DEFAULT 0,
-"tenant_id" int8 NOT NULL DEFAULT 0,
+"tenant_id" int8 NOT NULL DEFAULT 1,
 "dept_id" int8 NOT NULL DEFAULT 1
 )
 ;
@@ -49,7 +49,7 @@ CREATE TABLE "public"."iot_device_property_log" (
 "update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 "del_flag" int2 NOT NULL DEFAULT 0,
 "version" int4 NOT NULL DEFAULT 0,
-"tenant_id" int8 NOT NULL DEFAULT 0,
+"tenant_id" int8 NOT NULL DEFAULT 1,
 "dept_id" int8 NOT NULL DEFAULT 1
 )
 ;
@@ -113,7 +113,7 @@ CREATE TABLE "public"."sys_notice_log" (
 "update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 "del_flag" int2 NOT NULL DEFAULT 0,
 "version" int4 NOT NULL DEFAULT 0,
-"tenant_id" int8 NOT NULL DEFAULT 0,
+"tenant_id" int8 NOT NULL DEFAULT 1,
 "dept_id" int8 NOT NULL DEFAULT 1,
 "code" varchar(100)  NOT NULL,
 "name" varchar(200)  NOT NULL,
@@ -177,7 +177,7 @@ CREATE TABLE "public"."sys_operate_log" (
 "update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 "del_flag" int2 NOT NULL DEFAULT 0,
 "version" int4 NOT NULL DEFAULT 0,
-"tenant_id" int8 NOT NULL DEFAULT 0,
+"tenant_id" int8 NOT NULL DEFAULT 1,
 "dept_id" int8 NOT NULL DEFAULT 1,
 "name" varchar(50) NOT NULL,
 "module_name" varchar(32)  NOT NULL,
@@ -235,7 +235,7 @@ CREATE TABLE "public"."sys_oss_log" (
 	"update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	"del_flag" int2 NOT NULL DEFAULT 0,
 	"version" int4 NOT NULL DEFAULT 0,
-	"tenant_id" int8 NOT NULL DEFAULT 0,
+	"tenant_id" int8 NOT NULL DEFAULT 1,
 	"dept_id" int8 NOT NULL DEFAULT 1,
 	"name" varchar(100) NOT NULL,
 	"md5" varchar(100) NOT NULL,
@@ -272,7 +272,7 @@ CREATE UNIQUE INDEX "sys_oss_log_md5_idx" ON "public"."sys_oss_log" USING btree 
 "md5"
 );
 
-INSERT INTO "public"."sys_oss_log" VALUES (1, 1, 1, '2025-07-20 16:12:56', '2025-07-20 16:12:58', 0, 0, 0,0, '4215328e32f94b668d4dcfc9cb8621d7.png', 'e39fe32418f9e115b2703350e581feb6', 'https://youke1.picui.cn/s1/2025/07/20/687ca202b2c53.jpg', 518124, 1, 'image/jpeg', 'image', '.jpg');
+INSERT INTO "public"."sys_oss_log" VALUES (1, 1, 1, '2025-07-20 16:12:56', '2025-07-20 16:12:58', 0, 0, 1,0, '4215328e32f94b668d4dcfc9cb8621d7.png', 'e39fe32418f9e115b2703350e581feb6', 'https://youke1.picui.cn/s1/2025/07/20/687ca202b2c53.jpg', 518124, 1, 'image/jpeg', 'image', '.jpg');
 
 ALTER TABLE "public"."sys_sql_log" ADD CONSTRAINT "sys_sql_log_pkey" PRIMARY KEY ("id");
 

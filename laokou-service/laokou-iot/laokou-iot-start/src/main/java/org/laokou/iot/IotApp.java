@@ -62,7 +62,7 @@ class IotApp {
 	static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
 		StopWatch stopWatch = new StopWatch("IoT应用程序");
 		stopWatch.start();
-		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "10005")));
+		System.setProperty("ADDRESS", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "10005")));
 		// SpringSecurity 子线程读取父线程的上下文
 		SecurityContextHolder.setContextHolderStrategy(new TransmittableThreadLocalSecurityContextHolderStrategy());
 		// 配置关闭nacos日志，因为nacos的log4j2导致本项目的日志不输出的问题

@@ -24,7 +24,7 @@ CREATE TABLE "public"."generator_column" (
 	"update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	"del_flag" int2 NOT NULL DEFAULT 0,
 	"version" int4 NOT NULL DEFAULT 0,
-	"tenant_id" int8 NOT NULL DEFAULT 0,
+	"tenant_id" int8 NOT NULL DEFAULT 1,
 	"dept_id" int8 NOT NULL DEFAULT 1,
 	"name" varchar(100) NOT NULL,
 	"comment" varchar(400),
@@ -77,7 +77,7 @@ CREATE TABLE "public"."generator_info" (
 	"update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	"del_flag" int2 NOT NULL DEFAULT 0,
 	"version" int4 NOT NULL DEFAULT 0,
-	"tenant_id" int8 NOT NULL DEFAULT 0,
+	"tenant_id" int8 NOT NULL DEFAULT 1,
 	"dept_id" int8 NOT NULL DEFAULT 1,
 	"ds_name" varchar(50) NOT NULL,
 	"db_name" varchar(50) NOT NULL,
@@ -125,7 +125,7 @@ CREATE TABLE "public"."generator_template" (
 	"update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	"del_flag" int2 NOT NULL DEFAULT 0,
 	"version" int4 NOT NULL DEFAULT 0,
-	"tenant_id" int8 NOT NULL DEFAULT 0,
+	"tenant_id" int8 NOT NULL DEFAULT 1,
 	"dept_id" int8 NOT NULL DEFAULT 1,
 	"code" varchar(50)  NOT NULL,
 	"name" varchar(50)  NOT NULL,
@@ -282,7 +282,7 @@ CREATE TABLE "public"."generator_group" (
    "update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
    "del_flag" int2 NOT NULL DEFAULT 0,
    "version" int4 NOT NULL DEFAULT 0,
-   "tenant_id" int8 NOT NULL DEFAULT 0,
+   "tenant_id" int8 NOT NULL DEFAULT 1,
    "dept_id" int8 NOT NULL DEFAULT 1,
    "name" varchar(50)  NOT NULL
 )
@@ -312,7 +312,7 @@ CREATE TABLE "public"."generator_template_group" (
 	"update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	"del_flag" int2 NOT NULL DEFAULT 0,
 	"version" int4 NOT NULL DEFAULT 0,
-	"tenant_id" int8 NOT NULL DEFAULT 0,
+	"tenant_id" int8 NOT NULL DEFAULT 1,
 	"dept_id" int8 NOT NULL DEFAULT 1,
 	"template_id" int8  NOT NULL,
 	"group_id" int8  NOT NULL
@@ -339,4 +339,4 @@ CREATE UNIQUE INDEX "generator_template_group_templateId_groupId_idx" ON "public
 );
 COMMENT ON INDEX "public"."generator_template_group_templateId_groupId_idx" IS '模板ID_组ID_唯一索引';
 
-INSERT INTO "public"."generator_template_group" VALUES (1, 1, 1, '2025-10-03 18:04:32', '2025-10-03 18:04:34', 0, 0, 0,0, 1, 1);
+INSERT INTO "public"."generator_template_group" VALUES (1, 1, 1, '2025-10-03 18:04:32', '2025-10-03 18:04:34', 0, 0, 1,0, 1, 1);

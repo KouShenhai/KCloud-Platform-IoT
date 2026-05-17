@@ -34,7 +34,7 @@ class ReportApp {
 
 	// @formatter:off
 	static void main(String[] args) throws UnknownHostException {
-		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "10002")));
+		System.setProperty("ADDRESS", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "10002")));
 		// 关闭sentinel健康检查 https://github.com/alibaba/Sentinel/issues/1494
 		System.setProperty("management.health.sentinel.enabled", "false");
 		// 因为nacos的log4j2导致本项目的日志不输出的问题

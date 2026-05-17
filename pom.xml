@@ -1347,6 +1347,7 @@
         <filtering>true</filtering>
         <!-- 在打包的时候，根据-P参数，加上需要的yml配置文件 -->
         <includes>
+          <include>custom-layout.json</include>
           <include>application.yml</include>
           <!--suppress UnresolvedMavenProperty -->
           <include>application-${PROFILE-ACTIVE}.yml</include>

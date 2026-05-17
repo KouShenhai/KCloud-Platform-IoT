@@ -49,7 +49,7 @@ public final class TraceLogConvertor {
 				traceLogIndex.getLevel(), traceLogIndex.getThreadName(), traceLogIndex.getPackageName());
 		List<List<String>> values = new ArrayList<>(2);
 		List<String> message = List.of(lokiTimestamp, traceLogIndex.getMessage());
-		List<String> stacktrace = List.of(lokiTimestamp, traceLogIndex.getStacktrace());
+		List<String> stacktrace = List.of(lokiTimestamp, traceLogIndex.getStackTrace());
 		values.add(message);
 		values.add(stacktrace);
 		return new LokiPushDTO.Stream(label, values);

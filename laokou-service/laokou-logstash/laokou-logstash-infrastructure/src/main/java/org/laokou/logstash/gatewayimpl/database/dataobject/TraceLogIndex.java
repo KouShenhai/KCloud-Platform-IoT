@@ -61,6 +61,6 @@ public final class TraceLogIndex implements Serializable {
 	private String message;
 
 	@Field(type = Type.KEYWORD)
-	private String stacktrace;
+	private String stackTrace;
 
 }

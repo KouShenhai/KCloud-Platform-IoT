@@ -24,6 +24,7 @@ import org.laokou.common.log.rpc.IdGeneratorMapper;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.kafka.core.KafkaAdmin;
 
 /**
@@ -37,6 +38,7 @@ public class OperateLogConfig {
 		return new KafkaAdmin.NewTopics(new NewTopic(Mq.OPERATE_LOG_TOPIC, 3, (short) 1));
 	}
 
+	@Lazy
 	@Bean("idGenerator")
 	@ConditionalOnProperty(prefix = "spring.cloud.nacos.discovery", name = "server-addr")
 	IdGenerator idGeneratorMapper() {

@@ -23,7 +23,7 @@ import org.laokou.common.i18n.common.constant.DateConstants;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.JacksonUtils;
-import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.logstash.gatewayimpl.database.dataobject.TraceLogIndex;
 
 import java.time.ZoneId;
@@ -42,8 +42,8 @@ public abstract class AbstractTraceLogStorage implements TraceLogStorage {
 	protected TraceLogIndex getTraceLogIndex(Object obj) {
 		if (obj instanceof byte[] buff) {
 			TraceLogIndex traceLogIndex = JacksonUtils.toBean(buff, TraceLogIndex.class);
-			if (!ObjectUtils.equals(traceLogIndex.getTraceId(), "%X{traceId}")
-					&& !ObjectUtils.equals(traceLogIndex.getSpanId(), "%X{spanId}")) {
+			if (StringExtUtils.isEmpty(traceLogIndex.getTraceId())
+					&& StringExtUtils.isEmpty(traceLogIndex.getSpanId())) {
 				return traceLogIndex;
 			}
 			return null;

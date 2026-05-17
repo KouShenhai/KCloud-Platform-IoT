@@ -58,7 +58,7 @@ class StandaloneAdminApp {
 	void main(String[] args) throws  NoSuchAlgorithmException, KeyManagementException, UnknownHostException {
 		StopWatch stopWatch = new StopWatch("StandaloneAdmin应用程序");
 		stopWatch.start();
-		System.setProperty("address", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "8099")));
+		System.setProperty("ADDRESS", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "8099")));
 		// SpringSecurity 子线程读取父线程的上下文
 		SecurityContextHolder.setContextHolderStrategy(new TransmittableThreadLocalSecurityContextHolderStrategy());
 		// 忽略SSL认证

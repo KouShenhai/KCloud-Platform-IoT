@@ -35,7 +35,7 @@
         <if test="pageQuery.params.endDate != null and pageQuery.params.endDate != ''">
             and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ <= ]]> ${pageQuery.params.endDate}
         </if>
-		order by id desc
+		order by create_time desc, id desc
 		limit ${pageQuery.pageSize} offset ${pageQuery.pageIndex}
 	</select>
 

@@ -259,7 +259,7 @@ public final class AuthA extends AggregateRoot implements ValidateName {
 
 	public void getTenantId(Supplier<Long> supplier) {
 		if (isDefaultTenant()) {
-			this.userV = this.userV.toBuilder().tenantId(0L).build();
+			this.userV = this.userV.toBuilder().tenantId(systemSettingsProperties.getDefaultTenantValue()).build();
 		}
 		else {
 			this.userV = this.userV.toBuilder().tenantId(supplier.get()).build();

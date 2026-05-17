@@ -61,12 +61,7 @@
       <Filters>
         <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
       </Filters>
-      <JsonExtLayout complete="true" compact="false" eventEol="true" properties="true" locationInfo="false" includeStacktrace="true" stacktraceAsString="true" objectMessageAsJsonObject="true">
-        <KeyValuePair key="serviceId" value="${SERVICE_ID}"/>
-        <KeyValuePair key="profile" value="${PROFILE}" />
-        <KeyValuePair key="traceId" value="%X{traceId}" />
-        <KeyValuePair key="spanId" value="%X{spanId}" />
-      </JsonExtLayout>
+      <JsonTemplateLayout eventTemplateUri="classpath:custom-layout.json"/>
       <Policies>
         <TimeBasedTriggeringPolicy interval="${LOG_INTERVAL}"/>
         <SizeBasedTriggeringPolicy size="${LOG_ROLL_SIZE}"/>
@@ -79,12 +74,7 @@
       <Filters>
         <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
       </Filters>
-      <JsonExtLayout complete="true" compact="false" eventEol="true" properties="true" locationInfo="false" includeStacktrace="true" stacktraceAsString="true" objectMessageAsJsonObject="true">
-        <KeyValuePair key="serviceId" value="${SERVICE_ID}"/>
-        <KeyValuePair key="profile" value="${PROFILE}" />
-        <KeyValuePair key="traceId" value="%X{traceId}" />
-        <KeyValuePair key="spanId" value="%X{spanId}" />
-      </JsonExtLayout>
+      <JsonTemplateLayout eventTemplateUri="classpath:custom-layout.json"/>
       <Policies>
         <TimeBasedTriggeringPolicy interval="${LOG_INTERVAL}"/>
         <SizeBasedTriggeringPolicy size="${LOG_ROLL_SIZE}"/>
