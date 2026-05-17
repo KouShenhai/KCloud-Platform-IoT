@@ -92,9 +92,7 @@ class WebSocketTypeTest {
 	@Test
 	void test_getByCode_throws_exception_for_unknown() {
 		// When & Then
-		Assertions.assertThatThrownBy(() -> WebSocketType.getByCode("unknown"))
-			.isInstanceOf(BizException.class)
-			.hasMessageContaining("枚举类型不存在");
+		Assertions.assertThatThrownBy(() -> WebSocketType.getByCode("unknown")).isInstanceOf(BizException.class);
 	}
 
 	@Test

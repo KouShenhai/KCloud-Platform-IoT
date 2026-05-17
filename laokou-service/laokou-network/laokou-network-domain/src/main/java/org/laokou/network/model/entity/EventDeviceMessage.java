@@ -15,23 +15,26 @@
  *
  */
 
-package main
+package org.laokou.network.model.entity;
 
-import (
-	"log"
+import lombok.Data;
 
-	"github.com/KouShenhai/KCloud-Platform-IoT/KEdge-Gateway/internal/pkg/config"
-)
+/**
+ * 设备事件消息.
+ *
+ * @author laokou
+ */
+@Data
+public abstract class EventDeviceMessage extends DeviceMessage {
 
-func main() {
-	cfg := config.Load()
-	if cfg == nil {
-		return
-	}
-	cleanup, err := cfg.Log.InitLogger()
-	if err != nil {
-		log.Fatalf("init logger failed: %v", err)
-	}
-	defer cleanup()
-	config.Logger.Debug("init logger success")
+	/**
+	 * 事件ID.
+	 */
+	private Long eventId;
+
+	/**
+	 * 事件类型.
+	 */
+	protected String type;
+
 }
