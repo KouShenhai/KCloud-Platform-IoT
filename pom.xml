@@ -1279,7 +1279,7 @@
                 <!-- 检查系统属性 -->
                 <requireProperty>
                   <property>project.version</property>
-                  <message>请检查项目版本</message>
+                  <messageHandler>请检查项目版本</messageHandler>
                   <regex>.*\d+.\d+.\d+.*</regex>
                 </requireProperty>
               </rules>

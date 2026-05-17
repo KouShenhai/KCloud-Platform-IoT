@@ -15,17 +15,19 @@
  *
  */
 
-package org.laokou.network.model.entity.mqtt;
+package org.laokou.network.config.http;
 
-import lombok.Data;
-import org.laokou.network.model.entity.GatewayMessage;
+import io.vertx.ext.web.RoutingContext;
 
 /**
- * 网关心跳消息【上行】.
+ * 消息路由器.
  *
  * @author laokou
  */
-@Data
-public class UpHeartbeatGatewayMessage extends GatewayMessage {
+public interface MessageRouter {
+
+	String route();
+
+	void handle(RoutingContext ctx);
 
 }

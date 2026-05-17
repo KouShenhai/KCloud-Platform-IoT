@@ -18,37 +18,31 @@
 package org.laokou.network.config.mqtt.handler;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.network.config.mqtt.MessageHandler;
+import org.laokou.network.config.util.VertxMqttUtils;
+import org.laokou.network.model.enums.MqttMessageType;
 import org.laokou.network.model.valueobject.MqttMessageV;
-import org.springframework.pulsar.core.PulsarTemplate;
 import org.springframework.stereotype.Component;
 
 /**
- * 属性读取回复【上行】处理器.
+ * 读取网关属性回复消息【上行】处理器.
  *
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
-public class DownPropertyReadReplyMqttMessageHandler implements MqttMessageHandler {
-
-	private final PulsarTemplate<Object> pulsarTemplate;
-
-	@Override
-	public boolean isSubscribe(String topic) {
-		return false;
-		// return
-		// VertxMqttUtils.matchTopic(MqttMessageEnum.UP_PROPERTY_READ_REPLY.getTopic(),
-		// topic);
-	}
+public class UpReadPropertiesReplyGatewayMessageHandler implements MessageHandler {
 
 	@Override
 	public void handle(String topic, MqttMessageV mqttMessageV) {
-		// MqttMessageEnum upPropertyReadReply = MqttMessageEnum.UP_PROPERTY_READ_REPLY;
-		// String topic = TopicUtils.getTopic("laokouyun", "mqtt",
-		// upPropertyReadReply.getMqTopic());
-		// return pulsarTemplate.sendAsync(topic, new
-		// PropertyMessage(mqttMessage.getTopic(),
-		// upPropertyReadReply.getCode(), mqttMessage.getPayload().toString()));
+
+	}
+
+	@Override
+	public boolean isSubscribe(String topic) {
+		return VertxMqttUtils.matchTopic(MqttMessageType.UP_READ_PROPERTIES_REPLY_GATEWAY_MESSAGE.getTopic(), topic);
 	}
 
 }

@@ -15,17 +15,33 @@
  *
  */
 
-package org.laokou.network.config.mqtt.handler;
+package org.laokou.network.config.http.router;
 
-import org.laokou.network.model.valueobject.MqttMessageV;
+import io.vertx.ext.web.RoutingContext;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.network.config.http.MessageRouter;
+import org.laokou.network.model.enums.HttpMessageType;
+import org.springframework.stereotype.Component;
 
 /**
+ * 网关心跳消息路由器.
+ *
  * @author laokou
  */
-public interface MqttMessageHandler {
+@Slf4j
+@Component
+@RequiredArgsConstructor
+public class HeartbeatGatewayMessageRouter implements MessageRouter {
 
-	void handle(String topic, MqttMessageV mqttMessageV);
+	@Override
+	public String route() {
+		return HttpMessageType.HEARTBEAT_GATEWAY_MESSAGE.getRoute();
+	}
 
-	boolean isSubscribe(String topic);
+	@Override
+	public void handle(RoutingContext ctx) {
+
+	}
 
 }

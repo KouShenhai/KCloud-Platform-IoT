@@ -24,7 +24,6 @@ import io.vertx.mqtt.MqttClient;
 import io.vertx.mqtt.MqttClientOptions;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.network.config.AbstractVertxService;
-import org.laokou.network.config.mqtt.handler.MqttMessageHandler;
 import org.laokou.network.model.valueobject.MqttMessageV;
 import org.laokou.network.config.util.VertxMqttUtils;
 
@@ -42,18 +41,17 @@ final class VertxMqttClient extends AbstractVertxService<Void> {
 
 	private final MqttClientOptions mqttClientOptions;
 
-	private final List<MqttMessageHandler> mqttMessageHandlers;
+	private final List<MessageHandler> messageHandlers;
 
 	private final MqttClient mqttClient;
 
 	private final AtomicBoolean disconnect;
 
-	VertxMqttClient(Vertx vertx, MqttClientProperties mqttClientProperties,
-			List<MqttMessageHandler> mqttMessageHandlers) {
+	VertxMqttClient(Vertx vertx, MqttClientProperties mqttClientProperties, List<MessageHandler> messageHandlers) {
 		super(vertx);
 		this.mqttClientOptions = getMqttClientOptions(mqttClientProperties);
 		this.mqttClientProperties = mqttClientProperties;
-		this.mqttMessageHandlers = mqttMessageHandlers;
+		this.messageHandlers = messageHandlers;
 		this.mqttClient = init();
 		this.disconnect = new AtomicBoolean(false);
 	}
@@ -158,8 +156,8 @@ final class VertxMqttClient extends AbstractVertxService<Void> {
 			String topic = publishHandler.topicName();
 			log.debug("【Vertx-MQTT-Client】 => MQTT接收到消息，Topic：{}", topic);
 			Thread.startVirtualThread(() -> {
-				for (MqttMessageHandler mqttMessageHandler : mqttMessageHandlers) {
-					Thread.startVirtualThread(() -> mqttMessageHandler.handle(topic,
+				for (MessageHandler messageHandler : messageHandlers) {
+					Thread.startVirtualThread(() -> messageHandler.handle(topic,
 							MqttMessageV.builder().topic(topic).payload(publishHandler.payload()).build()));
 				}
 			});

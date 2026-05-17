@@ -15,17 +15,28 @@
  *
  */
 
-package org.laokou.network.model.entity.mqtt;
+package org.laokou.network.config.http.router;
 
-import lombok.Data;
-import org.laokou.network.model.entity.GatewayMessage;
+import io.vertx.ext.web.RoutingContext;
+import org.laokou.network.config.http.MessageRouter;
+import org.laokou.network.model.enums.HttpMessageType;
 
 /**
- * 网关心跳消息【上行】.
+ * 设备预警/报警事件消息路由器.
  *
  * @author laokou
  */
-@Data
-public class UpHeartbeatGatewayMessage extends GatewayMessage {
+
+public class AlarmEventDeviceMessageRouter implements MessageRouter {
+
+	@Override
+	public String route() {
+		return HttpMessageType.ALARM_EVENT_DEVICE_MESSAGE.getRoute();
+	}
+
+	@Override
+	public void handle(RoutingContext ctx) {
+
+	}
 
 }

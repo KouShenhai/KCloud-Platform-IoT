@@ -22,9 +22,10 @@ import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.http.HttpServerOptions;
 import io.vertx.ext.web.Router;
-import io.vertx.ext.web.handler.BodyHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.network.config.AbstractVertxService;
+
+import java.util.List;
 
 /**
  * @author laokou
@@ -34,9 +35,12 @@ final class VertxHttpServer extends AbstractVertxService<HttpServer> {
 
 	private final HttpServerOptions httpServerOptions;
 
-	VertxHttpServer(final Vertx vertx, HttpServerProperties httpServerProperties) {
+	private final List<MessageRouter> messageRouters;
+
+	VertxHttpServer(final Vertx vertx, HttpServerProperties httpServerProperties, List<MessageRouter> messageRouters) {
 		super(vertx);
 		this.httpServerOptions = getHttpServerOptions(httpServerProperties);
+		this.messageRouters = messageRouters;
 	}
 
 	@Override
@@ -66,25 +70,18 @@ final class VertxHttpServer extends AbstractVertxService<HttpServer> {
 
 	@Override
 	public Future<HttpServer> doStart() {
-		return super.vertx.createHttpServer(httpServerOptions).webSocketHandler(serverWebSocket -> {
-			// if (!RegexUtils.matches(WebsocketMessage.UP_PROPERTY_REPORT.getPath(),
-			// serverWebSocket.path())) {
-			// serverWebSocket.close();
-			// return;
-			// }
-			serverWebSocket.textMessageHandler(message -> log.info("【Vertx-WebSocket-Server】 => 收到消息：{}", message))
-				.closeHandler(_ -> log.error("【Vertx-WebSocket-Server】 => 断开连接"))
-				.exceptionHandler(err -> log.error("【Vertx-WebSocket-Server】 => 错误信息：{}", err.getMessage(), err))
-				.endHandler(_ -> log.error("【Vertx-WebSocket-Server】 => 结束连接"));
-		}).requestHandler(getRouter()).listen().onComplete(completionHandler -> {
-			if (completionHandler.succeeded()) {
-				log.info("【Vertx-HTTP-Server】 => HTTP服务启动成功，端口：{}", httpServerOptions.getPort());
-			}
-			else {
-				Throwable ex = completionHandler.cause();
-				log.error("【Vertx-HTTP-Server】 => HTTP服务启动失败，错误信息：{}", ex.getMessage(), ex);
-			}
-		});
+		return super.vertx.createHttpServer(httpServerOptions)
+			.requestHandler(getRouter())
+			.listen()
+			.onComplete(completionHandler -> {
+				if (completionHandler.succeeded()) {
+					log.info("【Vertx-HTTP-Server】 => HTTP服务启动成功，端口：{}", httpServerOptions.getPort());
+				}
+				else {
+					Throwable ex = completionHandler.cause();
+					log.error("【Vertx-HTTP-Server】 => HTTP服务启动失败，错误信息：{}", ex.getMessage(), ex);
+				}
+			});
 	}
 
 	@Override
@@ -102,14 +99,9 @@ final class VertxHttpServer extends AbstractVertxService<HttpServer> {
 
 	private Router getRouter() {
 		Router router = Router.router(super.vertx);
-		router.route().handler(BodyHandler.create());
-		// router.post(HttpMessageType.UP_PROPERTY_REPORT.getRouter()).handler(ctx -> {
-		// String body = ctx.body().asString();
-		// Long productId = Long.valueOf(ctx.pathParam("productId"));
-		// Long deviceId = Long.valueOf(ctx.pathParam("deviceId"));
-		// log.debug("productId:{}，deviceId:{}，body：{}", productId, deviceId, body);
-		// ctx.response().end();
-		// });
+		for (MessageRouter messageRouter : messageRouters) {
+			Thread.startVirtualThread(() -> router.post(messageRouter.route()).handler(messageRouter::handle));
+		}
 		return router;
 	}
 

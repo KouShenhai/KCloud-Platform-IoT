@@ -75,16 +75,16 @@ public enum HttpMessageType {
 		}
 	},
 
-	EVENT_DEVICE_MESSAGE("event_device_message", "设备事件") {
+	ALARM_EVENT_DEVICE_MESSAGE("alarm_event_device_message", "设备预警/报警事件") {
 
 		@Override
 		public String getRoute() {
-			return "/:tenantId/:gatewayId/:productId/:deviceId/event/+";
+			return "/:tenantId/:gatewayId/:productId/:deviceId/event/alarm";
 		}
 
 		@Override
 		public String getMqTopic() {
-			return "iot-event-device-message";
+			return "iot-alarm-event-device-message";
 		}
 	};
 

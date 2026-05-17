@@ -79,7 +79,7 @@ class XxxTest {
         // When & Then
 		Assertions.assertThatThrownBy(() -> xxx.method("input"))
             .isInstanceOf(RuntimeException.class)
-            .hasMessage("expected message");
+            .hasMessage("expected messageHandler");
     }
 
     @ParameterizedTest

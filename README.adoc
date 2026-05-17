@@ -37,11 +37,11 @@ image:https://gitee.com/laokouyun/KCloud-Platform-IoT/badge/fork.svg?theme=dark[
 image:https://gitcode.com/KouShenhai_/KCloud-Platform-IoT/star/badge.svg?theme=dark[GitCode star,link=https://gitcode.com/KouShenhai_/KCloud-Platform-IoT]
 image:https://atomgit.com/KouShenhai_/KCloud-Platform-IoT/star/2025top.svg?theme=dark[GitCode star,link=https://gitcode.com/KouShenhai_/KCloud-Platform-IoT]
 
-image:https://img.shields.io/static/v1?label=Spring%20Framework&message=7.0.7&color=green[Spring Framework,link=https://spring.io/projects/spring-framework]
-image:https://img.shields.io/static/v1?label=Spring%20Security&message=7.0.4&color=green[Spring Security,link=https://spring.io/projects/spring-security]
-image:https://img.shields.io/static/v1?label=Spring%20Boot&message=4.0.6&color=green[Spring Boot,link=https://spring.io/projects/spring-boot]
-image:https://img.shields.io/static/v1?label=Spring%20Cloud&message=2025.1.0&color=green[Spring Cloud,link=https://spring.io/projects/spring-cloud]
-image:https://img.shields.io/static/v1?label=Spring%20Cloud%20Alibaba&message=2025.1.0.0&color=orange[Spring Cloud Alibaba,link=https://github.com/alibaba/spring-cloud-alibaba]
+image:https://img.shields.io/static/v1?label=Spring%20Framework&messageHandler=7.0.7&color=green[Spring Framework,link=https://spring.io/projects/spring-framework]
+image:https://img.shields.io/static/v1?label=Spring%20Security&messageHandler=7.0.4&color=green[Spring Security,link=https://spring.io/projects/spring-security]
+image:https://img.shields.io/static/v1?label=Spring%20Boot&messageHandler=4.0.6&color=green[Spring Boot,link=https://spring.io/projects/spring-boot]
+image:https://img.shields.io/static/v1?label=Spring%20Cloud&messageHandler=2025.1.0&color=green[Spring Cloud,link=https://spring.io/projects/spring-cloud]
+image:https://img.shields.io/static/v1?label=Spring%20Cloud%20Alibaba&messageHandler=2025.1.0.0&color=orange[Spring Cloud Alibaba,link=https://github.com/alibaba/spring-cloud-alibaba]
 
 image:https://img.shields.io/badge/GraalVM-25.0.0-blue.svg[GraalVM,link=https://www.graalvm.org/downloads]
 image:https://img.shields.io/badge/Maven-3.9.11-blue[Maven,link=https://maven.apache.org/]
