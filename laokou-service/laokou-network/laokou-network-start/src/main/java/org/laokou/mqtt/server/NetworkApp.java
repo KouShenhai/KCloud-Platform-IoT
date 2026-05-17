@@ -45,7 +45,7 @@ class NetworkApp {
 		StopWatch stopWatch = new StopWatch("Network应用程序");
 		stopWatch.start();
 		String host = InetAddress.getLocalHost().getHostAddress();
-		System.setProperty("address", String.format("%s:%s", host, System.getProperty("server.port", "9995")));
+		System.setProperty("ADDRESS", String.format("%s:%s", host, System.getProperty("server.port", "9995")));
 		System.setProperty("host", host);
 		new SpringApplicationBuilder(NetworkApp.class).web(WebApplicationType.SERVLET).run(args);
 		stopWatch.stop();

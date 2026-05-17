@@ -47,7 +47,7 @@
     SELECT <include refid="selectColumns"/>
     from sys_i18n_menu
     <include refid="selectConditions"/>
-    order by id desc
+    order by create_time desc, id desc
   </sql>
 
   <select id="selectObjectPage"

@@ -8,7 +8,7 @@ CREATE TABLE "public"."t_user" (
 								   "update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 								   "del_flag" int2 NOT NULL DEFAULT 0,
 								   "version" int4 NOT NULL DEFAULT 0,
-								   "tenant_id" int8 NOT NULL DEFAULT 0,
+								   "tenant_id" int8 NOT NULL DEFAULT 1,
 	                               "dept_id" int8 NOT NULL DEFAULT 1,
 								   CONSTRAINT "t_user_pkey" PRIMARY KEY ("id")
 );

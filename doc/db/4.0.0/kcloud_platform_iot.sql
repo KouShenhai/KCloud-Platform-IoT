@@ -24,7 +24,7 @@ CREATE TABLE "public"."iot_device" (
 "update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 "del_flag" int2 NOT NULL DEFAULT 0,
 "version" int4 NOT NULL DEFAULT 0,
-"tenant_id" int8 NOT NULL DEFAULT 0,
+"tenant_id" int8 NOT NULL DEFAULT 1,
 "dept_id" int8 NOT NULL DEFAULT 1,
 "sn" varchar(64)  NOT NULL,
 "name" varchar(50)  NOT NULL,
@@ -58,7 +58,7 @@ COMMENT ON COLUMN "public"."iot_device"."product_id" IS '产品ID';
 COMMENT ON TABLE "public"."iot_device" IS '设备';
 ALTER TABLE "public"."iot_device" ADD CONSTRAINT "iot_device_pkey" PRIMARY KEY ("id");
 
-INSERT INTO "public"."iot_device" VALUES (1, 1, 1, '2024-05-11 03:56:15.821857', '2024-05-11 03:56:15.821857', 0, 0, 0,0, '139c5556-8494-5753-ac97-de09f2a6a929', 'HFCL设备', 0, NULL, NULL, NULL, NULL, NULL, 1);
+INSERT INTO "public"."iot_device" VALUES (1, 1, 1, '2024-05-11 03:56:15.821857', '2024-05-11 03:56:15.821857', 0, 0, 1,0, '139c5556-8494-5753-ac97-de09f2a6a929', 'HFCL设备', 0, NULL, NULL, NULL, NULL, NULL, 1);
 
 DROP TABLE IF EXISTS "public"."iot_thing_model";
 CREATE TABLE "public"."iot_thing_model" (
@@ -69,7 +69,7 @@ CREATE TABLE "public"."iot_thing_model" (
 "update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 "del_flag" int2 NOT NULL DEFAULT 0,
 "version" int4 NOT NULL DEFAULT 0,
-"tenant_id" int8 NOT NULL DEFAULT 0,
+"tenant_id" int8 NOT NULL DEFAULT 1,
 "dept_id" int8 NOT NULL DEFAULT 1,
 "name" varchar(50)  NOT NULL,
 "code" varchar(50)  NOT NULL,
@@ -118,7 +118,7 @@ CREATE TABLE "public"."iot_product" (
 "update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 "del_flag" int2 NOT NULL DEFAULT 0,
 "version" int4 NOT NULL DEFAULT 0,
-"tenant_id" int8 NOT NULL DEFAULT 0,
+"tenant_id" int8 NOT NULL DEFAULT 1,
 "dept_id" int8 NOT NULL DEFAULT 1,
 "name" varchar(50)  NOT NULL,
 "category_id" int8 NOT NULL,
@@ -157,7 +157,7 @@ CREATE TABLE "public"."iot_product_category" (
 "update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 "del_flag" int2 NOT NULL DEFAULT 0,
 "version" int4 NOT NULL DEFAULT 0,
-"tenant_id" int8 NOT NULL DEFAULT 0,
+"tenant_id" int8 NOT NULL DEFAULT 1,
 "dept_id" int8 NOT NULL DEFAULT 1,
 "name" varchar(50) NOT NULL,
 "sort" int4 NOT NULL,
@@ -190,7 +190,7 @@ CREATE TABLE "public"."iot_product_model" (
 "update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 "del_flag" int2 NOT NULL DEFAULT 0,
 "version" int4 NOT NULL DEFAULT 0,
-"tenant_id" int8 NOT NULL DEFAULT 0,
+"tenant_id" int8 NOT NULL DEFAULT 1,
 "dept_id" int8 NOT NULL DEFAULT 1,
 "product_id" int8 NOT NULL,
 "model_id" int8 NOT NULL

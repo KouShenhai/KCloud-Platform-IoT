@@ -7,7 +7,7 @@ CREATE TABLE "public"."sys_i18n_menu" (
 										  "update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 										  "del_flag" int2 NOT NULL DEFAULT 0,
 										  "version" int4 NOT NULL DEFAULT 0,
-										  "tenant_id" int8 NOT NULL DEFAULT 0,
+										  "tenant_id" int8 NOT NULL DEFAULT 1,
 										  "dept_id" int8 NOT NULL DEFAULT 1,
 										  "code" varchar(50) NOT NULL,
 										  "name" varchar(50) NOT NULL

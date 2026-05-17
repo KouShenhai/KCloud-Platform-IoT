@@ -1,0 +1,43 @@
+{
+  "address": "${sys:ADDRESS}",
+  "serviceId": "${sys:SERVICE_ID}",
+  "profile": "${sys:PROFILE}",
+  "traceId": {
+    "$resolver": "mdc",
+    "key": "traceId"
+  },
+  "spanId": {
+    "$resolver": "mdc",
+    "key": "spanId"
+  },
+  "dateTime": {
+    "$resolver": "timestamp",
+    "pattern": {
+      "format": "yyyy-MM-dd HH:mm:ss.SSS",
+      "timeZone": "Asia/Shanghai"
+    }
+  },
+  "level": {
+    "$resolver": "level",
+    "field": "name"
+  },
+  "threadName": {
+    "$resolver": "thread",
+    "field": "name"
+  },
+  "packageName": {
+    "$resolver": "logger",
+    "field": "name"
+  },
+  "message": {
+    "$resolver": "message",
+    "stringified": true
+  },
+  "stackTrace": {
+    "$resolver": "exception",
+    "field": "stackTrace",
+    "stackTrace": {
+      "stringified": true
+    }
+  }
+}
