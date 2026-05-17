@@ -22,4 +22,4 @@ COMMENT ON COLUMN "public"."t_user"."del_flag" IS '删除标识 0未删除 1已�
 COMMENT ON COLUMN "public"."t_user"."version" IS '版本号';
 COMMENT ON COLUMN "public"."t_user"."tenant_id" IS '租户ID';
 COMMENT ON COLUMN "public"."t_user"."dept_id" IS '部门ID';
-INSERT INTO "public"."t_user" VALUES (1, '老寇', 1, 1, '2025-04-17 22:35:13.722422', '2025-04-17 22:35:13.722422', 0, 0, 0,1);
+INSERT INTO "public"."t_user" VALUES (1, '老寇', 1, 1, '2025-04-17 22:35:13.722422', '2025-04-17 22:35:13.722422', 0, 0, 1,1);

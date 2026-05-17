@@ -27,11 +27,11 @@ import lombok.Data;
 @Data
 @Schema(description = "{功能}命令")
 public class {功能名}Cmd {
-    
+
     @NotBlank(message = "名称不能为空")
     @Schema(description = "名称")
     private String name;
-    
+
     // 其他字段...
 }
 ```
@@ -47,10 +47,10 @@ import org.laokou.common.core.page.PageQuery;
 @Data
 @Schema(description = "{功能}查询")
 public class {功能名}Qry extends PageQuery {
-    
+
     @Schema(description = "名称")
     private String name;
-    
+
     // 查询条件...
 }
 ```
@@ -65,13 +65,13 @@ import lombok.Data;
 @Data
 @Schema(description = "{功能}响应")
 public class {功能名}CO {
-    
+
     @Schema(description = "ID")
     private Long id;
-    
+
     @Schema(description = "名称")
     private String name;
-    
+
     // 响应字段...
 }
 ```
@@ -88,13 +88,13 @@ import org.laokou.{模块名}.dto.clientobject.{功能名}CO;
 public interface {功能名}sServiceI {
 
     Result<Void> save{功能名}({功能名}Cmd cmd);
-    
+
     Result<Void> modify{功能名}({功能名}Cmd cmd);
-    
+
     Result<Void> remove{功能名}(Long id);
-    
+
     Result<{功能名}CO> get{功能名}ById(Long id);
-    
+
     Result<Page<{功能名}CO>> page{功能名}({功能名}Qry qry);
 }
 ```
@@ -240,14 +240,14 @@ import org.laokou.common.domain.entity.AggregateRoot;
 
 @Data
 public class {功能名}Aggregate extends AggregateRoot<Long> {
-    
+
     private String name;
     // 业务字段...
-    
+
     public void validate() {
         // 业务校验
     }
-    
+
     public void create() {
         // 创建逻辑
         addEvent(new {功能名}CreatedEvent(this));
@@ -262,13 +262,13 @@ package org.laokou.{模块名}.gateway;
 import org.laokou.{模块名}.model.{功能名}Aggregate;
 
 public interface {功能名}Gateway {
-    
+
     void save({功能名}Aggregate aggregate);
-    
+
     void update({功能名}Aggregate aggregate);
-    
+
     void delete(Long id);
-    
+
     {功能名}Aggregate getById(Long id);
 }
 ```
@@ -286,7 +286,7 @@ import org.laokou.common.mybatisplus.entity.BaseDO;
 @Data
 @TableName("{表名}")
 public class {功能名}DO extends BaseDO {
-    
+
     private String name;
     // 数据库字段...
 }
@@ -302,7 +302,7 @@ import org.laokou.{模块名}.gatewayimpl.database.dataobject.{功能名}DO;
 
 @Mapper
 public interface {功能名}Mapper extends BaseMapper<{功能名}DO> {
-    
+
 }
 ```
 
@@ -327,7 +327,7 @@ public class {功能名}GatewayImpl implements {功能名}Gateway {
         {功能名}DO entity = convert(aggregate);
         mapper.insert(entity);
     }
-    
+
     // 其他方法实现...
 }
 ```

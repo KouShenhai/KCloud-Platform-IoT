@@ -15,17 +15,19 @@
  *
  */
 
-package org.laokou.network.model.entity.mqtt;
+package org.laokou.network.config.mqtt;
 
-import lombok.Data;
-import org.laokou.network.model.entity.GatewayMessage;
+import org.laokou.network.model.valueobject.MqttMessageV;
 
 /**
- * 网关心跳消息【上行】.
+ * 消息处理器.
  *
  * @author laokou
  */
-@Data
-public class UpHeartbeatGatewayMessage extends GatewayMessage {
+public interface MessageHandler {
+
+	void handle(String topic, MqttMessageV mqttMessageV);
+
+	boolean isSubscribe(String topic);
 
 }

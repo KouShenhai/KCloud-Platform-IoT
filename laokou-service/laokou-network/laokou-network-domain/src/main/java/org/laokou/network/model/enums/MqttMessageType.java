@@ -217,16 +217,16 @@ public enum MqttMessageType {
 		}
 	},
 
-	UP_EVENT_DEVICE_MESSAGE("up_event_device_message", "设备事件【上行】") {
+	UP_ALARM_EVENT_DEVICE_MESSAGE("up_event_device_message", "设备预警/报警事件【上行】") {
 
 		@Override
 		public String getTopic() {
-			return "/up/+/+/+/+/event/+";
+			return "/up/+/+/+/+/event/alarm";
 		}
 
 		@Override
 		public String getMqTopic() {
-			return "iot-up-event-device-message";
+			return "iot-up-alarm-event-device-message";
 		}
 	};
 

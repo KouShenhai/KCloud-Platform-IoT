@@ -31,7 +31,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.network.config.AbstractVertxService;
-import org.laokou.network.config.mqtt.handler.MqttMessageHandler;
 import org.laokou.network.model.valueobject.MqttMessageV;
 import org.laokou.network.config.util.VertxMqttUtils;
 
@@ -49,18 +48,18 @@ final class VertxMqttServer extends AbstractVertxService<MqttServer> {
 
 	private final Map<String, MqttEndpoint> endpoints = new ConcurrentHashMap<>(100000);
 
-	private final List<MqttMessageHandler> mqttMessageHandlers;
+	private final List<MessageHandler> messageHandlers;
 
 	private final MqttServerProperties mqttServerProperties;
 
 	private final MqttServerOptions mqttServerOptions;
 
 	VertxMqttServer(final Vertx vertx, final MqttServerProperties mqttServerProperties,
-			final List<MqttMessageHandler> mqttMessageHandlers) {
+			final List<MessageHandler> messageHandlers) {
 		super(vertx);
 		this.mqttServerProperties = mqttServerProperties;
 		this.mqttServerOptions = getMqttServerOptions(mqttServerProperties);
-		this.mqttMessageHandlers = mqttMessageHandlers;
+		this.messageHandlers = messageHandlers;
 	}
 
 	public void publish(@NonNull PublishDTO dto) {
@@ -133,8 +132,8 @@ final class VertxMqttServer extends AbstractVertxService<MqttServer> {
 							log.debug("【Vertx-MQTT-Server】 => 发送PUBREL数据包给客户端【Qos=2】，消息ID：{}【客户端发布】", messageId);
 						}
 						Thread.startVirtualThread(() -> {
-							for (MqttMessageHandler mqttMessageHandler : mqttMessageHandlers) {
-								Thread.startVirtualThread(() -> mqttMessageHandler.handle(mqttPublishMessage.topicName(), MqttMessageV.builder().topic(mqttPublishMessage.topicName()).payload(mqttPublishMessage.payload()).build()));
+							for (MessageHandler messageHandler : messageHandlers) {
+								Thread.startVirtualThread(() -> messageHandler.handle(mqttPublishMessage.topicName(), MqttMessageV.builder().topic(mqttPublishMessage.topicName()).payload(mqttPublishMessage.payload()).build()));
 							}
 						});
 					})
