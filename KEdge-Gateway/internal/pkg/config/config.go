@@ -31,6 +31,7 @@ import (
 type Config struct {
 	Server ServerConfig `yaml:"server"`
 	DB     DBConfig     `yaml:"db"`
+	MQ     MQConfig     `yaml:"mq"`
 	Log    LogConfig    `yaml:"log"`
 }
 
@@ -40,6 +41,18 @@ type ServerConfig struct {
 
 type DBConfig struct {
 	Sqlite SqliteConfig `yaml:"sqlite"`
+}
+
+type MQConfig struct {
+	RabbitMQ RabbitMQConfig `yaml:"rabbitmq"`
+}
+
+type RabbitMQConfig struct {
+	Host        string `yaml:"host"`
+	Port        string `yaml:"port"`
+	Username    string `yaml:"username"`
+	Password    string `yaml:"password"`
+	VirtualHost string `yaml:"virtual-host"`
 }
 
 type SqliteConfig struct {

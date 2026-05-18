@@ -1,7 +1,7 @@
 #### 测试
 
-```shell
-pm := engine.NewPluginManager(context.Background())
+```go
+	pm := engine.NewPluginManager(context.Background())
 	// 加载插件
 	err = pm.Load(
 		"mqtt",
