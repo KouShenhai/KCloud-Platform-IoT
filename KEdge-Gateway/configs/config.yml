@@ -21,6 +21,14 @@ db:
   sqlite:
     url: jdbc:sqlite:db/kedge-gateway.db
 
+mq:
+  rabbitmq:
+    host: 192.168.1.7
+    port: 5672
+    username: root
+    password: laokou123
+    virtual-host: /
+
 log:
   # 级别【debug/info/error】
   level: debug

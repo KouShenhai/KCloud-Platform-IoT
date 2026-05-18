@@ -18,9 +18,8 @@
 package main
 
 import (
-	"log"
-
 	"github.com/KouShenhai/KCloud-Platform-IoT/KEdge-Gateway/internal/pkg/config"
+	"log"
 )
 
 func main() {
