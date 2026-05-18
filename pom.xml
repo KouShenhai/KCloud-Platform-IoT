@@ -87,7 +87,7 @@
     <!--maven-failsafe-plugin版本-->
     <maven-failsafe-plugin.version>3.5.5</maven-failsafe-plugin.version>
     <!--maven-enforcer-plugin版本-->
-    <maven-enforcer-plugin.version>3.6.2</maven-enforcer-plugin.version>
+    <maven-enforcer-plugin.version>3.6.3</maven-enforcer-plugin.version>
     <!--docker-maven-plugin版本-->
     <docker-maven-plugin.version>0.48.1</docker-maven-plugin.version>
     <!--maven-checkstyle-plugin版本-->
