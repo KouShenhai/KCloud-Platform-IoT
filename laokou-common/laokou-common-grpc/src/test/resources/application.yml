@@ -8,9 +8,13 @@ spring:
       servlet:
         enabled: false
       port: 9097
+      enabled: true
     client:
-      channels:
+      channel:
         laokou-common-grpc:
-           address: discovery://laokou-common-grpc
-           enable-keep-alive: true
-           idle-timeout: 60s
+          target: discovery://laokou-common-grpc
+          keepalive:
+            time: 10s
+            timeout: 30s
+          idle:
+            timeout: 30s

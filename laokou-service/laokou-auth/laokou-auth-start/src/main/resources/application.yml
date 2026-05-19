@@ -77,11 +77,14 @@ spring:
     prefix: classpath:/templates/
   grpc:
     client:
-      channels:
+      channel:
         laokou-snowflake-id:
-          address: discovery://laokou-snowflake-id
-          enable-keep-alive: true
-          idle-timeout: 60s
+          target: discovery://laokou-snowflake-id
+          keepalive:
+            time: 10s
+            timeout: 30s
+          idle:
+            timeout: 30s
   # security
   security:
     oauth2:

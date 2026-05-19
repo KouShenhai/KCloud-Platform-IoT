@@ -134,8 +134,6 @@
     <spring-data.version>2026.0.0-RC1</spring-data.version>
     <!--spring-security版本-->
     <spring-security.version>7.1.0-RC1</spring-security.version>
-    <!--spring-grpc版本-->
-    <spring-grpc.version>1.1.0-RC1</spring-grpc.version>
     <!--spring-ai版本-->
     <spring-ai.version>1.1.6</spring-ai.version>
     <!--spring-ai-alibaba版本-->
@@ -329,16 +327,6 @@
         <scope>import</scope>
       </dependency>
       <!-- =============================== 定义 Spring Security 版本 =============================== -->
-
-      <!-- =============================== 定义 Spring gRPC 版本 =============================== -->
-      <dependency>
-        <groupId>org.springframework.grpc</groupId>
-        <artifactId>spring-grpc-dependencies</artifactId>
-        <version>${spring-grpc.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <!-- =============================== 定义 Spring gRPC 版本 =============================== -->
 
       <!-- =============================== 定义 Spring Ai 版本 =============================== -->
       <dependency>
