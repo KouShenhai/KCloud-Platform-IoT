@@ -236,16 +236,13 @@
     <wiremock.version>3.13.2</wiremock.version>
     <!--jsch版本-->
     <jsch.version>2.28.2</jsch.version>
-    <!--jSerialComm版本-->
-    <jSerialComm.version>2.11.4</jSerialComm.version>
-    <!--californium版本-->
-    <californium.version>4.0.0-M6</californium.version>
     <!--jsoup版本-->
     <jsoup.version>1.22.2</jsoup.version>
     <!--minio版本-->
     <minio.version>9.0.1</minio.version>
     <!--modbus4j版本-->
     <modbus4j.version>v3.1.0</modbus4j.version>
+    <minio.version>9.0.0</minio.version>
     <!--swagger-annotations-jakarta版本-->
     <swagger-annotations-jakarta.version>2.2.50</swagger-annotations-jakarta.version>
     <!--jsqlparser版本-->
@@ -254,6 +251,8 @@
     <commons-io.version>2.22.0</commons-io.version>
     <!--commons-logging版本-->
     <commons-logging.version>1.3.6</commons-logging.version>
+    <!--jctools版本-->
+    <jctools.version>4.0.6</jctools.version>
     <!--spotbugs版本-->
     <spotbugs.version>4.9.8</spotbugs.version>
     <!--docker主机-->
@@ -497,12 +496,6 @@
         <artifactId>fesod-sheet</artifactId>
         <version>${fesod.version}</version>
       </dependency>
-
-      <dependency>
-        <groupId>com.github.infiniteautomation</groupId>
-        <artifactId>modbus4j</artifactId>
-        <version>${modbus4j.version}</version>
-      </dependency>
       <dependency>
         <groupId>io.minio</groupId>
         <artifactId>minio</artifactId>
@@ -512,16 +505,6 @@
         <groupId>org.jsoup</groupId>
         <artifactId>jsoup</artifactId>
         <version>${jsoup.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.eclipse.californium</groupId>
-        <artifactId>californium-core</artifactId>
-        <version>${californium.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.fazecast</groupId>
-        <artifactId>jSerialComm</artifactId>
-        <version>${jSerialComm.version}</version>
       </dependency>
       <dependency>
         <groupId>com.github.mwiede</groupId>
@@ -742,6 +725,12 @@
         <groupId>commons-logging</groupId>
         <artifactId>commons-logging</artifactId>
         <version>${commons-logging.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.jctools</groupId>
+        <artifactId>jctools-core</artifactId>
+        <version>${jctools.version}</version>
       </dependency>
 
     </dependencies>
