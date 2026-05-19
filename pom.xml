@@ -240,7 +240,7 @@
     <minio.version>9.0.1</minio.version>
     <!--modbus4j版本-->
     <modbus4j.version>v3.1.0</modbus4j.version>
-    <minio.version>9.0.0</minio.version>
+    <minio.version>9.0.1</minio.version>
     <!--swagger-annotations-jakarta版本-->
     <swagger-annotations-jakarta.version>2.2.50</swagger-annotations-jakarta.version>
     <!--jsqlparser版本-->
