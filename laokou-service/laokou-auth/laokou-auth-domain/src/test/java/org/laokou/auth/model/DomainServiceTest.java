@@ -94,7 +94,7 @@ class DomainServiceTest {
 	@MockitoBean
 	private CaptchaValidator captchaValidator;
 
-	@MockitoBean("idGenerator")
+	@MockitoBean()
 	private IdGenerator idGenerator;
 
 	@MockitoBean

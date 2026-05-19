@@ -66,7 +66,7 @@ public class UserA extends AggregateRoot implements ValidateName {
 
 	private final PasswordEncoder passwordEncoder;
 
-	public UserA(@Qualifier("idGenerator") IdGenerator idGenerator,
+	public UserA(IdGenerator idGenerator,
 			@Qualifier("saveUserParamValidator") UserParamValidator saveUserParamValidator,
 			@Qualifier("modifyUserParamValidator") UserParamValidator modifyUserParamValidator,
 			@Qualifier("resetUserPwdParamValidator") UserParamValidator resetUserPwdParamValidator,

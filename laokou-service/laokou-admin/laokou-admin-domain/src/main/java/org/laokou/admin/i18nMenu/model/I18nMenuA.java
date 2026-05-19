@@ -53,7 +53,7 @@ public class I18nMenuA extends AggregateRoot implements ValidateName {
 
 	private final I18nMenuParamValidator modifyI18nMenuParamValidator;
 
-	public I18nMenuA(@Qualifier("idGenerator") IdGenerator idGenerator,
+	public I18nMenuA(IdGenerator idGenerator,
 			@Qualifier("saveI18nMenuParamValidator") I18nMenuParamValidator saveI18nMenuParamValidator,
 			@Qualifier("modifyI18nMenuParamValidator") I18nMenuParamValidator modifyI18nMenuParamValidator) {
 		this.idGenerator = idGenerator;

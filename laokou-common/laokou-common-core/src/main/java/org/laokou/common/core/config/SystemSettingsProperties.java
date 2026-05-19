@@ -18,6 +18,7 @@
 package org.laokou.common.core.config;
 
 import lombok.Data;
+import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +30,7 @@ import java.time.Duration;
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = "system.settings")
+@ConfigurationProperties(prefix = "system-settings")
 public class SystemSettingsProperties implements Serializable {
 
 	private Long dataId = 1L;
@@ -51,5 +52,25 @@ public class SystemSettingsProperties implements Serializable {
 	private String tenantCode = "laokouyun";
 
 	private Long tenantValue = 1L;
+
+	private Mode appMode = Mode.MICROSERVICE;
+
+	@Getter
+	enum Mode {
+
+		MONOLITH("monolith", "单体"),
+
+		MICROSERVICE("microservice", "微服务");
+
+		private final String code;
+
+		private final String desc;
+
+		Mode(String code, String desc) {
+			this.code = code;
+			this.desc = desc;
+		}
+
+	}
 
 }

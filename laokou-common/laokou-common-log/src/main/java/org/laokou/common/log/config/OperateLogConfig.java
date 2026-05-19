@@ -39,8 +39,9 @@ public class OperateLogConfig {
 	}
 
 	@Lazy
-	@Bean("idGenerator")
-	@ConditionalOnProperty(prefix = "spring.cloud.nacos.discovery", name = "server-addr")
+	@Bean(name = "idGenerator")
+	@ConditionalOnProperty(prefix = "system-settings", name = "app-mode", havingValue = "MICROSERVICE",
+			matchIfMissing = true)
 	IdGenerator idGeneratorMapper() {
 		return new IdGeneratorMapper();
 	}

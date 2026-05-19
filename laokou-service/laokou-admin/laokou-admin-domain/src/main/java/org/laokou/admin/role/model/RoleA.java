@@ -53,7 +53,7 @@ public class RoleA extends AggregateRoot implements ValidateName {
 
 	private final RoleParamValidator modifyRoleAuthorityParamValidator;
 
-	public RoleA(@Qualifier("idGenerator") IdGenerator idGenerator,
+	public RoleA(IdGenerator idGenerator,
 			@Qualifier("saveRoleParamValidator") RoleParamValidator saveRoleParamValidator,
 			@Qualifier("modifyRoleParamValidator") RoleParamValidator modifyRoleParamValidator,
 			@Qualifier("modifyRoleAuthorityParamValidator") RoleParamValidator modifyRoleAuthorityParamValidator) {

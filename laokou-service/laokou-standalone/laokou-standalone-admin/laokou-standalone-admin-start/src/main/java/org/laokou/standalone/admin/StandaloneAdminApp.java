@@ -55,7 +55,7 @@ import java.security.NoSuchAlgorithmException;
 class StandaloneAdminApp {
 
 	// @formatter:off
-	void main(String[] args) throws  NoSuchAlgorithmException, KeyManagementException, UnknownHostException {
+	static void main(String[] args) throws  NoSuchAlgorithmException, KeyManagementException, UnknownHostException {
 		StopWatch stopWatch = new StopWatch("StandaloneAdmin应用程序");
 		stopWatch.start();
 		System.setProperty("ADDRESS", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "8099")));

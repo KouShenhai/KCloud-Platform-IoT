@@ -54,7 +54,7 @@ import java.security.NoSuchAlgorithmException;
 class StandaloneAuthApp {
 
 	// @formatter:off
-	void main(String[] args) throws  NoSuchAlgorithmException, KeyManagementException, UnknownHostException {
+	static void main(String[] args) throws  NoSuchAlgorithmException, KeyManagementException, UnknownHostException {
 		StopWatch stopWatch = new StopWatch("StandaloneAuth应用程序");
 		stopWatch.start();
 		System.setProperty("ADDRESS", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "8098")));

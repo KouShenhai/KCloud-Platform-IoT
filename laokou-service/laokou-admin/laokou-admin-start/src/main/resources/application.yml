@@ -188,6 +188,6 @@ management:
     tags:
       application: ${spring.application.name}
 
-system:
-  settings:
-    node-id: 1
+system-settings:
+  node-id: 1
+  app-mode: microservice

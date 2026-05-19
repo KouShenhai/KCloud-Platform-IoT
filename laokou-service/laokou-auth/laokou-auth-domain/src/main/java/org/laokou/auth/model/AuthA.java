@@ -179,7 +179,7 @@ public final class AuthA extends AggregateRoot implements ValidateName {
 
 	// @formatter:off
 	AuthA(
-		@Qualifier("idGenerator") @NonNull IdGenerator idGenerator,
+		@NonNull IdGenerator idGenerator,
 		@NonNull HttpRequest httpRequest,
 		@NonNull PasswordValidator passwordValidator,
 		@NonNull CaptchaValidator captchaValidator,

@@ -257,6 +257,5 @@ management:
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml
 
-system:
-  settings:
-    node-id: 1
+system-settings:
+  node-id: 1
