@@ -39,7 +39,7 @@ import org.springframework.stereotype.Component;
 final class OAuth2MailAuthenticationProvider extends AbstractOAuth2AuthenticationProvider {
 
 	public OAuth2MailAuthenticationProvider(OAuth2AuthorizationService authorizationService,
-			OAuth2TokenGenerator<OAuth2Token> tokenGenerator,
+			OAuth2TokenGenerator<@NonNull OAuth2Token> tokenGenerator,
 			OAuth2UsernamePasswordAuthentication oAuth2UsernamePasswordAuthentication) {
 		super(authorizationService, tokenGenerator, oAuth2UsernamePasswordAuthentication);
 	}

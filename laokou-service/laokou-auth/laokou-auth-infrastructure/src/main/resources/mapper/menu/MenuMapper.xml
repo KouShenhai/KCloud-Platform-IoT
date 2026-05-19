@@ -22,14 +22,14 @@
   <select id="selectAllPermissions" resultType="string">
     SELECT permission
     FROM sys_menu
-    WHERE "type" = 1 and status = 0 AND del_flag = 0 and tenant_id = 0
+    WHERE "type" = 1 and status = 0 AND del_flag = 0 and tenant_id = 1
   </select>
 
   <select id="selectPermissions" resultType="string">
     select me.permission from sys_menu me
     join sys_role_menu rm on rm.menu_id = me."id"
     join sys_user_role ur on ur.role_id = rm.role_id
-    where ur.user_id = #{user.id} and me."type" = 1 and me.status = 0 and me.del_flag = 0 and me.tenant_id = 0
+    where ur.user_id = #{user.id} and me."type" = 1 and me.status = 0 and me.del_flag = 0 and me.tenant_id = 1
   </select>
 
 </mapper>

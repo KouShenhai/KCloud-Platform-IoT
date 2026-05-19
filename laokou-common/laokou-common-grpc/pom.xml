@@ -27,24 +27,18 @@
       <artifactId>spring-cloud-commons</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.springframework.grpc</groupId>
-      <artifactId>spring-grpc-client-spring-boot-starter</artifactId>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-grpc-client</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.springframework.grpc</groupId>
-      <artifactId>spring-grpc-server-web-spring-boot-starter</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>io.grpc</groupId>
-          <artifactId>grpc-servlet-jakarta</artifactId>
-        </exclusion>
-      </exclusions>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-grpc-server</artifactId>
       <scope>test</scope>
       <optional>true</optional>
     </dependency>
     <dependency>
-      <groupId>org.springframework.grpc</groupId>
-      <artifactId>spring-grpc-test-spring-boot-autoconfigure</artifactId>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-grpc-test</artifactId>
       <scope>test</scope>
       <optional>true</optional>
     </dependency>
