@@ -125,7 +125,7 @@
     <!--spring-boot版本-->
     <spring-boot.version>4.1.0-RC1</spring-boot.version>
     <!--spring-cloud版本-->
-    <spring-cloud.version>2025.1.1</spring-cloud.version>
+    <spring-cloud.version>2025.1.2-SNAPSHOT</spring-cloud.version>
     <!--cloud-alibaba版本-->
     <spring-cloud-alibaba.version>2025.1.0.0</spring-cloud-alibaba.version>
     <!--spring-framework版本-->

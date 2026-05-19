@@ -75,11 +75,11 @@ import java.util.Set;
 @RequiredArgsConstructor
 abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationProvider {
 
-	private final JwtDecoderFactory<DPoPProofContext> dPoPProofVerifierFactory = new DPoPProofJwtDecoderFactory();
+	private final JwtDecoderFactory<@NonNull DPoPProofContext> dPoPProofVerifierFactory = new DPoPProofJwtDecoderFactory();
 
 	private final OAuth2AuthorizationService authorizationService;
 
-	private final OAuth2TokenGenerator<OAuth2Token> tokenGenerator;
+	private final OAuth2TokenGenerator<@NonNull OAuth2Token> tokenGenerator;
 
 	private final OAuth2UsernamePasswordAuthentication oAuth2UsernamePasswordAuthentication;
 
@@ -187,8 +187,9 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 			tokenContext = tokenContextBuilder.tokenType(OAuth2TokenType.REFRESH_TOKEN).build();
 			OAuth2Token generatedRefreshToken = Optional.ofNullable(tokenGenerator.generate(tokenContext))
 				.orElseThrow(() -> OAuth2ExceptionHandler.getException(OAuth2Constants.GENERATE_REFRESH_TOKEN_FAIL));
-			refreshToken = (OAuth2RefreshToken) generatedRefreshToken;
-			authorizationBuilder.refreshToken(refreshToken);
+			if (generatedRefreshToken instanceof OAuth2RefreshToken token) {
+				authorizationBuilder.refreshToken(refreshToken = token);
+			}
 		}
 		// 存储认证信息
 		authorizationBuilder.attribute(Principal.class.getName(), usernamePasswordAuthentication);

@@ -27,12 +27,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.grpc.client.ClientInterceptorsConfigurer;
 import org.springframework.grpc.client.GrpcChannelBuilderCustomizer;
 import org.springframework.grpc.client.GrpcClientFactory;
+import org.springframework.grpc.client.ImportGrpcClients;
 
 import java.util.List;
 
 /**
  * @author laokou
  */
+@ImportGrpcClients
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnClass(DiscoveryClient.class)
 public class GrpcClientConfig {
