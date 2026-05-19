@@ -18,6 +18,8 @@
 package org.laokou.common.mybatisplus.config;
 
 import com.baomidou.mybatisplus.autoconfigure.ConfigurationCustomizer;
+import com.baomidou.mybatisplus.core.incrementer.DefaultIdentifierGenerator;
+import com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator;
 import com.baomidou.mybatisplus.extension.parser.JsqlParserGlobal;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
@@ -27,16 +29,21 @@ import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerIntercept
 import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import org.laokou.common.core.config.SystemSettingsProperties;
+import org.laokou.common.i18n.common.IdGenerator;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.support.TransactionOperations;
 import org.springframework.transaction.support.TransactionTemplate;
+
 import javax.sql.DataSource;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -52,6 +59,36 @@ public class MybatisPlusAutoConfig {
 	static {
 		JsqlParserGlobal.setJsqlParseCache(new ForySerialCaffeineJsqlParseCache(
 				Caffeine.newBuilder().maximumSize(4096).expireAfterWrite(10, TimeUnit.MINUTES).build()));
+	}
+
+	@Bean(name = "identifierGenerator")
+	@ConditionalOnProperty(prefix = "system-settings", name = "app-mode", havingValue = "MONOLITH",
+			matchIfMissing = true)
+	public IdentifierGenerator identifierGenerator(SystemSettingsProperties systemSettingsProperties) {
+		return new DefaultIdentifierGenerator(systemSettingsProperties.getWorkId(),
+				systemSettingsProperties.getDataId());
+	}
+
+	@Bean(name = "idGenerator")
+	@ConditionalOnProperty(prefix = "system-settings", name = "app-mode", havingValue = "MONOLITH",
+			matchIfMissing = true)
+	public IdGenerator idGenerator(IdentifierGenerator identifierGenerator) {
+		return new IdGenerator() {
+
+			@Override
+			public Long getId() {
+				return identifierGenerator.nextId(null).longValue();
+			}
+
+			@Override
+			public List<Long> getIds(int num) {
+				List<Long> ids = new ArrayList<>(num);
+				for (int i = 0; i < num; i++) {
+					ids.add(getId());
+				}
+				return ids;
+			}
+		};
 	}
 
 	@Bean

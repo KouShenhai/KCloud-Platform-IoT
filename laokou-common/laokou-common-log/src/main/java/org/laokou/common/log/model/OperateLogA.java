@@ -20,18 +20,18 @@ package org.laokou.common.log.model;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.laokou.common.core.util.CollectionExtUtils;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.IdGenerator;
 import org.laokou.common.i18n.common.constant.StringConstants;
+import org.laokou.common.i18n.common.entity.OperateLogE;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.i18n.common.entity.OperateLogE;
 import org.laokou.common.log.model.enums.Status;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.util.StopWatch;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -48,15 +48,12 @@ import java.util.List;
  */
 @Entity
 @Getter
+@RequiredArgsConstructor
 public class OperateLogA extends AggregateRoot {
 
 	private OperateLogE operateLogE;
 
 	private final IdGenerator idGenerator;
-
-	public OperateLogA(@Qualifier("idGenerator") IdGenerator idGenerator) {
-		this.idGenerator = idGenerator;
-	}
 
 	public OperateLogA create(OperateLogE operateLogE) {
 		this.operateLogE = operateLogE;

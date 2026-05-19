@@ -53,7 +53,7 @@ public class DeptA extends AggregateRoot implements ValidateName {
 
 	private final DeptParamValidator modifyDeptParamValidator;
 
-	public DeptA(@Qualifier("idGenerator") IdGenerator idGenerator,
+	public DeptA(IdGenerator idGenerator,
 			@Qualifier("modifyDeptParamValidator") DeptParamValidator saveDeptParamValidator,
 			@Qualifier("saveDeptParamValidator") DeptParamValidator modifyDeptParamValidator) {
 		this.idGenerator = idGenerator;

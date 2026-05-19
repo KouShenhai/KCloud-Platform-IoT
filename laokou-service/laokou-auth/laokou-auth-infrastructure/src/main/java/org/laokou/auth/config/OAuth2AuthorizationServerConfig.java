@@ -219,7 +219,8 @@ class OAuth2AuthorizationServerConfig {
 
 	@Lazy
 	@Bean(name = "idGenerator")
-	@ConditionalOnProperty(prefix = "spring.cloud.nacos.discovery", name = "server-addr")
+	@ConditionalOnProperty(prefix = "system-settings", name = "app-mode", havingValue = "MICROSERVICE",
+			matchIfMissing = true)
 	IdGenerator idGeneratorMapper() {
 		return new IdGeneratorMapper();
 	}

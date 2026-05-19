@@ -64,6 +64,5 @@ spring:
         enabled: true
         maximum-size: 1000
 
-system:
-  settings:
-    node-id: 1
+system-settings:
+  node-id: 1

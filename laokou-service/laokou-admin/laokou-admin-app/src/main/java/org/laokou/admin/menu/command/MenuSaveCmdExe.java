@@ -24,6 +24,7 @@ import org.laokou.admin.menu.dto.MenuSaveCmd;
 import org.laokou.admin.menu.factory.MenuDomainFactory;
 import org.laokou.admin.menu.model.MenuA;
 import org.laokou.common.domain.annotation.CommandLog;
+import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.stereotype.Component;
 
@@ -35,6 +36,10 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class MenuSaveCmdExe {
+
+	static {
+		ForyFactory.INSTANCE.register(org.laokou.admin.menu.dto.clientobject.MenuCO.class);
+	}
 
 	private final MenuDomainService menuDomainService;
 

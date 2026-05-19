@@ -131,12 +131,6 @@ management:
     tags:
       application: ${spring.application.name}
 
-# knife4j的增强配置，不需要增强可以不配
-knife4j:
-  enable: false
-  setting:
-    language: zh_cn
-
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml
 
@@ -169,3 +163,9 @@ mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+
+system-settings:
+  node-id: 1
+  data-id: 1
+  work-id: 1
+  app-mode: monolith
