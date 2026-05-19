@@ -45,23 +45,27 @@
   <Appenders>
     <!-- 控制台输出 -->
     <Console name="console" target="SYSTEM_OUT">
-      <!--
-            <JsonExtLayout complete="false" compact="true" eventEol="true" properties="true" locationInfo="true" includeStacktrace="true" stacktraceAsString="false" objectMessageAsJsonObject="false">
-              <KeyValuePair key="serviceId" value="${SERVICE_ID}"/>
-              <KeyValuePair key="profile" value="${PROFILE}" />
-              <KeyValuePair key="traceId" value="%X{traceId}" />
-              <KeyValuePair key="spanId" value="%X{spanId}" />
-            </JsonExtLayout>
-      -->
       <PatternLayout pattern="${LOG_CONSOLE_PATTERN}"/>
     </Console>
-    <RollingRandomAccessFile name="file" fileName="${LOG_PATH}/${SERVICE_ID}.json"
-                             filePattern="${LOG_PATH}/%d{yyyyMMdd}/${SERVICE_ID}_%d{yyyy-MM-dd}.%i.json.gz"
+    <RollingRandomAccessFile name="file" fileName="${LOG_PATH}/${SERVICE_ID}.log"
+                             filePattern="${LOG_PATH}/%d{yyyyMMdd}/${SERVICE_ID}_%d{yyyy-MM-dd}.%i.log.gz"
                              immediateFlush="false">
       <Filters>
         <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
       </Filters>
-      <JsonTemplateLayout eventTemplateUri="classpath:custom-layout.json"/>
+     <!--
+
+          https://logging.apache.org/log4j/2.x/manual/json-template-layout.html
+
+          charset                 => 字符编码
+          locationInfoEnabled     => 是否显示文件行数，方法名等信息
+          stackTraceEnabled       => 是否显示堆栈信息
+          maxStringLength         => 最大字符串长度，超过此长度的字符串会被截断
+          truncatedStringSuffix   => 截断字符串后的后缀
+          recyclerFactory         => 队列工厂，用于创建队列，默认为MpmcArrayQueue，性能高，但内存占用高
+
+      -->
+      <JsonTemplateLayout locationInfoEnabled="false" charset="UTF-8" stackTraceEnabled="true" maxStringLength="8196" truncatedStringSuffix="..." recyclerFactory="queue:supplier=org.jctools.queues.MpmcArrayQueue.new,capacity=256" eventTemplateUri="classpath:custom-layout.json"/>
       <Policies>
         <TimeBasedTriggeringPolicy interval="${LOG_INTERVAL}"/>
         <SizeBasedTriggeringPolicy size="${LOG_ROLL_SIZE}"/>

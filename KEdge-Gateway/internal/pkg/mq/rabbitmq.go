@@ -1,3 +1,20 @@
+/*
+ * Copyright (c) 2022-2026 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
 package mq
 
 import (
@@ -270,21 +287,24 @@ func (r *RabbitClient) processMessage(msg amqp.Delivery, handler func([]byte) er
 		if rec := recover(); rec != nil {
 			config.Logger.Error("Consumer panic recovered", zap.Any("panic", rec))
 			// 发生 Panic 时，不推荐 requeue (true)，否则容易造成毒消息无限死循环
-			_ = msg.Nack(false, false)
+			if err := msg.Nack(false, false); err != nil {
+				config.Logger.Error("Failed to Nack message after panic", zap.Error(err))
+			}
 		}
 	}()
-
 	if err := handler(msg.Body); err != nil {
 		config.Logger.Error("Consume business error", zap.Error(err))
-
 		// 优化注意：如果这里传 (false, true) 代表一直重新入队。
 		// 对于明确的业务异常（如解析出错），建议传 false 丢弃或路由到死信队列。
 		// 只有对于瞬时的网络异常等，才应该重新入队。
-		_ = msg.Nack(false, false)
+		if err := msg.Nack(false, false); err != nil {
+			config.Logger.Error("Failed to Nack message after business error", zap.Error(err))
+		}
 		return
 	}
-
-	_ = msg.Ack(false)
+	if err := msg.Ack(false); err != nil {
+		config.Logger.Error("Failed to Ack message", zap.Error(err))
+	}
 }
 
 // SetupTopology 声明 Exchange、Queue 并建立绑定关系
