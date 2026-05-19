@@ -45,17 +45,9 @@
   <Appenders>
     <!-- 控制台输出 -->
     <Console name="console" target="SYSTEM_OUT">
-      <!--
-            <JsonExtLayout complete="false" compact="true" eventEol="true" properties="true" locationInfo="true" includeStacktrace="true" stacktraceAsString="false" objectMessageAsJsonObject="false">
-              <KeyValuePair key="serviceId" value="${SERVICE_ID}"/>
-              <KeyValuePair key="profile" value="${PROFILE}" />
-              <KeyValuePair key="traceId" value="%X{traceId}" />
-              <KeyValuePair key="spanId" value="%X{spanId}" />
-            </JsonExtLayout>
-      -->
       <PatternLayout pattern="${LOG_CONSOLE_PATTERN}"/>
     </Console>
-    <RollingRandomAccessFile name="file" fileName="${LOG_PATH}/${SERVICE_ID}.json"
+    <RollingRandomAccessFile name="file" fileName="${LOG_PATH}/${SERVICE_ID}.log"
                              filePattern="${LOG_PATH}/%d{yyyyMMdd}/${SERVICE_ID}-%d{yyyy-MM-dd}.%i.json.gz"
                              immediateFlush="false">
       <Filters>
