@@ -23,7 +23,7 @@ import lombok.Data;
  * @author laokou
  */
 @Data
-public abstract class BaseConfig {
+public abstract class Config {
 
 	protected String host;
 

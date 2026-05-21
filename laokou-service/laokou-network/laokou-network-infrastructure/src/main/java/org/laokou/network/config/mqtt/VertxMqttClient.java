@@ -53,7 +53,7 @@ final class VertxMqttClient extends AbstractVertxService<Void> {
 	private final SystemSettingsProperties systemSettingsProperties;
 
 	VertxMqttClient(Vertx vertx, MqttClientConfig mqttClientProperties, List<MessageHandler> messageHandlers,
-                    SystemSettingsProperties systemSettingsProperties) {
+			SystemSettingsProperties systemSettingsProperties) {
 		super(vertx);
 		this.mqttClientOptions = getMqttClientOptions(mqttClientProperties);
 		this.mqttClientProperties = mqttClientProperties;
