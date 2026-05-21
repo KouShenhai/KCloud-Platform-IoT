@@ -33,6 +33,7 @@
 
 package org.laokou.common.security.config;
 
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import org.laokou.common.security.config.entity.OAuth2RegisteredClient;
 import org.laokou.common.security.config.repository.OAuth2RegisteredClientRepository;
@@ -48,7 +49,7 @@ public record RedisRegisteredClientRepository(
 	}
 
 	@Override
-	public void save(RegisteredClient registeredClient) {
+	public void save(@NonNull RegisteredClient registeredClient) {
 		Assert.notNull(registeredClient, "RegisteredClient cannot be null");
 		OAuth2RegisteredClient oauth2RegisteredClient = OAuth2ModelMapper
 			.convertOAuth2RegisteredClient(registeredClient);
@@ -57,7 +58,7 @@ public record RedisRegisteredClientRepository(
 
 	@Nullable
 	@Override
-	public RegisteredClient findById(String id) {
+	public RegisteredClient findById(@NonNull String id) {
 		Assert.hasText(id, "Id cannot be empty");
 		return this.registeredClientRepository.findById(id)
 			.map(OAuth2ModelMapper::convertRegisteredClient)
@@ -66,7 +67,7 @@ public record RedisRegisteredClientRepository(
 
 	@Nullable
 	@Override
-	public RegisteredClient findByClientId(String clientId) {
+	public RegisteredClient findByClientId(@NonNull String clientId) {
 		Assert.hasText(clientId, "ClientId cannot be empty");
 		OAuth2RegisteredClient oauth2RegisteredClient = this.registeredClientRepository.findByClientId(clientId);
 		return oauth2RegisteredClient != null ? OAuth2ModelMapper.convertRegisteredClient(oauth2RegisteredClient)

@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
  * @author laokou
  */
 @Data
-public class MqttServerProperties {
+public class MqttServerConfig {
 
 	private boolean auth = true;
 

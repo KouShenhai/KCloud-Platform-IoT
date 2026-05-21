@@ -18,6 +18,8 @@
 package org.laokou.common.security.config;
 
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 import org.laokou.common.context.util.OAuth2Authentication;
 import org.laokou.common.context.util.UserConvertor;
 import org.laokou.common.context.util.UserExtDetails;
@@ -46,14 +48,15 @@ public record OAuth2OpaqueTokenIntrospector(OAuth2AuthorizationService authoriza
 		RedisUtils redisUtils) implements OpaqueTokenIntrospector {
 
 	// @formatter:off
+	@NotNull
 	@Override
-	public OAuth2AuthenticatedPrincipal introspect(String token) {
+	public OAuth2AuthenticatedPrincipal introspect(@NonNull String token) {
 		OAuth2Authorization authorization = authorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
 		if (ObjectUtils.isNull(authorization)) {
 			throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED);
 		}
-		OAuth2Authorization.Token<OAuth2AccessToken> accessToken = authorization.getAccessToken();
-		OAuth2Authorization.Token<OAuth2RefreshToken> refreshToken = authorization.getRefreshToken();
+		OAuth2Authorization.Token<@NonNull OAuth2AccessToken> accessToken = authorization.getAccessToken();
+		OAuth2Authorization.Token<@NonNull OAuth2RefreshToken> refreshToken = authorization.getRefreshToken();
 		if (ObjectUtils.isNull(accessToken) || ObjectUtils.isNull(refreshToken)) {
 			throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED);
 		}

@@ -24,7 +24,7 @@ import org.laokou.common.core.util.UUIDGenerator;
  * @author laokou
  */
 @Data
-public class MqttClientProperties {
+public class MqttClientConfig {
 
 	private boolean auth = true;
 
