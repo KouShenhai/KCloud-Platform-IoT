@@ -53,9 +53,11 @@ public class OAuth2AuthorizationCodeGrantAuthorization extends OAuth2Authorizati
 
 	private final AuthorizationCode authorizationCode;
 
+	/**
+	 * Used to correlate the request during the authorization consent flow.
+	 */
 	@Indexed
-	private final String state; // Used to correlate the request during the authorization
-								// consent flow
+	private final String state;
 
 	public OAuth2AuthorizationCodeGrantAuthorization(String id, String registeredClientId, String principalName,
 			Set<String> authorizedScopes, AccessToken accessToken, RefreshToken refreshToken, Principal principal,

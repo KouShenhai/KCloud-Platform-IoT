@@ -32,6 +32,7 @@
  */
 package org.laokou.common.security.config;
 
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import org.laokou.common.security.config.entity.OAuth2UserConsent;
 import org.laokou.common.security.config.repository.OAuth2UserConsentRepository;
@@ -51,14 +52,14 @@ public record RedisOAuth2AuthorizationConsentService(
 	}
 
 	@Override
-	public void save(OAuth2AuthorizationConsent authorizationConsent) {
+	public void save(@NonNull OAuth2AuthorizationConsent authorizationConsent) {
 		Assert.notNull(authorizationConsent, "AuthorizationConsent cannot be null");
 		OAuth2UserConsent oauth2UserConsent = OAuth2ModelMapper.convertOAuth2UserConsent(authorizationConsent);
 		this.userConsentRepository.save(oauth2UserConsent);
 	}
 
 	@Override
-	public void remove(OAuth2AuthorizationConsent authorizationConsent) {
+	public void remove(@NonNull OAuth2AuthorizationConsent authorizationConsent) {
 		Assert.notNull(authorizationConsent, "AuthorizationConsent cannot be null");
 		this.userConsentRepository.deleteByRegisteredClientIdAndPrincipalName(
 				authorizationConsent.getRegisteredClientId(), authorizationConsent.getPrincipalName());
@@ -66,7 +67,7 @@ public record RedisOAuth2AuthorizationConsentService(
 
 	@Nullable
 	@Override
-	public OAuth2AuthorizationConsent findById(String registeredClientId, String principalName) {
+	public OAuth2AuthorizationConsent findById(@NonNull String registeredClientId, @NonNull String principalName) {
 		Assert.hasText(registeredClientId, "RegisteredClientId cannot be empty");
 		Assert.hasText(principalName, "PrincipalName cannot be empty");
 		OAuth2UserConsent oauth2UserConsent = this.userConsentRepository
