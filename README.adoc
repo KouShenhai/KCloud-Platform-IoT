@@ -166,13 +166,13 @@ image::doc/image/老寇IoT云平台业务架构图.png[架构图,align=center]
 |gRPC                        |1.77.0
 |Redis                       |8.0.1
 |Elasticsearch               |9.4.1
-|Netty                       |4.2.13.Final
+|Netty                       |4.2.14.Final
 |Kafka                       |4.0.4
 |Pulsar                      |4.1.2
 |EMQX                        |5.4.1
 |TimescaleDB                 |17
 |TDengine                    |3.3.5.0
-|Flyway                      |12.6.1
+|Flyway                      |12.6.2
 |Snail Job                   |1.8.0
 |Sentinel                    |1.8.9
 |Fory                        |0.17.0

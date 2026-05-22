@@ -20,7 +20,11 @@ package org.laokou.storage;
 /**
  * @author laokou
  */
-public interface DS {
+public interface DataSource {
+
+	void open();
+
+	void close();
 
 	void create(Table table);
 
