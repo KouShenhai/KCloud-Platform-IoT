@@ -314,9 +314,9 @@ services:
     ports:
       - "9200:9200"
       - "9300:9300"
-#    volumes:
-#      - ./elasticsearch9/data:/usr/share/elasticsearch/data
-#      - ./elasticsearch9/logs:/usr/share/elasticsearch/logs
+    volumes:
+      - ./elasticsearch9/data:/usr/share/elasticsearch/data
+      - ./elasticsearch9/logs:/usr/share/elasticsearch/logs
     environment:
       - discovery.type=single-node
       - TZ=Asia/Shanghai
