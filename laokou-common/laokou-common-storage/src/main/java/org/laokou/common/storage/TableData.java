@@ -15,33 +15,28 @@
  *
  */
 
-package org.laokou.storage.enums;
+package org.laokou.common.storage;
 
-import lombok.Getter;
+import lombok.Data;
+
+import java.util.Map;
 
 /**
  * @author laokou
  */
-@Getter
-public enum StorageType {
+@Data
+public class TableData {
 
-	TIMESCALEDB("timescaledb", "TimescaleDB"),
+	private Long tenantId;
 
-	CLICKHOUSE("clickhouse", "ClickHouse"),
+	private Long gatewayId;
 
-	IOTDB("iotdb", "IoTDB"),
+	private Long productId;
 
-	INFLUXDB("influxdb", "InfluxDB"),
+	private Long deviceId;
 
-	TDENGINE("tdengine", "TDengine");
+	private String tableName;
 
-	private final String code;
-
-	private final String desc;
-
-	StorageType(String code, String desc) {
-		this.code = code;
-		this.desc = desc;
-	}
+	private Map<String, String> columns;
 
 }

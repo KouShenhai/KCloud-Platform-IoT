@@ -15,22 +15,33 @@
  *
  */
 
-package org.laokou.storage;
+package org.laokou.common.storage.enums;
 
-import lombok.Data;
+import lombok.Getter;
 
 /**
  * @author laokou
  */
-@Data
-public abstract class Config {
+@Getter
+public enum StorageType {
 
-	protected String host;
+	TIMESCALEDB("timescaledb", "TimescaleDB"),
 
-	protected int port;
+	CLICKHOUSE("clickhouse", "ClickHouse"),
 
-	protected String username;
+	IOTDB("iotdb", "IoTDB"),
 
-	protected String password;
+	INFLUXDB("influxdb", "InfluxDB"),
+
+	TDENGINE("tdengine", "TDengine");
+
+	private final String code;
+
+	private final String desc;
+
+	StorageType(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
 
 }

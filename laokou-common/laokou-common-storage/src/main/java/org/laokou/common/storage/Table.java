@@ -15,14 +15,29 @@
  *
  */
 
-package org.laokou.storage.enums;
+package org.laokou.common.storage;
 
-import lombok.Getter;
+import lombok.Data;
+
+import java.util.Set;
 
 /**
  * @author laokou
  */
-@Getter
-public enum InfluxDBColumnType {
+@Data
+public class Table {
+
+	private String name;
+
+	private Set<Column> columns;
+
+	@Data
+	public static class Column {
+
+		private String name;
+
+		private String type;
+
+	}
 
 }

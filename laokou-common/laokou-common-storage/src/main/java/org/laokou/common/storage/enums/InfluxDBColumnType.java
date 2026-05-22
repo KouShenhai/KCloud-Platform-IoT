@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.storage.enums;
+package org.laokou.common.storage.enums;
 
 import lombok.Getter;
 
@@ -23,17 +23,6 @@ import lombok.Getter;
  * @author laokou
  */
 @Getter
-public enum TimescaleDBColumType {
-
-	;
-
-	private final String code;
-
-	private final String desc;
-
-	TimescaleDBColumType(String code, String desc) {
-		this.code = code;
-		this.desc = desc;
-	}
+public enum InfluxDBColumnType {
 
 }

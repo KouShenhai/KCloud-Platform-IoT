@@ -15,14 +15,11 @@
  *
  */
 
-package org.laokou.storage.enums;
-
-import lombok.Getter;
+package org.laokou.common.storage;
 
 /**
  * @author laokou
  */
-@Getter
-public enum ClickHouseColumnType {
+public abstract class AbstractDataSource implements DataSource {
 
 }

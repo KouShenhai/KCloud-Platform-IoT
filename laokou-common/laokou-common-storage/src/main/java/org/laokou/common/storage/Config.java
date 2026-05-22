@@ -15,29 +15,22 @@
  *
  */
 
-package org.laokou.storage;
+package org.laokou.common.storage;
 
 import lombok.Data;
-
-import java.util.Set;
 
 /**
  * @author laokou
  */
 @Data
-public class Table {
+public abstract class Config {
 
-	private String name;
+	protected String host;
 
-	private Set<Column> columns;
+	protected int port;
 
-	@Data
-	public static class Column {
+	protected String username;
 
-		private String name;
-
-		private String type;
-
-	}
+	protected String password;
 
 }

@@ -15,25 +15,17 @@
  *
  */
 
-package org.laokou.storage.enums;
-
-import lombok.Getter;
+package org.laokou.common.storage;
 
 /**
  * @author laokou
  */
-@Getter
-public enum TDengineColumnType {
+interface DataSource {
 
-	;
+	void open();
 
-	private final String code;
+	void close();
 
-	private final String desc;
-
-	TDengineColumnType(String code, String desc) {
-		this.code = code;
-		this.desc = desc;
-	}
+	void create(Table table);
 
 }

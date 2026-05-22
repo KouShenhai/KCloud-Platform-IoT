@@ -15,28 +15,25 @@
  *
  */
 
-package org.laokou.storage;
+package org.laokou.common.storage.enums;
 
-import lombok.Data;
-
-import java.util.Map;
+import lombok.Getter;
 
 /**
  * @author laokou
  */
-@Data
-public class TableData {
+@Getter
+public enum TimescaleDBColumType {
 
-	private Long tenantId;
+	;
 
-	private Long gatewayId;
+	private final String code;
 
-	private Long productId;
+	private final String desc;
 
-	private Long deviceId;
-
-	private String tableName;
-
-	private Map<String, String> columns;
+	TimescaleDBColumType(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
 
 }

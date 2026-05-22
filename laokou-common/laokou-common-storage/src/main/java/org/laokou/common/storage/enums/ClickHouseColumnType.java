@@ -15,17 +15,14 @@
  *
  */
 
-package org.laokou.storage;
+package org.laokou.common.storage.enums;
+
+import lombok.Getter;
 
 /**
  * @author laokou
  */
-public interface DataSource {
-
-	void open();
-
-	void close();
-
-	void create(Table table);
+@Getter
+public enum ClickHouseColumnType {
 
 }

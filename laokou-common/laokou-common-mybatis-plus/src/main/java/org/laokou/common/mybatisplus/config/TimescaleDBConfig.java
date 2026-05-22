@@ -15,14 +15,13 @@
  *
  */
 
-package org.laokou.storage.enums;
+package org.laokou.common.mybatisplus.config;
 
-import lombok.Getter;
+import org.laokou.common.storage.Config;
 
 /**
  * @author laokou
  */
-@Getter
-public enum IoTDBColumnType {
+public class TimescaleDBConfig extends Config {
 
 }
