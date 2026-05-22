@@ -281,7 +281,7 @@ services:
     networks:
       - iot_network
   kafka:
-    image: apache/kafka:4.2.0
+    image: apache/kafka:4.3.0
     container_name: kafka
     tty: true
     ports:
@@ -521,7 +521,7 @@ services:
    networks:
      - iot_network
   clickhouse:
-    image: clickhouse/clickhouse-server:26.4
+    image: clickhouse/clickhouse-server:26.5
     container_name: clickhouse
     # 保持容器在没有守护程序的情况下运行
     tty: true
