@@ -17,8 +17,8 @@
 
 package org.laokou.common.mybatisplus.config;
 
+import com.zaxxer.hikari.HikariConfig;
 import org.laokou.common.storage.AbstractDataSource;
-import org.laokou.common.storage.Config;
 import org.laokou.common.storage.Table;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -33,8 +33,8 @@ public class TimescaleDB extends AbstractDataSource {
 
 	protected JdbcTemplate jdbcTemplate;
 
-	public TimescaleDB(Config config, DataSource dataSource) {
-		this.timescaleDBConfig = (TimescaleDBConfig) config;
+	public TimescaleDB(TimescaleDBConfig timescaleDBConfig) {
+		this.timescaleDBConfig = timescaleDBConfig;
 	}
 
 	@Override
@@ -52,4 +52,11 @@ public class TimescaleDB extends AbstractDataSource {
 
 	}
 
+	@Override
+	protected DataSource getDataSource() {
+		HikariConfig config = new HikariConfig();
+		config.setPoolName(String.format("iot_timescaledb_%d", System.currentTimeMillis()));
+		config.setDriverClassName("com.mysql.jdbc.Driver");
+		return null;
+	}
 }
