@@ -23,7 +23,7 @@ import lombok.Getter;
  * @author laokou
  */
 @Getter
-public enum StorageType {
+public enum StorageLayout {
 
 	ROW("row", "行"),
 
@@ -33,7 +33,7 @@ public enum StorageType {
 
 	private final String desc;
 
-	StorageType(String code, String desc) {
+	StorageLayout(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}
