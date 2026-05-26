@@ -22,7 +22,7 @@ export NACOS_DS_DB=kcloud_platform_nacos
 export SECRET_KEY=your_secret_key
 
 # ========== JVM 参数 ==========
-JAVA_OPT="-Xms512m -Xmx512m -XX:+UseG1GC -XX:+ZGenerational"
+JAVA_OPT="-Xms512m -Xmx512m -XX:+UseZGC -XX:+ZGenerational"
 JAVA_OPT="$JAVA_OPT -Dnacos.standalone=true"
 JAVA_OPT="$JAVA_OPT -Dnacos.mode=standalone"
 JAVA_OPT="$JAVA_OPT -Dfile.encoding=UTF-8"
