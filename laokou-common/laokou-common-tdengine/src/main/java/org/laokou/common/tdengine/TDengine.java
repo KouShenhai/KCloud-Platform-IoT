@@ -19,6 +19,7 @@ package org.laokou.common.tdengine;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.storage.AbstractDataSource;
 import org.laokou.common.storage.Config;
 import org.laokou.common.storage.Table;
@@ -27,11 +28,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 /**
  * @author laokou
  */
+@Slf4j
 public class TDengine extends AbstractDataSource {
 
-	protected JdbcTemplate jdbcTemplate;
+	private volatile JdbcTemplate jdbcTemplate;
 
-	protected HikariDataSource hikariDataSource;
+	private volatile HikariDataSource hikariDataSource;
 
 	protected TDengine(Config config) {
 		super(config);
@@ -41,15 +43,32 @@ public class TDengine extends AbstractDataSource {
 	public void open() {
 		hikariDataSource = getHikariDataSource();
 		jdbcTemplate = new JdbcTemplate(hikariDataSource, false);
+		initTable();
+		log.info("TDengine DataSource opened successfully");
 	}
 
 	@Override
 	public void close() {
-		hikariDataSource.close();
+		if (hikariDataSource != null && !hikariDataSource.isClosed()) {
+			hikariDataSource.close();
+			log.info("TDengine DataSource closed successfully");
+		}
 	}
 
 	@Override
 	public void create(Table table) {
+
+	}
+
+	private void initTable() {
+		Thread.startVirtualThread(this::createDeviceAlarm);
+		Thread.startVirtualThread(this::createDeviceStatus);
+	}
+
+	private void createDeviceAlarm() {
+	}
+
+	private void createDeviceStatus() {
 
 	}
 
@@ -63,8 +82,8 @@ public class TDengine extends AbstractDataSource {
 		hikariConfig.setPassword(config.getPassword());
 		// 线程池名称
 		hikariConfig.setPoolName(String.format("iot_tdengine_%d", System.currentTimeMillis()));
-		// 关闭自动提交
-		hikariConfig.setAutoCommit(false);
+		// 自动提交
+		hikariConfig.setAutoCommit(true);
 		// 连接测试
 		hikariConfig.setConnectionTestQuery("SELECT server_status()");
 		// 连接最大生命周期(15分钟)
