@@ -17,7 +17,6 @@
 
 package org.laokou.common.oss.convertor;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.oss.model.AmazonS3;
 import org.laokou.common.oss.model.Local;
@@ -31,21 +30,21 @@ public final class OssConvertor {
 	private OssConvertor() {
 	}
 
-	public static AmazonS3 toAmazonS3(Long id, String name, String param) throws JsonProcessingException {
+	public static AmazonS3 toAmazonS3(Long id, String name, String param) {
 		AmazonS3 amazonS3 = JacksonUtils.toBean(param, AmazonS3.class);
 		amazonS3.setName(name);
 		amazonS3.setId(id);
 		return amazonS3;
 	}
 
-	public static Local toLocal(Long id, String name, String param) throws JsonProcessingException {
+	public static Local toLocal(Long id, String name, String param) {
 		Local local = JacksonUtils.toBean(param, Local.class);
 		local.setName(name);
 		local.setId(id);
 		return local;
 	}
 
-	public static MinIO toMinIO(Long id, String name, String param) throws JsonProcessingException {
+	public static MinIO toMinIO(Long id, String name, String param) {
 		MinIO minIO = JacksonUtils.toBean(param, MinIO.class);
 		minIO.setName(name);
 		minIO.setId(id);

@@ -26,6 +26,8 @@ import java.util.List;
  */
 public class HashAlgorithm extends AbstractAlgorithm {
 
+	public static final HashAlgorithm INSTANCE = new HashAlgorithm();
+
 	/**
 	 * 哈希算法.
 	 * @param list 集合

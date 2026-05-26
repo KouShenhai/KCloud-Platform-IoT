@@ -15,14 +15,33 @@
  *
  */
 
-package org.laokou.common.oss.model;
+package org.laokou.common.storage.enums;
 
-import java.io.InputStream;
-import java.io.Serializable;
+import lombok.Getter;
 
 /**
  * @author laokou
  */
-public record FileInfo(InputStream inputStream, long size, String contentType, String name,
-		String extName) implements Serializable {
+@Getter
+public enum StoragePolicy {
+
+	TIMESCALEDB("timescaledb", "TimescaleDB"),
+
+	CLICKHOUSE("clickhouse", "ClickHouse"),
+
+	IOTDB("iotdb", "IoTDB"),
+
+	INFLUXDB("influxdb", "InfluxDB"),
+
+	TDENGINE("tdengine", "TDengine");
+
+	private final String code;
+
+	private final String desc;
+
+	StoragePolicy(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
+
 }

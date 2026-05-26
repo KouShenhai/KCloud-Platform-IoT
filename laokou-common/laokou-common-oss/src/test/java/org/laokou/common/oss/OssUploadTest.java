@@ -24,7 +24,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.i18n.util.ResourceExtUtils;
 import org.laokou.common.oss.config.StorageAutoConfig;
-import org.laokou.common.oss.model.FileInfo;
+import org.laokou.common.oss.model.File;
 import org.laokou.common.oss.model.MinIO;
 import org.laokou.common.oss.template.StorageTemplate;
 import org.laokou.common.testcontainers.container.MinIOContainer;
@@ -34,7 +34,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestConstructor;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -49,7 +48,7 @@ class OssUploadTest {
 
 	private final StorageTemplate storageTemplate;
 
-	private FileInfo fileInfo;
+	private File file;
 
 	static final MinIOContainer minIO = new MinIOContainer(DockerImageNames.minIO()).withUsername("minio")
 		.withPassword("laokou123");
@@ -68,9 +67,9 @@ class OssUploadTest {
 	void setUp() throws IOException {
 		Resource resource = ResourceExtUtils.getResource("1.txt");
 		InputStream inputStream = resource.getInputStream();
-		File file = resource.getFile();
-		long length = file.length();
-		fileInfo = new FileInfo(inputStream, length, "text/plain", file.getName(), file.getName());
+		java.io.File fileObj = resource.getFile();
+		long length = fileObj.length();
+		file = new File(inputStream, length, "text/plain", fileObj.getName(), fileObj.getName());
 	}
 
 	@Test

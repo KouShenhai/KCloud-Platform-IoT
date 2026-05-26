@@ -25,12 +25,12 @@ import lombok.Data;
 @Data
 public abstract class Config {
 
-	protected String host;
-
-	protected int port;
+	protected String address;
 
 	protected String username;
 
 	protected String password;
+
+	protected String dbName;
 
 }

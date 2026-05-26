@@ -15,36 +15,13 @@
  *
  */
 
-package org.laokou.common.oss.model.enums;
+package org.laokou.common.tdengine;
 
-import lombok.Getter;
-import org.laokou.common.algorithm.template.select.HashAlgorithm;
-import org.laokou.common.oss.model.BaseOss;
-
-import java.util.List;
+import org.laokou.common.storage.Config;
 
 /**
  * @author laokou
  */
-@Getter
-public enum LoadBalancePolicy {
-
-	HASH("hash", "负载均衡【哈希】") {
-		@Override
-		public BaseOss choose(List<BaseOss> list) {
-			return HashAlgorithm.INSTANCE.select(list, System.currentTimeMillis());
-		}
-	};
-
-	private final String code;
-
-	private final String desc;
-
-	LoadBalancePolicy(String code, String desc) {
-		this.code = code;
-		this.desc = desc;
-	}
-
-	public abstract BaseOss choose(List<BaseOss> list);
+public class TDengineConfig extends Config {
 
 }

@@ -22,6 +22,10 @@ package org.laokou.common.storage;
  */
 public abstract class AbstractDataSource implements DataSource {
 
-	protected abstract javax.sql.DataSource getDataSource();
+	protected final Config config;
+
+	protected AbstractDataSource(Config config) {
+		this.config = config;
+	}
 
 }

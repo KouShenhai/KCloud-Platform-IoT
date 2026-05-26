@@ -26,7 +26,7 @@ import io.minio.PutObjectArgs;
 import io.minio.errors.MinioException;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.oss.model.BaseOss;
-import org.laokou.common.oss.model.FileInfo;
+import org.laokou.common.oss.model.File;
 import org.laokou.common.oss.model.MinIO;
 
 import java.util.concurrent.TimeUnit;
@@ -38,8 +38,8 @@ public final class MinIOStorage extends AbstractStorage<MinioClient> {
 
 	private final MinIO minIO;
 
-	public MinIOStorage(FileInfo fileInfo, BaseOss baseOss) {
-		super(fileInfo);
+	public MinIOStorage(File file, BaseOss baseOss) {
+		super(file);
 		minIO = (MinIO) baseOss;
 	}
 
@@ -66,9 +66,9 @@ public final class MinIOStorage extends AbstractStorage<MinioClient> {
 	protected void upload(MinioClient minioClient) throws MinioException {
 		PutObjectArgs objectArgs = PutObjectArgs.builder()
 			.bucket(this.minIO.getBucketName())
-			.object(fileInfo.name())
-			.stream(fileInfo.inputStream(), fileInfo.size(), -1L)
-			.contentType(fileInfo.contentType())
+			.object(file.name())
+			.stream(file.inputStream(), file.size(), -1L)
+			.contentType(file.contentType())
 			.build();
 		minioClient.putObject(objectArgs);
 	}
@@ -77,7 +77,7 @@ public final class MinIOStorage extends AbstractStorage<MinioClient> {
 	protected String getUrl(MinioClient minioClient) throws MinioException {
 		GetPresignedObjectUrlArgs objectUrlArgs = GetPresignedObjectUrlArgs.builder()
 			.bucket(this.minIO.getBucketName())
-			.object(fileInfo.name())
+			.object(file.name())
 			.method(Http.Method.GET)
 			.expiry(5, TimeUnit.DAYS)
 			.build();

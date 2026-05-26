@@ -25,15 +25,9 @@ import lombok.Getter;
 @Getter
 public enum StorageType {
 
-	TIMESCALEDB("timescaledb", "TimescaleDB"),
+	ROW("row", "行"),
 
-	CLICKHOUSE("clickhouse", "ClickHouse"),
-
-	IOTDB("iotdb", "IoTDB"),
-
-	INFLUXDB("influxdb", "InfluxDB"),
-
-	TDENGINE("tdengine", "TDengine");
+	COLUMN("column", "列");
 
 	private final String code;
 
