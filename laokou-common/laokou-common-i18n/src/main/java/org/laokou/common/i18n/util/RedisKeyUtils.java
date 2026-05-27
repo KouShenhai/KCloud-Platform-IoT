@@ -76,4 +76,11 @@ public final class RedisKeyUtils {
 		return "route:definition";
 	}
 
+	/**
+	 * 数据换成Key.
+	 */
+	public static String getDataCacheKey(String name, String key) {
+		return "data-cache:" + name + ":" + key;
+	}
+
 }

@@ -24,6 +24,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.common.core.util.SpringExpressionUtils;
 import org.laokou.common.data.cache.annotation.DataCache;
+import org.laokou.common.redis.util.RedisUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Component;
@@ -40,8 +41,11 @@ public class DataCacheAspectj {
 
 	private final CacheManager redisCacheManager;
 
-	public DataCacheAspectj(@Qualifier("redisCacheManager") CacheManager redisCacheManager) {
+	private final RedisUtils redisUtils;
+
+	public DataCacheAspectj(@Qualifier("redisCacheManager") CacheManager redisCacheManager, RedisUtils redisUtils) {
 		this.redisCacheManager = redisCacheManager;
+		this.redisUtils = redisUtils;
 	}
 
 	@Around("@annotation(dataCache)")
@@ -49,7 +53,7 @@ public class DataCacheAspectj {
 		String name = dataCache.name();
 		String key = SpringExpressionUtils.parse(dataCache.key(),
 				((MethodSignature) point.getSignature()).getParameterNames(), point.getArgs(), String.class);
-		return dataCache.operateType().execute(name, key, point, redisCacheManager);
+		return dataCache.operateType().execute(name, key, point, redisCacheManager, redisUtils);
 	}
 
 }

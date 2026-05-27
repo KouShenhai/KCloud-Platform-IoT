@@ -92,8 +92,7 @@ final class RedisCacheManager implements CacheManager {
 	}
 
 	private Cache createMapCache(String name, CacheConfig config) {
-		RMapCache<Object, Object> map = getMapCache(name);
-		return instanceMap.computeIfAbsent(name, _ -> new RedissonCache(map, config, false));
+		return instanceMap.computeIfAbsent(name, _ -> new RedissonCache(getMapCache(name), config, false));
 	}
 
 	private RMapCache<Object, Object> getMapCache(String name) {
