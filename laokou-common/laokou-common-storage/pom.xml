@@ -10,7 +10,6 @@
   </parent>
 
   <artifactId>laokou-common-storage</artifactId>
-  <packaging>pom</packaging>
   <version>4.0.3-SNAPSHOT</version>
 
   <dependencies>

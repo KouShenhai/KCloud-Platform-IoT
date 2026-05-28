@@ -25,6 +25,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.laokou.common.data.cache.annotation.DataCache;
+import org.laokou.common.redis.util.RedisUtils;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -41,6 +42,9 @@ class DataCacheAspectjTest {
 
 	@Mock
 	private CacheManager redisCacheManager;
+
+	@Mock
+	private RedisUtils redisUtils;
 
 	@Mock
 	private ProceedingJoinPoint point;
@@ -61,7 +65,7 @@ class DataCacheAspectjTest {
 
 	@BeforeEach
 	void setUp() {
-		aspectj = new DataCacheAspectj(redisCacheManager);
+		aspectj = new DataCacheAspectj(redisCacheManager, redisUtils);
 	}
 
 	@Test

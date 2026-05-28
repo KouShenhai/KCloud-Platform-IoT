@@ -95,7 +95,6 @@ spring:
       fetch-min-size: 100KB
       fetch-max-wait: 50ms
       properties:
-        max.partition.fetch.bytes: 1MB
         spring.deserializer.key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
         spring.deserializer.value.delegate.class: org.laokou.common.kafka.config.ForyKafkaDeserializer
     producer:
@@ -112,7 +111,7 @@ spring:
       # acks=0 ： 生产者在成功写入消息之前不会等待任何来自服务器的响应。
       # acks=1 ： 只要集群的首领节点收到消息，生产者就会收到一个来自服务器成功响应。
       # acks=all ：只有当所有参与复制的节点全部收到消息时，生产者才会收到一个来自服务器的成功响应。
-      acks: all
+      acks: 1
       # 启用消息压缩
       compression-type: lz4
     listener:
