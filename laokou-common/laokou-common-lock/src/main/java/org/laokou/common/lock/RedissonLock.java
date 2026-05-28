@@ -28,8 +28,8 @@ import org.redisson.api.RLock;
  *
  * @author laokou
  */
-@RequiredArgsConstructor
 @Slf4j
+@RequiredArgsConstructor
 public class RedissonLock extends AbstractLock<RLock> {
 
 	private final RedisUtils redisUtils;
@@ -70,15 +70,13 @@ public class RedissonLock extends AbstractLock<RLock> {
 	 */
 	@Override
 	public void unlock(RLock lock) {
-		if (ObjectUtils.isNotNull(lock)) {
-			if (redisUtils.isLocked(lock) && redisUtils.isHeldByCurrentThread(lock)) {
-				log.info("【分布式锁】 => 名称：{}，线程名：{}，开始解锁", lock.getName(), Thread.currentThread().getName());
-				redisUtils.unlock(lock);
-				log.info("【分布式锁】 => 解锁成功");
-			}
-			else {
-				log.info("【分布式锁】 => 无线程持有，无需解锁");
-			}
+		if (ObjectUtils.isNotNull(lock) && redisUtils.isLocked(lock) && redisUtils.isHeldByCurrentThread(lock)) {
+			log.info("【分布式锁】 => 名称：{}，线程名：{}，开始解锁", lock.getName(), Thread.currentThread().getName());
+			redisUtils.unlock(lock);
+			log.info("【分布式锁】 => 解锁成功");
+		}
+		else {
+			log.info("【分布式锁】 => 无线程持有，无需解锁");
 		}
 	}
 

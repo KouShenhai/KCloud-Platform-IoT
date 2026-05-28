@@ -20,9 +20,14 @@ package org.laokou.common.data.cache.aspectj;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.i18n.util.RedisKeyUtils;
+import org.laokou.common.lock.Type;
+import org.laokou.common.lock.util.LockUtils;
+import org.laokou.common.redis.util.RedisUtils;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 
@@ -37,19 +42,30 @@ public enum OperateType {
 
 	GET("get", "查看") {
 		@Override
-		public Object execute(String name, String key, ProceedingJoinPoint point, CacheManager cacheManager) {
+		public Object execute(String name, String key, ProceedingJoinPoint point, CacheManager cacheManager,
+				RedisUtils redisUtils) {
 			try {
 				Cache cache = getCache(cacheManager, name);
 				Cache.ValueWrapper valueWrapper = cache.get(key);
 				if (ObjectUtils.isNotNull(valueWrapper)) {
 					return valueWrapper.get();
 				}
-				Object newValue = point.proceed();
-				Object oldValue = cache.putIfAbsent(key, newValue);
-				if (ObjectUtils.isNull(oldValue)) {
-					return newValue;
-				}
-				return oldValue;
+				String cacheKey = RedisKeyUtils.getDataCacheKey(name, key);
+				return LockUtils.executeWithLock(cacheKey, Type.LOCK, 3000, 3, redisUtils, () -> {
+					try {
+						Cache.ValueWrapper valWrapper = cache.get(key);
+						if (ObjectUtils.isNotNull(valWrapper)) {
+							return valWrapper.get();
+						}
+						Object newValue = point.proceed();
+						cache.put(key, newValue);
+						return newValue;
+					}
+					catch (Throwable ex) {
+						log.error("获取值失败，错误信息：{}", ex.getMessage(), ex);
+						throw new BizException("B_Value_GetFailed", "获取值失败", ex);
+					}
+				});
 			}
 			catch (GlobalException gex) {
 				// 系统异常/业务异常/参数异常直接捕获并抛出
@@ -64,7 +80,8 @@ public enum OperateType {
 
 	DEL("del", "删除") {
 		@Override
-		public Object execute(String name, String key, ProceedingJoinPoint point, CacheManager cacheManager) {
+		public Object execute(String name, String key, ProceedingJoinPoint point, CacheManager cacheManager,
+				RedisUtils redisUtils) {
 			try {
 				getCache(cacheManager, name).evict(key);
 				return point.proceed();
@@ -89,7 +106,8 @@ public enum OperateType {
 		this.desc = desc;
 	}
 
-	public abstract Object execute(String name, String key, ProceedingJoinPoint point, CacheManager cacheManager);
+	public abstract Object execute(String name, String key, ProceedingJoinPoint point, CacheManager cacheManager,
+			RedisUtils redisUtils);
 
 	public static Cache getCache(CacheManager cacheManager, String name) {
 		Cache cache = cacheManager.getCache(name);

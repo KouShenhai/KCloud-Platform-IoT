@@ -22,7 +22,7 @@ import lombok.Getter;
 import org.laokou.common.i18n.util.EnumParser;
 import org.laokou.common.oss.convertor.OssConvertor;
 import org.laokou.common.oss.model.BaseOss;
-import org.laokou.common.oss.model.FileInfo;
+import org.laokou.common.oss.model.File;
 import org.laokou.common.oss.template.AmazonS3Storage;
 import org.laokou.common.oss.template.LocalStorage;
 import org.laokou.common.oss.template.MinIOStorage;
@@ -33,37 +33,37 @@ public enum StoragePolicy {
 
 	LOCAL("local", "本地") {
 		@Override
-		public BaseOss getOss(Long id, String name, String param) throws JsonProcessingException {
+		public BaseOss getOss(Long id, String name, String param) {
 			return OssConvertor.toLocal(id, name, param);
 		}
 
 		@Override
-		public Storage getStorage(FileInfo fileInfo, BaseOss baseOss) {
-			return new LocalStorage(fileInfo, baseOss);
+		public Storage getStorage(File file, BaseOss baseOss) {
+			return new LocalStorage(file, baseOss);
 		}
 	},
 
 	AMAZON_S3("amazon_s3", "亚马逊S3") {
 		@Override
-		public BaseOss getOss(Long id, String name, String param) throws JsonProcessingException {
+		public BaseOss getOss(Long id, String name, String param) {
 			return OssConvertor.toAmazonS3(id, name, param);
 		}
 
 		@Override
-		public Storage getStorage(FileInfo fileInfo, BaseOss baseOss) {
-			return new AmazonS3Storage(fileInfo, baseOss);
+		public Storage getStorage(File file, BaseOss baseOss) {
+			return new AmazonS3Storage(file, baseOss);
 		}
 	},
 
 	MINIO("minio", "MinIO") {
 		@Override
-		public BaseOss getOss(Long id, String name, String param) throws JsonProcessingException {
+		public BaseOss getOss(Long id, String name, String param) {
 			return OssConvertor.toMinIO(id, name, param);
 		}
 
 		@Override
-		public Storage getStorage(FileInfo fileInfo, BaseOss baseOss) {
-			return new MinIOStorage(fileInfo, baseOss);
+		public Storage getStorage(File file, BaseOss baseOss) {
+			return new MinIOStorage(file, baseOss);
 		}
 	};
 
@@ -82,6 +82,6 @@ public enum StoragePolicy {
 
 	public abstract BaseOss getOss(Long id, String name, String param) throws JsonProcessingException;
 
-	public abstract Storage getStorage(FileInfo fileInfo, BaseOss baseOss);
+	public abstract Storage getStorage(File file, BaseOss baseOss);
 
 }

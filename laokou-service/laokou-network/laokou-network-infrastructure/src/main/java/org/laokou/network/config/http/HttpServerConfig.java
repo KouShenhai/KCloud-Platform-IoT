@@ -31,7 +31,7 @@ import java.util.concurrent.TimeUnit;
  * @author laokou
  */
 @Data
-public class HttpServerProperties {
+public class HttpServerConfig {
 
 	private boolean auth = true;
 

@@ -26,13 +26,11 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.common.core.util.SpringExpressionUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
-import org.laokou.common.i18n.common.exception.StatusCode;
-import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.util.StringExtUtils;
-import org.laokou.common.lock.Lock;
-import org.laokou.common.lock.RedissonLock;
 import org.laokou.common.lock.Type;
 import org.laokou.common.lock.annotation.Lock4j;
+import org.laokou.common.lock.util.LockUtils;
 import org.laokou.common.redis.util.RedisUtils;
 import org.springframework.stereotype.Component;
 
@@ -66,30 +64,16 @@ public class LockAspectj {
 		}
 		long timeout = lock4j.timeout();
 		int retry = lock4j.retry();
-		final Type lockType = lock4j.type();
-		Lock lock = new RedissonLock(redisUtils);
-		boolean isLocked = false;
-		try {
-			do {
-				// 注意：设置锁的过期时间，看门狗失效
-				isLocked = lock.tryLock(lockType, key, timeout);
+		Type lockType = lock4j.type();
+		return LockUtils.executeWithLock(key, lockType, timeout, retry, redisUtils, () -> {
+			try {
+				return joinPoint.proceed();
 			}
-			while (!isLocked && --retry > 0);
-			if (!isLocked) {
-				throw new SystemException(StatusCode.TOO_MANY_REQUESTS);
+			catch (Throwable ex) {
+				log.error("获取值失败，错误信息：{}", ex.getMessage(), ex);
+				throw new BizException("B_Value_GetFailed", "获取值失败", ex);
 			}
-			return joinPoint.proceed();
-		}
-		catch (Throwable throwable) {
-			log.error("【分布式锁】 => 加锁失败，错误信息：{}", throwable.getMessage(), throwable);
-			throw throwable;
-		}
-		finally {
-			// 释放锁
-			if (isLocked) {
-				lock.unlock(lockType, key);
-			}
-		}
+		});
 	}
 
 }

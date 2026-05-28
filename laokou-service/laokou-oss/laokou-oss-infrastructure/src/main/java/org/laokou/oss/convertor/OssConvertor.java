@@ -19,7 +19,7 @@ package org.laokou.oss.convertor;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.laokou.common.oss.model.BaseOss;
-import org.laokou.common.oss.model.FileInfo;
+import org.laokou.common.oss.model.File;
 import org.laokou.common.oss.model.OssUpload;
 import org.laokou.common.oss.model.enums.StoragePolicy;
 import org.laokou.oss.dto.clientobject.OssUploadCO;
@@ -43,8 +43,7 @@ public final class OssConvertor {
 
 	public static OssA toEntity(String fileType, long size, String extName, byte[] buffer, String contentType,
 			String name) {
-		OssA oss = OssDomainFactory.getOss();
-		return oss;
+		return OssDomainFactory.getOss();
 	}
 
 	public static OssUploadCO toClientObject(OssA ossA) {
@@ -58,8 +57,8 @@ public final class OssConvertor {
 		return OssUploadEvent.builder().build();
 	}
 
-	public static FileInfo toFileInfo(byte[] buffer, long size, String contentType, String name, String extName) {
-		return new FileInfo(new ByteArrayInputStream(buffer), size, contentType, name, extName);
+	public static File toFile(byte[] buffer, long size, String contentType, String name, String extName) {
+		return new File(new ByteArrayInputStream(buffer), size, contentType, name, extName);
 	}
 
 	public static List<BaseOss> toBaseOssList(List<OssDO> list) {

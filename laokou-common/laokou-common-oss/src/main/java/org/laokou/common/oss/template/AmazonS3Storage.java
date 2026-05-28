@@ -19,7 +19,7 @@ package org.laokou.common.oss.template;
 
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.oss.model.BaseOss;
-import org.laokou.common.oss.model.FileInfo;
+import org.laokou.common.oss.model.File;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.core.sync.RequestBody;
@@ -39,8 +39,8 @@ public final class AmazonS3Storage extends AbstractStorage<S3Client> {
 
 	private final org.laokou.common.oss.model.AmazonS3 amazonS3;
 
-	public AmazonS3Storage(FileInfo fileInfo, BaseOss baseOss) {
-		super(fileInfo);
+	public AmazonS3Storage(File file, BaseOss baseOss) {
+		super(file);
 		this.amazonS3 = (org.laokou.common.oss.model.AmazonS3) baseOss;
 	}
 
@@ -76,11 +76,11 @@ public final class AmazonS3Storage extends AbstractStorage<S3Client> {
 		String bucketName = this.amazonS3.getBucketName();
 		PutObjectRequest putObjectRequest = PutObjectRequest.builder()
 			.bucket(bucketName)
-			.key(fileInfo.name())
-			.contentType(fileInfo.contentType())
-			.contentLength(fileInfo.size())
+			.key(file.name())
+			.contentType(file.contentType())
+			.contentLength(file.size())
 			.build();
-		s3Client.putObject(putObjectRequest, RequestBody.fromInputStream(fileInfo.inputStream(), fileInfo.size()));
+		s3Client.putObject(putObjectRequest, RequestBody.fromInputStream(file.inputStream(), file.size()));
 	}
 
 	@Override
@@ -101,7 +101,7 @@ public final class AmazonS3Storage extends AbstractStorage<S3Client> {
 			.build()) {
 			return s3Presigner
 				.presignGetObject(builder -> builder.signatureDuration(Duration.ofDays(5))
-					.getObjectRequest(gor -> gor.bucket(bucketName).key(fileInfo.name())))
+					.getObjectRequest(gor -> gor.bucket(bucketName).key(file.name())))
 				.url()
 				.toString();
 		}

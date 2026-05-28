@@ -15,14 +15,22 @@
  *
  */
 
-package org.laokou.common.oss.model;
+package org.laokou.common.storage;
 
-import java.io.InputStream;
-import java.io.Serializable;
+import lombok.Data;
 
 /**
  * @author laokou
  */
-public record FileInfo(InputStream inputStream, long size, String contentType, String name,
-		String extName) implements Serializable {
+@Data
+public abstract class Config {
+
+	protected String address;
+
+	protected String username;
+
+	protected String password;
+
+	protected String dbName;
+
 }

@@ -20,7 +20,7 @@ package org.laokou.common.oss.template;
 import org.laokou.common.core.util.FileUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.oss.model.BaseOss;
-import org.laokou.common.oss.model.FileInfo;
+import org.laokou.common.oss.model.File;
 import org.laokou.common.oss.model.Local;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -32,14 +32,14 @@ public final class LocalStorage extends AbstractStorage<Path> {
 
 	private final Local local;
 
-	public LocalStorage(FileInfo fileInfo, BaseOss baseOss) {
-		super(fileInfo);
+	public LocalStorage(File file, BaseOss baseOss) {
+		super(file);
 		this.local = (Local) baseOss;
 	}
 
 	@Override
 	protected Path getObj() throws IOException {
-		return FileUtils.createDirAndFile(Path.of(this.local.getPath() + this.local.getDirectory(), fileInfo.name()));
+		return FileUtils.createDirAndFile(Path.of(this.local.getPath() + this.local.getDirectory(), file.name()));
 	}
 
 	@Override
@@ -48,12 +48,12 @@ public final class LocalStorage extends AbstractStorage<Path> {
 
 	@Override
 	protected void upload(Path path) {
-		FileUtils.write(path, fileInfo.inputStream(), fileInfo.size());
+		FileUtils.write(path, file.inputStream(), file.size());
 	}
 
 	@Override
 	protected String getUrl(Path path) {
-		return local.getDomain() + this.local.getDirectory() + StringConstants.SLASH + fileInfo.name();
+		return local.getDomain() + this.local.getDirectory() + StringConstants.SLASH + file.name();
 	}
 
 	@Override

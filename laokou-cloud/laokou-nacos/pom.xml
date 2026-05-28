@@ -101,6 +101,7 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>${spring-boot-maven-plugin.version}</version>
         <configuration>
           <!-- main方法的地址 只需要修改这个地址-->
           <mainClass>org.laokou.nacos.NacosApp</mainClass>

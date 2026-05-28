@@ -48,7 +48,7 @@ public class OssGatewayImpl implements OssGateway {
 	public OssUploadV uploadOssAndGetInfo(OssA ossA) {
 		try {
 			return OssConvertor.toValueObject(storageTemplate.uploadOss(
-					OssConvertor.toFileInfo(ossA.getBuffer(), ossA.getSize(), ossA.getContentType(), ossA.getName(),
+					OssConvertor.toFile(ossA.getBuffer(), ossA.getSize(), ossA.getContentType(), ossA.getName(),
 							ossA.getExtName()),
 					OssConvertor.toBaseOssList(ossMapper.selectList(Wrappers.lambdaQuery(OssDO.class)
 						.eq(OssDO::getStatus, OssStatus.ENABLE.getCode())

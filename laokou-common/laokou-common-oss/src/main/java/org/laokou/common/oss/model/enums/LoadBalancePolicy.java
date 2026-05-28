@@ -32,7 +32,7 @@ public enum LoadBalancePolicy {
 	HASH("hash", "负载均衡【哈希】") {
 		@Override
 		public BaseOss choose(List<BaseOss> list) {
-			return new HashAlgorithm().select(list, System.currentTimeMillis());
+			return HashAlgorithm.INSTANCE.select(list, System.currentTimeMillis());
 		}
 	};
 

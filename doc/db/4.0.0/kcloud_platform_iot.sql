@@ -160,7 +160,7 @@ CREATE TABLE "public"."iot_product_category" (
 "tenant_id" int8 NOT NULL DEFAULT 1,
 "dept_id" int8 NOT NULL DEFAULT 1,
 "name" varchar(50) NOT NULL,
-"sort" int4 NOT NULL,
+"sort" int4 NOT NULL DEFAULT 1,
 "pid" int8 NOT NULL,
 "remark" varchar(400)
 )

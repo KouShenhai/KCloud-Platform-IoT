@@ -37,7 +37,7 @@ final class VertxHttpServer extends AbstractVertxService<HttpServer> {
 
 	private final List<MessageRouter> messageRouters;
 
-	VertxHttpServer(final Vertx vertx, HttpServerProperties httpServerProperties, List<MessageRouter> messageRouters) {
+	VertxHttpServer(final Vertx vertx, HttpServerConfig httpServerProperties, List<MessageRouter> messageRouters) {
 		super(vertx);
 		this.httpServerOptions = getHttpServerOptions(httpServerProperties);
 		this.messageRouters = messageRouters;
@@ -105,7 +105,7 @@ final class VertxHttpServer extends AbstractVertxService<HttpServer> {
 		return router;
 	}
 
-	private HttpServerOptions getHttpServerOptions(HttpServerProperties httpServerProperties) {
+	private HttpServerOptions getHttpServerOptions(HttpServerConfig httpServerProperties) {
 		HttpServerOptions options = new HttpServerOptions();
 		options.setHost(httpServerProperties.getHost());
 		options.setPort(httpServerProperties.getPort());

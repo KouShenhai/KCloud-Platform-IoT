@@ -20,7 +20,7 @@ set NACOS_DS_DB=kcloud_platform_nacos
 
 set SECRET-KEY=your_secret_key
 
-set JAVA_OPT=-Xms512m -Xmx512m -XX:+UseG1GC -XX:+ZGenerational
+set JAVA_OPT=-Xms512m -Xmx512m -XX:+UseZGC -XX:+ZGenerational
 set JAVA_OPT=%JAVA_OPT% -Dnacos.standalone=true
 set JAVA_OPT=%JAVA_OPT% -Dnacos.mode=standalone
 set JAVA_OPT=%JAVA_OPT% -Dfile.encoding=UTF-8

@@ -40,7 +40,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @Slf4j
 final class VertxMqttClient extends AbstractVertxService<Void> {
 
-	private final MqttClientProperties mqttClientProperties;
+	private final MqttClientConfig mqttClientProperties;
 
 	private final MqttClientOptions mqttClientOptions;
 
@@ -52,7 +52,7 @@ final class VertxMqttClient extends AbstractVertxService<Void> {
 
 	private final SystemSettingsProperties systemSettingsProperties;
 
-	VertxMqttClient(Vertx vertx, MqttClientProperties mqttClientProperties, List<MessageHandler> messageHandlers,
+	VertxMqttClient(Vertx vertx, MqttClientConfig mqttClientProperties, List<MessageHandler> messageHandlers,
 			SystemSettingsProperties systemSettingsProperties) {
 		super(vertx);
 		this.mqttClientOptions = getMqttClientOptions(mqttClientProperties);
@@ -179,7 +179,7 @@ final class VertxMqttClient extends AbstractVertxService<Void> {
 			.pingResponseHandler(_ -> log.debug("【Vertx-MQTT-Client】 => 接收MQTT的PINGRESP数据包"));
 	}
 
-	private MqttClientOptions getMqttClientOptions(MqttClientProperties mqttClientProperties) {
+	private MqttClientOptions getMqttClientOptions(MqttClientConfig mqttClientProperties) {
 		MqttClientOptions options = new MqttClientOptions();
 		options.setClientId(mqttClientProperties.getClientId());
 		options.setCleanSession(mqttClientProperties.isClearSession());

@@ -50,11 +50,11 @@ final class VertxMqttServer extends AbstractVertxService<MqttServer> {
 
 	private final List<MessageHandler> messageHandlers;
 
-	private final MqttServerProperties mqttServerProperties;
+	private final MqttServerConfig mqttServerProperties;
 
 	private final MqttServerOptions mqttServerOptions;
 
-	VertxMqttServer(final Vertx vertx, final MqttServerProperties mqttServerProperties,
+	VertxMqttServer(final Vertx vertx, final MqttServerConfig mqttServerProperties,
 			final List<MessageHandler> messageHandlers) {
 		super(vertx);
 		this.mqttServerProperties = mqttServerProperties;
@@ -197,7 +197,7 @@ final class VertxMqttServer extends AbstractVertxService<MqttServer> {
 	}
 
 	// @formatter:off
-	private MqttServerOptions getMqttServerOptions(MqttServerProperties mqttServerProperties) {
+	private MqttServerOptions getMqttServerOptions(MqttServerConfig mqttServerProperties) {
 		MqttServerOptions mqttServerOptions = new MqttServerOptions();
 		mqttServerOptions.setHost(mqttServerProperties.getHost());
 		mqttServerOptions.setPort(mqttServerProperties.getPort());
