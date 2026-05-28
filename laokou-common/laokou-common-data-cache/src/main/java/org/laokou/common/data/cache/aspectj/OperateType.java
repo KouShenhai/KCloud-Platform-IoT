@@ -20,7 +20,6 @@ package org.laokou.common.data.cache.aspectj;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -43,38 +42,32 @@ public enum OperateType {
 	GET("get", "查看") {
 		@Override
 		public Object execute(String name, String key, ProceedingJoinPoint point, CacheManager cacheManager,
-				RedisUtils redisUtils) {
-			try {
-				Cache cache = getCache(cacheManager, name);
-				Cache.ValueWrapper valueWrapper = cache.get(key);
-				if (ObjectUtils.isNotNull(valueWrapper)) {
-					return valueWrapper.get();
+				RedisUtils redisUtils) throws InterruptedException {
+			Cache cache = getCache(cacheManager, name);
+			Cache.ValueWrapper valueWrapper = cache.get(key);
+			if (ObjectUtils.isNotNull(valueWrapper)) {
+				return valueWrapper.get();
+			}
+			String cacheKey = RedisKeyUtils.getDataCacheKey(name, key);
+			return LockUtils.executeWithLock(cacheKey, Type.LOCK, 3000, 3, redisUtils, () -> {
+				try {
+					Cache.ValueWrapper valWrapper = cache.get(key);
+					if (ObjectUtils.isNotNull(valWrapper)) {
+						return valWrapper.get();
+					}
+					Object newValue = point.proceed();
+					cache.put(key, newValue);
+					return newValue;
 				}
-				String cacheKey = RedisKeyUtils.getDataCacheKey(name, key);
-				return LockUtils.executeWithLock(cacheKey, Type.LOCK, 3000, 3, redisUtils, () -> {
-					try {
-						Cache.ValueWrapper valWrapper = cache.get(key);
-						if (ObjectUtils.isNotNull(valWrapper)) {
-							return valWrapper.get();
-						}
-						Object newValue = point.proceed();
-						cache.put(key, newValue);
-						return newValue;
-					}
-					catch (Throwable ex) {
-						log.error("获取值失败，错误信息：{}", ex.getMessage(), ex);
-						throw new BizException("B_Value_GetFailed", "获取值失败", ex);
-					}
-				});
-			}
-			catch (GlobalException gex) {
-				// 系统异常/业务异常/参数异常直接捕获并抛出
-				throw gex;
-			}
-			catch (Throwable ex) {
-				log.error("获取缓存失败", ex);
-				throw new SystemException("S_Cache_GetError", "获取缓存失败", ex);
-			}
+				catch (GlobalException e) {
+					// 系统异常/业务异常/参数异常直接捕获并抛出
+					throw e;
+				}
+				catch (Throwable ex) {
+					log.error("执行 proceed 失败，错误信息：{}", ex.getMessage(), ex);
+					return null;
+				}
+			});
 		}
 	},
 
@@ -107,7 +100,7 @@ public enum OperateType {
 	}
 
 	public abstract Object execute(String name, String key, ProceedingJoinPoint point, CacheManager cacheManager,
-			RedisUtils redisUtils);
+			RedisUtils redisUtils) throws InterruptedException;
 
 	public static Cache getCache(CacheManager cacheManager, String name) {
 		Cache cache = cacheManager.getCache(name);
