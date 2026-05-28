@@ -43,7 +43,7 @@
     SELECT <include refid="selectColumns"/>
     from iot_product_category
     <include refid="selectConditions"/>
-    order by "sort" desc
+    order by "sort" asc
   </sql>
 
 	<select id="selectObjectPage"
