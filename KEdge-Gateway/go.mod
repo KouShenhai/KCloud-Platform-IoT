@@ -3,7 +3,7 @@ module github.com/KouShenhai/KCloud-Platform-IoT/KEdge-Gateway
 go 1.26.2
 
 require (
-	github.com/DeRuina/timberjack v1.4.2
+	github.com/DeRuina/timberjack v1.4.5
 	github.com/extism/go-sdk v1.7.1
 	github.com/rabbitmq/amqp091-go v1.11.0
 	go.uber.org/zap v1.28.0
