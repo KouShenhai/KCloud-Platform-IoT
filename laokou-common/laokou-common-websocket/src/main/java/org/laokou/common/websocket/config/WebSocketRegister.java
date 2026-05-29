@@ -25,6 +25,9 @@ import org.jspecify.annotations.NonNull;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 /**
  * @author laokou
  */
@@ -37,12 +40,14 @@ public record WebSocketRegister(NacosDiscoveryProperties nacosDiscoveryPropertie
 	public void onApplicationEvent(@NonNull ApplicationReadyEvent event) {
 		try {
 			namingService.registerInstance(springWebSocketServerProperties.getServiceId(),
-					nacosDiscoveryProperties.getGroup(), springWebSocketServerProperties.getIp(),
+					nacosDiscoveryProperties.getGroup(), InetAddress.getLocalHost().getHostAddress(),
 					springWebSocketServerProperties.getPort(), nacosDiscoveryProperties.getClusterName());
-			log.info("【WebSocket-Server】 => 注册Nacos成功");
+			log.info("【WebSocket-Server】 => 注册 Nacos 成功");
 		}
-		catch (NacosException e) {
-			log.error("【WebSocket-Server】 => 注册失败：{}", e.getMessage(), e);
+		catch (NacosException ex) {
+			log.error("【WebSocket-Server】 => 注册 Nacos 失败，错误信息：{}", ex.getMessage(), ex);
+		} catch (UnknownHostException ex) {
+			log.error("未知主机，错误信息：{}", ex.getMessage(), ex);
 		}
 	}
 
