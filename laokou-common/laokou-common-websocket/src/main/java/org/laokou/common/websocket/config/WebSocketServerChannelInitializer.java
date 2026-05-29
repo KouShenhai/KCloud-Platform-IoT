@@ -26,6 +26,7 @@ import io.netty.handler.ssl.SslHandler;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.ResourceExtUtils;
+import org.springframework.boot.web.server.Ssl;
 import org.springframework.boot.web.server.autoconfigure.ServerProperties;
 
 import java.io.InputStream;
@@ -65,7 +66,7 @@ public final class WebSocketServerChannelInitializer extends AbstractWebSocketSe
 	}
 
 	private SslContext getSslContext() throws Exception {
-		if (serverProperties.getSsl().isEnabled()) {
+		if (serverProperties.getSsl() instanceof Ssl ssl && ssl.isEnabled()) {
 			// @formatter:off
 		// 生成证书 => openssl pkcs12 -in scg-keystore.p12 -clcerts -nokeys -out certificate.crt
 		InputStream keyCertChainIn = ResourceExtUtils.getResource(springWebSocketServerProperties.getKeyCertChainPath()).getInputStream();

@@ -62,9 +62,9 @@ spring:
     timeout-per-shutdown-phase: 2m
   webflux:
     multipart:
-      max-parts: -1
-      max-disk-usage-per-part: -1
-      max-in-memory-size: 4096
+      max-parts: 50
+      max-disk-usage-per-part: 200MB
+      max-in-memory-size: 10MB
   cloud:
     # loadbalancer
     loadbalancer:

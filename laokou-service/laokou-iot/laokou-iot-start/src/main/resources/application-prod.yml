@@ -15,12 +15,14 @@
 #    *
 #    */
 spring:
-  # 邮箱配置
-  mail:
-    host: smtp.163.com
-    username: koushenhai@163.com
-    password: ENC(lyyF4qBHGnbwEHfz/RSj2JtahbLqWjMrkFz0hGqcND3Hp19Ea6aJejxqNBYCCGnL7iw8n11Y1xvM7Hp9EDPgtg==)
-    default-encoding: UTF-8
+  pulsar:
+    client:
+      service-url: pulsar://pulsar:6650
+    producer:
+      batching-enabled: true
+      cache:
+        maximum-size: 1000
+        enabled: true
   datasource:
     dynamic:
       # 默认false,建议线上关闭
@@ -47,6 +49,21 @@ spring:
           type: com.zaxxer.hikari.HikariDataSource
           driver-class-name: ${DS_DRIVER:org.postgresql.Driver}
           url: jdbc:${DS_PLATFORM:postgresql}://${DS_HOST:postgresql}:${DS_PORT:5432}/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-auth&useSSL=false
+          username: ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)
+          password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
+          # https://blog.csdn.net/u014644574/article/details/123680515
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+        iot:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: ${DS_DRIVER:org.postgresql.Driver}
+          url: jdbc:${DS_PLATFORM:postgresql}://${DS_HOST:postgresql}:${DS_PORT:5432}/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-iot&useSSL=false
           username: ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)
           password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
           # https://blog.csdn.net/u014644574/article/details/123680515
@@ -133,25 +150,12 @@ spring:
       # 临时配置文件【解决拉取nacos配置文件时，group默认为DEFAULT_GROUP问题】
       - optional:nacos:laokou-auth.yaml?refreshEnabled=true&group=${NACOS_GROUP:IOT_GROUP}
   cloud:
-    sentinel:
-      datasource:
-        # 自定义名称
-        db0:
-          nacos:
-            server-addr: ${NACOS_CONFIG_ADDRESS:nacos:8848,nacos:8858,nacos:8868}
-            namespace: ${NACOS_NAMESPACE:0dac1a68-2f01-40df-bd26-bf0cb199057a}
-            data-id: auth-flow.json
-            data-type: json
-            group-id: ${NACOS_GROUP:IOT_GROUP}
-            username: ${NACOS_USERNAME:nacos}
-            password: ${NACOS_PASSWORD:nacos}
-            rule-type: flow
     nacos:
       discovery:
         # 开启服务注册&发现
         enabled: true
         server-addr: ${NACOS_DISCOVERY_ADDRESS:nacos:8848,nacos:8858,nacos:8868}
-        namespace: ${NACOS_NAMESPACE:0dac1a68-2f01-40df-bd26-bf0cb199057a}
+        namespace: ${NACOS_NAMESPACE:8140e92b-fb43-48f5-b63b-7506185206a5}
         username: ${NACOS_USERNAME:nacos}
         password: ${NACOS_PASSWORD:nacos}
         group: ${NACOS_GROUP:IOT_GROUP}
@@ -174,7 +178,7 @@ spring:
         # 开启配置中心
         enabled: true
         server-addr: ${NACOS_CONFIG_ADDRESS:nacos:8848,nacos:8858,nacos:8868}
-        namespace: ${NACOS_NAMESPACE:0dac1a68-2f01-40df-bd26-bf0cb199057a}
+        namespace: ${NACOS_NAMESPACE:8140e92b-fb43-48f5-b63b-7506185206a5}
         username: ${NACOS_USERNAME:nacos}
         password: ${NACOS_PASSWORD:nacos}
         cluster-name: ${NACOS_CLUSTER_NAME:iot-cluster}
@@ -183,10 +187,3 @@ spring:
         file-extension: yaml
         group: ${NACOS_GROUP:IOT_GROUP}
         refresh-enabled: true
-
-sms:
-  type: gyy
-  gyy:
-    template-id: ENC(h+6CtZDd1st7pAOcFNcjNDmglNIkRsEMFAwPv76STLe7kxdTX0lyX+ZJ4tO9zY3Bd7Xp5511saK9E7nr0ZlnwvPypbTBqz6U/ICCu03EEo4=)
-    sign-id: ENC(6DZexca4yMNi/4FiyS0Vwa9uSRUidUpCo9N390puXIZBAGC/T3PxSqF01Bv62TzRbY6/O2IsAKISDqfEtDooofRglNcmN9dVx55pZEwV4ck=)
-    appcode: ENC(QIuOx6iFUg1VuPvrdarC3Q4kWhIMsnRjPSkAN+cPoRHitIJ58xicWbaT2sAuVo+PW+SBdJfsp0yUpBZX2usHzxOVosw9WYBuBsQYtns2/9c=)

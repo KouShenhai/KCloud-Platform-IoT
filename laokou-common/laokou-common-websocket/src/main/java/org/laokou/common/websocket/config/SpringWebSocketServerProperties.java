@@ -32,11 +32,6 @@ import org.springframework.stereotype.Component;
 public class SpringWebSocketServerProperties {
 
 	/**
-	 * 真实IP.
-	 */
-	private String ip = "127.0.0.1";
-
-	/**
 	 * 绑定IP.
 	 */
 	private String bindIp = "0.0.0.0";

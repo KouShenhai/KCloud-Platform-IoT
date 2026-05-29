@@ -26,7 +26,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.laokou.common.core.util.SpringExpressionUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
-import org.laokou.common.i18n.common.exception.BizException;
+import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.common.lock.Type;
 import org.laokou.common.lock.annotation.Lock4j;
@@ -69,9 +69,13 @@ public class LockAspectj {
 			try {
 				return joinPoint.proceed();
 			}
+			catch (GlobalException e) {
+				// 系统异常/业务异常/参数异常直接捕获并抛出
+				throw e;
+			}
 			catch (Throwable ex) {
-				log.error("获取值失败，错误信息：{}", ex.getMessage(), ex);
-				throw new BizException("B_Value_GetFailed", "获取值失败", ex);
+				log.error("执行 proceed 失败，错误信息：{}", ex.getMessage(), ex);
+				return null;
 			}
 		});
 	}

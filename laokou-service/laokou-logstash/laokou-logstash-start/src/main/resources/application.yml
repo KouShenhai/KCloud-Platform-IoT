@@ -65,13 +65,14 @@ spring:
   loki:
     url: http://loki:3100/loki/api/v1/push
   # Elasticsearch配置
-  elasticsearch:
-    uris:
-      - https://elasticsearch:9200
-    username: ENC(288BcA+5uF75oMpMHekXLLG+DBnzJbj3eFEY5uEG9G1TWvv7dR2TXJ8jc13MtHDk)
-    password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
-    connection-timeout: 60s
-    socket-timeout: 60s
+  data:
+    elasticsearch:
+      uris:
+        - https://elasticsearch:9200
+      username: ENC(288BcA+5uF75oMpMHekXLLG+DBnzJbj3eFEY5uEG9G1TWvv7dR2TXJ8jc13MtHDk)
+      password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
+      connection-timeout: 60s
+      socket-timeout: 60s
   kafka:
     bootstrap-servers: kafka:9092
     consumer:
@@ -80,20 +81,21 @@ spring:
       # 禁用自动提交（按周期）已消费offset
       enable-auto-commit: false
       # 单次poll()调用返回的记录数
-      max-poll-records: 500
+      max-poll-records: 1000
       # 键的序列化方式
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       # 值的序列化方式
       value-deserializer: org.laokou.common.kafka.config.ForyKafkaDeserializer
       # 单位拉取量
-      fetch-min-size: 102400
+      fetch-min-size: 100KB
+      fetch-max-wait: 50ms
     producer:
       # 发生错误后，消息重发的次数。
       retries: 5
       # 当有多个消息需要被发送到同一个分区时，生产者会把它们放在同一个批次里。该参数指定了一个批次可以使用的内存大小，按照字节数计算。
-      batch-size: 1048576
+      batch-size: 10MB
       # 设置生产者内存缓冲区的大小。
-      buffer-memory: 33554432
+      buffer-memory: 64MB
       # 键的序列化方式
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       # 值的序列化方式
@@ -106,7 +108,7 @@ spring:
       compression-type: lz4
     listener:
       # 在侦听器容器中运行的线程数。
-      concurrency: 5
+      concurrency: 10
       # 批量提交模式
       ack-mode: manual
       # 批量batch类型

@@ -62,8 +62,8 @@ spring:
   servlet:
     multipart:
       enabled: true
-      max-file-size: -1
-      max-request-size: -1
+      max-file-size: 100MB
+      max-request-size: 100MB
   # 开启虚拟线程
   threads:
     virtual:
