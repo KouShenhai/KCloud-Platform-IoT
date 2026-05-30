@@ -46,7 +46,8 @@ public record WebSocketRegister(NacosDiscoveryProperties nacosDiscoveryPropertie
 		}
 		catch (NacosException ex) {
 			log.error("【WebSocket-Server】 => 注册 Nacos 失败，错误信息：{}", ex.getMessage(), ex);
-		} catch (UnknownHostException ex) {
+		}
+		catch (UnknownHostException ex) {
 			log.error("未知主机，错误信息：{}", ex.getMessage(), ex);
 		}
 	}

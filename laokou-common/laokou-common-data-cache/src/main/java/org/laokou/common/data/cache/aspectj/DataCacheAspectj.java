@@ -49,7 +49,7 @@ public class DataCacheAspectj {
 	}
 
 	@Around("@annotation(dataCache)")
-	public Object doAround(ProceedingJoinPoint point, DataCache dataCache) {
+	public Object doAround(ProceedingJoinPoint point, DataCache dataCache) throws InterruptedException {
 		String name = dataCache.name();
 		String key = SpringExpressionUtils.parse(dataCache.key(),
 				((MethodSignature) point.getSignature()).getParameterNames(), point.getArgs(), String.class);
