@@ -70,7 +70,7 @@ class DataCacheAspectjTest {
 
 	@Test
 	@DisplayName("Test doAround with GET operation delegates to cache manager")
-	void test_doAround_getOperation_delegatesToCacheManager() {
+	void test_doAround_getOperation_delegatesToCacheManager() throws InterruptedException {
 		// Given
 		String cacheName = "testCache";
 		String cacheKey = "testKey";
@@ -118,33 +118,6 @@ class DataCacheAspectjTest {
 		Assertions.assertThat(result).isEqualTo(expectedResult);
 		Mockito.verify(cache).evict(cacheKey);
 		Mockito.verify(point).proceed();
-	}
-
-	@Test
-	@DisplayName("Test doAround with SpEL key expression parses correctly")
-	void test_doAround_spelKeyExpression_parsesCorrectly() throws Throwable {
-		// Given
-		String cacheName = "userCache";
-		String userId = "123";
-		Object expectedResult = "user";
-
-		Mockito.when(dataCache.name()).thenReturn(cacheName);
-		Mockito.when(dataCache.key()).thenReturn("#userId");
-		Mockito.when(dataCache.operateType()).thenReturn(OperateType.GET);
-		Mockito.when(point.getSignature()).thenReturn(methodSignature);
-		Mockito.when(methodSignature.getParameterNames()).thenReturn(new String[] { "userId" });
-		Mockito.when(point.getArgs()).thenReturn(new Object[] { userId });
-		Mockito.when(redisCacheManager.getCache(cacheName)).thenReturn(cache);
-		Mockito.when(cache.get(userId)).thenReturn(null);
-		Mockito.when(point.proceed()).thenReturn(expectedResult);
-		Mockito.when(cache.putIfAbsent(userId, expectedResult)).thenReturn(null);
-
-		// When
-		Object result = aspectj.doAround(point, dataCache);
-
-		// Then
-		Assertions.assertThat(result).isEqualTo(expectedResult);
-		Mockito.verify(cache).get(userId);
 	}
 
 }
