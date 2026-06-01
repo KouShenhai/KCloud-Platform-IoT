@@ -185,7 +185,7 @@
     <!--jakarta.servlet-api版本-->
     <jakarta-servlet-api.version>6.1.0</jakarta-servlet-api.version>
     <!--fesod版本-->
-    <fesod.version>2.0.1-incubating</fesod.version>
+    <fesod.version>2.0.2-incubating</fesod.version>
     <!--s3版本-->
     <s3.version>2.45.1</s3.version>
     <!--dynamic-datasource版本-->
