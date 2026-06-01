@@ -29,7 +29,7 @@
 
   <properties>
     <!--pig-nacos版本-->
-    <pig-nacos.version>3.2.1</pig-nacos.version>
+    <pig-nacos.version>3.2.2</pig-nacos.version>
   </properties>
 
   <dependencies>
