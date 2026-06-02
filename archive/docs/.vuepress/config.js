@@ -59,6 +59,11 @@ module.exports = {
 							{text: 'Flyway配置', link: '/pages/a0baf8/'},
 						]
 					},
+					{
+						text: '环境', link: '/pages/a0baf10/', items: [
+							{text: 'Ubuntu22.04安装Mysql9.6.0', link: '/pages/a0baf10/'},
+						]
+					},
 				]
 			},
 			{text: '赞助', link: '/pages/1b12ed/'},
