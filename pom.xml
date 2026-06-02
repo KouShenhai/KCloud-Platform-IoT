@@ -1315,6 +1315,7 @@
           <exclude>*.properties</exclude>
           <exclude>log4j2*.xml</exclude>
           <exclude>*.json</exclude>
+          <exclude>*.banner</exclude>
         </excludes>
       </resource>
       <!-- 添加需要包含的文件 -->
@@ -1335,6 +1336,8 @@
           <!--suppress UnresolvedMavenProperty -->
           <include>log4j2-${PROFILE-ACTIVE}.xml</include>
           <include>log4j2.component.properties</include>
+          <include>banner.txt</include>
+          <include>nacos-ai-registry.properties</include>
         </includes>
       </resource>
     </resources>

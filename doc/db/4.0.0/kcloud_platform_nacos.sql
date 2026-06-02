@@ -444,22 +444,6 @@ CREATE INDEX "idx_ai_resource_ver_name" ON "ai_resource_version" USING btree ("n
 CREATE INDEX "idx_ai_resource_ver_status" ON "ai_resource_version" USING btree ("status");
 CREATE INDEX "idx_ai_resource_ver_gmt_modified" ON "ai_resource_version" USING btree ("gmt_modified");
 
-ALTER TABLE config_info ALTER COLUMN tenant_id SET DEFAULT '';
-UPDATE config_info SET tenant_id = '' WHERE tenant_id IS NULL;
-ALTER TABLE config_info ALTER COLUMN tenant_id SET NOT NULL;
-
-ALTER TABLE config_info_gray ALTER COLUMN tenant_id SET DEFAULT '';
-UPDATE config_info_gray SET tenant_id = '' WHERE tenant_id IS NULL;
-ALTER TABLE config_info_gray ALTER COLUMN tenant_id SET NOT NULL;
-
-ALTER TABLE config_tags_relation ALTER COLUMN tenant_id SET DEFAULT '';
-UPDATE config_tags_relation SET tenant_id = '' WHERE tenant_id IS NULL;
-ALTER TABLE config_tags_relation ALTER COLUMN tenant_id SET NOT NULL;
-
-ALTER TABLE his_config_info ALTER COLUMN tenant_id SET DEFAULT '';
-UPDATE his_config_info SET tenant_id = '' WHERE tenant_id IS NULL;
-ALTER TABLE his_config_info ALTER COLUMN tenant_id SET NOT NULL;
-
 INSERT INTO "public"."users" VALUES ('laokou', '$2a$10$75WIn2J5FoX9F5wEBdFsL.0cKdv5h8QqBMKMWBABhWAxKB4TO8WZq', 'f');
 INSERT INTO "public"."users" VALUES ('nacos', '$2a$10$oVX1zRtaql9Jbsyzaaovx.TU2M6Bw0ZpCbPYWOIED58d1ougzaFRm', 'f');
 
