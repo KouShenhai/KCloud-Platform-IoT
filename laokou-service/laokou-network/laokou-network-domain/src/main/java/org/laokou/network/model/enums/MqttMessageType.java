@@ -151,7 +151,7 @@ public enum MqttMessageType {
 	UP_REPORT_PROPERTIES_DEVICE_MESSAGE("up_report_properties_device_message", "上报设备属性【上行】") {
 		@Override
 		public String getTopic() {
-			return "/up/+/+/+/+/properties/report";
+			return "/up/+/+/properties/report";
 		}
 
 		@Override
@@ -163,7 +163,7 @@ public enum MqttMessageType {
 	DOWN_READ_PROPERTIES_DEVICE_MESSAGE("down_read_properties_device_message", "读取设备属性【下行】") {
 		@Override
 		public String getTopic() {
-			return "/down/+/+/+/+/properties/read";
+			return "/down/+/+/properties/read";
 		}
 
 		@Override
@@ -175,7 +175,7 @@ public enum MqttMessageType {
 	UP_READ_PROPERTIES_REPLY_DEVICE_MESSAGE("up_read_properties_reply_device_message", "读取设备属性回复【上行】") {
 		@Override
 		public String getTopic() {
-			return "/up/+/+/+/+/properties/read/reply";
+			return "/up/+/+/properties/read/reply";
 		}
 
 		@Override
@@ -187,7 +187,7 @@ public enum MqttMessageType {
 	DOWN_WRITE_PROPERTIES_DEVICE_MESSAGE("down_write_properties_device_message", "修改设备属性【下行】") {
 		@Override
 		public String getTopic() {
-			return "/down/+/+/+/+/properties/write";
+			return "/down/+/+/properties/write";
 		}
 
 		@Override
@@ -199,7 +199,7 @@ public enum MqttMessageType {
 	UP_WRITE_PROPERTIES_REPLY_DEVICE_MESSAGE("up_write_properties_reply_device_message", "修改设备属性回复【上行】") {
 		@Override
 		public String getTopic() {
-			return "/up/+/+/+/+/properties/write/reply";
+			return "/up/+/+/properties/write/reply";
 		}
 
 		@Override
@@ -211,7 +211,7 @@ public enum MqttMessageType {
 	UP_STATUS_DEVICE_MESSAGE("up_status_device_message", "设备状态【上行】") {
 		@Override
 		public String getTopic() {
-			return "/up/+/+/+/+/status";
+			return "/up/+/+/status";
 		}
 
 		@Override
@@ -224,7 +224,7 @@ public enum MqttMessageType {
 
 		@Override
 		public String getTopic() {
-			return "/up/+/+/+/+/event/alarm";
+			return "/up/+/+/event/alarm";
 		}
 
 		@Override

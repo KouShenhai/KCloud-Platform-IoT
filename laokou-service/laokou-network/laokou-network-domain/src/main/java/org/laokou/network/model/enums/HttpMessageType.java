@@ -54,7 +54,7 @@ public enum HttpMessageType {
 	REPORT_PROPERTIES_DEVICE_MESSAGE("report_properties_device_message", "上报设备属性") {
 		@Override
 		public String getRoute() {
-			return "/:tenantId/:gatewayId/:productId/:deviceId/properties/report";
+			return "/:tenantId/:gatewayId/properties/report";
 		}
 
 		@Override
@@ -66,7 +66,7 @@ public enum HttpMessageType {
 	STATUS_DEVICE_MESSAGE("status_device_message", "设备状态") {
 		@Override
 		public String getRoute() {
-			return "/:tenantId/:gatewayId/:productId/:deviceId/status";
+			return "/:tenantId/:gatewayId/status";
 		}
 
 		@Override
@@ -79,7 +79,7 @@ public enum HttpMessageType {
 
 		@Override
 		public String getRoute() {
-			return "/:tenantId/:gatewayId/:productId/:deviceId/event/alarm";
+			return "/:tenantId/:gatewayId/event/alarm";
 		}
 
 		@Override
