@@ -98,6 +98,12 @@ export default [
 				path: '/sys/base',
 				routes: [
 					{
+						name: 'menu.sys.base.dict',
+						title: 'menu.sys.base.dict',
+						path: '/sys/base/dict',
+						component: './Sys/Base/dict',
+					},
+					{
 						name: 'menu.sys.base.i18n-menu',
 						title: 'menu.sys.base.i18n-menu',
 						path: '/sys/base/i18nMenu',

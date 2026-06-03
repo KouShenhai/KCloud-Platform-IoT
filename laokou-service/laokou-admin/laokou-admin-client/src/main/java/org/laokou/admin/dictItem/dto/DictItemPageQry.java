@@ -19,6 +19,7 @@ package org.laokou.admin.dictItem.dto;
 
 import lombok.Data;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.util.StringExtUtils;
 
 /**
  * 分页查询字典项命令.
@@ -27,5 +28,33 @@ import org.laokou.common.i18n.dto.PageQuery;
  */
 @Data
 public class DictItemPageQry extends PageQuery {
+
+	/**
+	 * 字典标签.
+	 */
+	private String label;
+
+	/**
+	 * 字典值.
+	 */
+	private String value;
+
+	/**
+	 * 字典状态 0启用 1停用.
+	 */
+	private Integer status;
+
+	/**
+	 * 类型ID.
+	 */
+	private Long typeId;
+
+	public void setLabel(String label) {
+		this.label = StringExtUtils.like(StringExtUtils.trim(label));
+	}
+
+	public void setValue(String value) {
+		this.value = StringExtUtils.like(StringExtUtils.trim(value));
+	}
 
 }

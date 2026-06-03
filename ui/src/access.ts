@@ -34,6 +34,60 @@ export default (initialState: any) => {
 		canI18nMenuSave:
 			permissions?.includes('sys:i18n-menu:save') && scopes?.includes('write'),
 
+		canDictGetDetail:
+			permissions?.includes('sys:dict:detail') &&
+			scopes?.includes('read'),
+
+		canDictPage:
+			permissions?.includes('sys:dict:page') && scopes?.includes('read'),
+
+		canDictModify:
+			permissions?.includes('sys:dict:modify') &&
+			scopes?.includes('write'),
+
+		canDictRemove:
+			permissions?.includes('sys:dict:remove') &&
+			scopes?.includes('write'),
+
+		canDictSave:
+			permissions?.includes('sys:dict:save') && scopes?.includes('write'),
+
+		canDictImport:
+			permissions?.includes('sys:dict:import') &&
+			scopes?.includes('write'),
+
+		canDictExport:
+			permissions?.includes('sys:dict:export') &&
+			scopes?.includes('write'),
+
+		canDictItemGetDetail:
+			permissions?.includes('sys:dict-item:detail') &&
+			scopes?.includes('read'),
+
+		canDictItemPage:
+			permissions?.includes('sys:dict-item:page') &&
+			scopes?.includes('read'),
+
+		canDictItemModify:
+			permissions?.includes('sys:dict-item:modify') &&
+			scopes?.includes('write'),
+
+		canDictItemRemove:
+			permissions?.includes('sys:dict-item:remove') &&
+			scopes?.includes('write'),
+
+		canDictItemSave:
+			permissions?.includes('sys:dict-item:save') &&
+			scopes?.includes('write'),
+
+		canDictItemImport:
+			permissions?.includes('sys:dict-item:import') &&
+			scopes?.includes('write'),
+
+		canDictItemExport:
+			permissions?.includes('sys:dict-item:export') &&
+			scopes?.includes('write'),
+
 		canDeptGetDetail:
 			permissions?.includes('sys:dept:detail') &&
 			scopes?.includes('read'),

@@ -6,7 +6,7 @@ export async function modifyDictItem(
 	body: API.DictItemModifyCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/api/v1/dict-items', {
+	return request<any>('/api-proxy/admin/api/v1/dict-items', {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
@@ -19,11 +19,13 @@ export async function modifyDictItem(
 /** 保存字典项 保存字典项 POST /api/v1/dict-items */
 export async function saveDictItem(
 	body: API.DictItemSaveCmd,
+	requestId: string,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/api/v1/dict-items', {
+	return request<any>('/api-proxy/admin/api/v1/dict-items', {
 		method: 'POST',
 		headers: {
+			'request-id': requestId,
 			'Content-Type': 'application/json',
 		},
 		data: body,
@@ -36,7 +38,7 @@ export async function removeDictItem(
 	body: number[],
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/api/v1/dict-items', {
+	return request<any>('/api-proxy/admin/api/v1/dict-items', {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',
@@ -53,7 +55,7 @@ export async function getDictItemById(
 	options?: { [key: string]: any },
 ) {
 	const { id: param0, ...queryParams } = params;
-	return request<API.Result>(`/api/v1/dict-items/${param0}`, {
+	return request<API.Result>(`/api-proxy/admin/api/v1/dict-items/${param0}`, {
 		method: 'GET',
 		params: { ...queryParams },
 		...(options || {}),
@@ -65,7 +67,7 @@ export async function exportDictItem(
 	body: API.DictItemExportCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/api/v1/dict-items/export', {
+	return request<any>('/api-proxy/admin/api/v1/dict-items/export', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -84,7 +86,7 @@ export async function importDictItem(
 	const formData = new FormData();
 
 	if (file) {
-		file.forEach((f) => formData.append('file', f || ''));
+		file.forEach((f) => formData.append('files', f || ''));
 	}
 
 	Object.keys(body).forEach((ele) => {
@@ -103,7 +105,7 @@ export async function importDictItem(
 		}
 	});
 
-	return request<any>('/api/v1/dict-items/import', {
+	return request<any>('/api-proxy/admin/api/v1/dict-items/import', {
 		method: 'POST',
 		data: formData,
 		requestType: 'form',
@@ -116,7 +118,7 @@ export async function pageDictItem(
 	body: API.DictItemPageQry,
 	options?: { [key: string]: any },
 ) {
-	return request<API.Result>('/api/v1/dict-items/page', {
+	return request<API.Result>('/api-proxy/admin/api/v1/dict-items/page', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

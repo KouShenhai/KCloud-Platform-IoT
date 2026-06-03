@@ -6,7 +6,7 @@ export async function modifyDict(
 	body: API.DictModifyCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/api/v1/dicts', {
+	return request<any>('/api-proxy/admin/api/v1/dicts', {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
@@ -19,11 +19,13 @@ export async function modifyDict(
 /** 保存字典 保存字典 POST /api/v1/dicts */
 export async function saveDict(
 	body: API.DictSaveCmd,
+	requestId: string,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/api/v1/dicts', {
+	return request<any>('/api-proxy/admin/api/v1/dicts', {
 		method: 'POST',
 		headers: {
+			'request-id': requestId,
 			'Content-Type': 'application/json',
 		},
 		data: body,
@@ -36,7 +38,7 @@ export async function removeDict(
 	body: number[],
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/api/v1/dicts', {
+	return request<any>('/api-proxy/admin/api/v1/dicts', {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',
@@ -53,7 +55,7 @@ export async function getDictById(
 	options?: { [key: string]: any },
 ) {
 	const { id: param0, ...queryParams } = params;
-	return request<API.Result>(`/api/v1/dicts/${param0}`, {
+	return request<API.Result>(`/api-proxy/admin/api/v1/dicts/${param0}`, {
 		method: 'GET',
 		params: { ...queryParams },
 		...(options || {}),
@@ -65,7 +67,7 @@ export async function exportDict(
 	body: API.DictExportCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/api/v1/dicts/export', {
+	return request<any>('/api-proxy/admin/api/v1/dicts/export', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -84,7 +86,7 @@ export async function importDict(
 	const formData = new FormData();
 
 	if (file) {
-		file.forEach((f) => formData.append('file', f || ''));
+		file.forEach((f) => formData.append('files', f || ''));
 	}
 
 	Object.keys(body).forEach((ele) => {
@@ -103,7 +105,7 @@ export async function importDict(
 		}
 	});
 
-	return request<any>('/api/v1/dicts/import', {
+	return request<any>('/api-proxy/admin/api/v1/dicts/import', {
 		method: 'POST',
 		data: formData,
 		requestType: 'form',
@@ -116,7 +118,7 @@ export async function pageDict(
 	body: API.DictPageQry,
 	options?: { [key: string]: any },
 ) {
-	return request<API.Result>('/api/v1/dicts/page', {
+	return request<API.Result>('/api-proxy/admin/api/v1/dicts/page', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

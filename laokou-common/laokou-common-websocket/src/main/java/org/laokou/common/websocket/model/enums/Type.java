@@ -31,7 +31,7 @@ import org.laokou.common.websocket.model.WebSocketMessage;
  */
 @Slf4j
 @Getter
-public enum WebSocketType {
+public enum Type {
 
 	MESSAGE("message", "消息") {
 		@Override
@@ -71,13 +71,13 @@ public enum WebSocketType {
 
 	private final String desc;
 
-	WebSocketType(String code, String desc) {
+	Type(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}
 
-	public static WebSocketType getByCode(String code) {
-		return EnumParser.parse(WebSocketType.class, WebSocketType::getCode, code);
+	public static Type getByCode(String code) {
+		return EnumParser.parse(Type.class, Type::getCode, code);
 	}
 
 	public abstract void handle(OAuth2AuthenticatedExtPrincipal principal, WebSocketMessage wsm, Channel channel);

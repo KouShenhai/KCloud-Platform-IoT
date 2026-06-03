@@ -26,7 +26,7 @@ import org.laokou.common.context.util.OAuth2AuthenticatedExtPrincipal;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.websocket.config.WebSocketSessionHeartBeatManager;
 import org.laokou.common.websocket.config.WebSocketSessionManager;
-import org.laokou.common.websocket.model.enums.WebSocketType;
+import org.laokou.common.websocket.model.enums.Type;
 import org.mockito.Mockito;
 
 import java.util.Set;
@@ -36,7 +36,7 @@ import java.util.Set;
  *
  * @author laokou
  */
-class WebSocketTypeTest {
+class TypeTest {
 
 	private static final String TEST_CHANNEL_ID = "test-channel-enum";
 
@@ -48,10 +48,10 @@ class WebSocketTypeTest {
 	@Test
 	void test_getByCode_for_message() {
 		// When
-		WebSocketType result = WebSocketType.getByCode("message");
+		Type result = Type.getByCode("message");
 
 		// Then
-		Assertions.assertThat(result).isEqualTo(WebSocketType.MESSAGE);
+		Assertions.assertThat(result).isEqualTo(Type.MESSAGE);
 		Assertions.assertThat(result.getCode()).isEqualTo("message");
 		Assertions.assertThat(result.getDesc()).isEqualTo("消息");
 	}
@@ -59,10 +59,10 @@ class WebSocketTypeTest {
 	@Test
 	void test_getByCode_for_connect() {
 		// When
-		WebSocketType result = WebSocketType.getByCode("connect");
+		Type result = Type.getByCode("connect");
 
 		// Then
-		Assertions.assertThat(result).isEqualTo(WebSocketType.CONNECT);
+		Assertions.assertThat(result).isEqualTo(Type.CONNECT);
 		Assertions.assertThat(result.getCode()).isEqualTo("connect");
 		Assertions.assertThat(result.getDesc()).isEqualTo("建立连接");
 	}
@@ -70,10 +70,10 @@ class WebSocketTypeTest {
 	@Test
 	void test_getByCode_for_ping() {
 		// When
-		WebSocketType result = WebSocketType.getByCode("ping");
+		Type result = Type.getByCode("ping");
 
 		// Then
-		Assertions.assertThat(result).isEqualTo(WebSocketType.PING);
+		Assertions.assertThat(result).isEqualTo(Type.PING);
 		Assertions.assertThat(result.getCode()).isEqualTo("ping");
 		Assertions.assertThat(result.getDesc()).isEqualTo("发送心跳");
 	}
@@ -81,10 +81,10 @@ class WebSocketTypeTest {
 	@Test
 	void test_getByCode_for_pong() {
 		// When
-		WebSocketType result = WebSocketType.getByCode("pong");
+		Type result = Type.getByCode("pong");
 
 		// Then
-		Assertions.assertThat(result).isEqualTo(WebSocketType.PONG);
+		Assertions.assertThat(result).isEqualTo(Type.PONG);
 		Assertions.assertThat(result.getCode()).isEqualTo("pong");
 		Assertions.assertThat(result.getDesc()).isEqualTo("心跳应答");
 	}
@@ -92,7 +92,7 @@ class WebSocketTypeTest {
 	@Test
 	void test_getByCode_throws_exception_for_unknown() {
 		// When & Then
-		Assertions.assertThatThrownBy(() -> WebSocketType.getByCode("unknown")).isInstanceOf(BizException.class);
+		Assertions.assertThatThrownBy(() -> Type.getByCode("unknown")).isInstanceOf(BizException.class);
 	}
 
 	@Test
@@ -110,7 +110,7 @@ class WebSocketTypeTest {
 		message.setType("connect");
 
 		// When
-		WebSocketType.CONNECT.handle(userDetails, message, mockChannel);
+		Type.CONNECT.handle(userDetails, message, mockChannel);
 
 		// Then
 		Set<Channel> channels = WebSocketSessionManager.get(1001L);
@@ -139,7 +139,7 @@ class WebSocketTypeTest {
 		message.setPayload("pong");
 
 		// When
-		WebSocketType.PONG.handle(userDetails, message, mockChannel);
+		Type.PONG.handle(userDetails, message, mockChannel);
 
 		// Then
 		int count = WebSocketSessionHeartBeatManager.get(TEST_CHANNEL_ID);

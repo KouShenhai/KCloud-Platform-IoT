@@ -17,12 +17,16 @@
 
 package org.laokou.admin.dictItem.gatewayimpl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.dict.gatewayimpl.database.DictMapper;
+import org.laokou.admin.dict.gatewayimpl.database.dataobject.DictDO;
 import org.laokou.admin.dictItem.convertor.DictItemConvertor;
 import org.laokou.admin.dictItem.gateway.DictItemGateway;
 import org.laokou.admin.dictItem.gatewayimpl.database.DictItemMapper;
 import org.laokou.admin.dictItem.gatewayimpl.database.dataobject.DictItemDO;
 import org.laokou.admin.dictItem.model.DictItemE;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -37,6 +41,8 @@ import java.util.Arrays;
 public class DictItemGatewayImpl implements DictItemGateway {
 
 	private final DictItemMapper dictItemMapper;
+
+	private final DictMapper dictMapper;
 
 	@Override
 	public void createDictItem(DictItemE dictItemE) {
@@ -53,6 +59,30 @@ public class DictItemGatewayImpl implements DictItemGateway {
 	@Override
 	public void deleteDictItem(Long[] ids) {
 		dictItemMapper.deleteByIds(Arrays.asList(ids));
+	}
+
+	@Override
+	public boolean existsDict(Long typeId) {
+		return dictMapper.selectCount(Wrappers.lambdaQuery(DictDO.class).eq(DictDO::getId, typeId)) > 0;
+	}
+
+	@Override
+	public boolean existsValue(Long id, Long typeId, String value) {
+		return dictItemMapper.selectCount(Wrappers.lambdaQuery(DictItemDO.class)
+			.eq(DictItemDO::getTypeId, typeId)
+			.eq(DictItemDO::getValue, value)
+			.ne(ObjectUtils.isNotNull(id), DictItemDO::getId, id)) > 0;
+	}
+
+	@Override
+	public boolean existsDictItem(Long id) {
+		return dictItemMapper.selectCount(Wrappers.lambdaQuery(DictItemDO.class).eq(DictItemDO::getId, id)) > 0;
+	}
+
+	@Override
+	public boolean existsDictItem(Long[] ids) {
+		return dictItemMapper
+			.selectCount(Wrappers.lambdaQuery(DictItemDO.class).in(DictItemDO::getId, Arrays.asList(ids))) == ids.length;
 	}
 
 }

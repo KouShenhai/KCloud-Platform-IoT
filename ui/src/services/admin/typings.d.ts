@@ -75,6 +75,10 @@ declare namespace API {
 		pageNum?: number;
 		pageSize?: number;
 		pageIndex?: number;
+		label?: string;
+		value?: string;
+		status?: number;
+		typeId?: number;
 		sqlFilter?: string;
 		params?: Record<string, any>;
 	};
@@ -102,6 +106,9 @@ declare namespace API {
 		pageNum?: number;
 		pageSize?: number;
 		pageIndex?: number;
+		name?: string;
+		type?: string;
+		status?: number;
 		sqlFilter?: string;
 		params?: Record<string, any>;
 	};
