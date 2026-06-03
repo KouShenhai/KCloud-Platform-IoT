@@ -1,5 +1,7 @@
 /* eslint-disable */
+import { ExportAllToExcel } from '@/utils/export';
 import { request } from '@umijs/max';
+import moment from 'moment/moment';
 
 /** 修改字典 修改字典 PUT /api/v1/dicts */
 export async function modifyDict(
@@ -63,18 +65,16 @@ export async function getDictById(
 }
 
 /** 导出字典 导出字典 POST /api/v1/dicts/export */
-export async function exportDict(
-	body: API.DictExportCmd,
-	options?: { [key: string]: any },
-) {
-	return request<any>('/api-proxy/admin/api/v1/dicts/export', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-		data: body,
-		...(options || {}),
-	});
+export async function exportDict(body: any, options?: { [key: string]: any }) {
+	return ExportAllToExcel(
+		'数据字典_导出全部_' +
+			moment(new Date()).format('YYYYMMDDHHmmss') +
+			'.xlsx',
+		'/api-proxy/admin/api/v1/dicts/export',
+		'POST',
+		body,
+		options,
+	);
 }
 
 /** 导入字典 导入字典 POST /api/v1/dicts/import */
