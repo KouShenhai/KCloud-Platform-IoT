@@ -162,7 +162,7 @@ image::doc/image/老寇IoT云平台业务架构图.png[架构图,align=center]
 |Spring Boot Admin           |4.0.2
 |Jackson                     |3.1.4
 |Mybatis Plus                |3.5.16
-|Nacos                       |3.2.1
+|Nacos                       |3.2.2
 |gRPC                        |1.77.0
 |Redis                       |8.0.1
 |Elasticsearch               |9.4.2

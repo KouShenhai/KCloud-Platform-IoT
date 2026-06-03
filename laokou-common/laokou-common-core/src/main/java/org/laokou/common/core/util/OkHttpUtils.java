@@ -24,7 +24,6 @@ import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.ResponseBody;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -35,6 +34,7 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.time.Duration;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -56,8 +56,10 @@ public final class OkHttpUtils {
 		finally {
 			Runtime.getRuntime().addShutdownHook(new Thread(() -> {
 				if (ObjectUtils.isNotNull(CLIENT)) {
-					CLIENT.dispatcher().executorService().shutdown();
-					CLIENT.connectionPool().evictAll();
+					try (ExecutorService executorService = CLIENT.dispatcher().executorService()) {
+						executorService.shutdown();
+						CLIENT.connectionPool().evictAll();
+					}
 				}
 			}));
 		}
@@ -73,8 +75,7 @@ public final class OkHttpUtils {
 		}
 		Request request = new Request.Builder().url(url).headers(Headers.of(headers)).post(builder.build()).build();
 		try (Response response = CLIENT.newCall(request).execute()) {
-			ResponseBody body = response.body();
-			return ObjectUtils.isNotNull(body) ? body.string() : StringConstants.EMPTY;
+			return response.body().string();
 		}
 		catch (IOException ex) {
 			log.error("调用失败，错误信息：{}", ex.getMessage(), ex);
@@ -85,7 +86,7 @@ public final class OkHttpUtils {
 	private static OkHttpClient getOkHttpClient() throws NoSuchAlgorithmException, KeyManagementException {
 		return new OkHttpClient.Builder()
 			.sslSocketFactory(SslUtils.sslContext().getSocketFactory(), SslUtils.DisableValidationTrustManager.INSTANCE)
-			.hostnameVerifier((hostname, session) -> true)
+			.hostnameVerifier((_, _) -> true)
 			.connectTimeout(Duration.ofSeconds(15))
 			.readTimeout(Duration.ofSeconds(15))
 			.writeTimeout(Duration.ofSeconds(15))

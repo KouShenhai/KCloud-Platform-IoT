@@ -28,30 +28,6 @@ import java.util.Map;
 @Getter
 public enum MqttMessageType {
 
-	DOWN_READ_PROPERTIES_GATEWAY_MESSAGE("down_read_properties_gateway_message", "读取网关属性【下行】") {
-		@Override
-		public String getTopic() {
-			return "/down/+/+/properties/read";
-		}
-
-		@Override
-		public String getMqTopic() {
-			return "iot-down-read-properties-gateway-message";
-		}
-	},
-
-	UP_READ_PROPERTIES_REPLY_GATEWAY_MESSAGE("up_read_properties_reply_gateway_message", "读取网关属性回复【上行】") {
-		@Override
-		public String getTopic() {
-			return "/up/+/+/properties/read/reply";
-		}
-
-		@Override
-		public String getMqTopic() {
-			return "iot-up-read-properties-reply-gateway-message";
-		}
-	},
-
 	DOWN_COMMAND_GATEWAY_MESSAGE("down_command_gateway_message", "网关指令【下行】") {
 		@Override
 		public String getTopic() {
@@ -157,54 +133,6 @@ public enum MqttMessageType {
 		@Override
 		public String getMqTopic() {
 			return "iot-up-report-properties-device-message";
-		}
-	},
-
-	DOWN_READ_PROPERTIES_DEVICE_MESSAGE("down_read_properties_device_message", "读取设备属性【下行】") {
-		@Override
-		public String getTopic() {
-			return "/down/+/+/properties/read";
-		}
-
-		@Override
-		public String getMqTopic() {
-			return "iot-down-read-properties-device-message";
-		}
-	},
-
-	UP_READ_PROPERTIES_REPLY_DEVICE_MESSAGE("up_read_properties_reply_device_message", "读取设备属性回复【上行】") {
-		@Override
-		public String getTopic() {
-			return "/up/+/+/properties/read/reply";
-		}
-
-		@Override
-		public String getMqTopic() {
-			return "iot-up-read-properties-reply-device-message";
-		}
-	},
-
-	DOWN_WRITE_PROPERTIES_DEVICE_MESSAGE("down_write_properties_device_message", "修改设备属性【下行】") {
-		@Override
-		public String getTopic() {
-			return "/down/+/+/properties/write";
-		}
-
-		@Override
-		public String getMqTopic() {
-			return "iot-down-write-properties-device-message";
-		}
-	},
-
-	UP_WRITE_PROPERTIES_REPLY_DEVICE_MESSAGE("up_write_properties_reply_device_message", "修改设备属性回复【上行】") {
-		@Override
-		public String getTopic() {
-			return "/up/+/+/properties/write/reply";
-		}
-
-		@Override
-		public String getMqTopic() {
-			return "iot-up-write-properties-reply-device-message";
 		}
 	},
 
