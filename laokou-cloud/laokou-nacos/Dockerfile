@@ -17,6 +17,7 @@ FROM ghcr.io/graalvm/jdk-community:25.0.2
 LABEL maintainer="laokou"
 LABEL description="laokou-nacos"
 COPY target/laokou-nacos.jar app.jar
+COPY arthas.jar arthas.jar
 EXPOSE 8848 8048 9848
 # >/dev/null 2>&1 标准输出和错误输出重定向nacos.log
 CMD java $JVM_OPTS $NACOS_OPTS -jar app.jar > /opt/nacos.log 2>&1

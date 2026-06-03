@@ -17,5 +17,6 @@ FROM ghcr.io/graalvm/jdk-community:25.0.2
 LABEL maintainer="laokou"
 LABEL description="laokou-monitor"
 COPY target/laokou-monitor.jar app.jar
+COPY arthas.jar arthas.jar
 EXPOSE 5000
 CMD java $JVM_OPTS -jar app.jar > /dev/null 2>&1
