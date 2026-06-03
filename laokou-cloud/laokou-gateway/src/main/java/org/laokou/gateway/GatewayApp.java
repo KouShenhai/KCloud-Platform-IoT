@@ -78,9 +78,9 @@ class GatewayApp implements CommandLineRunner {
 
 	@Override
 	public void run(@NotNull String... args) {
-		nacosRouteDefinitionRepository.syncRouter()
+		Thread.startVirtualThread(() -> nacosRouteDefinitionRepository.syncRouter()
 			.timeout(Duration.ofSeconds(15))
-			.block();
+			.block());
 	}
 	// @formatter:on
 

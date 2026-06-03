@@ -89,7 +89,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 			@Override
 			public void receiveConfigInfo(String routes) {
 				log.info("监听路由配置信息，开始同步路由配置：{}", routes);
-				syncRouter(getRoutes(routes)).timeout(Duration.ofSeconds(15)).block();
+				Thread.startVirtualThread(() -> syncRouter(getRoutes(routes)).timeout(Duration.ofSeconds(15)).block());
 			}
 		});
 	}
