@@ -81,8 +81,8 @@ public class DictItemGatewayImpl implements DictItemGateway {
 
 	@Override
 	public boolean existsDictItem(Long[] ids) {
-		return dictItemMapper
-			.selectCount(Wrappers.lambdaQuery(DictItemDO.class).in(DictItemDO::getId, Arrays.asList(ids))) == ids.length;
+		return dictItemMapper.selectCount(
+				Wrappers.lambdaQuery(DictItemDO.class).in(DictItemDO::getId, Arrays.asList(ids))) == ids.length;
 	}
 
 }

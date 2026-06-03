@@ -75,7 +75,8 @@ public class DictGatewayImpl implements DictGateway {
 
 	@Override
 	public boolean existsDict(Long[] ids) {
-		return dictMapper.selectCount(Wrappers.lambdaQuery(DictDO.class).in(DictDO::getId, Arrays.asList(ids))) == ids.length;
+		return dictMapper
+			.selectCount(Wrappers.lambdaQuery(DictDO.class).in(DictDO::getId, Arrays.asList(ids))) == ids.length;
 	}
 
 	@Override
