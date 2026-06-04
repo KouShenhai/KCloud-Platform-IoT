@@ -15,48 +15,20 @@
  *
  */
 
-package org.laokou.iot.product.dto;
+package org.laokou.admin.source.dto;
 
 import lombok.Data;
-import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.i18n.util.StringExtUtils;
+import org.laokou.admin.source.dto.clientobject.SourceCO;
+import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
- *
- * 分页查询产品命令.
+ * 测试数据源连接命令.
  *
  * @author laokou
  */
 @Data
-public class ProductPageQry extends PageQuery {
+public class SourceTestCmd extends CommonCommand {
 
-	/**
-	 * 产品名称.
-	 */
-	private String name;
-
-	/**
-	 * 产品类别.
-	 */
-	private Long categoryId;
-
-	/**
-	 * 设备类型 1直连设备 2网关设备 3监控设备.
-	 */
-	private Integer deviceType;
-
-	/**
-	 * 通讯协议ID.
-	 */
-	private Long cpId;
-
-	/**
-	 * 传输协议ID.
-	 */
-	private Long tpId;
-
-	public void setName(String name) {
-		this.name = StringExtUtils.like(StringExtUtils.trim(name));
-	}
+	private SourceCO co;
 
 }

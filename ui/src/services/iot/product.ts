@@ -19,11 +19,13 @@ export async function modifyProduct(
 /** 保存产品 保存产品 POST /api/v1/products */
 export async function saveProduct(
 	body: API.ProductSaveCmd,
+	requestId: string,
 	options?: { [key: string]: any },
 ) {
 	return request<any>('/api-proxy/iot/api/v1/products', {
 		method: 'POST',
 		headers: {
+			'request-id': requestId,
 			'Content-Type': 'application/json',
 		},
 		data: body,
