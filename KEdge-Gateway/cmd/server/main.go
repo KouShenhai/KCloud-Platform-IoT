@@ -18,8 +18,11 @@
 package main
 
 import (
-	"github.com/KouShenhai/KCloud-Platform-IoT/KEdge-Gateway/internal/pkg/config"
 	"log"
+
+	"github.com/KouShenhai/KCloud-Platform-IoT/KEdge-Gateway/internal/pkg/config"
+	"github.com/KouShenhai/KCloud-Platform-IoT/KEdge-Gateway/internal/routers"
+	"github.com/cloudwego/hertz/pkg/app/server"
 )
 
 func main() {
@@ -33,4 +36,10 @@ func main() {
 	}
 	defer cleanup()
 	config.Logger.Debug("init logger success")
+
+	h := server.Default(server.WithHostPorts(":8888"))
+
+	routers.RegisterRouters(h)
+
+	h.Spin()
 }

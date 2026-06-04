@@ -20,19 +20,48 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.common.tenant.mapper.TenantMapper">
 
+	<sql id="selectColumns">
+		id,
+		"name",
+		code,
+		source_id,
+		package_id,
+		create_time
+	</sql>
+
+	<sql id="selectConditions">
+		where del_flag = 0
+		<if test="pageQuery.name != null and pageQuery.name != ''">
+			and "name" like #{pageQuery.name}
+		</if>
+		<if test="pageQuery.code != null and pageQuery.code != ''">
+			and code like #{pageQuery.code}
+		</if>
+		<if test="pageQuery.params != null and pageQuery.params.startTime != null and pageQuery.params.startTime != ''">
+			and create_time <![CDATA[ >= ]]> #{pageQuery.params.startTime}
+		</if>
+		<if test="pageQuery.params != null and pageQuery.params.endTime != null and pageQuery.params.endTime != ''">
+			and create_time <![CDATA[ <= ]]> #{pageQuery.params.endTime}
+		</if>
+	</sql>
+
+	<sql id="selectObjectList">
+		SELECT <include refid="selectColumns"/>
+		from sys_tenant
+		<include refid="selectConditions"/>
+		order by create_time desc, id desc
+	</sql>
+
 	<select id="selectObjectPage"
 			resultType="org.laokou.common.tenant.mapper.TenantDO">
-		SELECT *
-		from sys_tenant
-		where del_flag = 0
-		order by id desc
+		<include refid="selectObjectList"/>
 		limit ${pageQuery.pageSize} offset ${pageQuery.pageIndex}
 	</select>
 
 	<select id="selectObjectCount" resultType="long">
 		SELECT count(1)
 		from sys_tenant
-		where del_flag = 0
+		<include refid="selectConditions"/>
 	</select>
 
 	<select id="selectVersion" resultType="integer">
@@ -46,5 +75,9 @@
     from sys_tenant
     where code = #{code} and del_flag = 0
   </select>
+
+	<select id="selectObjectList" resultType="org.laokou.common.tenant.mapper.TenantDO">
+		<include refid="selectObjectList"/>
+	</select>
 
 </mapper>

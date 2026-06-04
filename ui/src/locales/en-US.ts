@@ -146,6 +146,25 @@ export default {
 	'sys.dictItem.validate.labelMax': 'Label cannot exceed 100 characters',
 	'sys.dictItem.validate.valueMax': 'Value cannot exceed 100 characters',
 
+	// sys/tenant
+	'sys.tenant.insert': 'Insert Tenant',
+	'sys.tenant.view': 'View Tenant',
+	'sys.tenant.modify': 'Modify Tenant',
+	'sys.tenant.name': 'Tenant Name',
+	'sys.tenant.code': 'Tenant Code',
+	'sys.tenant.sourceId': 'Source ID',
+	'sys.tenant.packageId': 'Package ID',
+	'sys.tenant.placeholder.name': 'Please enter tenant name',
+	'sys.tenant.placeholder.code': 'Please enter tenant code',
+	'sys.tenant.placeholder.sourceId': 'Please enter source ID',
+	'sys.tenant.placeholder.packageId': 'Please enter package ID',
+	'sys.tenant.required.name': 'Please enter tenant name',
+	'sys.tenant.required.code': 'Please enter tenant code',
+	'sys.tenant.required.sourceId': 'Please enter source ID',
+	'sys.tenant.required.packageId': 'Please enter package ID',
+	'sys.tenant.validate.nameMax': 'Tenant name cannot exceed 100 characters',
+	'sys.tenant.validate.codeMax': 'Tenant code cannot exceed 30 characters',
+
 	// error
 	'error.serverInternal': 'Internal server error. Unable to complete the request.',
 	'error.network': 'Network request error. Please try again later.',
@@ -196,6 +215,30 @@ export default {
 	'iot.productCategory.required.pid': 'Please select parent category',
 	'iot.productCategory.required.name': 'Please enter category name',
 	'iot.productCategory.required.sort': 'Please enter category sort',
+
+	// iot/product
+	'iot.product.name': 'Product Name',
+	'iot.product.categoryId': 'Product Category',
+	'iot.product.deviceType': 'Device Type',
+	'iot.product.imgUrl': 'Product Image URL',
+	'iot.product.cpId': 'Communication Protocol ID',
+	'iot.product.tpId': 'Transport Protocol ID',
+	'iot.product.remark': 'Product Remark',
+	'iot.product.insert': 'Insert Product',
+	'iot.product.view': 'View Product',
+	'iot.product.modify': 'Modify Product',
+	'iot.product.deviceType.direct': 'Direct Device',
+	'iot.product.deviceType.gateway': 'Gateway Device',
+	'iot.product.deviceType.monitor': 'Monitor Device',
+	'iot.product.placeholder.name': 'Please enter product name',
+	'iot.product.placeholder.categoryId': 'Please select product category',
+	'iot.product.placeholder.deviceType': 'Please select device type',
+	'iot.product.placeholder.imgUrl': 'Please enter product image URL',
+	'iot.product.placeholder.cpId': 'Please enter communication protocol ID',
+	'iot.product.placeholder.tpId': 'Please enter transport protocol ID',
+	'iot.product.required.name': 'Please enter product name',
+	'iot.product.required.categoryId': 'Please select product category',
+	'iot.product.required.deviceType': 'Please select device type',
 
 	// iot/thingModel
 	'iot.thingModel.insert': 'Insert Thing Model',
@@ -249,11 +292,6 @@ export default {
 	'iot.thingModel.specs.integerLength': 'Integer Length',
 	'iot.thingModel.specs.decimalLength': 'Decimal Length',
 	'iot.thingModel.specs.unit': 'Unit',
-
-	// iot/device
-	'iot.device.send': 'Send',
-	'iot.device.ws.connected': 'WebSocket connected',
-	'iot.device.ws.error': 'WebSocket error',
 
 	// sys/menu
 	'sys.menu.pid': 'Parent Menu',

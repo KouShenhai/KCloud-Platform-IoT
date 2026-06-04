@@ -68,6 +68,25 @@ export default [
 				],
 			},
 			{
+				name: 'menu.sys.tenant',
+				title: 'menu.sys.tenant',
+				path: '/sys/tenant',
+				routes: [
+					{
+						name: 'menu.sys.tenant.tenant',
+						title: 'menu.sys.tenant.tenant',
+						path: '/sys/tenant/tenant',
+						component: './Sys/Tenant/tenant',
+					},
+					{
+						name: 'menu.sys.tenant.source',
+						title: 'menu.sys.tenant.source',
+						path: '/sys/tenant/source',
+						component: './Sys/Tenant/source',
+					},
+				],
+			},
+			{
 				name: 'menu.sys.log',
 				title: 'menu.sys.log',
 				path: '/sys/log',
@@ -173,6 +192,12 @@ export default [
 						title: 'menu.iot.device.productCategory',
 						path: '/iot/device/productCategory',
 						component: './IoT/Device/productCategory',
+					},
+					{
+						name: 'menu.iot.device.product',
+						title: 'menu.iot.device.product',
+						path: '/iot/device/product',
+						component: './IoT/Device/product',
 					},
 				],
 			},

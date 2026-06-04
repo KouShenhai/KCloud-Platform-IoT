@@ -125,3 +125,19 @@ export async function pageSource(
 		...(options || {}),
 	});
 }
+
+/** 测试数据源 测试数据源 POST /api/v1/sources/test */
+export async function testSource(
+	body: API.SourceTestCmd,
+	options?: { [key: string]: any },
+) {
+	return request<any>('/api/v1/sources/test', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		data: body,
+		...(options || {}),
+	});
+}
+

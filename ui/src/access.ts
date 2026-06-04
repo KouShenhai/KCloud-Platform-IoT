@@ -88,6 +88,58 @@ export default (initialState: any) => {
 			permissions?.includes('sys:dict-item:export') &&
 			scopes?.includes('write'),
 
+		canTenantGetDetail:
+			permissions?.includes('sys:tenant:detail') &&
+			scopes?.includes('read'),
+
+		canTenantPage:
+			permissions?.includes('sys:tenant:page') && scopes?.includes('read'),
+
+		canTenantModify:
+			permissions?.includes('sys:tenant:modify') &&
+			scopes?.includes('write'),
+
+		canTenantRemove:
+			permissions?.includes('sys:tenant:remove') &&
+			scopes?.includes('write'),
+
+		canTenantSave:
+			permissions?.includes('sys:tenant:save') && scopes?.includes('write'),
+
+		canTenantImport:
+			permissions?.includes('sys:tenant:import') &&
+			scopes?.includes('write'),
+
+		canTenantExport:
+			permissions?.includes('sys:tenant:export') &&
+			scopes?.includes('write'),
+
+		canSourceGetDetail:
+			permissions?.includes('sys:source:detail') &&
+			scopes?.includes('read'),
+
+		canSourcePage:
+			permissions?.includes('sys:source:page') && scopes?.includes('read'),
+
+		canSourceModify:
+			permissions?.includes('sys:source:modify') &&
+			scopes?.includes('write'),
+
+		canSourceRemove:
+			permissions?.includes('sys:source:remove') &&
+			scopes?.includes('write'),
+
+		canSourceSave:
+			permissions?.includes('sys:source:save') && scopes?.includes('write'),
+
+		canSourceImport:
+			permissions?.includes('sys:source:import') &&
+			scopes?.includes('write'),
+
+		canSourceExport:
+			permissions?.includes('sys:source:export') &&
+			scopes?.includes('write'),
+
 		canDeptGetDetail:
 			permissions?.includes('sys:dept:detail') &&
 			scopes?.includes('read'),
@@ -175,6 +227,10 @@ export default (initialState: any) => {
 			permissions?.includes('iot:product:detail') &&
 			scopes?.includes('read'),
 
+		canProductPage:
+			permissions?.includes('iot:product:page') &&
+			scopes?.includes('read'),
+
 		canProductModify:
 			permissions?.includes('iot:product:modify') &&
 			scopes?.includes('write'),
@@ -185,6 +241,14 @@ export default (initialState: any) => {
 
 		canProductSave:
 			permissions?.includes('iot:product:save') &&
+			scopes?.includes('write'),
+
+		canProductImport:
+			permissions?.includes('iot:product:import') &&
+			scopes?.includes('write'),
+
+		canProductExport:
+			permissions?.includes('iot:product:export') &&
 			scopes?.includes('write'),
 
 		canThingModelGetDetail:

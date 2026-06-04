@@ -146,6 +146,25 @@ export default {
 	'sys.dictItem.validate.labelMax': '字典标签不能超过100个字符',
 	'sys.dictItem.validate.valueMax': '字典值不能超过100个字符',
 
+	// sys/tenant
+	'sys.tenant.insert': '新增租户',
+	'sys.tenant.view': '查看租户',
+	'sys.tenant.modify': '修改租户',
+	'sys.tenant.name': '租户名称',
+	'sys.tenant.code': '租户编码',
+	'sys.tenant.sourceId': '数据源ID',
+	'sys.tenant.packageId': '套餐ID',
+	'sys.tenant.placeholder.name': '请输入租户名称',
+	'sys.tenant.placeholder.code': '请输入租户编码',
+	'sys.tenant.placeholder.sourceId': '请输入数据源ID',
+	'sys.tenant.placeholder.packageId': '请输入套餐ID',
+	'sys.tenant.required.name': '请输入租户名称',
+	'sys.tenant.required.code': '请输入租户编码',
+	'sys.tenant.required.sourceId': '请输入数据源ID',
+	'sys.tenant.required.packageId': '请输入套餐ID',
+	'sys.tenant.validate.nameMax': '租户名称不能超过100个字符',
+	'sys.tenant.validate.codeMax': '租户编码不能超过30个字符',
+
 	// error
 	'error.serverInternal': '服务器内部错误，无法完成请求',
 	'error.network': '网络请求错误，请稍后再试',
@@ -196,6 +215,30 @@ export default {
 	'iot.productCategory.required.pid': '请选择父级产品类别',
 	'iot.productCategory.required.name': '请输入产品类别名称',
 	'iot.productCategory.required.sort': '请输入产品类别排序',
+
+	// iot/product
+	'iot.product.name': '产品名称',
+	'iot.product.categoryId': '产品类别',
+	'iot.product.deviceType': '设备类型',
+	'iot.product.imgUrl': '产品图片URL',
+	'iot.product.cpId': '通讯协议ID',
+	'iot.product.tpId': '传输协议ID',
+	'iot.product.remark': '产品备注',
+	'iot.product.insert': '新增产品',
+	'iot.product.view': '查看产品',
+	'iot.product.modify': '修改产品',
+	'iot.product.deviceType.direct': '直连设备',
+	'iot.product.deviceType.gateway': '网关设备',
+	'iot.product.deviceType.monitor': '监控设备',
+	'iot.product.placeholder.name': '请输入产品名称',
+	'iot.product.placeholder.categoryId': '请选择产品类别',
+	'iot.product.placeholder.deviceType': '请选择设备类型',
+	'iot.product.placeholder.imgUrl': '请输入产品图片URL',
+	'iot.product.placeholder.cpId': '请输入通讯协议ID',
+	'iot.product.placeholder.tpId': '请输入传输协议ID',
+	'iot.product.required.name': '请输入产品名称',
+	'iot.product.required.categoryId': '请选择产品类别',
+	'iot.product.required.deviceType': '请选择设备类型',
 
 	// iot/thingModel
 	'iot.thingModel.insert': '新增物模型',
@@ -249,11 +292,6 @@ export default {
 	'iot.thingModel.specs.integerLength': '整数位长度',
 	'iot.thingModel.specs.decimalLength': '小数位长度',
 	'iot.thingModel.specs.unit': '单位',
-
-	// iot/device
-	'iot.device.send': '发送',
-	'iot.device.ws.connected': 'WebSocket 连接已建立',
-	'iot.device.ws.error': 'WebSocket 错误',
 
 	// sys/menu
 	'sys.menu.pid': '父级菜单',

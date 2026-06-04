@@ -224,6 +224,39 @@ services:
       - ./tdengine/logs:/var/log/taos
     networks:
       - iot_network
+  # tcp连接 127.0.0.1:6667 root/root
+  iotdb:
+    image: apache/iotdb:latest
+    hostname: iotdb
+    container_name: iotdb
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "6667:6667"
+    environment:
+      - cn_internal_address=iotdb
+      - cn_internal_port=10710
+      - cn_consensus_port=10720
+      - cn_seed_config_node=iotdb:10710
+      - dn_rpc_address=iotdb
+      - dn_internal_address=iotdb
+      - dn_rpc_port=6667
+      - dn_internal_port=10730
+      - dn_mpp_data_exchange_port=10740
+      - dn_schema_region_consensus_port=10750
+      - dn_data_region_consensus_port=10760
+      - dn_seed_config_node=iotdb:10710
+    volumes:
+      - ./iotdb/data:/iotdb/data
+      - ./iotdb/logs:/iotdb/logs
+    ulimits:
+      nofile:
+        soft: 1048576
+        hard: 1048576
+    networks:
+      - iot_network
   # docker部署 => sudo docker run -d --name emqx  --restart always --network bridge -v /home/ubuntu/emqx/data:/opt/emqx/data:rw -v /home/ubuntu/emqx/log:/opt/emqx/log:rw -p 1883:1883 -p 8083:8083 -p 8084:8084 -p 8883:8883 -p 18083:18083 emqx/emqx:5.8.6
   emqx:
     image: emqx/emqx:5.4.1

@@ -347,11 +347,15 @@ declare namespace API {
 		co?: SourceCO;
 	};
 
+	type SourceTestCmd = {
+		co?: SourceCO;
+	};
+
 	type TenantCO = {
 		extValues?: Record<string, any>;
 		id?: number;
 		name?: string;
-		label?: string;
+		code?: string;
 		sourceId?: number;
 		packageId?: number;
 	};
@@ -363,6 +367,8 @@ declare namespace API {
 	};
 
 	type TenantPageQry = {
+		name?: string;
+		code?: string;
 		pageNum?: number;
 		pageSize?: number;
 		pageIndex?: number;
