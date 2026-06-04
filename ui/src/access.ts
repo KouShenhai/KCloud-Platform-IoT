@@ -114,6 +114,32 @@ export default (initialState: any) => {
 			permissions?.includes('sys:tenant:export') &&
 			scopes?.includes('write'),
 
+		canSourceGetDetail:
+			permissions?.includes('sys:source:detail') &&
+			scopes?.includes('read'),
+
+		canSourcePage:
+			permissions?.includes('sys:source:page') && scopes?.includes('read'),
+
+		canSourceModify:
+			permissions?.includes('sys:source:modify') &&
+			scopes?.includes('write'),
+
+		canSourceRemove:
+			permissions?.includes('sys:source:remove') &&
+			scopes?.includes('write'),
+
+		canSourceSave:
+			permissions?.includes('sys:source:save') && scopes?.includes('write'),
+
+		canSourceImport:
+			permissions?.includes('sys:source:import') &&
+			scopes?.includes('write'),
+
+		canSourceExport:
+			permissions?.includes('sys:source:export') &&
+			scopes?.includes('write'),
+
 		canDeptGetDetail:
 			permissions?.includes('sys:dept:detail') &&
 			scopes?.includes('read'),

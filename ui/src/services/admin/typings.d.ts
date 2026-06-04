@@ -347,6 +347,10 @@ declare namespace API {
 		co?: SourceCO;
 	};
 
+	type SourceTestCmd = {
+		co?: SourceCO;
+	};
+
 	type TenantCO = {
 		extValues?: Record<string, any>;
 		id?: number;

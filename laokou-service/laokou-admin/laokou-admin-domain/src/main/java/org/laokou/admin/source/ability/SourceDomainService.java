@@ -20,7 +20,12 @@ package org.laokou.admin.source.ability;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.source.gateway.SourceGateway;
 import org.laokou.admin.source.model.SourceE;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.springframework.stereotype.Component;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 /**
  * 数据源领域服务.
@@ -34,15 +39,37 @@ public class SourceDomainService {
 	private final SourceGateway sourceGateway;
 
 	public void createSource(SourceE sourceE) {
+		checkConnection(sourceE);
 		sourceGateway.createSource(sourceE);
 	}
 
 	public void updateSource(SourceE sourceE) {
+		checkConnection(sourceE);
 		sourceGateway.updateSource(sourceE);
 	}
 
 	public void deleteSource(Long[] ids) {
 		sourceGateway.deleteSource(ids);
+	}
+
+	public void testConnection(SourceE sourceE) {
+		checkConnection(sourceE);
+	}
+
+	private void checkConnection(SourceE sourceE) {
+		if ("com.taosdata.jdbc.rs.RestfulDriver".equals(sourceE.getDriverClassName())) {
+			try {
+				Class.forName(sourceE.getDriverClassName());
+				DriverManager.setLoginTimeout(5);
+				try (Connection ignored = DriverManager.getConnection(sourceE.getUrl(), sourceE.getUsername(),
+						sourceE.getPassword())) {
+					// 连接成功
+				}
+			}
+			catch (ClassNotFoundException | SQLException e) {
+				throw new SystemException("SOURCE_CONNECTION_FAILED", "TDengine 数据源连接失败：" + e.getMessage(), e);
+			}
+		}
 	}
 
 }

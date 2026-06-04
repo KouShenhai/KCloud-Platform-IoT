@@ -31,7 +31,7 @@
 
 ### 1. 前端使用单表租户管理页
 
-新增 `ui/src/pages/Sys/Tenant/index.tsx` 和 `TenantDrawer.tsx`，路由挂载为 `/sys/tenant/index`，与数据库菜单初始化数据保持一致。页面使用单个 `ProTable` 管理租户基础信息，抽屉表单负责新增、查看、修改。
+新增 `ui/src/pages/Sys/Tenant/tenant.tsx` 和 `TenantDrawer.tsx`，路由挂载为 `/sys/tenant/index`，与数据库菜单初始化数据保持一致。页面使用单个 `ProTable` 管理租户基础信息，抽屉表单负责新增、查看、修改。
 
 备选方案是放到 `/sys/base/tenant` 或与部门/用户页面合并。该方案会偏离已有数据库菜单路径，也会把租户这种平台级主数据混入权限组织结构，因此不采用。
 

@@ -86,8 +86,9 @@ public class TenantGatewayImpl implements TenantGateway {
 	public boolean existsDefaultTenant(Long[] ids) {
 		return tenantMapper.selectCount(Wrappers.lambdaQuery(TenantDO.class)
 			.in(TenantDO::getId, Arrays.asList(ids))
-			.and(wrapper -> wrapper.eq(TenantDO::getId, DEFAULT_TENANT_ID).or().eq(TenantDO::getCode,
-					DEFAULT_TENANT_CODE))) > 0;
+			.and(wrapper -> wrapper.eq(TenantDO::getId, DEFAULT_TENANT_ID)
+				.or()
+				.eq(TenantDO::getCode, DEFAULT_TENANT_CODE))) > 0;
 	}
 
 }

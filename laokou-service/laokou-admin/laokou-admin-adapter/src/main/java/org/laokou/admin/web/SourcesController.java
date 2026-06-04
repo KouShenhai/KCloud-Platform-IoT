@@ -104,6 +104,14 @@ public class SourcesController {
 		sourcesServiceI.exportSource(cmd);
 	}
 
+	@PostMapping("/v1/sources/test")
+	@PreAuthorize("hasAuthority('write') and hasAuthority('sys:source:save')")
+	@OperateLog(module = "数据源管理", operation = "测试数据源")
+	@Operation(summary = "测试数据源", description = "测试数据源")
+	public void testSource(@RequestBody org.laokou.admin.source.dto.SourceTestCmd cmd) {
+		sourcesServiceI.testSource(cmd);
+	}
+
 	@TraceLog
 	@PostMapping("/v1/sources/page")
 	@PreAuthorize("hasAuthority('read') and hasAuthority('sys:source:page')")

@@ -75,8 +75,14 @@ export default [
 					{
 						name: 'menu.sys.tenant.tenant',
 						title: 'menu.sys.tenant.tenant',
-						path: '/sys/tenant/index',
-						component: './Sys/Tenant',
+						path: '/sys/tenant/tenant',
+						component: './Sys/Tenant/tenant',
+					},
+					{
+						name: 'menu.sys.tenant.source',
+						title: 'menu.sys.tenant.source',
+						path: '/sys/tenant/source',
+						component: './Sys/Tenant/source',
 					},
 				],
 			},
