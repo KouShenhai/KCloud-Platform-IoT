@@ -293,11 +293,6 @@ export default {
 	'iot.thingModel.specs.decimalLength': 'Decimal Length',
 	'iot.thingModel.specs.unit': 'Unit',
 
-	// iot/device
-	'iot.device.send': 'Send',
-	'iot.device.ws.connected': 'WebSocket connected',
-	'iot.device.ws.error': 'WebSocket error',
-
 	// sys/menu
 	'sys.menu.pid': 'Parent Menu',
 	'sys.menu.name': 'Name',

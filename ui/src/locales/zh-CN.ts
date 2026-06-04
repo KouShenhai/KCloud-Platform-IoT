@@ -293,11 +293,6 @@ export default {
 	'iot.thingModel.specs.decimalLength': '小数位长度',
 	'iot.thingModel.specs.unit': '单位',
 
-	// iot/device
-	'iot.device.send': '发送',
-	'iot.device.ws.connected': 'WebSocket 连接已建立',
-	'iot.device.ws.error': 'WebSocket 错误',
-
 	// sys/menu
 	'sys.menu.pid': '父级菜单',
 	'sys.menu.name': '菜单名称',
