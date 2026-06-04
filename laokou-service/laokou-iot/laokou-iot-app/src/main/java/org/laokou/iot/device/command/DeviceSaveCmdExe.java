@@ -41,7 +41,6 @@ public class DeviceSaveCmdExe {
 
 	@CommandLog
 	public void executeVoid(DeviceSaveCmd cmd) {
-		// 校验参数
 		transactionalUtils
 			.executeInTransaction(() -> deviceDomainService.createDevice(DeviceConvertor.toEntity(cmd.getCo())));
 	}

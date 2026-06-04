@@ -356,6 +356,8 @@ INSERT INTO "public"."sys_menu" VALUES (58, 1, 1, '2025-03-16 11:24:02.28912', '
 INSERT INTO "public"."sys_menu" VALUES (59, 1, 1, '2025-03-16 11:23:41.504246', '2025-03-16 11:23:41.504246', 0, 0, 1, 1, 13, 'iot:device:modify', 1, '修改设备', NULL, NULL, 3, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (60, 1, 1, '2025-03-16 11:23:23.056863', '2025-03-16 11:23:23.056863', 0, 0, 1, 1, 13, 'iot:device:save', 1, '新增设备', NULL, NULL, 4, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (61, 1, 1, '2025-03-16 11:22:56.958172', '2025-03-16 11:22:56.958172', 0, 0, 1, 1, 13, 'iot:device:page', 1, '分页查询设备', NULL, NULL, 5, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (105, 1, 1, '2026-06-04 00:00:00', '2026-06-04 00:00:00', 0, 0, 1, 1, 13, 'iot:device:import', 1, '导入设备', NULL, NULL, 6, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (106, 1, 1, '2026-06-04 00:00:00', '2026-06-04 00:00:00', 0, 0, 1, 1, 13, 'iot:device:export', 1, '导出设备', NULL, NULL, 7, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (62, 1, 1, '2025-03-16 11:22:20.518897', '2025-03-16 11:22:20.518897', 0, 0, 1, 1, 16, 'iot:product-category:detail', 1, '查看产品类别', NULL, NULL, 1, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (63, 1, 1, '2025-03-16 11:22:00.290849', '2025-03-16 11:22:00.290849', 0, 0, 1, 1, 16, 'iot:product-category:remove', 1, '删除产品类别', NULL, NULL, 2, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (64, 1, 1, '2025-03-16 11:21:32.205209', '2025-03-16 11:21:32.205209', 0, 0, 1, 1, 16, 'iot:product-category:modify', 1, '修改产品类别', NULL, NULL, 3, 0, 0, NULL);

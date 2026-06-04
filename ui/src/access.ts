@@ -211,6 +211,10 @@ export default (initialState: any) => {
 			permissions?.includes('iot:device:detail') &&
 			scopes?.includes('read'),
 
+		canDevicePage:
+			permissions?.includes('iot:device:page') &&
+			scopes?.includes('read'),
+
 		canDeviceModify:
 			permissions?.includes('iot:device:modify') &&
 			scopes?.includes('write'),
@@ -221,6 +225,14 @@ export default (initialState: any) => {
 
 		canDeviceSave:
 			permissions?.includes('iot:device:save') &&
+			scopes?.includes('write'),
+
+		canDeviceImport:
+			permissions?.includes('iot:device:import') &&
+			scopes?.includes('write'),
+
+		canDeviceExport:
+			permissions?.includes('iot:device:export') &&
 			scopes?.includes('write'),
 
 		canProductGetDetail:

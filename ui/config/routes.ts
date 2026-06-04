@@ -199,6 +199,12 @@ export default [
 						path: '/iot/device/product',
 						component: './IoT/Device/product',
 					},
+					{
+						name: 'menu.iot.device.device',
+						title: 'menu.iot.device.device',
+						path: '/iot/device/index',
+						component: './IoT/Device',
+					},
 				],
 			},
 		],

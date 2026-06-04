@@ -58,6 +58,14 @@ COMMENT ON COLUMN "public"."iot_device"."product_id" IS '产品ID';
 COMMENT ON TABLE "public"."iot_device" IS '设备';
 ALTER TABLE "public"."iot_device" ADD CONSTRAINT "iot_device_pkey" PRIMARY KEY ("id");
 
+-- 设备序列号租户内唯一索引（仅约束未删除数据）。
+-- 上线前检查重复序列号：
+-- SELECT tenant_id, sn, count(1) FROM iot_device WHERE del_flag = 0 GROUP BY tenant_id, sn HAVING count(1) > 1;
+CREATE UNIQUE INDEX IF NOT EXISTS "iot_device_sn_tenantId_idx"
+ON "public"."iot_device" USING btree ("sn", "tenant_id")
+WHERE del_flag = 0;
+COMMENT ON INDEX "public"."iot_device_sn_tenantId_idx" IS '设备序列号_租户ID_未删除唯一索引';
+
 INSERT INTO "public"."iot_device" VALUES (1, 1, 1, '2024-05-11 03:56:15.821857', '2024-05-11 03:56:15.821857', 0, 0, 1,1, '139c5556-8494-5753-ac97-de09f2a6a929', 'HFCL设备', 0, NULL, NULL, NULL, NULL, NULL, 1);
 
 DROP TABLE IF EXISTS "public"."iot_thing_model";

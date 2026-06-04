@@ -17,7 +17,9 @@
 
 package org.laokou.iot.device.gatewayimpl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.iot.device.model.DeviceE;
 import org.springframework.stereotype.Component;
 import org.laokou.iot.device.gateway.DeviceGateway;
@@ -25,6 +27,8 @@ import org.laokou.iot.device.gatewayimpl.database.DeviceMapper;
 import java.util.Arrays;
 import org.laokou.iot.device.convertor.DeviceConvertor;
 import org.laokou.iot.device.gatewayimpl.database.dataobject.DeviceDO;
+import org.laokou.iot.product.gatewayimpl.database.ProductMapper;
+import org.laokou.iot.product.gatewayimpl.database.dataobject.ProductDO;
 
 /**
  *
@@ -37,6 +41,8 @@ import org.laokou.iot.device.gatewayimpl.database.dataobject.DeviceDO;
 public class DeviceGatewayImpl implements DeviceGateway {
 
 	private final DeviceMapper deviceMapper;
+
+	private final ProductMapper productMapper;
 
 	@Override
 	public void createDevice(DeviceE deviceE) {
@@ -53,6 +59,29 @@ public class DeviceGatewayImpl implements DeviceGateway {
 	@Override
 	public void deleteDevice(Long[] ids) {
 		deviceMapper.deleteByIds(Arrays.asList(ids));
+	}
+
+	@Override
+	public boolean existsSn(Long id, String sn) {
+		return deviceMapper.selectCount(Wrappers.lambdaQuery(DeviceDO.class)
+			.eq(DeviceDO::getSn, sn)
+			.ne(ObjectUtils.isNotNull(id), DeviceDO::getId, id)) > 0;
+	}
+
+	@Override
+	public boolean existsDevice(Long id) {
+		return deviceMapper.selectCount(Wrappers.lambdaQuery(DeviceDO.class).eq(DeviceDO::getId, id)) > 0;
+	}
+
+	@Override
+	public boolean existsDevice(Long[] ids) {
+		return deviceMapper
+			.selectCount(Wrappers.lambdaQuery(DeviceDO.class).in(DeviceDO::getId, Arrays.asList(ids))) == ids.length;
+	}
+
+	@Override
+	public boolean existsProduct(Long productId) {
+		return productMapper.selectCount(Wrappers.lambdaQuery(ProductDO.class).eq(ProductDO::getId, productId)) > 0;
 	}
 
 }

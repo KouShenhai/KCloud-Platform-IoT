@@ -19,6 +19,7 @@ package org.laokou.iot.device.dto;
 
 import lombok.Data;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.util.StringExtUtils;
 
 /**
  *
@@ -53,5 +54,13 @@ public class DevicePageQry extends PageQuery {
 	 * 产品ID.
 	 */
 	private Long productId;
+
+	public void setSn(String sn) {
+		this.sn = StringExtUtils.like(StringExtUtils.trim(sn));
+	}
+
+	public void setName(String name) {
+		this.name = StringExtUtils.like(StringExtUtils.trim(name));
+	}
 
 }
