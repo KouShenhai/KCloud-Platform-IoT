@@ -41,4 +41,24 @@ public interface TenantGateway {
 	 */
 	void deleteTenant(Long[] ids);
 
+	/**
+	 * 租户编码是否存在.
+	 */
+	boolean existsCode(Long id, String code);
+
+	/**
+	 * 租户是否存在.
+	 */
+	boolean existsTenant(Long id);
+
+	/**
+	 * 租户IDS是否存在.
+	 */
+	boolean existsTenant(Long[] ids);
+
+	/**
+	 * 是否包含默认租户.
+	 */
+	boolean existsDefaultTenant(Long[] ids);
+
 }

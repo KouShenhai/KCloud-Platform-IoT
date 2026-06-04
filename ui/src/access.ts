@@ -88,6 +88,32 @@ export default (initialState: any) => {
 			permissions?.includes('sys:dict-item:export') &&
 			scopes?.includes('write'),
 
+		canTenantGetDetail:
+			permissions?.includes('sys:tenant:detail') &&
+			scopes?.includes('read'),
+
+		canTenantPage:
+			permissions?.includes('sys:tenant:page') && scopes?.includes('read'),
+
+		canTenantModify:
+			permissions?.includes('sys:tenant:modify') &&
+			scopes?.includes('write'),
+
+		canTenantRemove:
+			permissions?.includes('sys:tenant:remove') &&
+			scopes?.includes('write'),
+
+		canTenantSave:
+			permissions?.includes('sys:tenant:save') && scopes?.includes('write'),
+
+		canTenantImport:
+			permissions?.includes('sys:tenant:import') &&
+			scopes?.includes('write'),
+
+		canTenantExport:
+			permissions?.includes('sys:tenant:export') &&
+			scopes?.includes('write'),
+
 		canDeptGetDetail:
 			permissions?.includes('sys:dept:detail') &&
 			scopes?.includes('read'),

@@ -17,10 +17,13 @@
 
 package org.laokou.admin.tenant.gatewayimpl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.tenant.convertor.TenantConvertor;
 import org.laokou.admin.tenant.gateway.TenantGateway;
 import org.laokou.admin.tenant.model.TenantE;
+import org.laokou.common.i18n.common.IdGenerator;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.tenant.mapper.TenantDO;
 import org.laokou.common.tenant.mapper.TenantMapper;
 import org.springframework.stereotype.Component;
@@ -36,11 +39,17 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class TenantGatewayImpl implements TenantGateway {
 
+	private static final long DEFAULT_TENANT_ID = 1L;
+
+	private static final String DEFAULT_TENANT_CODE = "laokouyun";
+
 	private final TenantMapper tenantMapper;
+
+	private final IdGenerator idGenerator;
 
 	@Override
 	public void createTenant(TenantE tenantE) {
-		tenantMapper.insert(TenantConvertor.toDataObject(1L, tenantE));
+		tenantMapper.insert(TenantConvertor.toDataObject(idGenerator.getId(), tenantE));
 	}
 
 	@Override
@@ -53,6 +62,32 @@ public class TenantGatewayImpl implements TenantGateway {
 	@Override
 	public void deleteTenant(Long[] ids) {
 		tenantMapper.deleteByIds(Arrays.asList(ids));
+	}
+
+	@Override
+	public boolean existsCode(Long id, String code) {
+		return tenantMapper.selectCount(Wrappers.lambdaQuery(TenantDO.class)
+			.eq(TenantDO::getCode, code)
+			.ne(ObjectUtils.isNotNull(id), TenantDO::getId, id)) > 0;
+	}
+
+	@Override
+	public boolean existsTenant(Long id) {
+		return tenantMapper.selectCount(Wrappers.lambdaQuery(TenantDO.class).eq(TenantDO::getId, id)) > 0;
+	}
+
+	@Override
+	public boolean existsTenant(Long[] ids) {
+		return tenantMapper
+			.selectCount(Wrappers.lambdaQuery(TenantDO.class).in(TenantDO::getId, Arrays.asList(ids))) == ids.length;
+	}
+
+	@Override
+	public boolean existsDefaultTenant(Long[] ids) {
+		return tenantMapper.selectCount(Wrappers.lambdaQuery(TenantDO.class)
+			.in(TenantDO::getId, Arrays.asList(ids))
+			.and(wrapper -> wrapper.eq(TenantDO::getId, DEFAULT_TENANT_ID).or().eq(TenantDO::getCode,
+					DEFAULT_TENANT_CODE))) > 0;
 	}
 
 }

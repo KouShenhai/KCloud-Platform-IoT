@@ -146,6 +146,25 @@ export default {
 	'sys.dictItem.validate.labelMax': '字典标签不能超过100个字符',
 	'sys.dictItem.validate.valueMax': '字典值不能超过100个字符',
 
+	// sys/tenant
+	'sys.tenant.insert': '新增租户',
+	'sys.tenant.view': '查看租户',
+	'sys.tenant.modify': '修改租户',
+	'sys.tenant.name': '租户名称',
+	'sys.tenant.code': '租户编码',
+	'sys.tenant.sourceId': '数据源ID',
+	'sys.tenant.packageId': '套餐ID',
+	'sys.tenant.placeholder.name': '请输入租户名称',
+	'sys.tenant.placeholder.code': '请输入租户编码',
+	'sys.tenant.placeholder.sourceId': '请输入数据源ID',
+	'sys.tenant.placeholder.packageId': '请输入套餐ID',
+	'sys.tenant.required.name': '请输入租户名称',
+	'sys.tenant.required.code': '请输入租户编码',
+	'sys.tenant.required.sourceId': '请输入数据源ID',
+	'sys.tenant.required.packageId': '请输入套餐ID',
+	'sys.tenant.validate.nameMax': '租户名称不能超过100个字符',
+	'sys.tenant.validate.codeMax': '租户编码不能超过30个字符',
+
 	// error
 	'error.serverInternal': '服务器内部错误，无法完成请求',
 	'error.network': '网络请求错误，请稍后再试',

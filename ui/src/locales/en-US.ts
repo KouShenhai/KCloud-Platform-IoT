@@ -146,6 +146,25 @@ export default {
 	'sys.dictItem.validate.labelMax': 'Label cannot exceed 100 characters',
 	'sys.dictItem.validate.valueMax': 'Value cannot exceed 100 characters',
 
+	// sys/tenant
+	'sys.tenant.insert': 'Insert Tenant',
+	'sys.tenant.view': 'View Tenant',
+	'sys.tenant.modify': 'Modify Tenant',
+	'sys.tenant.name': 'Tenant Name',
+	'sys.tenant.code': 'Tenant Code',
+	'sys.tenant.sourceId': 'Source ID',
+	'sys.tenant.packageId': 'Package ID',
+	'sys.tenant.placeholder.name': 'Please enter tenant name',
+	'sys.tenant.placeholder.code': 'Please enter tenant code',
+	'sys.tenant.placeholder.sourceId': 'Please enter source ID',
+	'sys.tenant.placeholder.packageId': 'Please enter package ID',
+	'sys.tenant.required.name': 'Please enter tenant name',
+	'sys.tenant.required.code': 'Please enter tenant code',
+	'sys.tenant.required.sourceId': 'Please enter source ID',
+	'sys.tenant.required.packageId': 'Please enter package ID',
+	'sys.tenant.validate.nameMax': 'Tenant name cannot exceed 100 characters',
+	'sys.tenant.validate.codeMax': 'Tenant code cannot exceed 30 characters',
+
 	// error
 	'error.serverInternal': 'Internal server error. Unable to complete the request.',
 	'error.network': 'Network request error. Please try again later.',

@@ -68,6 +68,19 @@ export default [
 				],
 			},
 			{
+				name: 'menu.sys.tenant',
+				title: 'menu.sys.tenant',
+				path: '/sys/tenant',
+				routes: [
+					{
+						name: 'menu.sys.tenant.tenant',
+						title: 'menu.sys.tenant.tenant',
+						path: '/sys/tenant/index',
+						component: './Sys/Tenant',
+					},
+				],
+			},
+			{
 				name: 'menu.sys.log',
 				title: 'menu.sys.log',
 				path: '/sys/log',

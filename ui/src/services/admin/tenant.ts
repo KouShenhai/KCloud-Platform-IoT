@@ -1,12 +1,14 @@
 /* eslint-disable */
+import { ExportAllToExcel } from '@/utils/export';
 import { request } from '@umijs/max';
+import moment from 'moment/moment';
 
 /** 修改租户 修改租户 PUT /api/v1/tenants */
 export async function modifyTenant(
 	body: API.TenantModifyCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/api/v1/tenants', {
+	return request<any>('/api-proxy/admin/api/v1/tenants', {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
@@ -19,11 +21,13 @@ export async function modifyTenant(
 /** 保存租户 保存租户 POST /api/v1/tenants */
 export async function saveTenant(
 	body: API.TenantSaveCmd,
+	requestId: string,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/api/v1/tenants', {
+	return request<any>('/api-proxy/admin/api/v1/tenants', {
 		method: 'POST',
 		headers: {
+			'request-id': requestId,
 			'Content-Type': 'application/json',
 		},
 		data: body,
@@ -36,7 +40,7 @@ export async function removeTenant(
 	body: number[],
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/api/v1/tenants', {
+	return request<any>('/api-proxy/admin/api/v1/tenants', {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',
@@ -53,7 +57,7 @@ export async function getTenantById(
 	options?: { [key: string]: any },
 ) {
 	const { id: param0, ...queryParams } = params;
-	return request<API.Result>(`/api/v1/tenants/${param0}`, {
+	return request<API.Result>(`/api-proxy/admin/api/v1/tenants/${param0}`, {
 		method: 'GET',
 		params: { ...queryParams },
 		...(options || {}),
@@ -61,18 +65,16 @@ export async function getTenantById(
 }
 
 /** 导出租户 导出租户 POST /api/v1/tenants/export */
-export async function exportTenant(
-	body: API.TenantExportCmd,
-	options?: { [key: string]: any },
-) {
-	return request<any>('/api/v1/tenants/export', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-		data: body,
-		...(options || {}),
-	});
+export async function exportTenant(body: any, options?: { [key: string]: any }) {
+	return ExportAllToExcel(
+		'租户_导出全部_' +
+			moment(new Date()).format('YYYYMMDDHHmmss') +
+			'.xlsx',
+		'/api-proxy/admin/api/v1/tenants/export',
+		'POST',
+		body,
+		options,
+	);
 }
 
 /** 导入租户 导入租户 POST /api/v1/tenants/import */
@@ -84,7 +86,7 @@ export async function importTenant(
 	const formData = new FormData();
 
 	if (file) {
-		file.forEach((f) => formData.append('file', f || ''));
+		file.forEach((f) => formData.append('files', f || ''));
 	}
 
 	Object.keys(body).forEach((ele) => {
@@ -103,7 +105,7 @@ export async function importTenant(
 		}
 	});
 
-	return request<any>('/api/v1/tenants/import', {
+	return request<any>('/api-proxy/admin/api/v1/tenants/import', {
 		method: 'POST',
 		data: formData,
 		requestType: 'form',
@@ -116,7 +118,7 @@ export async function pageTenant(
 	body: API.TenantPageQry,
 	options?: { [key: string]: any },
 ) {
-	return request<API.Result>('/api/v1/tenants/page', {
+	return request<API.Result>('/api-proxy/admin/api/v1/tenants/page', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
