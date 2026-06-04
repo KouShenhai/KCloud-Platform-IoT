@@ -4,6 +4,7 @@ openspec --version
 ```
 
 ```shell
+# https://github.com/ForceInjection/OpenSpec-practise/blob/main/docs/openspec-user-manual.md
 cd KCloud-Platform-IoT
 openspec init
 openspec init --tools codex
