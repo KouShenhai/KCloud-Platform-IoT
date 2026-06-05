@@ -42,4 +42,24 @@ public interface DeviceGateway {
 	 */
 	void deleteDevice(Long[] ids);
 
+	/**
+	 * 设备序列号是否已存在（修改时排除自身）.
+	 */
+	boolean existsSn(Long id, String sn);
+
+	/**
+	 * 设备是否存在.
+	 */
+	boolean existsDevice(Long id);
+
+	/**
+	 * 设备是否全部存在.
+	 */
+	boolean existsDevice(Long[] ids);
+
+	/**
+	 * 产品是否存在.
+	 */
+	boolean existsProduct(Long productId);
+
 }

@@ -1,20 +1,134 @@
 schema: spec-driven
 
-# Project context (optional)
-# This is shown to AI when creating artifacts.
-# Add your tech stack, conventions, style guides, domain knowledge, etc.
-# Example:
-#   context: |
-#     Tech stack: TypeScript, React, Node.js
-#     We use conventional commits
-#     Domain: e-commerce platform
+context: |
+  Project: IoT Cloud Platform
 
-# Per-artifact rules (optional)
-# Add custom rules for specific artifacts.
-# Example:
-#   rules:
-#     proposal:
-#       - Keep proposals under 500 words
-#       - Always include a "Non-goals" section
-#     tasks:
-#       - Break tasks into chunks of max 2 hours
+  Backend:
+  - Java 25
+  - Spring Boot 4
+  - Spring Cloud 2025.1.2
+  - Spring Cloud Alibaba 2025.0.0
+  - Maven 3.9.11
+  - MyBatis Plus
+  - PostgreSQL 17
+  - Redis
+  - TDengine
+  - Kafka
+  - Pulsar
+  - Jackson3
+  - Fory
+  - Elasticsearch
+  - DDD COLA
+  - gRpc
+  - Protobuf
+
+  Frontend:
+  - React 19
+  - TypeScript
+  - Vite
+  - Ant Design Pro
+  - Umi Max
+  - Axios
+  - Zustand
+
+  Infrastructure:
+  - Docker
+  - Kubernetes
+  - Nacos
+  - Kafka
+  - MQTT
+  - Plusar
+  - Redis
+
+  Architecture:
+  - Microservice Architecture
+  - REST API
+  - WebSocket
+  - SSE
+  - HTTP
+
+  Domain:
+  - IoT Platform
+  - Device Management
+  - Gateway Management
+  - Product Management
+  - Thing Model Management
+  - Telemetry Collection
+  - Rule Engine
+  - Alarm Center
+  - OTA Upgrade
+  - RBAC
+
+rules:
+  proposal:
+    - Include rollback plan for risky changes
+    - Consider backward compatibility for APIs
+    - Evaluate impact on existing microservices
+    - Document database migration strategy
+
+  specs:
+    - Use Given/When/Then format for scenarios
+    - Define API contracts before implementation
+    - Include success and failure scenarios
+    - Include permission requirements
+
+  design:
+    - Include sequence diagrams for complex flows
+    - Include service interaction diagrams
+    - Explain data flow between services
+    - Document Kafka topics and message formats
+
+  tasks:
+    - Break tasks into max 2-hour chunks
+    - Separate backend and frontend work
+    - Include testing tasks
+    - Include documentation updates
+
+  backend:
+    - Use constructor injection only
+    - Prefer Java 25 language features
+    - Follow Spring Boot 4 best practices
+    - Use DTOs for API contracts
+    - Validate all request parameters
+    - Use MyBatis Plus for persistence
+    - Use unified Result<T> response model
+    - Avoid field injection
+
+  frontend:
+    - Use React Functional Components only
+    - Use TypeScript strict mode
+    - Prefer Hooks over Class Components
+    - Separate page, component, store and api layers
+    - Avoid any type unless necessary
+    - Use Ant Design components when possible
+
+  database:
+    - PostgreSQL stores business data
+    - TDengine stores telemetry data
+    - Never directly modify production schema
+    - Use migration scripts for schema changes
+
+  iot:
+    - Telemetry ingestion must be asynchronous
+    - MQTT messages should be idempotent
+    - Device data should be batched when possible
+    - Use Kafka as buffer between ingestion and storage
+    - Store device metadata separately from telemetry
+
+  testing:
+    - Backend uses JUnit5 and Mockito
+    - Frontend uses Vitest and React Testing Library
+    - New APIs require integration tests
+    - Critical business logic requires unit tests
+
+agent:
+  coding:
+    - Prefer modifying existing code over creating new modules
+    - Reuse existing services when possible
+    - Avoid duplicate business logic
+    - Follow existing project package structure
+
+  output:
+    - Generate code comments in Chinese
+    - Generate documentation in Chinese
+    - Keep API names in English

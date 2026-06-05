@@ -18,6 +18,11 @@
       <artifactId>laokou-common-reactor</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-i18n</artifactId>
+      <version>${project.version}</version>
+    </dependency>
   </dependencies>
 
 </project>

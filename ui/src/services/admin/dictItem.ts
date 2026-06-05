@@ -1,12 +1,14 @@
 /* eslint-disable */
+import { ExportAllToExcel } from '@/utils/export';
 import { request } from '@umijs/max';
+import moment from 'moment/moment';
 
 /** 修改字典项 修改字典项 PUT /api/v1/dict-items */
 export async function modifyDictItem(
 	body: API.DictItemModifyCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/api/v1/dict-items', {
+	return request<any>('/api-proxy/admin/api/v1/dict-items', {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
@@ -19,11 +21,13 @@ export async function modifyDictItem(
 /** 保存字典项 保存字典项 POST /api/v1/dict-items */
 export async function saveDictItem(
 	body: API.DictItemSaveCmd,
+	requestId: string,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/api/v1/dict-items', {
+	return request<any>('/api-proxy/admin/api/v1/dict-items', {
 		method: 'POST',
 		headers: {
+			'request-id': requestId,
 			'Content-Type': 'application/json',
 		},
 		data: body,
@@ -36,7 +40,7 @@ export async function removeDictItem(
 	body: number[],
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/api/v1/dict-items', {
+	return request<any>('/api-proxy/admin/api/v1/dict-items', {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',
@@ -53,7 +57,7 @@ export async function getDictItemById(
 	options?: { [key: string]: any },
 ) {
 	const { id: param0, ...queryParams } = params;
-	return request<API.Result>(`/api/v1/dict-items/${param0}`, {
+	return request<API.Result>(`/api-proxy/admin/api/v1/dict-items/${param0}`, {
 		method: 'GET',
 		params: { ...queryParams },
 		...(options || {}),
@@ -62,17 +66,18 @@ export async function getDictItemById(
 
 /** 导出字典项 导出字典项 POST /api/v1/dict-items/export */
 export async function exportDictItem(
-	body: API.DictItemExportCmd,
+	body: any,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/api/v1/dict-items/export', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-		data: body,
-		...(options || {}),
-	});
+	return ExportAllToExcel(
+		'字典项_导出全部_' +
+			moment(new Date()).format('YYYYMMDDHHmmss') +
+			'.xlsx',
+		'/api-proxy/admin/api/v1/dict-items/export',
+		'POST',
+		body,
+		options,
+	);
 }
 
 /** 导入字典项 导入字典项 POST /api/v1/dict-items/import */
@@ -84,7 +89,7 @@ export async function importDictItem(
 	const formData = new FormData();
 
 	if (file) {
-		file.forEach((f) => formData.append('file', f || ''));
+		file.forEach((f) => formData.append('files', f || ''));
 	}
 
 	Object.keys(body).forEach((ele) => {
@@ -103,7 +108,7 @@ export async function importDictItem(
 		}
 	});
 
-	return request<any>('/api/v1/dict-items/import', {
+	return request<any>('/api-proxy/admin/api/v1/dict-items/import', {
 		method: 'POST',
 		data: formData,
 		requestType: 'form',
@@ -116,7 +121,7 @@ export async function pageDictItem(
 	body: API.DictItemPageQry,
 	options?: { [key: string]: any },
 ) {
-	return request<API.Result>('/api/v1/dict-items/page', {
+	return request<API.Result>('/api-proxy/admin/api/v1/dict-items/page', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

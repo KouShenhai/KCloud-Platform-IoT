@@ -24,6 +24,7 @@ import org.laokou.admin.source.command.SourceImportCmdExe;
 import org.laokou.admin.source.command.SourceModifyCmdExe;
 import org.laokou.admin.source.command.SourceRemoveCmdExe;
 import org.laokou.admin.source.command.SourceSaveCmdExe;
+import org.laokou.admin.source.command.SourceTestCmdExe;
 import org.laokou.admin.source.command.query.SourceGetQryExe;
 import org.laokou.admin.source.command.query.SourcePageQryExe;
 import org.laokou.admin.source.dto.SourceExportCmd;
@@ -33,6 +34,7 @@ import org.laokou.admin.source.dto.SourceModifyCmd;
 import org.laokou.admin.source.dto.SourcePageQry;
 import org.laokou.admin.source.dto.SourceRemoveCmd;
 import org.laokou.admin.source.dto.SourceSaveCmd;
+import org.laokou.admin.source.dto.SourceTestCmd;
 import org.laokou.admin.source.dto.clientobject.SourceCO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
@@ -60,6 +62,8 @@ public class SourcesServiceImpl implements SourcesServiceI {
 	private final SourcePageQryExe sourcePageQryExe;
 
 	private final SourceGetQryExe sourceGetQryExe;
+
+	private final SourceTestCmdExe sourceTestCmdExe;
 
 	@Override
 	public void saveSource(SourceSaveCmd cmd) {
@@ -94,6 +98,11 @@ public class SourcesServiceImpl implements SourcesServiceI {
 	@Override
 	public Result<SourceCO> getSourceById(SourceGetQry qry) {
 		return sourceGetQryExe.execute(qry);
+	}
+
+	@Override
+	public void testSource(SourceTestCmd cmd) {
+		sourceTestCmdExe.executeVoid(cmd);
 	}
 
 }

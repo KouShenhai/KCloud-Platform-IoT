@@ -41,4 +41,24 @@ public interface DictItemGateway {
 	 */
 	void deleteDictItem(Long[] ids);
 
+	/**
+	 * 字典类型是否存在.
+	 */
+	boolean existsDict(Long typeId);
+
+	/**
+	 * 字典项值是否存在.
+	 */
+	boolean existsValue(Long id, Long typeId, String value);
+
+	/**
+	 * 字典项是否存在.
+	 */
+	boolean existsDictItem(Long id);
+
+	/**
+	 * 字典项IDS是否存在.
+	 */
+	boolean existsDictItem(Long[] ids);
+
 }

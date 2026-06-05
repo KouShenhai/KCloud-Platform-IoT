@@ -19,11 +19,13 @@ export async function modifyDevice(
 /** 保存设备 保存设备 POST /api/v1/devices */
 export async function saveDevice(
 	body: API.DeviceSaveCmd,
+	requestId: string,
 	options?: { [key: string]: any },
 ) {
 	return request<any>('/api-proxy/iot/api/v1/devices', {
 		method: 'POST',
 		headers: {
+			'request-id': requestId,
 			'Content-Type': 'application/json',
 		},
 		data: body,

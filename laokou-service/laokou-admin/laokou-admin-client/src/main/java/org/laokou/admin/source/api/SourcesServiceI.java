@@ -24,6 +24,7 @@ import org.laokou.admin.source.dto.SourceModifyCmd;
 import org.laokou.admin.source.dto.SourcePageQry;
 import org.laokou.admin.source.dto.SourceRemoveCmd;
 import org.laokou.admin.source.dto.SourceSaveCmd;
+import org.laokou.admin.source.dto.SourceTestCmd;
 import org.laokou.admin.source.dto.clientobject.SourceCO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
@@ -72,9 +73,16 @@ public interface SourcesServiceI {
 	Result<Page<SourceCO>> pageSource(SourcePageQry qry);
 
 	/**
-	 * 查看数据源.
-	 * @param qry 查看请求
+	 * 查看数据源详情.
+	 * @param qry 查看数据源详情参数
+	 * @return 数据源详情
 	 */
 	Result<SourceCO> getSourceById(SourceGetQry qry);
+
+	/**
+	 * 测试数据源连通性.
+	 * @param cmd 测试数据源连接命令
+	 */
+	void testSource(SourceTestCmd cmd);
 
 }

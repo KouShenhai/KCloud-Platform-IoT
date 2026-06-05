@@ -68,6 +68,25 @@ export default [
 				],
 			},
 			{
+				name: 'menu.sys.tenant',
+				title: 'menu.sys.tenant',
+				path: '/sys/tenant',
+				routes: [
+					{
+						name: 'menu.sys.tenant.tenant',
+						title: 'menu.sys.tenant.tenant',
+						path: '/sys/tenant/tenant',
+						component: './Sys/Tenant/tenant',
+					},
+					{
+						name: 'menu.sys.tenant.source',
+						title: 'menu.sys.tenant.source',
+						path: '/sys/tenant/source',
+						component: './Sys/Tenant/source',
+					},
+				],
+			},
+			{
 				name: 'menu.sys.log',
 				title: 'menu.sys.log',
 				path: '/sys/log',
@@ -97,6 +116,12 @@ export default [
 				title: 'menu.sys.base',
 				path: '/sys/base',
 				routes: [
+					{
+						name: 'menu.sys.base.dict',
+						title: 'menu.sys.base.dict',
+						path: '/sys/base/dict',
+						component: './Sys/Base/dict',
+					},
 					{
 						name: 'menu.sys.base.i18n-menu',
 						title: 'menu.sys.base.i18n-menu',
@@ -168,7 +193,33 @@ export default [
 						path: '/iot/device/productCategory',
 						component: './IoT/Device/productCategory',
 					},
+					{
+						name: 'menu.iot.device.product',
+						title: 'menu.iot.device.product',
+						path: '/iot/device/product',
+						component: './IoT/Device/product',
+					},
+					{
+						name: 'menu.iot.device.device',
+						title: 'menu.iot.device.device',
+						path: '/iot/device/index',
+						component: './IoT/Device',
+					},
 				],
+			},
+		],
+	},
+	{
+		name: 'menu.network',
+		title: 'menu.network',
+		path: '/network',
+		icon: 'api',
+		routes: [
+			{
+				name: 'menu.network.connection',
+				title: 'menu.network.connection',
+				path: '/network/connection',
+				component: './Network/Connection',
 			},
 		],
 	},

@@ -48,3 +48,6 @@ hs_err_pid*
 
 .xcodemap
 .vscode
+
+# Edge Gateway runtime data
+KEdge-Gateway/data/users.yaml

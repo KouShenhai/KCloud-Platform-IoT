@@ -34,6 +34,112 @@ export default (initialState: any) => {
 		canI18nMenuSave:
 			permissions?.includes('sys:i18n-menu:save') && scopes?.includes('write'),
 
+		canDictGetDetail:
+			permissions?.includes('sys:dict:detail') &&
+			scopes?.includes('read'),
+
+		canDictPage:
+			permissions?.includes('sys:dict:page') && scopes?.includes('read'),
+
+		canDictModify:
+			permissions?.includes('sys:dict:modify') &&
+			scopes?.includes('write'),
+
+		canDictRemove:
+			permissions?.includes('sys:dict:remove') &&
+			scopes?.includes('write'),
+
+		canDictSave:
+			permissions?.includes('sys:dict:save') && scopes?.includes('write'),
+
+		canDictImport:
+			permissions?.includes('sys:dict:import') &&
+			scopes?.includes('write'),
+
+		canDictExport:
+			permissions?.includes('sys:dict:export') &&
+			scopes?.includes('write'),
+
+		canDictItemGetDetail:
+			permissions?.includes('sys:dict-item:detail') &&
+			scopes?.includes('read'),
+
+		canDictItemPage:
+			permissions?.includes('sys:dict-item:page') &&
+			scopes?.includes('read'),
+
+		canDictItemModify:
+			permissions?.includes('sys:dict-item:modify') &&
+			scopes?.includes('write'),
+
+		canDictItemRemove:
+			permissions?.includes('sys:dict-item:remove') &&
+			scopes?.includes('write'),
+
+		canDictItemSave:
+			permissions?.includes('sys:dict-item:save') &&
+			scopes?.includes('write'),
+
+		canDictItemImport:
+			permissions?.includes('sys:dict-item:import') &&
+			scopes?.includes('write'),
+
+		canDictItemExport:
+			permissions?.includes('sys:dict-item:export') &&
+			scopes?.includes('write'),
+
+		canTenantGetDetail:
+			permissions?.includes('sys:tenant:detail') &&
+			scopes?.includes('read'),
+
+		canTenantPage:
+			permissions?.includes('sys:tenant:page') && scopes?.includes('read'),
+
+		canTenantModify:
+			permissions?.includes('sys:tenant:modify') &&
+			scopes?.includes('write'),
+
+		canTenantRemove:
+			permissions?.includes('sys:tenant:remove') &&
+			scopes?.includes('write'),
+
+		canTenantSave:
+			permissions?.includes('sys:tenant:save') && scopes?.includes('write'),
+
+		canTenantImport:
+			permissions?.includes('sys:tenant:import') &&
+			scopes?.includes('write'),
+
+		canTenantExport:
+			permissions?.includes('sys:tenant:export') &&
+			scopes?.includes('write'),
+
+		canSourceGetDetail:
+			permissions?.includes('sys:source:detail') &&
+			scopes?.includes('read'),
+
+		canSourcePage:
+			permissions?.includes('sys:source:page') && scopes?.includes('read'),
+
+		canSourceModify:
+			permissions?.includes('sys:source:modify') &&
+			scopes?.includes('write'),
+
+		canSourceRemove:
+			permissions?.includes('sys:source:remove') &&
+			scopes?.includes('write'),
+
+		canSourceSave:
+			permissions?.includes('sys:source:save') && scopes?.includes('write'),
+
+		canSourceImport:
+			permissions?.includes('sys:source:import') &&
+			scopes?.includes('write'),
+
+		canSourceExport:
+			permissions?.includes('sys:source:export') &&
+			scopes?.includes('write'),
+
 		canDeptGetDetail:
 			permissions?.includes('sys:dept:detail') &&
 			scopes?.includes('read'),
@@ -105,6 +211,10 @@ export default (initialState: any) => {
 			permissions?.includes('iot:device:detail') &&
 			scopes?.includes('read'),
 
+		canDevicePage:
+			permissions?.includes('iot:device:page') &&
+			scopes?.includes('read'),
+
 		canDeviceModify:
 			permissions?.includes('iot:device:modify') &&
 			scopes?.includes('write'),
@@ -117,8 +227,20 @@ export default (initialState: any) => {
 			permissions?.includes('iot:device:save') &&
 			scopes?.includes('write'),
 
+		canDeviceImport:
+			permissions?.includes('iot:device:import') &&
+			scopes?.includes('write'),
+
+		canDeviceExport:
+			permissions?.includes('iot:device:export') &&
+			scopes?.includes('write'),
+
 		canProductGetDetail:
 			permissions?.includes('iot:product:detail') &&
+			scopes?.includes('read'),
+
+		canProductPage:
+			permissions?.includes('iot:product:page') &&
 			scopes?.includes('read'),
 
 		canProductModify:
@@ -131,6 +253,34 @@ export default (initialState: any) => {
 
 		canProductSave:
 			permissions?.includes('iot:product:save') &&
+			scopes?.includes('write'),
+
+		canProductImport:
+			permissions?.includes('iot:product:import') &&
+			scopes?.includes('write'),
+
+		canProductExport:
+			permissions?.includes('iot:product:export') &&
+			scopes?.includes('write'),
+
+		canConnectionGetDetail:
+			permissions?.includes('network:connection:detail') &&
+			scopes?.includes('read'),
+
+		canConnectionPage:
+			permissions?.includes('network:connection:page') &&
+			scopes?.includes('read'),
+
+		canConnectionModify:
+			permissions?.includes('network:connection:modify') &&
+			scopes?.includes('write'),
+
+		canConnectionRemove:
+			permissions?.includes('network:connection:remove') &&
+			scopes?.includes('write'),
+
+		canConnectionSave:
+			permissions?.includes('network:connection:save') &&
 			scopes?.includes('write'),
 
 		canThingModelGetDetail:

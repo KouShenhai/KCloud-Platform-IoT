@@ -14,3 +14,22 @@ export const layout = () => {
     },
   };
 };
+
+import type { RequestConfig } from '@umijs/max';
+
+export const request: RequestConfig = {
+  timeout: 10000,
+  errorConfig: {
+    errorHandler() {},
+    errorThrower() {},
+  },
+  requestInterceptors: [
+    (config: any) => {
+      const token = localStorage.getItem('edge_token');
+      if (token && config.headers) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+      return config;
+    },
+  ],
+};

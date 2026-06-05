@@ -1,5 +1,11 @@
+# jasypt
+jasypt:
+  encryptor:
+    password: ${SECRET_KEY:laokou}
 server:
   port: ${SERVER_PORT:9995}
+  compression:
+    enabled: true
   ssl:
     # 开启证书
     enabled: false
@@ -14,8 +20,19 @@ server:
   http2:
     enabled: false
   shutdown: graceful
+  servlet:
+    context-path: /api
   forward-headers-strategy: framework
+  tomcat:
+    threads:
+      max: 500
+      min-spare: 50
+    max-connections: 10000
+    accept-count: 200
+    uri-encoding: UTF-8
+    connection-timeout: 60s
 
+# Actuator配置
 management:
   endpoints:
     web:
@@ -25,21 +42,21 @@ management:
     health:
       show-details: always
   tracing:
-    enabled: true
+    export:
+      enabled: true
     propagation:
       type: w3c
     # 采样率 => 100%
     sampling:
       probability: 1
-  otlp:
+  opentelemetry:
     tracing:
-      endpoint: http://otel-collector:4317/v1/traces
-      compression: gzip
-      timeout: 10s
-      transport: grpc
-    metrics:
       export:
-        enabled: false
+        otlp:
+          endpoint: http://otel-collector:4317/v1/traces
+          compression: gzip
+          timeout: 5s
+          transport: grpc
   metrics:
     tags:
       application: ${spring.application.name}
@@ -52,9 +69,113 @@ spring:
     name: ${SERVICE_ID:laokou-mqtt}
   profiles:
     active: @PROFILE-ACTIVE@
+  config:
+    import:
+      - optional:nacos:laokou-mqtt.yaml?refreshEnabled=true&group=${NACOS_GROUP:IOT_GROUP}
   threads:
     virtual:
       enabled: true
+  lifecycle:
+    timeout-per-shutdown-phase: "2m"
+  datasource:
+    dynamic:
+      p6spy: false
+      strict: true
+      datasource:
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: ${DS_DRIVER:org.postgresql.Driver}
+          url: jdbc:${DS_PLATFORM:postgresql}://${DS_HOST:postgresql}:${DS_PORT:5432}/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-mqtt&useSSL=false
+          username: ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)
+          password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+        domain:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: ${DS_DRIVER:org.postgresql.Driver}
+          url: jdbc:${DS_PLATFORM:postgresql}://${DS_HOST:postgresql}:${DS_PORT:5432}/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-mqtt&useSSL=false
+          username: ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)
+          password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
+          hikari:
+            connection-timeout: 180000
+            validation-timeout: 3000
+            idle-timeout: 180000
+            max-lifetime: 1800000
+            maximum-pool-size: 60
+            minimum-idle: 10
+            is-read-only: false
+  data:
+    redis:
+      client-type: lettuce
+      host: redis
+      port: 6379
+      password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
+      connect-timeout: 60000ms
+      timeout: 60000ms
+      lettuce:
+        pool:
+          max-active: 1000
+          max-wait: 2m
+          max-idle: 500
+          min-idle: 200
+  redisson:
+    password: ${spring.data.redis.password}
+    node:
+      type: single
+      single:
+        address: redis://${spring.data.redis.host}:${spring.data.redis.port}
+  security:
+    oauth2:
+      resource-server:
+        enabled: true
+        request-matcher:
+          ignore-patterns:
+            GET:
+              - /v3/api-docs/**=laokou-mqtt
+              - /actuator/**=laokou-mqtt
+              - /scalar/**=laokou-mqtt
+              - /favicon.svg=laokou-mqtt
+  cloud:
+    loadbalancer:
+      nacos:
+        enabled: true
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
+    nacos:
+      discovery:
+        enabled: true
+        server-addr: ${NACOS_DISCOVERY_ADDRESS:nacos:8848,nacos:8858,nacos:8868}
+        namespace: ${NACOS_NAMESPACE:0dac1a68-2f01-40df-bd26-bf0cb199057a}
+        username: ${NACOS_USERNAME:nacos}
+        password: ${NACOS_PASSWORD:nacos}
+        group: ${NACOS_GROUP:IOT_GROUP}
+        secure: false
+        ephemeral: true
+        cluster-name: ${NACOS_CLUSTER_NAME:iot-cluster}
+        heart-beat:
+          enabled: true
+        heart-beat-interval: 30000
+        heart-beat-timeout: 60000
+        metadata:
+          node_id: ${system-settings.node-id}
+      config:
+        enabled: true
+        server-addr: ${NACOS_CONFIG_ADDRESS:nacos:8848,nacos:8858,nacos:8868}
+        namespace: ${NACOS_NAMESPACE:0dac1a68-2f01-40df-bd26-bf0cb199057a}
+        username: ${NACOS_USERNAME:nacos}
+        password: ${NACOS_PASSWORD:nacos}
+        cluster-name: ${NACOS_CLUSTER_NAME:iot-cluster}
+        file-extension: yaml
+        group: ${NACOS_GROUP:IOT_GROUP}
+        refresh-enabled: true
   pulsar:
     client:
       service-url: pulsar://pulsar:6650
@@ -64,5 +185,29 @@ spring:
         enabled: true
         maximum-size: 1000
 
+scalar:
+  enabled: true
+springdoc:
+  swagger-ui:
+    enabled: false
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+    version: openapi_3_1
+
+mybatis-plus:
+  global-config:
+    db-config:
+      column-format: "\"%s\""
+  tenant:
+    enabled: true
+  sql-monitor:
+    enabled: true
+    interval: 0
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+
 system-settings:
   node-id: 1
+  app-mode: microservice

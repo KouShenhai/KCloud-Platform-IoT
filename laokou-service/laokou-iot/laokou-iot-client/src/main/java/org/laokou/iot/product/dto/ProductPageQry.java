@@ -19,6 +19,7 @@ package org.laokou.iot.product.dto;
 
 import lombok.Data;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.util.StringExtUtils;
 
 /**
  *
@@ -53,5 +54,9 @@ public class ProductPageQry extends PageQuery {
 	 * 传输协议ID.
 	 */
 	private Long tpId;
+
+	public void setName(String name) {
+		this.name = StringExtUtils.like(StringExtUtils.trim(name));
+	}
 
 }

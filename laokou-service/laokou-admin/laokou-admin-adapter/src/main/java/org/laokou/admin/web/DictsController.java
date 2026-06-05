@@ -33,6 +33,7 @@ import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.log.annotation.OperateLog;
+import org.laokou.common.tenant.annotation.Tenant;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -101,6 +102,7 @@ public class DictsController {
 	}
 
 	@TraceLog
+	@Tenant
 	@PostMapping("/v1/dicts/page")
 	@PreAuthorize("hasAuthority('read') and hasAuthority('sys:dict:page')")
 	@Operation(summary = "分页查询字典列表", description = "分页查询字典列表")

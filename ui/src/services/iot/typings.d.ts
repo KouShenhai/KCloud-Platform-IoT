@@ -2,7 +2,7 @@ declare namespace API {
 	type ProductCO = {
 		extValues?: Record<string, any>;
 		/** ID */
-		Id?: number;
+		id?: number;
 		/** 产品名称 */
 		name?: string;
 		/** 产品类别 */
@@ -195,7 +195,7 @@ declare namespace API {
 	type DeviceCO = {
 		extValues?: Record<string, any>;
 		/** ID */
-		Id?: number;
+		id?: number;
 		/** 设备序列号 */
 		sn?: string;
 		/** 设备名称 */

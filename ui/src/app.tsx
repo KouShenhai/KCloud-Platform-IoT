@@ -15,6 +15,7 @@ import {logout, refresh, refreshByAuthorizationCode} from '@/services/auth/auth'
 import { history, SelectLang } from '@@/exports';
 import { RunTimeLayoutConfig } from '@@/plugin-layout/types';
 import {
+	ApiOutlined,
 	HomeOutlined,
 	LogoutOutlined,
 	RobotOutlined,
@@ -32,6 +33,8 @@ let whiteList = ['/login'];
 
 const getIcon = (icon: string) => {
 	switch (icon) {
+		case 'ApiOutlined':
+			return <ApiOutlined />;
 		case 'SettingOutlined':
 			return <SettingOutlined />;
 		case 'RobotOutlined':

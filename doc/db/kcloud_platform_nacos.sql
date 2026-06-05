@@ -2755,7 +2755,45 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (31, 'router
     },
     "order": 1
   },
-    {
+  {
+    "id": "laokou-network",
+    "uri": "lb://laokou-network",
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/api-gateway/network/**"
+        }
+      },
+      {
+        "name": "Weight",
+        "args": {
+          "_genkey_0": "network",
+          "_genkey_1": "100"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "2"
+        }
+      },
+      {
+        "name": "RewritePath",
+        "args": {
+          "_genkey_0": "/api-gateway/network/(?<path>.*)",
+          "_genkey_1": "/$\\{path}"
+        }
+      }
+    ],
+    "metadata": {
+      "version": "v1"
+    },
+    "order": 1
+  },
+  {
     "id": "laokou-generator",
     "uri": "lb://laokou-generator",
     "predicates": [
@@ -2832,7 +2870,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (31, 'router
     "order": 1
   }
 ]
-', '0e03959c7b36b5d0c13fc33b2463e0d3', '2024-05-25 18:13:10.616', '2024-11-06 22:47:22.13', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', '8140e92b-fb43-48f5-b63b-7506185206a5', '动态路由配置', '', '', 'json', '', '');
+', 'ec8e342e7f69986c97a3549d1cf6700b', '2024-05-25 18:13:10.616', '2024-11-06 22:47:22.13', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', '8140e92b-fb43-48f5-b63b-7506185206a5', '动态路由配置', '', '', 'json', '', '');
 INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (26, 'router.json', 'IOT_GROUP', '[
   {
     "id": "laokou-auth",
@@ -2948,7 +2986,45 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (26, 'router
     },
     "order": 1
   },
-    {
+  {
+    "id": "laokou-network",
+    "uri": "lb://laokou-network",
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/api-gateway/network/**"
+        }
+      },
+      {
+        "name": "Weight",
+        "args": {
+          "_genkey_0": "network",
+          "_genkey_1": "100"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "2"
+        }
+      },
+      {
+        "name": "RewritePath",
+        "args": {
+          "_genkey_0": "/api-gateway/network/(?<path>.*)",
+          "_genkey_1": "/$\\{path}"
+        }
+      }
+    ],
+    "metadata": {
+      "version": "v1"
+    },
+    "order": 1
+  },
+  {
     "id": "laokou-generator",
     "uri": "lb://laokou-generator",
     "predicates": [
@@ -3025,7 +3101,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (26, 'router
     "order": 1
   }
 ]
-', '0e03959c7b36b5d0c13fc33b2463e0d3', '2024-05-25 18:13:33.387', '2024-11-06 22:46:53.026', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '动态路由配置', '', '', 'json', '', '');
+', 'f23a8c6c7593199274f8e829646ccd8e', '2024-05-25 18:13:33.387', '2024-11-06 22:46:53.026', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', '0dac1a68-2f01-40df-bd26-bf0cb199057a', '动态路由配置', '', '', 'json', '', '');
 INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (30, 'router.json', 'IOT_GROUP', '[
   {
     "id": "laokou-auth",
@@ -3141,7 +3217,45 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (30, 'router
     },
     "order": 1
   },
-    {
+  {
+    "id": "laokou-network",
+    "uri": "lb://laokou-network",
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/api-gateway/network/**"
+        }
+      },
+      {
+        "name": "Weight",
+        "args": {
+          "_genkey_0": "network",
+          "_genkey_1": "100"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "2"
+        }
+      },
+      {
+        "name": "RewritePath",
+        "args": {
+          "_genkey_0": "/api-gateway/network/(?<path>.*)",
+          "_genkey_1": "/$\\{path}"
+        }
+      }
+    ],
+    "metadata": {
+      "version": "v1"
+    },
+    "order": 1
+  },
+  {
     "id": "laokou-generator",
     "uri": "lb://laokou-generator",
     "predicates": [
@@ -3218,7 +3332,7 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (30, 'router
     "order": 1
   }
 ]
-', '0e03959c7b36b5d0c13fc33b2463e0d3', '2023-01-13 15:44:25', '2024-11-06 22:47:10.779', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'json', '', '');
+', 'ec8e342e7f69986c97a3549d1cf6700b', '2023-01-13 15:44:25', '2024-11-06 22:47:10.779', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', 'a61abd4c-ef96-42a5-99a1-616adee531f3', '', '', '', 'json', '', '');
 
 INSERT INTO "public"."tenant_info" VALUES (1, '2', 'nacos-default-mcp', 'nacos-default-mcp', 'Nacos default AI MCP module.', 'nacos', 1747555499268, 1747555499268);
 INSERT INTO "public"."tenant_info" VALUES (2, '1', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'dev', 'dev', 'nacos', 1716631648356, 1716631648356);

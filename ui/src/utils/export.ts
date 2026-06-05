@@ -35,7 +35,7 @@ export function ExportAllToExcel(
 		[key: string]: any;
 	},
 ) {
-	request<any>(url, {
+	return request<any>(url, {
 		method: method,
 		responseType: 'blob',
 		headers: {

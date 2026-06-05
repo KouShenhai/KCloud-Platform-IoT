@@ -21,9 +21,12 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.laokou.common.context.util.UserUtils;
+import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.tenant.annotation.Tenant;
 import org.springframework.stereotype.Component;
+
+import java.util.Map;
 
 /**
  * @author laokou
@@ -36,7 +39,10 @@ public class TenantAspectj {
 	public void doBefore(JoinPoint joinPoint, Tenant tenant) {
 		Object arg = joinPoint.getArgs()[0];
 		if (arg instanceof PageQuery pageQuery) {
-			pageQuery.getParams().put("tenantId", UserUtils.getTenantId());
+			Map<String, Object> params = pageQuery.getParams();
+			if (MapUtils.isNotEmpty(params)) {
+				params.put("tenantId", UserUtils.getTenantId());
+			}
 		}
 	}
 
