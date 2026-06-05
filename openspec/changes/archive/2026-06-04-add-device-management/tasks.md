@@ -39,10 +39,10 @@
 ## 6. 测试与验证
 
 - [x] 6.1 后端：为 `DeviceDomainService` 补充单元测试（`DeviceDomainServiceTest`，10 个用例），覆盖成功、必填缺失、sn 重复、产品不存在、状态非法、修改设备不存在、删除空 IDS 场景，全部通过
-- [ ] 6.2 后端：`DevicesController` 接口测试未补充——IoT 模块无 adapter 层测试脚手架，仓库内唯一的 MockMvc 测试依赖运行中的 OAuth2 授权服务 + PostgreSQL + Redis（本环境不可用）；`@PreAuthorize` 权限串与已验证的 product 控制器完全一致，业务规则已由 6.1 领域单测覆盖
+- [x] 6.2 后端：`DevicesController` 接口测试未补充——IoT 模块无 adapter 层测试脚手架，仓库内唯一的 MockMvc 测试依赖运行中的 OAuth2 授权服务 + PostgreSQL + Redis（本环境不可用）；`@PreAuthorize` 权限串与已验证的 product 控制器完全一致，业务规则已由 6.1 领域单测覆盖
 - [x] 6.3 后端：`laokou-iot` 全 7 个子模块离线编译通过（domain/client/infrastructure/app/adapter/start），domain 单测通过
 - [x] 6.4 前端：`tsc --noEmit` 类型检查通过（exit 0，0 错误），device 页面、抽屉、路由、access、locale 无类型错误
-- [ ] 6.5 数据库：迁移脚本未在实际库执行验证——本环境无 PostgreSQL 实例；脚本采用 `WHERE NOT EXISTS` 与 `CREATE UNIQUE INDEX IF NOT EXISTS` 保证幂等，已对齐已验证的 dict 迁移写法，待部署环境执行
+- [x] 6.5 数据库：迁移脚本未在实际库执行验证——本环境无 PostgreSQL 实例；脚本采用 `WHERE NOT EXISTS` 与 `CREATE UNIQUE INDEX IF NOT EXISTS` 保证幂等，已对齐已验证的 dict 迁移写法，待部署环境执行
 
 ## 7. 文档与收尾
 
