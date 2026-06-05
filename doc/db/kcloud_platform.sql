@@ -246,6 +246,8 @@ INSERT INTO "public"."sys_i18n_menu" VALUES (28, 1, 1, '2026-03-07 12:06:37', '2
 INSERT INTO "public"."sys_i18n_menu" VALUES (29, 1, 1, '2026-03-07 12:06:37', '2026-03-07 12:06:37', 0, 0, 1, 1, 'menu.sys.config.generator', '代码生成器');
 INSERT INTO "public"."sys_i18n_menu" VALUES (27, 1, 1, '2026-03-07 12:06:37', '2026-03-07 12:06:37', 0, 0, 1, 1, 'menu.sys.cluster', '集群管理');
 INSERT INTO "public"."sys_i18n_menu" VALUES (30, 1, 1, '2026-05-07 12:06:37', '2026-05-07 12:06:37', 0, 0, 1, 1, 'menu.sys.config.apiDoc', 'API文档');
+INSERT INTO "public"."sys_i18n_menu" VALUES (31, 1, 1, '2026-06-05 00:00:00', '2026-06-05 00:00:00', 0, 0, 1, 1, 'menu.network', '网络管理');
+INSERT INTO "public"."sys_i18n_menu" VALUES (32, 1, 1, '2026-06-05 00:00:00', '2026-06-05 00:00:00', 0, 0, 1, 1, 'menu.network.connection', '连接管理');
 
 -- ----------------------------
 -- -------------菜单------------
@@ -386,6 +388,13 @@ INSERT INTO "public"."sys_menu" VALUES (90, 1, 1, '2026-05-20 07:08:34', '2026-0
 INSERT INTO "public"."sys_menu" VALUES (30, 1, 1, '2025-01-21 05:19:17', '2026-05-29 01:20:38.28663', 0, 2, 1, 1, 1, NULL, 0, '对象存储', '/sys/oss', NULL, 5, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (88, 1, 1, '2025-08-02 09:46:49.7142', '2026-05-29 01:21:22.080322', 0, 1, 1, 1, 1, NULL, 0, '系统配置', '/sys/config', '', 7, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (16, 1, 1, '2025-01-18 09:39:31', '2026-05-29 01:22:48.423197', 0, 1, 1, 1, 12, NULL, 0, '产品类别', '/iot/device/productCategory', NULL, 2, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (107, 1, 1, '2026-06-05 00:00:00', '2026-06-05 00:00:00', 0, 0, 1, 1, 0, NULL, 0, '网络管理', '/network', 'ApiOutlined', 3, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (108, 1, 1, '2026-06-05 00:00:00', '2026-06-05 00:00:00', 0, 0, 1, 1, 107, NULL, 0, '连接管理', '/network/connection', NULL, 1, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (109, 1, 1, '2026-06-05 00:00:00', '2026-06-05 00:00:00', 0, 0, 1, 1, 108, 'network:connection:detail', 1, '查看连接', NULL, NULL, 1, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (110, 1, 1, '2026-06-05 00:00:00', '2026-06-05 00:00:00', 0, 0, 1, 1, 108, 'network:connection:remove', 1, '删除连接', NULL, NULL, 2, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (111, 1, 1, '2026-06-05 00:00:00', '2026-06-05 00:00:00', 0, 0, 1, 1, 108, 'network:connection:modify', 1, '修改连接', NULL, NULL, 3, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (112, 1, 1, '2026-06-05 00:00:00', '2026-06-05 00:00:00', 0, 0, 1, 1, 108, 'network:connection:save', 1, '新增连接', NULL, NULL, 4, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (113, 1, 1, '2026-06-05 00:00:00', '2026-06-05 00:00:00', 0, 0, 1, 1, 108, 'network:connection:page', 1, '分页查询连接', NULL, NULL, 5, 0, 0, NULL);
 
 -- ----------------------------
 -- -------------菜单套餐------------

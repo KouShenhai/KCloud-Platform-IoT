@@ -263,6 +263,26 @@ export default (initialState: any) => {
 			permissions?.includes('iot:product:export') &&
 			scopes?.includes('write'),
 
+		canConnectionGetDetail:
+			permissions?.includes('network:connection:detail') &&
+			scopes?.includes('read'),
+
+		canConnectionPage:
+			permissions?.includes('network:connection:page') &&
+			scopes?.includes('read'),
+
+		canConnectionModify:
+			permissions?.includes('network:connection:modify') &&
+			scopes?.includes('write'),
+
+		canConnectionRemove:
+			permissions?.includes('network:connection:remove') &&
+			scopes?.includes('write'),
+
+		canConnectionSave:
+			permissions?.includes('network:connection:save') &&
+			scopes?.includes('write'),
+
 		canThingModelGetDetail:
 			permissions?.includes('iot:thing-model:detail') &&
 			scopes?.includes('read'),

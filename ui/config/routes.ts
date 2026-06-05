@@ -209,4 +209,18 @@ export default [
 			},
 		],
 	},
+	{
+		name: 'menu.network',
+		title: 'menu.network',
+		path: '/network',
+		icon: 'api',
+		routes: [
+			{
+				name: 'menu.network.connection',
+				title: 'menu.network.connection',
+				path: '/network/connection',
+				component: './Network/Connection',
+			},
+		],
+	},
 ];
