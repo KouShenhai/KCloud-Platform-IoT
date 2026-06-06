@@ -55,7 +55,7 @@ management:
         otlp:
           endpoint: http://otel-collector:4317/v1/traces
           compression: gzip
-          timeout: 5s
+          timeout: 10s
           transport: grpc
   metrics:
     tags:
@@ -66,7 +66,7 @@ logging:
 
 spring:
   application:
-    name: ${SERVICE_ID:laokou-mqtt}
+    name: ${SERVICE_ID:laokou-network}
   profiles:
     active: @PROFILE-ACTIVE@
   config:
@@ -77,70 +77,6 @@ spring:
       enabled: true
   lifecycle:
     timeout-per-shutdown-phase: "2m"
-  datasource:
-    dynamic:
-      p6spy: false
-      strict: true
-      datasource:
-        master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: ${DS_DRIVER:org.postgresql.Driver}
-          url: jdbc:${DS_PLATFORM:postgresql}://${DS_HOST:postgresql}:${DS_PORT:5432}/kcloud_platform_iot?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-mqtt&useSSL=false
-          username: ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)
-          password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
-          hikari:
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-        domain:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: ${DS_DRIVER:org.postgresql.Driver}
-          url: jdbc:${DS_PLATFORM:postgresql}://${DS_HOST:postgresql}:${DS_PORT:5432}/kcloud_platform_domain?tcpKeepAlive=true&reWriteBatchedInserts=true&stringtype=unspecified&ApplicationName=laokou-mqtt&useSSL=false
-          username: ENC(l126CTjtLG8OkXRNs5aofcN96EQpbQmQorTqpnWFMvcysQLjNBEuX+9f6hLwdoEk)
-          password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
-          hikari:
-            connection-timeout: 180000
-            validation-timeout: 3000
-            idle-timeout: 180000
-            max-lifetime: 1800000
-            maximum-pool-size: 60
-            minimum-idle: 10
-            is-read-only: false
-  data:
-    redis:
-      client-type: lettuce
-      host: redis
-      port: 6379
-      password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
-      connect-timeout: 60000ms
-      timeout: 60000ms
-      lettuce:
-        pool:
-          max-active: 1000
-          max-wait: 2m
-          max-idle: 500
-          min-idle: 200
-  redisson:
-    password: ${spring.data.redis.password}
-    node:
-      type: single
-      single:
-        address: redis://${spring.data.redis.host}:${spring.data.redis.port}
-  security:
-    oauth2:
-      resource-server:
-        enabled: true
-        request-matcher:
-          ignore-patterns:
-            GET:
-              - /v3/api-docs/**=laokou-mqtt
-              - /actuator/**=laokou-mqtt
-              - /scalar/**=laokou-mqtt
-              - /favicon.svg=laokou-mqtt
   cloud:
     loadbalancer:
       nacos:

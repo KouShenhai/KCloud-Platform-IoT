@@ -114,8 +114,8 @@
     "order": 1
   },
   {
-    "id": "laokou-mqtt",
-    "uri": "lb://laokou-mqtt",
+    "id": "laokou-network",
+    "uri": "lb://laokou-network",
     "predicates": [
       {
         "name": "Path",
