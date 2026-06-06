@@ -114,44 +114,6 @@
     "order": 1
   },
   {
-    "id": "laokou-mqtt",
-    "uri": "lb://laokou-mqtt",
-    "predicates": [
-      {
-        "name": "Path",
-        "args": {
-          "pattern": "/api-gateway/network/**"
-        }
-      },
-      {
-        "name": "Weight",
-        "args": {
-          "_genkey_0": "network",
-          "_genkey_1": "100"
-        }
-      }
-    ],
-    "filters": [
-      {
-        "name": "StripPrefix",
-        "args": {
-          "parts": "2"
-        }
-      },
-      {
-        "name": "RewritePath",
-        "args": {
-          "_genkey_0": "/api-gateway/network/(?<path>.*)",
-          "_genkey_1": "/$\\{path}"
-        }
-      }
-    ],
-    "metadata": {
-      "version": "v1"
-    },
-    "order": 1
-  },
-  {
     "id": "laokou-generator",
     "uri": "lb://laokou-generator",
     "predicates": [
