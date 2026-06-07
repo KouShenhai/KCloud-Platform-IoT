@@ -68,6 +68,16 @@ spring:
   threads:
     virtual:
       enabled: true
+  grpc:
+    client:
+      channel:
+        laokou-snowflake-id:
+          target: discovery://laokou-snowflake-id
+          keepalive:
+            time: 10s
+            timeout: 30s
+          idle:
+            timeout: 30s
   security:
     oauth2:
       resource-server:

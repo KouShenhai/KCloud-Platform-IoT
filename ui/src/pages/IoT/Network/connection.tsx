@@ -1,9 +1,9 @@
-import { ConnectionDrawer } from '@/pages/Network/ConnectionDrawer';
+import { ConnectionDrawer } from '@/pages/IoT/Network/ConnectionDrawer';
 import {
 	getConnectionById,
 	pageConnection,
 	removeConnection,
-} from '@/services/network/connection';
+} from '@/services/iot/connection';
 import { trim } from '@/utils/format';
 import { useAccess, useIntl } from '@@/exports';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';

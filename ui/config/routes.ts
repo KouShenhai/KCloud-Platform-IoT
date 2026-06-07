@@ -202,25 +202,17 @@ export default [
 					{
 						name: 'menu.iot.device.device',
 						title: 'menu.iot.device.device',
-						path: '/iot/device/index',
-						component: './IoT/Device',
+						path: '/iot/device/device',
+						component: './IoT/Device/device',
 					},
 				],
 			},
-		],
-	},
-	{
-		name: 'menu.network',
-		title: 'menu.network',
-		path: '/network',
-		icon: 'api',
-		routes: [
 			{
-				name: 'menu.network.connection',
-				title: 'menu.network.connection',
-				path: '/network/connection',
-				component: './Network/Connection',
+				name: 'menu.iot.network.connection',
+				title: 'menu.iot.network.connection',
+				path: '/iot/network/connection',
+				component: './IoT/Network/connection'
 			},
 		],
-	},
+	}
 ];

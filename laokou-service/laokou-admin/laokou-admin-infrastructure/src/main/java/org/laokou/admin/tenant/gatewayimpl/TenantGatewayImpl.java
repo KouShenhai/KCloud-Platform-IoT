@@ -22,7 +22,6 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.admin.tenant.convertor.TenantConvertor;
 import org.laokou.admin.tenant.gateway.TenantGateway;
 import org.laokou.admin.tenant.model.TenantE;
-import org.laokou.common.i18n.common.IdGenerator;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.tenant.mapper.TenantDO;
 import org.laokou.common.tenant.mapper.TenantMapper;
@@ -45,11 +44,9 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	private final TenantMapper tenantMapper;
 
-	private final IdGenerator idGenerator;
-
 	@Override
 	public void createTenant(TenantE tenantE) {
-		tenantMapper.insert(TenantConvertor.toDataObject(idGenerator.getId(), tenantE));
+		// tenantMapper.insert(TenantConvertor.toDataObject(idGenerator.getId(), tenantE));
 	}
 
 	@Override
