@@ -186,7 +186,7 @@ CREATE TABLE "public"."sys_operate_log" (
 "request_type" varchar(20)  NOT NULL,
 "request_params" text,
 "user_agent" varchar(500)  NOT NULL,
-"ip" varchar(50)  NOT NULL,
+"ip_address" varchar(50)  NOT NULL,
 "service_address" varchar(100)  NOT NULL,
 "service_id" varchar(50)NOT NULL,
 "address" varchar(200) NOT NULL,
@@ -214,7 +214,7 @@ COMMENT ON COLUMN "public"."sys_operate_log"."method_name" IS '操作的方法�
 COMMENT ON COLUMN "public"."sys_operate_log"."request_type" IS '操作的请求类型';
 COMMENT ON COLUMN "public"."sys_operate_log"."request_params" IS '操作的请求参数';
 COMMENT ON COLUMN "public"."sys_operate_log"."user_agent" IS '操作的浏览器';
-COMMENT ON COLUMN "public"."sys_operate_log"."ip" IS '操作的IP地址';
+COMMENT ON COLUMN "public"."sys_operate_log"."ip_address" IS '操作的IP地址';
 COMMENT ON COLUMN "public"."sys_operate_log"."address" IS '操作的归属地';
 COMMENT ON COLUMN "public"."sys_operate_log"."status" IS '操作状态 0成功 1失败';
 COMMENT ON COLUMN "public"."sys_operate_log"."profile" IS '操作的服务环境';

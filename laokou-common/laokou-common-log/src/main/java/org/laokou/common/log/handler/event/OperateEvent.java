@@ -50,7 +50,7 @@ public final class OperateEvent extends DomainEvent {
 
 	private String userAgent;
 
-	private String ip;
+	private String ipAddress;
 
 	private String address;
 

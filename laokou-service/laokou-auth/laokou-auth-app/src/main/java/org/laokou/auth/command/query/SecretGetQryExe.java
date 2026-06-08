@@ -35,7 +35,7 @@ public class SecretGetQryExe {
 	 * @return 密钥
 	 */
 	public Result<SecretCO> execute() {
-		return Result.ok(new SecretCO(RSAUtils.getPublicKey()));
+		return Result.ok(new SecretCO(RSAUtils.getPublicKey(), System.getProperty("ENDPOINT")));
 	}
 
 }

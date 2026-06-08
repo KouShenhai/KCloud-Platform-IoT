@@ -1,5 +1,5 @@
 {
-  "address": "${sys:ADDRESS}",
+  "endpoint": "${sys:ENDPOINT}",
   "serviceId": "${sys:SERVICE_ID}",
   "profile": "${sys:PROFILE}",
   "traceId": {
