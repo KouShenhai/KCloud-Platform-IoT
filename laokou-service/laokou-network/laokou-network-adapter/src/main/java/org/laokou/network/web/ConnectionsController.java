@@ -43,13 +43,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 网络连接管理.
+ * 连接管理.
  *
  * @author laokou
  */
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "网络连接管理", description = "网络连接管理")
+@Tag(name = "连接管理", description = "连接管理")
 public class ConnectionsController {
 
 	private final ConnectionsServiceI connectionsServiceI;
@@ -57,24 +57,24 @@ public class ConnectionsController {
 	@Idempotent
 	@PostMapping("/v1/connections")
 	@PreAuthorize("hasAuthority('write') and hasAuthority('network:connection:save')")
-	@OperateLog(module = "网络连接管理", operation = "保存网络连接")
-	@Operation(summary = "保存网络连接", description = "保存网络连接")
+	@OperateLog(module = "连接管理", operation = "保存连接")
+	@Operation(summary = "保存连接", description = "保存连接")
 	public void saveConnection(@RequestBody ConnectionSaveCmd cmd) {
 		connectionsServiceI.saveConnection(cmd);
 	}
 
 	@PutMapping("/v1/connections")
 	@PreAuthorize("hasAuthority('write') and hasAuthority('network:connection:modify')")
-	@OperateLog(module = "网络连接管理", operation = "修改网络连接")
-	@Operation(summary = "修改网络连接", description = "修改网络连接")
+	@OperateLog(module = "连接管理", operation = "修改连接")
+	@Operation(summary = "修改连接", description = "修改连接")
 	public void modifyConnection(@RequestBody ConnectionModifyCmd cmd) {
 		connectionsServiceI.modifyConnection(cmd);
 	}
 
 	@DeleteMapping("/v1/connections")
 	@PreAuthorize("hasAuthority('write') and hasAuthority('network:connection:remove')")
-	@OperateLog(module = "网络连接管理", operation = "删除网络连接")
-	@Operation(summary = "删除网络连接", description = "删除网络连接")
+	@OperateLog(module = "连接管理", operation = "删除网络连接")
+	@Operation(summary = "删除连接", description = "删除连接")
 	public void removeConnection(@RequestBody Long[] ids) {
 		connectionsServiceI.removeConnection(new ConnectionRemoveCmd(ids));
 	}
@@ -82,7 +82,7 @@ public class ConnectionsController {
 	@TraceLog
 	@PostMapping("/v1/connections/page")
 	@PreAuthorize("hasAuthority('read') and hasAuthority('network:connection:page')")
-	@Operation(summary = "查询网络连接列表", description = "查询网络连接列表")
+	@Operation(summary = "查询连接列表", description = "查询连接列表")
 	public Result<Page<ConnectionCO>> pageConnection(@Validated @RequestBody ConnectionPageQry qry) {
 		return connectionsServiceI.pageConnection(qry);
 	}
@@ -90,7 +90,7 @@ public class ConnectionsController {
 	@TraceLog
 	@GetMapping("/v1/connections/{id}")
 	@PreAuthorize("hasAuthority('read') and hasAuthority('network:connection:detail')")
-	@Operation(summary = "查看网络连接详情", description = "查看网络连接详情")
+	@Operation(summary = "查看连接详情", description = "查看连接详情")
 	public Result<ConnectionCO> getConnectionById(@PathVariable("id") Long id) {
 		return connectionsServiceI.getConnectionById(new ConnectionGetQry(id));
 	}
