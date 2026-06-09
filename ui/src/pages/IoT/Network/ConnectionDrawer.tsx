@@ -1,7 +1,7 @@
 import {
 	modifyConnection,
 	saveConnection,
-} from '@/services/network/connection';
+} from '@/services/iot/connection';
 import { useIntl } from '@@/exports';
 import {
 	DrawerForm,

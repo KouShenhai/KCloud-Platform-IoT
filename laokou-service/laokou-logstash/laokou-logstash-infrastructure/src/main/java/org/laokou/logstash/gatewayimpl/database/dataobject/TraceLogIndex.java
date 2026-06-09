@@ -46,7 +46,7 @@ public final class TraceLogIndex implements Serializable {
 	private String spanId;
 
 	@Field(type = Type.KEYWORD)
-	private String address;
+	private String endpoint;
 
 	@Field(type = Type.KEYWORD)
 	private String level;

@@ -104,7 +104,7 @@ public class OperateLogDO extends BaseDO {
 	/**
 	 * 操作的IP地址.
 	 */
-	private String ip;
+	private String ipAddress;
 
 	/**
 	 * 操作的服务环境.

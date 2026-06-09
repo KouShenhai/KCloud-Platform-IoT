@@ -43,15 +43,15 @@ public final class OperateLogConvertor {
 	public static OperateLogE toEntity(OperateLog operateLog, Supplier<String> serviceIdSupplier,
 			Supplier<String> profileSupplier) throws InetAddressException, IOException, InterruptedException {
 		HttpServletRequest request = RequestUtils.getHttpServletRequest();
-		String ip = IpUtils.getIpAddr(request);
+		String ipAddress = IpUtils.getIpAddr(request);
 		return DomainFactory.createOperateLogE()
 			.toBuilder()
 			.uri(request.getRequestURI())
 			.requestType(request.getMethod())
 			.userAgent(request.getHeader(HttpHeaders.USER_AGENT))
-			.ip(ip)
-			.address(AddressUtils.getRealAddress(ip))
-			.serviceAddress(System.getProperty("address"))
+			.ipAddress(ipAddress)
+			.address(AddressUtils.getRealAddress(ipAddress))
+			.serviceAddress(System.getProperty("ENDPOINT"))
 			.moduleName(operateLog.module())
 			.name(operateLog.operation())
 			.serviceId(serviceIdSupplier.get())
@@ -70,7 +70,7 @@ public final class OperateLogConvertor {
 			.requestType(operateLogE.getRequestType())
 			.requestParams(operateLogE.getRequestParams())
 			.userAgent(operateLogE.getUserAgent())
-			.ip(operateLogE.getIp())
+			.ipAddress(operateLogE.getIpAddress())
 			.address(operateLogE.getAddress())
 			.status(operateLogE.getStatus())
 			.errorMessage(operateLogE.getErrorMessage())
@@ -99,7 +99,7 @@ public final class OperateLogConvertor {
 		operateLogDO.setServiceId(operateEvent.getServiceId());
 		operateLogDO.setServiceAddress(operateEvent.getServiceAddress());
 		operateLogDO.setStackTrace(operateEvent.getStackTrace());
-		operateLogDO.setIp(operateEvent.getIp());
+		operateLogDO.setIpAddress(operateEvent.getIpAddress());
 		operateLogDO.setProfile(operateEvent.getProfile());
 		operateLogDO.setMethodName(operateEvent.getMethodName());
 		operateLogDO.setRequestParams(operateEvent.getRequestParams());
