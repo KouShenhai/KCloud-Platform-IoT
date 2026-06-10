@@ -249,7 +249,7 @@
     <!--jctools版本-->
     <jctools.version>4.0.6</jctools.version>
     <!--spotbugs版本-->
-    <spotbugs.version>4.10.1</spotbugs.version>
+    <spotbugs.version>4.10.2</spotbugs.version>
     <!--docker主机-->
     <docker.host>tcp://127.0.0.1:2375</docker.host>
     <!--docker仓库-->
