@@ -93,7 +93,7 @@
     <!--maven-checkstyle-plugin版本-->
     <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
     <!--spotbugs-maven-plugin版本-->
-    <spotbugs-maven-plugin.version>4.9.8.4</spotbugs-maven-plugin.version>
+    <spotbugs-maven-plugin.version>4.10.2.0</spotbugs-maven-plugin.version>
     <!--native-maven-plugin版本-->
     <native-maven-plugin.version>1.1.1</native-maven-plugin.version>
     <!--versions-maven-plugin版本-->
@@ -199,7 +199,7 @@
     <!--ip2region版本-->
     <ip2region.version>3.3.7</ip2region.version>
     <!--spring-kafka版本-->
-    <spring-kafka.version>4.1.0-RC1</spring-kafka.version>
+    <spring-kafka.version>4.1.0</spring-kafka.version>
     <!--disruptor版本-->
     <disruptor.version>4.0.0</disruptor.version>
     <!--transmittable-thread-local版本-->
@@ -249,7 +249,7 @@
     <!--jctools版本-->
     <jctools.version>4.0.6</jctools.version>
     <!--spotbugs版本-->
-    <spotbugs.version>4.10.1</spotbugs.version>
+    <spotbugs.version>4.10.2</spotbugs.version>
     <!--docker主机-->
     <docker.host>tcp://127.0.0.1:2375</docker.host>
     <!--docker仓库-->
