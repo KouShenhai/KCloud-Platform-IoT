@@ -650,13 +650,13 @@
         <version>${oshi.version}</version>
       </dependency>
 
-      <!-- =============================== Elasticsearch =============================== -->
+      <!-- =============================== Elasticsearch 版本 =============================== -->
       <dependency>
         <groupId>co.elastic.clients</groupId>
         <artifactId>elasticsearch-java</artifactId>
         <version>${elasticsearch.version}</version>
       </dependency>
-      <!-- =============================== Elasticsearch =============================== -->
+      <!-- =============================== Elasticsearch 版本 =============================== -->
 
       <dependency>
         <groupId>jakarta.servlet</groupId>
@@ -959,7 +959,7 @@
 
   <build>
     <plugins>
-      <!--先set后commit【先运行插件，再修改版本】-->
+      <!-- 先set后commit【先运行插件，再修改版本】 -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>versions-maven-plugin</artifactId>
@@ -1304,13 +1304,13 @@
         <includes>
           <include>custom-layout.json</include>
           <include>application.yml</include>
-          <!--suppress UnresolvedMavenProperty -->
+          <!-- suppress UnresolvedMavenProperty -->
           <include>application-${PROFILE-ACTIVE}.yml</include>
           <include>application.properties</include>
-          <!--suppress UnresolvedMavenProperty -->
+          <!-- suppress UnresolvedMavenProperty -->
           <include>application-${PROFILE-ACTIVE}.properties</include>
           <include>log4j2.xml</include>
-          <!--suppress UnresolvedMavenProperty -->
+          <!-- suppress UnresolvedMavenProperty -->
           <include>log4j2-${PROFILE-ACTIVE}.xml</include>
           <include>log4j2.component.properties</include>
           <include>banner.txt</include>
