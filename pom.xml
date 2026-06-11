@@ -156,111 +156,107 @@
     <opentelemetry.version>1.63.0</opentelemetry.version>
     <!--netty版本-->
     <netty.version>4.2.15.Final</netty.version>
-    <!--grpc版本-->
+    <!-- grpc版本 -->
     <grpc.version>1.81.0</grpc.version>
-    <!--jackson版本-->
+    <!-- jackson版本 -->
     <jackson.version>3.2.0</jackson.version>
-    <!--okhttp版本-->
+    <!-- okhttp版本 -->
     <okhttp.version>5.4.0</okhttp.version>
-    <!--protobuf版本-->
+    <!-- protobuf版本 -->
     <protobuf.version>4.34.2</protobuf.version>
-    <!--redisson版本-->
+    <!-- redisson版本 -->
     <redisson.version>4.5.0</redisson.version>
-    <!--lombok版本-->
+    <!-- lombok版本 -->
     <lombok.version>1.18.46</lombok.version>
-    <!--postgresql版本-->
+    <!-- postgresql版本 -->
     <postgresql.version>42.7.11</postgresql.version>
-    <!--admin版本-->
+    <!-- spring-boot-admin版本 -->
     <spring-boot-admin.version>4.0.4</spring-boot-admin.version>
-    <!--jsoup版本-->
-    <jsoup.version>1.21.2</jsoup.version>
-    <!--jasypt版本-->
-    <jasypt.version>4.0.4</jasypt.version>
-    <!--captcha版本-->
-    <easy-captcha.version>1.6.2</easy-captcha.version>
-    <!--guava版本-->
-    <guava.version>33.6.0-jre</guava.version>
-    <!--oshi版本-->
-    <oshi.version>7.3.0</oshi.version>
-    <!--elasticsearch版本-->
-    <elasticsearch.version>9.4.2</elasticsearch.version>
-    <!--jakarta.servlet-api版本-->
-    <jakarta-servlet-api.version>6.1.0</jakarta-servlet-api.version>
-    <!--fesod版本-->
-    <fesod.version>2.0.2-incubating</fesod.version>
-    <!--s3版本-->
-    <s3.version>2.46.7</s3.version>
-    <!--dynamic-datasource版本-->
-    <dynamic-datasource.version>4.5.0</dynamic-datasource.version>
-    <!--httpclient5版本-->
-    <httpclient5.version>5.6.1</httpclient5.version>
-    <!--httpcore5版本-->
-    <httpcore5.version>5.4.2</httpcore5.version>
-    <!--hibernate-validator版本-->
-    <hibernate-validator.version>9.1.0.Final</hibernate-validator.version>
-    <!--ip2region版本-->
-    <ip2region.version>3.3.7</ip2region.version>
-    <!--spring-kafka版本-->
-    <spring-kafka.version>4.1.0</spring-kafka.version>
-    <!--disruptor版本-->
-    <disruptor.version>4.0.0</disruptor.version>
-    <!--transmittable-thread-local版本-->
-    <transmittable-thread-local.version>2.14.5</transmittable-thread-local.version>
-    <!--mockito版本-->
-    <mockito.version>5.23.0</mockito.version>
-    <!--knife4j版本-->
-    <knife4j.version>4.5.0</knife4j.version>
-    <!--taos-jdbcdriver版本-->
-    <taos-jdbcdriver.version>3.8.4</taos-jdbcdriver.version>
-    <!--fory-core版本-->
-    <fory-core.version>1.1.0</fory-core.version>
-    <!--browscap-java版本-->
-    <browscap-java.version>1.5.1</browscap-java.version>
-    <!--flyway版本-->
-    <flyway.version>12.8.1</flyway.version>
-    <!--snail-job版本-->
-    <snail-job.version>2.0.0</snail-job.version>
-    <!--archunit-junit5版本-->
-    <archunit-junit5.version>1.4.2</archunit-junit5.version>
-    <!--caffeine版本-->
-    <caffeine.version>3.2.4</caffeine.version>
-    <!--objenesis版本-->
-    <objenesis.version>3.5</objenesis.version>
-    <!--influxdb-client-java版本-->
-    <influxdb-client-java.version>8.0.0</influxdb-client-java.version>
-    <!--reactor-core版本-->
-    <reactor-core.version>3.8.6</reactor-core.version>
-    <!--opencsv版本-->
-    <opencsv.version>5.12.0</opencsv.version>
-    <!--wiremock版本-->
-    <wiremock.version>3.13.2</wiremock.version>
-    <!--jsch版本-->
-    <jsch.version>2.28.3</jsch.version>
-    <!--jsoup版本-->
+    <!-- jsoup版本 -->
     <jsoup.version>1.22.2</jsoup.version>
-    <!--minio版本-->
+    <!-- jasypt版本 -->
+    <jasypt.version>4.0.4</jasypt.version>
+    <!-- easy-captcha版本 -->
+    <easy-captcha.version>1.6.2</easy-captcha.version>
+    <!-- guava版本 -->
+    <guava.version>33.6.0-jre</guava.version>
+    <!-- oshi版本 -->
+    <oshi.version>7.3.0</oshi.version>
+    <!-- elasticsearch版本 -->
+    <elasticsearch.version>9.4.2</elasticsearch.version>
+    <!-- jakarta.servlet-api版本 -->
+    <jakarta-servlet-api.version>6.1.0</jakarta-servlet-api.version>
+    <!-- fesod版本 -->
+    <fesod.version>2.0.2-incubating</fesod.version>
+    <!-- s3版本 -->
+    <s3.version>2.46.7</s3.version>
+    <!-- dynamic-datasource版本 -->
+    <dynamic-datasource.version>4.5.0</dynamic-datasource.version>
+    <!-- httpclient5版本 -->
+    <httpclient5.version>5.6.1</httpclient5.version>
+    <!-- httpcore5版本 -->
+    <httpcore5.version>5.4.2</httpcore5.version>
+    <!-- hibernate-validator版本 -->
+    <hibernate-validator.version>9.1.0.Final</hibernate-validator.version>
+    <!-- ip2region版本 -->
+    <ip2region.version>3.3.7</ip2region.version>
+    <!-- spring-kafka版本 -->
+    <spring-kafka.version>4.1.0</spring-kafka.version>
+    <!-- disruptor版本 -->
+    <disruptor.version>4.0.0</disruptor.version>
+    <!-- transmittable-thread-local版本 -->
+    <transmittable-thread-local.version>2.14.5</transmittable-thread-local.version>
+    <!-- mockito版本 -->
+    <mockito.version>5.23.0</mockito.version>
+    <!-- taos-jdbcdriver版本 -->
+    <taos-jdbcdriver.version>3.8.4</taos-jdbcdriver.version>
+    <!-- fory版本 -->
+    <fory.version>1.1.0</fory.version>
+    <!-- browscap-java版本 -->
+    <browscap-java.version>1.5.1</browscap-java.version>
+    <!-- flyway版本 -->
+    <flyway.version>12.8.1</flyway.version>
+    <!-- snail-job版本 -->
+    <snail-job.version>2.0.0</snail-job.version>
+    <!-- archunit-junit5版本 -->
+    <archunit-junit5.version>1.4.2</archunit-junit5.version>
+    <!-- caffeine版本 -->
+    <caffeine.version>3.2.4</caffeine.version>
+    <!-- objenesis版本 -->
+    <objenesis.version>3.5</objenesis.version>
+    <!-- influxdb-client-java版本 -->
+    <influxdb-client-java.version>8.0.0</influxdb-client-java.version>
+    <!-- reactor-core版本 -->
+    <reactor-core.version>3.8.6</reactor-core.version>
+    <!-- opencsv版本 -->
+    <opencsv.version>5.12.0</opencsv.version>
+    <!-- wiremock版本 -->
+    <wiremock.version>3.13.2</wiremock.version>
+    <!-- jsch版本 -->
+    <jsch.version>2.28.3</jsch.version>
+    <!-- minio版本 -->
     <minio.version>9.0.2</minio.version>
-    <!--swagger-annotations-jakarta版本-->
+    <!-- swagger-annotations-jakarta版本 -->
     <swagger-annotations-jakarta.version>2.2.50</swagger-annotations-jakarta.version>
-    <!--jsqlparser版本-->
+    <!-- jsqlparser版本 -->
     <jsqlparser.version>5.3</jsqlparser.version>
-    <!--commons-io-->
+    <!-- commons-io版本 -->
     <commons-io.version>2.22.0</commons-io.version>
-    <!--commons-logging版本-->
+    <!-- commons-logging版本 -->
     <commons-logging.version>1.3.6</commons-logging.version>
-    <!--jctools版本-->
+    <!-- jctools版本 -->
     <jctools.version>4.0.6</jctools.version>
-    <!--spotbugs版本-->
+    <!-- spotbugs版本 -->
     <spotbugs.version>4.10.2</spotbugs.version>
-    <!--docker主机-->
+    <!-- docker主机 -->
     <docker.host>tcp://127.0.0.1:2375</docker.host>
-    <!--docker仓库-->
+    <!-- docker仓库 -->
     <docker.registry>registry.cn-shenzhen.aliyuncs.com</docker.registry>
-    <!--docker命名空间-->
+    <!-- docker命名空间 -->
     <docker.namespace>koushenhai</docker.namespace>
-    <!--docker用户名-->
+    <!-- docker用户名 -->
     <docker.username>username</docker.username>
-    <!--docker密码-->
+    <!-- docker密码 -->
     <docker.password>password</docker.password>
   </properties>
 
@@ -526,11 +522,6 @@
         <version>${archunit-junit5.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.github.xiaoymin</groupId>
-        <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
-        <version>${knife4j.version}</version>
-      </dependency>
-      <dependency>
         <groupId>com.aizuda</groupId>
         <artifactId>snail-job-client-starter</artifactId>
         <version>${snail-job.version}</version>
@@ -563,22 +554,17 @@
       <dependency>
         <groupId>org.apache.fory</groupId>
         <artifactId>fory-core</artifactId>
-        <version>${fory-core.version}</version>
+        <version>${fory.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.fory</groupId>
         <artifactId>fory-extensions</artifactId>
-        <version>${fory-core.version}</version>
+        <version>${fory.version}</version>
       </dependency>
       <dependency>
         <groupId>com.taosdata.jdbc</groupId>
         <artifactId>taos-jdbcdriver</artifactId>
         <version>${taos-jdbcdriver.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.github.xiaoymin</groupId>
-        <artifactId>knife4j-gateway-spring-boot-starter</artifactId>
-        <version>${knife4j.version}</version>
       </dependency>
       <dependency>
         <groupId>org.postgresql</groupId>
