@@ -35,6 +35,11 @@
       <groupId>org.springframework.grpc</groupId>
       <artifactId>spring-grpc-core</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-security</artifactId>
+      <version>${project.version}</version>
+    </dependency>
   </dependencies>
 
 </project>
