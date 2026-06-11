@@ -53,6 +53,8 @@ public class SystemSettingsProperties implements Serializable {
 
 	private Long tenantValue = 1L;
 
+	private String ignoreAuthServiceId = "laokou-auth";
+
 	private Mode appMode = Mode.MICROSERVICE;
 
 	@Getter

@@ -19,8 +19,8 @@ package org.laokou.auth.gatewayimpl.rpc;
 
 import io.grpc.StatusException;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.grpc.annotation.GrpcClient;
-import org.laokou.common.grpc.exception.ServiceNotFoundException;
+import org.laokou.common.grpc.client.annotation.GrpcClient;
+import org.laokou.common.grpc.client.exception.ServiceNotFoundException;
 import org.laokou.common.i18n.common.IdGenerator;
 import org.laokou.snowflake.id.proto.GenerateBatchIdsRequest;
 import org.laokou.snowflake.id.proto.GenerateBatchIdsResponse;
