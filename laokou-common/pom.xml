@@ -111,8 +111,9 @@
     <module>laokou-common-context</module>
     <module>laokou-common-testcontainers</module>
     <module>laokou-common-mongodb</module>
-    <module>laokou-common-grpc</module>
     <module>laokou-common-storage</module>
+    <module>laokou-common-grpc-server</module>
+    <module>laokou-common-grpc-client</module>
   </modules>
 
 </project>

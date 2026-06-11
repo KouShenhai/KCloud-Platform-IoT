@@ -124,7 +124,7 @@ public record NacosLoadBalancer(
 			List<ServiceInstance> ipv6InstanceList = new ArrayList<>();
 			for (ServiceInstance instance : instances) {
 				if (RegexUtils.ipv4Regex(instance.getHost())) {
-					if (StringUtils.isNotEmpty(instance.getMetadata().get("IPv6"))) {
+					if (StringUtils.isNotEmpty(ObjectUtils.requireNotNull(instance.getMetadata()).get("IPv6"))) {
 						ipv6InstanceList.add(instance);
 					}
 				}
@@ -170,14 +170,16 @@ public record NacosLoadBalancer(
 			return new EmptyResponse();
 		}
 		if (request.getContext() instanceof RequestDataContext context) {
-			String path = context.getClientRequest().getUrl().getPath();
+			String path = ObjectUtils.requireNotNull(context.getClientRequest()).getUrl().getPath();
 			HttpHeaders headers = context.getClientRequest().getHeaders();
 			// 服务灰度路由
-			if (isGrayRouter(headers)) {
+			if (isGrayRouter(ObjectUtils.requireNotNull(headers))) {
 				String version = RegexUtils.getRegexValue(path, "/(v\\d+)/");
 				if (StringExtUtils.isNotEmpty(version)) {
 					serviceInstances = serviceInstances.stream()
-						.filter(item -> item.getMetadata().getOrDefault("version", "v1").equals(version))
+						.filter(item -> ObjectUtils.requireNotNull(item.getMetadata())
+							.getOrDefault("version", "v1")
+							.equals(version))
 						.toList();
 				}
 			}
@@ -201,7 +203,7 @@ public record NacosLoadBalancer(
 			List<ServiceInstance> instancesToChoose = serviceInstances;
 			if (StringUtils.isNotBlank(clusterName)) {
 				List<ServiceInstance> sameClusterInstances = serviceInstances.stream().filter(serviceInstance -> {
-					String cluster = serviceInstance.getMetadata().get("nacos.cluster");
+					String cluster = ObjectUtils.requireNotNull(serviceInstance.getMetadata()).get("nacos.cluster");
 					return StringUtils.equals(cluster, clusterName);
 				}).toList();
 				if (CollectionExtUtils.isNotEmpty(sameClusterInstances)) {
