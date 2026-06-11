@@ -156,8 +156,8 @@
     <opentelemetry.version>1.63.0</opentelemetry.version>
     <!--netty版本-->
     <netty.version>4.2.15.Final</netty.version>
-    <!-- grpc版本 -->
-    <grpc.version>1.81.0</grpc.version>
+    <!--grpc版本-->
+    <grpc.version>1.82.0</grpc.version>
     <!-- jackson版本 -->
     <jackson.version>3.2.0</jackson.version>
     <!-- okhttp版本 -->
