@@ -66,91 +66,91 @@
     </license>
   </licenses>
   <properties>
-    <!--项目版本-->
+    <!-- 项目版本 -->
     <project.version>4.0.3-SNAPSHOT</project.version>
-    <!--JDK版本-->
+    <!-- JDK版本 -->
     <java.version>25</java.version>
-    <!--项目编码-->
+    <!-- 项目编码 -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <!--maven-compiler-plugin来源-->
+    <!-- maven-compiler-plugin来源 -->
     <maven.compiler.source>${java.version}</maven.compiler.source>
-    <!--maven-compiler-plugin目标-->
+    <!-- maven-compiler-plugin目标 -->
     <maven.compiler.target>${java.version}</maven.compiler.target>
-    <!--maven-compiler-plugin发布-->
+    <!-- maven-compiler-plugin发布 -->
     <maven.compiler.release>${java.version}</maven.compiler.release>
-    <!--maven-compiler-plugin版本-->
+    <!-- maven-compiler-plugin版本 -->
     <maven-compiler-plugin.version>3.15.0</maven-compiler-plugin.version>
-    <!--spring-boot-maven-plugin版本-->
+    <!-- spring-boot-maven-plugin版本 -->
     <spring-boot-maven-plugin.version>${spring-boot.version}</spring-boot-maven-plugin.version>
-    <!--maven-surefire-plugin版本-->
+    <!-- maven-surefire-plugin版本 -->
     <maven-surefire-plugin.version>3.5.6</maven-surefire-plugin.version>
-    <!--maven-failsafe-plugin版本-->
+    <!-- maven-failsafe-plugin版本 -->
     <maven-failsafe-plugin.version>3.5.6</maven-failsafe-plugin.version>
-    <!--maven-enforcer-plugin版本-->
+    <!-- maven-enforcer-plugin版本 -->
     <maven-enforcer-plugin.version>3.6.3</maven-enforcer-plugin.version>
-    <!--docker-maven-plugin版本-->
+    <!-- docker-maven-plugin版本 -->
     <docker-maven-plugin.version>0.48.1</docker-maven-plugin.version>
-    <!--maven-checkstyle-plugin版本-->
+    <!-- maven-checkstyle-plugin版本 -->
     <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
-    <!--spotbugs-maven-plugin版本-->
+    <!-- spotbugs-maven-plugin版本 -->
     <spotbugs-maven-plugin.version>4.10.2.0</spotbugs-maven-plugin.version>
-    <!--native-maven-plugin版本-->
+    <!-- native-maven-plugin版本 -->
     <native-maven-plugin.version>1.1.1</native-maven-plugin.version>
-    <!--versions-maven-plugin版本-->
+    <!-- versions-maven-plugin版本 -->
     <versions-maven-plugin.version>2.21.0</versions-maven-plugin.version>
-    <!--asciidoctor-maven-plugin版本-->
+    <!-- asciidoctor-maven-plugin版本 -->
     <asciidoctor-maven-plugin.version>3.2.0</asciidoctor-maven-plugin.version>
-    <!--spring-javaformat-maven-plugin版本-->
+    <!-- spring-javaformat-maven-plugin版本 -->
     <spring-javaformat-maven-plugin.version>0.0.47</spring-javaformat-maven-plugin.version>
-    <!--maven-archetype-plugin版本-->
+    <!-- maven-archetype-plugin版本 -->
     <maven-archetype-plugin.version>3.4.1</maven-archetype-plugin.version>
-    <!--jacoco-maven-plugin版本-->
+    <!-- jacoco-maven-plugin版本 -->
     <jacoco-maven-plugin.version>0.8.15</jacoco-maven-plugin.version>
-    <!--checkstyle版本-->
+    <!-- checkstyle版本 -->
     <checkstyle.version>13.5.0</checkstyle.version>
-    <!--spring-javaformat-checkstyle版本-->
+    <!-- spring-javaformat-checkstyle版本 -->
     <spring-javaformat-checkstyle.version>0.0.47</spring-javaformat-checkstyle.version>
-    <!--spring-asciidoctor-backends版本-->
+    <!-- spring-asciidoctor-backends版本 -->
     <spring-asciidoctor-backends.version>0.0.7</spring-asciidoctor-backends.version>
-    <!--protobuf-maven-plugin版本-->
+    <!-- protobuf-maven-plugin版本 -->
     <protobuf-maven-plugin.version>5.1.4</protobuf-maven-plugin.version>
-    <!--central-publishing-maven-plugin版本-->
+    <!-- central-publishing-maven-plugin版本 -->
     <central-publishing-maven-plugin.version>0.10.0</central-publishing-maven-plugin.version>
-    <!--maven-source-plugin版本-->
+    <!-- maven-source-plugin版本 -->
     <maven-source-plugin.version>3.4.0</maven-source-plugin.version>
-    <!--maven-javadoc-plugin版本-->
+    <!-- maven-javadoc-plugin版本 -->
     <maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
-    <!--maven-gpg-plugin版本-->
+    <!-- maven-gpg-plugin版本 -->
     <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
-    <!--spring-boot版本-->
-    <spring-boot.version>4.1.0-RC1</spring-boot.version>
-    <!--spring-cloud版本-->
+    <!-- spring-boot版本 -->
+    <spring-boot.version>4.1.0</spring-boot.version>
+    <!-- spring-cloud版本 -->
     <spring-cloud.version>2025.1.2-SNAPSHOT</spring-cloud.version>
-    <!--cloud-alibaba版本-->
+    <!-- cloud-alibaba版本 -->
     <spring-cloud-alibaba.version>2025.1.0.0</spring-cloud-alibaba.version>
-    <!--spring-framework版本-->
+    <!-- spring-framework版本 -->
     <spring-framework.version>7.0.8</spring-framework.version>
-    <!--spring-data版本-->
+    <!-- spring-data版本 -->
     <spring-data.version>2026.0.0</spring-data.version>
-    <!--spring-security版本-->
+    <!-- spring-security版本 -->
     <spring-security.version>7.1.0</spring-security.version>
-    <!--spring-ai版本-->
+    <!-- spring-ai版本 -->
     <spring-ai.version>1.1.7</spring-ai.version>
-    <!--spring-ai-alibaba版本-->
+    <!-- spring-ai-alibaba版本 -->
     <spring-ai-alibaba.version>1.1.2.3</spring-ai-alibaba.version>
-    <!--springdoc-openapi版本-->
+    <!-- springdoc-openapi版本 -->
     <springdoc-openapi.version>3.0.3</springdoc-openapi.version>
-    <!--testcontainers版本-->
+    <!-- testcontainers版本 -->
     <testcontainers.version>2.0.5</testcontainers.version>
-    <!--vertx版本-->
+    <!-- vertx版本 -->
     <vertx.version>5.1.2</vertx.version>
-    <!--mybatis-plus版本 -->
+    <!-- mybatis-plus版本 -->
     <mybatis-plus.version>3.5.16</mybatis-plus.version>
-    <!--nacos版本-->
+    <!-- nacos版本 -->
     <nacos.version>3.2.2</nacos.version>
-    <!--micrometer-tracing-bom版本-->
+    <!-- micrometer-tracing版本 -->
     <micrometer-tracing.version>1.7.0</micrometer-tracing.version>
-    <!--opentelemetry版本-->
+    <!-- opentelemetry版本 -->
     <opentelemetry.version>1.63.0</opentelemetry.version>
     <!--netty版本-->
     <netty.version>4.2.15.Final</netty.version>
