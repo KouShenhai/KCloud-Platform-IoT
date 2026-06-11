@@ -169,7 +169,8 @@ spring:
         heart-beat-timeout: 60000
         # 元数据
         metadata:
-          node_id: ${spring.id-generator.segment.node-id}
+          version: ${APP_VERSION:v1}
+          node_id: ${system-settings.node-id}
       config:
         # 开启配置中心
         enabled: true

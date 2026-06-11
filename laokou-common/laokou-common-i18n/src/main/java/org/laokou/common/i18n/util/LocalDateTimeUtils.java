@@ -135,7 +135,16 @@ public final class LocalDateTimeUtils {
 	 * @return 时间戳
 	 */
 	public static long getTimestampOfLocalDateTime(LocalDateTime localDateTime) {
-		ZoneId zoneId = ZoneId.systemDefault();
+		return getTimestampOfLocalDateTime(localDateTime, getZoneId());
+	}
+
+	/**
+	 * 时间转时间戳.
+	 * @param localDateTime 时间
+	 * @param zoneId 时区ID
+	 * @return 时间戳
+	 */
+	public static long getTimestampOfLocalDateTime(LocalDateTime localDateTime, ZoneId zoneId) {
 		return localDateTime.atZone(zoneId).toInstant().toEpochMilli();
 	}
 
@@ -152,10 +161,21 @@ public final class LocalDateTimeUtils {
 	 * 开始时间到结束时间相差多少小时.
 	 * @param start 开始时间
 	 * @param end 结束时间
+	 * @param zoneId 时区ID
+	 * @return 小时
+	 */
+	public static long betweenHours(LocalDateTime start, LocalDateTime end, ZoneId zoneId) {
+		return Duration.between(start.atZone(zoneId), end.atZone(zoneId)).toHours();
+	}
+
+	/**
+	 * 开始时间到结束时间相差多少小时.
+	 * @param start 开始时间
+	 * @param end 结束时间
 	 * @return 小时
 	 */
 	public static long betweenHours(LocalDateTime start, LocalDateTime end) {
-		return Duration.between(start, end).toHours();
+		return betweenHours(start, end, ZoneId.systemDefault());
 	}
 
 	/**
@@ -165,7 +185,29 @@ public final class LocalDateTimeUtils {
 	 * @return 天
 	 */
 	public static long betweenDays(LocalDateTime start, LocalDateTime end) {
-		return Duration.between(start, end).toDays();
+		return betweenDays(start, end, ZoneId.systemDefault());
+	}
+
+	/**
+	 * 开始时间到结束时间相差多少天.
+	 * @param start 开始时间
+	 * @param end 结束时间
+	 * @param zoneId 时区ID
+	 * @return 天
+	 */
+	public static long betweenDays(LocalDateTime start, LocalDateTime end, ZoneId zoneId) {
+		return Duration.between(start.atZone(zoneId), end.atZone(zoneId)).toDays();
+	}
+
+	/**
+	 * 开始时间到结束时间相差多少分钟.
+	 * @param start 开始时间
+	 * @param end 结束时间
+	 * @param zoneId 时区ID
+	 * @return 分钟
+	 */
+	public static long betweenMinutes(LocalDateTime start, LocalDateTime end, ZoneId zoneId) {
+		return Duration.between(start.atZone(zoneId), end.atZone(zoneId)).toMinutes();
 	}
 
 	/**
@@ -175,7 +217,18 @@ public final class LocalDateTimeUtils {
 	 * @return 分钟
 	 */
 	public static long betweenMinutes(LocalDateTime start, LocalDateTime end) {
-		return Duration.between(start, end).toMinutes();
+		return betweenMinutes(start, end, getZoneId());
+	}
+
+	/**
+	 * 开始时间到结束时间相差多少秒.
+	 * @param start 开始时间
+	 * @param end 结束时间
+	 * @param zoneId 时区ID
+	 * @return 秒
+	 */
+	public static long betweenSeconds(LocalDateTime start, LocalDateTime end, ZoneId zoneId) {
+		return Duration.between(start.atZone(zoneId), end.atZone(zoneId)).toSeconds();
 	}
 
 	/**
@@ -185,7 +238,14 @@ public final class LocalDateTimeUtils {
 	 * @return 秒
 	 */
 	public static long betweenSeconds(LocalDateTime start, LocalDateTime end) {
-		return Duration.between(start, end).toSeconds();
+		return betweenSeconds(start, end, getZoneId());
+	}
+
+	/**
+	 * 获取时区ID.
+	 */
+	public static ZoneId getZoneId() {
+		return ZoneId.systemDefault();
 	}
 
 }

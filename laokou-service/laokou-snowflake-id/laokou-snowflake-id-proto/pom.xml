@@ -14,9 +14,16 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-grpc</artifactId>
-      <version>${project.version}</version>
+      <groupId>io.grpc</groupId>
+      <artifactId>grpc-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.grpc</groupId>
+      <artifactId>grpc-stub</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.grpc</groupId>
+      <artifactId>grpc-protobuf</artifactId>
     </dependency>
   </dependencies>
 

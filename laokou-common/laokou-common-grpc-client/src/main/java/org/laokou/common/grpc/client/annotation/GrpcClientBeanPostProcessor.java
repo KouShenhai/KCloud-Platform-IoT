@@ -1,0 +1,74 @@
+/*
+ * Copyright (c) 2022-2026 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+package org.laokou.common.grpc.client.annotation;
+
+import org.jspecify.annotations.NonNull;
+import org.laokou.common.i18n.util.ObjectUtils;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.grpc.client.GrpcClientFactory;
+import org.springframework.util.ReflectionUtils;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
+/**
+ * @author laokou
+ */
+public record GrpcClientBeanPostProcessor(GrpcClientFactory grpcClientFactory) implements BeanPostProcessor {
+
+	@Override
+	public Object postProcessBeforeInitialization(@NonNull Object bean, @NonNull String beanName)
+			throws BeansException {
+		Class<?> clazz = bean.getClass();
+		do {
+			setFields(bean, clazz);
+			setMethods(bean, clazz);
+			clazz = clazz.getSuperclass();
+		}
+		while (ObjectUtils.isNotNull(clazz));
+		return bean;
+	}
+
+	private void setFields(Object bean, Class<?> clazz) {
+		for (Field field : clazz.getDeclaredFields()) {
+			GrpcClient grpcClient = AnnotationUtils.findAnnotation(field, GrpcClient.class);
+			if (ObjectUtils.isNotNull(grpcClient)) {
+				ReflectionUtils.makeAccessible(field);
+				ReflectionUtils.setField(field, bean, getClient(field.getType(), grpcClient));
+			}
+		}
+	}
+
+	private void setMethods(Object bean, Class<?> clazz) {
+		for (Method method : clazz.getDeclaredMethods()) {
+			GrpcClient grpcClient = AnnotationUtils.findAnnotation(method, GrpcClient.class);
+			if (ObjectUtils.isNotNull(grpcClient)) {
+				ReflectionUtils.makeAccessible(method);
+				ReflectionUtils.invokeMethod(method, bean, getClient(method.getParameterTypes()[0], grpcClient));
+			}
+		}
+	}
+
+	private <T> T getClient(Class<T> type, @NonNull GrpcClient grpcClient) {
+		String target = String.format("discovery://%s", grpcClient.serviceId());
+		return grpcClientFactory.getClient(target, type, null);
+	}
+
+}
