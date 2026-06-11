@@ -46,7 +46,8 @@ public class TenantGatewayImpl implements TenantGateway {
 
 	@Override
 	public void createTenant(TenantE tenantE) {
-		// tenantMapper.insert(TenantConvertor.toDataObject(idGenerator.getId(), tenantE));
+		// tenantMapper.insert(TenantConvertor.toDataObject(idGenerator.getId(),
+		// tenantE));
 	}
 
 	@Override

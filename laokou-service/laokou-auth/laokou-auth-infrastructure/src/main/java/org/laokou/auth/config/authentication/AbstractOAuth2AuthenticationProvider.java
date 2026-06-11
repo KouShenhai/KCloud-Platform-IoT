@@ -188,7 +188,8 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 			OAuth2Token generatedRefreshToken = Optional.ofNullable(tokenGenerator.generate(tokenContext))
 				.orElseThrow(() -> OAuth2ExceptionHandler.getException(OAuth2Constants.GENERATE_REFRESH_TOKEN_FAIL));
 			if (generatedRefreshToken instanceof OAuth2RefreshToken token) {
-				authorizationBuilder.refreshToken(refreshToken = token);
+				refreshToken = token;
+				authorizationBuilder.refreshToken(token);
 			}
 		}
 		// 存储认证信息

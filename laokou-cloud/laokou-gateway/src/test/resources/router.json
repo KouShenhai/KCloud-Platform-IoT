@@ -32,9 +32,6 @@
         }
       }
     ],
-    "metadata": {
-      "version": "v1"
-    },
     "order": 1
   },
   {
@@ -70,9 +67,6 @@
         }
       }
     ],
-    "metadata": {
-      "version": "v1"
-    },
     "order": 1
   },
   {
@@ -108,9 +102,6 @@
         }
       }
     ],
-    "metadata": {
-      "version": "v1"
-    },
     "order": 1
   },
   {
@@ -146,9 +137,6 @@
         }
       }
     ],
-    "metadata": {
-      "version": "v1"
-    },
     "order": 1
   },
   {
@@ -184,9 +172,6 @@
         }
       }
     ],
-    "metadata": {
-      "version": "v1"
-    },
     "order": 1
   }
 ]

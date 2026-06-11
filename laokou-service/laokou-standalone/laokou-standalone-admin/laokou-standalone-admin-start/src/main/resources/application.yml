@@ -165,7 +165,7 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
 
 system-settings:
-  node-id: 1
-  data-id: 1
-  work-id: 1
+  node-id: ${NODE_ID:1}
+  data-id: ${DATA_ID:1}
+  work-id: ${WORK_ID:1}
   app-mode: monolith

@@ -29,6 +29,7 @@ import org.laokou.common.i18n.dto.ClientObject;
 public class SecretCO extends ClientObject {
 
 	private final String publicKey;
+
 	private final String endpoint;
 
 }

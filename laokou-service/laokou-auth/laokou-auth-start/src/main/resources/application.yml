@@ -269,5 +269,5 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
 
 system-settings:
-  node-id: 1
+  node-id: ${NODE_ID:1}
   app-mode: microservice
