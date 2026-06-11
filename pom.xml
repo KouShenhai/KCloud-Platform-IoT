@@ -70,7 +70,7 @@
     <project.version>4.0.3-SNAPSHOT</project.version>
     <!-- JDK版本 -->
     <java.version>25</java.version>
-    <!-- 项目编码 -->
+    <!--项目编码-->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!-- maven-compiler-plugin来源 -->
     <maven.compiler.source>${java.version}</maven.compiler.source>
@@ -97,6 +97,8 @@
     <!-- native-maven-plugin版本 -->
     <native-maven-plugin.version>1.1.1</native-maven-plugin.version>
     <!-- versions-maven-plugin版本 -->
+    <native-maven-plugin.version>1.1.2</native-maven-plugin.version>
+    <!--versions-maven-plugin版本-->
     <versions-maven-plugin.version>2.21.0</versions-maven-plugin.version>
     <!-- asciidoctor-maven-plugin版本 -->
     <asciidoctor-maven-plugin.version>3.2.0</asciidoctor-maven-plugin.version>
@@ -233,11 +235,11 @@
     <!--wiremock版本-->
     <wiremock.version>3.13.2</wiremock.version>
     <!--jsch版本-->
-    <jsch.version>2.28.2</jsch.version>
+    <jsch.version>2.28.3</jsch.version>
     <!--jsoup版本-->
     <jsoup.version>1.22.2</jsoup.version>
     <!--minio版本-->
-    <minio.version>9.0.1</minio.version>
+    <minio.version>9.0.2</minio.version>
     <!--swagger-annotations-jakarta版本-->
     <swagger-annotations-jakarta.version>2.2.50</swagger-annotations-jakarta.version>
     <!--jsqlparser版本-->
