@@ -137,7 +137,7 @@
     <!-- spring-security版本 -->
     <spring-security.version>7.1.0</spring-security.version>
     <!-- spring-ai版本 -->
-    <spring-ai.version>1.1.7</spring-ai.version>
+    <spring-ai.version>1.1.8</spring-ai.version>
     <!-- spring-ai-alibaba版本 -->
     <spring-ai-alibaba.version>1.1.2.3</spring-ai-alibaba.version>
     <!-- springdoc-openapi版本 -->
