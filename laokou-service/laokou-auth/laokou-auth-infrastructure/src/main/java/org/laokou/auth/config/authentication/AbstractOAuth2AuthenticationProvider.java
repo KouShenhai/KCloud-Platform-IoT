@@ -32,7 +32,6 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClaimAccessor;
-import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2Error;
@@ -57,6 +56,7 @@ import org.springframework.security.oauth2.server.authorization.settings.OAuth2T
 import org.springframework.security.oauth2.server.authorization.token.DefaultOAuth2TokenContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
+import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
@@ -81,7 +81,7 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 
 	private final OAuth2TokenGenerator<@NonNull OAuth2Token> tokenGenerator;
 
-	private final OAuth2UsernamePasswordAuthentication oAuth2UsernamePasswordAuthentication;
+	private final OAuth2UsernamePasswordAuthentication usernamePasswordAuthentication;
 
 	/**
 	 * 认证授权.
@@ -125,8 +125,8 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 	 * @return 认证信息
 	 */
 	protected Authentication authentication(AuthA authA, HttpServletRequest request) {
-		return oAuth2UsernamePasswordAuthentication
-			.authentication(oAuth2UsernamePasswordAuthentication.authentication(authA, request));
+		return usernamePasswordAuthentication
+			.authentication(usernamePasswordAuthentication.authentication(authA, request));
 	}
 
 	/**
@@ -165,36 +165,22 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 			.authorizationGrantType(grantType)
 			.authorizationGrant(abstractOAuth2Authentication);
 		// @formatter:on
-		if (dPoPProof != null) {
+		if (ObjectUtils.isNotNull(dPoPProof)) {
 			tokenContextBuilder.put(OAuth2TokenContext.DPOP_PROOF_KEY, dPoPProof);
 		}
-
 		OAuth2Authorization.Builder authorizationBuilder = OAuth2Authorization.withRegisteredClient(registeredClient)
 			.principalName(loginName)
 			.authorizedScopes(authorizedScopes)
 			.authorizationGrantType(grantType);
-
 		// ----- Access token -----
-		OAuth2TokenContext tokenContext = tokenContextBuilder.tokenType(OAuth2TokenType.ACCESS_TOKEN).build();
-		OAuth2Token generatedAccessToken = Optional.ofNullable(tokenGenerator.generate(tokenContext))
-			.orElseThrow(() -> OAuth2ExceptionHandler.getException(OAuth2Constants.GENERATE_ACCESS_TOKEN_FAIL));
-		OAuth2AccessToken accessToken = accessToken(authorizationBuilder, generatedAccessToken, tokenContext);
-
+		OAuth2AccessToken accessToken = getAccessToken(tokenContextBuilder, authorizationBuilder);
 		// ----- Refresh token -----
-		OAuth2RefreshToken refreshToken = null;
-		if (registeredClient.getAuthorizationGrantTypes().contains(AuthorizationGrantType.REFRESH_TOKEN) && !ObjectUtils
-			.equals(clientPrincipal.getClientAuthenticationMethod(), ClientAuthenticationMethod.NONE)) {
-			tokenContext = tokenContextBuilder.tokenType(OAuth2TokenType.REFRESH_TOKEN).build();
-			OAuth2Token generatedRefreshToken = Optional.ofNullable(tokenGenerator.generate(tokenContext))
-				.orElseThrow(() -> OAuth2ExceptionHandler.getException(OAuth2Constants.GENERATE_REFRESH_TOKEN_FAIL));
-			if (generatedRefreshToken instanceof OAuth2RefreshToken token) {
-				refreshToken = token;
-				authorizationBuilder.refreshToken(token);
-			}
-		}
+		OAuth2RefreshToken refreshToken = getRefreshToken(tokenContextBuilder, authorizationBuilder, registeredClient);
 		// 存储认证信息
 		authorizationBuilder.attribute(Principal.class.getName(), usernamePasswordAuthentication);
 		authorizationService.save(authorizationBuilder.build());
+		log.debug("Saved authorization");
+		log.debug("Authenticated {} token request", grantType.getValue());
 		return new OAuth2AccessTokenAuthenticationToken(registeredClient, clientPrincipal, accessToken, refreshToken);
 	}
 
@@ -204,10 +190,10 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 		if (authentication.getPrincipal() instanceof OAuth2ClientAuthenticationToken oAuth2ClientAuthenticationToken) {
 			clientPrincipal = oAuth2ClientAuthenticationToken;
 		}
-		if (ObjectUtils.isNotNull(clientPrincipal) && clientPrincipal.isAuthenticated()) {
-			return clientPrincipal;
+		if (ObjectUtils.isNull(clientPrincipal) || !clientPrincipal.isAuthenticated()) {
+			throw OAuth2ExceptionHandler.getException(OAuth2Constants.INVALID_CLIENT);
 		}
-		throw OAuth2ExceptionHandler.getException(OAuth2Constants.INVALID_CLIENT);
+		return clientPrincipal;
 	}
 
 	private Jwt verifyIfAvailable(OAuth2AuthorizationGrantAuthenticationToken authorizationGrantAuthentication) {
@@ -216,8 +202,9 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 			return null;
 		}
 		String method = (String) authorizationGrantAuthentication.getAdditionalParameters().get("dpop_method");
+		Assert.hasText(method, "dpop_method cannot be empty");
 		String targetUri = (String) authorizationGrantAuthentication.getAdditionalParameters().get("dpop_target_uri");
-		Jwt dPoPProofJwt;
+		Assert.hasText(targetUri, "dpop_target_uri cannot be empty");
 		try {
 			// @formatter:off
 			DPoPProofContext dPoPProofContext = DPoPProofContext.withDPoPProof(dPoPProof)
@@ -226,16 +213,23 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 				.build();
 			// @formatter:on
 			JwtDecoder dPoPProofVerifier = dPoPProofVerifierFactory.createDecoder(dPoPProofContext);
-			dPoPProofJwt = dPoPProofVerifier.decode(dPoPProof);
+			return dPoPProofVerifier.decode(dPoPProof);
 		}
 		catch (Exception ex) {
 			throw new OAuth2AuthenticationException(new OAuth2Error(OAuth2ErrorCodes.INVALID_DPOP_PROOF), ex);
 		}
-		return dPoPProofJwt;
 	}
 
-	private <T extends OAuth2Token> OAuth2AccessToken accessToken(OAuth2Authorization.Builder builder, T token,
-			OAuth2TokenContext accessTokenContext) {
+	private OAuth2AccessToken getAccessToken(DefaultOAuth2TokenContext.Builder tokenContextBuilder,
+			OAuth2Authorization.Builder authorizationBuilder) {
+		OAuth2TokenContext tokenContext = tokenContextBuilder.tokenType(OAuth2TokenType.ACCESS_TOKEN).build();
+		// 生成AccessToken
+		OAuth2Token token = tokenGenerator.generate(tokenContext);
+		if (token == null) {
+			log.error("The token generator failed to generate the access token");
+			throw OAuth2ExceptionHandler.getException(OAuth2Constants.GENERATE_ACCESS_TOKEN_FAIL);
+		}
+		log.debug("Generated access token");
 		OAuth2AccessToken.TokenType tokenType = OAuth2AccessToken.TokenType.BEARER;
 		if (token instanceof ClaimAccessor claimAccessor) {
 			Map<String, Object> cnfClaims = claimAccessor.getClaimAsMap("cnf");
@@ -244,11 +238,11 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 			}
 		}
 		OAuth2AccessToken accessToken = new OAuth2AccessToken(tokenType, token.getTokenValue(), token.getIssuedAt(),
-				token.getExpiresAt(), accessTokenContext.getAuthorizedScopes());
-		OAuth2TokenFormat accessTokenFormat = accessTokenContext.getRegisteredClient()
+				token.getExpiresAt(), tokenContext.getAuthorizedScopes());
+		OAuth2TokenFormat accessTokenFormat = tokenContext.getRegisteredClient()
 			.getTokenSettings()
 			.getAccessTokenFormat();
-		builder.token(accessToken, (metadata) -> {
+		authorizationBuilder.token(accessToken, (metadata) -> {
 			if (token instanceof ClaimAccessor claimAccessor) {
 				metadata.put(OAuth2Authorization.Token.CLAIMS_METADATA_NAME, claimAccessor.getClaims());
 			}
@@ -256,6 +250,25 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 			metadata.put(OAuth2TokenFormat.class.getName(), accessTokenFormat.getValue());
 		});
 		return accessToken;
+	}
+
+	private OAuth2RefreshToken getRefreshToken(DefaultOAuth2TokenContext.Builder tokenContextBuilder,
+			OAuth2Authorization.Builder authorizationBuilder, RegisteredClient registeredClient) {
+		if (registeredClient.getAuthorizationGrantTypes().contains(AuthorizationGrantType.REFRESH_TOKEN)) {
+			OAuth2TokenContext tokenContext = tokenContextBuilder.tokenType(OAuth2TokenType.REFRESH_TOKEN).build();
+			// 生成RefreshToken
+			OAuth2Token token = tokenGenerator.generate(tokenContext);
+			if (token instanceof OAuth2RefreshToken refreshToken) {
+				log.debug("Generated refresh token");
+				authorizationBuilder.refreshToken(refreshToken);
+				return refreshToken;
+			}
+			else {
+				log.error("The token generator failed to generate the refresh token");
+				throw OAuth2ExceptionHandler.getException(OAuth2Constants.GENERATE_REFRESH_TOKEN_FAIL);
+			}
+		}
+		return null;
 	}
 
 }

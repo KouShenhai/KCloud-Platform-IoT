@@ -10,9 +10,11 @@ export default (
 ) => {
   const canSeeAdmin = !!initialState.currentUser;
   const canManageUsers = initialState.currentUser?.role === 'admin';
+  const canManageMenus = initialState.currentUser?.role === 'admin';
 
   return {
     canSeeAdmin,
     canManageUsers,
+    canManageMenus,
   };
 };

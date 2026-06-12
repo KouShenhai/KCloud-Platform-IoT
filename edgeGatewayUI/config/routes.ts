@@ -36,6 +36,13 @@ export default [
 		icon: 'user',
 	},
 	{
+		name: 'Menu Management',
+		path: '/menus',
+		component: './MenuManagement',
+		access: 'canManageMenus',
+		icon: 'menu',
+	},
+	{
 		name: '系统管理',
 		path: '/sys',
 		icon: 'setting',

@@ -40,8 +40,8 @@ final class OAuth2UsernamePasswordAuthenticationProvider extends AbstractOAuth2A
 
 	public OAuth2UsernamePasswordAuthenticationProvider(OAuth2AuthorizationService authorizationService,
 			OAuth2TokenGenerator<@NonNull OAuth2Token> tokenGenerator,
-			OAuth2UsernamePasswordAuthentication oAuth2UsernamePasswordAuthentication) {
-		super(authorizationService, tokenGenerator, oAuth2UsernamePasswordAuthentication);
+			OAuth2UsernamePasswordAuthentication usernamePasswordAuthentication) {
+		super(authorizationService, tokenGenerator, usernamePasswordAuthentication);
 	}
 
 	@Override

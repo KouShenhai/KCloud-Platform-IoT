@@ -31,6 +31,12 @@ export default defineConfig({
       access: 'canManageUsers',
     },
     {
+      name: 'Menu Management',
+      path: '/menus',
+      component: './MenuManagement',
+      access: 'canManageMenus',
+    },
+    {
       name: ' CRUD 示例',
       path: '/table',
       component: './Table',

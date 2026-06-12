@@ -28,3 +28,9 @@ pnpm build
 The `/users` page is available only to users whose JWT payload contains
 `role=admin`. Operator users can continue to use authenticated gateway pages but
 will not pass the `canManageUsers` access check for user administration.
+
+== Menu Management
+
+The `/menus` page is available only to users whose JWT payload contains
+`role=admin`. It manages the edge gateway menu tree with name, path, icon,
+parent menu, sort order, and enabled or disabled status.

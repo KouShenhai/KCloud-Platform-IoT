@@ -27,12 +27,20 @@ func RegisterRouters(h *server.Hertz) {
 		secureAPI.GET("/users/:id", sys.GetUser)
 		secureAPI.PUT("/users/:id/password", sys.ResetPassword)
 
+		secureAPI.GET("/menus", sys.ListMenus)
+		secureAPI.GET("/menus/:id", sys.GetMenu)
+
 		adminAPI := secureAPI.Group("")
 		adminAPI.Use(middlewares.AdminOnlyMiddleware())
 		{
 			adminAPI.POST("/users", sys.CreateUser)
 			adminAPI.PUT("/users/:id", sys.UpdateUser)
 			adminAPI.DELETE("/users/:id", sys.DeleteUser)
+
+			adminAPI.POST("/menus", sys.CreateMenu)
+			adminAPI.PUT("/menus/:id", sys.UpdateMenu)
+			adminAPI.PUT("/menus/:id/status", sys.UpdateMenuStatus)
+			adminAPI.DELETE("/menus/:id", sys.DeleteMenu)
 		}
 	}
 }

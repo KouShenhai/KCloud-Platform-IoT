@@ -41,6 +41,9 @@ func main() {
 	if err := repository.InitDefaultAdmin("data/users.yaml"); err != nil {
 		log.Fatalf("init user repository failed: %v", err)
 	}
+	if err := repository.InitDefaultMenus("data/menus.yaml"); err != nil {
+		log.Fatalf("init menu repository failed: %v", err)
+	}
 
 	h := server.Default(server.WithHostPorts(":8888"))
 
