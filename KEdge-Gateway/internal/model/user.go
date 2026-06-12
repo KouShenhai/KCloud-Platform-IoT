@@ -48,8 +48,8 @@ type SafeUser struct {
 	Username  string    `json:"username"`
 	Role      string    `json:"role"`
 	Status    string    `json:"status"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
+	CreatedAt time.Time `json:"createdAt"`
+	UpdatedAt time.Time `json:"updatedAt"`
 }
 
 // ToSafe converts a User to a SafeUser (strips password hash)

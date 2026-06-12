@@ -29,6 +29,13 @@ export default [
 		layout: false,
 	},
 	{
+		name: 'User Management',
+		path: '/users',
+		component: './UserManagement',
+		access: 'canManageUsers',
+		icon: 'user',
+	},
+	{
 		name: '系统管理',
 		path: '/sys',
 		icon: 'setting',
