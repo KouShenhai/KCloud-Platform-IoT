@@ -26,12 +26,12 @@ import (
 
 var (
 	ErrInvalidToken = errors.New("invalid token")
-	ErrExpiredToken  = errors.New("token expired")
+	ErrExpiredToken = errors.New("token expired")
 )
 
 // CustomClaims holds user identity and role in the JWT payload
 type CustomClaims struct {
-	UserID   string `json:"user_id"`
+	UserID   string `json:"userId"`
 	Username string `json:"username"`
 	Role     string `json:"role"`
 	jwt.RegisteredClaims

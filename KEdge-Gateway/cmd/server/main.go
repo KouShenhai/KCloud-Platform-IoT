@@ -20,8 +20,9 @@ package main
 import (
 	"log"
 
+	"github.com/KouShenhai/KCloud-Platform-IoT/KEdge-Gateway/internal/api"
 	"github.com/KouShenhai/KCloud-Platform-IoT/KEdge-Gateway/internal/pkg/config"
-	"github.com/KouShenhai/KCloud-Platform-IoT/KEdge-Gateway/internal/routers"
+	"github.com/KouShenhai/KCloud-Platform-IoT/KEdge-Gateway/internal/repository"
 	"github.com/cloudwego/hertz/pkg/app/server"
 )
 
@@ -37,9 +38,16 @@ func main() {
 	defer cleanup()
 	config.Logger.Debug("init logger success")
 
+	if err := repository.InitDefaultAdmin("data/users.yaml"); err != nil {
+		log.Fatalf("init user repository failed: %v", err)
+	}
+	if err := repository.InitDefaultMenus("data/menus.yaml"); err != nil {
+		log.Fatalf("init menu repository failed: %v", err)
+	}
+
 	h := server.Default(server.WithHostPorts(":8888"))
 
-	routers.RegisterRouters(h)
+	api.RegisterRouters(h)
 
 	h.Spin()
 }

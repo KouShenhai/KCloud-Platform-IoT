@@ -21,8 +21,8 @@ import (
 	"context"
 	"errors"
 	"net/http"
+	"regexp"
 	"strconv"
-	"unicode/utf8"
 
 	"github.com/KouShenhai/KCloud-Platform-IoT/KEdge-Gateway/internal/model"
 	"github.com/KouShenhai/KCloud-Platform-IoT/KEdge-Gateway/internal/repository"
@@ -62,8 +62,8 @@ func respondError(c *app.RequestContext, statusCode int, message string) {
 // ---------------------------------------------------------------------------
 
 func validateUsername(name string) bool {
-	l := utf8.RuneCountInString(name)
-	return l >= 3 && l <= 32
+	ok, _ := regexp.MatchString(`^[A-Za-z0-9_]{3,32}$`, name)
+	return ok
 }
 
 func validatePassword(pw string) bool {
@@ -191,6 +191,20 @@ func UpdateUser(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
+	current, err := repository.DefaultUserRepository.GetByID(id)
+	if err != nil {
+		if errors.Is(err, repository.ErrUserNotFound) {
+			respondError(c, http.StatusNotFound, "user not found")
+			return
+		}
+		respondError(c, http.StatusInternalServerError, "failed to get user")
+		return
+	}
+	if current.Role == model.RoleAdmin && (req.Role == model.RoleOperator || req.Status == model.StatusDisabled) && repository.DefaultUserRepository.AdminCount() <= 1 {
+		respondError(c, http.StatusBadRequest, "cannot disable or demote the last admin user")
+		return
+	}
+
 	user, err := repository.DefaultUserRepository.Update(id, repository.UpdateParams{
 		Username: req.Username,
 		Role:     req.Role,
@@ -252,15 +266,23 @@ func ResetPassword(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	// Determine if caller is admin (admins can skip oldPassword)
+	// Admins can reset another user's password; self-service changes require oldPassword.
 	callerRole, _ := c.Get("role")
 	callerID, _ := c.Get("user_id")
 	isSelf := callerID == id
 	isAdmin := callerRole == model.RoleAdmin
 
+	if !isAdmin && !isSelf {
+		respondError(c, http.StatusForbidden, "cannot reset another user's password")
+		return
+	}
+
 	oldPassword := ""
-	if isSelf && !isAdmin {
-		// Non-admin changing own password must provide old password
+	if isSelf {
+		if req.OldPassword == "" {
+			respondError(c, http.StatusBadRequest, "old password is required")
+			return
+		}
 		oldPassword = req.OldPassword
 	}
 

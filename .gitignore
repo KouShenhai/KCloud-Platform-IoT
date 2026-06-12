@@ -48,6 +48,7 @@ hs_err_pid*
 
 .xcodemap
 .vscode
-
-# Edge Gateway runtime data
-KEdge-Gateway/data/users.yaml
+.cache/
+.umi/
+.umi-production/
+go.sum

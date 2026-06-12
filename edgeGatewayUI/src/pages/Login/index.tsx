@@ -12,7 +12,7 @@ const Login: React.FC = () => {
       if (res.code === 200) {
         message.success('Login successful');
         localStorage.setItem('edge_token', res.data.token);
-        window.location.href = '/devices';
+        window.location.href = '/home';
       } else {
         message.error(res.message || 'Login failed');
       }

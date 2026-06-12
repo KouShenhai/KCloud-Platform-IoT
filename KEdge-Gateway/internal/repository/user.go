@@ -22,6 +22,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
 	"sync"
 	"time"
@@ -109,8 +110,12 @@ func (r *UserRepository) List(params ListParams) *ListResult {
 		if params.Keyword != "" && !strings.Contains(strings.ToLower(u.Username), strings.ToLower(params.Keyword)) {
 			continue
 		}
-		all = append(all, u)
+		cp := *u
+		all = append(all, &cp)
 	}
+	sort.Slice(all, func(i, j int) bool {
+		return all[i].CreatedAt.Before(all[j].CreatedAt)
+	})
 
 	total := len(all)
 
@@ -320,6 +325,9 @@ func (r *UserRepository) saveToFileLocked() error {
 		cp := *u
 		store.Users = append(store.Users, &cp)
 	}
+	sort.Slice(store.Users, func(i, j int) bool {
+		return store.Users[i].CreatedAt.Before(store.Users[j].CreatedAt)
+	})
 
 	data, err := yaml.Marshal(&store)
 	if err != nil {
@@ -327,6 +335,9 @@ func (r *UserRepository) saveToFileLocked() error {
 	}
 
 	dir := filepath.Dir(r.dataPath)
+	if err := os.MkdirAll(dir, 0750); err != nil {
+		return fmt.Errorf("create data directory: %w", err)
+	}
 	tmp, err := os.CreateTemp(dir, "users-*.yaml.tmp")
 	if err != nil {
 		return fmt.Errorf("create temp file: %w", err)
@@ -367,6 +378,10 @@ func InitDefaultAdmin(path string) error {
 	}
 
 	// File does not exist — create default admin
+	if err := os.MkdirAll(filepath.Dir(path), 0750); err != nil {
+		return fmt.Errorf("create user data directory: %w", err)
+	}
+
 	hash, err := bcrypt.GenerateFromPassword([]byte("admin123"), bcrypt.DefaultCost)
 	if err != nil {
 		return fmt.Errorf("hash default admin password: %w", err)

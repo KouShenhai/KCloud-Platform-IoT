@@ -1,10 +1,10 @@
 package iot
 
 import (
+	"context"
 	"net/http"
 
-	"context"
-	"github.com/KouShenhai/KCloud-Platform-IoT/KEdge-Gateway/internal/services"
+	"github.com/KouShenhai/KCloud-Platform-IoT/KEdge-Gateway/internal/repository"
 	"github.com/cloudwego/hertz/pkg/app"
 )
 
@@ -25,7 +25,7 @@ func RegisterDevice(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	device, err := services.DefaultDeviceService.RegisterDevice(req.Name, req.Type)
+	device, err := repository.DefaultDeviceService.RegisterDevice(req.Name, req.Type)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, map[string]interface{}{"code": 500, "message": err.Error()})
 		return
@@ -35,7 +35,7 @@ func RegisterDevice(ctx context.Context, c *app.RequestContext) {
 }
 
 func ListDevices(ctx context.Context, c *app.RequestContext) {
-	devices, err := services.DefaultDeviceService.ListDevices()
+	devices, err := repository.DefaultDeviceService.ListDevices()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, map[string]interface{}{"code": 500, "message": err.Error()})
 		return
@@ -52,9 +52,9 @@ func UpdateDevice(ctx context.Context, c *app.RequestContext) {
 		return
 	}
 
-	device, err := services.DefaultDeviceService.UpdateDevice(id, req.Name, req.Status)
+	device, err := repository.DefaultDeviceService.UpdateDevice(id, req.Name, req.Status)
 	if err != nil {
-		if err == services.ErrDeviceNotFound {
+		if err == repository.ErrDeviceNotFound {
 			c.JSON(http.StatusNotFound, map[string]interface{}{"code": 404, "message": "Device not found"})
 			return
 		}
@@ -67,9 +67,9 @@ func UpdateDevice(ctx context.Context, c *app.RequestContext) {
 
 func DeleteDevice(ctx context.Context, c *app.RequestContext) {
 	id := c.Param("id")
-	err := services.DefaultDeviceService.DeleteDevice(id)
+	err := repository.DefaultDeviceService.DeleteDevice(id)
 	if err != nil {
-		if err == services.ErrDeviceNotFound {
+		if err == repository.ErrDeviceNotFound {
 			c.JSON(http.StatusNotFound, map[string]interface{}{"code": 404, "message": "Device not found"})
 			return
 		}

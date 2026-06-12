@@ -5,7 +5,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/KouShenhai/KCloud-Platform-IoT/KEdge-Gateway/internal/models"
+	"github.com/KouShenhai/KCloud-Platform-IoT/KEdge-Gateway/internal/model"
 	"github.com/google/uuid"
 )
 
@@ -14,19 +14,19 @@ var (
 )
 
 type DeviceService struct {
-	devices map[string]*models.Device
+	devices map[string]*model.Device
 	mu      sync.RWMutex
 }
 
 var DefaultDeviceService = &DeviceService{
-	devices: make(map[string]*models.Device),
+	devices: make(map[string]*model.Device),
 }
 
-func (s *DeviceService) RegisterDevice(name, deviceType string) (*models.Device, error) {
+func (s *DeviceService) RegisterDevice(name, deviceType string) (*model.Device, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
-	device := &models.Device{
+	device := &model.Device{
 		ID:        uuid.New().String(),
 		Name:      name,
 		Type:      deviceType,
@@ -39,18 +39,18 @@ func (s *DeviceService) RegisterDevice(name, deviceType string) (*models.Device,
 	return device, nil
 }
 
-func (s *DeviceService) ListDevices() ([]*models.Device, error) {
+func (s *DeviceService) ListDevices() ([]*model.Device, error) {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
 
-	var list []*models.Device
+	var list []*model.Device
 	for _, v := range s.devices {
 		list = append(list, v)
 	}
 	return list, nil
 }
 
-func (s *DeviceService) UpdateDevice(id, name, status string) (*models.Device, error) {
+func (s *DeviceService) UpdateDevice(id, name, status string) (*model.Device, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 

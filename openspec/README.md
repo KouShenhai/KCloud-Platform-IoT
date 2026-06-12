@@ -14,6 +14,7 @@ openspec init
 openspec init --tools codex
 openspec init --tools claude
 openspec init --tools kiro
+openspec init --tools qoder
 # 提案
 /opsx:propose <description>
 # 验证
