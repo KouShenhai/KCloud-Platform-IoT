@@ -12,12 +12,12 @@
 export default {
 	dev: {
 		'/api-proxy/': {
-			// 单体代理地址
-			// target: 'http://nginx:81',
-			// 微服务代理地址
-			target: 'http://gateway:5555/api-gateway',
+			// Nginx单体代理地址
+			// target: 'http://nginx:99',
+			// Nginx微服务代理地址
+			target: 'http://127.0.0.1:88/api-gateway',
 			changeOrigin: true,
 			pathRewrite: { '^/api-proxy': '' },
-		},
+		}
 	},
 };

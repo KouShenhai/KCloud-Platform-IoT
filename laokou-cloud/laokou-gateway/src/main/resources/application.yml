@@ -181,13 +181,13 @@ logging:
 request-matcher:
   ignore-patterns:
     GET:
-      - /api/v3/api-docs/**=laokou-gateway
-      - /actuator/**=laokou-gateway
-      - /favicon.ico=laokou-gateway
-      - /api/v1/username-password/captchas/{uuid}=laokou-gateway
-      - /api/v1/secrets=laokou-gateway
-      - /ws=laokou-gateway
+      - /api/v3/api-docs/**=${spring.application.name}
+      - /actuator/**=${spring.application.name}
+      - /favicon.ico=${spring.application.name}
+      - /api/v1/username-password/captchas/{uuid}=${spring.application.name}
+      - /api/v1/secrets=${spring.application.name}
+      - /ws=${spring.application.name}
     POST:
-      - /api/v1/captchas/send-mail=laokou-gateway
-      - /api/v1/captchas/send-mobile=laokou-gateway
-      - /api/v1/oauth2/token=laokou-gateway
+      - /api/v1/captchas/send-mail=${spring.application.name}
+      - /api/v1/captchas/send-mobile=${spring.application.name}
+      - /api/v1/oauth2/token=${spring.application.name}

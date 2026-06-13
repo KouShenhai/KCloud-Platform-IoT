@@ -98,7 +98,7 @@ spring:
             provider: local
         provider:
           local:
-            token-uri: http://nginx:89/api/${spring.security.oauth2.authorization-server.endpoint.token-uri}
+            token-uri: http://127.0.0.1:90/api/${spring.security.oauth2.authorization-server.endpoint.token-uri}
       authorization-server:
         enabled: true
         # 多租户
@@ -192,21 +192,21 @@ spring:
         request-matcher:
           ignore-patterns:
             GET:
-              - /v3/api-docs/**=laokou-auth
-              - /actuator/**=laokou-auth
-              - /error=laokou-auth
-              - /v1/username-password/captchas/{uuid}=laokou-auth
-              - /v1/authorization-code/captchas/{uuid}=laokou-auth
-              - /v1/secrets=laokou-auth
-              - /img/**=laokou-auth
-              - /js/**=laokou-auth
-              - /scalar/**=laokou-auth
-              - /favicon.svg=laokou-auth
+              - /v3/api-docs/**=${spring.application.name}
+              - /actuator/**=${spring.application.name}
+              - /error=${spring.application.name}
+              - /v1/username-password/captchas/{uuid}=${spring.application.name}
+              - /v1/authorization-code/captchas/{uuid}=${spring.application.name}
+              - /v1/secrets=${spring.application.name}
+              - /img/**=${spring.application.name}
+              - /js/**=${spring.application.name}
+              - /scalar/**=${spring.application.name}
+              - /favicon.svg=${spring.application.name}
             POST:
-              - /v1/captchas/send-mail=laokou-auth
-              - /v1/captchas/send-mobile=laokou-auth
+              - /v1/captchas/send-mail=${spring.application.name}
+              - /v1/captchas/send-mobile=${spring.application.name}
             DELETE:
-              - /v1/tokens=laokou-auth
+              - /v1/tokens=${spring.application.name}
   cloud:
     # Loadbalancer配置
     loadbalancer:
