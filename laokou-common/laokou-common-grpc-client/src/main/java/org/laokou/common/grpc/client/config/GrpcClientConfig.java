@@ -90,7 +90,9 @@ final class GrpcClientConfig {
 	@GlobalClientInterceptor
 	ClientInterceptor clientInterceptor(OAuth2AuthorizedClientManager authorizedClientManager) {
 		return new BearerTokenAuthenticationInterceptor(() -> {
-			OAuth2AuthorizeRequest request = OAuth2AuthorizeRequest.withClientRegistrationId("default").principal("system").build();
+			OAuth2AuthorizeRequest request = OAuth2AuthorizeRequest.withClientRegistrationId("default")
+				.principal("system")
+				.build();
 			OAuth2AuthorizedClient client = authorizedClientManager.authorize(request);
 			Assert.notNull(client, "authorized client is null");
 			return client.getAccessToken().getTokenValue();

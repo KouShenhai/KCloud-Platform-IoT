@@ -45,7 +45,7 @@ public final class TraceLogConvertor {
 		// 毫秒转纳秒
 		String lokiTimestamp = String.valueOf(instant.toEpochMilli() * 1000000);
 		LokiPushDTO.Label label = new LokiPushDTO.Label(traceLogIndex.getServiceId(), traceLogIndex.getProfile(),
-				traceLogIndex.getTraceId(), traceLogIndex.getSpanId(), traceLogIndex.getAddress(),
+				traceLogIndex.getTraceId(), traceLogIndex.getSpanId(), traceLogIndex.getEndpoint(),
 				traceLogIndex.getLevel(), traceLogIndex.getThreadName(), traceLogIndex.getPackageName());
 		List<List<String>> values = new ArrayList<>(2);
 		List<String> message = List.of(lokiTimestamp, traceLogIndex.getMessage());
