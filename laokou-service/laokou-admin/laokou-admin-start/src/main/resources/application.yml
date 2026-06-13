@@ -85,10 +85,9 @@ spring:
         request-matcher:
           ignore-patterns:
             GET:
-              - /v3/api-docs/**=laokou-admin
-              - /actuator/**=laokou-admin
-              - /scalar/**=laokou-admin
-              - /favicon.svg=laokou-admin
+              - /v3/api-docs/**=${spring.application.name}
+              - /actuator/**=${spring.application.name}
+              - /scalar/**=${spring.application.name}
   cloud:
     loadbalancer:
       nacos:

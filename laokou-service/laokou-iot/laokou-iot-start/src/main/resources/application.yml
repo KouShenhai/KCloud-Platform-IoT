@@ -62,7 +62,6 @@ spring:
               - /v3/api-docs/**=laokou-iot
               - /actuator/**=laokou-iot
               - /scalar/**=laokou-iot
-              - /favicon.svg=laokou-iot
   cloud:
     # Loadbalancer配置
     loadbalancer:

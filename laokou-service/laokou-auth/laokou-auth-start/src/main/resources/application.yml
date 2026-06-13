@@ -201,7 +201,6 @@ spring:
               - /img/**=${spring.application.name}
               - /js/**=${spring.application.name}
               - /scalar/**=${spring.application.name}
-              - /favicon.svg=${spring.application.name}
             POST:
               - /v1/captchas/send-mail=${spring.application.name}
               - /v1/captchas/send-mobile=${spring.application.name}
