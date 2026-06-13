@@ -76,7 +76,7 @@ CREATE TABLE "public"."sys_login_log" (
 "tenant_id" int8,
 "dept_id" int8,
 "username" varchar(200) NOT NULL,
-"ip" varchar(50) NOT NULL,
+"ip_address" varchar(50) NOT NULL,
 "address" varchar(200) NOT NULL,
 "browser" varchar(50)  NOT NULL,
 "os" varchar(50)  NOT NULL,
@@ -95,7 +95,7 @@ COMMENT ON COLUMN "public"."sys_login_log"."version" IS '版本号';
 COMMENT ON COLUMN "public"."sys_login_log"."tenant_id" IS '租户ID';
 COMMENT ON COLUMN "public"."sys_login_log"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."sys_login_log"."username" IS '登录的用户名';
-COMMENT ON COLUMN "public"."sys_login_log"."ip" IS '登录的IP地址';
+COMMENT ON COLUMN "public"."sys_login_log"."ip_address" IS '登录的IP地址';
 COMMENT ON COLUMN "public"."sys_login_log"."address" IS '登录的归属地';
 COMMENT ON COLUMN "public"."sys_login_log"."browser" IS '登录的浏览器';
 COMMENT ON COLUMN "public"."sys_login_log"."os" IS '登录的操作系统';

@@ -49,7 +49,7 @@ public class LoginLogE {
 	/**
 	 * 登录的IP地址.
 	 */
-	private String ip;
+	private String ipAddress;
 
 	/**
 	 * 登录的归属地.

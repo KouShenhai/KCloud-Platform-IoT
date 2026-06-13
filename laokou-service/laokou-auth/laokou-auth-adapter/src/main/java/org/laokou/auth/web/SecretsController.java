@@ -43,7 +43,7 @@ public class SecretsController {
 	@TraceLog
 	@GetMapping(value = "/v1/secrets", produces = MediaType.APPLICATION_JSON_VALUE)
 	@Operation(summary = "获取密钥", description = "获取密钥")
-	@RateLimiter(key = "AUTH_SECRET", type = Type.IP)
+	@RateLimiter(key = "AUTH_SECRET", type = Type.IP_ADDRESS)
 	public Result<SecretCO> getSecretInfo() {
 		return secretsServiceI.getSecretInfo();
 	}

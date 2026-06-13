@@ -43,7 +43,7 @@ public final class OperateLogConvertor {
 	public static OperateLogE toEntity(OperateLog operateLog, Supplier<String> serviceIdSupplier,
 			Supplier<String> profileSupplier) throws InetAddressException, IOException, InterruptedException {
 		HttpServletRequest request = RequestUtils.getHttpServletRequest();
-		String ipAddress = IpUtils.getIpAddr(request);
+		String ipAddress = IpUtils.getIpAddress(request);
 		return DomainFactory.createOperateLogE()
 			.toBuilder()
 			.uri(request.getRequestURI())

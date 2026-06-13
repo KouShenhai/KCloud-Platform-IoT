@@ -17,7 +17,6 @@
 
 package org.laokou.snowflake.id;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -36,9 +35,8 @@ import java.net.UnknownHostException;
  * @author laokou
  */
 @Slf4j
-@EnableConfigurationProperties
 @EnableAspectJAutoProxy
-@RequiredArgsConstructor
+@EnableConfigurationProperties
 @EnableDiscoveryClient(autoRegister = false)
 @SpringBootApplication(scanBasePackages = "org.laokou")
 class SnowflakeIdApp {
@@ -47,7 +45,7 @@ class SnowflakeIdApp {
 	static void main(String[] args) throws UnknownHostException {
 		StopWatch stopWatch = new StopWatch("SnowflakeId应用程序");
 		stopWatch.start();
-		System.setProperty("ENDPOINT", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "9094")));
+		System.setProperty("ENDPOINT", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("spring.grpc.server.port", "19094")));
 		// 配置关闭nacos日志，因为nacos的log4j2导致本项目的日志不输出的问题
 		System.setProperty("nacos.logging.default.config.enabled", "false");
 		// 关闭sentinel健康检查 https://github.com/alibaba/Sentinel/issues/1494

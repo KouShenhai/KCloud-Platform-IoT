@@ -38,10 +38,10 @@ public enum Type {
 		}
 	},
 
-	IP("ip", "IP地址") {
+	IP_ADDRESS("ip_address", "IP地址") {
 		@Override
 		public String resolve(HttpServletRequest request) {
-			return IpUtils.getIpAddr(request);
+			return IpUtils.getIpAddress(request);
 		}
 	},
 

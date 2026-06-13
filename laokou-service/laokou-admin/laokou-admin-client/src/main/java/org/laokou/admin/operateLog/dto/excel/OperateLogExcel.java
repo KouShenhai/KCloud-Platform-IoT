@@ -75,7 +75,7 @@ public class OperateLogExcel extends DTO {
 	@ContentStyle(horizontalAlignment = HorizontalAlignmentEnum.CENTER,
 			verticalAlignment = VerticalAlignmentEnum.CENTER, wrapped = BooleanEnum.TRUE)
 	@ExcelProperty(value = "IP地址", index = 4)
-	private String ip;
+	private String ipAddress;
 
 	/**
 	 * 操作的归属地.

@@ -62,7 +62,7 @@ public final class IpUtils {
 	/**
 	 * 获取客户端真实 IP.
 	 */
-	public static String getIpAddr(HttpServletRequest request) {
+	public static String getIpAddress(HttpServletRequest request) {
 		if (ObjectUtils.isNull(request)) {
 			return UNKNOWN_IP;
 		}

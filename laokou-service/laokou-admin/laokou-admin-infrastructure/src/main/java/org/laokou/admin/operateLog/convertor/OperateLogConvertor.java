@@ -63,7 +63,7 @@ public final class OperateLogConvertor implements ExcelUtils.ExcelConvertor<Oper
 		operateLogDO.setErrorMessage(operateLog111E.getErrorMessage());
 		operateLogDO.setStatus(operateLog111E.getStatus());
 		operateLogDO.setCostTime(operateLog111E.getCostTime());
-		operateLogDO.setIp(operateLog111E.getIp());
+		operateLogDO.setIpAddress(operateLog111E.getIp());
 		operateLogDO.setProfile(operateLog111E.getProfile());
 		operateLogDO.setServiceAddress(operateLog111E.getServiceAddress());
 		operateLogDO.setStackTrace(operateLog111E.getStackTrace());
@@ -80,7 +80,7 @@ public final class OperateLogConvertor implements ExcelUtils.ExcelConvertor<Oper
 		operateLogCO.setRequestType(operateLogDO.getRequestType());
 		operateLogCO.setRequestParams(operateLogDO.getRequestParams());
 		operateLogCO.setUserAgent(operateLogDO.getUserAgent());
-		operateLogCO.setIp(operateLogDO.getIp());
+		operateLogCO.setIp(operateLogDO.getIpAddress());
 		operateLogCO.setAddress(operateLogDO.getAddress());
 		operateLogCO.setStatus(operateLogDO.getStatus());
 		operateLogCO.setOperator(operateLogDO.getOperator());
@@ -138,7 +138,7 @@ public final class OperateLogConvertor implements ExcelUtils.ExcelConvertor<Oper
 		operateLogExcel.setModuleName(operateLogDO.getModuleName());
 		operateLogExcel.setRequestType(operateLogDO.getRequestType());
 		operateLogExcel.setOperator(operateLogDO.getOperator());
-		operateLogExcel.setIp(operateLogDO.getIp());
+		operateLogExcel.setIpAddress(operateLogDO.getIpAddress());
 		operateLogExcel.setAddress(operateLogDO.getAddress());
 		operateLogExcel.setStatus(status.getDesc());
 		operateLogExcel.setErrorMessage(operateLogDO.getErrorMessage());
