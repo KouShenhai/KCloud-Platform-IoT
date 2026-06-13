@@ -29,6 +29,7 @@ import org.laokou.snowflake.id.proto.GenerateIdRequest;
 import org.laokou.snowflake.id.proto.GenerateIdResponse;
 import org.laokou.snowflake.id.proto.SnowflakeIdServiceIGrpc;
 import org.springframework.grpc.server.service.GrpcService;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 /**
  * 分布式 ID gRPC 服务实现.
@@ -43,6 +44,7 @@ public class SnowflakeIdServiceImpl extends SnowflakeIdServiceIGrpc.SnowflakeIdS
 	private final IdGenerator idGenerator;
 
 	@Override
+	@PreAuthorize("hasAuthority('SCOPE_read')")
 	public void generateId(GenerateIdRequest request, StreamObserver<GenerateIdResponse> responseObserver) {
 		GenerateIdResponse response = GenerateIdResponse.newBuilder()
 			.setCode(StatusCode.OK)
@@ -54,6 +56,7 @@ public class SnowflakeIdServiceImpl extends SnowflakeIdServiceIGrpc.SnowflakeIdS
 	}
 
 	@Override
+	@PreAuthorize("hasAuthority('SCOPE_read')")
 	public void generateBatchIds(GenerateBatchIdsRequest request,
 			StreamObserver<GenerateBatchIdsResponse> responseObserver) {
 		GenerateBatchIdsResponse.Builder builder = GenerateBatchIdsResponse.newBuilder()

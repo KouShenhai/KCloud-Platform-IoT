@@ -17,8 +17,13 @@
 
 package org.laokou.common.grpc.server.config;
 
-import io.grpc.Metadata;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.grpc.server.GlobalServerInterceptor;
+import org.springframework.grpc.server.security.AuthenticationProcessInterceptor;
+import org.springframework.grpc.server.security.GrpcSecurity;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 
 /**
  *
@@ -35,25 +40,15 @@ import org.springframework.context.annotation.Configuration;
  * @author laokou
  */
 @Configuration
+@EnableMethodSecurity
 class GrpcOAuth2Config {
 
-	private final Metadata.Key<String> authorization = Metadata.Key.of("Authorization",
-			Metadata.ASCII_STRING_MARSHALLER);
-
-	private final Metadata.Key<String> serviceId = Metadata.Key.of("Service-Id", Metadata.ASCII_STRING_MARSHALLER);
-
-	// @Override
-	// public <ReqT, RespT> ServerCall.Listener<ReqT> interceptCall(ServerCall<ReqT,
-	// RespT> serverCall, Metadata metadata,
-	// ServerCallHandler<ReqT, RespT> serverCallHandler) {
-	// try {
-	// return serverCallHandler.startCall(serverCall, metadata);
-	// }
-	// catch (Exception e) {
-	// serverCall.close(Status.UNAUTHENTICATED.withDescription(""), new Metadata());
-	// return new ServerCall.Listener<>() {
-	// };
-	// }
-	// }
+	@Bean
+	@GlobalServerInterceptor
+	AuthenticationProcessInterceptor jwtAuthenticationProcessInterceptor(GrpcSecurity grpc) throws Exception {
+		return grpc.authorizeRequests(requests -> requests.allRequests().authenticated())
+			.oauth2ResourceServer((resourceServer) -> resourceServer.jwt(Customizer.withDefaults()))
+			.build();
+	}
 
 }

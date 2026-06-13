@@ -40,7 +40,7 @@ public class SecretsController {
 	private final SecretsServiceI secretsServiceI;
 
 	@TraceLog
-	@GetMapping( "/v1/secrets")
+	@GetMapping("/v1/secrets")
 	@Operation(summary = "获取密钥", description = "获取密钥")
 	@RateLimiter(key = "AUTH_SECRET", type = Type.IP_ADDRESS)
 	public Result<SecretCO> getSecretInfo() {

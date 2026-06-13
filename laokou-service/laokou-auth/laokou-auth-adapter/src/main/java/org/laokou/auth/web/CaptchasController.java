@@ -47,7 +47,7 @@ public class CaptchasController {
 	private final CaptchasServiceI captchasServiceI;
 
 	@TraceLog
-	@GetMapping( "/v1/username-password/captchas/{uuid}")
+	@GetMapping("/v1/username-password/captchas/{uuid}")
 	@RateLimiter(key = "GET_USERNAME_PASSWORD_CAPTCHA", type = Type.IP_ADDRESS)
 	@Operation(summary = "根据UUID获取用户名密码登录验证码", description = "根据UUID获取用户名密码登录验证码")
 	public Result<String> getUsernamePasswordAuthCaptchaByUuid(@PathVariable("uuid") String uuid) {

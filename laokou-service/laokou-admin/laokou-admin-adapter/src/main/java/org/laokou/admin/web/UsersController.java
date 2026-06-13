@@ -151,7 +151,7 @@ public class UsersController {
 	}
 
 	@TraceLog
-	@GetMapping( "/v1/users/profile")
+	@GetMapping("/v1/users/profile")
 	@Operation(summary = "查看个人信息", description = "查看个人信息")
 	public Result<UserProfileCO> getUserProfile() {
 		return usersServiceI.getUserProfile();
