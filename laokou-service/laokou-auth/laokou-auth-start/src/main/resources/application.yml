@@ -92,13 +92,16 @@ spring:
         registration:
           default:
             client-id: ${spring.security.oauth2.authorization-server.client.default.registration.client-id}
-            client-secret: ${spring.security.oauth2.authorization-server.client.default.registration.client-secret}
+            client-secret: FpHwIfw4wY92dO
             client-name: OAuth2.1 M2M认证客户端
             authorization-grant-type: client_credentials
+            client-authentication-method: client_secret_basic
+            scope:
+              - read
             provider: local
         provider:
           local:
-            token-uri: http://127.0.0.1:90/api/${spring.security.oauth2.authorization-server.endpoint.token-uri}
+            token-uri: http://127.0.0.1:${server.port}${server.servlet.context-path}${spring.security.oauth2.authorization-server.endpoint.token-uri}
       authorization-server:
         enabled: true
         # 多租户

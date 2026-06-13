@@ -28,6 +28,12 @@ import org.springframework.grpc.client.ClientInterceptorsConfigurer;
 import org.springframework.grpc.client.GrpcChannelBuilderCustomizer;
 import org.springframework.grpc.client.GrpcClientFactory;
 import org.springframework.grpc.client.ImportGrpcClients;
+import org.springframework.security.oauth2.client.AuthorizedClientServiceOAuth2AuthorizedClientManager;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientProvider;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientProviderBuilder;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 
 import java.util.List;
 
@@ -60,6 +66,14 @@ final class GrpcClientConfig {
 			List<GrpcChannelBuilderCustomizer<@NonNull NettyChannelBuilder>> globalCustomizers,
 			ClientInterceptorsConfigurer interceptorsConfigurer) {
 		return new DiscoveryGrpcChannelFactory(globalCustomizers, interceptorsConfigurer);
+	}
+
+	@Bean
+	OAuth2AuthorizedClientManager authorizedClientManager(ClientRegistrationRepository registrations, OAuth2AuthorizedClientService service) {
+		OAuth2AuthorizedClientProvider provider = OAuth2AuthorizedClientProviderBuilder.builder().clientCredentials().build();
+		AuthorizedClientServiceOAuth2AuthorizedClientManager manager = new AuthorizedClientServiceOAuth2AuthorizedClientManager(registrations, service);
+		manager.setAuthorizedClientProvider(provider);
+		return manager;
 	}
 
 }
