@@ -15,27 +15,28 @@
  *
  */
 
-package org.laokou.auth.command.query;
+package org.laokou.common.security.filter;
 
-import org.laokou.auth.dto.clientobject.SecretCO;
-import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.crypto.util.RSAUtils;
-import org.springframework.stereotype.Component;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.jspecify.annotations.NonNull;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 /**
- * 获取密钥执行器.
+ * 令牌拦截器.
  *
  * @author laokou
  */
-@Component
-public class SecretGetQryExe {
+@Order(Ordered.HIGHEST_PRECEDENCE + 1000)
+public final class TokenFilter extends OncePerRequestFilter {
 
-	/**
-	 * 执行获取密钥.
-	 * @return 密钥
-	 */
-	public Result<SecretCO> execute() {
-		return Result.ok(new SecretCO(RSAUtils.getPublicKey()));
+	@Override
+	protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
+			@NonNull FilterChain chain) {
+
 	}
 
 }

@@ -54,7 +54,7 @@ public final class LoginLogConvertor {
 			.toBuilder()
 			.id(co.getId())
 			.username(co.getUsername())
-			.ip(co.getIp())
+			.ipAddress(co.getIpAddress())
 			.address(co.getAddress())
 			.browser(co.getBrowser())
 			.os(co.getOs())
@@ -71,7 +71,7 @@ public final class LoginLogConvertor {
 		LoginLogDO loginLogDO = new LoginLogDO();
 		loginLogDO.setId(loginLogE.getId());
 		loginLogDO.setUsername(loginLogE.getUsername());
-		loginLogDO.setIp(loginLogE.getIp());
+		loginLogDO.setIpAddress(loginLogE.getIpAddress());
 		loginLogDO.setAddress(loginLogE.getAddress());
 		loginLogDO.setBrowser(loginLogE.getBrowser());
 		loginLogDO.setOs(loginLogE.getOs());
@@ -90,7 +90,7 @@ public final class LoginLogConvertor {
 		LoginLogCO loginLogCO = new LoginLogCO();
 		loginLogCO.setId(loginEvent.getId());
 		loginLogCO.setUsername(loginEvent.getUsername());
-		loginLogCO.setIp(loginEvent.getIp());
+		loginLogCO.setIpAddress(loginEvent.getIpAddress());
 		loginLogCO.setAddress(loginEvent.getAddress());
 		loginLogCO.setBrowser(loginEvent.getBrowser());
 		loginLogCO.setOs(loginEvent.getOs());
@@ -106,7 +106,7 @@ public final class LoginLogConvertor {
 	public static LoginEvent toDomainEvent(HttpServletRequest request, AuthA authA, GlobalException gex) {
 		try {
 			Capabilities capabilities = RequestUtils.getCapabilities(request);
-			String ip = IpUtils.getIpAddr(request);
+			String ipAddress = IpUtils.getIpAddress(request);
 			int status = LoginStatus.OK.getCode();
 			UserE userE = authA.getUserE();
 			Optional<UserE> optional = Optional.ofNullable(userE);
@@ -121,8 +121,8 @@ public final class LoginLogConvertor {
 			return LoginEvent.builder()
 				.id(authA.getId())
 				.username(authA.getLoginName())
-				.ip(ip)
-				.address(AddressUtils.getRealAddress(ip))
+				.ipAddress(ipAddress)
+				.address(AddressUtils.getRealAddress(ipAddress))
 				.browser(capabilities.getBrowser())
 				.os(capabilities.getPlatform())
 				.status(status)

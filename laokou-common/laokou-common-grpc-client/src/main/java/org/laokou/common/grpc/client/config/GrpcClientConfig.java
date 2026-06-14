@@ -17,6 +17,7 @@
 
 package org.laokou.common.grpc.client.config;
 
+import io.grpc.ClientInterceptor;
 import io.grpc.netty.NettyChannelBuilder;
 import org.jspecify.annotations.NonNull;
 import org.laokou.common.grpc.client.annotation.GrpcClientBeanPostProcessor;
@@ -25,9 +26,20 @@ import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.grpc.client.ClientInterceptorsConfigurer;
+import org.springframework.grpc.client.GlobalClientInterceptor;
 import org.springframework.grpc.client.GrpcChannelBuilderCustomizer;
 import org.springframework.grpc.client.GrpcClientFactory;
 import org.springframework.grpc.client.ImportGrpcClients;
+import org.springframework.grpc.client.interceptor.security.BearerTokenAuthenticationInterceptor;
+import org.springframework.security.oauth2.client.AuthorizedClientServiceOAuth2AuthorizedClientManager;
+import org.springframework.security.oauth2.client.OAuth2AuthorizeRequest;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientProvider;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientProviderBuilder;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.util.Assert;
 
 import java.util.List;
 
@@ -60,6 +72,31 @@ final class GrpcClientConfig {
 			List<GrpcChannelBuilderCustomizer<@NonNull NettyChannelBuilder>> globalCustomizers,
 			ClientInterceptorsConfigurer interceptorsConfigurer) {
 		return new DiscoveryGrpcChannelFactory(globalCustomizers, interceptorsConfigurer);
+	}
+
+	@Bean
+	OAuth2AuthorizedClientManager authorizedClientManager(ClientRegistrationRepository registrations,
+			OAuth2AuthorizedClientService service) {
+		OAuth2AuthorizedClientProvider provider = OAuth2AuthorizedClientProviderBuilder.builder()
+			.clientCredentials()
+			.build();
+		AuthorizedClientServiceOAuth2AuthorizedClientManager manager = new AuthorizedClientServiceOAuth2AuthorizedClientManager(
+				registrations, service);
+		manager.setAuthorizedClientProvider(provider);
+		return manager;
+	}
+
+	@Bean
+	@GlobalClientInterceptor
+	ClientInterceptor clientInterceptor(OAuth2AuthorizedClientManager authorizedClientManager) {
+		return new BearerTokenAuthenticationInterceptor(() -> {
+			OAuth2AuthorizeRequest request = OAuth2AuthorizeRequest.withClientRegistrationId("default")
+				.principal("system")
+				.build();
+			OAuth2AuthorizedClient client = authorizedClientManager.authorize(request);
+			Assert.notNull(client, "authorized client is null");
+			return client.getAccessToken().getTokenValue();
+		});
 	}
 
 }

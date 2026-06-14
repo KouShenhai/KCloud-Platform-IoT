@@ -44,7 +44,7 @@ public final class LoginEvent extends DomainEvent {
 	/**
 	 * 登录的IP地址.
 	 */
-	private final String ip;
+	private final String ipAddress;
 
 	/**
 	 * 登录的归属地.

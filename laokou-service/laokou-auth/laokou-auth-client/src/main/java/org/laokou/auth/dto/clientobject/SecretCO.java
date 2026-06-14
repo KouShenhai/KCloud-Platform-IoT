@@ -30,6 +30,4 @@ public class SecretCO extends ClientObject {
 
 	private final String publicKey;
 
-	private final String endpoint;
-
 }

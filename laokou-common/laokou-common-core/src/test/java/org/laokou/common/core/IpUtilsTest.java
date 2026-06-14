@@ -32,7 +32,7 @@ class IpUtilsTest {
 	@Test
 	void test_getIpAddr_withNullRequest() {
 		// 测试null请求对象
-		String result = IpUtils.getIpAddr(null);
+		String result = IpUtils.getIpAddress(null);
 		Assertions.assertThat(result).isEqualTo(IpUtils.UNKNOWN_IP);
 	}
 
@@ -41,7 +41,7 @@ class IpUtilsTest {
 		// 测试X-Forwarded-For header
 		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
 		Mockito.when(request.getHeader("X-Forwarded-For")).thenReturn("192.168.1.100");
-		String result = IpUtils.getIpAddr(request);
+		String result = IpUtils.getIpAddress(request);
 		Assertions.assertThat(result).isEqualTo("192.168.1.100");
 	}
 
@@ -51,7 +51,7 @@ class IpUtilsTest {
 		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
 		Mockito.when(request.getHeader("X-Forwarded-For")).thenReturn(null);
 		Mockito.when(request.getHeader("Proxy-Client-IP")).thenReturn("10.0.0.1");
-		String result = IpUtils.getIpAddr(request);
+		String result = IpUtils.getIpAddress(request);
 		Assertions.assertThat(result).isEqualTo("10.0.0.1");
 	}
 
@@ -62,7 +62,7 @@ class IpUtilsTest {
 		Mockito.when(request.getHeader("X-Forwarded-For")).thenReturn(null);
 		Mockito.when(request.getHeader("Proxy-Client-IP")).thenReturn(null);
 		Mockito.when(request.getHeader("X-Forwarded-For")).thenReturn("172.16.0.1");
-		String result = IpUtils.getIpAddr(request);
+		String result = IpUtils.getIpAddress(request);
 		Assertions.assertThat(result).isEqualTo("172.16.0.1");
 	}
 
@@ -74,7 +74,7 @@ class IpUtilsTest {
 		Mockito.when(request.getHeader("Proxy-Client-IP")).thenReturn(null);
 		Mockito.when(request.getHeader("X-Forwarded-For")).thenReturn(null);
 		Mockito.when(request.getHeader("WL-Proxy-Client-IP")).thenReturn("203.0.113.1");
-		String result = IpUtils.getIpAddr(request);
+		String result = IpUtils.getIpAddress(request);
 		Assertions.assertThat(result).isEqualTo("203.0.113.1");
 	}
 
@@ -87,7 +87,7 @@ class IpUtilsTest {
 		Mockito.when(request.getHeader("X-Forwarded-For")).thenReturn(null);
 		Mockito.when(request.getHeader("WL-Proxy-Client-IP")).thenReturn(null);
 		Mockito.when(request.getHeader("X-Real-IP")).thenReturn("8.8.8.8");
-		String result = IpUtils.getIpAddr(request);
+		String result = IpUtils.getIpAddress(request);
 		Assertions.assertThat(result).isEqualTo("8.8.8.8");
 	}
 
@@ -101,7 +101,7 @@ class IpUtilsTest {
 		Mockito.when(request.getHeader("WL-Proxy-Client-IP")).thenReturn(null);
 		Mockito.when(request.getHeader("X-Real-IP")).thenReturn(null);
 		Mockito.when(request.getRemoteAddr()).thenReturn("114.114.114.114");
-		String result = IpUtils.getIpAddr(request);
+		String result = IpUtils.getIpAddress(request);
 		Assertions.assertThat(result).isEqualTo("114.114.114.114");
 	}
 
@@ -115,7 +115,7 @@ class IpUtilsTest {
 		Mockito.when(request.getHeader("WL-Proxy-Client-IP")).thenReturn(null);
 		Mockito.when(request.getHeader("X-Real-IP")).thenReturn(null);
 		Mockito.when(request.getRemoteAddr()).thenReturn("0:0:0:0:0:0:0:1");
-		String result = IpUtils.getIpAddr(request);
+		String result = IpUtils.getIpAddress(request);
 		Assertions.assertThat(result).isEqualTo(IpUtils.LOCAL_IPV4);
 	}
 
@@ -129,7 +129,7 @@ class IpUtilsTest {
 		Mockito.when(request.getHeader("WL-Proxy-Client-IP")).thenReturn(null);
 		Mockito.when(request.getHeader("X-Real-IP")).thenReturn(null);
 		Mockito.when(request.getRemoteAddr()).thenReturn("");
-		String result = IpUtils.getIpAddr(request);
+		String result = IpUtils.getIpAddress(request);
 		Assertions.assertThat(result).isEqualTo(IpUtils.LOCAL_IPV4);
 	}
 
@@ -138,7 +138,7 @@ class IpUtilsTest {
 		// 测试多个IP地址（逗号分隔），取第一个
 		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
 		Mockito.when(request.getHeader("X-Forwarded-For")).thenReturn("192.168.1.1, 10.0.0.1, 172.16.0.1");
-		String result = IpUtils.getIpAddr(request);
+		String result = IpUtils.getIpAddress(request);
 		Assertions.assertThat(result).isEqualTo("192.168.1.1");
 	}
 
@@ -148,7 +148,7 @@ class IpUtilsTest {
 		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
 		Mockito.when(request.getHeader("X-Forwarded-For")).thenReturn("unknown");
 		Mockito.when(request.getHeader("Proxy-Client-IP")).thenReturn("192.168.1.1");
-		String result = IpUtils.getIpAddr(request);
+		String result = IpUtils.getIpAddress(request);
 		Assertions.assertThat(result).isEqualTo("192.168.1.1");
 	}
 
@@ -158,7 +158,7 @@ class IpUtilsTest {
 		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
 		Mockito.when(request.getHeader("X-Forwarded-For")).thenReturn("UNKNOWN");
 		Mockito.when(request.getHeader("Proxy-Client-IP")).thenReturn("10.0.0.1");
-		String result = IpUtils.getIpAddr(request);
+		String result = IpUtils.getIpAddress(request);
 		Assertions.assertThat(result).isEqualTo("10.0.0.1");
 	}
 
@@ -350,7 +350,7 @@ class IpUtilsTest {
 		Mockito.when(request.getHeader("WL-Proxy-Client-IP")).thenReturn(null);
 		Mockito.when(request.getHeader("X-Real-IP")).thenReturn(null);
 		Mockito.when(request.getRemoteAddr()).thenReturn("192.168.1.1");
-		String result = IpUtils.getIpAddr(request);
+		String result = IpUtils.getIpAddress(request);
 		Assertions.assertThat(result).isEqualTo("192.168.1.1");
 	}
 
@@ -364,7 +364,7 @@ class IpUtilsTest {
 		Mockito.when(request.getHeader("WL-Proxy-Client-IP")).thenReturn("unknown");
 		Mockito.when(request.getHeader("X-Real-IP")).thenReturn("unknown");
 		Mockito.when(request.getRemoteAddr()).thenReturn("10.0.0.1");
-		String result = IpUtils.getIpAddr(request);
+		String result = IpUtils.getIpAddress(request);
 		Assertions.assertThat(result).isEqualTo("10.0.0.1");
 	}
 
@@ -378,7 +378,7 @@ class IpUtilsTest {
 		Mockito.when(request.getHeader("WL-Proxy-Client-IP")).thenReturn("");
 		Mockito.when(request.getHeader("X-Real-IP")).thenReturn("");
 		Mockito.when(request.getRemoteAddr()).thenReturn("172.16.0.1");
-		String result = IpUtils.getIpAddr(request);
+		String result = IpUtils.getIpAddress(request);
 		Assertions.assertThat(result).isEqualTo("172.16.0.1");
 	}
 

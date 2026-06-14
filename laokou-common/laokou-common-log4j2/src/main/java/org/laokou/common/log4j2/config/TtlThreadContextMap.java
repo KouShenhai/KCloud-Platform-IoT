@@ -119,7 +119,6 @@ public class TtlThreadContextMap implements ThreadContextMap, ReadOnlyStringMap 
 		UnmodifiableArrayBackedMap.getMap(localState).forEach(action, state);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public <V> V getValue(final String key) {
 		return (V) get(key);

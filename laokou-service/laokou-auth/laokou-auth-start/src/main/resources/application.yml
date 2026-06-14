@@ -88,10 +88,37 @@ spring:
   # security
   security:
     oauth2:
+      client:
+        registration:
+          default:
+            client-id: ${spring.security.oauth2.authorization-server.client.default.registration.client-id}
+            client-secret: FpHwIfw4wY92dO
+            client-name: OAuth2.1 M2M认证客户端
+            authorization-grant-type: client_credentials
+            client-authentication-method: client_secret_basic
+            scope:
+              - read
+            provider: local
+        provider:
+          local:
+            token-uri: http://127.0.0.1:${server.port}${server.servlet.context-path}${spring.security.oauth2.authorization-server.endpoint.token-uri}
       authorization-server:
         enabled: true
         # 多租户
         multiple-issuers-allowed: false
+        endpoint:
+          authorization-uri: /v1/oauth2/authorize
+          device-authorization-uri: /v1/oauth2/device_authorization
+          device-verification-uri: /v1/oauth2/device_verification
+          token-uri: /v1/oauth2/token
+          jwk-set-uri: /v1/oauth2/jwks
+          token-revocation-uri: /v1/oauth2/revoke
+          token-introspection-uri: /v1/oauth2/introspect
+          pushed-authorization-request-uri: /v1/oauth2/par
+          oidc:
+            logout-uri: /v1/oidc/connect/logout
+            client-registration-uri: /v1/oidc/connect/register
+            user-info-uri: /v1/oidc/userinfo
         client:
           default:
             token:
@@ -102,7 +129,7 @@ spring:
             registration:
               # Base64编码 OTVUeFNzVFBGQTN0RjEyVEJTTW1VVkswZGE6RnBId0lmdzR3WTkyZE8=
               client-id: 95TxSsTPFA3tF12TBSMmUVK0da
-              client-name: OAuth2.1认证【用户名密码/邮箱/手机号/测试/客户端】
+              client-name: OAuth2.1认证【用户名密码/邮箱/手机号/测试/M2M】
               # 对client-secret进行加密【原值 => FpHwIfw4wY92dO】
               client-secret: "{bcrypt}$2a$10$BDcxgmL3WYk7G.QEDTqlBeSudNlV3KUU/V6iC.hKlAbGAC.jbX2fO"
               client-authentication-methods:
@@ -168,21 +195,20 @@ spring:
         request-matcher:
           ignore-patterns:
             GET:
-              - /v3/api-docs/**=laokou-auth
-              - /actuator/**=laokou-auth
-              - /error=laokou-auth
-              - /v1/username-password/captchas/{uuid}=laokou-auth
-              - /v1/authorization-code/captchas/{uuid}=laokou-auth
-              - /v1/secrets=laokou-auth
-              - /img/**=laokou-auth
-              - /js/**=laokou-auth
-              - /scalar/**=laokou-auth
-              - /favicon.svg=laokou-auth
+              - /v3/api-docs/**=${spring.application.name}
+              - /actuator/**=${spring.application.name}
+              - /error=${spring.application.name}
+              - /v1/username-password/captchas/{uuid}=${spring.application.name}
+              - /v1/authorization-code/captchas/{uuid}=${spring.application.name}
+              - /v1/secrets=${spring.application.name}
+              - /img/**=${spring.application.name}
+              - /js/**=${spring.application.name}
+              - /scalar/**=${spring.application.name}
             POST:
-              - /v1/captchas/send-mail=laokou-auth
-              - /v1/captchas/send-mobile=laokou-auth
+              - /v1/captchas/send-mail=${spring.application.name}
+              - /v1/captchas/send-mobile=${spring.application.name}
             DELETE:
-              - /v1/tokens=laokou-auth
+              - /v1/tokens=${spring.application.name}
   cloud:
     # Loadbalancer配置
     loadbalancer:

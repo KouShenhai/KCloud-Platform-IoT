@@ -86,11 +86,12 @@ public final class AddressUtils {
 
 	/**
 	 * 根据IP获取所属位置.
-	 * @param ip IP
+	 * @param ipAddress IP地址
 	 * @return 所属位置
 	 */
-	public static String getRealAddress(String ip) throws InetAddressException, IOException, InterruptedException {
-		return IpUtils.internalIp(ip) ? "内网IP" : addressFormat(ipRegion.search(ip));
+	public static String getRealAddress(String ipAddress)
+			throws InetAddressException, IOException, InterruptedException {
+		return IpUtils.internalIp(ipAddress) ? "内网IP" : addressFormat(ipRegion.search(ipAddress));
 	}
 
 	/**

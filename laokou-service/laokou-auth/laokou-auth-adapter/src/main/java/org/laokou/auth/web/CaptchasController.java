@@ -30,7 +30,6 @@ import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.ratelimiter.annotation.RateLimiter;
 import org.laokou.common.ratelimiter.aspectj.Type;
 import org.laokou.common.trace.annotation.TraceLog;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,8 +47,8 @@ public class CaptchasController {
 	private final CaptchasServiceI captchasServiceI;
 
 	@TraceLog
-	@GetMapping(value = "/v1/username-password/captchas/{uuid}", produces = MediaType.APPLICATION_JSON_VALUE)
-	@RateLimiter(key = "GET_USERNAME_PASSWORD_CAPTCHA", type = Type.IP)
+	@GetMapping("/v1/username-password/captchas/{uuid}")
+	@RateLimiter(key = "GET_USERNAME_PASSWORD_CAPTCHA", type = Type.IP_ADDRESS)
 	@Operation(summary = "根据UUID获取用户名密码登录验证码", description = "根据UUID获取用户名密码登录验证码")
 	public Result<String> getUsernamePasswordAuthCaptchaByUuid(@PathVariable("uuid") String uuid) {
 		return captchasServiceI
@@ -57,8 +56,8 @@ public class CaptchasController {
 	}
 
 	@TraceLog
-	@GetMapping(value = "/v1/authorization-code/captchas/{uuid}", produces = MediaType.APPLICATION_JSON_VALUE)
-	@RateLimiter(key = "GET_AUTHORIZATION_CODE_CAPTCHA", type = Type.IP)
+	@GetMapping("/v1/authorization-code/captchas/{uuid}")
+	@RateLimiter(key = "GET_AUTHORIZATION_CODE_CAPTCHA", type = Type.IP_ADDRESS)
 	@Operation(summary = "根据UUID获取授权码登录验证码", description = "根据UUID获取授权码登录验证码")
 	public Result<String> getAuthorizationCodeAuthCaptchaByUuid(@PathVariable("uuid") String uuid) {
 		return captchasServiceI
@@ -67,7 +66,7 @@ public class CaptchasController {
 
 	@Idempotent
 	@PostMapping("/v1/captchas/send-mobile")
-	@RateLimiter(key = "SEND_MOBILE_CAPTCHA", type = Type.IP)
+	@RateLimiter(key = "SEND_MOBILE_CAPTCHA", type = Type.IP_ADDRESS)
 	@Operation(summary = "根据UUID发送手机验证码", description = "根据UUID发送手机验证码")
 	public void sendMobileCaptchaByUuid(@RequestBody CaptchaSendCmd cmd) {
 		cmd.getCo().setTag(SendCaptchaType.SEND_MOBILE_CAPTCHA.getCode());
@@ -76,7 +75,7 @@ public class CaptchasController {
 
 	@Idempotent
 	@PostMapping("/v1/captchas/send-mail")
-	@RateLimiter(key = "SEND_MAIL_CAPTCHA", type = Type.IP)
+	@RateLimiter(key = "SEND_MAIL_CAPTCHA", type = Type.IP_ADDRESS)
 	@Operation(summary = "根据UUID发送邮箱验证码", description = "根据UUID发送邮箱验证码")
 	public void sendMailCaptchaByUuid(@RequestBody CaptchaSendCmd cmd) {
 		cmd.getCo().setTag(SendCaptchaType.SEND_MAIL_CAPTCHA.getCode());
