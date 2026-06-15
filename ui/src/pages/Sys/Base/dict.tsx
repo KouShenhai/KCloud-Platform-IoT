@@ -34,6 +34,7 @@ import {
 	Row,
 	Space,
 	Switch,
+	Typography,
 	Upload,
 } from 'antd';
 import type { TableRowSelection } from 'antd/es/table/interface';
@@ -70,6 +71,8 @@ export default () => {
 	const [dictItemParam, setDictItemParam] = useState<any>({});
 	const [dictItemExportLoading, setDictItemExportLoading] = useState(false);
 	const [dictItemImportLoading, setDictItemImportLoading] = useState(false);
+	const selectedDictId = selectedDict?.id;
+	const hasSelectedDict = !!selectedDictId;
 
 	const getDictPageQueryParam = (params: any) => {
 		const param = {
@@ -100,7 +103,7 @@ export default () => {
 			label: trim(params?.label),
 			value: trim(params?.value),
 			status: params?.statusValue,
-			typeId: selectedDict?.id,
+			typeId: selectedDictId,
 			params: {
 				startTime: params?.startDate
 					? `${params.startDate} 00:00:00`
@@ -122,29 +125,42 @@ export default () => {
 		dictItemActionRef?.current?.reload();
 	};
 
-	const refreshDictItemAfterDictChange = () => {
+	const reloadDictItemWithLatestSelection = () => {
+		setTimeout(() => {
+			reloadDictItem();
+		});
+	};
+
+	const clearDictSelection = () => {
 		setSelectedDict(undefined);
 		setDictIds([]);
 		setDictItemIds([]);
+		setDictItemParam({});
+	};
+
+	const selectDict = (record?: API.DictCO) => {
+		setSelectedDict(record);
+		setDictIds(record?.id ? [record.id] : []);
+		setDictItemIds([]);
+		reloadDictItemWithLatestSelection();
+	};
+
+	const refreshDictItemAfterDictChange = () => {
+		clearDictSelection();
 		reloadDict();
-		reloadDictItem();
+		reloadDictItemWithLatestSelection();
 	};
 
 	const dictRowSelection: TableRowSelection<API.DictCO> = {
-		selectedRowKeys: selectedDict?.id ? [selectedDict.id] : [],
+		selectedRowKeys: selectedDictId ? [selectedDictId] : [],
 		type: 'radio',
 		onChange: (_, selectedRows) => {
-			const record = selectedRows?.[0];
-			setSelectedDict(record);
-			setDictIds(record?.id ? [record.id] : []);
-			setDictItemIds([]);
-			setTimeout(() => {
-				reloadDictItem();
-			});
+			selectDict(selectedRows?.[0]);
 		},
 	};
 
 	const dictItemRowSelection: TableRowSelection<API.DictItemCO> = {
+		selectedRowKeys: dictItemIds,
 		onChange: (selectedRowKeys) => {
 			const ids: number[] = [];
 			selectedRowKeys.forEach((item) => {
@@ -220,12 +236,12 @@ export default () => {
 		showUploadList: false,
 		accept: '.xls,.xlsx',
 		beforeUpload: (file) => {
-			if (!selectedDict?.id) {
+			if (!selectedDictId) {
 				message.warning(t('sys.dictItem.selectDictFirst')).then();
 				return false;
 			}
 			setDictItemImportLoading(true);
-			importDictItem({ typeId: selectedDict.id }, [file])
+			importDictItem({ typeId: selectedDictId }, [file])
 				.then((res) => {
 					if (res.code === 'OK') {
 						message.success(t('toast.importSuccess')).then();
@@ -258,6 +274,36 @@ export default () => {
 		},
 		ellipsis: true,
 	});
+
+	const renderSelectedDictContext = () => {
+		if (!selectedDictId) {
+			return (
+				<Typography.Text key="selected" type="secondary">
+					{t('sys.dictItem.selectDictFirst')}
+				</Typography.Text>
+			);
+		}
+
+		return (
+			<Space key="selected" size={6} wrap>
+				<Typography.Text type="secondary">
+					{t('sys.dictItem.currentDict')}
+				</Typography.Text>
+				<Typography.Text
+					strong
+					ellipsis
+					style={{ display: 'inline-block', maxWidth: 180 }}
+				>
+					{selectedDict?.name || '-'}
+				</Typography.Text>
+				{selectedDict?.type && (
+					<Typography.Text type="secondary">
+						{selectedDict.type}
+					</Typography.Text>
+				)}
+			</Space>
+		);
+	};
 
 	const dictColumns: ProColumns<API.DictCO>[] = [
 		{
@@ -350,7 +396,8 @@ export default () => {
 				access.canDictGetDetail && (
 					<a
 						key="get"
-						onClick={() => {
+						onClick={(event) => {
+							event.stopPropagation();
 							getDictById({ id: record?.id as number }).then(
 								(res) => {
 									if (res.code === 'OK') {
@@ -369,7 +416,8 @@ export default () => {
 				access.canDictModify && (
 					<a
 						key="modify"
-						onClick={() => {
+						onClick={(event) => {
+							event.stopPropagation();
 							getDictById({ id: record?.id as number }).then(
 								(res) => {
 									if (res.code === 'OK') {
@@ -388,7 +436,8 @@ export default () => {
 				access.canDictRemove && (
 					<a
 						key="remove"
-						onClick={() => {
+						onClick={(event) => {
+							event.stopPropagation();
 							showDictRemoveConfirm([record?.id as number]);
 						}}
 					>
@@ -575,8 +624,8 @@ export default () => {
 					reloadDictItem();
 				}}
 			/>
-			<Row gutter={[16, 16]}>
-				<Col xs={24} xl={10}>
+			<Row gutter={[16, 16]} align="top">
+				<Col xs={24} xl={9} style={{ minWidth: 0 }}>
 					<ProTable<API.DictCO>
 						actionRef={dictActionRef}
 						columns={dictColumns}
@@ -599,7 +648,14 @@ export default () => {
 							);
 						}}
 						rowSelection={{ ...dictRowSelection }}
+						onRow={(record) => ({
+							onClick: () => {
+								selectDict(record);
+							},
+							style: { cursor: 'pointer' },
+						})}
 						rowKey="id"
+						scroll={{ x: 860 }}
 						pagination={{
 							showQuickJumper: true,
 							showSizeChanger: false,
@@ -680,12 +736,12 @@ export default () => {
 						}}
 					/>
 				</Col>
-				<Col xs={24} xl={14}>
+				<Col xs={24} xl={15} style={{ minWidth: 0 }}>
 					<ProTable<API.DictItemCO>
 						actionRef={dictItemActionRef}
 						columns={dictItemColumns}
 						request={async (params) => {
-							if (!selectedDict?.id || !access.canDictItemPage) {
+							if (!selectedDictId || !access.canDictItemPage) {
 								setDictItemParam({});
 								return Promise.resolve({
 									data: [],
@@ -705,6 +761,7 @@ export default () => {
 						}}
 						rowSelection={{ ...dictItemRowSelection }}
 						rowKey="id"
+						scroll={{ x: 1000 }}
 						pagination={{
 							showQuickJumper: true,
 							showSizeChanger: false,
@@ -727,18 +784,15 @@ export default () => {
 							),
 						}}
 						toolBarRender={() => [
-							<Space key="selected" size={4}>
-								<span>{t('sys.dictItem.currentDict')}</span>
-								<strong>{selectedDict?.name || '-'}</strong>
-							</Space>,
+							renderSelectedDictContext(),
 							access.canDictItemSave && (
 								<Button
 									key="save"
 									type="primary"
 									icon={<PlusOutlined />}
-									disabled={!selectedDict?.id}
+									disabled={!hasSelectedDict}
 									onClick={() => {
-										if (!selectedDict?.id) {
+										if (!selectedDictId) {
 											message
 												.warning(
 													t(
@@ -761,7 +815,7 @@ export default () => {
 											sort: 1,
 											remark: '',
 											status: 0,
-											typeId: selectedDict.id,
+											typeId: selectedDictId,
 										});
 									}}
 								>
@@ -774,7 +828,7 @@ export default () => {
 									type="primary"
 									danger
 									icon={<DeleteOutlined />}
-									disabled={!selectedDict?.id}
+									disabled={!hasSelectedDict}
 									onClick={() => {
 										showDictItemRemoveConfirm(dictItemIds);
 									}}
@@ -786,7 +840,7 @@ export default () => {
 								<Upload key="import" {...uploadDictItemProps}>
 									<Button
 										loading={dictItemImportLoading}
-										disabled={!selectedDict?.id}
+										disabled={!hasSelectedDict}
 										icon={<UploadOutlined />}
 									>
 										{t('common.import')}
@@ -798,11 +852,11 @@ export default () => {
 									key="export"
 									type="primary"
 									ghost
-									disabled={!selectedDict?.id}
+									disabled={!hasSelectedDict}
 									loading={dictItemExportLoading}
 									icon={<DownloadOutlined />}
 									onClick={() => {
-										if (!selectedDict?.id) {
+										if (!selectedDictId) {
 											message
 												.warning(
 													t(
@@ -815,7 +869,7 @@ export default () => {
 										setDictItemExportLoading(true);
 										exportDictItem({
 											...dictItemParam,
-											typeId: selectedDict.id,
+											typeId: selectedDictId,
 										}).finally(() => {
 											setDictItemExportLoading(false);
 										});
@@ -827,9 +881,14 @@ export default () => {
 						]}
 						dateFormatter="string"
 						toolbar={{
-							title: t('sys.dictItem.title'),
+							title: selectedDict?.name
+								? `${t('sys.dictItem.title')} - ${
+										selectedDict.name
+								  }`
+								: t('sys.dictItem.title'),
 							tooltip:
-								selectedDict?.type || t('sys.dictItem.title'),
+								selectedDict?.type ||
+								t('sys.dictItem.selectDictFirst'),
 						}}
 					/>
 				</Col>
