@@ -109,7 +109,7 @@
     <!-- jacoco-maven-plugin版本 -->
     <jacoco-maven-plugin.version>0.8.15</jacoco-maven-plugin.version>
     <!-- checkstyle版本 -->
-    <checkstyle.version>13.5.0</checkstyle.version>
+    <checkstyle.version>13.6.0</checkstyle.version>
     <!-- spring-javaformat-checkstyle版本 -->
     <spring-javaformat-checkstyle.version>0.0.47</spring-javaformat-checkstyle.version>
     <!-- spring-asciidoctor-backends版本 -->
@@ -165,7 +165,7 @@
     <!-- protobuf版本 -->
     <protobuf.version>4.34.2</protobuf.version>
     <!-- redisson版本 -->
-    <redisson.version>4.5.0</redisson.version>
+    <redisson.version>4.6.0</redisson.version>
     <!-- lombok版本 -->
     <lombok.version>1.18.46</lombok.version>
     <!-- postgresql版本 -->
