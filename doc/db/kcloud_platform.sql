@@ -216,6 +216,7 @@ COMMENT ON INDEX "public"."sys_i18n_menu_code_name_idx" IS '编码_名称_唯一
 
 ALTER TABLE "public"."sys_i18n_menu" ADD CONSTRAINT "sys_i18n_menu_pkey" PRIMARY KEY ("id");
 
+INSERT INTO "public"."sys_i18n_menu" VALUES (8, 1, 1, '2026-03-07 12:06:37', '2026-03-07 12:06:37', 0, 0, 1, 1,  'menu.iot.device.thingModel', '物模型');
 INSERT INTO "public"."sys_i18n_menu" VALUES (10, 1, 1, '2026-03-07 12:06:37', '2026-03-07 12:06:37', 0, 0, 1, 1, 'menu.iot.device.productCategory', '产品类别');
 INSERT INTO "public"."sys_i18n_menu" VALUES (1, 1, 1, '2026-03-07 12:06:37', '2026-03-07 12:06:37', 0, 0, 1, 1,  'menu.sys', '系统管理');
 INSERT INTO "public"."sys_i18n_menu" VALUES (4, 1, 1, '2026-03-07 12:06:37', '2026-03-07 12:06:37', 0, 0, 1, 1,  'menu.sys.log.notice', '通知日志');
@@ -387,6 +388,12 @@ INSERT INTO "public"."sys_menu" VALUES (16, 1, 1, '2025-01-18 09:39:31', '2026-0
 INSERT INTO "public"."sys_menu" VALUES (15, 1, 1, '2025-01-18 09:38:58', '2026-05-29 01:22:57.821007', 0, 1, 1, 1, 12, NULL, 0, '产品', '/iot/device/product', NULL, 3, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (82, 1, 1, '2025-03-15 12:15:37.277552', '2025-03-15 12:15:37.278549', 0, 0, 1, 1, 31, 'sys:oss:upload', 1, '上传文件', NULL, NULL, 5, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (90, 1, 1, '2026-05-20 07:08:34', '2026-05-29 01:19:03.585621', 0, 2, 1, 1, 88, NULL, 0, 'API文档', '/sys/config/apiDoc', NULL, 2, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (14, 1, 1, '2025-01-18 09:37:53', '2026-05-29 01:22:42.9652', 0, 1, 1, 1, 12, NULL, 0, '物模型', '/iot/device/thingModel', NULL, 1, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (72, 1, 1, '2025-03-16 11:02:48.298633', '2025-03-16 11:02:48.298633', 0, 0, 1, 1, 14, 'iot:thing-model:detail', 1, '查看物模型', NULL, NULL, 1, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (73, 1, 1, '2025-03-16 11:02:24.689321', '2025-03-16 11:02:24.689321', 0, 0, 1, 1, 14, 'iot:thing-model:remove', 1, '删除物模型', NULL, NULL, 2, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (74, 1, 1, '2025-03-16 11:01:52.176027', '2025-03-16 11:18:56.079399', 0, 2, 1, 1, 14, 'iot:thing-model:modify', 1, '修改物模型', NULL, NULL, 3, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (75, 1, 1, '2025-03-16 11:01:31.000074', '2025-03-16 11:01:31.000074', 0, 0, 1, 1, 14, 'iot:thing-model:save', 1, '新增物模型', NULL, NULL, 4, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (76, 1, 1, '2025-03-16 11:00:58.755018', '2025-03-16 11:00:58.755018', 0, 0, 1, 1, 14, 'iot:thing-model:page', 1, '分页查询物模型列表', NULL, NULL, 5, 0, 0, NULL);
 
 -- ----------------------------
 -- -------------菜单套餐------------
