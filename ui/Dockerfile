@@ -18,7 +18,5 @@ LABEL maintainer="laokou"
 LABEL description="ui"
 COPY dist /usr/share/nginx/dist
 COPY nginx/conf/nginx.conf /etc/nginx/nginx.conf
-COPY nginx/ssl/cert.pem /etc/nginx/ssl/cert.pem
-COPY nginx/ssl/key.pem /etc/nginx/ssl/key.pem
 EXPOSE 443
 CMD ["nginx", "-g", "daemon off;"]
