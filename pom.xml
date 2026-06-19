@@ -115,9 +115,9 @@
     <!-- spring-asciidoctor-backends版本 -->
     <spring-asciidoctor-backends.version>0.0.7</spring-asciidoctor-backends.version>
     <!-- protobuf-maven-plugin版本 -->
-    <protobuf-maven-plugin.version>5.1.4</protobuf-maven-plugin.version>
+    <protobuf-maven-plugin.version>5.1.5</protobuf-maven-plugin.version>
     <!-- central-publishing-maven-plugin版本 -->
-    <central-publishing-maven-plugin.version>0.10.0</central-publishing-maven-plugin.version>
+    <central-publishing-maven-plugin.version>0.11.0</central-publishing-maven-plugin.version>
     <!-- maven-source-plugin版本 -->
     <maven-source-plugin.version>3.4.0</maven-source-plugin.version>
     <!-- maven-javadoc-plugin版本 -->
@@ -165,7 +165,7 @@
     <!-- protobuf版本 -->
     <protobuf.version>4.34.2</protobuf.version>
     <!-- redisson版本 -->
-    <redisson.version>4.6.0</redisson.version>
+    <redisson.version>4.6.1</redisson.version>
     <!-- lombok版本 -->
     <lombok.version>1.18.46</lombok.version>
     <!-- postgresql版本 -->
@@ -189,7 +189,7 @@
     <!-- fesod版本 -->
     <fesod.version>2.0.2-incubating</fesod.version>
     <!-- s3版本 -->
-    <s3.version>2.46.10</s3.version>
+    <s3.version>2.46.14</s3.version>
     <!-- dynamic-datasource版本 -->
     <dynamic-datasource.version>4.5.0</dynamic-datasource.version>
     <!-- httpclient5版本 -->
@@ -211,11 +211,11 @@
     <!-- taos-jdbcdriver版本 -->
     <taos-jdbcdriver.version>3.8.4</taos-jdbcdriver.version>
     <!-- fory版本 -->
-    <fory.version>1.1.0</fory.version>
+    <fory.version>1.2.0</fory.version>
     <!-- browscap-java版本 -->
     <browscap-java.version>1.5.1</browscap-java.version>
     <!-- flyway版本 -->
-    <flyway.version>12.8.1</flyway.version>
+    <flyway.version>12.9.0</flyway.version>
     <!-- snail-job版本 -->
     <snail-job.version>2.0.0</snail-job.version>
     <!-- archunit-junit5版本 -->
@@ -243,7 +243,7 @@
     <!-- commons-io版本 -->
     <commons-io.version>2.22.0</commons-io.version>
     <!-- commons-logging版本 -->
-    <commons-logging.version>1.3.6</commons-logging.version>
+    <commons-logging.version>1.4.0</commons-logging.version>
     <!-- jctools版本 -->
     <jctools.version>4.0.6</jctools.version>
     <!-- spotbugs版本 -->
