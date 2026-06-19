@@ -613,7 +613,7 @@ export default {
 	'menu.iot.device.productCategory': '产品类别',
 	'menu.iot.device.product': '产品',
 	'menu.iot.device.device': '设备',
-	'menu.iot.network.connection': '连接管理',
+	'menu.iot.network.connection': '网络连接',
 	'menu.sys.tenant': '租户管理',
 	'menu.sys.tenant.package': '套餐',
 	'menu.sys.tenant.tenant': '租户',

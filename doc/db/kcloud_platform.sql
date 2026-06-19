@@ -246,8 +246,7 @@ INSERT INTO "public"."sys_i18n_menu" VALUES (28, 1, 1, '2026-03-07 12:06:37', '2
 INSERT INTO "public"."sys_i18n_menu" VALUES (29, 1, 1, '2026-03-07 12:06:37', '2026-03-07 12:06:37', 0, 0, 1, 1, 'menu.sys.config.generator', '代码生成器');
 INSERT INTO "public"."sys_i18n_menu" VALUES (27, 1, 1, '2026-03-07 12:06:37', '2026-03-07 12:06:37', 0, 0, 1, 1, 'menu.sys.cluster', '集群管理');
 INSERT INTO "public"."sys_i18n_menu" VALUES (30, 1, 1, '2026-05-07 12:06:37', '2026-05-07 12:06:37', 0, 0, 1, 1, 'menu.sys.config.apiDoc', 'API文档');
-INSERT INTO "public"."sys_i18n_menu" VALUES (31, 1, 1, '2026-06-05 00:00:00', '2026-06-05 00:00:00', 0, 0, 1, 1, 'menu.network', '网络管理');
-INSERT INTO "public"."sys_i18n_menu" VALUES (32, 1, 1, '2026-06-05 00:00:00', '2026-06-05 00:00:00', 0, 0, 1, 1, 'menu.network.connection', '连接管理');
+INSERT INTO "public"."sys_i18n_menu" VALUES (32, 1, 1, '2026-06-05 00:00:00', '2026-06-05 00:00:00', 0, 0, 1, 1, 'menu.iot.network.connection', '网络连接');
 
 -- ----------------------------
 -- -------------菜单------------
@@ -302,7 +301,7 @@ COMMENT ON INDEX "public"."sys_menu_type_idx" IS '菜单类型_索引';
 INSERT INTO "public"."sys_menu" VALUES (33, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 1, 1, 1, NULL, 0, '集群管理', '/sys/cluster', NULL, 3, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (19, 1, 1, '2025-01-21 05:19:17', '2026-05-29 01:19:54.280534', 0, 1, 1, 1, 17, NULL, 0, '部门', '/sys/permission/dept', NULL, 2, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (6, 1, 1, '2024-09-17 18:36:56', '2026-06-13 16:09:10.335754', 0, 1, 1, 1, 2, NULL, 0, '通知日志', '/sys/log/notice', '', 1, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (108, 1, 1, '2026-06-05 00:00:00', '2026-06-07 19:29:30.266887', 0, 1, 1, 1, 11, NULL, 0, '连接管理', '/iot/network/connection', NULL, 1, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (108, 1, 1, '2026-06-05 00:00:00', '2026-06-07 19:29:30.266887', 0, 1, 1, 1, 11, NULL, 0, '网络连接', '/iot/network/connection', NULL, 1, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (12, 1, 1, '2025-01-18 09:28:42', '2026-05-29 01:21:36.257117', 0, 1, 1, 1, 11, NULL, 0, '设备管理', '/iot/device', NULL, 1, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (13, 1, 1, '2025-01-18 09:30:03', '2026-05-29 01:23:03.948971', 0, 1, 1, 1, 12, NULL, 0, '设备', '/iot/device/index', NULL, 4, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (20, 1, 1, '2025-01-21 05:19:17', '2026-05-29 01:19:59.024113', 0, 1, 1, 1, 17, NULL, 0, '角色', '/sys/permission/role', NULL, 3, 0, 0, NULL);
@@ -394,6 +393,11 @@ INSERT INTO "public"."sys_menu" VALUES (73, 1, 1, '2025-03-16 11:02:24.689321', 
 INSERT INTO "public"."sys_menu" VALUES (74, 1, 1, '2025-03-16 11:01:52.176027', '2025-03-16 11:18:56.079399', 0, 2, 1, 1, 14, 'iot:thing-model:modify', 1, '修改物模型', NULL, NULL, 3, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (75, 1, 1, '2025-03-16 11:01:31.000074', '2025-03-16 11:01:31.000074', 0, 0, 1, 1, 14, 'iot:thing-model:save', 1, '新增物模型', NULL, NULL, 4, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (76, 1, 1, '2025-03-16 11:00:58.755018', '2025-03-16 11:00:58.755018', 0, 0, 1, 1, 14, 'iot:thing-model:page', 1, '分页查询物模型列表', NULL, NULL, 5, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (120, 1, 1, '2026-06-19 15:42:26.14658', '2026-06-19 15:42:26.31174', 0, 0, 1, 1, 29, 'sys:i18n-menu:detail', 1, '查看国际化菜单', NULL, NULL, 1, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (121, 1, 1, '2026-06-19 15:43:07.457194', '2026-06-19 15:43:07.4775', 0, 0, 1, 1, 29, 'sys:i18n-menu:remove', 1, '删除国际化菜单', NULL, NULL, 2, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (122, 1, 1, '2026-06-19 15:43:36.840718', '2026-06-19 15:43:58.433843', 0, 1, 1, 1, 29, 'sys:i18n-menu:modify', 1, '修改国际化菜单', NULL, NULL, 3, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (123, 1, 1, '2026-06-19 15:44:27.722691', '2026-06-19 15:44:27.741956', 0, 0, 1, 1, 29, 'sys:i18n-menu:save', 1, '新增国际化菜单', NULL, NULL, 4, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (124, 1, 1, '2026-06-19 15:45:03.403504', '2026-06-19 15:45:25.009303', 0, 1, 1, 1, 29, 'sys:i18n-menu:page', 1, '分页查询国际化菜单列表', NULL, NULL, 5, 0, 0, NULL);
 
 -- ----------------------------
 -- -------------菜单套餐------------

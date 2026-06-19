@@ -625,7 +625,7 @@ export default () => {
 				}}
 			/>
 			<Row gutter={[16, 16]} align="top">
-				<Col xs={24} xl={9} style={{ minWidth: 0 }}>
+				<Col xs={24} xl={12} style={{ minWidth: 0 }}>
 					<ProTable<API.DictCO>
 						actionRef={dictActionRef}
 						columns={dictColumns}
@@ -736,7 +736,7 @@ export default () => {
 						}}
 					/>
 				</Col>
-				<Col xs={24} xl={15} style={{ minWidth: 0 }}>
+				<Col xs={24} xl={12} style={{ minWidth: 0 }}>
 					<ProTable<API.DictItemCO>
 						actionRef={dictItemActionRef}
 						columns={dictItemColumns}
