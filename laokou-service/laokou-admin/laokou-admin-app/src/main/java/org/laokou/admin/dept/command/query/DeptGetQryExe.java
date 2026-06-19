@@ -34,10 +34,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DeptGetQryExe {
 
-	private final DeptMapper adminDeptMapper;
+	private final DeptMapper deptMapper;
 
 	public Result<DeptCO> execute(DeptGetQry qry) {
-		return Result.ok(DeptConvertor.toClientObject(adminDeptMapper.selectById(qry.getId())));
+		return Result.ok(DeptConvertor.toClientObject(deptMapper.selectById(qry.getId())));
 	}
 
 }

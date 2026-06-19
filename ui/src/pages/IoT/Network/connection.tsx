@@ -346,8 +346,8 @@ export default () => {
 				]}
 				dateFormatter="string"
 				toolbar={{
-					title: t('menu.network.connection'),
-					tooltip: t('menu.network.connection'),
+					title: t('menu.iot.network.connection'),
+					tooltip: t('menu.iot.network.connection'),
 				}}
 			/>
 		</>

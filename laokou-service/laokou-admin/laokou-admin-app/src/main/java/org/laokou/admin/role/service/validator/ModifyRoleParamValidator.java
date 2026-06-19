@@ -31,7 +31,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ModifyRoleParamValidator implements RoleParamValidator {
 
-	private final RoleMapper adminRoleMapper;
+	private final RoleMapper roleMapper;
 
 	@Override
 	public void validateRole(RoleA roleA) {
@@ -39,7 +39,7 @@ public class ModifyRoleParamValidator implements RoleParamValidator {
 				// 校验ID
 				org.laokou.admin.role.service.validator.RoleParamValidator.validateId(roleA),
 				// 校验名称
-				org.laokou.admin.role.service.validator.RoleParamValidator.validateName(roleA, adminRoleMapper),
+				org.laokou.admin.role.service.validator.RoleParamValidator.validateName(roleA, roleMapper),
 				// 校验排序
 				org.laokou.admin.role.service.validator.RoleParamValidator.validateSort(roleA));
 	}

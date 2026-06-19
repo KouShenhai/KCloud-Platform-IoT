@@ -31,18 +31,18 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class MenuDomainService {
 
-	private final MenuGateway adminMenuGateway;
+	private final MenuGateway menuGateway;
 
 	public void createMenu(MenuA menuA) {
-		adminMenuGateway.createMenu(menuA);
+		menuGateway.createMenu(menuA);
 	}
 
 	public void updateMenu(MenuA menuA) {
-		adminMenuGateway.updateMenu(menuA);
+		menuGateway.updateMenu(menuA);
 	}
 
 	public void deleteMenu(Long[] ids) {
-		adminMenuGateway.deleteMenu(ids);
+		menuGateway.deleteMenu(ids);
 	}
 
 }

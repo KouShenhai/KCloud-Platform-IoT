@@ -26,10 +26,12 @@ import org.laokou.admin.role.command.RoleModifyCmdExe;
 import org.laokou.admin.role.command.RoleRemoveCmdExe;
 import org.laokou.admin.role.command.RoleSaveCmdExe;
 import org.laokou.admin.role.command.query.RoleGetQryExe;
+import org.laokou.admin.role.command.query.RoleListQryExe;
 import org.laokou.admin.role.command.query.RolePageQryExe;
 import org.laokou.admin.role.dto.RoleExportCmd;
 import org.laokou.admin.role.dto.RoleGetQry;
 import org.laokou.admin.role.dto.RoleImportCmd;
+import org.laokou.admin.role.dto.RoleListQry;
 import org.laokou.admin.role.dto.RoleModifyAuthorityCmd;
 import org.laokou.admin.role.dto.RoleModifyCmd;
 import org.laokou.admin.role.dto.RolePageQry;
@@ -39,6 +41,8 @@ import org.laokou.admin.role.dto.clientobject.RoleCO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 角色接口实现类.
@@ -64,6 +68,8 @@ public class RolesServiceImpl implements RolesServiceI {
 	private final RolePageQryExe rolePageQryExe;
 
 	private final RoleGetQryExe roleGetQryExe;
+
+	private final RoleListQryExe roleListQryExe;
 
 	@Override
 	public void saveRole(RoleSaveCmd cmd) {
@@ -98,6 +104,11 @@ public class RolesServiceImpl implements RolesServiceI {
 	@Override
 	public Result<Page<RoleCO>> pageRole(RolePageQry qry) {
 		return rolePageQryExe.execute(qry);
+	}
+
+	@Override
+	public Result<List<RoleCO>> listRole(RoleListQry qry) {
+		return roleListQryExe.execute(qry);
 	}
 
 	@Override

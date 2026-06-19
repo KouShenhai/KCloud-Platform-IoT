@@ -15,29 +15,17 @@
  *
  */
 
-package org.laokou.admin.menu.command.query;
+package org.laokou.admin.role.dto;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.menu.convertor.MenuConvertor;
-import org.laokou.admin.menu.dto.MenuGetQry;
-import org.laokou.admin.menu.dto.clientobject.MenuCO;
-import org.laokou.admin.menu.gatewayimpl.database.MenuMapper;
-import org.laokou.common.i18n.dto.Result;
-import org.springframework.stereotype.Component;
+import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
- * 查看菜单请求执行器.
- *
  * @author laokou
  */
-@Component
+@Getter
 @RequiredArgsConstructor
-public class MenuGetQryExe {
-
-	private final MenuMapper menuMapper;
-
-	public Result<MenuCO> execute(MenuGetQry qry) {
-		return Result.ok(MenuConvertor.toClientObject(menuMapper.selectById(qry.getId())));
-	}
+public class RoleListQry extends CommonCommand {
 
 }

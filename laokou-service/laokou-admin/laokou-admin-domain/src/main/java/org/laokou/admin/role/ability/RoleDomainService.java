@@ -38,7 +38,7 @@ import java.util.concurrent.ExecutorService;
 @RequiredArgsConstructor
 public class RoleDomainService {
 
-	private final RoleGateway adminRoleGateway;
+	private final RoleGateway roleGateway;
 
 	private final RoleMenuGateway roleMenuGateway;
 
@@ -47,18 +47,18 @@ public class RoleDomainService {
 	private final ExecutorService virtualTaskExecutor;
 
 	public void createRole(RoleA roleA) {
-		adminRoleGateway.createRole(roleA);
+		roleGateway.createRole(roleA);
 	}
 
 	public void updateRole(RoleA roleA) {
-		adminRoleGateway.updateRole(roleA);
+		roleGateway.updateRole(roleA);
 	}
 
 	public void updateAuthorityRole(RoleA roleA) throws InterruptedException {
 		roleA.checkRoleParam();
 		List<Callable<Boolean>> futures = new ArrayList<>(3);
 		futures.add(() -> {
-			adminRoleGateway.updateRole(roleA);
+			roleGateway.updateRole(roleA);
 			return true;
 		});
 		futures.add(() -> {
@@ -75,7 +75,7 @@ public class RoleDomainService {
 	public void deleteRole(Long[] ids) throws InterruptedException {
 		List<Callable<Boolean>> futures = new ArrayList<>(3);
 		futures.add(() -> {
-			adminRoleGateway.deleteRole(ids);
+			roleGateway.deleteRole(ids);
 			return true;
 		});
 		futures.add(() -> {

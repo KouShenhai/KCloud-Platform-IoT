@@ -182,6 +182,12 @@ export default [
 				path: '/iot/device',
 				routes: [
 					{
+						name: 'menu.iot.device.thingModel',
+						title: 'menu.iot.device.thingModel',
+						path: '/iot/device/thingModel',
+						component: './IoT/Device/thingModel',
+					},
+					{
 						name: 'menu.iot.device.productCategory',
 						title: 'menu.iot.device.productCategory',
 						path: '/iot/device/productCategory',

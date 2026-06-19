@@ -28,7 +28,7 @@ import org.springframework.stereotype.Repository;
  * @author laokou
  */
 @Mapper
-@Repository("adminUserMapper")
+@Repository
 public interface UserMapper extends CrudMapper<Long, Integer, UserDO> {
 
 }

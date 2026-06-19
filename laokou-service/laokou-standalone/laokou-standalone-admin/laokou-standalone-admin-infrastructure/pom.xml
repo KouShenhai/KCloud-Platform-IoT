@@ -25,6 +25,12 @@
       <groupId>org.laokou</groupId>
       <artifactId>laokou-admin-adapter</artifactId>
       <version>${project.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.laokou</groupId>
+          <artifactId>laokou-common-grpc-client</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
   </dependencies>
 

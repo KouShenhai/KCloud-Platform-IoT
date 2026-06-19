@@ -31,20 +31,19 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class SaveUserParamValidator implements UserParamValidator {
 
-	private final UserMapper adminUserMapper;
+	private final UserMapper userMapper;
 
 	@Override
 	public void validateUser(UserA userA) throws Exception {
 		ParamValidator.validate(userA.getValidateName(),
 				// 校验用户名
-				org.laokou.admin.user.service.validator.UserParamValidator.validateUsername(userA, adminUserMapper,
-						true),
+				org.laokou.admin.user.service.validator.UserParamValidator.validateUsername(userA, userMapper, true),
 				// 校验密码
 				org.laokou.admin.user.service.validator.UserParamValidator.validatePassword(userA, null, null, false),
 				// 校验邮箱
-				org.laokou.admin.user.service.validator.UserParamValidator.validateMail(userA, adminUserMapper, true),
+				org.laokou.admin.user.service.validator.UserParamValidator.validateMail(userA, userMapper, true),
 				// 校验手机号
-				org.laokou.admin.user.service.validator.UserParamValidator.validateMobile(userA, adminUserMapper),
+				org.laokou.admin.user.service.validator.UserParamValidator.validateMobile(userA, userMapper),
 				// 校验部门ID
 				org.laokou.admin.user.service.validator.UserParamValidator.validateDeptId(userA));
 	}
