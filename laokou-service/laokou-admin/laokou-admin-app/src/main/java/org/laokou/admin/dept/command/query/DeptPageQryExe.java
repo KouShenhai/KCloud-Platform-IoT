@@ -38,11 +38,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DeptPageQryExe {
 
-	private final DeptMapper adminDeptMapper;
+	private final DeptMapper deptMapper;
 
 	public Result<Page<DeptCO>> execute(DeptPageQry qry) {
-		List<DeptDO> list = adminDeptMapper.selectObjectPage(qry);
-		long total = adminDeptMapper.selectObjectCount(qry);
+		List<DeptDO> list = deptMapper.selectObjectPage(qry);
+		long total = deptMapper.selectObjectCount(qry);
 		return Result.ok(Page.create(DeptConvertor.toClientObjectList(list), total));
 	}
 

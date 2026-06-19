@@ -315,6 +315,8 @@ declare namespace API {
 		params?: Record<string, any>;
 	};
 
+	type RoleListQry = NonNullable<unknown>;
+
 	type RoleSaveCmd = {
 		co?: RoleCO;
 	};

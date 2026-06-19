@@ -32,27 +32,27 @@ import java.util.Arrays;
  *
  * @author laokou
  */
-@Component("adminMenuGateway")
+@Component
 @RequiredArgsConstructor
 public class MenuGatewayImpl implements MenuGateway {
 
-	private final MenuMapper adminMenuMapper;
+	private final MenuMapper menuMapper;
 
 	@Override
 	public void createMenu(MenuA menuA) {
-		adminMenuMapper.insert(MenuConvertor.toDataObject(menuA));
+		menuMapper.insert(MenuConvertor.toDataObject(menuA));
 	}
 
 	@Override
 	public void updateMenu(MenuA menuA) {
 		MenuDO menuDO = MenuConvertor.toDataObject(menuA);
-		menuDO.setVersion(adminMenuMapper.selectVersion(menuA.getId()));
-		adminMenuMapper.updateById(menuDO);
+		menuDO.setVersion(menuMapper.selectVersion(menuA.getId()));
+		menuMapper.updateById(menuDO);
 	}
 
 	@Override
 	public void deleteMenu(Long[] ids) {
-		adminMenuMapper.deleteByIds(Arrays.asList(ids));
+		menuMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }

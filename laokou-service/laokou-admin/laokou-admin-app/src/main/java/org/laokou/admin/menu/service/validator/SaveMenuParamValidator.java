@@ -31,7 +31,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class SaveMenuParamValidator implements MenuParamValidator {
 
-	private final MenuMapper adminMenuMapper;
+	private final MenuMapper menuMapper;
 
 	@Override
 	public void validateMenu(MenuA menuA) {
@@ -41,11 +41,11 @@ public class SaveMenuParamValidator implements MenuParamValidator {
 				// 校验类型
 				org.laokou.admin.menu.service.validator.MenuParamValidator.validateType(menuA),
 				// 校验名称
-				org.laokou.admin.menu.service.validator.MenuParamValidator.validateName(menuA, adminMenuMapper),
+				org.laokou.admin.menu.service.validator.MenuParamValidator.validateName(menuA, menuMapper),
 				// 校验路径
-				org.laokou.admin.menu.service.validator.MenuParamValidator.validatePath(menuA, adminMenuMapper),
+				org.laokou.admin.menu.service.validator.MenuParamValidator.validatePath(menuA, menuMapper),
 				// 校验权限标识
-				org.laokou.admin.menu.service.validator.MenuParamValidator.validatePermission(menuA, adminMenuMapper),
+				org.laokou.admin.menu.service.validator.MenuParamValidator.validatePermission(menuA, menuMapper),
 				// 校验状态
 				org.laokou.admin.menu.service.validator.MenuParamValidator.validateStatus(menuA),
 				// 校验排序

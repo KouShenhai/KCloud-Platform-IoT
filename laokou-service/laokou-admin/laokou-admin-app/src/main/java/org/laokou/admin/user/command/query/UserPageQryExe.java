@@ -40,11 +40,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserPageQryExe {
 
-	private final UserMapper adminUserMapper;
+	private final UserMapper userMapper;
 
 	public Result<Page<UserCO>> execute(UserPageQry qry) {
-		List<UserDO> list = adminUserMapper.selectObjectPage(qry);
-		long total = adminUserMapper.selectObjectCount(qry);
+		List<UserDO> list = userMapper.selectObjectPage(qry);
+		long total = userMapper.selectObjectCount(qry);
 		return Result.ok(Page.create(UserConvertor.toClientObjects(list), total));
 	}
 

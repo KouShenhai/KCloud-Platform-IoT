@@ -37,18 +37,18 @@ import java.util.concurrent.ExecutorService;
 @RequiredArgsConstructor
 public class UserDomainService {
 
-	private final UserGateway adminUserGateway;
+	private final UserGateway userGateway;
 
 	private final UserRoleGateway userRoleGateway;
 
 	private final ExecutorService virtualTaskExecutor;
 
 	public void createUser(UserA userA) {
-		adminUserGateway.createUser(userA);
+		userGateway.createUser(userA);
 	}
 
 	public void updateUser(UserA userA) {
-		adminUserGateway.updateUser(userA);
+		userGateway.updateUser(userA);
 	}
 
 	public void updateAuthorityUser(UserA userA) throws Exception {
@@ -63,7 +63,7 @@ public class UserDomainService {
 	public void deleteUser(Long[] ids) throws InterruptedException {
 		List<Callable<Boolean>> futures = new ArrayList<>(2);
 		futures.add(() -> {
-			adminUserGateway.deleteUser(ids);
+			userGateway.deleteUser(ids);
 			return true;
 		});
 		futures.add(() -> {

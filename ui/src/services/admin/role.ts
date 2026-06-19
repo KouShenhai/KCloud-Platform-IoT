@@ -128,6 +128,21 @@ export async function pageRole(
 	});
 }
 
+/** 查询角色列表 分页查询角色列表 POST /api/v1/roles/list */
+export async function listRole(
+	body: API.RoleListQry,
+	options?: { [key: string]: any },
+) {
+	return request<API.Result>('/api-proxy/admin/api/v1/roles/list', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		data: body,
+		...(options || {}),
+	});
+}
+
 /** 修改角色权限 修改角色权限 PUT /api/v1/roles/authority */
 export async function modifyRoleAuthority(
 	body: API.RoleModifyAuthorityCmd,

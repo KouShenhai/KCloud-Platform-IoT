@@ -34,7 +34,7 @@ public class ResetUserPwdParamValidator implements UserParamValidator {
 
 	private final PasswordEncoder passwordEncoder;
 
-	private final UserMapper adminUserMapper;
+	private final UserMapper userMapper;
 
 	@Override
 	public void validateUser(UserA userA) {
@@ -43,7 +43,7 @@ public class ResetUserPwdParamValidator implements UserParamValidator {
 				org.laokou.admin.user.service.validator.UserParamValidator.validateId(userA),
 				// 校验密码
 				org.laokou.admin.user.service.validator.UserParamValidator.validatePassword(userA, passwordEncoder,
-						adminUserMapper, true));
+						userMapper, true));
 	}
 
 }

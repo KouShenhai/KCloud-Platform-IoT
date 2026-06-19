@@ -33,32 +33,32 @@ import java.util.Arrays;
  * @author laokou
  */
 @Slf4j
-@Component("adminRoleGateway")
+@Component
 @RequiredArgsConstructor
 public class RoleGatewayImpl implements RoleGateway {
 
-	private final RoleMapper adminRoleMapper;
+	private final RoleMapper roleMapper;
 
 	@Override
 	public void createRole(RoleA roleA) {
 		RoleDO roleDO = RoleConvertor.toDataObject(roleA);
-		adminRoleMapper.insert(roleDO);
+		roleMapper.insert(roleDO);
 	}
 
 	@Override
 	public void updateRole(RoleA roleA) {
 		RoleDO roleDO = RoleConvertor.toDataObject(roleA);
 		roleDO.setVersion(getVersion(roleA.getId()));
-		adminRoleMapper.updateById(roleDO);
+		roleMapper.updateById(roleDO);
 	}
 
 	@Override
 	public void deleteRole(Long[] ids) {
-		adminRoleMapper.deleteByIds(Arrays.asList(ids));
+		roleMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 	private Integer getVersion(Long id) {
-		return adminRoleMapper.selectVersion(id);
+		return roleMapper.selectVersion(id);
 	}
 
 }

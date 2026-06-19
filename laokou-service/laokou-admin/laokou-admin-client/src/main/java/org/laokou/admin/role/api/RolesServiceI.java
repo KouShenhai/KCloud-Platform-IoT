@@ -20,6 +20,7 @@ package org.laokou.admin.role.api;
 import org.laokou.admin.role.dto.RoleExportCmd;
 import org.laokou.admin.role.dto.RoleGetQry;
 import org.laokou.admin.role.dto.RoleImportCmd;
+import org.laokou.admin.role.dto.RoleListQry;
 import org.laokou.admin.role.dto.RoleModifyAuthorityCmd;
 import org.laokou.admin.role.dto.RoleModifyCmd;
 import org.laokou.admin.role.dto.RolePageQry;
@@ -28,6 +29,8 @@ import org.laokou.admin.role.dto.RoleSaveCmd;
 import org.laokou.admin.role.dto.clientobject.RoleCO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
+
+import java.util.List;
 
 /**
  * 角色接口.
@@ -77,6 +80,12 @@ public interface RolesServiceI {
 	 * @param qry 分页查询请求
 	 */
 	Result<Page<RoleCO>> pageRole(RolePageQry qry);
+
+	/**
+	 * 查询角色.
+	 * @param qry 查询请求
+	 */
+	Result<List<RoleCO>> listRole(RoleListQry qry);
 
 	/**
 	 * 查看角色.

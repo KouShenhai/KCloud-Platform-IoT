@@ -15,29 +15,34 @@
  *
  */
 
-package org.laokou.admin.menu.command.query;
+package org.laokou.admin.role.command.query;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.menu.convertor.MenuConvertor;
-import org.laokou.admin.menu.dto.MenuGetQry;
-import org.laokou.admin.menu.dto.clientobject.MenuCO;
-import org.laokou.admin.menu.gatewayimpl.database.MenuMapper;
+import org.laokou.admin.role.convertor.RoleConvertor;
+import org.laokou.admin.role.dto.RoleListQry;
+import org.laokou.admin.role.dto.clientobject.RoleCO;
+import org.laokou.admin.role.gatewayimpl.database.RoleMapper;
+import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDO;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
- * 查看菜单请求执行器.
+ * 查询角色请求执行器.
  *
  * @author laokou
  */
 @Component
 @RequiredArgsConstructor
-public class MenuGetQryExe {
+public class RoleListQryExe {
 
-	private final MenuMapper menuMapper;
+	private final RoleMapper roleMapper;
 
-	public Result<MenuCO> execute(MenuGetQry qry) {
-		return Result.ok(MenuConvertor.toClientObject(menuMapper.selectById(qry.getId())));
+	public Result<List<RoleCO>> execute(RoleListQry qry) {
+		List<RoleDO> list = roleMapper.selectList(Wrappers.lambdaQuery(RoleDO.class).orderByAsc(RoleDO::getSort));
+		return Result.ok(RoleConvertor.toClientObjects(list));
 	}
 
 }

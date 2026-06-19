@@ -33,7 +33,7 @@ import java.util.List;
  *
  * @author laokou
  */
-@Entity("adminUserE")
+@Entity
 @Getter
 @Builder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)

@@ -25,6 +25,7 @@ import org.laokou.admin.role.api.RolesServiceI;
 import org.laokou.admin.role.dto.RoleExportCmd;
 import org.laokou.admin.role.dto.RoleGetQry;
 import org.laokou.admin.role.dto.RoleImportCmd;
+import org.laokou.admin.role.dto.RoleListQry;
 import org.laokou.admin.role.dto.RoleModifyAuthorityCmd;
 import org.laokou.admin.role.dto.RoleModifyCmd;
 import org.laokou.admin.role.dto.RolePageQry;
@@ -52,6 +53,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * 角色管理控制器.
@@ -123,6 +126,13 @@ public class RolesController {
 	@Operation(summary = "分页查询角色列表", description = "分页查询角色列表")
 	public Result<Page<RoleCO>> pageRole(@Validated @RequestBody RolePageQry qry) {
 		return rolesServiceI.pageRole(qry);
+	}
+
+	@TraceLog
+	@PostMapping("/v1/roles/list")
+	@Operation(summary = "查询角色列表", description = "查询角色列表")
+	public Result<List<RoleCO>> listRole(@Validated @RequestBody RoleListQry qry) {
+		return rolesServiceI.listRole(qry);
 	}
 
 	@TraceLog
