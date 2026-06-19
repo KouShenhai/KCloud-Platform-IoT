@@ -73,7 +73,7 @@ public class OperateLogCO extends ClientObject {
 	/**
 	 * 操作的IP地址.
 	 */
-	private String ip;
+	private String ipAddress;
 
 	/**
 	 * 操作的归属地.

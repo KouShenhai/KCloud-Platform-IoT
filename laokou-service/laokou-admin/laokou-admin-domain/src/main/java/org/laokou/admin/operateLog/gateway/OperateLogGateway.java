@@ -17,7 +17,7 @@
 
 package org.laokou.admin.operateLog.gateway;
 
-import org.laokou.admin.operateLog.model.OperateLog111E;
+import org.laokou.admin.operateLog.model.AdminOperateLogE;
 
 /**
  * 操作日志网关【防腐】.
@@ -29,12 +29,12 @@ public interface OperateLogGateway {
 	/**
 	 * 新增操作日志.
 	 */
-	void createOperateLog(OperateLog111E operateLog111E);
+	void createOperateLog(AdminOperateLogE adminOperateLogE);
 
 	/**
 	 * 修改操作日志.
 	 */
-	void updateOperateLog(OperateLog111E operateLog111E);
+	void updateOperateLog(AdminOperateLogE adminOperateLogE);
 
 	/**
 	 * 删除操作日志.

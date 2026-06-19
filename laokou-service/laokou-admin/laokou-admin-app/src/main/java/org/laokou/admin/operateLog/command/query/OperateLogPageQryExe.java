@@ -19,6 +19,7 @@ package org.laokou.admin.operateLog.command.query;
 
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.operateLog.convertor.OperateLogConvertor;
 import org.laokou.admin.operateLog.dto.OperateLogPageQry;
 import org.laokou.admin.operateLog.dto.clientobject.OperateLogCO;
@@ -29,6 +30,7 @@ import org.laokou.common.log.mapper.OperateLogMapper;
 import org.laokou.common.tenant.constant.DSConstants;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -36,6 +38,7 @@ import java.util.List;
  *
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class OperateLogPageQryExe {
@@ -48,6 +51,10 @@ public class OperateLogPageQryExe {
 			List<OperateLogDO> list = operateLogMapper.selectObjectPage(qry);
 			long total = operateLogMapper.selectObjectCount(qry);
 			return Result.ok(Page.create(OperateLogConvertor.toClientObjects(list), total));
+		}
+		catch (Exception e) {
+			log.error("查询操作日志列表失败，错误信息：{}", e.getMessage(), e);
+			return Result.ok(Page.create(Collections.emptyList(), 0));
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

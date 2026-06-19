@@ -23,7 +23,7 @@
   <sql id="selectColumns">
     id,
     username,
-    ip,
+    ip_address,
     address,
     browser,
     os,
@@ -38,8 +38,8 @@
     <if test="pageQuery.username != null and pageQuery.username != ''">
       and username like #{pageQuery.username}
     </if>
-    <if test="pageQuery.ip != null and pageQuery.ip != ''">
-      and ip like #{pageQuery.ip}
+    <if test="pageQuery.ipAddress != null and pageQuery.ipAddress != ''">
+      and ip_address like #{pageQuery.ipAddress}
     </if>
     <if test="pageQuery.address != null and pageQuery.address != ''">
       and address like #{pageQuery.address}

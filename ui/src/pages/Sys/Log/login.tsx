@@ -13,7 +13,7 @@ export default () => {
 	type TableColumns = {
 		id: number | undefined;
 		username: string | undefined;
-		ip: string | undefined;
+		ipAddress: string | undefined;
 		address: string | undefined;
 		browser: string | undefined;
 		os: string | undefined;
@@ -54,7 +54,7 @@ export default () => {
 			pageNum: params?.current,
 			pageIndex: params?.pageSize * (params?.current - 1),
 			username: trim(params?.username),
-			ip: trim(params?.ip),
+			ipAddress: trim(params?.ipAddress),
 			address: trim(params?.address),
 			browser: trim(params?.browser),
 			status: params?.statusValue,
@@ -91,12 +91,12 @@ export default () => {
 			},
 		},
 		{
-			title: t('sys.loginLog.ip'),
-			dataIndex: 'ip',
+			title: t('sys.loginLog.ipAddress'),
+			dataIndex: 'ipAddress',
 			ellipsis: true,
 			valueType: 'text',
 			fieldProps: {
-				placeholder: t('sys.loginLog.placeholder.ip'),
+				placeholder: t('sys.loginLog.placeholder.ipAddress'),
 			},
 		},
 		{
@@ -293,7 +293,7 @@ export default () => {
 							sheetData: _list,
 							sheetFilter: [
 								'username',
-								'ip',
+								'ipAddress',
 								'address',
 								'browser',
 								'os',
@@ -304,7 +304,7 @@ export default () => {
 							],
 							sheetHeader: [
 								t('sys.user.username'),
-								t('sys.loginLog.ip'),
+								t('sys.loginLog.ipAddress'),
 								t('sys.loginLog.address'),
 								t('sys.loginLog.browser'),
 								t('sys.loginLog.os'),
