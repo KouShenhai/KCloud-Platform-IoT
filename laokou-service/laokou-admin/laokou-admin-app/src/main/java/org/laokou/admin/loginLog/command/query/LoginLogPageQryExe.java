@@ -30,6 +30,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.tenant.constant.DSConstants;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -42,14 +43,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LoginLogPageQryExe {
 
-	private final LoginLogMapper adminLoginLogMapper;
+	private final LoginLogMapper loginLogMapper;
 
 	public Result<Page<LoginLogCO>> execute(LoginLogPageQry qry) {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);
-			List<LoginLogDO> list = adminLoginLogMapper.selectObjectPage(qry);
-			long total = adminLoginLogMapper.selectObjectCount(qry);
+			List<LoginLogDO> list = loginLogMapper.selectObjectPage(qry);
+			long total = loginLogMapper.selectObjectCount(qry);
 			return Result.ok(Page.create(LoginLogConvertor.toClientObjects(list), total));
+		}
+		catch (Exception e) {
+			log.error("查询登录日志列表失败，错误信息：{}", e.getMessage(), e);
+			return Result.ok(Page.create(Collections.emptyList(), 0));
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

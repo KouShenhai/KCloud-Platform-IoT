@@ -32,7 +32,6 @@ import {
 	message,
 	Modal,
 	Row,
-	Space,
 	Switch,
 	Typography,
 	Upload,
@@ -283,26 +282,6 @@ export default () => {
 				</Typography.Text>
 			);
 		}
-
-		return (
-			<Space key="selected" size={6} wrap>
-				<Typography.Text type="secondary">
-					{t('sys.dictItem.currentDict')}
-				</Typography.Text>
-				<Typography.Text
-					strong
-					ellipsis
-					style={{ display: 'inline-block', maxWidth: 180 }}
-				>
-					{selectedDict?.name || '-'}
-				</Typography.Text>
-				{selectedDict?.type && (
-					<Typography.Text type="secondary">
-						{selectedDict.type}
-					</Typography.Text>
-				)}
-			</Space>
-		);
 	};
 
 	const dictColumns: ProColumns<API.DictCO>[] = [
@@ -881,14 +860,8 @@ export default () => {
 						]}
 						dateFormatter="string"
 						toolbar={{
-							title: selectedDict?.name
-								? `${t('sys.dictItem.title')} - ${
-										selectedDict.name
-								  }`
-								: t('sys.dictItem.title'),
-							tooltip:
-								selectedDict?.type ||
-								t('sys.dictItem.selectDictFirst'),
+							title: t('sys.dictItem.title'),
+							tooltip: selectedDict?.type || t('sys.dictItem.selectDictFirst'),
 						}}
 					/>
 				</Col>

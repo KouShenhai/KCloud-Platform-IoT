@@ -130,8 +130,6 @@ COMMENT ON TABLE "public"."sys_dict" IS '字典';
 
 ALTER TABLE "public"."sys_dict" ADD CONSTRAINT "sys_dict_pkey" PRIMARY KEY ("id");
 
-INSERT INTO "public"."sys_dict" VALUES (1, 1, 1, '2024-05-09 00:15:30', '2024-05-09 00:15:40', 0, 0, 1,1, 'dict-type.manage.name.menu.show-hide', 'sys_menu_show_hide', '菜单状态列表', 0);
-
 -- ----------------------------
 -- -------------字典项------------
 -- ----------------------------
@@ -172,11 +170,11 @@ COMMENT ON TABLE "public"."sys_dict_item" IS '字典项';
 
 ALTER TABLE "public"."sys_dict_item" ADD CONSTRAINT "sys_dict_item_pkey" PRIMARY KEY ("id");
 
-CREATE UNIQUE INDEX "sys_dict_type_tenantId_idx" ON "public"."sys_dict" USING btree (
+CREATE INDEX "sys_dict_type_tenantId_idx" ON "public"."sys_dict" USING btree (
    "type",
    "tenant_id"
 );
-COMMENT ON INDEX "public"."sys_dict_type_tenantId_idx" IS '类型_租户ID_唯一索引';
+COMMENT ON INDEX "public"."sys_dict_type_tenantId_idx" IS '类型_租户ID_索引';
 
 -- ----------------------------
 -- -------------国际化菜单------------
@@ -293,10 +291,8 @@ COMMENT ON COLUMN "public"."sys_menu"."status" IS '菜单状态 0启用 1停用'
 COMMENT ON TABLE "public"."sys_menu" IS '菜单';
 
 ALTER TABLE "public"."sys_menu" ADD CONSTRAINT "sys_menu_pkey" PRIMARY KEY ("id");
-ALTER TABLE "public"."sys_menu" ADD CONSTRAINT "sys_menu_permission_unique" UNIQUE ("permission");
-
-CREATE INDEX "sys_menu_type_idx" ON "public"."sys_menu" USING btree ("type");
-COMMENT ON INDEX "public"."sys_menu_type_idx" IS '菜单类型_索引';
+CREATE INDEX "sys_menu_type_tenantId_idx" ON "public"."sys_menu" USING btree ("type", "tenant_id");
+COMMENT ON INDEX "public"."sys_menu_type_tenantId_idx" IS '菜单类型_租户ID_索引';
 
 INSERT INTO "public"."sys_menu" VALUES (33, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 1, 1, 1, NULL, 0, '集群管理', '/sys/cluster', NULL, 3, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (19, 1, 1, '2025-01-21 05:19:17', '2026-05-29 01:19:54.280534', 0, 1, 1, 1, 17, NULL, 0, '部门', '/sys/permission/dept', NULL, 2, 0, 0, NULL);
@@ -398,6 +394,20 @@ INSERT INTO "public"."sys_menu" VALUES (121, 1, 1, '2026-06-19 15:43:07.457194',
 INSERT INTO "public"."sys_menu" VALUES (122, 1, 1, '2026-06-19 15:43:36.840718', '2026-06-19 15:43:58.433843', 0, 1, 1, 1, 29, 'sys:i18n-menu:modify', 1, '修改国际化菜单', NULL, NULL, 3, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (123, 1, 1, '2026-06-19 15:44:27.722691', '2026-06-19 15:44:27.741956', 0, 0, 1, 1, 29, 'sys:i18n-menu:save', 1, '新增国际化菜单', NULL, NULL, 4, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (124, 1, 1, '2026-06-19 15:45:03.403504', '2026-06-19 15:45:25.009303', 0, 1, 1, 1, 29, 'sys:i18n-menu:page', 1, '分页查询国际化菜单列表', NULL, NULL, 5, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (96, 1, 1, '2026-06-19 18:24:58.966455', '2026-06-19 18:24:58.966455', 0, 0, 1, 1, 27, 'sys:dict:import', 1, '导入字典', NULL, NULL, 6, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (99, 1, 1, '2026-06-19 18:24:58.966455', '2026-06-19 18:24:58.966455', 0, 0, 1, 1, 27, 'sys:dict-item:remove', 1, '删除字典项', NULL, NULL, 9, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (104, 1, 1, '2026-06-19 18:24:58.966455', '2026-06-19 18:24:58.966455', 0, 0, 1, 1, 27, 'sys:dict-item:export', 1, '导出字典项', NULL, NULL, 14, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (102, 1, 1, '2026-06-19 18:24:58.966455', '2026-06-19 18:24:58.966455', 0, 0, 1, 1, 27, 'sys:dict-item:page', 1, '分页查询字典项列表', NULL, NULL, 12, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (94, 1, 1, '2026-06-19 18:24:58.966455', '2026-06-19 18:24:58.966455', 0, 0, 1, 1, 27, 'sys:dict:save', 1, '新增字典', NULL, NULL, 4, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (98, 1, 1, '2026-06-19 18:24:58.966455', '2026-06-19 18:24:58.966455', 0, 0, 1, 1, 27, 'sys:dict-item:detail', 1, '查看字典项', NULL, NULL, 8, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (101, 1, 1, '2026-06-19 18:24:58.966455', '2026-06-19 18:24:58.966455', 0, 0, 1, 1, 27, 'sys:dict-item:save', 1, '新增字典项', NULL, NULL, 11, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (100, 1, 1, '2026-06-19 18:24:58.966455', '2026-06-19 18:24:58.966455', 0, 0, 1, 1, 27, 'sys:dict-item:modify', 1, '修改字典项', NULL, NULL, 10, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (92, 1, 1, '2026-06-19 18:24:58.966455', '2026-06-19 18:24:58.966455', 0, 0, 1, 1, 27, 'sys:dict:remove', 1, '删除字典', NULL, NULL, 2, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (93, 1, 1, '2026-06-19 18:24:58.966455', '2026-06-19 18:24:58.966455', 0, 0, 1, 1, 27, 'sys:dict:modify', 1, '修改字典', NULL, NULL, 3, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (103, 1, 1, '2026-06-19 18:24:58.966455', '2026-06-19 18:24:58.966455', 0, 0, 1, 1, 27, 'sys:dict-item:import', 1, '导入字典项', NULL, NULL, 13, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (91, 1, 1, '2026-06-19 18:24:58.966455', '2026-06-19 18:24:58.966455', 0, 0, 1, 1, 27, 'sys:dict:detail', 1, '查看字典', NULL, NULL, 1, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (97, 1, 1, '2026-06-19 18:24:58.966455', '2026-06-19 18:24:58.966455', 0, 0, 1, 1, 27, 'sys:dict:export', 1, '导出字典', NULL, NULL, 7, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (95, 1, 1, '2026-06-19 18:24:58.966455', '2026-06-19 18:24:58.966455', 0, 0, 1, 1, 27, 'sys:dict:page', 1, '分页查询字典列表', NULL, NULL, 5, 0, 0, NULL);
 
 -- ----------------------------
 -- -------------菜单套餐------------
@@ -779,10 +789,11 @@ COMMENT ON TABLE "public"."sys_user" IS '用户';
 
 ALTER TABLE "public"."sys_user" ADD CONSTRAINT "sys_user_pkey" PRIMARY KEY ("id");
 
-CREATE UNIQUE INDEX "sys_user_username_idx" ON "public"."sys_user" USING btree (
-	"username"
+CREATE INDEX "sys_user_username_tenantId_idx" ON "public"."sys_user" USING btree (
+	"username",
+	"tenant_id"
 );
-COMMENT ON INDEX "public"."sys_user_username_idx" IS '用户名_唯一索引';
+COMMENT ON INDEX "public"."sys_user_username_tenantId_idx" IS '用户名_租户ID_索引';
 
 INSERT INTO "public"."sys_user" VALUES (1, 1, 1, '2022-01-01 20:13:11+08', '2024-04-29 23:52:52+08', 0, 0, 1,1, '{bcrypt}$2a$10$bGXM7u58FPMDanMyqvZ7Reb9sqJiUTCdAcb1wN5IIkFa8nYOMOioK', 1, 'Ylh4QTF0YmdEWWJR2TEQZjlR4rzAz/73MsL8gxlNSv+/j3L7Sxne4hFAP+W9', 'Ylh4QTF0YmdEWWJR2j0YYjxS577BzIgIGdpZbU2I7EIUTVaxqvWu', 0, 1, 'Ylh4QTF0YmdEWWJRimFMPAPt8S6U+J8eEhIZiErF69o=~Ylh4QTF0YmdEWWJRj2hIO/7mcHvbRltmR9cojv2C2jE=', 'Ylh4QTF0YmdEWWJR2TEQZt/I7tdiOALwVrZXFxK5boI=~Ylh4QTF0YmdEWWJR3zQSZDEzo/mQ2Kt2ooeStwwy1DM=~Ylh4QTF0YmdEWWJR2jYQYvkuHP0mNYNzkmUPAkpRnNs=~Ylh4QTF0YmdEWWJR2DQWY04zb3FkQTCmuPFi97WrI08=~Ylh4QTF0YmdEWWJR2jIXZToqPakPCzCwmjz4XLwksmM=~Ylh4QTF0YmdEWWJR3DMRYRY/bEOz79QYxdiB5xtGMoU=~Ylh4QTF0YmdEWWJR3TUVYYBJ7iU6aLpsTeXBwNhb1lk=~Ylh4QTF0YmdEWWJR2zEVFRAKn1yHzG9spDDE8afQ1Ls=~Ylh4QTF0YmdEWWJR3zFhJLv17Ndjz3ymZABhpoKJPCE=~Ylh4QTF0YmdEWWJR30VQJOy8KF8pYc2r4yJkfOWIWnw=~Ylh4QTF0YmdEWWJRq3RQe8Vs9XmHQG6AkHOCtSwt6cA=~Ylh4QTF0YmdEWWJRmnQPNipHlgS+8wcVPz+EC5gdeeM=~Ylh4QTF0YmdEWWJRmitCOoJ+zG0CpSympji+U7NWxUw=~Ylh4QTF0YmdEWWJRxWZOOE8J8sq9k7iJhdxbniMpw9I=', 'Ylh4QTF0YmdEWWJR2j0YOQJF4W0Ofxd/k/LFC4GzoQ==~Ylh4QTF0YmdEWWJR3DEVZk3r4C1hv2eOukkPSzTOffA=~Ylh4QTF0YmdEWWJR2TAWY8HwM9jwPxZFMFE0pFibp9k=', 'Ylh4QTF0YmdEWWJRimFMPGaJmldyuWIb9BNmUN1ULMI7');
 INSERT INTO "public"."sys_user" VALUES (5, 1, 1, '2022-06-16 00:48:28+08', '2024-04-29 23:52:52+08', 0, 1, 1,1, '{bcrypt}$2a$10$RX9zW6rUMbGjybnlW77FWezhgbH0ZsFinGtKaoOsbovkEgij7kzNC', 0, NULL, NULL, 0, 1, 'Ylh4QTF0YmdEWWJRh2ROPuSvWyrTvf2MaPrw8GpjTBM=~Ylh4QTF0YmdEWWJRimpKYMTCzQiEJvp5Ar80c6jh1Wg=', NULL, NULL, 'Ylh4QTF0YmdEWWJRh2ROPj1LULONpfXTh6mWUOIX9SFO');

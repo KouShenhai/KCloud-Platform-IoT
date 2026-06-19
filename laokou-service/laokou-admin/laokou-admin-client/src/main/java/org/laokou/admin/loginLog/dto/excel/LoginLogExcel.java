@@ -48,7 +48,7 @@ public class LoginLogExcel extends DTO {
 	@ContentStyle(horizontalAlignment = HorizontalAlignmentEnum.CENTER,
 			verticalAlignment = VerticalAlignmentEnum.CENTER, wrapped = BooleanEnum.TRUE)
 	@ExcelProperty(value = "登录地址", index = 1)
-	private String ip;
+	private String ipAddress;
 
 	/**
 	 * 登录的归属地.

@@ -18,32 +18,59 @@
 package org.laokou.admin.dict.convertor;
 
 import org.laokou.admin.dict.dto.clientobject.DictCO;
+import org.laokou.admin.dict.factory.DictDomainFactory;
 import org.laokou.admin.dict.gatewayimpl.database.dataobject.DictDO;
-import org.laokou.admin.dict.model.DictE;
-import org.laokou.common.core.util.ConvertUtils;
-import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.admin.dict.model.DictA;
+import org.laokou.admin.dict.model.entity.DictE;
+
+import java.util.List;
 
 /**
  * 字典转换器.
  *
  * @author laokou
  */
-public class DictConvertor {
+public final class DictConvertor {
 
-	public static DictDO toDataObject(Long id, DictE dictE) {
-		DictDO dictDO = ConvertUtils.sourceToTarget(dictE, DictDO.class);
-		if (ObjectUtils.isNull(dictDO.getId())) {
-			dictDO.setId(id);
-		}
+	private DictConvertor() {
+	}
+
+	public static DictDO toDataObject(DictA dictA) {
+		DictE dictE = dictA.getDictE();
+		DictDO dictDO = new DictDO();
+		dictDO.setId(dictA.getId());
+		dictDO.setType(dictE.getType());
+		dictDO.setName(dictE.getName());
+		dictDO.setRemark(dictE.getRemark());
+		dictDO.setStatus(dictE.getStatus());
+		dictDO.setCreateTime(dictA.getCreateTime());
 		return dictDO;
 	}
 
 	public static DictCO toClientObject(DictDO dictDO) {
-		return ConvertUtils.sourceToTarget(dictDO, DictCO.class);
+		DictCO dictCO = new DictCO();
+		dictCO.setId(dictDO.getId());
+		dictCO.setType(dictDO.getType());
+		dictCO.setName(dictDO.getName());
+		dictCO.setRemark(dictDO.getRemark());
+		dictCO.setStatus(dictDO.getStatus());
+		dictCO.setCreateTime(dictDO.getCreateTime());
+		return dictCO;
+	}
+
+	public static List<DictCO> toClientObjectList(List<DictDO> list) {
+		return list.stream().map(DictConvertor::toClientObject).toList();
 	}
 
 	public static DictE toEntity(DictCO dictCO) {
-		return ConvertUtils.sourceToTarget(dictCO, DictE.class);
+		return DictDomainFactory.createDictE()
+			.toBuilder()
+			.id(dictCO.getId())
+			.type(dictCO.getType())
+			.name(dictCO.getName())
+			.status(dictCO.getStatus())
+			.remark(dictCO.getRemark())
+			.build();
 	}
 
 }

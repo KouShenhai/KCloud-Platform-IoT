@@ -20,6 +20,7 @@ package org.laokou.common.crypto.annotation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonGenerator;
 import tools.jackson.databind.SerializationContext;
 import tools.jackson.databind.ValueSerializer;
 
@@ -35,8 +36,7 @@ public class CryptoSerializer extends ValueSerializer<String> {
 	private final boolean isEncrypt;
 
 	@Override
-	public void serialize(String value, tools.jackson.core.JsonGenerator generator, SerializationContext context)
-			throws JacksonException {
+	public void serialize(String value, JsonGenerator generator, SerializationContext context) throws JacksonException {
 		try {
 			if (isEncrypt) {
 				generator.writeString(cipherType.encrypt(value));
@@ -45,8 +45,8 @@ public class CryptoSerializer extends ValueSerializer<String> {
 				generator.writeString(cipherType.decrypt(value));
 			}
 		}
-		catch (Exception e) {
-			log.error("加密/解密失败，错误信息：{}", e.getMessage(), e);
+		catch (Exception ex) {
+			log.error("加密/解密失败，错误信息：{}", ex.getMessage(), ex);
 		}
 	}
 

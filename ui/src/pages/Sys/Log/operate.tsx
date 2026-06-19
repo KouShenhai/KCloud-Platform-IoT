@@ -29,7 +29,7 @@ export default () => {
 		createTime: string | undefined;
 		moduleName: string | undefined;
 		requestType: string | undefined;
-		ip: string | undefined;
+		ipAddress: string | undefined;
 		address: string | undefined;
 		operator: string | undefined;
 		costTime: number | string;
@@ -55,7 +55,7 @@ export default () => {
 			name: trim(params?.name),
 			status: params?.statusValue,
 			moduleName: trim(params?.moduleName),
-			ip: trim(params?.ip),
+			ipAddress: trim(params?.ipAddress),
 			requestType: trim(params?.requestType),
 			operator: trim(params?.operator),
 			profile: trim(params?.profile),
@@ -118,12 +118,12 @@ export default () => {
 			},
 		},
 		{
-			title: t('sys.operateLog.ip'),
-			dataIndex: 'ip',
+			title: t('sys.operateLog.ipAddress'),
+			dataIndex: 'ipAddress',
 			ellipsis: true,
 			valueType: 'text',
 			fieldProps: {
-				placeholder: t('sys.operateLog.placeholder.ip'),
+				placeholder: t('sys.operateLog.placeholder.ipAddress'),
 			},
 		},
 		{
@@ -307,7 +307,7 @@ export default () => {
 									t('sys.operateLog.name'),
 									t('sys.operateLog.requestType'),
 									t('sys.operateLog.operator'),
-									t('sys.operateLog.ip'),
+									t('sys.operateLog.ipAddress'),
 									t('sys.operateLog.address'),
 									t('sys.operateLog.status'),
 									t('sys.operateLog.errorMessage'),

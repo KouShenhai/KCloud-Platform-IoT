@@ -28,7 +28,7 @@ import org.laokou.common.i18n.annotation.Entity;
  */
 @Setter
 @Getter
-@Entity("adminLoginLogE")
+@Entity
 public class LoginLogE {
 
 	/**
@@ -44,7 +44,7 @@ public class LoginLogE {
 	/**
 	 * 登录的IP地址.
 	 */
-	private String ip;
+	private String ipAddress;
 
 	/**
 	 * 登录的归属地.

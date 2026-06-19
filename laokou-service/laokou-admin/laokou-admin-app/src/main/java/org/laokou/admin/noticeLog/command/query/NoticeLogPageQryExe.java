@@ -19,6 +19,7 @@ package org.laokou.admin.noticeLog.command.query;
 
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.noticeLog.convertor.NoticeLogConvertor;
 import org.laokou.admin.noticeLog.dto.NoticeLogPageQry;
 import org.laokou.admin.noticeLog.dto.clientobject.NoticeLogCO;
@@ -29,6 +30,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.tenant.constant.DSConstants;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -36,6 +38,7 @@ import java.util.List;
  *
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class NoticeLogPageQryExe {
@@ -48,6 +51,10 @@ public class NoticeLogPageQryExe {
 			List<NoticeLogDO> list = adminNoticeLogMapper.selectObjectPage(qry);
 			long total = adminNoticeLogMapper.selectObjectCount(qry);
 			return Result.ok(Page.create(NoticeLogConvertor.toClientObjects(list), total));
+		}
+		catch (Exception e) {
+			log.error("查询通知日志列表失败，错误信息：{}", e.getMessage(), e);
+			return Result.ok(Page.create(Collections.emptyList(), 0));
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

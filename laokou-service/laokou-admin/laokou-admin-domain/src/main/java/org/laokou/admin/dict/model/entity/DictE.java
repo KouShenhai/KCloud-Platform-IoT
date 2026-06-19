@@ -15,20 +15,30 @@
  *
  */
 
-package org.laokou.admin.loginLog.dto.clientobject;
+package org.laokou.admin.dict.model.entity;
 
-import lombok.Data;
-import org.laokou.common.i18n.dto.ClientObject;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.annotation.Entity;
 
-import java.time.Instant;
+import java.io.Serializable;
 
 /**
- * 登录日志客户端对象.
+ * 字典领域对象【实体】.
  *
  * @author laokou
  */
-@Data
-public class LoginLogCO extends ClientObject {
+@Entity
+@Getter
+@Builder(toBuilder = true)
+@EqualsAndHashCode(callSuper = false)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class DictE implements Serializable {
 
 	/**
 	 * ID.
@@ -36,48 +46,23 @@ public class LoginLogCO extends ClientObject {
 	private Long id;
 
 	/**
-	 * 登录的用户名.
+	 * 字典名称.
 	 */
-	private String username;
+	private String name;
 
 	/**
-	 * 登录的IP地址.
-	 */
-	private String ipAddress;
-
-	/**
-	 * 登录的归属地.
-	 */
-	private String address;
-
-	/**
-	 * 登录的浏览器.
-	 */
-	private String browser;
-
-	/**
-	 * 登录的操作系统.
-	 */
-	private String os;
-
-	/**
-	 * 登录状态 0登录成功 1登录失败.
-	 */
-	private Integer status;
-
-	/**
-	 * 错误信息.
-	 */
-	private String errorMessage;
-
-	/**
-	 * 登录类型.
+	 * 字典类型.
 	 */
 	private String type;
 
 	/**
-	 * 登录日期.
+	 * 字典备注.
 	 */
-	private Instant createTime;
+	private String remark;
+
+	/**
+	 * 字典状态 0启用 1停用.
+	 */
+	private Integer status;
 
 }

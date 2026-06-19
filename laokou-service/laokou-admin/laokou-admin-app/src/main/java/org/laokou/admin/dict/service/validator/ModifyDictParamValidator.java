@@ -15,41 +15,23 @@
  *
  */
 
-package org.laokou.admin.dict.model;
+package org.laokou.admin.dict.service.validator;
 
-import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import org.laokou.admin.dict.model.DictA;
+import org.laokou.admin.dict.model.validator.DictParamValidator;
+import org.springframework.stereotype.Component;
 
 /**
- * 字典领域对象【实体】.
- *
  * @author laokou
  */
-@Data
-public class DictE {
+@RequiredArgsConstructor
+@Component("modifyDictParamValidator")
+public class ModifyDictParamValidator implements DictParamValidator {
 
-	/**
-	 * ID.
-	 */
-	private Long id;
+	@Override
+	public void validateDict(DictA dictA) {
 
-	/**
-	 * 字典名称.
-	 */
-	private String name;
-
-	/**
-	 * 字典类型.
-	 */
-	private String type;
-
-	/**
-	 * 字典备注.
-	 */
-	private String remark;
-
-	/**
-	 * 字典状态 0启用 1停用.
-	 */
-	private Integer status;
+	}
 
 }

@@ -29,7 +29,7 @@ import org.laokou.common.i18n.annotation.Entity;
 @Setter
 @Getter
 @Entity
-public class OperateLog111E {
+public class AdminOperateLogE {
 
 	/**
 	 * ID.
@@ -74,7 +74,7 @@ public class OperateLog111E {
 	/**
 	 * 操作的IP地址.
 	 */
-	private String ip;
+	private String ipAddress;
 
 	/**
 	 * 操作的归属地.

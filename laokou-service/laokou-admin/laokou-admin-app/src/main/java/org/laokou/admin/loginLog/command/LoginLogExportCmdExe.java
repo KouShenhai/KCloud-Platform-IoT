@@ -40,7 +40,7 @@ import java.util.concurrent.ExecutorService;
 @RequiredArgsConstructor
 public class LoginLogExportCmdExe {
 
-	private final LoginLogMapper adminLoginLogMapper;
+	private final LoginLogMapper loginLogMapper;
 
 	private final ExecutorService virtualTaskExecutor;
 
@@ -48,7 +48,7 @@ public class LoginLogExportCmdExe {
 	public void executeVoid(LoginLogExportCmd cmd) {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);
-			ExcelUtils.doExport("登录日志", "登录日志", ResponseUtils.getHttpServletResponse(), cmd, adminLoginLogMapper,
+			ExcelUtils.doExport("登录日志", "登录日志", ResponseUtils.getHttpServletResponse(), cmd, loginLogMapper,
 					LoginLogExcel.class, LoginLogConvertor.INSTANCE, virtualTaskExecutor);
 		}
 		catch (Exception e) {

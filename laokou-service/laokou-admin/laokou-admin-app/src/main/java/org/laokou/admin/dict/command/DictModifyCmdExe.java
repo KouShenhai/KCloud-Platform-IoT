@@ -19,6 +19,8 @@ package org.laokou.admin.dict.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dict.dto.DictModifyCmd;
+import org.laokou.admin.dict.factory.DictDomainFactory;
+import org.laokou.admin.dict.model.DictA;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.stereotype.Component;
@@ -40,9 +42,9 @@ public class DictModifyCmdExe {
 
 	@CommandLog
 	public void executeVoid(DictModifyCmd cmd) {
+		DictA dictA = DictDomainFactory.createDictA().create(DictConvertor.toEntity(cmd.getCo()));
 		// 校验参数
-		transactionalUtils
-			.executeInTransaction(() -> dictDomainService.updateDict(DictConvertor.toEntity(cmd.getCo())));
+		transactionalUtils.executeInTransaction(() -> dictDomainService.updateDict(dictA));
 	}
 
 }

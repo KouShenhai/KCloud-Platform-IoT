@@ -32,27 +32,27 @@ import java.util.Arrays;
  *
  * @author laokou
  */
-@Component("adminLoginLogGateway")
+@Component
 @RequiredArgsConstructor
 public class LoginLogGatewayImpl implements LoginLogGateway {
 
-	private final LoginLogMapper adminLoginLogMapper;
+	private final LoginLogMapper loginLogMapper;
 
 	@Override
 	public void createLoginLog(LoginLogE loginLogE) {
-		adminLoginLogMapper.insert(LoginLogConvertor.toDataObject(1L, loginLogE, true));
+		loginLogMapper.insert(LoginLogConvertor.toDataObject(1L, loginLogE, true));
 	}
 
 	@Override
 	public void updateLoginLog(LoginLogE loginLogE) {
 		LoginLogDO loginLogDO = LoginLogConvertor.toDataObject(null, loginLogE, false);
-		loginLogDO.setVersion(adminLoginLogMapper.selectVersion(loginLogE.getId()));
-		adminLoginLogMapper.updateById(loginLogDO);
+		loginLogDO.setVersion(loginLogMapper.selectVersion(loginLogE.getId()));
+		loginLogMapper.updateById(loginLogDO);
 	}
 
 	@Override
 	public void deleteLoginLog(Long[] ids) {
-		adminLoginLogMapper.deleteByIds(Arrays.asList(ids));
+		loginLogMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }

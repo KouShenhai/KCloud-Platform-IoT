@@ -35,7 +35,7 @@ public class OperateLogPageQry extends PageQuery {
 
 	private String errorMessage;
 
-	private String ip;
+	private String ipAddress;
 
 	private String requestType;
 
@@ -61,8 +61,8 @@ public class OperateLogPageQry extends PageQuery {
 		this.errorMessage = StringExtUtils.like(StringExtUtils.trim(errorMessage));
 	}
 
-	public void setIp(String ip) {
-		this.ip = StringExtUtils.like(StringExtUtils.trim(ip));
+	public void setIpAddress(String ipAddress) {
+		this.ipAddress = StringExtUtils.like(StringExtUtils.trim(ipAddress));
 	}
 
 	public void setRequestType(String requestType) {

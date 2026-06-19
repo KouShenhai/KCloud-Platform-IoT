@@ -43,7 +43,6 @@ import org.laokou.auth.model.validator.PasswordValidator;
 import org.laokou.auth.model.valueobject.CaptchaV;
 import org.laokou.auth.model.valueobject.DataFilterV;
 import org.laokou.auth.model.valueobject.UserV;
-import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.common.core.util.RandomStringUtils;
 import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.crypto.util.RSAUtils;
@@ -172,11 +171,6 @@ public final class AuthA extends AggregateRoot implements ValidateName {
 	 */
 	private final CaptchaParamValidator mobileCaptchaParamValidator;
 
-	/**
-	 * 系统设置属性.
-	 */
-	private final SystemSettingsProperties systemSettingsProperties;
-
 	// @formatter:off
 	AuthA(
 		@NonNull IdGenerator idGenerator,
@@ -189,8 +183,7 @@ public final class AuthA extends AggregateRoot implements ValidateName {
 		@Qualifier("testAuthParamValidator") @NonNull AuthParamValidator testAuthParamValidator,
 		@Qualifier("usernamePasswordAuthParamValidator") @NonNull AuthParamValidator usernamePasswordAuthParamValidator,
 		@Qualifier("mailCaptchaParamValidator") @NonNull CaptchaParamValidator mailCaptchaParamValidator,
-		@Qualifier("mobileCaptchaParamValidator") @NonNull CaptchaParamValidator mobileCaptchaParamValidator,
-		@NonNull SystemSettingsProperties systemSettingsProperties) {
+		@Qualifier("mobileCaptchaParamValidator") @NonNull CaptchaParamValidator mobileCaptchaParamValidator) {
 		this.idGenerator = idGenerator;
 		this.parameterMap = httpRequest.getParameterMap();
 		this.userE = DomainFactory.createUser();
@@ -203,7 +196,6 @@ public final class AuthA extends AggregateRoot implements ValidateName {
 		this.usernamePasswordAuthParamValidator = usernamePasswordAuthParamValidator;
 		this.mailCaptchaParamValidator = mailCaptchaParamValidator;
 		this.mobileCaptchaParamValidator = mobileCaptchaParamValidator;
-		this.systemSettingsProperties = systemSettingsProperties;
 	}
 	// @formatter:on
 
@@ -258,12 +250,7 @@ public final class AuthA extends AggregateRoot implements ValidateName {
 	}
 
 	public void getTenantId(Supplier<Long> supplier) {
-		if (isDefaultTenant()) {
-			this.userV = this.userV.toBuilder().tenantId(systemSettingsProperties.getDefaultTenantValue()).build();
-		}
-		else {
-			this.userV = this.userV.toBuilder().tenantId(supplier.get()).build();
-		}
+		this.userV = this.userV.toBuilder().tenantId(supplier.get()).build();
 	}
 
 	public void getUserInfo(UserE userE) {
@@ -409,10 +396,6 @@ public final class AuthA extends AggregateRoot implements ValidateName {
 			case AUTHORIZATION_CODE -> RedisKeyUtils.getAuthorizationCodeAuthCaptchaKey(this.captchaV.uuid());
 			case TEST -> throw new UnsupportedOperationException("Unsupported grant type");
 		};
-	}
-
-	private boolean isDefaultTenant() {
-		return ObjectUtils.equals(systemSettingsProperties.getDefaultTenantCode(), this.userV.tenantCode());
 	}
 
 	private String getParameterValue(String key) {

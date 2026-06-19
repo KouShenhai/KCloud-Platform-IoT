@@ -17,7 +17,7 @@
 
 package org.laokou.admin.dict.gateway;
 
-import org.laokou.admin.dict.model.DictE;
+import org.laokou.admin.dict.model.DictA;
 
 /**
  * 字典网关【防腐】.
@@ -29,36 +29,16 @@ public interface DictGateway {
 	/**
 	 * 新增字典.
 	 */
-	void createDict(DictE dictE);
+	void createDict(DictA dictA);
 
 	/**
 	 * 修改字典.
 	 */
-	void updateDict(DictE dictE);
+	void updateDict(DictA dictA);
 
 	/**
 	 * 删除字典.
 	 */
 	void deleteDict(Long[] ids);
-
-	/**
-	 * 字典类型是否存在.
-	 */
-	boolean existsType(Long id, String type);
-
-	/**
-	 * 字典是否存在.
-	 */
-	boolean existsDict(Long id);
-
-	/**
-	 * 字典IDS是否存在.
-	 */
-	boolean existsDict(Long[] ids);
-
-	/**
-	 * 字典是否存在字典项.
-	 */
-	boolean existsDictItem(Long[] ids);
 
 }

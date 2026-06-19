@@ -33,7 +33,7 @@ public class LoginLogPageQry extends PageQuery {
 
 	private String type;
 
-	private String ip;
+	private String ipAddress;
 
 	private String address;
 
@@ -49,8 +49,8 @@ public class LoginLogPageQry extends PageQuery {
 		this.username = StringExtUtils.like(StringExtUtils.trim(username));
 	}
 
-	public void setIp(String ip) {
-		this.ip = StringExtUtils.like(StringExtUtils.trim(ip));
+	public void setIpAddress(String ipAddress) {
+		this.ipAddress = StringExtUtils.like(StringExtUtils.trim(ipAddress));
 	}
 
 	public void setAddress(String address) {

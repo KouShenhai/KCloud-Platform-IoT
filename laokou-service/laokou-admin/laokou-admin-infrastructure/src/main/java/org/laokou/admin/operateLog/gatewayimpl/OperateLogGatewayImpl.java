@@ -20,7 +20,7 @@ package org.laokou.admin.operateLog.gatewayimpl;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.operateLog.convertor.OperateLogConvertor;
 import org.laokou.admin.operateLog.gateway.OperateLogGateway;
-import org.laokou.admin.operateLog.model.OperateLog111E;
+import org.laokou.admin.operateLog.model.AdminOperateLogE;
 import org.laokou.common.log.mapper.OperateLogDO;
 import org.laokou.common.log.mapper.OperateLogMapper;
 import org.springframework.stereotype.Component;
@@ -39,14 +39,14 @@ public class OperateLogGatewayImpl implements OperateLogGateway {
 	private final OperateLogMapper operateLogMapper;
 
 	@Override
-	public void createOperateLog(OperateLog111E operateLog111E) {
-		operateLogMapper.insert(OperateLogConvertor.toDataObject(1L, operateLog111E, true));
+	public void createOperateLog(AdminOperateLogE adminOperateLogE) {
+		operateLogMapper.insert(OperateLogConvertor.toDataObject(1L, adminOperateLogE, true));
 	}
 
 	@Override
-	public void updateOperateLog(OperateLog111E operateLog111E) {
-		OperateLogDO operateLogDO = OperateLogConvertor.toDataObject(null, operateLog111E, false);
-		operateLogDO.setVersion(operateLogMapper.selectVersion(operateLog111E.getId()));
+	public void updateOperateLog(AdminOperateLogE adminOperateLogE) {
+		OperateLogDO operateLogDO = OperateLogConvertor.toDataObject(null, adminOperateLogE, false);
+		operateLogDO.setVersion(operateLogMapper.selectVersion(adminOperateLogE.getId()));
 		operateLogMapper.updateById(operateLogDO);
 	}
 

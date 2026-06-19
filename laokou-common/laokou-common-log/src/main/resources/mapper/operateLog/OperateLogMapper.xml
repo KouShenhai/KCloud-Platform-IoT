@@ -30,7 +30,7 @@
     request_type,
     request_params,
     user_agent,
-    ip,
+    ip_address,
     service_address,
     service_id,
     address,
@@ -53,8 +53,8 @@
     <if test="pageQuery.moduleName != null and pageQuery.moduleName != ''">
       and module_name like #{pageQuery.moduleName}
     </if>
-    <if test="pageQuery.ip != null and pageQuery.ip != ''">
-      and ip like #{pageQuery.ip}
+    <if test="pageQuery.ipAddress != null and pageQuery.ipAddress != ''">
+      and ip_address like #{pageQuery.ipAddress}
     </if>
     <if test="pageQuery.requestType != null and pageQuery.requestType != ''">
       and request_type like #{pageQuery.requestType}

@@ -32,7 +32,7 @@ import java.io.Serializable;
  *
  * @author laokou
  */
-@Entity("i18nMenuE")
+@Entity
 @Getter
 @Builder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
