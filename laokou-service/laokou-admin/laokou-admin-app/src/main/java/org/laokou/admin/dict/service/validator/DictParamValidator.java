@@ -15,34 +15,14 @@
  *
  */
 
-package org.laokou.admin.dict.ability;
-
-import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dict.gateway.DictGateway;
-import org.laokou.admin.dict.model.DictA;
-import org.springframework.stereotype.Component;
+package org.laokou.admin.dict.service.validator;
 
 /**
- * 字典领域服务.
- *
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class DictDomainService {
+final class DictParamValidator {
 
-	private final DictGateway dictGateway;
-
-	public void createDict(DictA dictA) {
-		dictGateway.createDict(dictA);
-	}
-
-	public void updateDict(DictA dictA) {
-		dictGateway.updateDict(dictA);
-	}
-
-	public void deleteDict(Long[] ids) {
-		dictGateway.deleteDict(ids);
+	private DictParamValidator() {
 	}
 
 }

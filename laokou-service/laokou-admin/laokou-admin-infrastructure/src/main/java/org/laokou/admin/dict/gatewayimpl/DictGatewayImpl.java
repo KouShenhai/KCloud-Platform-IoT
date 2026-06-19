@@ -17,16 +17,12 @@
 
 package org.laokou.admin.dict.gatewayimpl;
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dict.convertor.DictConvertor;
 import org.laokou.admin.dict.gateway.DictGateway;
 import org.laokou.admin.dict.gatewayimpl.database.DictMapper;
 import org.laokou.admin.dict.gatewayimpl.database.dataobject.DictDO;
-import org.laokou.admin.dictItem.gatewayimpl.database.dataobject.DictItemDO;
-import org.laokou.admin.dictItem.gatewayimpl.database.DictItemMapper;
-import org.laokou.admin.dict.model.DictE;
-import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.admin.dict.model.DictA;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -42,47 +38,21 @@ public class DictGatewayImpl implements DictGateway {
 
 	private final DictMapper dictMapper;
 
-	private final DictItemMapper dictItemMapper;
-
 	@Override
-	public void createDict(DictE dictE) {
-		dictMapper.insert(DictConvertor.toDataObject(1L, dictE));
+	public void createDict(DictA dictA) {
+		dictMapper.insert(DictConvertor.toDataObject(dictA));
 	}
 
 	@Override
-	public void updateDict(DictE dictE) {
-		DictDO dictDO = DictConvertor.toDataObject(null, dictE);
-		dictDO.setVersion(dictMapper.selectVersion(dictE.getId()));
+	public void updateDict(DictA dictA) {
+		DictDO dictDO = DictConvertor.toDataObject(dictA);
+		dictDO.setVersion(dictMapper.selectVersion(dictA.getId()));
 		dictMapper.updateById(dictDO);
 	}
 
 	@Override
 	public void deleteDict(Long[] ids) {
 		dictMapper.deleteByIds(Arrays.asList(ids));
-	}
-
-	@Override
-	public boolean existsType(Long id, String type) {
-		return dictMapper.selectCount(Wrappers.lambdaQuery(DictDO.class)
-			.eq(DictDO::getType, type)
-			.ne(ObjectUtils.isNotNull(id), DictDO::getId, id)) > 0;
-	}
-
-	@Override
-	public boolean existsDict(Long id) {
-		return dictMapper.selectCount(Wrappers.lambdaQuery(DictDO.class).eq(DictDO::getId, id)) > 0;
-	}
-
-	@Override
-	public boolean existsDict(Long[] ids) {
-		return dictMapper
-			.selectCount(Wrappers.lambdaQuery(DictDO.class).in(DictDO::getId, Arrays.asList(ids))) == ids.length;
-	}
-
-	@Override
-	public boolean existsDictItem(Long[] ids) {
-		return dictItemMapper
-			.selectCount(Wrappers.lambdaQuery(DictItemDO.class).in(DictItemDO::getTypeId, Arrays.asList(ids))) > 0;
 	}
 
 }

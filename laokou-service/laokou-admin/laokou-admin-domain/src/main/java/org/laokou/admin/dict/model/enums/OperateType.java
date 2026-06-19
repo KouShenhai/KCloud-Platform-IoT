@@ -15,34 +15,27 @@
  *
  */
 
-package org.laokou.admin.dict.ability;
+package org.laokou.admin.dict.model.enums;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dict.gateway.DictGateway;
-import org.laokou.admin.dict.model.DictA;
-import org.springframework.stereotype.Component;
+import lombok.Getter;
 
 /**
- * 字典领域服务.
- *
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class DictDomainService {
+@Getter
+public enum OperateType {
 
-	private final DictGateway dictGateway;
+	SAVE("save", "保存字典"),
 
-	public void createDict(DictA dictA) {
-		dictGateway.createDict(dictA);
-	}
+	MODIFY("modify", "修改字典");
 
-	public void updateDict(DictA dictA) {
-		dictGateway.updateDict(dictA);
-	}
+	private final String code;
 
-	public void deleteDict(Long[] ids) {
-		dictGateway.deleteDict(ids);
+	private final String desc;
+
+	OperateType(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
 	}
 
 }

@@ -15,34 +15,26 @@
  *
  */
 
-package org.laokou.admin.dict.ability;
+package org.laokou.admin.dict.factory;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dict.gateway.DictGateway;
 import org.laokou.admin.dict.model.DictA;
-import org.springframework.stereotype.Component;
+import org.laokou.admin.dict.model.entity.DictE;
+import org.laokou.common.i18n.util.SpringContextUtils;
 
 /**
- * 字典领域服务.
- *
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class DictDomainService {
+public final class DictDomainFactory {
 
-	private final DictGateway dictGateway;
-
-	public void createDict(DictA dictA) {
-		dictGateway.createDict(dictA);
+	private DictDomainFactory() {
 	}
 
-	public void updateDict(DictA dictA) {
-		dictGateway.updateDict(dictA);
+	public static DictE createDictE() {
+		return SpringContextUtils.getBeanProvider(DictE.class);
 	}
 
-	public void deleteDict(Long[] ids) {
-		dictGateway.deleteDict(ids);
+	public static DictA createDictA() {
+		return SpringContextUtils.getBeanProvider(DictA.class);
 	}
 
 }

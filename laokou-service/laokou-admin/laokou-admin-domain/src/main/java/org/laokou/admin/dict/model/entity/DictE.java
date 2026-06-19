@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.admin.i18nMenu.model.entity;
+package org.laokou.admin.dict.model.entity;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -28,7 +28,7 @@ import org.laokou.common.i18n.annotation.Entity;
 import java.io.Serializable;
 
 /**
- * 国际化菜单领域对象【实体】.
+ * 字典领域对象【实体】.
  *
  * @author laokou
  */
@@ -38,7 +38,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class I18nMenuE implements Serializable {
+public class DictE implements Serializable {
 
 	/**
 	 * ID.
@@ -46,13 +46,23 @@ public class I18nMenuE implements Serializable {
 	private Long id;
 
 	/**
-	 * 编码.
-	 */
-	private String code;
-
-	/**
-	 * 名称.
+	 * 字典名称.
 	 */
 	private String name;
+
+	/**
+	 * 字典类型.
+	 */
+	private String type;
+
+	/**
+	 * 字典备注.
+	 */
+	private String remark;
+
+	/**
+	 * 字典状态 0启用 1停用.
+	 */
+	private Integer status;
 
 }
