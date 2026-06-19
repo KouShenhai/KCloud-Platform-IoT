@@ -130,8 +130,6 @@ COMMENT ON TABLE "public"."sys_dict" IS '字典';
 
 ALTER TABLE "public"."sys_dict" ADD CONSTRAINT "sys_dict_pkey" PRIMARY KEY ("id");
 
-INSERT INTO "public"."sys_dict" VALUES (1, 1, 1, '2024-05-09 00:15:30', '2024-05-09 00:15:40', 0, 0, 1,1, 'dict-type.manage.name.menu.show-hide', 'sys_menu_show_hide', '菜单状态列表', 0);
-
 -- ----------------------------
 -- -------------字典项------------
 -- ----------------------------
