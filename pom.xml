@@ -171,7 +171,7 @@
     <!-- postgresql版本 -->
     <postgresql.version>42.7.11</postgresql.version>
     <!-- spring-boot-admin版本 -->
-    <spring-boot-admin.version>4.1.0</spring-boot-admin.version>
+    <spring-boot-admin.version>4.1.1</spring-boot-admin.version>
     <!-- jsoup版本 -->
     <jsoup.version>1.22.2</jsoup.version>
     <!-- jasypt版本 -->
