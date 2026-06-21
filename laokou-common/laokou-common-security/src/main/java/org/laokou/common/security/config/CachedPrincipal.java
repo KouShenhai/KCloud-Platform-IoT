@@ -15,28 +15,16 @@
  *
  */
 
-package org.laokou.common.security.filter;
+package org.laokou.common.security.config;
 
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import org.jspecify.annotations.NonNull;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
-import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
+
+import java.time.Instant;
 
 /**
- * 令牌拦截器.
- *
  * @author laokou
+ * @param principal 认证对象
+ * @param expiresAt 过期时间
  */
-@Order(Ordered.HIGHEST_PRECEDENCE + 1000)
-public final class TokenFilter extends OncePerRequestFilter {
-
-	@Override
-	protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
-			@NonNull FilterChain chain) {
-
-	}
-
+record CachedPrincipal(OAuth2AuthenticatedPrincipal principal, Instant expiresAt) {
 }

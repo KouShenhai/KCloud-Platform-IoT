@@ -46,6 +46,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.test.context.TestConstructor;
 import org.springframework.util.Assert;
@@ -98,6 +99,8 @@ class OAuth2ApiTest {
 	private final RestClient restClient;
 
 	private final PasswordEncoder passwordEncoder;
+
+	private final JwtDecoder jwtDecoder;
 
 	@Test
 	void test_sendMailCaptcha() {
@@ -178,8 +181,8 @@ class OAuth2ApiTest {
 		log.info("刷新token：{}", token);
 		log.info("---------- 模拟认证开始 ----------");
 		Assertions.assertThat(token).isNotBlank();
-		OAuth2OpaqueTokenIntrospector introspector = new OAuth2OpaqueTokenIntrospector(authorizationService,
-				redisUtils);
+		OAuth2OpaqueTokenIntrospector introspector = new OAuth2OpaqueTokenIntrospector(authorizationService, redisUtils,
+				jwtDecoder);
 		log.info("认证数据：{}", JacksonUtils.toJsonStr(introspector.introspect(token)));
 		log.info("---------- 模拟认证结束 ----------");
 		log.info("---------- 用户名密码认证模式结束 ----------");

@@ -26,6 +26,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
@@ -47,11 +48,14 @@ class OAuth2OpaqueTokenIntrospectorTest {
 	@Mock
 	private RedisUtils redisUtils;
 
+	@Mock
+	private JwtDecoder jwtDecoder;
+
 	@Test
 	void test_introspect_throws_exception_when_authorization_is_null() {
 		// Given
-		OAuth2OpaqueTokenIntrospector introspector = new OAuth2OpaqueTokenIntrospector(authorizationService,
-				redisUtils);
+		OAuth2OpaqueTokenIntrospector introspector = new OAuth2OpaqueTokenIntrospector(authorizationService, redisUtils,
+				jwtDecoder);
 		Mockito.when(authorizationService.findByToken("invalid-token", OAuth2TokenType.ACCESS_TOKEN)).thenReturn(null);
 
 		// Then
@@ -61,8 +65,8 @@ class OAuth2OpaqueTokenIntrospectorTest {
 	@Test
 	void test_introspect_throws_exception_when_accessToken_is_null() {
 		// Given
-		OAuth2OpaqueTokenIntrospector introspector = new OAuth2OpaqueTokenIntrospector(authorizationService,
-				redisUtils);
+		OAuth2OpaqueTokenIntrospector introspector = new OAuth2OpaqueTokenIntrospector(authorizationService, redisUtils,
+				jwtDecoder);
 		RegisteredClient registeredClient = createRegisteredClient();
 		OAuth2Authorization authorization = OAuth2Authorization.withRegisteredClient(registeredClient)
 			.principalName("user")
@@ -78,8 +82,8 @@ class OAuth2OpaqueTokenIntrospectorTest {
 	@Test
 	void test_record_constructor() {
 		// When
-		OAuth2OpaqueTokenIntrospector introspector = new OAuth2OpaqueTokenIntrospector(authorizationService,
-				redisUtils);
+		OAuth2OpaqueTokenIntrospector introspector = new OAuth2OpaqueTokenIntrospector(authorizationService, redisUtils,
+				jwtDecoder);
 
 		// Then
 		Assertions.assertThat(introspector.authorizationService()).isEqualTo(authorizationService);
