@@ -129,7 +129,6 @@ public class MenusController {
 
 	@TraceLog
 	@PostMapping("/v1/menus/list-select-tree")
-	@PreAuthorize("hasAuthority('read') and hasAuthority('sys:menu:list-tree')")
 	@Operation(summary = "查询菜单树列表", description = "查询菜单树列表")
 	public Result<List<MenuTreeCO>> listSelectTreeMenu(@RequestBody MenuTreeListQry qry) {
 		return menusServiceI.listTreeMenu(qry);

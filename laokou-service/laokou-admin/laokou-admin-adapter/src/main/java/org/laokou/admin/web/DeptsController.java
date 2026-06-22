@@ -129,7 +129,6 @@ public class DeptsController {
 
 	@TraceLog
 	@PostMapping("/v1/depts/list-select-tree")
-	@PreAuthorize("hasAuthority('read') and hasAuthority('sys:dept:list-tree')")
 	@Operation(summary = "查询部门树列表", description = "查询部门树列表")
 	public Result<List<DeptTreeCO>> listSelectTreeDept(@RequestBody DeptTreeListQry qry) {
 		return deptsServiceI.listTreeDept(qry);

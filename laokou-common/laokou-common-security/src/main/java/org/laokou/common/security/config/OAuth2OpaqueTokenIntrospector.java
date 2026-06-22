@@ -70,7 +70,8 @@ public record OAuth2OpaqueTokenIntrospector(OAuth2AuthorizationService authoriza
 				throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED);
 			}
 			return cachedPrincipal.principal();
-		} catch (Exception e) {
+		} catch (Exception ex) {
+			log.debug("JWT解析失败，错误信息：{}", ex.getMessage(), ex);
 			invalidate(token);
 			throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED);
 		}
