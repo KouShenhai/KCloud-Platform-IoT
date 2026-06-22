@@ -183,22 +183,22 @@ management:
   endpoint:
     health:
       show-details: always
-  tracing:
-    enabled: true
-    propagation:
-      type: w3c
-    # 采样率 => 100%
-    sampling:
-      probability: 1
-  otlp:
-    tracing:
-      endpoint: http://otel-collector:4317/v1/traces
-      compression: gzip
-      timeout: 10s
-      transport: grpc
-    metrics:
-      export:
-        enabled: false
-  metrics:
-    tags:
-      application: ${spring.application.name}
+#  tracing:
+#    enabled: true
+#    propagation:
+#      type: w3c
+#    # 采样率 => 100%
+#    sampling:
+#      probability: 1
+#  otlp:
+#    tracing:
+#      endpoint: http://otel-collector:4317/v1/traces
+#      compression: gzip
+#      timeout: 10s
+#      transport: grpc
+#    metrics:
+#      export:
+#        enabled: false
+#  metrics:
+#    tags:
+#      application: ${spring.application.name}
