@@ -237,7 +237,7 @@
     <!-- minio版本 -->
     <minio.version>9.0.3</minio.version>
     <!-- swagger-annotations-jakarta版本 -->
-    <swagger-annotations-jakarta.version>2.2.51</swagger-annotations-jakarta.version>
+    <swagger-annotations-jakarta.version>2.2.52</swagger-annotations-jakarta.version>
     <!-- jsqlparser版本 -->
     <jsqlparser.version>5.3</jsqlparser.version>
     <!-- commons-io版本 -->
