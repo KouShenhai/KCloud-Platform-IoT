@@ -43,7 +43,7 @@ public class SystemSettingsProperties implements Serializable {
 
 	private Duration idempotentExpire = Duration.ofMinutes(5);
 
-	private Duration profileExpire = Duration.ofHours(6);
+	private Duration profileExpire = Duration.ofHours(1);
 
 	private Long defaultTenantValue = 1L;
 
