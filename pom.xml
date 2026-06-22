@@ -197,7 +197,7 @@
     <!-- httpcore5版本 -->
     <httpcore5.version>5.4.2</httpcore5.version>
     <!-- hibernate-validator版本 -->
-    <hibernate-validator.version>9.1.0.Final</hibernate-validator.version>
+    <hibernate-validator.version>9.1.1.Final</hibernate-validator.version>
     <!-- ip2region版本 -->
     <ip2region.version>3.3.7</ip2region.version>
     <!-- spring-kafka版本 -->
