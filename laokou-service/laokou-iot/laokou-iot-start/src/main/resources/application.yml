@@ -54,6 +54,20 @@ spring:
   # security
   security:
     oauth2:
+      client:
+        registration:
+          default:
+            client-id: 95TxSsTPFA3tF12TBSMmUVK0da
+            client-secret: FpHwIfw4wY92dO
+            client-name: OAuth2.1 M2M认证客户端
+            authorization-grant-type: client_credentials
+            client-authentication-method: client_secret_basic
+            scope:
+              - read
+            provider: local
+        provider:
+          local:
+            token-uri: http://127.0.0.1:90/api/v1/oauth2/token
       resource-server:
         enabled: true
         request-matcher:
@@ -62,6 +76,16 @@ spring:
               - /v3/api-docs/**=laokou-iot
               - /actuator/**=laokou-iot
               - /scalar/**=laokou-iot
+  grpc:
+    client:
+      channel:
+        laokou-snowflake-id:
+          target: discovery://laokou-snowflake-id
+          keepalive:
+            time: 10s
+            timeout: 30s
+          idle:
+            timeout: 30s
   cloud:
     # Loadbalancer配置
     loadbalancer:
@@ -106,22 +130,22 @@ management:
   endpoint:
     health:
       show-details: always
-  tracing:
-    export:
-      enabled: true
-    propagation:
-      type: w3c
-    # 采样率 => 100%
-    sampling:
-      probability: 1
-  opentelemetry:
-    tracing:
-      export:
-        otlp:
-          endpoint: http://otel-collector:4317/v1/traces
-          compression: gzip
-          timeout: 10s
-          transport: grpc
+#  tracing:
+#    export:
+#      enabled: true
+#    propagation:
+#      type: w3c
+#    # 采样率 => 100%
+#    sampling:
+#      probability: 1
+#  opentelemetry:
+#    tracing:
+#      export:
+#        otlp:
+#          endpoint: http://otel-collector:4317/v1/traces
+#          compression: gzip
+#          timeout: 10s
+#          transport: grpc
 
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml

@@ -43,12 +43,14 @@ public class SnowflakeIdServiceImpl extends SnowflakeIdServiceIGrpc.SnowflakeIdS
 
 	private final IdGenerator idGenerator;
 
+	private final String resultMsg = MessageUtils.getMessage(StatusCode.OK);
+
 	@Override
 	@PreAuthorize("hasAuthority('SCOPE_read')")
 	public void generateId(GenerateIdRequest request, StreamObserver<GenerateIdResponse> responseObserver) {
 		GenerateIdResponse response = GenerateIdResponse.newBuilder()
 			.setCode(StatusCode.OK)
-			.setMsg(MessageUtils.getMessage(StatusCode.OK))
+			.setMsg(resultMsg)
 			.setData(idGenerator.nextId())
 			.build();
 		responseObserver.onNext(response);
@@ -61,7 +63,7 @@ public class SnowflakeIdServiceImpl extends SnowflakeIdServiceIGrpc.SnowflakeIdS
 			StreamObserver<GenerateBatchIdsResponse> responseObserver) {
 		GenerateBatchIdsResponse.Builder builder = GenerateBatchIdsResponse.newBuilder()
 			.setCode(StatusCode.OK)
-			.setMsg(MessageUtils.getMessage(StatusCode.OK));
+			.setMsg(resultMsg);
 		responseObserver.onNext(builder.addAllData(idGenerator.nextIds(request.getNum())).build());
 		responseObserver.onCompleted();
 	}

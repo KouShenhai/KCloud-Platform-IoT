@@ -18,14 +18,7 @@
 package org.laokou.iot.handler;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.pulsar.client.api.SubscriptionType;
-import org.apache.pulsar.common.schema.SchemaType;
-import org.springframework.pulsar.annotation.PulsarListener;
-import org.springframework.pulsar.annotation.PulsarListeners;
-import org.springframework.pulsar.listener.AckMode;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * @author laokou
@@ -34,11 +27,13 @@ import java.util.List;
 @Component
 public class HttpMessageHandler {
 
-	@PulsarListeners(value = { @PulsarListener(topicPattern = "persistent://laokouyun/http/up-property-report",
-			subscriptionName = "laokouyun-http-up-property-report", schemaType = SchemaType.BYTES, batch = true,
-			ackMode = AckMode.BATCH, subscriptionType = SubscriptionType.Shared), })
-	public void handlePropertyReportMessage(List<byte[]> messages) {
-		log.info("接收到HTTP消息：{}", messages);
-	}
+	// @PulsarListeners(value = { @PulsarListener(topicPattern =
+	// "persistent://laokouyun/http/up-property-report",
+	// subscriptionName = "laokouyun-http-up-property-report", schemaType =
+	// SchemaType.BYTES, batch = true,
+	// ackMode = AckMode.BATCH, subscriptionType = SubscriptionType.Shared), })
+	// public void handlePropertyReportMessage(List<byte[]> messages) {
+	// log.info("接收到HTTP消息：{}", messages);
+	// }
 
 }

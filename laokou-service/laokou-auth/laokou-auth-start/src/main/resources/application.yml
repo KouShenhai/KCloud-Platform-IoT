@@ -237,7 +237,7 @@ spring:
       redis:
         flush-mode: on-save
         repository-type: indexed
-# actuator
+# Actuator
 management:
   endpoints:
     web:
@@ -246,25 +246,25 @@ management:
   endpoint:
     health:
       show-details: always
-  tracing:
-    export:
-      enabled: true
-    propagation:
-      type: w3c
-    # 采样率 => 100%
-    sampling:
-      probability: 1
-  opentelemetry:
-    tracing:
-      export:
-        otlp:
-          endpoint: http://otel-collector:4317/v1/traces
-          compression: gzip
-          timeout: 10s
-          transport: grpc
-  metrics:
-    tags:
-      application: ${spring.application.name}
+#  tracing:
+#    export:
+#      enabled: true
+#    propagation:
+#      type: w3c
+#    # 采样率 => 100%
+#    sampling:
+#      probability: 1
+#  opentelemetry:
+#    tracing:
+#      export:
+#        otlp:
+#          endpoint: http://otel-collector:4317/v1/traces
+#          compression: gzip
+#          timeout: 10s
+#          transport: grpc
+#  metrics:
+#    tags:
+#      application: ${spring.application.name}
 
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml
@@ -297,3 +297,4 @@ mybatis-plus:
 system-settings:
   node-id: ${NODE_ID:1}
   app-mode: microservice
+  profile-expire: ${spring.security.oauth2.authorization-server.client.pkce.token.refresh-token-time-to-live}
