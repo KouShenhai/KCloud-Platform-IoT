@@ -193,7 +193,7 @@
     <!-- httpclient5版本 -->
     <httpclient5.version>5.6.1</httpclient5.version>
     <!-- httpcore5版本 -->
-    <httpcore5.version>5.4.2</httpcore5.version>
+    <httpcore5.version>5.4.3</httpcore5.version>
     <!-- hibernate-validator版本 -->
     <hibernate-validator.version>9.1.1.Final</hibernate-validator.version>
     <!-- ip2region版本 -->
