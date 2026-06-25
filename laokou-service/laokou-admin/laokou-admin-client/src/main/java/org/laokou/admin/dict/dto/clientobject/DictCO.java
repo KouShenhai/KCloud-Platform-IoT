@@ -44,9 +44,9 @@ public class DictCO extends ClientObject {
 	private String name;
 
 	/**
-	 * 字典类型.
+	 * 字典编码.
 	 */
-	private String type;
+	private String code;
 
 	/**
 	 * 字典备注.

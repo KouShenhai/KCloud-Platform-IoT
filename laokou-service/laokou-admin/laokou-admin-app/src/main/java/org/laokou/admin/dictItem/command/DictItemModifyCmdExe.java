@@ -19,6 +19,8 @@ package org.laokou.admin.dictItem.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dictItem.dto.DictItemModifyCmd;
+import org.laokou.admin.dictItem.factory.DictItemDomainFactory;
+import org.laokou.admin.dictItem.model.DictItemA;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.stereotype.Component;
@@ -40,9 +42,10 @@ public class DictItemModifyCmdExe {
 
 	@CommandLog
 	public void executeVoid(DictItemModifyCmd cmd) {
+		DictItemA dictItemA = DictItemDomainFactory.createDictItemA().create(DictItemConvertor.toEntity(cmd.getCo()));
 		// 校验参数
-		transactionalUtils
-			.executeInTransaction(() -> dictItemDomainService.updateDictItem(DictItemConvertor.toEntity(cmd.getCo())));
+		dictItemA.checkDeptParam();
+		transactionalUtils.executeInTransaction(() -> dictItemDomainService.updateDictItem(dictItemA));
 	}
 
 }

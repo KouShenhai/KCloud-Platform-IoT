@@ -15,30 +15,23 @@
  *
  */
 
-package org.laokou.admin.dictItem.gateway;
+package org.laokou.admin.dictItem.service.validator;
 
+import lombok.RequiredArgsConstructor;
 import org.laokou.admin.dictItem.model.DictItemA;
+import org.laokou.admin.dictItem.model.validator.DictItemParamValidator;
+import org.springframework.stereotype.Component;
 
 /**
- * 字典项网关【防腐】.
- *
  * @author laokou
  */
-public interface DictItemGateway {
+@RequiredArgsConstructor
+@Component("modifyDictItemParamValidator")
+public class ModifyDictItemParamValidator implements DictItemParamValidator {
 
-	/**
-	 * 新增字典项.
-	 */
-	void createDictItem(DictItemA dictItemA);
+	@Override
+	public void validateDict(DictItemA dictItemA) {
 
-	/**
-	 * 修改字典项.
-	 */
-	void updateDictItem(DictItemA dictItemA);
-
-	/**
-	 * 删除字典项.
-	 */
-	void deleteDictItem(Long[] ids);
+	}
 
 }

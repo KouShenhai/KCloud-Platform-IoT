@@ -15,30 +15,15 @@
  *
  */
 
-package org.laokou.admin.dictItem.gateway;
+package org.laokou.admin.dictItem.model.validator;
 
 import org.laokou.admin.dictItem.model.DictItemA;
 
 /**
- * 字典项网关【防腐】.
- *
  * @author laokou
  */
-public interface DictItemGateway {
+public interface DictItemParamValidator {
 
-	/**
-	 * 新增字典项.
-	 */
-	void createDictItem(DictItemA dictItemA);
-
-	/**
-	 * 修改字典项.
-	 */
-	void updateDictItem(DictItemA dictItemA);
-
-	/**
-	 * 删除字典项.
-	 */
-	void deleteDictItem(Long[] ids);
+	void validateDict(DictItemA dictItemA);
 
 }

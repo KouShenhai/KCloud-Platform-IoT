@@ -35,9 +35,9 @@ public class DictPageQry extends PageQuery {
 	private String name;
 
 	/**
-	 * 字典类型.
+	 * 字典编码.
 	 */
-	private String type;
+	private String code;
 
 	/**
 	 * 字典状态 0启用 1停用.
@@ -48,8 +48,8 @@ public class DictPageQry extends PageQuery {
 		this.name = StringExtUtils.like(StringExtUtils.trim(name));
 	}
 
-	public void setType(String type) {
-		this.type = StringExtUtils.like(StringExtUtils.trim(type));
+	public void setCode(String code) {
+		this.code = StringExtUtils.like(StringExtUtils.trim(code));
 	}
 
 }

@@ -79,7 +79,7 @@ export default () => {
 			pageNum: params?.current,
 			pageIndex: params?.pageSize * (params?.current - 1),
 			name: trim(params?.name),
-			type: trim(params?.type),
+			code: trim(params?.code),
 			status: params?.statusValue,
 			params: {
 				startTime: params?.startDate
@@ -102,7 +102,7 @@ export default () => {
 			label: trim(params?.label),
 			value: trim(params?.value),
 			status: params?.statusValue,
-			typeId: selectedDictId,
+			dictId: selectedDictId,
 			params: {
 				startTime: params?.startDate
 					? `${params.startDate} 00:00:00`

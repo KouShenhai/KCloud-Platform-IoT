@@ -15,17 +15,30 @@
  *
  */
 
-package org.laokou.admin.dictItem.model;
+package org.laokou.admin.dictItem.model.entity;
 
-import lombok.Data;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.annotation.Entity;
+
+import java.io.Serializable;
 
 /**
  * 字典项领域对象【实体】.
  *
  * @author laokou
  */
-@Data
-public class DictItemE {
+@Entity
+@Getter
+@Builder(toBuilder = true)
+@EqualsAndHashCode(callSuper = false)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class DictItemE implements Serializable {
 
 	/**
 	 * ID.
@@ -33,33 +46,33 @@ public class DictItemE {
 	private Long id;
 
 	/**
-	 * 字典标签.
+	 * 字典项名称.
 	 */
-	private String label;
+	private String name;
 
 	/**
-	 * 字典值.
+	 * 字典项编码.
 	 */
-	private String value;
+	private String code;
 
 	/**
-	 * 字典排序.
+	 * 字典项排序.
 	 */
 	private Integer sort;
 
 	/**
-	 * 字典备注.
+	 * 字典项备注.
 	 */
 	private String remark;
 
 	/**
-	 * 字典状态 0启用 1停用.
+	 * 字典项状态 0启用 1停用.
 	 */
 	private Integer status;
 
 	/**
-	 * 类型ID.
+	 * 字典ID.
 	 */
-	private Long typeId;
+	private Long dictId;
 
 }

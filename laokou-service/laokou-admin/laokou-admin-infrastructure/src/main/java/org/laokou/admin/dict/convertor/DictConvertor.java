@@ -39,7 +39,7 @@ public final class DictConvertor {
 		DictE dictE = dictA.getDictE();
 		DictDO dictDO = new DictDO();
 		dictDO.setId(dictA.getId());
-		dictDO.setType(dictE.getType());
+		dictDO.setCode(dictE.getCode());
 		dictDO.setName(dictE.getName());
 		dictDO.setRemark(dictE.getRemark());
 		dictDO.setStatus(dictE.getStatus());
@@ -50,7 +50,7 @@ public final class DictConvertor {
 	public static DictCO toClientObject(DictDO dictDO) {
 		DictCO dictCO = new DictCO();
 		dictCO.setId(dictDO.getId());
-		dictCO.setType(dictDO.getType());
+		dictCO.setCode(dictDO.getCode());
 		dictCO.setName(dictDO.getName());
 		dictCO.setRemark(dictDO.getRemark());
 		dictCO.setStatus(dictDO.getStatus());
@@ -66,7 +66,7 @@ public final class DictConvertor {
 		return DictDomainFactory.createDictE()
 			.toBuilder()
 			.id(dictCO.getId())
-			.type(dictCO.getType())
+			.code(dictCO.getCode())
 			.name(dictCO.getName())
 			.status(dictCO.getStatus())
 			.remark(dictCO.getRemark())
