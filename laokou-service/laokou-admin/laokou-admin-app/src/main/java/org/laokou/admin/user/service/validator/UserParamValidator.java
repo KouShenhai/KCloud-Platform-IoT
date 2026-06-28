@@ -40,7 +40,7 @@ final class UserParamValidator {
 
 	}
 
-	public static ParamValidator.Validate validateId(UserA userA) {
+	static ParamValidator.Validate validateId(UserA userA) {
 		Long id = userA.getId();
 		if (ObjectUtils.isNull(id)) {
 			return ParamValidator.invalidate("用户ID不能为空");
@@ -48,8 +48,8 @@ final class UserParamValidator {
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validatePassword(UserA userA, PasswordEncoder passwordEncoder,
-			UserMapper userMapper, boolean isResetPwd) {
+	static ParamValidator.Validate validatePassword(UserA userA, PasswordEncoder passwordEncoder, UserMapper userMapper,
+			boolean isResetPwd) {
 		String password = userA.getUserE().getPassword();
 		if (StringExtUtils.isEmpty(password)) {
 			return ParamValidator.invalidate("用户密码不能为空");
@@ -69,7 +69,7 @@ final class UserParamValidator {
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateUsername(UserA userA, UserMapper userMapper, boolean isSave)
+	static ParamValidator.Validate validateUsername(UserA userA, UserMapper userMapper, boolean isSave)
 			throws Exception {
 		String username = userA.getUserE().getUsername();
 		Long id = userA.getId();
@@ -95,8 +95,7 @@ final class UserParamValidator {
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateMail(UserA userA, UserMapper userMapper, boolean isSave)
-			throws Exception {
+	static ParamValidator.Validate validateMail(UserA userA, UserMapper userMapper, boolean isSave) throws Exception {
 		String mail = userA.getUserE().getMail();
 		if (StringExtUtils.isNotEmpty(mail)) {
 			if (!RegexUtils.mailRegex(mail)) {
@@ -119,7 +118,7 @@ final class UserParamValidator {
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateMobile(UserA userA, UserMapper userMapper) throws Exception {
+	static ParamValidator.Validate validateMobile(UserA userA, UserMapper userMapper) throws Exception {
 		String mobile = userA.getUserE().getMobile();
 		if (StringExtUtils.isNotEmpty(mobile)) {
 			if (!RegexUtils.mobileRegex(mobile)) {
@@ -140,7 +139,7 @@ final class UserParamValidator {
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateRoleIds(UserA userA) {
+	static ParamValidator.Validate validateRoleIds(UserA userA) {
 		List<String> roleIds = userA.getUserE().getRoleIds();
 		if (CollectionExtUtils.isEmpty(roleIds)) {
 			return ParamValidator.invalidate("用户角色IDS不能为空");
@@ -148,7 +147,7 @@ final class UserParamValidator {
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateDeptId(UserA userA) {
+	static ParamValidator.Validate validateDeptId(UserA userA) {
 		if (ObjectUtils.isNull(userA.getUserE().getDeptId())) {
 			return ParamValidator.invalidate("用户部门ID不能为空");
 		}

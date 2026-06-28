@@ -30,7 +30,7 @@ final class DeptParamValidator {
 	private DeptParamValidator() {
 	}
 
-	public static ParamValidator.Validate validateParentId(DeptA deptA) {
+	static ParamValidator.Validate validateParentId(DeptA deptA) {
 		Long pid = deptA.getDeptE().getPid();
 		if (ObjectUtils.isNull(pid)) {
 			return ParamValidator.invalidate("部门父级ID不能为空");
@@ -38,7 +38,7 @@ final class DeptParamValidator {
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateSort(DeptA deptA) {
+	static ParamValidator.Validate validateSort(DeptA deptA) {
 		Integer sort = deptA.getDeptE().getSort();
 		if (ObjectUtils.isNull(sort)) {
 			return ParamValidator.invalidate("部门排序不能为空");
@@ -49,7 +49,7 @@ final class DeptParamValidator {
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateId(DeptA deptA) {
+	static ParamValidator.Validate validateId(DeptA deptA) {
 		Long id = deptA.getDeptE().getId();
 		if (deptA.isModify() && ObjectUtils.isNull(id)) {
 			return ParamValidator.invalidate("部门ID不能为空");
@@ -57,7 +57,7 @@ final class DeptParamValidator {
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateName(DeptA deptA) {
+	static ParamValidator.Validate validateName(DeptA deptA) {
 		String name = deptA.getDeptE().getName();
 		if (StringExtUtils.isEmpty(name)) {
 			return ParamValidator.invalidate("部门名称不能为空");

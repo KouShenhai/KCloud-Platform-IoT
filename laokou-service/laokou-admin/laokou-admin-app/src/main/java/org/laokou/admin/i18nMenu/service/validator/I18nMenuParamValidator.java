@@ -34,14 +34,14 @@ final class I18nMenuParamValidator {
 	private I18nMenuParamValidator() {
 	}
 
-	public static ParamValidator.Validate validateId(I18nMenuA i18nMenuA) {
+	static ParamValidator.Validate validateId(I18nMenuA i18nMenuA) {
 		if (i18nMenuA.isModify() && ObjectUtils.isNull(i18nMenuA.getI18nMenuE().getId())) {
 			return ParamValidator.invalidate("国际化菜单ID不能为空");
 		}
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateCode(I18nMenuA i18nMenuA) {
+	static ParamValidator.Validate validateCode(I18nMenuA i18nMenuA) {
 		String code = i18nMenuA.getI18nMenuE().getCode();
 		if (StringExtUtils.isEmpty(code)) {
 			return ParamValidator.invalidate("国际化菜单编码不能为空");
@@ -49,7 +49,7 @@ final class I18nMenuParamValidator {
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateName(I18nMenuA i18nMenuA) {
+	static ParamValidator.Validate validateName(I18nMenuA i18nMenuA) {
 		String name = i18nMenuA.getI18nMenuE().getName();
 		if (StringExtUtils.isEmpty(name)) {
 			return ParamValidator.invalidate("国际化菜单名称不能为空");
@@ -57,7 +57,7 @@ final class I18nMenuParamValidator {
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateCodeAndName(I18nMenuA i18nMenuA, I18nMenuMapper i18nMenuMapper) {
+	static ParamValidator.Validate validateCodeAndName(I18nMenuA i18nMenuA, I18nMenuMapper i18nMenuMapper) {
 		I18nMenuE i18nMenuE = i18nMenuA.getI18nMenuE();
 		String code = i18nMenuE.getCode();
 		String name = i18nMenuE.getName();

@@ -49,7 +49,7 @@ public class DictItemPageQry extends PageQuery {
 	 */
 	private Long dictId;
 
-	public void setName(String label) {
+	public void setName(String name) {
 		this.name = StringExtUtils.like(StringExtUtils.trim(name));
 	}
 

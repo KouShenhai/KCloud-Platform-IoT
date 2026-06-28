@@ -41,7 +41,7 @@ final class DictParamValidator {
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateCodeAndName(DictA dictA, DictMapper dictMapper) {
+	static ParamValidator.Validate validateCodeAndName(DictA dictA, DictMapper dictMapper) {
 		String name = dictA.getDictE().getName();
 		String code = dictA.getDictE().getCode();
 		Long id = dictA.getId();
@@ -53,18 +53,18 @@ final class DictParamValidator {
 		}
 		if (dictA.isSave() && dictMapper
 			.selectCount(Wrappers.lambdaQuery(DictDO.class).eq(DictDO::getCode, code).eq(DictDO::getName, name)) > 0) {
-			return ParamValidator.invalidate("字典编码和字典名称已存在，请重新输入");
+			return ParamValidator.invalidate("字典编码和字典名称已存在");
 		}
 		if (dictA.isModify() && dictMapper.selectCount(Wrappers.lambdaQuery(DictDO.class)
 			.eq(DictDO::getCode, code)
 			.eq(DictDO::getName, name)
 			.ne(DictDO::getId, id)) > 0) {
-			return ParamValidator.invalidate("字典编码和字典名称已存在，请重新输入");
+			return ParamValidator.invalidate("字典编码和字典名称已存在");
 		}
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateStatus(DictA dictA) {
+	static ParamValidator.Validate validateStatus(DictA dictA) {
 		Integer status = dictA.getDictE().getStatus();
 		if (status == null) {
 			return ParamValidator.invalidate("字典状态不能为空");

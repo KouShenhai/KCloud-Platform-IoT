@@ -130,6 +130,13 @@ COMMENT ON TABLE "public"."sys_dict" IS '字典';
 
 ALTER TABLE "public"."sys_dict" ADD CONSTRAINT "sys_dict_pkey" PRIMARY KEY ("id");
 
+CREATE INDEX "sys_dict_code_tenantId_idx" ON "public"."sys_dict" USING btree (
+	"code",
+	"tenant_id"
+	);
+COMMENT ON INDEX "public"."sys_dict_code_tenantId_idx" IS '编码_租户ID_索引';
+
+INSERT INTO "public"."sys_dict" VALUES (1, 1, 1, '2026-06-28 17:29:34.520198', '2026-06-28 17:29:34.602805', 0, 0, 1, 1, '物模型数据类型', 'thing_model_data_type', '', 0);
 -- ----------------------------
 -- -------------字典项------------
 -- ----------------------------
@@ -170,11 +177,19 @@ COMMENT ON TABLE "public"."sys_dict_item" IS '字典项';
 
 ALTER TABLE "public"."sys_dict_item" ADD CONSTRAINT "sys_dict_item_pkey" PRIMARY KEY ("id");
 
-CREATE INDEX "sys_dict_code_tenantId_idx" ON "public"."sys_dict" USING btree (
-   "code",
-   "tenant_id"
-);
-COMMENT ON INDEX "public"."sys_dict_code_tenantId_idx" IS '编码_租户ID_索引';
+CREATE INDEX "sys_dict_item_code_dictId_tenantId_idx" ON "public"."sys_dict_item" USING btree (
+	"code",
+	"dict_id",
+	"tenant_id"
+	);
+COMMENT ON INDEX "public"."sys_dict_item_code_dictId_tenantId_idx" IS '编码_字典ID_租户ID_索引';
+
+INSERT INTO "public"."sys_dict_item" VALUES (1, 1, 1, '2026-06-28 17:32:46.558703', '2026-06-28 17:32:46.5829', 0, 0, 1, 1, 'int(整数型)', 'int', 1, '', 0, 32765689148211202);
+INSERT INTO "public"."sys_dict_item" VALUES (2, 1, 1, '2026-06-28 17:33:06.47766', '2026-06-28 17:33:06.497407', 0, 0, 1, 1, 'long(长整数型)', 'long', 2, '', 0, 32765689148211202);
+INSERT INTO "public"."sys_dict_item" VALUES (3, 1, 1, '2026-06-28 17:33:51.971941', '2026-06-28 17:33:51.986855', 0, 0, 1, 1, 'float(单精度浮点型)', 'float', 3, '', 0, 32765689148211202);
+INSERT INTO "public"."sys_dict_item" VALUES (4, 1, 1, '2026-06-28 17:34:19.22565', '2026-06-28 17:34:19.245028', 0, 0, 1, 1, 'double(双精度浮点型)', 'double', 4, '', 0, 32765689148211202);
+INSERT INTO "public"."sys_dict_item" VALUES (5, 1, 1, '2026-06-28 17:34:53.705181', '2026-06-28 17:35:05.016846', 0, 1, 1, 1, 'text(文本型)', 'text', 5, '', 0, 32765689148211202);
+INSERT INTO "public"."sys_dict_item" VALUES (6, 1, 1, '2026-06-28 17:35:28.144399', '2026-06-28 17:35:28.159035', 0, 0, 1, 1, 'boolean(布尔型)', 'boolean', 6, '', 0, 32765689148211202);
 
 -- ----------------------------
 -- -------------国际化菜单------------

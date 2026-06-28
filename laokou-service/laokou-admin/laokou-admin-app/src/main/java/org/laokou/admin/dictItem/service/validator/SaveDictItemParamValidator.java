@@ -18,8 +18,10 @@
 package org.laokou.admin.dictItem.service.validator;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.dictItem.gatewayimpl.database.DictItemMapper;
 import org.laokou.admin.dictItem.model.DictItemA;
 import org.laokou.admin.dictItem.model.validator.DictItemParamValidator;
+import org.laokou.common.i18n.util.ParamValidator;
 import org.springframework.stereotype.Component;
 
 /**
@@ -29,9 +31,18 @@ import org.springframework.stereotype.Component;
 @Component("saveDictItemParamValidator")
 public class SaveDictItemParamValidator implements DictItemParamValidator {
 
+	private final DictItemMapper dictItemMapper;
+
 	@Override
 	public void validateDict(DictItemA dictItemA) {
-
+		ParamValidator.validate(dictItemA.getValidateName(),
+				// 校验字典项编码和字典项名称
+				org.laokou.admin.dictItem.service.validator.DictItemParamValidator.validateCodeAndName(dictItemA,
+						dictItemMapper),
+				// 校验排序
+				org.laokou.admin.dictItem.service.validator.DictItemParamValidator.validateSort(dictItemA),
+				// 校验字典项状态
+				org.laokou.admin.dictItem.service.validator.DictItemParamValidator.validateStatus(dictItemA));
 	}
 
 }
