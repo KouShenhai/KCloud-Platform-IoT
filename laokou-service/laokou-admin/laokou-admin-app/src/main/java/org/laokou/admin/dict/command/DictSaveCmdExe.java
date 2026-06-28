@@ -44,6 +44,7 @@ public class DictSaveCmdExe {
 	public void executeVoid(DictSaveCmd cmd) {
 		DictA dictA = DictDomainFactory.createDictA().create(DictConvertor.toEntity(cmd.getCo()));
 		// 校验参数
+		dictA.checkDeptParam();
 		transactionalUtils.executeInTransaction(() -> dictDomainService.createDict(dictA));
 	}
 

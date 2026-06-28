@@ -15,30 +15,27 @@
  *
  */
 
-package org.laokou.admin.dictItem.gateway;
+package org.laokou.admin.dictItem.model.enums;
 
-import org.laokou.admin.dictItem.model.DictItemA;
+import lombok.Getter;
 
 /**
- * 字典项网关【防腐】.
- *
  * @author laokou
  */
-public interface DictItemGateway {
+@Getter
+public enum OperateType {
 
-	/**
-	 * 新增字典项.
-	 */
-	void createDictItem(DictItemA dictItemA);
+	SAVE("save", "保存字典项"),
 
-	/**
-	 * 修改字典项.
-	 */
-	void updateDictItem(DictItemA dictItemA);
+	MODIFY("modify", "修改字典项");
 
-	/**
-	 * 删除字典项.
-	 */
-	void deleteDictItem(Long[] ids);
+	private final String code;
+
+	private final String desc;
+
+	OperateType(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
 
 }

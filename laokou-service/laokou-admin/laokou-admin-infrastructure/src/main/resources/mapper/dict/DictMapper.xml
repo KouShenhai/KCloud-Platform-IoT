@@ -23,7 +23,7 @@
 	<sql id="selectColumns">
 		id,
 		"name",
-		"type",
+		"code",
 		remark,
 		status,
 		create_time
@@ -34,8 +34,8 @@
 		<if test="pageQuery.name != null and pageQuery.name != ''">
 			and "name" like #{pageQuery.name}
 		</if>
-		<if test="pageQuery.type != null and pageQuery.type != ''">
-			and "type" like #{pageQuery.type}
+		<if test="pageQuery.code != null and pageQuery.code != ''">
+			and "code" like #{pageQuery.code}
 		</if>
 		<if test="pageQuery.status != null">
 			and status = #{pageQuery.status}

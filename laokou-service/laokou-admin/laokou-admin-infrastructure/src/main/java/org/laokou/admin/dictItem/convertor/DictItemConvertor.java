@@ -18,32 +18,65 @@
 package org.laokou.admin.dictItem.convertor;
 
 import org.laokou.admin.dictItem.dto.clientobject.DictItemCO;
+import org.laokou.admin.dictItem.factory.DictItemDomainFactory;
 import org.laokou.admin.dictItem.gatewayimpl.database.dataobject.DictItemDO;
-import org.laokou.admin.dictItem.model.DictItemE;
-import org.laokou.common.core.util.ConvertUtils;
-import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.admin.dictItem.model.DictItemA;
+import org.laokou.admin.dictItem.model.entity.DictItemE;
+
+import java.util.List;
 
 /**
  * 字典项转换器.
  *
  * @author laokou
  */
-public class DictItemConvertor {
+public final class DictItemConvertor {
 
-	public static DictItemDO toDataObject(Long id, DictItemE dictItemE) {
-		DictItemDO dictItemDO = ConvertUtils.sourceToTarget(dictItemE, DictItemDO.class);
-		if (ObjectUtils.isNull(dictItemDO.getId())) {
-			dictItemDO.setId(id);
-		}
+	private DictItemConvertor() {
+	}
+
+	public static DictItemDO toDataObject(DictItemA dictItemA) {
+		DictItemE dictItemE = dictItemA.getDictItemE();
+		DictItemDO dictItemDO = new DictItemDO();
+		dictItemDO.setId(dictItemA.getId());
+		dictItemDO.setName(dictItemE.getName());
+		dictItemDO.setCode(dictItemE.getCode());
+		dictItemDO.setRemark(dictItemE.getRemark());
+		dictItemDO.setStatus(dictItemE.getStatus());
+		dictItemDO.setSort(dictItemE.getSort());
+		dictItemDO.setDictId(dictItemE.getDictId());
+		dictItemDO.setCreateTime(dictItemA.getCreateTime());
 		return dictItemDO;
 	}
 
 	public static DictItemCO toClientObject(DictItemDO dictItemDO) {
-		return ConvertUtils.sourceToTarget(dictItemDO, DictItemCO.class);
+		DictItemCO dictItemCO = new DictItemCO();
+		dictItemCO.setId(dictItemDO.getId());
+		dictItemCO.setName(dictItemDO.getName());
+		dictItemCO.setCode(dictItemDO.getCode());
+		dictItemCO.setRemark(dictItemDO.getRemark());
+		dictItemCO.setStatus(dictItemDO.getStatus());
+		dictItemCO.setSort(dictItemDO.getSort());
+		dictItemCO.setDictId(dictItemDO.getDictId());
+		dictItemCO.setCreateTime(dictItemDO.getCreateTime());
+		return dictItemCO;
+	}
+
+	public static List<DictItemCO> toClientObjectList(List<DictItemDO> list) {
+		return list.stream().map(DictItemConvertor::toClientObject).toList();
 	}
 
 	public static DictItemE toEntity(DictItemCO dictItemCO) {
-		return ConvertUtils.sourceToTarget(dictItemCO, DictItemE.class);
+		return DictItemDomainFactory.createDictItemE()
+			.toBuilder()
+			.id(dictItemCO.getId())
+			.name(dictItemCO.getName())
+			.code(dictItemCO.getCode())
+			.status(dictItemCO.getStatus())
+			.remark(dictItemCO.getRemark())
+			.dictId(dictItemCO.getDictId())
+			.sort(dictItemCO.getSort())
+			.build();
 	}
 
 }

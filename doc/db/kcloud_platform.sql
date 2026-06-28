@@ -108,8 +108,8 @@ CREATE TABLE "public"."sys_dict" (
   "version" int4 NOT NULL DEFAULT 0,
   "tenant_id" int8 NOT NULL DEFAULT 1,
   "dept_id" int8 NOT NULL DEFAULT 1,
-  "name" varchar(100) NOT NULL,
-  "type" varchar(100) NOT NULL,
+  "name" varchar(50) NOT NULL,
+  "code" varchar(100) NOT NULL,
   "remark" varchar(500),
   "status" int2 NOT NULL DEFAULT 0
 );
@@ -123,13 +123,20 @@ COMMENT ON COLUMN "public"."sys_dict"."version" IS '版本号';
 COMMENT ON COLUMN "public"."sys_dict"."tenant_id" IS '租户ID';
 COMMENT ON COLUMN "public"."sys_dict"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."sys_dict"."name" IS '字典名称';
-COMMENT ON COLUMN "public"."sys_dict"."type" IS '字典类型';
+COMMENT ON COLUMN "public"."sys_dict"."code" IS '字典编码';
 COMMENT ON COLUMN "public"."sys_dict"."remark" IS '字典备注';
 COMMENT ON COLUMN "public"."sys_dict"."status" IS '字典状态 0启用 1停用';
 COMMENT ON TABLE "public"."sys_dict" IS '字典';
 
 ALTER TABLE "public"."sys_dict" ADD CONSTRAINT "sys_dict_pkey" PRIMARY KEY ("id");
 
+CREATE INDEX "sys_dict_code_tenantId_idx" ON "public"."sys_dict" USING btree (
+	"code",
+	"tenant_id"
+	);
+COMMENT ON INDEX "public"."sys_dict_code_tenantId_idx" IS '编码_租户ID_索引';
+
+INSERT INTO "public"."sys_dict" VALUES (1, 1, 1, '2026-06-28 17:29:34.520198', '2026-06-28 17:29:34.602805', 0, 0, 1, 1, '物模型数据类型', 'thing_model_data_type', '', 0);
 -- ----------------------------
 -- -------------字典项------------
 -- ----------------------------
@@ -144,12 +151,12 @@ CREATE TABLE "public"."sys_dict_item" (
    "version" int4 NOT NULL DEFAULT 0,
    "tenant_id" int8 NOT NULL DEFAULT 1,
    "dept_id" int8 NOT NULL DEFAULT 1,
-   "label" varchar(100) NOT NULL,
-   "value" varchar(100) NOT NULL,
+   "name" varchar(50) NOT NULL,
+   "code" varchar(100) NOT NULL,
    "sort" int4 NOT NULL DEFAULT 1,
    "remark" varchar(500),
    "status" int2 NOT NULL DEFAULT 0,
-   "type_id" int8 NOT NULL
+   "dict_id" int8 NOT NULL
 );
 COMMENT ON COLUMN "public"."sys_dict_item"."id" IS 'ID';
 COMMENT ON COLUMN "public"."sys_dict_item"."creator" IS '创建人';
@@ -160,21 +167,29 @@ COMMENT ON COLUMN "public"."sys_dict_item"."del_flag" IS '删除标识 0未删�
 COMMENT ON COLUMN "public"."sys_dict_item"."version" IS '版本号';
 COMMENT ON COLUMN "public"."sys_dict_item"."tenant_id" IS '租户ID';
 COMMENT ON COLUMN "public"."sys_dict_item"."dept_id" IS '部门ID';
-COMMENT ON COLUMN "public"."sys_dict_item"."label" IS '字典标签';
-COMMENT ON COLUMN "public"."sys_dict_item"."value" IS '字典值';
-COMMENT ON COLUMN "public"."sys_dict_item"."sort" IS '字典排序';
-COMMENT ON COLUMN "public"."sys_dict_item"."remark" IS '字典备注';
-COMMENT ON COLUMN "public"."sys_dict_item"."status" IS '字典状态 0启用 1停用';
-COMMENT ON COLUMN "public"."sys_dict_item"."type_id" IS '类型ID';
+COMMENT ON COLUMN "public"."sys_dict_item"."name" IS '字典项名称';
+COMMENT ON COLUMN "public"."sys_dict_item"."code" IS '字典项编码';
+COMMENT ON COLUMN "public"."sys_dict_item"."sort" IS '字典项排序';
+COMMENT ON COLUMN "public"."sys_dict_item"."remark" IS '字典项备注';
+COMMENT ON COLUMN "public"."sys_dict_item"."status" IS '字典项状态 0启用 1停用';
+COMMENT ON COLUMN "public"."sys_dict_item"."dict_id" IS '字典ID';
 COMMENT ON TABLE "public"."sys_dict_item" IS '字典项';
 
 ALTER TABLE "public"."sys_dict_item" ADD CONSTRAINT "sys_dict_item_pkey" PRIMARY KEY ("id");
 
-CREATE INDEX "sys_dict_type_tenantId_idx" ON "public"."sys_dict" USING btree (
-   "type",
-   "tenant_id"
-);
-COMMENT ON INDEX "public"."sys_dict_type_tenantId_idx" IS '类型_租户ID_索引';
+CREATE INDEX "sys_dict_item_code_dictId_tenantId_idx" ON "public"."sys_dict_item" USING btree (
+	"code",
+	"dict_id",
+	"tenant_id"
+	);
+COMMENT ON INDEX "public"."sys_dict_item_code_dictId_tenantId_idx" IS '编码_字典ID_租户ID_索引';
+
+INSERT INTO "public"."sys_dict_item" VALUES (1, 1, 1, '2026-06-28 17:32:46.558703', '2026-06-28 17:32:46.5829', 0, 0, 1, 1, 'int(整数型)', 'int', 1, '', 0, 32765689148211202);
+INSERT INTO "public"."sys_dict_item" VALUES (2, 1, 1, '2026-06-28 17:33:06.47766', '2026-06-28 17:33:06.497407', 0, 0, 1, 1, 'long(长整数型)', 'long', 2, '', 0, 32765689148211202);
+INSERT INTO "public"."sys_dict_item" VALUES (3, 1, 1, '2026-06-28 17:33:51.971941', '2026-06-28 17:33:51.986855', 0, 0, 1, 1, 'float(单精度浮点型)', 'float', 3, '', 0, 32765689148211202);
+INSERT INTO "public"."sys_dict_item" VALUES (4, 1, 1, '2026-06-28 17:34:19.22565', '2026-06-28 17:34:19.245028', 0, 0, 1, 1, 'double(双精度浮点型)', 'double', 4, '', 0, 32765689148211202);
+INSERT INTO "public"."sys_dict_item" VALUES (5, 1, 1, '2026-06-28 17:34:53.705181', '2026-06-28 17:35:05.016846', 0, 1, 1, 1, 'text(文本型)', 'text', 5, '', 0, 32765689148211202);
+INSERT INTO "public"."sys_dict_item" VALUES (6, 1, 1, '2026-06-28 17:35:28.144399', '2026-06-28 17:35:28.159035', 0, 0, 1, 1, 'boolean(布尔型)', 'boolean', 6, '', 0, 32765689148211202);
 
 -- ----------------------------
 -- -------------国际化菜单------------
@@ -190,7 +205,7 @@ CREATE TABLE "public"."sys_i18n_menu" (
   "version" int4 NOT NULL DEFAULT 0,
   "tenant_id" int8 NOT NULL DEFAULT 1,
   "dept_id" int8 NOT NULL DEFAULT 1,
-  "code" varchar(50) NOT NULL,
+  "code" varchar(100) NOT NULL,
   "name" varchar(50) NOT NULL
 );
 COMMENT ON COLUMN "public"."sys_i18n_menu"."id" IS 'ID';
@@ -716,7 +731,7 @@ CREATE TABLE "public"."sys_tenant" (
 	"tenant_id" int8 NOT NULL DEFAULT 1,
 	"dept_id" int8 NOT NULL DEFAULT 1,
 	"name" varchar(100) NOT NULL,
-	"code" varchar(30) NOT NULL,
+	"code" varchar(50) NOT NULL,
 	"source_id" int8 NOT NULL,
 	"package_id" int8 NOT NULL
 );

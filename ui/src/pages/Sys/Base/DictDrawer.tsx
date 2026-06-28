@@ -109,13 +109,13 @@ export const DictDrawer: React.FC<DictDrawerProps> = ({
 
 			<ProFormText
 				disabled={loading}
-				name="type"
-				label={t('sys.dict.type')}
+				name="code"
+				label={t('sys.dict.code')}
 				readonly={readOnly}
-				placeholder={t('sys.dict.placeholder.type')}
+				placeholder={t('sys.dict.placeholder.code')}
 				rules={[
-					{ required: true, message: t('sys.dict.required.type') },
-					{ max: 100, message: t('sys.dict.validate.typeMax') },
+					{ required: true, message: t('sys.dict.required.code') },
+					{ max: 100, message: t('sys.dict.validate.codeMax') },
 				]}
 			/>
 

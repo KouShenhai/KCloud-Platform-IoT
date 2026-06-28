@@ -35,7 +35,7 @@ final class RoleParamValidator {
 	private RoleParamValidator() {
 	}
 
-	public static ParamValidator.Validate validateSort(RoleA roleA) {
+	static ParamValidator.Validate validateSort(RoleA roleA) {
 		Integer sort = roleA.getRoleE().getSort();
 		if (ObjectUtils.isNull(sort)) {
 			return ParamValidator.invalidate("角色排序不能为空");
@@ -46,28 +46,28 @@ final class RoleParamValidator {
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateId(RoleA roleA) {
+	static ParamValidator.Validate validateId(RoleA roleA) {
 		if (ObjectUtils.isNull(roleA.getId())) {
 			return ParamValidator.invalidate("角色ID不能为空");
 		}
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateDataScope(RoleA roleA) {
+	static ParamValidator.Validate validateDataScope(RoleA roleA) {
 		if (StringExtUtils.isEmpty(roleA.getRoleE().getDataScope())) {
 			return ParamValidator.invalidate("角色数据范围不能为空");
 		}
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateMenuIds(RoleA roleA) {
+	static ParamValidator.Validate validateMenuIds(RoleA roleA) {
 		if (CollectionExtUtils.isEmpty(roleA.getRoleE().getMenuIds())) {
 			return ParamValidator.invalidate("角色菜单IDS不能为空");
 		}
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateDeptIds(RoleA roleA) {
+	static ParamValidator.Validate validateDeptIds(RoleA roleA) {
 		if (ObjectUtils.equals(roleA.getRoleE().getDataScope(), DataScope.CUSTOM.getCode())
 				&& CollectionExtUtils.isEmpty(roleA.getRoleE().getDeptIds())) {
 			return ParamValidator.invalidate("角色部门IDS不能为空");
@@ -75,7 +75,7 @@ final class RoleParamValidator {
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateName(RoleA roleA, RoleMapper roleMapper) {
+	static ParamValidator.Validate validateName(RoleA roleA, RoleMapper roleMapper) {
 		Long id = roleA.getId();
 		String name = roleA.getRoleE().getName();
 		if (StringExtUtils.isEmpty(name)) {

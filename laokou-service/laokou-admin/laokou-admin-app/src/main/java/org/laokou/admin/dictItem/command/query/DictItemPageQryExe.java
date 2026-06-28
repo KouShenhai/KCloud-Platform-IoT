@@ -43,7 +43,7 @@ public class DictItemPageQryExe {
 	public Result<Page<DictItemCO>> execute(DictItemPageQry qry) {
 		List<DictItemDO> list = dictItemMapper.selectObjectPage(qry);
 		long total = dictItemMapper.selectObjectCount(qry);
-		return Result.ok(Page.create(list.stream().map(DictItemConvertor::toClientObject).toList(), total));
+		return Result.ok(Page.create(DictItemConvertor.toClientObjectList(list), total));
 	}
 
 }

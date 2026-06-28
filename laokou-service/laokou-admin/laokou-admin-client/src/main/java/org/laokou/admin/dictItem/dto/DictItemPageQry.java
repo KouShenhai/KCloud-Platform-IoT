@@ -30,31 +30,31 @@ import org.laokou.common.i18n.util.StringExtUtils;
 public class DictItemPageQry extends PageQuery {
 
 	/**
-	 * 字典标签.
+	 * 字典项名称.
 	 */
-	private String label;
+	private String name;
 
 	/**
-	 * 字典值.
+	 * 字典项编码.
 	 */
-	private String value;
+	private String code;
 
 	/**
-	 * 字典状态 0启用 1停用.
+	 * 字典项状态 0启用 1停用.
 	 */
 	private Integer status;
 
 	/**
-	 * 类型ID.
+	 * 字典ID.
 	 */
-	private Long typeId;
+	private Long dictId;
 
-	public void setLabel(String label) {
-		this.label = StringExtUtils.like(StringExtUtils.trim(label));
+	public void setName(String name) {
+		this.name = StringExtUtils.like(StringExtUtils.trim(name));
 	}
 
-	public void setValue(String value) {
-		this.value = StringExtUtils.like(StringExtUtils.trim(value));
+	public void setCode(String code) {
+		this.code = StringExtUtils.like(StringExtUtils.trim(code));
 	}
 
 }

@@ -15,30 +15,26 @@
  *
  */
 
-package org.laokou.admin.dictItem.gateway;
+package org.laokou.admin.dictItem.factory;
 
 import org.laokou.admin.dictItem.model.DictItemA;
+import org.laokou.admin.dictItem.model.entity.DictItemE;
+import org.laokou.common.i18n.util.SpringContextUtils;
 
 /**
- * 字典项网关【防腐】.
- *
  * @author laokou
  */
-public interface DictItemGateway {
+public final class DictItemDomainFactory {
 
-	/**
-	 * 新增字典项.
-	 */
-	void createDictItem(DictItemA dictItemA);
+	private DictItemDomainFactory() {
+	}
 
-	/**
-	 * 修改字典项.
-	 */
-	void updateDictItem(DictItemA dictItemA);
+	public static DictItemE createDictItemE() {
+		return SpringContextUtils.getBeanProvider(DictItemE.class);
+	}
 
-	/**
-	 * 删除字典项.
-	 */
-	void deleteDictItem(Long[] ids);
+	public static DictItemA createDictItemA() {
+		return SpringContextUtils.getBeanProvider(DictItemA.class);
+	}
 
 }

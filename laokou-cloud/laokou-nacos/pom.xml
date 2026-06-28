@@ -109,6 +109,7 @@
             --add-opens=java.base/java.lang=ALL-UNNAMED
             --add-opens=java.base/java.lang.reflect=ALL-UNNAMED
             --add-opens=java.base/java.util=ALL-UNNAMED
+            --add-opens=java.base/java.lang.invoke=ALL-UNNAMED
           </jvmArguments>
         </configuration>
         <executions>
@@ -151,6 +152,9 @@
         <version>${maven-surefire-plugin.version}</version>
         <configuration>
           <skip>true</skip>
+          <argLine>
+            --add-opens=java.base/java.lang.invoke=ALL-UNNAMED
+          </argLine>
         </configuration>
       </plugin>
     </plugins>

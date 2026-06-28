@@ -159,6 +159,12 @@
           <mainClass>org.laokou.gateway.GatewayApp</mainClass>
           <!-- Docker镜像名称 -->
           <imageName>${docker.registry}/${docker.namespace}/${project.artifactId}-native:${project.version}</imageName>
+          <jvmArguments>
+            --add-opens=java.base/java.lang=ALL-UNNAMED
+            --add-opens=java.base/java.lang.reflect=ALL-UNNAMED
+            --add-opens=java.base/java.util=ALL-UNNAMED
+            --add-opens=java.base/java.lang.invoke=ALL-UNNAMED
+          </jvmArguments>
         </configuration>
         <executions>
           <execution>

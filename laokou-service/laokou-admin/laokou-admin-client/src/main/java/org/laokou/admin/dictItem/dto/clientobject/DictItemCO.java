@@ -17,8 +17,13 @@
 
 package org.laokou.admin.dictItem.dto.clientobject;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import org.laokou.common.i18n.common.constant.DateConstants;
 import org.laokou.common.i18n.dto.ClientObject;
+
+import java.time.Instant;
 
 /**
  * 字典项客户端对象.
@@ -34,33 +39,37 @@ public class DictItemCO extends ClientObject {
 	private Long id;
 
 	/**
-	 * 字典标签.
+	 * 字典项名称.
 	 */
-	private String label;
+	private String name;
 
 	/**
-	 * 字典值.
+	 * 字典项编码.
 	 */
-	private String value;
+	private String code;
 
 	/**
-	 * 字典排序.
+	 * 字典项排序.
 	 */
 	private Integer sort;
 
 	/**
-	 * 字典备注.
+	 * 字典项备注.
 	 */
 	private String remark;
 
 	/**
-	 * 字典状态 0启用 1停用.
+	 * 字典项状态 0启用 1停用.
 	 */
 	private Integer status;
 
 	/**
-	 * 类型ID.
+	 * 字典ID.
 	 */
-	private Long typeId;
+	private Long dictId;
+
+	@Schema(name = "创建时间", description = "创建时间")
+	@JsonFormat(pattern = DateConstants.YYYY_B_MM_B_DD_HH_R_MM_R_SS, timezone = DateConstants.DEFAULT_TIMEZONE)
+	private Instant createTime;
 
 }

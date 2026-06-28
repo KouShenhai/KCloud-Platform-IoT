@@ -18,8 +18,10 @@
 package org.laokou.admin.dict.service.validator;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.admin.dict.gatewayimpl.database.DictMapper;
 import org.laokou.admin.dict.model.DictA;
 import org.laokou.admin.dict.model.validator.DictParamValidator;
+import org.laokou.common.i18n.util.ParamValidator;
 import org.springframework.stereotype.Component;
 
 /**
@@ -29,9 +31,17 @@ import org.springframework.stereotype.Component;
 @Component("modifyDictParamValidator")
 public class ModifyDictParamValidator implements DictParamValidator {
 
+	private final DictMapper dictMapper;
+
 	@Override
 	public void validateDict(DictA dictA) {
-
+		ParamValidator.validate(dictA.getValidateName(),
+				// 校验字典ID
+				org.laokou.admin.dict.service.validator.DictParamValidator.validateId(dictA),
+				// 校验字典编码和字典名称
+				org.laokou.admin.dict.service.validator.DictParamValidator.validateCodeAndName(dictA, dictMapper),
+				// 校验字典状态
+				org.laokou.admin.dict.service.validator.DictParamValidator.validateStatus(dictA));
 	}
 
 }

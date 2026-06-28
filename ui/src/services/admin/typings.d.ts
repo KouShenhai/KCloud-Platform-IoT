@@ -57,12 +57,12 @@ declare namespace API {
 	type DictItemCO = {
 		extValues?: Record<string, any>;
 		id?: number;
-		label?: string;
-		value?: string;
+		name?: string;
+		code?: string;
 		sort?: number;
 		remark?: string;
 		status?: number;
-		typeId?: number;
+		dictId?: number;
 	};
 
 	type DictItemExportCmd = true;
@@ -78,7 +78,7 @@ declare namespace API {
 		label?: string;
 		value?: string;
 		status?: number;
-		typeId?: number;
+		dictId?: number;
 		sqlFilter?: string;
 		params?: Record<string, any>;
 	};
@@ -91,7 +91,7 @@ declare namespace API {
 		extValues?: Record<string, any>;
 		id?: number;
 		name?: string;
-		type?: string;
+		code?: string;
 		remark?: string;
 		status?: number;
 	};

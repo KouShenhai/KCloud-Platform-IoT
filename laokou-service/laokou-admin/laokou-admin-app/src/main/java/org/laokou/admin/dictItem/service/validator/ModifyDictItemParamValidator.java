@@ -15,44 +15,36 @@
  *
  */
 
-package org.laokou.admin.dictItem.gatewayimpl;
+package org.laokou.admin.dictItem.service.validator;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.dictItem.convertor.DictItemConvertor;
-import org.laokou.admin.dictItem.gateway.DictItemGateway;
 import org.laokou.admin.dictItem.gatewayimpl.database.DictItemMapper;
-import org.laokou.admin.dictItem.gatewayimpl.database.dataobject.DictItemDO;
 import org.laokou.admin.dictItem.model.DictItemA;
+import org.laokou.admin.dictItem.model.validator.DictItemParamValidator;
+import org.laokou.common.i18n.util.ParamValidator;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-
 /**
- * 字典项网关实现.
- *
  * @author laokou
  */
-@Component
 @RequiredArgsConstructor
-public class DictItemGatewayImpl implements DictItemGateway {
+@Component("modifyDictItemParamValidator")
+public class ModifyDictItemParamValidator implements DictItemParamValidator {
 
 	private final DictItemMapper dictItemMapper;
 
 	@Override
-	public void createDictItem(DictItemA dictItemA) {
-		dictItemMapper.insert(DictItemConvertor.toDataObject(dictItemA));
-	}
-
-	@Override
-	public void updateDictItem(DictItemA dictItemA) {
-		DictItemDO dictItemDO = DictItemConvertor.toDataObject(dictItemA);
-		dictItemDO.setVersion(dictItemMapper.selectVersion(dictItemA.getId()));
-		dictItemMapper.updateById(dictItemDO);
-	}
-
-	@Override
-	public void deleteDictItem(Long[] ids) {
-		dictItemMapper.deleteByIds(Arrays.asList(ids));
+	public void validateDict(DictItemA dictItemA) {
+		ParamValidator.validate(dictItemA.getValidateName(),
+				// 校验字典项ID
+				org.laokou.admin.dictItem.service.validator.DictItemParamValidator.validateId(dictItemA),
+				// 校验字典项编码和字典项名称
+				org.laokou.admin.dictItem.service.validator.DictItemParamValidator.validateCodeAndName(dictItemA,
+						dictItemMapper),
+				// 校验排序
+				org.laokou.admin.dictItem.service.validator.DictItemParamValidator.validateSort(dictItemA),
+				// 校验字典项状态
+				org.laokou.admin.dictItem.service.validator.DictItemParamValidator.validateStatus(dictItemA));
 	}
 
 }

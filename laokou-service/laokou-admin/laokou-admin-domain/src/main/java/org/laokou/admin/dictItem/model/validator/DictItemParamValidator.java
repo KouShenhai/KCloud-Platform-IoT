@@ -15,27 +15,15 @@
  *
  */
 
-package org.laokou.admin.dict.model.enums;
+package org.laokou.admin.dictItem.model.validator;
 
-import lombok.Getter;
+import org.laokou.admin.dictItem.model.DictItemA;
 
 /**
  * @author laokou
  */
-@Getter
-public enum OperateType {
+public interface DictItemParamValidator {
 
-	SAVE("save", "保存字典"),
-
-	MODIFY("modify", "修改字典");
-
-	private final String code;
-
-	private final String desc;
-
-	OperateType(String code, String desc) {
-		this.code = code;
-		this.desc = desc;
-	}
+	void validateDict(DictItemA dictItemA);
 
 }

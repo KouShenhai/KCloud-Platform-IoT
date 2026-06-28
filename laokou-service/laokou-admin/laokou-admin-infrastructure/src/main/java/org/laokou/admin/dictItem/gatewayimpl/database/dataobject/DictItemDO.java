@@ -31,33 +31,33 @@ import org.laokou.common.mybatisplus.mapper.BaseDO;
 public class DictItemDO extends BaseDO {
 
 	/**
-	 * 字典标签.
+	 * 字典项名称.
 	 */
-	private String label;
+	private String name;
 
 	/**
-	 * 字典值.
+	 * 字典项编码.
 	 */
-	private String value;
+	private String code;
 
 	/**
-	 * 字典排序.
+	 * 字典项排序.
 	 */
 	private Integer sort;
 
 	/**
-	 * 字典备注.
+	 * 字典项备注.
 	 */
 	private String remark;
 
 	/**
-	 * 字典状态 0启用 1停用.
+	 * 字典项状态 0启用 1停用.
 	 */
 	private Integer status;
 
 	/**
-	 * 类型ID.
+	 * 字典ID.
 	 */
-	private Long typeId;
+	private Long dictId;
 
 }
