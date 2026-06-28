@@ -97,43 +97,43 @@ export const DictItemDrawer: React.FC<DictItemDrawerProps> = ({
 			/>
 			<ProFormText
 				disabled={loading}
-				name="typeId"
-				label={t('sys.dictItem.typeId')}
+				name="dictId"
+				label={t('sys.dictItem.dictId')}
 				hidden={true}
 			/>
 
 			<ProFormText
 				disabled={loading}
-				name="label"
-				label={t('sys.dictItem.label')}
+				name="name"
+				label={t('sys.dictItem.name')}
 				readonly={readOnly}
-				placeholder={t('sys.dictItem.placeholder.label')}
+				placeholder={t('sys.dictItem.placeholder.name')}
 				rules={[
 					{
 						required: true,
-						message: t('sys.dictItem.required.label'),
+						message: t('sys.dictItem.required.name'),
 					},
 					{
 						max: 100,
-						message: t('sys.dictItem.validate.labelMax'),
+						message: t('sys.dictItem.validate.nameMax'),
 					},
 				]}
 			/>
 
 			<ProFormText
 				disabled={loading}
-				name="value"
-				label={t('sys.dictItem.value')}
+				name="code"
+				label={t('sys.dictItem.code')}
 				readonly={readOnly}
-				placeholder={t('sys.dictItem.placeholder.value')}
+				placeholder={t('sys.dictItem.placeholder.code')}
 				rules={[
 					{
 						required: true,
-						message: t('sys.dictItem.required.value'),
+						message: t('sys.dictItem.required.code'),
 					},
 					{
 						max: 100,
-						message: t('sys.dictItem.validate.valueMax'),
+						message: t('sys.dictItem.validate.codeMax'),
 					},
 				]}
 			/>

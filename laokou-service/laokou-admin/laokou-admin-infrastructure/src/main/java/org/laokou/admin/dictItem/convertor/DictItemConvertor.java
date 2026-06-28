@@ -44,6 +44,7 @@ public final class DictItemConvertor {
 		dictItemDO.setRemark(dictItemE.getRemark());
 		dictItemDO.setStatus(dictItemE.getStatus());
 		dictItemDO.setSort(dictItemE.getSort());
+		dictItemDO.setDictId(dictItemE.getDictId());
 		dictItemDO.setCreateTime(dictItemA.getCreateTime());
 		return dictItemDO;
 	}
@@ -55,6 +56,8 @@ public final class DictItemConvertor {
 		dictItemCO.setCode(dictItemDO.getCode());
 		dictItemCO.setRemark(dictItemDO.getRemark());
 		dictItemCO.setStatus(dictItemDO.getStatus());
+		dictItemCO.setSort(dictItemDO.getSort());
+		dictItemCO.setDictId(dictItemDO.getDictId());
 		dictItemCO.setCreateTime(dictItemDO.getCreateTime());
 		return dictItemCO;
 	}

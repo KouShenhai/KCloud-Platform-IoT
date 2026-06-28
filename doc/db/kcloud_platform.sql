@@ -123,7 +123,7 @@ COMMENT ON COLUMN "public"."sys_dict"."version" IS '版本号';
 COMMENT ON COLUMN "public"."sys_dict"."tenant_id" IS '租户ID';
 COMMENT ON COLUMN "public"."sys_dict"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."sys_dict"."name" IS '字典名称';
-COMMENT ON COLUMN "public"."sys_dict"."type" IS '字典编码';
+COMMENT ON COLUMN "public"."sys_dict"."code" IS '字典编码';
 COMMENT ON COLUMN "public"."sys_dict"."remark" IS '字典备注';
 COMMENT ON COLUMN "public"."sys_dict"."status" IS '字典状态 0启用 1停用';
 COMMENT ON TABLE "public"."sys_dict" IS '字典';

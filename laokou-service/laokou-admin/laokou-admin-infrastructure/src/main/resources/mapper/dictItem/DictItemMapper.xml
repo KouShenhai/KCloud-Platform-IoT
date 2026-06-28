@@ -32,8 +32,8 @@
 
 	<sql id="selectConditions">
 		where del_flag = 0
-		<if test="pageQuery.typeId != null">
-			and type_id = #{pageQuery.typeId}
+		<if test="pageQuery.dictId != null">
+			and dict_id = #{pageQuery.dictId}
 		</if>
 		<if test="pageQuery.name != null and pageQuery.name != ''">
 			and "name" like #{pageQuery.name}

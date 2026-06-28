@@ -99,8 +99,8 @@ export default () => {
 			pageSize: params?.pageSize,
 			pageNum: params?.current,
 			pageIndex: params?.pageSize * (params?.current - 1),
-			label: trim(params?.label),
-			value: trim(params?.value),
+			name: trim(params?.name),
+			code: trim(params?.code),
 			status: params?.statusValue,
 			dictId: selectedDictId,
 			params: {
@@ -240,7 +240,7 @@ export default () => {
 				return false;
 			}
 			setDictItemImportLoading(true);
-			importDictItem({ typeId: selectedDictId }, [file])
+			importDictItem({ dictId: selectedDictId }, [file])
 				.then((res) => {
 					if (res.code === 'OK') {
 						message.success(t('toast.importSuccess')).then();
@@ -274,16 +274,6 @@ export default () => {
 		ellipsis: true,
 	});
 
-	const renderSelectedDictContext = () => {
-		if (!selectedDictId) {
-			return (
-				<Typography.Text key="selected" type="secondary">
-					{t('sys.dictItem.selectDictFirst')}
-				</Typography.Text>
-			);
-		}
-	};
-
 	const dictColumns: ProColumns<API.DictCO>[] = [
 		{
 			title: t('common.number'),
@@ -301,12 +291,12 @@ export default () => {
 			},
 		},
 		{
-			title: t('sys.dict.type'),
-			dataIndex: 'type',
+			title: t('sys.dict.code'),
+			dataIndex: 'code',
 			ellipsis: true,
 			width: 150,
 			fieldProps: {
-				placeholder: t('sys.dict.placeholder.type'),
+				placeholder: t('sys.dict.placeholder.code'),
 			},
 		},
 		{
@@ -320,7 +310,7 @@ export default () => {
 			title: t('sys.dict.status'),
 			dataIndex: 'status',
 			hideInSearch: true,
-			width: 110,
+			width: 150,
 			render: (_, record) => (
 				<Switch
 					checkedChildren={t('common.enable')}
@@ -435,21 +425,21 @@ export default () => {
 			width: 70,
 		},
 		{
-			title: t('sys.dictItem.label'),
-			dataIndex: 'label',
+			title: t('sys.dictItem.name'),
+			dataIndex: 'name',
 			ellipsis: true,
-			width: 150,
+			width: 170,
 			fieldProps: {
-				placeholder: t('sys.dictItem.placeholder.label'),
+				placeholder: t('sys.dictItem.placeholder.name'),
 			},
 		},
 		{
-			title: t('sys.dictItem.value'),
-			dataIndex: 'value',
+			title: t('sys.dictItem.code'),
+			dataIndex: 'code',
 			ellipsis: true,
-			width: 150,
+			width: 170,
 			fieldProps: {
-				placeholder: t('sys.dictItem.placeholder.value'),
+				placeholder: t('sys.dictItem.placeholder.code'),
 			},
 		},
 		{
@@ -463,7 +453,7 @@ export default () => {
 			title: t('sys.dictItem.status'),
 			dataIndex: 'status',
 			hideInSearch: true,
-			width: 110,
+			width: 170,
 			render: (_, record) => (
 				<Switch
 					checkedChildren={t('common.enable')}
@@ -477,14 +467,14 @@ export default () => {
 			title: t('sys.dictItem.sort'),
 			dataIndex: 'sort',
 			hideInSearch: true,
-			width: 90,
+			width: 170,
 			ellipsis: true,
 		},
 		{
 			title: t('sys.dictItem.remark'),
 			dataIndex: 'remark',
 			hideInSearch: true,
-			width: 160,
+			width: 170,
 			ellipsis: true,
 		},
 		{
@@ -658,7 +648,7 @@ export default () => {
 										setDictDataSource({
 											id: undefined,
 											name: '',
-											type: '',
+											code: '',
 											remark: '',
 											status: 0,
 										});
@@ -763,7 +753,6 @@ export default () => {
 							),
 						}}
 						toolBarRender={() => [
-							renderSelectedDictContext(),
 							access.canDictItemSave && (
 								<Button
 									key="save"
@@ -789,12 +778,12 @@ export default () => {
 										setDictItemRequestId(uuidV7());
 										setDictItemDataSource({
 											id: undefined,
-											label: '',
-											value: '',
+											name: '',
+											code: '',
 											sort: 1,
 											remark: '',
 											status: 0,
-											typeId: selectedDictId,
+											dictId: selectedDictId,
 										});
 									}}
 								>
@@ -848,7 +837,7 @@ export default () => {
 										setDictItemExportLoading(true);
 										exportDictItem({
 											...dictItemParam,
-											typeId: selectedDictId,
+											dictId: selectedDictId,
 										}).finally(() => {
 											setDictItemExportLoading(false);
 										});
@@ -861,7 +850,7 @@ export default () => {
 						dateFormatter="string"
 						toolbar={{
 							title: t('sys.dictItem.title'),
-							tooltip: selectedDict?.type || t('sys.dictItem.selectDictFirst'),
+							tooltip: t('sys.dictItem.selectDictFirst'),
 						}}
 					/>
 				</Col>
