@@ -5,13 +5,14 @@ import {
 } from '@/services/admin/i18nMenu';
 import {trim} from '@/utils/format';
 import {useAccess, useIntl} from '@@/exports';
-import {PlusOutlined} from '@ant-design/icons';
+import {DeleteOutlined, PlusOutlined} from '@ant-design/icons';
 import type {ActionType, ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
 import {Button, message, Modal} from 'antd';
 import {useRef, useState} from 'react';
 import {I18nMenuDrawer} from "@/pages/Sys/Base/I18nMenuDrawer";
 import {v7 as uuidV7} from "uuid";
+import {TableRowSelection} from "antd/es/table/interface";
 
 export default () => {
 	type TableColumns = {
@@ -32,6 +33,16 @@ export default () => {
 	const [ids, setIds] = useState<number[]>([]);
 	const [title, setTitle] = useState('');
 	const [requestId, setRequestId] = useState('');
+
+	const rowSelection: TableRowSelection<TableColumns> = {
+		onChange: (selectedRowKeys) => {
+			const ids: number[] = [];
+			selectedRowKeys.forEach((item) => {
+				ids.push(item as number);
+			});
+			setIds(ids);
+		},
+	};
 
 	const getPageQueryParam = (params: any) => {
 		return {
@@ -199,6 +210,7 @@ export default () => {
 					});
 				}}
 				rowKey="id"
+				rowSelection={{ ...rowSelection }}
 				pagination={{
 					showQuickJumper: true,
 					showSizeChanger: false,
@@ -229,6 +241,47 @@ export default () => {
 							{t('common.insert')}
 						</Button>
 					),
+					access.canI18nMenuRemove && (
+						<Button
+							key="remove"
+							type="primary"
+							danger
+							icon={<DeleteOutlined />}
+							onClick={() => {
+								Modal.confirm({
+									title: t('confirm.deleteTitle'),
+									content: t('confirm.deleteContent'),
+									okText: t('common.ok'),
+									cancelText: t('common.cancel'),
+									onOk: async () => {
+										if (ids.length === 0) {
+											message
+												.warning(
+													t('toast.selectAtLeastOne'),
+												)
+												.then();
+											return;
+										}
+										removeI18nMenu(ids).then((res) => {
+											if (res.code === 'OK') {
+												message
+													.success(
+														t(
+															'toast.deleteSuccess',
+														),
+													)
+													.then();
+												// @ts-ignore
+												actionRef?.current?.reload();
+											}
+										});
+									},
+								});
+							}}
+						>
+							{t('common.delete')}
+						</Button>
+					)
 				]}
 				dateFormatter="string"
 				toolbar={{
