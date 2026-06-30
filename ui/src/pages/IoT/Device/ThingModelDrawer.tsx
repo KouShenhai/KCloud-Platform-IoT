@@ -38,17 +38,17 @@ type TableColumns = {
 };
 
 export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
-																	  modalVisit,
-																	  setModalVisit,
-																	  title,
-																	  readOnly,
-																	  dataSource,
-																	  onComponent,
-																	  dataType,
-																	  setDataType,
-																	  requestId,
-																	  setRequestId,
-																  }) => {
+	  modalVisit,
+	  setModalVisit,
+	  title,
+	  readOnly,
+	  dataSource,
+	  onComponent,
+	  dataType,
+	  setDataType,
+	  requestId,
+	  setRequestId,
+  }) => {
 	const intl = useIntl();
 	const t = (id: string, values?: Record<string, any>) =>
 		intl.formatMessage({ id }, values);
@@ -56,17 +56,6 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 
 	const getSpecs = (value: any) => {
 		switch (value.dataType) {
-			case 'integer':
-				return {
-					length: value.length,
-					unit: value.unit,
-				};
-			case 'decimal':
-				return {
-					integerLength: value.integerLength,
-					decimalLength: value.decimalLength,
-					unit: value.unit,
-				};
 			case 'boolean':
 				return {
 					trueText: value?.trueText,
@@ -163,30 +152,6 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 
 			<ProFormSelect
 				disabled={loading}
-				name="category"
-				label={t('iot.thingModel.category')}
-				readonly={readOnly}
-				placeholder={t('iot.thingModel.placeholder.category')}
-				rules={[
-					{
-						required: true,
-						message: t('iot.thingModel.required.category'),
-					},
-				]}
-				options={[
-					{
-						value: 1,
-						label: t('iot.thingModel.category.property'),
-					},
-					{
-						value: 2,
-						label: t('iot.thingModel.category.event'),
-					},
-				]}
-			/>
-
-			<ProFormSelect
-				disabled={loading}
 				name="type"
 				label={t('iot.thingModel.type')}
 				mode={'multiple'}
@@ -195,11 +160,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 				rules={[
 					{ required: true, message: t('iot.thingModel.required.type') },
 				]}
-				options={[
-					{ value: 'read', label: t('iot.thingModel.type.read') },
-					{ value: 'write', label: t('iot.thingModel.type.write') },
-					{ value: 'report', label: t('iot.thingModel.type.report') },
-				]}
+				options={[]}
 			/>
 
 			<ProFormDigit
@@ -227,24 +188,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 						message: t('iot.thingModel.required.dataType'),
 					},
 				]}
-				options={[
-					{
-						value: 'integer',
-						label: t('iot.thingModel.dataType.integer'),
-					},
-					{
-						value: 'decimal',
-						label: t('iot.thingModel.dataType.decimal'),
-					},
-					{
-						value: 'boolean',
-						label: t('iot.thingModel.dataType.boolean'),
-					},
-					{
-						value: 'string',
-						label: t('iot.thingModel.dataType.string'),
-					},
-				]}
+				options={[]}
 				onChange={setDataType}
 			/>
 
@@ -295,86 +239,6 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 									message: t('iot.thingModel.required.falseText'),
 								},
 							]}
-						/>
-					</Col>
-				</Row>
-			)}
-
-			{dataType === 'integer' && (
-				<Row gutter={24}>
-					<Col span={12}>
-						<ProFormText
-							disabled={loading}
-							readonly={readOnly}
-							name="length"
-							label={t('iot.thingModel.length')}
-							rules={[
-								{
-									required: true,
-									message: t('iot.thingModel.required.length'),
-								},
-								{
-									pattern: /^(8|16|32|64)$/,
-									message: t('iot.thingModel.validate.intLength'),
-								},
-							]}
-						/>
-					</Col>
-					<Col span={12}>
-						<ProFormText
-							disabled={loading}
-							readonly={readOnly}
-							name="unit"
-							label={t('iot.thingModel.unit')}
-						/>
-					</Col>
-				</Row>
-			)}
-
-			{dataType === 'decimal' && (
-				<Row gutter={24}>
-					<Col span={8}>
-						<ProFormText
-							disabled={loading}
-							readonly={readOnly}
-							name="integerLength"
-							label={t('iot.thingModel.integerLength')}
-							rules={[
-								{
-									required: true,
-									message: t('iot.thingModel.required.integerLength'),
-								},
-								{
-									pattern: /^([1-9]|[1-5][0-9]|6[0-4])$/,
-									message: t('iot.thingModel.validate.integerLength'),
-								},
-							]}
-						/>
-					</Col>
-					<Col span={8}>
-						<ProFormText
-							disabled={loading}
-							readonly={readOnly}
-							name="decimalLength"
-							label={t('iot.thingModel.decimalLength')}
-							rules={[
-								{
-									required: true,
-									message: t('iot.thingModel.required.decimalLength'),
-								},
-								{
-									pattern: /^[1-4]$/,
-									message: t('iot.thingModel.validate.decimalLength'),
-								},
-							]}
-						/>
-					</Col>
-					<Col span={8}>
-						<ProFormText
-							disabled={loading}
-							readonly={readOnly}
-							name="unit"
-							label={t('iot.thingModel.unit')}
 						/>
 					</Col>
 				</Row>

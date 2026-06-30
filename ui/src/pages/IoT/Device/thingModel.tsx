@@ -25,7 +25,7 @@ export default () => {
 	const [title, setTitle] = useState('');
 	const [readOnly, setReadOnly] = useState(false);
 	const [ids, setIds] = useState<any>([]);
-	const [dataType, setDataType] = useState('integer');
+	const [dataType, setDataType] = useState('int');
 	const [requestId, setRequestId] = useState('');
 
 	type TableColumns = {
@@ -34,9 +34,8 @@ export default () => {
 		name: string | undefined;
 		sort: number | undefined;
 		dataType: string | undefined;
-		category: number | undefined;
 		type: string | undefined;
-		specs: string | undefined;
+		spec: string | undefined;
 		remark: string | undefined;
 		createTime: string | undefined;
 	};
@@ -119,22 +118,7 @@ export default () => {
 				mode: 'single',
 				placeholder: t('iot.thingModel.placeholder.dataType'),
 				options: [
-					{
-						value: 'integer',
-						label: t('iot.thingModel.dataType.integer'),
-					},
-					{
-						value: 'decimal',
-						label: t('iot.thingModel.dataType.decimal'),
-					},
-					{
-						value: 'boolean',
-						label: t('iot.thingModel.dataType.boolean'),
-					},
-					{
-						value: 'string',
-						label: t('iot.thingModel.dataType.string'),
-					},
+
 				],
 			},
 			ellipsis: true,
@@ -149,14 +133,7 @@ export default () => {
 				mode: 'single',
 				placeholder: t('iot.thingModel.placeholder.category'),
 				options: [
-					{
-						value: 1,
-						label: t('iot.thingModel.category.property'),
-					},
-					{
-						value: 2,
-						label: t('iot.thingModel.category.event'),
-					},
+
 				],
 			},
 			ellipsis: true,
@@ -232,44 +209,10 @@ export default () => {
 			},
 			render: (_, record) => {
 				const data = JSON.parse(
-					typeof record?.specs === 'string' ? record?.specs : '{}',
+					typeof record?.spec === 'string' ? record?.spec : '{}',
 				);
 				return (
 					<>
-						{(record?.dataType === 'integer' ||
-							record?.dataType === 'string') && (
-							<div>
-								{t('iot.thingModel.specs.length')}：
-								<span style={{ color: '#fd5251' }}>
-									{data?.length}
-								</span>
-							</div>
-						)}
-						{record?.dataType === 'decimal' && (
-							<div>
-								{t('iot.thingModel.specs.integerLength')}：
-								<span style={{ color: '#fd5251' }}>
-									{data?.integerLength}
-								</span>
-							</div>
-						)}
-						{record?.dataType === 'decimal' && (
-							<div>
-								{t('iot.thingModel.specs.decimalLength')}：
-								<span style={{ color: '#fd5251' }}>
-									{data?.decimalLength}
-								</span>
-							</div>
-						)}
-						{(record?.dataType === 'decimal' ||
-							record?.dataType === 'integer') && (
-							<div>
-								{t('iot.thingModel.specs.unit')}：
-								<span style={{ color: '#fd5251' }}>
-									{data?.unit ? data?.unit : t('common.none')}
-								</span>
-							</div>
-						)}
 						{record?.dataType === 'boolean' && (
 							<div>
 								0：
