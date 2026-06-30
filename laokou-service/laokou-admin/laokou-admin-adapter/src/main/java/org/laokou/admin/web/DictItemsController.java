@@ -24,6 +24,7 @@ import org.laokou.admin.dictItem.api.DictItemsServiceI;
 import org.laokou.admin.dictItem.dto.DictItemExportCmd;
 import org.laokou.admin.dictItem.dto.DictItemGetQry;
 import org.laokou.admin.dictItem.dto.DictItemImportCmd;
+import org.laokou.admin.dictItem.dto.DictItemListQry;
 import org.laokou.admin.dictItem.dto.DictItemModifyCmd;
 import org.laokou.admin.dictItem.dto.DictItemPageQry;
 import org.laokou.admin.dictItem.dto.DictItemRemoveCmd;
@@ -47,6 +48,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * 字典项管理控制器.
@@ -108,6 +111,13 @@ public class DictItemsController {
 	@Operation(summary = "分页查询字典项列表", description = "分页查询字典项列表")
 	public Result<Page<DictItemCO>> pageDictItem(@Validated @RequestBody DictItemPageQry qry) {
 		return dictItemsServiceI.pageDictItem(qry);
+	}
+
+	@TraceLog
+	@PostMapping("/v1/dict-items/list")
+	@Operation(summary = "查询字典项列表", description = "查询字典项列表")
+	public Result<List<DictItemCO>> listDictItem(@Validated @RequestBody DictItemListQry qry) {
+		return dictItemsServiceI.listDictItem(qry);
 	}
 
 	@TraceLog

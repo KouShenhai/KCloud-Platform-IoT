@@ -15,26 +15,31 @@
  *
  */
 
-package org.laokou.admin.dictItem.gatewayimpl.database;
+package org.laokou.admin.dictItem.command.query;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+import lombok.RequiredArgsConstructor;
+import org.laokou.admin.dictItem.convertor.DictItemConvertor;
 import org.laokou.admin.dictItem.dto.DictItemListQry;
-import org.laokou.admin.dictItem.gatewayimpl.database.dataobject.DictItemDO;
-import org.laokou.common.mybatisplus.mapper.CrudMapper;
-import org.springframework.stereotype.Repository;
+import org.laokou.admin.dictItem.dto.clientobject.DictItemCO;
+import org.laokou.admin.dictItem.gatewayimpl.database.DictItemMapper;
+import org.laokou.common.i18n.dto.Result;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 /**
- * 字典项数据库映射.
+ * 查询字典项请求执行器.
  *
  * @author laokou
  */
-@Mapper
-@Repository
-public interface DictItemMapper extends CrudMapper<Long, Integer, DictItemDO> {
+@Component
+@RequiredArgsConstructor
+public class DictItemListQryExe {
 
-	List<DictItemDO> selectObjList(@Param("qry") DictItemListQry qry);
+	private final DictItemMapper dictItemMapper;
+
+	public Result<List<DictItemCO>> execute(DictItemListQry qry) {
+		return Result.ok(DictItemConvertor.toClientObjectList(dictItemMapper.selectObjList(qry)));
+	}
 
 }

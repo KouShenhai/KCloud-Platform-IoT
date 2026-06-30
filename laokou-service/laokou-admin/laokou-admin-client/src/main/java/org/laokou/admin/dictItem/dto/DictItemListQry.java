@@ -15,26 +15,22 @@
  *
  */
 
-package org.laokou.admin.dictItem.gatewayimpl.database;
+package org.laokou.admin.dictItem.dto;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.laokou.admin.dictItem.dto.DictItemListQry;
-import org.laokou.admin.dictItem.gatewayimpl.database.dataobject.DictItemDO;
-import org.laokou.common.mybatisplus.mapper.CrudMapper;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
+import lombok.Data;
+import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
- * 字典项数据库映射.
+ * 查询字典项命令.
  *
  * @author laokou
  */
-@Mapper
-@Repository
-public interface DictItemMapper extends CrudMapper<Long, Integer, DictItemDO> {
+@Data
+public class DictItemListQry extends CommonCommand {
 
-	List<DictItemDO> selectObjList(@Param("qry") DictItemListQry qry);
+	/**
+	 * 字典编码.
+	 */
+	private String dictCode;
 
 }

@@ -25,10 +25,12 @@ import org.laokou.admin.dictItem.command.DictItemModifyCmdExe;
 import org.laokou.admin.dictItem.command.DictItemRemoveCmdExe;
 import org.laokou.admin.dictItem.command.DictItemSaveCmdExe;
 import org.laokou.admin.dictItem.command.query.DictItemGetQryExe;
+import org.laokou.admin.dictItem.command.query.DictItemListQryExe;
 import org.laokou.admin.dictItem.command.query.DictItemPageQryExe;
 import org.laokou.admin.dictItem.dto.DictItemExportCmd;
 import org.laokou.admin.dictItem.dto.DictItemGetQry;
 import org.laokou.admin.dictItem.dto.DictItemImportCmd;
+import org.laokou.admin.dictItem.dto.DictItemListQry;
 import org.laokou.admin.dictItem.dto.DictItemModifyCmd;
 import org.laokou.admin.dictItem.dto.DictItemPageQry;
 import org.laokou.admin.dictItem.dto.DictItemRemoveCmd;
@@ -37,6 +39,8 @@ import org.laokou.admin.dictItem.dto.clientobject.DictItemCO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 字典项接口实现类.
@@ -60,6 +64,8 @@ public class DictItemsServiceImpl implements DictItemsServiceI {
 	private final DictItemPageQryExe dictItemPageQryExe;
 
 	private final DictItemGetQryExe dictItemGetQryExe;
+
+	private final DictItemListQryExe dictItemListQryExe;
 
 	@Override
 	public void saveDictItem(DictItemSaveCmd cmd) {
@@ -89,6 +95,11 @@ public class DictItemsServiceImpl implements DictItemsServiceI {
 	@Override
 	public Result<Page<DictItemCO>> pageDictItem(DictItemPageQry qry) {
 		return dictItemPageQryExe.execute(qry);
+	}
+
+	@Override
+	public Result<List<DictItemCO>> listDictItem(DictItemListQry qry) {
+		return dictItemListQryExe.execute(qry);
 	}
 
 	@Override
