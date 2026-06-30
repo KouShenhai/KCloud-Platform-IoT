@@ -17,25 +17,31 @@
 
 package org.laokou.iot.thingModel.model.enums;
 
-import lombok.Getter;
+import lombok.Data;
+import org.laokou.common.i18n.util.ParamValidator;
+
+import java.io.Serial;
+import java.io.Serializable;
 
 /**
  * @author laokou
  */
-@Getter
-public enum Category {
+@Data
+public class TextType implements Serializable {
 
-	PROPERTY(1, "属性"),
+	@Serial
+	private static final long serialVersionUID = -1L;
 
-	EVENT(2, "事件");
+	private Integer length;
 
-	private final int code;
-
-	private final String desc;
-
-	Category(int code, String desc) {
-		this.code = code;
-		this.desc = desc;
+	public ParamValidator.Validate checkValue() {
+		if (length == null) {
+			return ParamValidator.invalidate("长度不能为空");
+		}
+		if (length < 1 || length > 10000) {
+			return ParamValidator.invalidate("长度必须为1-10000");
+		}
+		return ParamValidator.validate();
 	}
 
 }

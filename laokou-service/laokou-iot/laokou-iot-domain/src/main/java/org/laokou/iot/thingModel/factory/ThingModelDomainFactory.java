@@ -15,13 +15,23 @@
  *
  */
 
-package org.laokou.iot.thingModel.model;
+package org.laokou.iot.thingModel.factory;
 
-/**
- * @author laokou
- */
-public interface ThingModelParamValidator {
+import org.laokou.common.i18n.util.SpringContextUtils;
+import org.laokou.iot.thingModel.model.ThingModelA;
+import org.laokou.iot.thingModel.model.entity.ThingModelE;
 
-	void validateThingModel(ThingModelE thingModelE) throws Exception;
+public final class ThingModelDomainFactory {
+
+	private ThingModelDomainFactory() {
+	}
+
+	public static ThingModelE createThingModelE() {
+		return SpringContextUtils.getBeanProvider(ThingModelE.class);
+	}
+
+	public static ThingModelA createThingModelA() {
+		return SpringContextUtils.getBeanProvider(ThingModelA.class);
+	}
 
 }

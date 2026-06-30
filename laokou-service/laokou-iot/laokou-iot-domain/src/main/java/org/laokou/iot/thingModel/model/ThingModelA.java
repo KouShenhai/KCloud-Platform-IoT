@@ -15,32 +15,32 @@
  *
  */
 
-package org.laokou.admin.dict.model;
+package org.laokou.iot.thingModel.model;
 
 import lombok.Getter;
-import org.laokou.admin.dict.model.entity.DictE;
-import org.laokou.admin.dict.model.enums.OperateType;
-import org.laokou.admin.dict.model.validator.DictParamValidator;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.IdGenerator;
 import org.laokou.common.i18n.common.ValidateName;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.iot.thingModel.model.entity.ThingModelE;
+import org.laokou.iot.thingModel.model.enums.OperateType;
+import org.laokou.iot.thingModel.model.validator.ThingModelParamValidator;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.time.Instant;
 
 /**
- * 字典聚合根.
+ * 物模型聚合根.
  *
  * @author laokou
  */
 @Entity
 @Getter
-public class DictA extends AggregateRoot implements ValidateName {
+public class ThingModelA extends AggregateRoot implements ValidateName {
 
-	private DictE dictE;
+	private ThingModelE thingModelE;
 
 	/**
 	 * 操作类型【保存/修改】.
@@ -49,21 +49,21 @@ public class DictA extends AggregateRoot implements ValidateName {
 
 	private final IdGenerator idGenerator;
 
-	private final DictParamValidator saveDictParamValidator;
+	private final ThingModelParamValidator saveThingModelParamValidator;
 
-	private final DictParamValidator modifyDictParamValidator;
+	private final ThingModelParamValidator modifyThingModelParamValidator;
 
-	public DictA(IdGenerator idGenerator,
-			@Qualifier("saveDictParamValidator") DictParamValidator saveDictParamValidator,
-			@Qualifier("modifyDictParamValidator") DictParamValidator modifyDictParamValidator) {
+	public ThingModelA(IdGenerator idGenerator,
+			@Qualifier("saveThingModelParamValidator") ThingModelParamValidator saveThingModelParamValidator,
+			@Qualifier("modifyThingModelParamValidator") ThingModelParamValidator modifyThingModelParamValidator) {
 		this.idGenerator = idGenerator;
-		this.saveDictParamValidator = saveDictParamValidator;
-		this.modifyDictParamValidator = modifyDictParamValidator;
+		this.saveThingModelParamValidator = saveThingModelParamValidator;
+		this.modifyThingModelParamValidator = modifyThingModelParamValidator;
 	}
 
-	public DictA create(DictE dictE) {
-		this.dictE = dictE;
-		Long primaryKey = this.dictE.getId();
+	public ThingModelA create(ThingModelE thingModelE) {
+		this.thingModelE = thingModelE;
+		Long primaryKey = this.thingModelE.getId();
 		super.createTime = InstantUtils.now();
 		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : idGenerator.getId();
 		this.operateType = ObjectUtils.isNotNull(primaryKey) ? OperateType.MODIFY : OperateType.SAVE;
@@ -72,8 +72,8 @@ public class DictA extends AggregateRoot implements ValidateName {
 
 	public void checkDeptParam() {
 		switch (operateType) {
-			case SAVE -> saveDictParamValidator.validateDict(this);
-			case MODIFY -> modifyDictParamValidator.validateDict(this);
+			case SAVE -> saveThingModelParamValidator.validateThingModel(this);
+			case MODIFY -> modifyThingModelParamValidator.validateThingModel(this);
 			default -> throw new UnsupportedOperationException("Unsupported operation type");
 		}
 	}
@@ -92,7 +92,7 @@ public class DictA extends AggregateRoot implements ValidateName {
 
 	@Override
 	public String getValidateName() {
-		return "Dict";
+		return "ThingModel";
 	}
 
 }

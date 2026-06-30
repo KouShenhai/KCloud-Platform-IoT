@@ -41,20 +41,17 @@ public class ThingModelCO extends ClientObject {
 	@Schema(name = "物模型编码", description = "物模型编码")
 	private String code;
 
-	@Schema(name = "数据类型 integer string decimal boolean", description = "数据类型 integer string decimal boolean")
+	@Schema(name = "数据类型 int long text float double boolean", description = "数据类型 int long text float double boolean")
 	private String dataType;
 
-	@Schema(name = "物模型类别 1属性 2事件", description = "物模型类别 1属性 2事件")
-	private Integer category;
-
-	@Schema(name = "物模型类型 read读 write写 report上报", description = "物模型类型 read读 write写 report上报")
+	@Schema(name = "物模型类型 read读 write写 ", description = "物模型类型 read读 write写 ")
 	private String type;
 
 	@Schema(name = "物模型排序", description = "物模型排序")
 	private Integer sort;
 
-	@Schema(name = "物模型规则说明", description = "物模型规则说明")
-	private String specs;
+	@Schema(name = "物模型规格", description = "物模型规格")
+	private String spec;
 
 	@Schema(name = "物模型备注", description = "物模型备注")
 	private String remark;

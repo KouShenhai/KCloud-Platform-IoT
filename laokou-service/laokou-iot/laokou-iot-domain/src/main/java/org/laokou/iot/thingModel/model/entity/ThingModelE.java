@@ -15,29 +15,41 @@
  *
  */
 
-package org.laokou.iot.thingModel.gatewayimpl.database.dataobject;
+package org.laokou.iot.thingModel.model.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
-import org.laokou.common.mybatisplus.mapper.BaseDO;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.annotation.Entity;
+
+import java.io.Serializable;
 
 /**
  *
- * 物模型数据对象.
+ * 物模型领域对象【实体】.
  *
  * @author laokou
  */
-@Data
-@TableName("iot_thing_model")
-public class ThingModelDO extends BaseDO {
+@Entity
+@Getter
+@Builder(toBuilder = true)
+@EqualsAndHashCode(callSuper = false)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class ThingModelE implements Serializable {
+
+	private Long id;
 
 	/**
-	 * 模型名称.
+	 * 物模型名称.
 	 */
 	private String name;
 
 	/**
-	 * 模型编码.
+	 * 物模型编码.
 	 */
 	private String code;
 
@@ -47,19 +59,24 @@ public class ThingModelDO extends BaseDO {
 	private String dataType;
 
 	/**
-	 * 模型类型 read读 write写.
+	 * 物模型类别 1属性 2事件.
 	 */
-	private String type;
+	private Integer category;
 
 	/**
-	 * 物模型排序.
+	 * 物模型类型 read读 write写 .
 	 */
-	private Integer sort;
+	private String type;
 
 	/**
 	 * 物模型规格.
 	 */
 	private String spec;
+
+	/**
+	 * 物模型排序.
+	 */
+	private Integer sort;
 
 	/**
 	 * 物模型备注.

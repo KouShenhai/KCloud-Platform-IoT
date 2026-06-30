@@ -41,7 +41,7 @@ public class ThingModelPageQry extends PageQuery {
 	private String code;
 
 	/**
-	 * 数据类型 integer string decimal boolean.
+	 * 数据类型 int long text float double boolean.
 	 */
 	private String dataType;
 

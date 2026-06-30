@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.iot.thingModel.model;
+package org.laokou.iot.thingModel.model.enums;
 
 import lombok.Data;
 import org.laokou.common.i18n.util.ObjectUtils;
@@ -39,8 +39,11 @@ public class BooleanType implements Serializable {
 	private String falseText;
 
 	public ParamValidator.Validate checkValue() {
-		if (StringExtUtils.isEmpty(trueText) || StringExtUtils.isEmpty(falseText)) {
-			return ParamValidator.invalidate("1对应文本和0对应文本不能为空");
+		if (StringExtUtils.isEmpty(trueText)) {
+			return ParamValidator.invalidate("1对应文本不能为空");
+		}
+		if (StringExtUtils.isEmpty(falseText)) {
+			return ParamValidator.invalidate("0对应文本不能为空");
 		}
 		if (ObjectUtils.equals(trueText, falseText)) {
 			return ParamValidator.invalidate("1对应文本和0对应文本不能相同");

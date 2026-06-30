@@ -91,11 +91,9 @@ declare namespace API {
 		name?: string;
 		/** 模型编码 */
 		code?: string;
-		/** 数据类型 integer string decimal boolean */
+		/** 数据类型 int long text float double boolean */
 		dataType?: string;
-		/** 模型类别 1属性 2事件 */
-		category?: number;
-		/** 模型类型 read读 write写 report上报 */
+		/** 模型类型 read读 write写 */
 		type?: string;
 		/** 表达式 */
 		expression?: string;

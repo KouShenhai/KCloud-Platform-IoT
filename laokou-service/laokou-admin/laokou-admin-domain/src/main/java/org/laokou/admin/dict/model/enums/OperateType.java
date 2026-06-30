@@ -15,33 +15,27 @@
  *
  */
 
-package org.laokou.iot.thingModel.model;
+package org.laokou.admin.dict.model.enums;
 
-import lombok.Data;
-import org.laokou.common.i18n.util.ParamValidator;
-
-import java.io.Serial;
-import java.io.Serializable;
+import lombok.Getter;
 
 /**
  * @author laokou
  */
-@Data
-public class StringType implements Serializable {
+@Getter
+public enum OperateType {
 
-	@Serial
-	private static final long serialVersionUID = -1L;
+	SAVE("save", "保存字典"),
 
-	private Integer length;
+	MODIFY("modify", "修改字典");
 
-	public ParamValidator.Validate checkValue() {
-		if (length == null) {
-			return ParamValidator.invalidate("长度不能为空");
-		}
-		if (length < 1 || length > 2000) {
-			return ParamValidator.invalidate("长度必须为1-2000");
-		}
-		return ParamValidator.validate();
+	private final String code;
+
+	private final String desc;
+
+	OperateType(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
 	}
 
 }

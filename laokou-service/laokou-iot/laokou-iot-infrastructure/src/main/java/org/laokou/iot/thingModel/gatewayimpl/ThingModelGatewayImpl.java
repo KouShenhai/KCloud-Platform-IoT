@@ -19,10 +19,10 @@ package org.laokou.iot.thingModel.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.iot.thingModel.convertor.ThingModelConvertor;
+import org.laokou.iot.thingModel.gateway.ThingModelGateway;
 import org.laokou.iot.thingModel.gatewayimpl.database.ThingModelMapper;
 import org.laokou.iot.thingModel.gatewayimpl.database.dataobject.ThingModelDO;
-import org.laokou.iot.thingModel.gateway.ThingModelGateway;
-import org.laokou.iot.thingModel.model.ThingModelE;
+import org.laokou.iot.thingModel.model.ThingModelA;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -40,14 +40,14 @@ public class ThingModelGatewayImpl implements ThingModelGateway {
 	private final ThingModelMapper thingModelMapper;
 
 	@Override
-	public void createThingModel(ThingModelE thingModelE) {
-		thingModelMapper.insert(ThingModelConvertor.toDataObject(thingModelE));
+	public void createThingModel(ThingModelA thingModelA) {
+		thingModelMapper.insert(ThingModelConvertor.toDataObject(thingModelA));
 	}
 
 	@Override
-	public void updateThingModel(ThingModelE thingModelE) {
-		ThingModelDO thingModelDO = ThingModelConvertor.toDataObject(thingModelE);
-		thingModelDO.setVersion(thingModelMapper.selectVersion(thingModelE.getId()));
+	public void updateThingModel(ThingModelA thingModelA) {
+		ThingModelDO thingModelDO = ThingModelConvertor.toDataObject(thingModelA);
+		thingModelDO.setVersion(thingModelMapper.selectVersion(thingModelA.getId()));
 		thingModelMapper.updateById(thingModelDO);
 	}
 
