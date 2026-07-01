@@ -203,7 +203,7 @@ export default () => {
 					<>
 						{record?.dataType === 'boolean' && (
 							<div>
-								0：
+								{t('iot.thingModel.falseText')}：
 								<span style={{ color: '#fd5251' }}>
 									{data?.falseText}
 								</span>
@@ -211,9 +211,17 @@ export default () => {
 						)}
 						{record?.dataType === 'boolean' && (
 							<div>
-								1：
+								{t('iot.thingModel.trueText')}：
 								<span style={{ color: '#fd5251' }}>
 									{data?.trueText}
+								</span>
+							</div>
+						)}
+						{record?.dataType === 'text' && (
+							<div>
+								{t('iot.thingModel.length')}：
+								<span style={{ color: '#fd5251' }}>
+									{data?.length}
 								</span>
 							</div>
 						)}
@@ -379,6 +387,7 @@ export default () => {
 								setRequestId(uuidV7());
 								setReadOnly(false);
 								setModalVisit(true);
+								setDataType('int')
 								setDataSource({
 									id: undefined,
 									sort: 1,

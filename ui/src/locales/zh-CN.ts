@@ -118,7 +118,7 @@ export default {
 	'sys.dict.required.name': '请输入字典名称',
 	'sys.dict.required.code': '请输入字典编码',
 	'sys.dict.required.status': '请选择字典状态',
-	'sys.dict.validate.nameMax': '字典名称不能超过100个字符',
+	'sys.dict.validate.nameMax': '字典名称不能超过50个字符',
 	'sys.dict.validate.codeMax': '字典编码不能超过100个字符',
 
 	// sys/dictItem

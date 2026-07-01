@@ -57,6 +57,7 @@ public class ThingModelSaveCmdExe {
 		}
 		catch (Exception ex) {
 			log.error("保存物模型失败，错误信息：{}", ex.getMessage(), ex);
+			throw ex;
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

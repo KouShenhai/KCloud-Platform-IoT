@@ -118,7 +118,7 @@ export default {
 	'sys.dict.required.name': 'Please enter dictionary name',
 	'sys.dict.required.code': 'Please enter dictionary code',
 	'sys.dict.required.status': 'Please select dictionary status',
-	'sys.dict.validate.nameMax': 'Dictionary name cannot exceed 100 characters',
+	'sys.dict.validate.nameMax': 'Dictionary name cannot exceed 50 characters',
 	'sys.dict.validate.codeMax': 'Dictionary code cannot exceed 100 characters',
 
 	// sys/dictItem

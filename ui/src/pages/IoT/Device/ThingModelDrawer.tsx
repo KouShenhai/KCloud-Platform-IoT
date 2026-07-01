@@ -65,7 +65,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 					trueText: value?.trueText,
 					falseText: value?.falseText,
 				};
-			case 'string':
+			case 'text':
 				return {
 					length: value.length,
 				};
@@ -196,21 +196,19 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 				onChange={setDataType}
 			/>
 
-			{dataType === 'string' && (
-				<ProFormText
+			{dataType === 'text' && (
+				<ProFormDigit
 					disabled={loading}
 					readonly={readOnly}
 					name="length"
 					label={t('iot.thingModel.length')}
+					min={1}
+					max={10000}
 					rules={[
 						{
 							required: true,
 							message: t('iot.thingModel.required.length'),
-						},
-						{
-							pattern: /^(2000|1\d{3}|[1-9]\d{0,2})$/,
-							message: t('iot.thingModel.validate.length1To2000'),
-						},
+						}
 					]}
 				/>
 			)}
