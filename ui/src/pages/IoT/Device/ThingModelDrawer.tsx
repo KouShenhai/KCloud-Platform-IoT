@@ -23,6 +23,7 @@ interface ThingModelDrawerProps {
 	requestId: string;
 	setRequestId: (requestId: string) => void;
 	dataTypeOptions: any[]
+	typeOptions: any[]
 }
 
 type TableColumns = {
@@ -33,7 +34,7 @@ type TableColumns = {
 	dataType: string | undefined;
 	category: number | undefined;
 	type: string | undefined;
-	specs: string | undefined;
+	spec: string | undefined;
 	remark: string | undefined;
 	createTime: string | undefined;
 };
@@ -49,14 +50,15 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 	  setDataType,
 	  requestId,
 	  setRequestId,
-	  dataTypeOptions
+	  dataTypeOptions,
+	  typeOptions
   }) => {
 	const intl = useIntl();
 	const t = (id: string, values?: Record<string, any>) =>
 		intl.formatMessage({ id }, values);
 	const [loading, setLoading] = useState(false);
 
-	const getSpecs = (value: any) => {
+	const getSpec = (value: any) => {
 		switch (value.dataType) {
 			case 'boolean':
 				return {
@@ -94,7 +96,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 			}}
 			onFinish={async (value) => {
 				setLoading(true);
-				value.specs = JSON.stringify(getSpecs(value));
+				value.spec = JSON.stringify(getSpec(value));
 				// @ts-ignore
 				value.type = value.type.join(',');
 				if (value.id === undefined) {
@@ -162,7 +164,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 				rules={[
 					{ required: true, message: t('iot.thingModel.required.type') },
 				]}
-				options={[]}
+				options={typeOptions}
 			/>
 
 			<ProFormDigit

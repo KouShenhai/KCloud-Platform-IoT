@@ -27,7 +27,8 @@ export default () => {
 	const [readOnly, setReadOnly] = useState(false);
 	const [ids, setIds] = useState<any>([]);
 	const [dataType, setDataType] = useState('int');
-	const [dataTypeaOptions, setDataTypeOptions] = useState<any>([]);
+	const [dataTypeOptions, setDataTypeOptions] = useState<any>([]);
+	const [typeOptions, setTypeOptions] = useState<any>([]);
 	const [requestId, setRequestId] = useState('');
 
 	type TableColumns = {
@@ -71,12 +72,22 @@ export default () => {
 		})
 		setDataTypeOptions(options)
 	}
+
+	const getType = async () => {
+		const  res = await listDictItem({dictCode: 'thing_model_type'});
+		const options: any[] = [];
+		res?.data?.forEach((item: any) => {
+			options.push({label: item.name, value: item.code})
+		})
+		setTypeOptions(options)
+	}
+
 	const getData = (data: any) => {
-		const specs = JSON.parse(data?.specs);
-		data.length = specs?.length;
-		data.unit = specs?.unit;
-		data.trueText = specs?.trueText;
-		data.falseText = specs?.falseText;
+		const spec = JSON.parse(data?.spec);
+		data.length = spec?.length;
+		data.unit = spec?.unit;
+		data.trueText = spec?.trueText;
+		data.falseText = spec?.falseText;
 		data.type = data?.type?.split(',');
 		return data;
 	};
@@ -93,6 +104,7 @@ export default () => {
 
 	useEffect(() => {
 		getDataType().catch(console.log)
+		getType().catch(console.log)
 	}, []);
 
 	const columns: ProColumns<TableColumns>[] = [
@@ -129,22 +141,7 @@ export default () => {
 				valueType: 'select',
 				mode: 'single',
 				placeholder: t('iot.thingModel.placeholder.dataType'),
-				options: dataTypeaOptions,
-			},
-			ellipsis: true,
-		},
-		{
-			title: t('iot.thingModel.category'),
-			key: 'category',
-			dataIndex: 'category',
-			valueType: 'select',
-			fieldProps: {
-				valueType: 'select',
-				mode: 'single',
-				placeholder: t('iot.thingModel.placeholder.category'),
-				options: [
-
-				],
+				options: dataTypeOptions,
 			},
 			ellipsis: true,
 		},
@@ -159,9 +156,7 @@ export default () => {
 				valueType: 'select',
 				mode: 'multiple',
 				placeholder: t('iot.thingModel.placeholder.type'),
-				options: [
-
-				],
+				options: typeOptions,
 			},
 		},
 		{
@@ -178,19 +173,13 @@ export default () => {
 					if (item === 'read') {
 						element.push(
 							<Tag color={'green-inverse'} key={'read'}>
-								{t('iot.thingModel.type.read')}
+								读
 							</Tag>,
 						);
-					} else if (item === 'write') {
+					} else {
 						element.push(
 							<Tag color={'#fd5251'} key={'write'}>
-								{t('iot.thingModel.type.write')}
-							</Tag>,
-						);
-					} else if (item === 'report') {
-						element.push(
-							<Tag color={'#f4a300'} key={'report'}>
-								{t('iot.thingModel.type.report')}
+								写
 							</Tag>,
 						);
 					}
@@ -199,8 +188,8 @@ export default () => {
 			},
 		},
 		{
-			title: t('iot.thingModel.specs'),
-			dataIndex: 'specs',
+			title: t('iot.thingModel.spec'),
+			dataIndex: 'spec',
 			valueType: 'text',
 			hideInSearch: true,
 			renderFormItem: (_, { defaultRender }) => {
@@ -336,7 +325,8 @@ export default () => {
 	return (
 		<>
 			<ThingModelDrawer
-				dataTypeOptions={dataTypeaOptions}
+				typeOptions={typeOptions}
+				dataTypeOptions={dataTypeOptions}
 				modalVisit={modalVisit}
 				setModalVisit={setModalVisit}
 				title={title}
@@ -392,8 +382,7 @@ export default () => {
 								setDataSource({
 									id: undefined,
 									sort: 1,
-									dataType: 'integer',
-									category: 1,
+									dataType: 'int'
 								});
 							}}
 						>

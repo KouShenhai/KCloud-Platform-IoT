@@ -136,7 +136,8 @@ CREATE INDEX "sys_dict_code_tenantId_idx" ON "public"."sys_dict" USING btree (
 	);
 COMMENT ON INDEX "public"."sys_dict_code_tenantId_idx" IS '编码_租户ID_索引';
 
-INSERT INTO "public"."sys_dict" VALUES (1, 1, 1, '2026-06-28 17:29:34.520198', '2026-06-28 17:29:34.602805', 0, 0, 1, 1, '物模型数据类型', 'thing_model_data_type', '', 0);
+INSERT INTO "public"."sys_dict" VALUES (1, 1, 1, '2026-06-28 17:29:34.520198', '2026-06-28 17:29:34.602805', 0, 0, 1, 1, '物模型数据类型', 'thing_model_data_type', '物模型数据类型', 0);
+INSERT INTO "public"."sys_dict" VALUES (2, 1, 1, '2026-07-01 12:33:04.764382', '2026-07-01 12:33:04.89152', 0, 0, 1, 1, '物模型类型', 'thing_model_type', '物模型类型', 0);
 -- ----------------------------
 -- -------------字典项------------
 -- ----------------------------
@@ -190,7 +191,8 @@ INSERT INTO "public"."sys_dict_item" VALUES (3, 1, 1, '2026-06-28 17:33:51.97194
 INSERT INTO "public"."sys_dict_item" VALUES (4, 1, 1, '2026-06-28 17:34:19.22565', '2026-06-28 17:34:19.245028', 0, 0, 1, 1, 'double(双精度浮点型)', 'double', 4, '', 0, 1);
 INSERT INTO "public"."sys_dict_item" VALUES (5, 1, 1, '2026-06-28 17:34:53.705181', '2026-06-28 17:35:05.016846', 0, 1, 1, 1, 'text(文本型)', 'text', 5, '', 0, 1);
 INSERT INTO "public"."sys_dict_item" VALUES (6, 1, 1, '2026-06-28 17:35:28.144399', '2026-06-28 17:35:28.159035', 0, 0, 1, 1, 'boolean(布尔型)', 'boolean', 6, '', 0, 1);
-
+INSERT INTO "public"."sys_dict_item" VALUES (7, 1, 1, '2026-07-01 12:33:48.606213', '2026-07-01 12:33:48.630013', 0, 0, 1, 1, '读', 'read', 1, '', 0, 2);
+INSERT INTO "public"."sys_dict_item" VALUES (8, 1, 1, '2026-07-01 12:34:10.339002', '2026-07-01 12:34:10.358249', 0, 0, 1, 1, '写', 'write', 2, '', 0, 2);
 -- ----------------------------
 -- -------------国际化菜单------------
 -- ----------------------------

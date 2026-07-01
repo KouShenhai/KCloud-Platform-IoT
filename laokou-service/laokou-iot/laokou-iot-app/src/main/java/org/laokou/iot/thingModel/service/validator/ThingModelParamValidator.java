@@ -80,7 +80,7 @@ final class ThingModelParamValidator {
 		}
 		ParamValidator.Validate validate = validateDataType(thingModelA);
 		if (validate.isValidate()) {
-			return DataType.getByCode(thingModelA.getThingModelE().getSpec()).validate(spec);
+			return DataType.getByCode(thingModelA.getThingModelE().getDataType()).validate(spec);
 		}
 		return validate;
 	}

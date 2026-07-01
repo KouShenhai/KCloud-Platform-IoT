@@ -28,7 +28,32 @@ import org.laokou.common.i18n.util.ParamValidator;
 @Getter
 public enum DataType {
 
-	STRING("text", "文本型") {
+	INT("int", "整数型") {
+		@Override
+		public ParamValidator.Validate validate(String spec) {
+			return ParamValidator.validate();
+		}
+	},
+	LONG("long", "长整数型") {
+		@Override
+		public ParamValidator.Validate validate(String spec) {
+			return ParamValidator.validate();
+		}
+	},
+	FLOAT("float" , "单精度浮点型") {
+		@Override
+		public ParamValidator.Validate validate(String spec) {
+			return ParamValidator.validate();
+		}
+	},
+	DOUBLE("double" , "双精度浮点型") {
+		@Override
+		public ParamValidator.Validate validate(String spec) {
+			return ParamValidator.validate();
+		}
+	},
+
+	TEXT("text", "文本型") {
 		@Override
 		public ParamValidator.Validate validate(String spec) {
 			return JacksonUtils.toBean(spec, TextType.class).checkValue();
