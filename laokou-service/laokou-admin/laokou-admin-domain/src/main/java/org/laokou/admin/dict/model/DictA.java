@@ -70,7 +70,7 @@ public class DictA extends AggregateRoot implements ValidateName {
 		return this;
 	}
 
-	public void checkDeptParam() {
+	public void checkDictParam() {
 		switch (operateType) {
 			case SAVE -> saveDictParamValidator.validateDict(this);
 			case MODIFY -> modifyDictParamValidator.validateDict(this);

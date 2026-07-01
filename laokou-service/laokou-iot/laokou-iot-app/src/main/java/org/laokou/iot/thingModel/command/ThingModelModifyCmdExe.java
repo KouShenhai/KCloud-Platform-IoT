@@ -50,7 +50,7 @@ public class ThingModelModifyCmdExe {
 			ThingModelA thingModelA = ThingModelDomainFactory.createThingModelA()
 				.create(ThingModelConvertor.toEntity(cmd.getCo()));
 			// 校验参数
-			thingModelA.checkDeptParam();
+			thingModelA.checkThingModelParam();
 			transactionalUtils.executeInTransaction(() -> thingModelDomainService.updateThingModel(thingModelA));
 		}
 		finally {

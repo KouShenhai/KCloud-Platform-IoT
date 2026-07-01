@@ -70,7 +70,7 @@ public class I18nMenuA extends AggregateRoot implements ValidateName {
 		return this;
 	}
 
-	public void checkDeptParam() {
+	public void checkI18nMenuParam() {
 		switch (operateType) {
 			case SAVE -> saveI18nMenuParamValidator.validateI18nMenu(this);
 			case MODIFY -> modifyI18nMenuParamValidator.validateI18nMenu(this);

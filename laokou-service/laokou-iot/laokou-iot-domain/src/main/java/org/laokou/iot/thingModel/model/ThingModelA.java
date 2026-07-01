@@ -70,7 +70,7 @@ public class ThingModelA extends AggregateRoot implements ValidateName {
 		return this;
 	}
 
-	public void checkDeptParam() {
+	public void checkThingModelParam() {
 		switch (operateType) {
 			case SAVE -> saveThingModelParamValidator.validateThingModel(this);
 			case MODIFY -> modifyThingModelParamValidator.validateThingModel(this);
