@@ -126,7 +126,7 @@ COMMENT ON COLUMN "public"."iot_thing_model"."tenant_id" IS '租户ID';
 COMMENT ON COLUMN "public"."iot_thing_model"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."iot_thing_model"."name" IS '物模型名称';
 COMMENT ON COLUMN "public"."iot_thing_model"."code" IS '物模型编码';
-COMMENT ON COLUMN "public"."iot_thing_model"."data_type" IS '数据类型 int long text float double boolean';
+COMMENT ON COLUMN "public"."iot_thing_model"."data_type" IS '物模型数据类型 int long text float double boolean';
 COMMENT ON COLUMN "public"."iot_thing_model"."type" IS '物模型类型 read读 write写';
 COMMENT ON COLUMN "public"."iot_thing_model"."sort" IS '物模型排序';
 COMMENT ON COLUMN "public"."iot_thing_model"."spec" IS '物模型规格';

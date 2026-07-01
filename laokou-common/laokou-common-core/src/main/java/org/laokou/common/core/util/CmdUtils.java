@@ -18,7 +18,7 @@
 package org.laokou.common.core.util;
 
 import org.laokou.common.i18n.common.exception.SystemException;
-import org.laokou.common.i18n.util.StringExtUtils;
+import org.springframework.util.StringUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -53,7 +53,7 @@ public final class CmdUtils {
 			int exitValue = process.exitValue();
 			if (exitValue != 0) {
 				throw new SystemException("S_Cmd_ExecuteFailed",
-						StringExtUtils.collectionToDelimitedString(output, "\n"));
+						StringUtils.collectionToDelimitedString(output, "\n"));
 			}
 			process.destroy();
 			return output;

@@ -54,17 +54,12 @@ public class ThingModelE implements Serializable {
 	private String code;
 
 	/**
-	 * 数据类型 int long text float double boolean.
+	 * 物模型数据类型 int long text float double boolean.
 	 */
 	private String dataType;
 
 	/**
-	 * 物模型类别 1属性 2事件.
-	 */
-	private Integer category;
-
-	/**
-	 * 物模型类型 read读 write写 .
+	 * 物模型类型 read读 write写.
 	 */
 	private String type;
 

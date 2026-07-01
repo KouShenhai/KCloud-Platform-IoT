@@ -130,7 +130,7 @@ public record ElasticsearchSearchTemplate(ElasticsearchClient elasticsearchClien
 				Field field = clazz.getDeclaredField(entry.getKey());
 				field.setAccessible(true);
 				ReflectionUtils.setField(field, source,
-						StringExtUtils.collectionToDelimitedString(entry.getValue(), "..."));
+						StringUtils.collectionToDelimitedString(entry.getValue(), "..."));
 			}
 			catch (NoSuchFieldException ex) {
 				throw new IllegalArgumentException(ex);

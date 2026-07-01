@@ -42,7 +42,7 @@ public class ThingModelDO extends BaseDO {
 	private String code;
 
 	/**
-	 * 数据类型 int long text float double boolean.
+	 * 物模型数据类型 int long text float double boolean.
 	 */
 	private String dataType;
 

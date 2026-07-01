@@ -19,6 +19,7 @@ package org.laokou.iot.thingModel.command.query;
 
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.tenant.constant.DSConstants;
@@ -36,6 +37,7 @@ import java.util.List;
  *
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class ThingModelPageQryExe {
@@ -48,6 +50,9 @@ public class ThingModelPageQryExe {
 			List<ThingModelDO> list = thingModelMapper.selectObjectPage(qry);
 			long total = thingModelMapper.selectObjectCount(qry);
 			return Result.ok(Page.create(ThingModelConvertor.toClientObjects(list), total));
+		} catch (Exception ex) {
+			log.error("分页查询物模型失败，错误信息：{}", ex.getMessage(), ex);
+			throw ex;
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();
