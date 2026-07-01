@@ -22,6 +22,7 @@ interface ThingModelDrawerProps {
 	setDataType: (type: string) => void;
 	requestId: string;
 	setRequestId: (requestId: string) => void;
+	dataTypeOptions: any[]
 }
 
 type TableColumns = {
@@ -48,6 +49,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 	  setDataType,
 	  requestId,
 	  setRequestId,
+	  dataTypeOptions
   }) => {
 	const intl = useIntl();
 	const t = (id: string, values?: Record<string, any>) =>
@@ -188,7 +190,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 						message: t('iot.thingModel.required.dataType'),
 					},
 				]}
-				options={[]}
+				options={dataTypeOptions}
 				onChange={setDataType}
 			/>
 

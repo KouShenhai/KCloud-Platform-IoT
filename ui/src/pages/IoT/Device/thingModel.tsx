@@ -11,8 +11,9 @@ import { ProColumns, ProTable } from '@ant-design/pro-components';
 import type { ActionType } from '@ant-design/pro-components';
 import { Button, message, Modal, Space, Tag } from 'antd';
 import { TableRowSelection } from 'antd/es/table/interface';
-import { useRef, useState } from 'react';
+import {useEffect, useRef, useState} from 'react';
 import { v7 as uuidV7 } from 'uuid';
+import {listDictItem} from "@/services/admin/dictItem";
 
 export default () => {
 	const access = useAccess();
@@ -26,6 +27,7 @@ export default () => {
 	const [readOnly, setReadOnly] = useState(false);
 	const [ids, setIds] = useState<any>([]);
 	const [dataType, setDataType] = useState('int');
+	const [dataTypeaOptions, setDataTypeOptions] = useState<any>([]);
 	const [requestId, setRequestId] = useState('');
 
 	type TableColumns = {
@@ -61,11 +63,17 @@ export default () => {
 		};
 	};
 
+	const getDataType = async () => {
+		const  res = await listDictItem({dictCode: 'thing_model_data_type'});
+		const options: any[] = [];
+		res?.data?.forEach((item: any) => {
+			options.push({label: item.name, value: item.code})
+		})
+		setDataTypeOptions(options)
+	}
 	const getData = (data: any) => {
 		const specs = JSON.parse(data?.specs);
 		data.length = specs?.length;
-		data.integerLength = specs?.integerLength;
-		data.decimalLength = specs?.decimalLength;
 		data.unit = specs?.unit;
 		data.trueText = specs?.trueText;
 		data.falseText = specs?.falseText;
@@ -82,6 +90,10 @@ export default () => {
 			setIds(ids);
 		},
 	};
+
+	useEffect(() => {
+		getDataType().catch(console.log)
+	}, []);
 
 	const columns: ProColumns<TableColumns>[] = [
 		{
@@ -117,9 +129,7 @@ export default () => {
 				valueType: 'select',
 				mode: 'single',
 				placeholder: t('iot.thingModel.placeholder.dataType'),
-				options: [
-
-				],
+				options: dataTypeaOptions,
 			},
 			ellipsis: true,
 		},
@@ -150,18 +160,7 @@ export default () => {
 				mode: 'multiple',
 				placeholder: t('iot.thingModel.placeholder.type'),
 				options: [
-					{
-						value: 'read',
-						label: t('iot.thingModel.type.read'),
-					},
-					{
-						value: 'write',
-						label: t('iot.thingModel.type.write'),
-					},
-					{
-						value: 'report',
-						label: t('iot.thingModel.type.report'),
-					},
+
 				],
 			},
 		},
@@ -337,6 +336,7 @@ export default () => {
 	return (
 		<>
 			<ThingModelDrawer
+				dataTypeOptions={dataTypeaOptions}
 				modalVisit={modalVisit}
 				setModalVisit={setModalVisit}
 				title={title}

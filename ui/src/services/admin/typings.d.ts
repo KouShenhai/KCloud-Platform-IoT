@@ -75,12 +75,16 @@ declare namespace API {
 		pageNum?: number;
 		pageSize?: number;
 		pageIndex?: number;
-		label?: string;
-		value?: string;
+		code?: string;
+		name?: string;
 		status?: number;
 		dictId?: number;
 		sqlFilter?: string;
 		params?: Record<string, any>;
+	};
+
+	type DictItemListQry = {
+		dictCode?: string;
 	};
 
 	type DictItemSaveCmd = {

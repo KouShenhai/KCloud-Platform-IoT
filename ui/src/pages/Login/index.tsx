@@ -228,7 +228,7 @@ export default () => {
 		}
 	}
 
-	const toHome =() => {
+	const toHome = () => {
 		const token = getAccessToken();
 		const expireTime = getExpireTime();
 		if (token && expireTime && expireTime > Date.now()) {
