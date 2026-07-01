@@ -11,8 +11,9 @@ import { ProColumns, ProTable } from '@ant-design/pro-components';
 import type { ActionType } from '@ant-design/pro-components';
 import { Button, message, Modal, Space, Tag } from 'antd';
 import { TableRowSelection } from 'antd/es/table/interface';
-import { useRef, useState } from 'react';
+import {useEffect, useRef, useState} from 'react';
 import { v7 as uuidV7 } from 'uuid';
+import {listDictItem} from "@/services/admin/dictItem";
 
 export default () => {
 	const access = useAccess();
@@ -25,7 +26,9 @@ export default () => {
 	const [title, setTitle] = useState('');
 	const [readOnly, setReadOnly] = useState(false);
 	const [ids, setIds] = useState<any>([]);
-	const [dataType, setDataType] = useState('integer');
+	const [dataType, setDataType] = useState('int');
+	const [dataTypeOptions, setDataTypeOptions] = useState<any>([]);
+	const [typeOptions, setTypeOptions] = useState<any>([]);
 	const [requestId, setRequestId] = useState('');
 
 	type TableColumns = {
@@ -34,9 +37,8 @@ export default () => {
 		name: string | undefined;
 		sort: number | undefined;
 		dataType: string | undefined;
-		category: number | undefined;
 		type: string | undefined;
-		specs: string | undefined;
+		spec: string | undefined;
 		remark: string | undefined;
 		createTime: string | undefined;
 	};
@@ -62,14 +64,30 @@ export default () => {
 		};
 	};
 
+	const getDataType = async () => {
+		const  res = await listDictItem({dictCode: 'thing_model_data_type'});
+		const options: any[] = [];
+		res?.data?.forEach((item: any) => {
+			options.push({label: item.name, value: item.code})
+		})
+		setDataTypeOptions(options)
+	}
+
+	const getType = async () => {
+		const  res = await listDictItem({dictCode: 'thing_model_type'});
+		const options: any[] = [];
+		res?.data?.forEach((item: any) => {
+			options.push({label: item.name, value: item.code})
+		})
+		setTypeOptions(options)
+	}
+
 	const getData = (data: any) => {
-		const specs = JSON.parse(data?.specs);
-		data.length = specs?.length;
-		data.integerLength = specs?.integerLength;
-		data.decimalLength = specs?.decimalLength;
-		data.unit = specs?.unit;
-		data.trueText = specs?.trueText;
-		data.falseText = specs?.falseText;
+		const spec = JSON.parse(data?.spec);
+		data.length = spec?.length;
+		data.unit = spec?.unit;
+		data.trueText = spec?.trueText;
+		data.falseText = spec?.falseText;
 		data.type = data?.type?.split(',');
 		return data;
 	};
@@ -83,6 +101,11 @@ export default () => {
 			setIds(ids);
 		},
 	};
+
+	useEffect(() => {
+		getDataType().catch(console.log)
+		getType().catch(console.log)
+	}, []);
 
 	const columns: ProColumns<TableColumns>[] = [
 		{
@@ -118,46 +141,7 @@ export default () => {
 				valueType: 'select',
 				mode: 'single',
 				placeholder: t('iot.thingModel.placeholder.dataType'),
-				options: [
-					{
-						value: 'integer',
-						label: t('iot.thingModel.dataType.integer'),
-					},
-					{
-						value: 'decimal',
-						label: t('iot.thingModel.dataType.decimal'),
-					},
-					{
-						value: 'boolean',
-						label: t('iot.thingModel.dataType.boolean'),
-					},
-					{
-						value: 'string',
-						label: t('iot.thingModel.dataType.string'),
-					},
-				],
-			},
-			ellipsis: true,
-		},
-		{
-			title: t('iot.thingModel.category'),
-			key: 'category',
-			dataIndex: 'category',
-			valueType: 'select',
-			fieldProps: {
-				valueType: 'select',
-				mode: 'single',
-				placeholder: t('iot.thingModel.placeholder.category'),
-				options: [
-					{
-						value: 1,
-						label: t('iot.thingModel.category.property'),
-					},
-					{
-						value: 2,
-						label: t('iot.thingModel.category.event'),
-					},
-				],
+				options: dataTypeOptions,
 			},
 			ellipsis: true,
 		},
@@ -172,20 +156,7 @@ export default () => {
 				valueType: 'select',
 				mode: 'multiple',
 				placeholder: t('iot.thingModel.placeholder.type'),
-				options: [
-					{
-						value: 'read',
-						label: t('iot.thingModel.type.read'),
-					},
-					{
-						value: 'write',
-						label: t('iot.thingModel.type.write'),
-					},
-					{
-						value: 'report',
-						label: t('iot.thingModel.type.report'),
-					},
-				],
+				options: typeOptions,
 			},
 		},
 		{
@@ -193,6 +164,7 @@ export default () => {
 			dataIndex: 'type',
 			disable: true,
 			hideInSearch: true,
+			ellipsis: true,
 			renderFormItem: (_, { defaultRender }) => {
 				return defaultRender(_);
 			},
@@ -202,19 +174,13 @@ export default () => {
 					if (item === 'read') {
 						element.push(
 							<Tag color={'green-inverse'} key={'read'}>
-								{t('iot.thingModel.type.read')}
+								读
 							</Tag>,
 						);
-					} else if (item === 'write') {
+					} else {
 						element.push(
 							<Tag color={'#fd5251'} key={'write'}>
-								{t('iot.thingModel.type.write')}
-							</Tag>,
-						);
-					} else if (item === 'report') {
-						element.push(
-							<Tag color={'#f4a300'} key={'report'}>
-								{t('iot.thingModel.type.report')}
+								写
 							</Tag>,
 						);
 					}
@@ -223,56 +189,23 @@ export default () => {
 			},
 		},
 		{
-			title: t('iot.thingModel.specs'),
-			dataIndex: 'specs',
+			title: t('iot.thingModel.spec'),
+			dataIndex: 'spec',
 			valueType: 'text',
 			hideInSearch: true,
+			ellipsis: true,
 			renderFormItem: (_, { defaultRender }) => {
 				return defaultRender(_);
 			},
 			render: (_, record) => {
 				const data = JSON.parse(
-					typeof record?.specs === 'string' ? record?.specs : '{}',
+					typeof record?.spec === 'string' ? record?.spec : '{}',
 				);
 				return (
 					<>
-						{(record?.dataType === 'integer' ||
-							record?.dataType === 'string') && (
-							<div>
-								{t('iot.thingModel.specs.length')}：
-								<span style={{ color: '#fd5251' }}>
-									{data?.length}
-								</span>
-							</div>
-						)}
-						{record?.dataType === 'decimal' && (
-							<div>
-								{t('iot.thingModel.specs.integerLength')}：
-								<span style={{ color: '#fd5251' }}>
-									{data?.integerLength}
-								</span>
-							</div>
-						)}
-						{record?.dataType === 'decimal' && (
-							<div>
-								{t('iot.thingModel.specs.decimalLength')}：
-								<span style={{ color: '#fd5251' }}>
-									{data?.decimalLength}
-								</span>
-							</div>
-						)}
-						{(record?.dataType === 'decimal' ||
-							record?.dataType === 'integer') && (
-							<div>
-								{t('iot.thingModel.specs.unit')}：
-								<span style={{ color: '#fd5251' }}>
-									{data?.unit ? data?.unit : t('common.none')}
-								</span>
-							</div>
-						)}
 						{record?.dataType === 'boolean' && (
 							<div>
-								0：
+								{t('iot.thingModel.falseText')}：
 								<span style={{ color: '#fd5251' }}>
 									{data?.falseText}
 								</span>
@@ -280,15 +213,37 @@ export default () => {
 						)}
 						{record?.dataType === 'boolean' && (
 							<div>
-								1：
+								{t('iot.thingModel.trueText')}：
 								<span style={{ color: '#fd5251' }}>
 									{data?.trueText}
+								</span>
+							</div>
+						)}
+						{record?.dataType === 'text' && (
+							<div>
+								{t('iot.thingModel.length')}：
+								<span style={{ color: '#fd5251' }}>
+									{data?.length}
 								</span>
 							</div>
 						)}
 					</>
 				);
 			},
+		},
+		{
+			title: t('iot.thingModel.sort'),
+			dataIndex: 'sort',
+			valueType: 'text',
+			hideInSearch: true,
+			ellipsis: true,
+		},
+		{
+			title: t('iot.thingModel.remark'),
+			dataIndex: 'remark',
+			valueType: 'text',
+			hideInSearch: true,
+			ellipsis: true,
 		},
 		{
 			title: t('common.createTime'),
@@ -394,6 +349,8 @@ export default () => {
 	return (
 		<>
 			<ThingModelDrawer
+				typeOptions={typeOptions}
+				dataTypeOptions={dataTypeOptions}
 				modalVisit={modalVisit}
 				setModalVisit={setModalVisit}
 				title={title}
@@ -446,11 +403,11 @@ export default () => {
 								setRequestId(uuidV7());
 								setReadOnly(false);
 								setModalVisit(true);
+								setDataType('int')
 								setDataSource({
 									id: undefined,
 									sort: 1,
-									dataType: 'integer',
-									category: 1,
+									dataType: 'int'
 								});
 							}}
 						>

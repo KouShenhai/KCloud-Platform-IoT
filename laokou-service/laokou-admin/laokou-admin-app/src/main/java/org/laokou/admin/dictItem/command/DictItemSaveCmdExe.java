@@ -44,7 +44,7 @@ public class DictItemSaveCmdExe {
 	public void executeVoid(DictItemSaveCmd cmd) {
 		DictItemA dictItemA = DictItemDomainFactory.createDictItemA().create(DictItemConvertor.toEntity(cmd.getCo()));
 		// 校验参数
-		dictItemA.checkDeptParam();
+		dictItemA.checkDictItemParam();
 		transactionalUtils.executeInTransaction(() -> dictItemDomainService.createDictItem(dictItemA));
 	}
 

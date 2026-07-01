@@ -36,7 +36,6 @@ package org.laokou.common.security.config;
 import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.util.CollectionExtUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.common.security.config.entity.OAuth2AuthorizationCodeGrantAuthorization;
 import org.laokou.common.security.config.entity.OAuth2AuthorizationGrantAuthorization;
 import org.laokou.common.security.config.entity.OAuth2ClientCredentialsGrantAuthorization;
@@ -67,6 +66,8 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
 import org.springframework.security.oauth2.server.authorization.settings.OAuth2TokenFormat;
 import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
+import org.springframework.util.StringUtils;
+
 import java.security.Principal;
 import java.util.stream.Collectors;
 
@@ -336,7 +337,7 @@ public final class OAuth2ModelMapper {
 		ClientSettings.Builder clientSettingsBuilder = ClientSettings.builder()
 			.requireProofKey(oauth2RegisteredClient.getClientSettings().requireProofKey())
 			.requireAuthorizationConsent(oauth2RegisteredClient.getClientSettings().requireAuthorizationConsent());
-		if (StringExtUtils.hasText(oauth2RegisteredClient.getClientSettings().jwkSetUrl())) {
+		if (StringUtils.hasText(oauth2RegisteredClient.getClientSettings().jwkSetUrl())) {
 			clientSettingsBuilder.jwkSetUrl(oauth2RegisteredClient.getClientSettings().jwkSetUrl());
 		}
 		if (ObjectUtils
@@ -344,7 +345,7 @@ public final class OAuth2ModelMapper {
 			clientSettingsBuilder.tokenEndpointAuthenticationSigningAlgorithm(
 					oauth2RegisteredClient.getClientSettings().tokenEndpointAuthenticationSigningAlgorithm());
 		}
-		if (StringExtUtils.hasText(oauth2RegisteredClient.getClientSettings().x509CertificateSubjectDN())) {
+		if (StringUtils.hasText(oauth2RegisteredClient.getClientSettings().x509CertificateSubjectDN())) {
 			clientSettingsBuilder
 				.x509CertificateSubjectDN(oauth2RegisteredClient.getClientSettings().x509CertificateSubjectDN());
 		}
@@ -463,7 +464,7 @@ public final class OAuth2ModelMapper {
 			.attribute(Principal.class.getName(), authorizationCodeGrantAuthorization.getPrincipal())
 			.attribute(OAuth2AuthorizationRequest.class.getName(),
 					authorizationCodeGrantAuthorization.getAuthorizationRequest());
-		if (StringExtUtils.hasText(authorizationCodeGrantAuthorization.getState())) {
+		if (StringUtils.hasText(authorizationCodeGrantAuthorization.getState())) {
 			builder.attribute(OAuth2ParameterNames.STATE, authorizationCodeGrantAuthorization.getState());
 		}
 
@@ -540,7 +541,7 @@ public final class OAuth2ModelMapper {
 		if (ObjectUtils.isNotNull(deviceCodeGrantAuthorization.getRequestedScopes())) {
 			builder.attribute(OAuth2ParameterNames.SCOPE, deviceCodeGrantAuthorization.getRequestedScopes());
 		}
-		if (StringExtUtils.hasText(deviceCodeGrantAuthorization.getDeviceState())) {
+		if (StringUtils.hasText(deviceCodeGrantAuthorization.getDeviceState())) {
 			builder.attribute(OAuth2ParameterNames.STATE, deviceCodeGrantAuthorization.getDeviceState());
 		}
 

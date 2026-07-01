@@ -130,3 +130,18 @@ export async function pageDictItem(
 		...(options || {}),
 	});
 }
+
+/** 查询字典项列表 分页查询字典项列表 POST /api/v1/dict-items/list */
+export async function listDictItem(
+	body: API.DictItemListQry,
+	options?: { [key: string]: any },
+) {
+	return request<API.Result>('/api-proxy/admin/api/v1/dict-items/list', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		data: body,
+		...(options || {}),
+	});
+}

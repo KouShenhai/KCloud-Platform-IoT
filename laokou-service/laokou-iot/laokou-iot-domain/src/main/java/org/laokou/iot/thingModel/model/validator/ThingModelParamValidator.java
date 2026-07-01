@@ -15,35 +15,15 @@
  *
  */
 
-package org.laokou.iot.thingModel.model;
+package org.laokou.iot.thingModel.model.validator;
 
-import lombok.Data;
-import org.laokou.common.i18n.util.ParamValidator;
-
-import java.io.Serial;
-import java.io.Serializable;
+import org.laokou.iot.thingModel.model.ThingModelA;
 
 /**
  * @author laokou
  */
-@Data
-public class IntegerType implements Serializable {
+public interface ThingModelParamValidator {
 
-	@Serial
-	private static final long serialVersionUID = -1L;
-
-	private Integer length;
-
-	private String unit;
-
-	public ParamValidator.Validate checkValue() {
-		if (length == null) {
-			return ParamValidator.invalidate("长度不能为空");
-		}
-		if (length != 8 && length != 16 && length != 32 && length != 64) {
-			return ParamValidator.invalidate("长度必须为8、16、32、64");
-		}
-		return ParamValidator.validate();
-	}
+	void validateThingModel(ThingModelA thingModelA);
 
 }

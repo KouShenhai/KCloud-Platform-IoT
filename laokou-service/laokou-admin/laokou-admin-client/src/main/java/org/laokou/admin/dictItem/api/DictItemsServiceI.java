@@ -20,6 +20,7 @@ package org.laokou.admin.dictItem.api;
 import org.laokou.admin.dictItem.dto.DictItemExportCmd;
 import org.laokou.admin.dictItem.dto.DictItemGetQry;
 import org.laokou.admin.dictItem.dto.DictItemImportCmd;
+import org.laokou.admin.dictItem.dto.DictItemListQry;
 import org.laokou.admin.dictItem.dto.DictItemModifyCmd;
 import org.laokou.admin.dictItem.dto.DictItemPageQry;
 import org.laokou.admin.dictItem.dto.DictItemRemoveCmd;
@@ -27,6 +28,8 @@ import org.laokou.admin.dictItem.dto.DictItemSaveCmd;
 import org.laokou.admin.dictItem.dto.clientobject.DictItemCO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
+
+import java.util.List;
 
 /**
  * 字典项接口.
@@ -70,6 +73,12 @@ public interface DictItemsServiceI {
 	 * @param qry 分页查询请求
 	 */
 	Result<Page<DictItemCO>> pageDictItem(DictItemPageQry qry);
+
+	/**
+	 * 查询字典项.
+	 * @param qry 查询请求
+	 */
+	Result<List<DictItemCO>> listDictItem(DictItemListQry qry);
 
 	/**
 	 * 查看字典项.

@@ -15,27 +15,22 @@
  *
  */
 
-package org.laokou.iot.thingModel.model.enums;
+package org.laokou.admin.dictItem.dto;
 
-import lombok.Getter;
+import lombok.Data;
+import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
+ * 查询字典项命令.
+ *
  * @author laokou
  */
-@Getter
-public enum Category {
+@Data
+public class DictItemListQry extends CommonCommand {
 
-	PROPERTY(1, "属性"),
-
-	EVENT(2, "事件");
-
-	private final int code;
-
-	private final String desc;
-
-	Category(int code, String desc) {
-		this.code = code;
-		this.desc = desc;
-	}
+	/**
+	 * 字典编码.
+	 */
+	private String dictCode;
 
 }

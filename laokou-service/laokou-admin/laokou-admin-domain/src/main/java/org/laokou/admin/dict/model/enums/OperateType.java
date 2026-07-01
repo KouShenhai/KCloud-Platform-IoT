@@ -15,18 +15,27 @@
  *
  */
 
-package org.laokou.iot.thingModel.factory;
+package org.laokou.admin.dict.model.enums;
 
-import org.laokou.common.i18n.util.SpringContextUtils;
-import org.laokou.iot.thingModel.model.ThingModelE;
+import lombok.Getter;
 
-public final class ThingModelFactory {
+/**
+ * @author laokou
+ */
+@Getter
+public enum OperateType {
 
-	private ThingModelFactory() {
-	}
+	SAVE("save", "保存字典"),
 
-	public static ThingModelE getThingModel() {
-		return SpringContextUtils.getBeanProvider(ThingModelE.class);
+	MODIFY("modify", "修改字典");
+
+	private final String code;
+
+	private final String desc;
+
+	OperateType(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
 	}
 
 }

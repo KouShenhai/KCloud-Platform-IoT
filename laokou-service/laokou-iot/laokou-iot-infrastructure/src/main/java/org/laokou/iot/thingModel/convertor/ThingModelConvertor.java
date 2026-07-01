@@ -18,10 +18,10 @@
 package org.laokou.iot.thingModel.convertor;
 
 import org.laokou.iot.thingModel.dto.clientobject.ThingModelCO;
-import org.laokou.iot.thingModel.factory.ThingModelFactory;
+import org.laokou.iot.thingModel.factory.ThingModelDomainFactory;
 import org.laokou.iot.thingModel.gatewayimpl.database.dataobject.ThingModelDO;
-import org.laokou.iot.thingModel.model.ThingModelE;
-import org.laokou.iot.thingModel.model.enums.OperateType;
+import org.laokou.iot.thingModel.model.ThingModelA;
+import org.laokou.iot.thingModel.model.entity.ThingModelE;
 
 import java.util.List;
 
@@ -31,21 +31,21 @@ import java.util.List;
  *
  * @author laokou
  */
-public class ThingModelConvertor {
+public final class ThingModelConvertor {
 
-	public static ThingModelDO toDataObject(ThingModelE thingModelE) {
+	private ThingModelConvertor() {
+	}
+
+	public static ThingModelDO toDataObject(ThingModelA thingModelA) {
 		ThingModelDO thingModelDO = new ThingModelDO();
-		switch (thingModelE.getOperateType()) {
-			case SAVE -> thingModelDO.setId(thingModelE.getPrimaryKey());
-			case MODIFY -> thingModelDO.setId(thingModelE.getId());
-		}
+		ThingModelE thingModelE = thingModelA.getThingModelE();
+		thingModelDO.setId(thingModelA.getId());
 		thingModelDO.setName(thingModelE.getName());
 		thingModelDO.setCode(thingModelE.getCode());
 		thingModelDO.setDataType(thingModelE.getDataType());
-		thingModelDO.setCategory(thingModelE.getCategory());
 		thingModelDO.setType(thingModelE.getType());
 		thingModelDO.setSort(thingModelE.getSort());
-		thingModelDO.setSpecs(thingModelE.getSpecs());
+		thingModelDO.setSpec(thingModelE.getSpec());
 		thingModelDO.setRemark(thingModelE.getRemark());
 		return thingModelDO;
 	}
@@ -60,28 +60,26 @@ public class ThingModelConvertor {
 		thingModelCO.setName(thingModelDO.getName());
 		thingModelCO.setCode(thingModelDO.getCode());
 		thingModelCO.setDataType(thingModelDO.getDataType());
-		thingModelCO.setCategory(thingModelDO.getCategory());
 		thingModelCO.setType(thingModelDO.getType());
 		thingModelCO.setSort(thingModelDO.getSort());
-		thingModelCO.setSpecs(thingModelDO.getSpecs());
+		thingModelCO.setSpec(thingModelDO.getSpec());
 		thingModelCO.setRemark(thingModelDO.getRemark());
 		thingModelCO.setCreateTime(thingModelDO.getCreateTime());
 		return thingModelCO;
 	}
 
-	public static ThingModelE toEntity(ThingModelCO thingModelCO, boolean isInsert) {
-		ThingModelE thingModelE = ThingModelFactory.getThingModel();
-		thingModelE.setId(thingModelCO.getId());
-		thingModelE.setName(thingModelCO.getName());
-		thingModelE.setCode(thingModelCO.getCode());
-		thingModelE.setDataType(thingModelCO.getDataType());
-		thingModelE.setCategory(thingModelCO.getCategory());
-		thingModelE.setType(thingModelCO.getType());
-		thingModelE.setSort(thingModelCO.getSort());
-		thingModelE.setSpecs(thingModelCO.getSpecs());
-		thingModelE.setRemark(thingModelCO.getRemark());
-		thingModelE.setOperateType(isInsert ? OperateType.SAVE : OperateType.MODIFY);
-		return thingModelE;
+	public static ThingModelE toEntity(ThingModelCO thingModelCO) {
+		return ThingModelDomainFactory.createThingModelE()
+			.toBuilder()
+			.id(thingModelCO.getId())
+			.name(thingModelCO.getName())
+			.code(thingModelCO.getCode())
+			.dataType(thingModelCO.getDataType())
+			.type(thingModelCO.getType())
+			.sort(thingModelCO.getSort())
+			.spec(thingModelCO.getSpec())
+			.remark(thingModelCO.getRemark())
+			.build();
 	}
 
 }

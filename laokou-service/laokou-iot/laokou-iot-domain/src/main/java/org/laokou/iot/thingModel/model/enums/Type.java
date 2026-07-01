@@ -27,9 +27,7 @@ public enum Type {
 
 	READ("read", "读"),
 
-	WRITE("write", "写"),
-
-	REPORT("report", "上报");
+	WRITE("write", "写");
 
 	private final String code;
 

@@ -33,6 +33,7 @@ import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.util.StringUtils;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -170,7 +171,7 @@ public class UserA extends AggregateRoot implements ValidateName {
 		list.add(AESUtils.encrypt(mobile.substring(0, 3)));
 		list.add(AESUtils.encrypt(mobile.substring(3, 7)));
 		list.add(AESUtils.encrypt(mobile.substring(7)));
-		return StringExtUtils.collectionToDelimitedString(list, "~");
+		return StringUtils.collectionToDelimitedString(list, "~");
 	}
 
 	private String encryptPhrase(String phrase) throws Exception {
@@ -181,7 +182,7 @@ public class UserA extends AggregateRoot implements ValidateName {
 		for (int i = 0; i <= phrase.length() - 4; i++) {
 			list.add(AESUtils.encrypt(phrase.substring(i, i + 4)));
 		}
-		return StringExtUtils.collectionToDelimitedString(list, "~");
+		return StringUtils.collectionToDelimitedString(list, "~");
 	}
 
 	public Instant getCreateTime() {

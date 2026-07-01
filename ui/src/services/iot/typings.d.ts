@@ -87,23 +87,19 @@ declare namespace API {
 		extValues?: Record<string, any>;
 		/** ID */
 		Id?: number;
-		/** 模型名称 */
+		/** 物模型名称 */
 		name?: string;
-		/** 模型编码 */
+		/** 物模型编码 */
 		code?: string;
-		/** 数据类型 integer string decimal boolean */
+		/** 物模型数据类型 int long text float double boolean */
 		dataType?: string;
-		/** 模型类别 1属性 2事件 */
-		category?: number;
-		/** 模型类型 read读 write写 report上报 */
+		/** 物模型类型 read读 write写 */
 		type?: string;
-		/** 表达式 */
-		expression?: string;
-		/** 排序 */
+		/** 物模型排序 */
 		sort?: number;
-		/** 规则说明 */
-		specs?: string;
-		/** 备注 */
+		/** 物模型规格 */
+		spec?: string;
+		/** 物模型备注 */
 		remark?: string;
 		/** 创建时间 */
 		createTime?: string;

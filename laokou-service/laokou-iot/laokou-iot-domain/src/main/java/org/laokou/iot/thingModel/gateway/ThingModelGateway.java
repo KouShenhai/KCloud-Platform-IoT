@@ -17,7 +17,7 @@
 
 package org.laokou.iot.thingModel.gateway;
 
-import org.laokou.iot.thingModel.model.ThingModelE;
+import org.laokou.iot.thingModel.model.ThingModelA;
 
 /**
  *
@@ -30,12 +30,12 @@ public interface ThingModelGateway {
 	/**
 	 * 新增物模型.
 	 */
-	void createThingModel(ThingModelE thingModelE);
+	void createThingModel(ThingModelA thingModelA);
 
 	/**
 	 * 修改物模型.
 	 */
-	void updateThingModel(ThingModelE thingModelE);
+	void updateThingModel(ThingModelA thingModelA);
 
 	/**
 	 * 删除物模型.

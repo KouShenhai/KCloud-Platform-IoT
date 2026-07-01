@@ -43,7 +43,7 @@ public class DevicePropertyGetQryExe {
 		// return StringConstants.EMPTY;
 		// }).filter(StringExtUtils::hasText).toList();
 		// if (CollectionExtUtils.isNotEmpty(list)) {
-		// return Result.ok(StringExtUtils.collectionToDelimitedString(list,
+		// return Result.ok(StringUtils.collectionToDelimitedString(list,
 		// StringConstants.DROP));
 		// }
 		return Result.ok(StringConstants.EMPTY);

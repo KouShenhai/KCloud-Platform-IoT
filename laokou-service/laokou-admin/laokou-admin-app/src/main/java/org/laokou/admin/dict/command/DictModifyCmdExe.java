@@ -44,7 +44,7 @@ public class DictModifyCmdExe {
 	public void executeVoid(DictModifyCmd cmd) {
 		DictA dictA = DictDomainFactory.createDictA().create(DictConvertor.toEntity(cmd.getCo()));
 		// 校验参数
-		dictA.checkDeptParam();
+		dictA.checkDictParam();
 		transactionalUtils.executeInTransaction(() -> dictDomainService.updateDict(dictA));
 	}
 

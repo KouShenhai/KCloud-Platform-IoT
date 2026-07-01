@@ -70,7 +70,7 @@ public class DictItemA extends AggregateRoot implements ValidateName {
 		return this;
 	}
 
-	public void checkDeptParam() {
+	public void checkDictItemParam() {
 		switch (operateType) {
 			case SAVE -> saveDictItemParamValidator.validateDict(this);
 			case MODIFY -> modifyDictItemParamValidator.validateDict(this);

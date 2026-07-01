@@ -21,10 +21,6 @@ import lombok.Getter;
 import org.laokou.common.i18n.util.EnumParser;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.ParamValidator;
-import org.laokou.iot.thingModel.model.BooleanType;
-import org.laokou.iot.thingModel.model.DecimalType;
-import org.laokou.iot.thingModel.model.IntegerType;
-import org.laokou.iot.thingModel.model.StringType;
 
 /**
  * @author laokou
@@ -32,28 +28,41 @@ import org.laokou.iot.thingModel.model.StringType;
 @Getter
 public enum DataType {
 
-	INTEGER("integer", "整数型") {
+	INT("int", "整数型") {
 		@Override
-		public ParamValidator.Validate validate(String specs) {
-			return JacksonUtils.toBean(specs, IntegerType.class).checkValue();
+		public ParamValidator.Validate validate(String spec) {
+			return ParamValidator.validate();
 		}
 	},
-	DECIMAL("decimal", "小数型") {
+	LONG("long", "长整数型") {
 		@Override
-		public ParamValidator.Validate validate(String specs) {
-			return JacksonUtils.toBean(specs, DecimalType.class).checkValue();
+		public ParamValidator.Validate validate(String spec) {
+			return ParamValidator.validate();
 		}
 	},
-	STRING("string", "字符串型") {
+	FLOAT("float", "单精度浮点型") {
 		@Override
-		public ParamValidator.Validate validate(String specs) {
-			return JacksonUtils.toBean(specs, StringType.class).checkValue();
+		public ParamValidator.Validate validate(String spec) {
+			return ParamValidator.validate();
+		}
+	},
+	DOUBLE("double", "双精度浮点型") {
+		@Override
+		public ParamValidator.Validate validate(String spec) {
+			return ParamValidator.validate();
+		}
+	},
+
+	TEXT("text", "文本型") {
+		@Override
+		public ParamValidator.Validate validate(String spec) {
+			return JacksonUtils.toBean(spec, TextType.class).checkValue();
 		}
 	},
 	BOOLEAN("boolean", "布尔型") {
 		@Override
-		public ParamValidator.Validate validate(String specs) {
-			return JacksonUtils.toBean(specs, BooleanType.class).checkValue();
+		public ParamValidator.Validate validate(String spec) {
+			return JacksonUtils.toBean(spec, BooleanType.class).checkValue();
 		}
 	};
 
@@ -66,7 +75,7 @@ public enum DataType {
 		this.desc = desc;
 	}
 
-	public abstract ParamValidator.Validate validate(String specs);
+	public abstract ParamValidator.Validate validate(String spec);
 
 	public static DataType getByCode(String code) {
 		return EnumParser.parse(DataType.class, DataType::getCode, code);

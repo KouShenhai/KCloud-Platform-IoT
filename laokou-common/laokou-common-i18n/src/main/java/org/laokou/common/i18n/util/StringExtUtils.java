@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
  *
  * @author laokou
  */
-public final class StringExtUtils extends StringUtils {
+public final class StringExtUtils {
 
 	private static final Pattern LINE_PATTERN = Pattern.compile("_(\\w)");
 
@@ -36,7 +36,7 @@ public final class StringExtUtils extends StringUtils {
 	}
 
 	public static boolean isNotEmpty(String str) {
-		return hasText(str);
+		return StringUtils.hasText(str);
 	}
 
 	public static boolean startWith(String str, String prefix) {
@@ -72,15 +72,15 @@ public final class StringExtUtils extends StringUtils {
 	}
 
 	public static boolean isEmpty(String str) {
-		return !hasText(str);
+		return !StringUtils.hasText(str);
 	}
 
 	public static boolean isEmpty(CharSequence sequence) {
-		return !hasText(sequence);
+		return !StringUtils.hasText(sequence);
 	}
 
 	public static boolean isNotEmpty(CharSequence sequence) {
-		return hasText(sequence);
+		return StringUtils.hasText(sequence);
 	}
 
 	public static String removeStart(String str, String remove) {

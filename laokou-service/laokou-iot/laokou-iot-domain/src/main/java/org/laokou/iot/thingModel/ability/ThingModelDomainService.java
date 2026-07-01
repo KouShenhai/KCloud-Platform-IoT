@@ -19,7 +19,7 @@ package org.laokou.iot.thingModel.ability;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.iot.thingModel.gateway.ThingModelGateway;
-import org.laokou.iot.thingModel.model.ThingModelE;
+import org.laokou.iot.thingModel.model.ThingModelA;
 import org.springframework.stereotype.Component;
 
 /**
@@ -34,12 +34,12 @@ public class ThingModelDomainService {
 
 	private final ThingModelGateway thingModelGateway;
 
-	public void createThingModel(ThingModelE thingModelE) throws Exception {
-		thingModelGateway.createThingModel(thingModelE);
+	public void createThingModel(ThingModelA thingModelA) {
+		thingModelGateway.createThingModel(thingModelA);
 	}
 
-	public void updateThingModel(ThingModelE thingModelE) throws Exception {
-		thingModelGateway.updateThingModel(thingModelE);
+	public void updateThingModel(ThingModelA thingModelA) {
+		thingModelGateway.updateThingModel(thingModelA);
 	}
 
 	public void deleteThingModel(Long[] ids) {

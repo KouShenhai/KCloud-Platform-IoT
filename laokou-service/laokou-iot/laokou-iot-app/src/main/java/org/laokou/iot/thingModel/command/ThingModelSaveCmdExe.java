@@ -19,13 +19,15 @@ package org.laokou.iot.thingModel.command;
 
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.laokou.common.tenant.constant.DSConstants;
 import org.laokou.iot.thingModel.ability.ThingModelDomainService;
 import org.laokou.iot.thingModel.convertor.ThingModelConvertor;
 import org.laokou.iot.thingModel.dto.ThingModelSaveCmd;
-import org.laokou.iot.thingModel.model.ThingModelE;
+import org.laokou.iot.thingModel.factory.ThingModelDomainFactory;
+import org.laokou.iot.thingModel.model.ThingModelA;
 import org.springframework.stereotype.Component;
 
 /**
@@ -34,6 +36,7 @@ import org.springframework.stereotype.Component;
  *
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class ThingModelSaveCmdExe {
@@ -46,10 +49,15 @@ public class ThingModelSaveCmdExe {
 	public void executeVoid(ThingModelSaveCmd cmd) throws Exception {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.IOT);
-			ThingModelE thingModelE = ThingModelConvertor.toEntity(cmd.getCo(), true);
+			ThingModelA thingModelA = ThingModelDomainFactory.createThingModelA()
+				.create(ThingModelConvertor.toEntity(cmd.getCo()));
 			// 校验参数
-			thingModelE.checkThingModelParam();
-			transactionalUtils.executeInTransaction(() -> thingModelDomainService.createThingModel(thingModelE));
+			thingModelA.checkThingModelParam();
+			transactionalUtils.executeInTransaction(() -> thingModelDomainService.createThingModel(thingModelA));
+		}
+		catch (Exception ex) {
+			log.error("保存物模型失败，错误信息：{}", ex.getMessage(), ex);
+			throw ex;
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

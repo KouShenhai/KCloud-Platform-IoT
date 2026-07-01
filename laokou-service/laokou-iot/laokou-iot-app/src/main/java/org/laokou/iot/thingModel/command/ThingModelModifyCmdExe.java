@@ -25,7 +25,8 @@ import org.laokou.common.tenant.constant.DSConstants;
 import org.laokou.iot.thingModel.ability.ThingModelDomainService;
 import org.laokou.iot.thingModel.convertor.ThingModelConvertor;
 import org.laokou.iot.thingModel.dto.ThingModelModifyCmd;
-import org.laokou.iot.thingModel.model.ThingModelE;
+import org.laokou.iot.thingModel.factory.ThingModelDomainFactory;
+import org.laokou.iot.thingModel.model.ThingModelA;
 import org.springframework.stereotype.Component;
 
 /**
@@ -46,10 +47,11 @@ public class ThingModelModifyCmdExe {
 	public void executeVoid(ThingModelModifyCmd cmd) throws Exception {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.IOT);
-			ThingModelE thingModelE = ThingModelConvertor.toEntity(cmd.getCo(), false);
+			ThingModelA thingModelA = ThingModelDomainFactory.createThingModelA()
+				.create(ThingModelConvertor.toEntity(cmd.getCo()));
 			// 校验参数
-			thingModelE.checkThingModelParam();
-			transactionalUtils.executeInTransaction(() -> thingModelDomainService.updateThingModel(thingModelE));
+			thingModelA.checkThingModelParam();
+			transactionalUtils.executeInTransaction(() -> thingModelDomainService.updateThingModel(thingModelA));
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

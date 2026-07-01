@@ -15,32 +15,32 @@
  *
  */
 
-package org.laokou.admin.i18nMenu.model;
+package org.laokou.iot.thingModel.model;
 
 import lombok.Getter;
-import org.laokou.admin.i18nMenu.model.entity.I18nMenuE;
-import org.laokou.admin.i18nMenu.model.enums.OperateType;
-import org.laokou.admin.i18nMenu.model.validator.I18nMenuParamValidator;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.IdGenerator;
 import org.laokou.common.i18n.common.ValidateName;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.iot.thingModel.model.entity.ThingModelE;
+import org.laokou.iot.thingModel.model.enums.OperateType;
+import org.laokou.iot.thingModel.model.validator.ThingModelParamValidator;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.time.Instant;
 
 /**
- * 国际化菜单聚合根.
+ * 物模型聚合根.
  *
  * @author laokou
  */
 @Entity
 @Getter
-public class I18nMenuA extends AggregateRoot implements ValidateName {
+public class ThingModelA extends AggregateRoot implements ValidateName {
 
-	private I18nMenuE i18nMenuE;
+	private ThingModelE thingModelE;
 
 	/**
 	 * 操作类型【保存/修改】.
@@ -49,31 +49,31 @@ public class I18nMenuA extends AggregateRoot implements ValidateName {
 
 	private final IdGenerator idGenerator;
 
-	private final I18nMenuParamValidator saveI18nMenuParamValidator;
+	private final ThingModelParamValidator saveThingModelParamValidator;
 
-	private final I18nMenuParamValidator modifyI18nMenuParamValidator;
+	private final ThingModelParamValidator modifyThingModelParamValidator;
 
-	public I18nMenuA(IdGenerator idGenerator,
-			@Qualifier("saveI18nMenuParamValidator") I18nMenuParamValidator saveI18nMenuParamValidator,
-			@Qualifier("modifyI18nMenuParamValidator") I18nMenuParamValidator modifyI18nMenuParamValidator) {
+	public ThingModelA(IdGenerator idGenerator,
+			@Qualifier("saveThingModelParamValidator") ThingModelParamValidator saveThingModelParamValidator,
+			@Qualifier("modifyThingModelParamValidator") ThingModelParamValidator modifyThingModelParamValidator) {
 		this.idGenerator = idGenerator;
-		this.saveI18nMenuParamValidator = saveI18nMenuParamValidator;
-		this.modifyI18nMenuParamValidator = modifyI18nMenuParamValidator;
+		this.saveThingModelParamValidator = saveThingModelParamValidator;
+		this.modifyThingModelParamValidator = modifyThingModelParamValidator;
 	}
 
-	public I18nMenuA create(I18nMenuE i18nMenuE) {
-		this.i18nMenuE = i18nMenuE;
-		Long primaryKey = this.i18nMenuE.getId();
+	public ThingModelA create(ThingModelE thingModelE) {
+		this.thingModelE = thingModelE;
+		Long primaryKey = this.thingModelE.getId();
 		super.createTime = InstantUtils.now();
 		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : idGenerator.getId();
 		this.operateType = ObjectUtils.isNotNull(primaryKey) ? OperateType.MODIFY : OperateType.SAVE;
 		return this;
 	}
 
-	public void checkI18nMenuParam() {
+	public void checkThingModelParam() {
 		switch (operateType) {
-			case SAVE -> saveI18nMenuParamValidator.validateI18nMenu(this);
-			case MODIFY -> modifyI18nMenuParamValidator.validateI18nMenu(this);
+			case SAVE -> saveThingModelParamValidator.validateThingModel(this);
+			case MODIFY -> modifyThingModelParamValidator.validateThingModel(this);
 			default -> throw new UnsupportedOperationException("Unsupported operation type");
 		}
 	}
@@ -92,7 +92,7 @@ public class I18nMenuA extends AggregateRoot implements ValidateName {
 
 	@Override
 	public String getValidateName() {
-		return "I18nMenu";
+		return "ThingModel";
 	}
 
 }

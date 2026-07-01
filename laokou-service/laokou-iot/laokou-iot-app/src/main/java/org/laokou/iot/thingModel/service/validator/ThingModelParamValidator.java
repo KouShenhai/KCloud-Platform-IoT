@@ -18,70 +18,76 @@
 package org.laokou.iot.thingModel.service.validator;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.laokou.common.core.util.CollectionExtUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.laokou.iot.thingModel.gatewayimpl.database.ThingModelMapper;
 import org.laokou.iot.thingModel.gatewayimpl.database.dataobject.ThingModelDO;
-import org.laokou.iot.thingModel.model.enums.Category;
+import org.laokou.iot.thingModel.model.ThingModelA;
+import org.laokou.iot.thingModel.model.entity.ThingModelE;
 import org.laokou.iot.thingModel.model.enums.DataType;
-import org.laokou.iot.thingModel.model.ThingModelE;
 import org.laokou.iot.thingModel.model.enums.Type;
+import org.springframework.util.StringUtils;
 
 import java.util.Arrays;
 
 /**
  * @author laokou
  */
-public final class ThingModelParamValidator {
+final class ThingModelParamValidator {
 
 	private ThingModelParamValidator() {
 
 	}
 
-	public static ParamValidator.Validate validateId(ThingModelE thingModelE) {
-		Long id = thingModelE.getId();
-		if (ObjectUtils.isNull(id)) {
+	static ParamValidator.Validate validateId(ThingModelA thingModelA) {
+		Long id = thingModelA.getId();
+		if (id == null) {
 			return ParamValidator.invalidate("物模型ID不能为空");
 		}
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateCodeAndName(ThingModelE thingModelE, boolean isSave,
-			ThingModelMapper thingModelMapper) {
+	static ParamValidator.Validate validateCodeAndName(ThingModelA thingModelA, ThingModelMapper thingModelMapper) {
+		ThingModelE thingModelE = thingModelA.getThingModelE();
 		String code = thingModelE.getCode();
 		String name = thingModelE.getName();
-		if (ObjectUtils.isNull(name) || ObjectUtils.isNull(code)) {
-			return ParamValidator.invalidate("物模型编码和名称不能为空");
+		if (!StringUtils.hasText(name)) {
+			return ParamValidator.invalidate("物模型名称不能为空");
 		}
-		if (isSave && thingModelMapper.selectCount(Wrappers.lambdaQuery(ThingModelDO.class)
+		if (!StringUtils.hasText(code)) {
+			return ParamValidator.invalidate("物模型编码不能为空");
+		}
+		if (thingModelA.isSave() && thingModelMapper.selectCount(Wrappers.lambdaQuery(ThingModelDO.class)
 			.eq(ThingModelDO::getCode, code)
 			.eq(ThingModelDO::getName, name)) > 0) {
-			return ParamValidator.invalidate("物模型编码和名称已存在");
+			return ParamValidator.invalidate("物模型编码和物模型名称已存在");
 		}
-		if (!isSave && thingModelMapper.selectCount(Wrappers.lambdaQuery(ThingModelDO.class)
+		if (thingModelA.isModify() && thingModelMapper.selectCount(Wrappers.lambdaQuery(ThingModelDO.class)
 			.eq(ThingModelDO::getCode, code)
 			.eq(ThingModelDO::getName, name)
 			.ne(ThingModelDO::getId, thingModelE.getId())) > 0) {
-			return ParamValidator.invalidate("物模型编码和名称已存在");
+			return ParamValidator.invalidate("物模型编码和物模型名称已存在");
 		}
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateSpecs(ThingModelE thingModelE) throws JsonProcessingException {
-		String specs = thingModelE.getSpecs();
-		if (ObjectUtils.isNull(specs)) {
-			return ParamValidator.invalidate("物模型规则说明不能为空");
+	static ParamValidator.Validate validateSpec(ThingModelA thingModelA) {
+		String spec = thingModelA.getThingModelE().getSpec();
+		if (!StringUtils.hasText(spec)) {
+			return ParamValidator.invalidate("物模型规格不能为空");
 		}
-		DataType dataType = DataType.getByCode(thingModelE.getDataType());
-		return dataType.validate(specs);
+		ParamValidator.Validate validate = validateDataType(thingModelA);
+		if (validate.isValidate()) {
+			return DataType.getByCode(thingModelA.getThingModelE().getDataType()).validate(spec);
+		}
+		return validate;
 	}
 
-	public static ParamValidator.Validate validateSort(ThingModelE thingModelE) {
-		Integer sort = thingModelE.getSort();
-		if (ObjectUtils.isNull(sort)) {
+	static ParamValidator.Validate validateSort(ThingModelA thingModelA) {
+		Integer sort = thingModelA.getThingModelE().getSort();
+		if (sort == null) {
 			return ParamValidator.invalidate("物模型排序不能为空");
 		}
 		if (sort < 1 || sort > 99999) {
@@ -90,8 +96,8 @@ public final class ThingModelParamValidator {
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateType(ThingModelE thingModelE) {
-		String type = thingModelE.getType();
+	static ParamValidator.Validate validateType(ThingModelA thingModelA) {
+		String type = thingModelA.getThingModelE().getType();
 		if (ObjectUtils.isNull(type)) {
 			return ParamValidator.invalidate("物模型类型不能为空");
 		}
@@ -103,19 +109,8 @@ public final class ThingModelParamValidator {
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateCategory(ThingModelE thingModelE) {
-		Integer category = thingModelE.getCategory();
-		if (ObjectUtils.isNull(category)) {
-			return ParamValidator.invalidate("物模型类别不能为空");
-		}
-		if (!CollectionExtUtils.contains(Arrays.stream(Category.values()).map(Category::getCode).toList(), category)) {
-			return ParamValidator.invalidate("物模型类别不存在");
-		}
-		return ParamValidator.validate();
-	}
-
-	public static ParamValidator.Validate validateDataType(ThingModelE thingModelE) {
-		String dataType = thingModelE.getDataType();
+	static ParamValidator.Validate validateDataType(ThingModelA thingModelA) {
+		String dataType = thingModelA.getThingModelE().getDataType();
 		if (ObjectUtils.isNull(dataType)) {
 			return ParamValidator.invalidate("物模型数据类型不能为空");
 		}

@@ -42,6 +42,7 @@ import org.laokou.common.elasticsearch.annotation.Type;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
+import org.springframework.util.StringUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -92,11 +93,11 @@ public record ElasticsearchIndexTemplate(ElasticsearchClient elasticsearchClient
 	public void deleteIndex(List<String> names) throws IOException {
 		if (!exist(names)) {
 			log.debug("index name: 【{}】 -> Sync index delete failed, index already exists",
-					StringExtUtils.collectionToDelimitedString(names, StringConstants.DROP));
+					StringUtils.collectionToDelimitedString(names, StringConstants.DROP));
 			return;
 		}
 		DeleteIndexResponse deleteIndexResponse = elasticsearchClient.indices().delete(fn -> fn.index(names));
-		printLog(StringExtUtils.collectionToDelimitedString(names, StringConstants.DROP),
+		printLog(StringUtils.collectionToDelimitedString(names, StringConstants.DROP),
 				deleteIndexResponse.acknowledged() ? "Sync index delete succeeded" : "Sync index delete failed");
 	}
 
@@ -104,7 +105,7 @@ public record ElasticsearchIndexTemplate(ElasticsearchClient elasticsearchClient
 		return asyncExist(names, executor).thenApplyAsync(resp -> {
 			if (!resp) {
 				log.debug("index name: 【{}】 -> Async index delete failed, index already exists",
-						StringExtUtils.collectionToDelimitedString(names, StringConstants.DROP));
+						StringUtils.collectionToDelimitedString(names, StringConstants.DROP));
 				return Boolean.FALSE;
 			}
 			return Boolean.TRUE;
@@ -113,7 +114,7 @@ public record ElasticsearchIndexTemplate(ElasticsearchClient elasticsearchClient
 				elasticsearchAsyncClient.indices()
 					.delete(fn -> fn.index(names))
 					.thenAcceptAsync(response -> printLog(
-							StringExtUtils.collectionToDelimitedString(names, StringConstants.DROP),
+							StringUtils.collectionToDelimitedString(names, StringConstants.DROP),
 							response.acknowledged() ? "Async index delete succeeded" : "Async index delete failed"));
 			}
 		});
@@ -133,7 +134,7 @@ public record ElasticsearchIndexTemplate(ElasticsearchClient elasticsearchClient
 		}
 		catch (Exception ex) {
 			log.error("index name: 【{}】 -> Failed to determine if the index exists, error message: {}",
-					StringExtUtils.collectionToDelimitedString(names, StringConstants.DROP), ex.getMessage(), ex);
+					StringUtils.collectionToDelimitedString(names, StringConstants.DROP), ex.getMessage(), ex);
 			return false;
 		}
 	}

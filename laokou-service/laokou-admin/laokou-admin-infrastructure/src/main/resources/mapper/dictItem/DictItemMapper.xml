@@ -84,4 +84,14 @@
 		<include refid="selectObjectList"/>
 	</select>
 
+  <select id="selectObjList" resultType="org.laokou.admin.dictItem.gatewayimpl.database.dataobject.DictItemDO">
+    SELECT sdi.code, sdi.name
+    from sys_dict_item sdi
+    join sys_dict sd on sd.id = sdi.dict_id
+    where sdi.del_flag = 0 and sdi.tenant_id = 1
+    <if test="qry.dictCode != null and qry.dictCode != ''">
+      and sd.code = #{qry.dictCode}
+    </if>
+  </select>
+
 </mapper>

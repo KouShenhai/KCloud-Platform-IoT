@@ -44,7 +44,7 @@ public class I18nMenuSaveCmdExe {
 	public void executeVoid(I18nMenuSaveCmd cmd) {
 		I18nMenuA i18nMenuA = I18nMenuDomainFactory.createI18nMenuA().create(I18nMenuConvertor.toEntity(cmd.getCo()));
 		// 校验参数
-		i18nMenuA.checkDeptParam();
+		i18nMenuA.checkI18nMenuParam();
 		transactionalUtils.executeInTransaction(() -> i18nMenuDomainService.createI18nMenu(i18nMenuA));
 	}
 

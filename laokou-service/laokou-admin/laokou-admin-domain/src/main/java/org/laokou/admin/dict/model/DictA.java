@@ -19,8 +19,8 @@ package org.laokou.admin.dict.model;
 
 import lombok.Getter;
 import org.laokou.admin.dict.model.entity.DictE;
+import org.laokou.admin.dict.model.enums.OperateType;
 import org.laokou.admin.dict.model.validator.DictParamValidator;
-import org.laokou.admin.i18nMenu.model.enums.OperateType;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.IdGenerator;
 import org.laokou.common.i18n.common.ValidateName;
@@ -70,7 +70,7 @@ public class DictA extends AggregateRoot implements ValidateName {
 		return this;
 	}
 
-	public void checkDeptParam() {
+	public void checkDictParam() {
 		switch (operateType) {
 			case SAVE -> saveDictParamValidator.validateDict(this);
 			case MODIFY -> modifyDictParamValidator.validateDict(this);

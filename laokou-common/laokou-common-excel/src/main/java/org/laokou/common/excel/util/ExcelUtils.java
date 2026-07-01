@@ -43,6 +43,7 @@ import org.laokou.common.i18n.util.ValidatorUtils;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
 import org.laokou.common.mybatisplus.mapper.CrudMapper;
 import org.laokou.common.mybatisplus.util.MybatisUtils;
+import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -226,7 +227,7 @@ public final class ExcelUtils {
 			}
 			if (CollectionExtUtils.isNotEmpty(validates)) {
 				ERRORS.add(getTemplate(currentRowNum,
-						StringExtUtils.collectionToDelimitedString(validates, StringConstants.DROP)));
+						StringUtils.collectionToDelimitedString(validates, StringConstants.DROP)));
 			}
 			else {
 				CACHED_DATA_LIST.add(convertor.toDataObject(excel));

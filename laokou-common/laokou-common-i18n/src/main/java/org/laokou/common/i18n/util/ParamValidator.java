@@ -19,6 +19,7 @@ package org.laokou.common.i18n.util;
 
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.ParamException;
+import org.springframework.util.StringUtils;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -33,7 +34,7 @@ public final class ParamValidator {
 	}
 
 	public static void validate(String name, Validate... validates) {
-		String validateString = StringExtUtils.collectionToDelimitedString(validates(validates), StringConstants.DROP);
+		String validateString = StringUtils.collectionToDelimitedString(validates(validates), StringConstants.DROP);
 		if (StringExtUtils.isNotEmpty(validateString)) {
 			throw new ParamException(String.format("P_%s_ValidateFailed", name), validateString);
 		}
