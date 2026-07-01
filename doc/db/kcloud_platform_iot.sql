@@ -111,7 +111,7 @@ CREATE TABLE "public"."iot_thing_model" (
 "data_type" varchar(20)  NOT NULL,
 "type" varchar(30) NULL,
 "sort" int4 NOT NULL DEFAULT 1,
-"spec" json NULL,
+"spec" json NOT NULL,
 "remark" varchar(400)
 )
 ;
