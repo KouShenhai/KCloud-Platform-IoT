@@ -52,8 +52,7 @@ public final class CmdUtils {
 			}
 			int exitValue = process.exitValue();
 			if (exitValue != 0) {
-				throw new SystemException("S_Cmd_ExecuteFailed",
-						StringUtils.collectionToDelimitedString(output, "\n"));
+				throw new SystemException("S_Cmd_ExecuteFailed", StringUtils.collectionToDelimitedString(output, "\n"));
 			}
 			process.destroy();
 			return output;

@@ -50,7 +50,8 @@ public class ThingModelPageQryExe {
 			List<ThingModelDO> list = thingModelMapper.selectObjectPage(qry);
 			long total = thingModelMapper.selectObjectCount(qry);
 			return Result.ok(Page.create(ThingModelConvertor.toClientObjects(list), total));
-		} catch (Exception ex) {
+		}
+		catch (Exception ex) {
 			log.error("分页查询物模型失败，错误信息：{}", ex.getMessage(), ex);
 			throw ex;
 		}

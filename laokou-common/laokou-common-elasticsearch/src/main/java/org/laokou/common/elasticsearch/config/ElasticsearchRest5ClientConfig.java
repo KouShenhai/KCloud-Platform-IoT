@@ -58,6 +58,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 import tools.jackson.databind.ObjectMapper;
 
 import javax.net.ssl.SSLContext;
@@ -209,7 +210,7 @@ class ElasticsearchRest5ClientConfig {
 
 		private SslBundle getSslBundle() {
 			SpringElasticsearchProperties.RestClient.Ssl ssl = springElasticsearchProperties.getRestClient().getSsl();
-			if (StringExtUtils.hasLength(ssl.getBundle())) {
+			if (StringUtils.hasText(ssl.getBundle())) {
 				Assert.notNull(this.sslBundles, "SSL bundle name has been set but no SSL bundles found in context");
 				return this.sslBundles.getBundle(ssl.getBundle());
 			}

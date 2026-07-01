@@ -40,13 +40,13 @@ public enum DataType {
 			return ParamValidator.validate();
 		}
 	},
-	FLOAT("float" , "单精度浮点型") {
+	FLOAT("float", "单精度浮点型") {
 		@Override
 		public ParamValidator.Validate validate(String spec) {
 			return ParamValidator.validate();
 		}
 	},
-	DOUBLE("double" , "双精度浮点型") {
+	DOUBLE("double", "双精度浮点型") {
 		@Override
 		public ParamValidator.Validate validate(String spec) {
 			return ParamValidator.validate();
