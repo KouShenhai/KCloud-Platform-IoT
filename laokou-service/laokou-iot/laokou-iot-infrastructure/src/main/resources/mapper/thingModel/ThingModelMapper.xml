@@ -28,6 +28,7 @@
          "type",
          sort,
          spec,
+         remark,
          create_time
   </sql>
 
@@ -57,7 +58,7 @@
     SELECT <include refid="selectColumns"/>
     from iot_thing_model
     <include refid="selectConditions"/>
-    order by create_time desc, id desc
+    order by sort asc
   </sql>
 
   <select id="selectObjectPage"

@@ -142,6 +142,53 @@ CREATE INDEX "iot_thing_model_code_name_tenantId_idx" ON "public"."iot_thing_mod
 );
 COMMENT ON INDEX "public"."iot_thing_model_code_name_tenantId_idx" IS '编码_名称_租户ID_索引';
 
+INSERT INTO "public"."iot_thing_model" VALUES (3, 1, 1, '2026-07-01 21:49:48.631276', '2026-07-01 22:01:19.1838', 0, 1, 1, 1, '读取时间', 'read_time', 'text', 'read', 1, '{"length":30}', '读取时间');
+INSERT INTO "public"."iot_thing_model" VALUES (4, 1, 1, '2026-07-01 22:02:48.966385', '2026-07-01 22:02:48.966385', 0, 0, 1, 1, '主轴倍率', 'spindle_ratio', 'float', 'read', 5, '{}', '主轴倍率');
+INSERT INTO "public"."iot_thing_model" VALUES (44, 1, 1, '2026-07-01 22:55:13.54178', '2026-07-01 22:55:13.54178', 0, 0, 1, 1, '机械坐标Z', 'machine_position_z', 'float', 'read', 43, '{}', '机械坐标Z');
+INSERT INTO "public"."iot_thing_model" VALUES (5, 1, 1, '2026-07-01 22:03:26.557768', '2026-07-01 22:03:26.557768', 0, 0, 1, 1, '主轴负载', 'spindle_load', 'float', 'read', 6, '{}', '主轴负载');
+INSERT INTO "public"."iot_thing_model" VALUES (45, 1, 1, '2026-07-01 22:55:47.073143', '2026-07-01 22:55:47.073143', 0, 0, 1, 1, '当前坐标X', 'current_position_x', 'float', 'read', 44, '{}', '当前坐标X');
+INSERT INTO "public"."iot_thing_model" VALUES (46, 1, 1, '2026-07-01 22:56:09.106549', '2026-07-01 22:56:09.106549', 0, 0, 1, 1, '当前坐标Y', 'current_position_y', 'float', 'read', 45, '{}', '当前坐标Y');
+INSERT INTO "public"."iot_thing_model" VALUES (47, 1, 1, '2026-07-01 22:56:31.980242', '2026-07-01 22:56:31.980242', 0, 0, 1, 1, '当前坐标Z', 'current_position_z', 'float', 'read', 46, '{}', '当前坐标Z');
+INSERT INTO "public"."iot_thing_model" VALUES (26, 1, 1, '2026-07-01 22:37:48.978759', '2026-07-01 22:37:48.978759', 0, 0, 1, 1, '主轴温度', 'spindle_temperature', 'float', 'read', 26, '{}', '主轴温度');
+INSERT INTO "public"."iot_thing_model" VALUES (6, 1, 1, '2026-07-01 22:01:06.091935', '2026-07-01 22:03:42.414821', 0, 1, 1, 1, '主轴名称', 'spindle_name', 'text', 'read', 4, '{"length":30}', '主轴名称');
+INSERT INTO "public"."iot_thing_model" VALUES (7, 1, 1, '2026-07-01 22:07:53.87512', '2026-07-01 22:07:53.875643', 0, 0, 1, 1, '主轴速度', 'spindle_speed', 'float', 'read', 7, '{}', '主轴速度');
+INSERT INTO "public"."iot_thing_model" VALUES (8, 1, 1, '2026-07-01 22:11:11.445452', '2026-07-01 22:11:11.445452', 0, 0, 1, 1, '工作时长', 'work_time', 'long', 'read', 9, '{}', '工作时长');
+INSERT INTO "public"."iot_thing_model" VALUES (9, 1, 1, '2026-07-01 22:08:35.98035', '2026-07-01 22:11:52.151166', 0, 3, 1, 1, '开机时间', 'boot_time', 'text', 'read', 8, '{"length":30}', '开机时间');
+INSERT INTO "public"."iot_thing_model" VALUES (10, 1, 1, '2026-07-01 22:13:50.356339', '2026-07-01 22:14:13.728488', 0, 1, 1, 1, '切削时长', 'cutting_time', 'float', 'read', 10, '{}', '切削时长');
+INSERT INTO "public"."iot_thing_model" VALUES (27, 1, 1, '2026-07-01 22:54:51.502675', '2026-07-01 22:54:51.502675', 0, 0, 1, 1, '机械坐标Y', 'machine_position_y', 'float', 'read', 42, '{}', '机械坐标Y');
+INSERT INTO "public"."iot_thing_model" VALUES (17, 1, 1, '2026-07-01 22:20:33.96301', '2026-07-01 22:33:34.499222', 0, 2, 1, 1, '运行状态', 'running_status', 'text', 'read', 17, '{"length":30}', '运行状态');
+INSERT INTO "public"."iot_thing_model" VALUES (11, 1, 1, '2026-07-01 22:15:00.641517', '2026-07-01 22:16:37.984324', 0, 1, 1, 1, '单次切削时长', 'single_cutting_time', 'float', 'read', 11, '{}', '单次切削时长');
+INSERT INTO "public"."iot_thing_model" VALUES (1, 1, 1, '2026-07-01 22:00:33.262271', '2026-07-01 22:00:33.262271', 0, 0, 1, 1, '程序编号', 'program_number', 'text', 'read', 3, '{"length":30}', '程序编号');
+INSERT INTO "public"."iot_thing_model" VALUES (2, 1, 1, '2026-07-01 21:50:27.885279', '2026-07-01 22:01:13.07348', 0, 1, 1, 1, '程序名称', 'program_name', 'text', 'read', 2, '{"length":30}', '程序名称');
+INSERT INTO "public"."iot_thing_model" VALUES (12, 1, 1, '2026-07-01 22:17:21.664134', '2026-07-01 22:17:21.664134', 0, 0, 1, 1, '进给速度', 'feed_rate', 'float', 'read', 12, '{}', '进给速度');
+INSERT INTO "public"."iot_thing_model" VALUES (13, 1, 1, '2026-07-01 22:17:53.89219', '2026-07-01 22:17:53.89219', 0, 0, 1, 1, '进给倍率', 'feed_ratio', 'float', 'read', 13, '{}', '进给倍率');
+INSERT INTO "public"."iot_thing_model" VALUES (14, 1, 1, '2026-07-01 22:18:19.858725', '2026-07-01 22:18:19.858725', 0, 0, 1, 1, '单次加工数', 'single_work_pieces', 'int', 'read', 14, '{}', '单次加工数');
+INSERT INTO "public"."iot_thing_model" VALUES (15, 1, 1, '2026-07-01 22:18:58.710393', '2026-07-01 22:18:58.710393', 0, 0, 1, 1, '工件计数', 'work_pieces', 'int', 'read', 15, '{}', '工件计数');
+INSERT INTO "public"."iot_thing_model" VALUES (16, 1, 1, '2026-07-01 22:19:39.355857', '2026-07-01 22:19:39.355857', 0, 0, 1, 1, '工作模式', 'work_mode', 'text', 'read', 16, '{"length":30}', '工作模式');
+INSERT INTO "public"."iot_thing_model" VALUES (18, 1, 1, '2026-07-01 22:21:07.976719', '2026-07-01 22:21:07.976719', 0, 0, 1, 1, '急停状态', 'emergency_stop_status', 'boolean', 'read', 18, '{"trueText":"正常运行","falseText":"已急停"}', '急停状态');
+INSERT INTO "public"."iot_thing_model" VALUES (19, 1, 1, '2026-07-01 22:21:54.853973', '2026-07-01 22:21:54.853973', 0, 0, 1, 1, '报警状态', 'alarm_status', 'boolean', 'read', 19, '{"trueText":"正常运行","falseText":"已报警"}', '报警状态');
+INSERT INTO "public"."iot_thing_model" VALUES (20, 1, 1, '2026-07-01 22:23:18.265921', '2026-07-01 22:23:18.265921', 0, 0, 1, 1, '已注册程序数量', 'program_registered_number', 'int', 'read', 20, '{}', '已注册程序数量');
+INSERT INTO "public"."iot_thing_model" VALUES (21, 1, 1, '2026-07-01 22:25:24.726522', '2026-07-01 22:25:24.726522', 0, 0, 1, 1, '可注册程序数量', 'program_registrable_number', 'int', 'read', 21, '{}', '可注册程序数量');
+INSERT INTO "public"."iot_thing_model" VALUES (22, 1, 1, '2026-07-01 22:26:10.159051', '2026-07-01 22:26:10.159051', 0, 0, 1, 1, '已使用内存', 'memory_used', 'int', 'read', 22, '{}', '已使用内存');
+INSERT INTO "public"."iot_thing_model" VALUES (23, 1, 1, '2026-07-01 22:27:19.026649', '2026-07-01 22:27:19.026649', 0, 0, 1, 1, '可使用内存', 'memory_available', 'int', 'read', 23, '{}', '可使用内存');
+INSERT INTO "public"."iot_thing_model" VALUES (31, 1, 1, '2026-07-01 22:41:50.40397', '2026-07-01 22:41:50.40397', 0, 0, 1, 1, '刀具编号', 'tool_number', 'int', 'read', 30, '{}', '刀具编号');
+INSERT INTO "public"."iot_thing_model" VALUES (24, 1, 1, '2026-07-01 22:34:55.945584', '2026-07-01 22:34:55.945584', 0, 0, 1, 1, '主轴设定转速', 'spindle_set_speed', 'float', 'read', 24, '{}', '主轴设定转速');
+INSERT INTO "public"."iot_thing_model" VALUES (25, 1, 1, '2026-07-01 22:35:21.413422', '2026-07-01 22:35:21.413422', 0, 0, 1, 1, '主轴实际转速', 'spindle_speed', 'float', 'read', 25, '{}', '主轴实际转速');
+INSERT INTO "public"."iot_thing_model" VALUES (28, 1, 1, '2026-07-01 22:38:30.511338', '2026-07-01 22:38:30.511338', 0, 0, 1, 1, '主轴电流', 'spindle_current', 'float', 'read', 27, '{}', '主轴电流');
+INSERT INTO "public"."iot_thing_model" VALUES (29, 1, 1, '2026-07-01 22:40:29.263306', '2026-07-01 22:40:29.263306', 0, 0, 1, 1, '进给设定速度', 'feed_set_rate', 'float', 'read', 28, '{}', '进给设定速度');
+INSERT INTO "public"."iot_thing_model" VALUES (30, 1, 1, '2026-07-01 22:41:20.801257', '2026-07-01 22:41:20.801257', 0, 0, 1, 1, '工件数量', 'workpiece_number', 'int', 'read', 29, '{}', '工件数量');
+INSERT INTO "public"."iot_thing_model" VALUES (32, 1, 1, '2026-07-01 22:43:10.939998', '2026-07-01 22:43:10.939998', 0, 0, 1, 1, 'block编号', 'block_number', 'int', 'read', 31, '{}', 'block编号');
+INSERT INTO "public"."iot_thing_model" VALUES (33, 1, 1, '2026-07-01 22:44:07.697856', '2026-07-01 22:44:07.697856', 0, 0, 1, 1, '伺服负载X', 'servo_load_x', 'float', 'read', 32, '{}', '伺服负载X');
+INSERT INTO "public"."iot_thing_model" VALUES (34, 1, 1, '2026-07-01 22:44:30.537811', '2026-07-01 22:44:30.53833', 0, 0, 1, 1, '伺服负载Y', 'servo_load_y', 'float', 'read', 33, '{}', '伺服负载Y');
+INSERT INTO "public"."iot_thing_model" VALUES (35, 1, 1, '2026-07-01 22:44:45.709113', '2026-07-01 22:44:45.709166', 0, 0, 1, 1, '伺服负载Z', 'servo_load_z', 'float', 'read', 34, '{}', '伺服负载Z');
+INSERT INTO "public"."iot_thing_model" VALUES (36, 1, 1, '2026-07-01 22:49:25.34154', '2026-07-01 22:50:59.690318', 0, 1, 1, 1, '剩余坐标X', 'surplus_position_x', 'float', 'read', 35, '{}', '剩余坐标X');
+INSERT INTO "public"."iot_thing_model" VALUES (37, 1, 1, '2026-07-01 22:49:52.532803', '2026-07-01 22:51:08.923939', 0, 1, 1, 1, '剩余坐标Y', 'surplus_position_y', 'float', 'read', 36, '{}', '剩余坐标Y');
+INSERT INTO "public"."iot_thing_model" VALUES (38, 1, 1, '2026-07-01 22:50:15.403769', '2026-07-01 22:51:21.886856', 0, 1, 1, 1, '剩余坐标Z', 'surplus_position_z', 'float', 'read', 37, '{}', '剩余坐标Z');
+INSERT INTO "public"."iot_thing_model" VALUES (39, 1, 1, '2026-07-01 22:52:41.666697', '2026-07-01 22:52:41.666697', 0, 0, 1, 1, '工件坐标X', 'workpiece_position_x', 'float', 'read', 38, '{}', '工件坐标X');
+INSERT INTO "public"."iot_thing_model" VALUES (40, 1, 1, '2026-07-01 22:53:02.973137', '2026-07-01 22:53:17.992101', 0, 1, 1, 1, '工件坐标Y', 'workpiece_position_y', 'float', 'read', 39, '{}', '工件坐标Y');
+INSERT INTO "public"."iot_thing_model" VALUES (41, 1, 1, '2026-07-01 22:53:35.951833', '2026-07-01 22:53:35.951833', 0, 0, 1, 1, '工件坐标Z', 'workpiece_position_z', 'float', 'read', 40, '{}', '工件坐标Z');
+INSERT INTO "public"."iot_thing_model" VALUES (42, 1, 1, '2026-07-01 22:54:24.868676', '2026-07-01 22:54:24.868676', 0, 0, 1, 1, '机械坐标X', 'machine_position_x', 'float', 'read', 41, '{}', '机械坐标X');
+
 DROP TABLE IF EXISTS "public"."iot_product";
 CREATE TABLE "public"."iot_product" (
 "id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY,

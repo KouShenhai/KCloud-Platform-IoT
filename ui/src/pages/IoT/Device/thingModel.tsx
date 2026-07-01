@@ -164,6 +164,7 @@ export default () => {
 			dataIndex: 'type',
 			disable: true,
 			hideInSearch: true,
+			ellipsis: true,
 			renderFormItem: (_, { defaultRender }) => {
 				return defaultRender(_);
 			},
@@ -192,6 +193,7 @@ export default () => {
 			dataIndex: 'spec',
 			valueType: 'text',
 			hideInSearch: true,
+			ellipsis: true,
 			renderFormItem: (_, { defaultRender }) => {
 				return defaultRender(_);
 			},
@@ -228,6 +230,20 @@ export default () => {
 					</>
 				);
 			},
+		},
+		{
+			title: t('iot.thingModel.sort'),
+			dataIndex: 'sort',
+			valueType: 'text',
+			hideInSearch: true,
+			ellipsis: true,
+		},
+		{
+			title: t('iot.thingModel.remark'),
+			dataIndex: 'remark',
+			valueType: 'text',
+			hideInSearch: true,
+			ellipsis: true,
 		},
 		{
 			title: t('common.createTime'),
