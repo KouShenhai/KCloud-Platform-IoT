@@ -15,13 +15,15 @@
  *
  */
 
-package org.laokou.iot.productCategory.model;
+package org.laokou.iot.productCategory.model.validator;
+
+import org.laokou.iot.productCategory.model.ProductCategoryA;
 
 /**
  * @author laokou
  */
 public interface ProductCategoryParamValidator {
 
-	void validateProductCategory(ProductCategoryE productCategoryE);
+	void validateProductCategory(ProductCategoryA productCategoryA);
 
 }

@@ -20,8 +20,8 @@ package org.laokou.iot.productCategory.service.validator;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.laokou.iot.productCategory.gatewayimpl.database.ProductCategoryMapper;
-import org.laokou.iot.productCategory.model.ProductCategoryE;
-import org.laokou.iot.productCategory.model.ProductCategoryParamValidator;
+import org.laokou.iot.productCategory.model.ProductCategoryA;
+import org.laokou.iot.productCategory.model.validator.ProductCategoryParamValidator;
 import org.springframework.stereotype.Component;
 
 /**
@@ -34,14 +34,17 @@ public class SaveProductCategoryParamValidator implements ProductCategoryParamVa
 	private final ProductCategoryMapper productCategoryMapper;
 
 	@Override
-	public void validateProductCategory(ProductCategoryE productCategoryE) {
-		ParamValidator.validate("System",
+	public void validateProductCategory(ProductCategoryA productCategoryA) {
+		ParamValidator.validate(productCategoryA.getValidateName(),
+				// 校验产品类别名称
 				org.laokou.iot.productCategory.service.validator.ProductCategoryParamValidator
-					.validateName(productCategoryE, true, productCategoryMapper),
+					.validateName(productCategoryA, productCategoryMapper),
+				// 校验产品类别排序
 				org.laokou.iot.productCategory.service.validator.ProductCategoryParamValidator
-					.validateSort(productCategoryE),
+					.validateSort(productCategoryA),
+				// 校验产品类别父级ID
 				org.laokou.iot.productCategory.service.validator.ProductCategoryParamValidator
-					.validateParentId(productCategoryE));
+					.validateParentId(productCategoryA));
 	}
 
 }

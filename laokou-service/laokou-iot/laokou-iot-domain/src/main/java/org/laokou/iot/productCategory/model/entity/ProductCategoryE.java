@@ -15,12 +15,19 @@
  *
  */
 
-package org.laokou.iot.productCategory.model;
+package org.laokou.iot.productCategory.model.entity;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.IdGenerator;
+import org.laokou.iot.productCategory.model.enums.OperateType;
+import org.laokou.iot.productCategory.model.validator.ProductCategoryParamValidator;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
@@ -30,8 +37,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
  * @author laokou
  */
 @Entity
-@Setter
 @Getter
+@Builder(toBuilder = true)
+@EqualsAndHashCode(callSuper = false)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ProductCategoryE {
 
 	private Long id;
@@ -39,34 +49,26 @@ public class ProductCategoryE {
 	/**
 	 * 产品类别名称.
 	 */
-	@Getter
-	@Setter
 	private String name;
 
 	/**
 	 * 产品类别排序.
 	 */
-	@Getter
-	@Setter
 	private Integer sort;
 
 	/**
 	 * 产品类别父节点ID.
 	 */
-	@Getter
-	@Setter
 	private Long pid;
 
 	/**
 	 * 产品类别备注.
 	 */
-	@Getter
-	@Setter
 	private String remark;
 
 	@Setter
 	@Getter
-	private ProductCategoryOperateTypeEnum productCategoryOperateTypeEnum;
+	private OperateType productCategoryOperateTypeEnum;
 
 	private final ProductCategoryParamValidator saveProductCategoryParamValidator;
 

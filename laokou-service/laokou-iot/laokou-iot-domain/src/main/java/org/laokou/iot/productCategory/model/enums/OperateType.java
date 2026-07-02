@@ -15,21 +15,27 @@
  *
  */
 
-package org.laokou.iot.productCategory.factory;
+package org.laokou.iot.productCategory.model.enums;
 
-import org.laokou.common.i18n.util.SpringContextUtils;
-import org.laokou.iot.productCategory.model.ProductCategoryE;
+import lombok.Getter;
 
 /**
  * @author laokou
  */
-public final class ProductCategoryFactory {
+@Getter
+public enum OperateType {
 
-	private ProductCategoryFactory() {
-	}
+	SAVE("save", "保存产品类别"),
 
-	public static ProductCategoryE getProductCategory() {
-		return SpringContextUtils.getBeanProvider(ProductCategoryE.class);
+	MODIFY("modify", "修改产品类别");
+
+	private final String code;
+
+	private final String desc;
+
+	OperateType(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
 	}
 
 }

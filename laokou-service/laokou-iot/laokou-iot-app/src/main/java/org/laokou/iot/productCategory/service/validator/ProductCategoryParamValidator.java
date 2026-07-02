@@ -22,44 +22,45 @@ import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.laokou.iot.productCategory.gatewayimpl.database.ProductCategoryMapper;
 import org.laokou.iot.productCategory.gatewayimpl.database.dataobject.ProductCategoryDO;
-import org.laokou.iot.productCategory.model.ProductCategoryE;
+import org.laokou.iot.productCategory.model.ProductCategoryA;
 
 /**
  * @author laokou
  */
-public final class ProductCategoryParamValidator {
+final class ProductCategoryParamValidator {
 
 	private ProductCategoryParamValidator() {
 	}
 
-	public static ParamValidator.Validate validateId(ProductCategoryE productCategoryE) {
-		Long id = productCategoryE.getId();
+	static ParamValidator.Validate validateId(ProductCategoryA productCategoryA) {
+		Long id = productCategoryA.getId();
 		if (ObjectUtils.isNull(id)) {
 			return ParamValidator.invalidate("产品类别ID不能为空");
 		}
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateName(ProductCategoryE productCategoryE, boolean isSave,
+	static ParamValidator.Validate validateName(ProductCategoryA productCategoryA,
 			ProductCategoryMapper productCategoryMapper) {
-		String name = productCategoryE.getName();
+		String name = productCategoryA.getProductCategoryE().getName();
 		if (ObjectUtils.isNull(name)) {
 			return ParamValidator.invalidate("产品类别名称不能为空");
 		}
-		if (isSave && productCategoryMapper
+		if (productCategoryA.isSave() && productCategoryMapper
 			.selectCount(Wrappers.lambdaQuery(ProductCategoryDO.class).eq(ProductCategoryDO::getName, name)) > 0) {
 			return ParamValidator.invalidate("产品类别名称已存在");
 		}
-		if (!isSave && productCategoryMapper.selectCount(Wrappers.lambdaQuery(ProductCategoryDO.class)
-			.eq(ProductCategoryDO::getName, name)
-			.ne(ProductCategoryDO::getId, productCategoryE.getId())) > 0) {
+		if (productCategoryA.isModify()
+				&& productCategoryMapper.selectCount(Wrappers.lambdaQuery(ProductCategoryDO.class)
+					.eq(ProductCategoryDO::getName, name)
+					.ne(ProductCategoryDO::getId, productCategoryA.getId())) > 0) {
 			return ParamValidator.invalidate("产品类别名称已存在");
 		}
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateSort(ProductCategoryE productCategoryE) {
-		Integer sort = productCategoryE.getSort();
+	static ParamValidator.Validate validateSort(ProductCategoryA productCategoryA) {
+		Integer sort = productCategoryA.getProductCategoryE().getSort();
 		if (ObjectUtils.isNull(sort)) {
 			return ParamValidator.invalidate("产品类别排序不能为空");
 		}
@@ -69,8 +70,8 @@ public final class ProductCategoryParamValidator {
 		return ParamValidator.validate();
 	}
 
-	public static ParamValidator.Validate validateParentId(ProductCategoryE productCategoryE) {
-		Long pid = productCategoryE.getPid();
+	static ParamValidator.Validate validateParentId(ProductCategoryA productCategoryA) {
+		Long pid = productCategoryA.getProductCategoryE().getPid();
 		if (ObjectUtils.isNull(pid)) {
 			return ParamValidator.invalidate("产品类别父级ID不能为空");
 		}

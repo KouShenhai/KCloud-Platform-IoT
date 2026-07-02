@@ -18,10 +18,10 @@
 package org.laokou.iot.productCategory.convertor;
 
 import org.laokou.iot.productCategory.dto.clientobject.ProductCategoryCO;
-import org.laokou.iot.productCategory.factory.ProductCategoryFactory;
+import org.laokou.iot.productCategory.factory.ProductCategoryDomainFactory;
 import org.laokou.iot.productCategory.gatewayimpl.database.dataobject.ProductCategoryDO;
-import org.laokou.iot.productCategory.model.ProductCategoryE;
-import org.laokou.iot.productCategory.model.ProductCategoryOperateTypeEnum;
+import org.laokou.iot.productCategory.model.ProductCategoryA;
+import org.laokou.iot.productCategory.model.entity.ProductCategoryE;
 
 import java.util.List;
 
@@ -31,14 +31,15 @@ import java.util.List;
  *
  * @author laokou
  */
-public class ProductCategoryConvertor {
+public final class ProductCategoryConvertor {
 
-	public static ProductCategoryDO toDataObject(ProductCategoryE productCategoryE) {
+	private ProductCategoryConvertor() {
+	}
+
+	public static ProductCategoryDO toDataObject(ProductCategoryA productCategoryA) {
 		ProductCategoryDO productCategoryDO = new ProductCategoryDO();
-		switch (productCategoryE.getProductCategoryOperateTypeEnum()) {
-			case SAVE -> productCategoryDO.setId(productCategoryE.getPrimaryKey());
-			case MODIFY -> productCategoryDO.setId(productCategoryE.getId());
-		}
+		ProductCategoryE productCategoryE = productCategoryA.getProductCategoryE();
+		productCategoryDO.setId(productCategoryA.getId());
 		productCategoryDO.setName(productCategoryE.getName());
 		productCategoryDO.setSort(productCategoryE.getSort());
 		productCategoryDO.setPid(productCategoryE.getPid());
@@ -46,43 +47,30 @@ public class ProductCategoryConvertor {
 		return productCategoryDO;
 	}
 
+	public static List<ProductCategoryCO> toClientObjects(List<ProductCategoryDO> list) {
+		return list.stream().map(ProductCategoryConvertor::toClientObject).toList();
+	}
+
 	public static ProductCategoryCO toClientObject(ProductCategoryDO productCategoryDO) {
 		ProductCategoryCO productCategoryCO = new ProductCategoryCO();
+		productCategoryCO.setId(productCategoryDO.getId());
 		productCategoryCO.setName(productCategoryDO.getName());
 		productCategoryCO.setSort(productCategoryDO.getSort());
-		productCategoryCO.setPid(productCategoryDO.getPid());
 		productCategoryCO.setRemark(productCategoryDO.getRemark());
-		productCategoryCO.setId(productCategoryDO.getId());
+		productCategoryCO.setPid(productCategoryDO.getPid());
 		productCategoryCO.setCreateTime(productCategoryDO.getCreateTime());
 		return productCategoryCO;
 	}
 
-	public static ProductCategoryE toEntity(ProductCategoryCO productCategoryCO, boolean isInsert) {
-		ProductCategoryE productCategoryE = ProductCategoryFactory.getProductCategory();
-		productCategoryE.setName(productCategoryCO.getName());
-		productCategoryE.setSort(productCategoryCO.getSort());
-		productCategoryE.setPid(productCategoryCO.getPid());
-		productCategoryE.setRemark(productCategoryCO.getRemark());
-		productCategoryE.setId(productCategoryCO.getId());
-		productCategoryE.setProductCategoryOperateTypeEnum(
-				isInsert ? ProductCategoryOperateTypeEnum.SAVE : ProductCategoryOperateTypeEnum.MODIFY);
-		return productCategoryE;
-	}
-
-	public static ProductCategoryCO toClientObj(ProductCategoryDO productCategoryDO) {
-		ProductCategoryCO co = new ProductCategoryCO();
-		co.setId(productCategoryDO.getId());
-		co.setName(productCategoryDO.getName());
-		co.setPid(productCategoryDO.getPid());
-		co.setSort(productCategoryDO.getSort());
-		co.setCreateTime(productCategoryDO.getCreateTime());
-		co.setRemark(productCategoryDO.getRemark());
-		return co;
-
-	}
-
-	public static List<ProductCategoryCO> toClientObjs(List<ProductCategoryDO> list) {
-		return list.stream().map(ProductCategoryConvertor::toClientObj).toList();
+	public static ProductCategoryE toEntity(ProductCategoryCO productCategoryCO) {
+		return ProductCategoryDomainFactory.createProductCategoryE()
+			.toBuilder()
+			.id(productCategoryCO.getId())
+			.name(productCategoryCO.getName())
+			.sort(productCategoryCO.getSort())
+			.pid(productCategoryCO.getPid())
+			.remark(productCategoryCO.getRemark())
+			.build();
 	}
 
 }
