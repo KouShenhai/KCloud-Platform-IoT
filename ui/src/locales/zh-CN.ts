@@ -62,6 +62,8 @@ export default {
 	'sys.user.placeholder.roles': '请选择所属角色',
 	'sys.user.required.username': '请输入用户名',
 	'sys.user.required.password': '请输入密码',
+	'sys.user.required.mail': '请输入邮箱',
+	'sys.user.required.mobile': '请输入手机号',
 	'sys.user.required.dept': '请选择所属部门',
 	'sys.user.required.status': '请选择用户状态',
 	'sys.user.required.roles': '请选择所属角色',

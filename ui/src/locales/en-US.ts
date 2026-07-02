@@ -62,6 +62,8 @@ export default {
 	'sys.user.placeholder.roles': 'Please select roles',
 	'sys.user.required.username': 'Please enter username',
 	'sys.user.required.password': 'Please enter password',
+	'sys.user.required.mail': 'Please enter mail',
+	'sys.user.required.mobile': 'Please enter mobile',
 	'sys.user.required.dept': 'Please select dept',
 	'sys.user.required.status': 'Please select status',
 	'sys.user.required.roles': 'Please select roles',

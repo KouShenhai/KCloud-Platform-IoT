@@ -66,12 +66,15 @@ spring:
       # 单次poll()调用返回的记录数
       max-poll-records: 1000
       # 键的序列化方式
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
       # 值的序列化方式
-      value-deserializer: org.laokou.common.kafka.config.ForyKafkaDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
       # 单位拉取量
       fetch-min-size: 100KB
       fetch-max-wait: 50ms
+      properties:
+        spring.deserializer.key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
+        spring.deserializer.value.delegate.class: org.laokou.common.kafka.config.ForyKafkaDeserializer
     producer:
       # 发生错误后，消息重发的次数。
       retries: 5

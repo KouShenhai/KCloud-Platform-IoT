@@ -42,12 +42,8 @@
       <if test="user.mobile != null and user.mobile != ''">
         and mobile = #{user.mobile}
       </if>
-      <if test="user.tenantId != null">
-        and tenant_id = #{user.tenantId}
-      </if>
       and del_flag = 0
     </where>
-    limit 1
   </select>
 
 </mapper>
