@@ -25,6 +25,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.annotation.Entity;
 
+import java.io.Serializable;
+
 /**
  *
  * 产品类别领域对象【实体】.
@@ -37,7 +39,7 @@ import org.laokou.common.i18n.annotation.Entity;
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class ProductCategoryE {
+public class ProductCategoryE implements Serializable {
 
 	private Long id;
 
