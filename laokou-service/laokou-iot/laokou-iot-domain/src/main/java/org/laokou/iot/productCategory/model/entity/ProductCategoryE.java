@@ -23,12 +23,7 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.laokou.common.i18n.annotation.Entity;
-import org.laokou.common.i18n.common.IdGenerator;
-import org.laokou.iot.productCategory.model.enums.OperateType;
-import org.laokou.iot.productCategory.model.validator.ProductCategoryParamValidator;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
  *
@@ -65,37 +60,5 @@ public class ProductCategoryE {
 	 * 产品类别备注.
 	 */
 	private String remark;
-
-	@Setter
-	@Getter
-	private OperateType productCategoryOperateTypeEnum;
-
-	private final ProductCategoryParamValidator saveProductCategoryParamValidator;
-
-	private final ProductCategoryParamValidator modifyProductCategoryParamValidator;
-
-	private final IdGenerator idGenerator;
-
-	public ProductCategoryE(
-			@Qualifier("saveProductCategoryParamValidator") ProductCategoryParamValidator saveProductCategoryParamValidator,
-			@Qualifier("modifyProductCategoryParamValidator") ProductCategoryParamValidator modifyProductCategoryParamValidator,
-			IdGenerator idGenerator) {
-		super();
-		this.saveProductCategoryParamValidator = saveProductCategoryParamValidator;
-		this.modifyProductCategoryParamValidator = modifyProductCategoryParamValidator;
-		this.idGenerator = idGenerator;
-	}
-
-	public Long getPrimaryKey() {
-		return idGenerator.getId();
-	}
-
-	public void checkProductCategoryParam() {
-		switch (productCategoryOperateTypeEnum) {
-			case SAVE -> saveProductCategoryParamValidator.validateProductCategory(this);
-			case MODIFY -> modifyProductCategoryParamValidator.validateProductCategory(this);
-			default -> throw new UnsupportedOperationException("Unsupported operation");
-		}
-	}
 
 }
