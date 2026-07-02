@@ -19,6 +19,7 @@ package org.laokou.iot.thingModel.service.validator;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.laokou.common.core.util.CollectionExtUtils;
+import org.laokou.common.core.util.RegexUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.ParamValidator;
@@ -53,11 +54,11 @@ final class ThingModelParamValidator {
 		ThingModelE thingModelE = thingModelA.getThingModelE();
 		String code = thingModelE.getCode();
 		String name = thingModelE.getName();
-		if (!StringUtils.hasText(name)) {
-			return ParamValidator.invalidate("物模型名称不能为空");
+		if (!StringUtils.hasText(code) || !StringUtils.hasText(name)) {
+			return ParamValidator.invalidate("物模型编码和物模型名称不能为空");
 		}
-		if (!StringUtils.hasText(code)) {
-			return ParamValidator.invalidate("物模型编码不能为空");
+		if (RegexUtils.matches("^[a-z]+(?:_[a-z]+)*$", code)) {
+			return ParamValidator.invalidate("物模型编码只能使用小写字母和下划线，必须以小写字母开头和结尾，下划线不能连续");
 		}
 		if (thingModelA.isSave() && thingModelMapper.selectCount(Wrappers.lambdaQuery(ThingModelDO.class)
 			.eq(ThingModelDO::getCode, code)

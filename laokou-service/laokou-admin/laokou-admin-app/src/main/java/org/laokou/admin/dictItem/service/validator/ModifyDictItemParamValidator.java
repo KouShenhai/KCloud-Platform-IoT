@@ -41,7 +41,7 @@ public class ModifyDictItemParamValidator implements DictItemParamValidator {
 				// 校验字典项编码和字典项名称
 				org.laokou.admin.dictItem.service.validator.DictItemParamValidator.validateCodeAndName(dictItemA,
 						dictItemMapper),
-				// 校验排序
+				// 校验字典项排序
 				org.laokou.admin.dictItem.service.validator.DictItemParamValidator.validateSort(dictItemA),
 				// 校验字典项状态
 				org.laokou.admin.dictItem.service.validator.DictItemParamValidator.validateStatus(dictItemA));

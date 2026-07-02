@@ -21,6 +21,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.laokou.admin.dict.gatewayimpl.database.DictMapper;
 import org.laokou.admin.dict.gatewayimpl.database.dataobject.DictDO;
 import org.laokou.admin.dict.model.DictA;
+import org.laokou.common.core.util.RegexUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.laokou.common.i18n.util.StringExtUtils;
@@ -45,11 +46,11 @@ final class DictParamValidator {
 		String name = dictA.getDictE().getName();
 		String code = dictA.getDictE().getCode();
 		Long id = dictA.getId();
-		if (StringExtUtils.isEmpty(name)) {
-			return ParamValidator.invalidate("字典名称不能为空");
+		if (StringExtUtils.isEmpty(code) || StringExtUtils.isEmpty(name)) {
+			return ParamValidator.invalidate("字典编码和字典名称不能为空");
 		}
-		if (StringExtUtils.isEmpty(code)) {
-			return ParamValidator.invalidate("字典编码不能为空");
+		if (RegexUtils.matches("^[a-z]+(?:_[a-z]+)*$", code)) {
+			return ParamValidator.invalidate("字典编码只能使用小写字母和下划线，必须以小写字母开头和结尾，下划线不能连续");
 		}
 		if (dictA.isSave() && dictMapper
 			.selectCount(Wrappers.lambdaQuery(DictDO.class).eq(DictDO::getCode, code).eq(DictDO::getName, name)) > 0) {
