@@ -38,11 +38,7 @@ public class ModifyI18nMenuParamValidator implements I18nMenuParamValidator {
 		ParamValidator.validate(i18nMenuA.getValidateName(),
 				// 校验ID
 				org.laokou.admin.i18nMenu.service.validator.I18nMenuParamValidator.validateId(i18nMenuA),
-				// 校验编码
-				org.laokou.admin.i18nMenu.service.validator.I18nMenuParamValidator.validateCode(i18nMenuA),
-				// 校验名称
-				org.laokou.admin.i18nMenu.service.validator.I18nMenuParamValidator.validateName(i18nMenuA),
-				// 校验编码和名称
+				// 校验国际化菜单编码和国际化菜单名称
 				org.laokou.admin.i18nMenu.service.validator.I18nMenuParamValidator.validateCodeAndName(i18nMenuA,
 						i18nMenuMapper));
 	}

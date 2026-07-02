@@ -36,11 +36,16 @@ public class SaveThingModelParamValidator implements ThingModelParamValidator {
 	@Override
 	public void validateThingModel(ThingModelA thingModelA) {
 		ParamValidator.validate(thingModelA.getValidateName(),
+				// 校验物模型编码和物模型名称
 				org.laokou.iot.thingModel.service.validator.ThingModelParamValidator.validateCodeAndName(thingModelA,
 						thingModelMapper),
+				// 校验物模型数据类型
 				org.laokou.iot.thingModel.service.validator.ThingModelParamValidator.validateDataType(thingModelA),
+				// 校验物模型规格
 				org.laokou.iot.thingModel.service.validator.ThingModelParamValidator.validateSpec(thingModelA),
+				// 校验物模型类型
 				org.laokou.iot.thingModel.service.validator.ThingModelParamValidator.validateType(thingModelA),
+				// 校验物模型排序
 				org.laokou.iot.thingModel.service.validator.ThingModelParamValidator.validateSort(thingModelA));
 	}
 
