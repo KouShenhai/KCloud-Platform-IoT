@@ -63,7 +63,7 @@ final class UserParamValidator {
 				return ParamValidator.invalidate("用户不存在");
 			}
 			if (passwordEncoder.matches(password, userDO.getPassword())) {
-				return ParamValidator.invalidate("用户新密码不能与旧密码相同");
+				return ParamValidator.invalidate("用户新密码与旧密码不能相同");
 			}
 		}
 		return ParamValidator.validate();
@@ -100,7 +100,7 @@ final class UserParamValidator {
 			return ParamValidator.invalidate("用户邮箱不能为空");
 		}
 		if (!RegexUtils.mailRegex(mail)) {
-			return ParamValidator.invalidate("用户邮箱错误");
+			return ParamValidator.invalidate("用户邮箱格式错误");
 		}
 		if (mail.length() > 30) {
 			return ParamValidator.invalidate("用户邮箱不能超过30个字符");
@@ -124,7 +124,7 @@ final class UserParamValidator {
 			return ParamValidator.invalidate("用户手机号不能为空");
 		}
 		if (!RegexUtils.mobileRegex(mobile)) {
-			return ParamValidator.invalidate("用户手机号错误");
+			return ParamValidator.invalidate("用户手机号格式错误");
 		}
 		Long id = userA.getId();
 		String encryptMobile = AESUtils.encrypt(mobile);
