@@ -1,4 +1,4 @@
-FROM docker.elastic.co/elasticsearch/elasticsearch:9.4.2
+FROM docker.elastic.co/elasticsearch/elasticsearch:9.4.3
 LABEL maintainer="laokou"
 LABEL description="elasticsearch9"
 RUN elasticsearch-plugin install --batch https://release.infinilabs.com/analysis-ik/stable/elasticsearch-analysis-ik-9.4.2.zip && \
