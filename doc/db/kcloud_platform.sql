@@ -809,17 +809,17 @@ ALTER TABLE "public"."sys_user" ADD CONSTRAINT "sys_user_pkey" PRIMARY KEY ("id"
 CREATE unique INDEX "sys_user_username_idx" ON "public"."sys_user" USING btree (
 	"username"
 );
-COMMENT ON INDEX "public"."sys_user_username_idx" IS '用户名_索引';
+COMMENT ON INDEX "public"."sys_user_username_idx" IS '用户名_唯一索引';
 
 CREATE unique INDEX "sys_user_mobile_idx" ON "public"."sys_user" USING btree (
 	"username"
 );
-COMMENT ON INDEX "public"."sys_user_mobile_idx" IS '手机号_索引';
+COMMENT ON INDEX "public"."sys_user_mobile_idx" IS '手机号_唯一索引';
 
 CREATE unique INDEX "sys_user_mail_idx" ON "public"."sys_user" USING btree (
 	"mail"
 );
-COMMENT ON INDEX "public"."sys_user_mail_idx" IS '邮箱_索引';
+COMMENT ON INDEX "public"."sys_user_mail_idx" IS '邮箱_唯一索引';
 
 INSERT INTO "public"."sys_user" VALUES (1, 1, 1, '2022-01-01 20:13:11+08', '2024-04-29 23:52:52+08', 0, 0, 1,1, '{bcrypt}$2a$10$bGXM7u58FPMDanMyqvZ7Reb9sqJiUTCdAcb1wN5IIkFa8nYOMOioK', 1, 'Ylh4QTF0YmdEWWJR2TEQZjlR4rzAz/73MsL8gxlNSv+/j3L7Sxne4hFAP+W9', 'Ylh4QTF0YmdEWWJR2j0YYjxS577BzIgIGdpZbU2I7EIUTVaxqvWu', 0, 1, 'Ylh4QTF0YmdEWWJRimFMPAPt8S6U+J8eEhIZiErF69o=~Ylh4QTF0YmdEWWJRj2hIO/7mcHvbRltmR9cojv2C2jE=', 'Ylh4QTF0YmdEWWJR2TEQZt/I7tdiOALwVrZXFxK5boI=~Ylh4QTF0YmdEWWJR3zQSZDEzo/mQ2Kt2ooeStwwy1DM=~Ylh4QTF0YmdEWWJR2jYQYvkuHP0mNYNzkmUPAkpRnNs=~Ylh4QTF0YmdEWWJR2DQWY04zb3FkQTCmuPFi97WrI08=~Ylh4QTF0YmdEWWJR2jIXZToqPakPCzCwmjz4XLwksmM=~Ylh4QTF0YmdEWWJR3DMRYRY/bEOz79QYxdiB5xtGMoU=~Ylh4QTF0YmdEWWJR3TUVYYBJ7iU6aLpsTeXBwNhb1lk=~Ylh4QTF0YmdEWWJR2zEVFRAKn1yHzG9spDDE8afQ1Ls=~Ylh4QTF0YmdEWWJR3zFhJLv17Ndjz3ymZABhpoKJPCE=~Ylh4QTF0YmdEWWJR30VQJOy8KF8pYc2r4yJkfOWIWnw=~Ylh4QTF0YmdEWWJRq3RQe8Vs9XmHQG6AkHOCtSwt6cA=~Ylh4QTF0YmdEWWJRmnQPNipHlgS+8wcVPz+EC5gdeeM=~Ylh4QTF0YmdEWWJRmitCOoJ+zG0CpSympji+U7NWxUw=~Ylh4QTF0YmdEWWJRxWZOOE8J8sq9k7iJhdxbniMpw9I=', 'Ylh4QTF0YmdEWWJR2j0YOQJF4W0Ofxd/k/LFC4GzoQ==~Ylh4QTF0YmdEWWJR3DEVZk3r4C1hv2eOukkPSzTOffA=~Ylh4QTF0YmdEWWJR2TAWY8HwM9jwPxZFMFE0pFibp9k=', 'Ylh4QTF0YmdEWWJRimFMPGaJmldyuWIb9BNmUN1ULMI7');
 
