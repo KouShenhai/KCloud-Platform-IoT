@@ -101,7 +101,6 @@ public final class UserConvertor {
 		userDO.setUsername(userV.username());
 		userDO.setMail(userV.mail());
 		userDO.setMobile(userV.mobile());
-		userDO.setTenantId(userV.tenantId());
 		return userDO;
 	}
 

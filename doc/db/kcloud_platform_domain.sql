@@ -194,7 +194,7 @@ CREATE TABLE "public"."sys_operate_log" (
 "operator" varchar(50) NOT NULL,
 "error_message" varchar(2000),
 "profile" varchar(50) NOT NULL,
-"stack_trace" text,
+"stack_trace" varchar(5000),
 "cost_time" int8 NOT NULL
 )
 ;

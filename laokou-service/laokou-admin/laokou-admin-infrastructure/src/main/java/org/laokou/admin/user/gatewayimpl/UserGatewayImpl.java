@@ -54,7 +54,7 @@ public class UserGatewayImpl implements UserGateway {
 
 	@Override
 	public void deleteUser(Long[] ids) {
-		userMapper.deleteByIds(Arrays.asList(ids));
+		userMapper.deleteObjectByIds(Arrays.asList(ids));
 	}
 
 }

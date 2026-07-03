@@ -19,13 +19,15 @@ package org.laokou.iot.productCategory.command;
 
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.laokou.common.tenant.constant.DSConstants;
 import org.laokou.iot.productCategory.ability.ProductCategoryDomainService;
 import org.laokou.iot.productCategory.convertor.ProductCategoryConvertor;
 import org.laokou.iot.productCategory.dto.ProductCategoryModifyCmd;
-import org.laokou.iot.productCategory.model.ProductCategoryE;
+import org.laokou.iot.productCategory.factory.ProductCategoryDomainFactory;
+import org.laokou.iot.productCategory.model.ProductCategoryA;
 import org.springframework.stereotype.Component;
 
 /**
@@ -34,6 +36,7 @@ import org.springframework.stereotype.Component;
  *
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class ProductCategoryModifyCmdExe {
@@ -46,11 +49,16 @@ public class ProductCategoryModifyCmdExe {
 	public void executeVoid(ProductCategoryModifyCmd cmd) {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.IOT);
-			ProductCategoryE productCategoryE = ProductCategoryConvertor.toEntity(cmd.getCo(), false);
+			ProductCategoryA productCategoryA = ProductCategoryDomainFactory.createProductCategoryA()
+				.create(ProductCategoryConvertor.toEntity(cmd.getCo()));
 			// 校验参数
-			productCategoryE.checkProductCategoryParam();
+			productCategoryA.checkProductCategoryParam();
 			transactionalUtils
-				.executeInTransaction(() -> productCategoryDomainService.updateProductCategory(productCategoryE));
+				.executeInTransaction(() -> productCategoryDomainService.updateProductCategory(productCategoryA));
+		}
+		catch (Exception ex) {
+			log.error("修改产品类别失败，错误信息：{}", ex.getMessage(), ex);
+			throw ex;
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

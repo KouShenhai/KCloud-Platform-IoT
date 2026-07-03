@@ -18,13 +18,14 @@
 package org.laokou.iot.productCategory.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.iot.productCategory.model.ProductCategoryE;
-import org.springframework.stereotype.Component;
+import org.laokou.iot.productCategory.convertor.ProductCategoryConvertor;
 import org.laokou.iot.productCategory.gateway.ProductCategoryGateway;
 import org.laokou.iot.productCategory.gatewayimpl.database.ProductCategoryMapper;
-import java.util.Arrays;
-import org.laokou.iot.productCategory.convertor.ProductCategoryConvertor;
 import org.laokou.iot.productCategory.gatewayimpl.database.dataobject.ProductCategoryDO;
+import org.laokou.iot.productCategory.model.ProductCategoryA;
+import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
 
 /**
  *
@@ -39,14 +40,14 @@ public class ProductCategoryGatewayImpl implements ProductCategoryGateway {
 	private final ProductCategoryMapper productCategoryMapper;
 
 	@Override
-	public void createProductCategory(ProductCategoryE productCategoryE) {
-		productCategoryMapper.insert(ProductCategoryConvertor.toDataObject(productCategoryE));
+	public void createProductCategory(ProductCategoryA productCategoryA) {
+		productCategoryMapper.insert(ProductCategoryConvertor.toDataObject(productCategoryA));
 	}
 
 	@Override
-	public void updateProductCategory(ProductCategoryE productCategoryE) {
-		ProductCategoryDO productCategoryDO = ProductCategoryConvertor.toDataObject(productCategoryE);
-		productCategoryDO.setVersion(productCategoryMapper.selectVersion(productCategoryE.getId()));
+	public void updateProductCategory(ProductCategoryA productCategoryA) {
+		ProductCategoryDO productCategoryDO = ProductCategoryConvertor.toDataObject(productCategoryA);
+		productCategoryDO.setVersion(productCategoryMapper.selectVersion(productCategoryA.getId()));
 		productCategoryMapper.updateById(productCategoryDO);
 	}
 

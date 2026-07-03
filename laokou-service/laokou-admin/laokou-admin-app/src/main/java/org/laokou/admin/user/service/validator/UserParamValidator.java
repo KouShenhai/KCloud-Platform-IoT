@@ -63,14 +63,13 @@ final class UserParamValidator {
 				return ParamValidator.invalidate("用户不存在");
 			}
 			if (passwordEncoder.matches(password, userDO.getPassword())) {
-				return ParamValidator.invalidate("用户新密码不能与旧密码相同");
+				return ParamValidator.invalidate("用户新密码与旧密码不能相同");
 			}
 		}
 		return ParamValidator.validate();
 	}
 
-	static ParamValidator.Validate validateUsername(UserA userA, UserMapper userMapper, boolean isSave)
-			throws Exception {
+	static ParamValidator.Validate validateUsername(UserA userA, UserMapper userMapper) throws Exception {
 		String username = userA.getUserE().getUsername();
 		Long id = userA.getId();
 		String encryptUsername = AESUtils.encrypt(username);
@@ -83,11 +82,11 @@ final class UserParamValidator {
 		if (!RegexUtils.matches("^[A-Za-z]+$|^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z0-9]+$", username)) {
 			return ParamValidator.invalidate("用户名只能为大小写字母或大小写字母与数字的组合");
 		}
-		if (isSave && userMapper
+		if (userA.isSave() && userMapper
 			.selectCount(Wrappers.lambdaQuery(UserDO.class).eq(UserDO::getUsername, encryptUsername)) > 0) {
 			return ParamValidator.invalidate("用户名已存在");
 		}
-		if (!isSave && userMapper.selectCount(Wrappers.lambdaQuery(UserDO.class)
+		if (userA.isModify() && userMapper.selectCount(Wrappers.lambdaQuery(UserDO.class)
 			.eq(UserDO::getUsername, encryptUsername)
 			.ne(UserDO::getId, id)) > 0) {
 			return ParamValidator.invalidate("用户名已存在");
@@ -95,46 +94,47 @@ final class UserParamValidator {
 		return ParamValidator.validate();
 	}
 
-	static ParamValidator.Validate validateMail(UserA userA, UserMapper userMapper, boolean isSave) throws Exception {
+	static ParamValidator.Validate validateMail(UserA userA, UserMapper userMapper) throws Exception {
 		String mail = userA.getUserE().getMail();
-		if (StringExtUtils.isNotEmpty(mail)) {
-			if (!RegexUtils.mailRegex(mail)) {
-				return ParamValidator.invalidate("用户邮箱错误");
-			}
-			if (mail.length() > 30) {
-				return ParamValidator.invalidate("用户邮箱不能超过30个字符");
-			}
-			Long id = userA.getId();
-			String encryptMail = AESUtils.encrypt(mail);
-			if (isSave && userMapper
-				.selectCount(Wrappers.lambdaQuery(UserDO.class).eq(UserDO::getMail, encryptMail)) > 0) {
-				return ParamValidator.invalidate("用户邮箱已存在");
-			}
-			if (!isSave && userMapper.selectCount(
-					Wrappers.lambdaQuery(UserDO.class).eq(UserDO::getMail, encryptMail).ne(UserDO::getId, id)) > 0) {
-				return ParamValidator.invalidate("用户邮箱已存在");
-			}
+		if (StringExtUtils.isEmpty(mail)) {
+			return ParamValidator.invalidate("用户邮箱不能为空");
+		}
+		if (!RegexUtils.mailRegex(mail)) {
+			return ParamValidator.invalidate("用户邮箱格式错误");
+		}
+		if (mail.length() > 30) {
+			return ParamValidator.invalidate("用户邮箱不能超过30个字符");
+		}
+		Long id = userA.getId();
+		String encryptMail = AESUtils.encrypt(mail);
+		if (userA.isSave()
+				&& userMapper.selectCount(Wrappers.lambdaQuery(UserDO.class).eq(UserDO::getMail, encryptMail)) > 0) {
+			return ParamValidator.invalidate("用户邮箱已存在");
+		}
+		if (userA.isModify() && userMapper.selectCount(
+				Wrappers.lambdaQuery(UserDO.class).eq(UserDO::getMail, encryptMail).ne(UserDO::getId, id)) > 0) {
+			return ParamValidator.invalidate("用户邮箱已存在");
 		}
 		return ParamValidator.validate();
 	}
 
 	static ParamValidator.Validate validateMobile(UserA userA, UserMapper userMapper) throws Exception {
 		String mobile = userA.getUserE().getMobile();
-		if (StringExtUtils.isNotEmpty(mobile)) {
-			if (!RegexUtils.mobileRegex(mobile)) {
-				return ParamValidator.invalidate("用户手机号错误");
-			}
-			Long id = userA.getId();
-			String encryptMobile = AESUtils.encrypt(mobile);
-			if (userA.isSave() && userMapper
-				.selectCount(Wrappers.lambdaQuery(UserDO.class).eq(UserDO::getMobile, encryptMobile)) > 0) {
-				return ParamValidator.invalidate("用户手机号已存在");
-			}
-			if (userA.isModify() && userMapper.selectCount(Wrappers.lambdaQuery(UserDO.class)
-				.eq(UserDO::getMobile, encryptMobile)
-				.ne(UserDO::getId, id)) > 0) {
-				return ParamValidator.invalidate("用户手机号已存在");
-			}
+		if (StringExtUtils.isEmpty(mobile)) {
+			return ParamValidator.invalidate("用户手机号不能为空");
+		}
+		if (!RegexUtils.mobileRegex(mobile)) {
+			return ParamValidator.invalidate("用户手机号格式错误");
+		}
+		Long id = userA.getId();
+		String encryptMobile = AESUtils.encrypt(mobile);
+		if (userA.isSave() && userMapper
+			.selectCount(Wrappers.lambdaQuery(UserDO.class).eq(UserDO::getMobile, encryptMobile)) > 0) {
+			return ParamValidator.invalidate("用户手机号已存在");
+		}
+		if (userA.isModify() && userMapper.selectCount(
+				Wrappers.lambdaQuery(UserDO.class).eq(UserDO::getMobile, encryptMobile).ne(UserDO::getId, id)) > 0) {
+			return ParamValidator.invalidate("用户手机号已存在");
 		}
 		return ParamValidator.validate();
 	}

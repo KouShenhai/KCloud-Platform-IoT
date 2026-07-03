@@ -50,7 +50,7 @@ final class I18nMenuParamValidator {
 		if (StringExtUtils.isEmpty(code) || StringExtUtils.isEmpty(name)) {
 			return ParamValidator.invalidate("国际化菜单编码和国际化菜单名称不能为空");
 		}
-		if (RegexUtils.matches("^[a-z]+(?:\\.[a-z]+)*$", code)) {
+		if (!RegexUtils.matches("^[a-z]+(?:\\.[a-z]+)*$", code)) {
 			return ParamValidator.invalidate("国际化菜单编码只能使用小写字母和小数点，必须以小写字母开头和结尾，小数点不能连续");
 		}
 		if (StringExtUtils.isNotEmpty(code) && StringExtUtils.isNotEmpty(name)) {

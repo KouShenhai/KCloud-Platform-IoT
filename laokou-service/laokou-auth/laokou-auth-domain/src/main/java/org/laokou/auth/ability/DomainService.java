@@ -23,7 +23,6 @@ import org.laokou.auth.gateway.DeptGateway;
 import org.laokou.auth.gateway.MenuGateway;
 import org.laokou.auth.gateway.OssLogGateway;
 import org.laokou.auth.gateway.RoleGateway;
-import org.laokou.auth.gateway.TenantGateway;
 import org.laokou.auth.gateway.UserGateway;
 import org.laokou.auth.model.AuthA;
 import org.springframework.stereotype.Component;
@@ -39,8 +38,6 @@ public class DomainService {
 
 	private final MenuGateway menuGateway;
 
-	private final TenantGateway tenantGateway;
-
 	private final OssLogGateway authOssLogGateway;
 
 	private final CaptchaGateway captchaGateway;
@@ -52,10 +49,7 @@ public class DomainService {
 	public void createCaptcha(AuthA authA) {
 		// 校验验证码参数
 		authA.checkCaptchaParam();
-		// 获取租户ID
-		authA.getTenantId(() -> tenantGateway.getTenantId(authA.getUserV().tenantCode()));
-		// 校验租户ID
-		authA.checkTenantId();
+
 		// 保存验证码
 		captchaGateway.createCaptcha(authA.getCaptchaCacheKeyBySend(), authA.getCaptchaBySend());
 	}
@@ -63,10 +57,6 @@ public class DomainService {
 	public void auth(AuthA authA) {
 		// 校验认证参数
 		authA.checkAuthParam();
-		// 获取租户ID
-		authA.getTenantId(() -> tenantGateway.getTenantId(authA.getUserV().tenantCode()));
-		// 校验租户ID
-		authA.checkTenantId();
 		// 校验验证码
 		authA.checkCaptcha();
 		// 获取用户信息

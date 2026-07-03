@@ -15,25 +15,15 @@
  *
  */
 
-package org.laokou.auth.gatewayimpl;
+package org.laokou.iot.productCategory.model.validator;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.auth.gateway.TenantGateway;
-import org.laokou.common.tenant.mapper.TenantMapper;
-import org.springframework.stereotype.Component;
+import org.laokou.iot.productCategory.model.ProductCategoryA;
 
 /**
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class TenantGatewayImpl implements TenantGateway {
+public interface ProductCategoryParamValidator {
 
-	private final TenantMapper tenantMapper;
-
-	@Override
-	public Long getTenantId(String tenantCode) {
-		return tenantMapper.selectIdByCode(tenantCode);
-	}
+	void validateProductCategory(ProductCategoryA productCategoryA);
 
 }

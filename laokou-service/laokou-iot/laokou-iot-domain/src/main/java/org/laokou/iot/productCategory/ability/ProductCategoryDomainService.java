@@ -19,7 +19,7 @@ package org.laokou.iot.productCategory.ability;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.iot.productCategory.gateway.ProductCategoryGateway;
-import org.laokou.iot.productCategory.model.ProductCategoryE;
+import org.laokou.iot.productCategory.model.ProductCategoryA;
 import org.springframework.stereotype.Component;
 
 /**
@@ -34,12 +34,12 @@ public class ProductCategoryDomainService {
 
 	private final ProductCategoryGateway productCategoryGateway;
 
-	public void createProductCategory(ProductCategoryE productCategoryE) {
-		productCategoryGateway.createProductCategory(productCategoryE);
+	public void createProductCategory(ProductCategoryA productCategoryA) {
+		productCategoryGateway.createProductCategory(productCategoryA);
 	}
 
-	public void updateProductCategory(ProductCategoryE productCategoryE) {
-		productCategoryGateway.updateProductCategory(productCategoryE);
+	public void updateProductCategory(ProductCategoryA productCategoryA) {
+		productCategoryGateway.updateProductCategory(productCategoryA);
 	}
 
 	public void deleteProductCategory(Long[] ids) {

@@ -44,7 +44,7 @@ public class ProductCategoryTreeListQryExe {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.IOT);
 			List<ProductCategoryDO> list = productCategoryMapper.selectObjectList(qry);
-			ProductCategoryCO productCategory = TreeUtils.buildTreeNode(ProductCategoryConvertor.toClientObjs(list),
+			ProductCategoryCO productCategory = TreeUtils.buildTreeNode(ProductCategoryConvertor.toClientObjects(list),
 					ProductCategoryCO.class);
 			return Result.ok(productCategory.getChildren());
 		}

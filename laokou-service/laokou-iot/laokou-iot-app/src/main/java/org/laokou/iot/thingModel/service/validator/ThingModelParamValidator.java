@@ -18,6 +18,7 @@
 package org.laokou.iot.thingModel.service.validator;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import org.laokou.common.context.util.UserUtils;
 import org.laokou.common.core.util.CollectionExtUtils;
 import org.laokou.common.core.util.RegexUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
@@ -57,17 +58,19 @@ final class ThingModelParamValidator {
 		if (!StringUtils.hasText(code) || !StringUtils.hasText(name)) {
 			return ParamValidator.invalidate("物模型编码和物模型名称不能为空");
 		}
-		if (RegexUtils.matches("^[a-z]+(?:_[a-z]+)*$", code)) {
+		if (!RegexUtils.matches("^[a-z]+(?:_[a-z]+)*$", code)) {
 			return ParamValidator.invalidate("物模型编码只能使用小写字母和下划线，必须以小写字母开头和结尾，下划线不能连续");
 		}
 		if (thingModelA.isSave() && thingModelMapper.selectCount(Wrappers.lambdaQuery(ThingModelDO.class)
 			.eq(ThingModelDO::getCode, code)
-			.eq(ThingModelDO::getName, name)) > 0) {
+			.eq(ThingModelDO::getName, name)
+			.eq(ThingModelDO::getTenantId, UserUtils.getTenantId())) > 0) {
 			return ParamValidator.invalidate("物模型编码和物模型名称已存在");
 		}
 		if (thingModelA.isModify() && thingModelMapper.selectCount(Wrappers.lambdaQuery(ThingModelDO.class)
 			.eq(ThingModelDO::getCode, code)
 			.eq(ThingModelDO::getName, name)
+			.eq(ThingModelDO::getTenantId, UserUtils.getTenantId())
 			.ne(ThingModelDO::getId, thingModelE.getId())) > 0) {
 			return ParamValidator.invalidate("物模型编码和物模型名称已存在");
 		}

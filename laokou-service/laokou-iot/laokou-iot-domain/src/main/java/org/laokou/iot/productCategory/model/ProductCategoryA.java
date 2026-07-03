@@ -18,10 +18,18 @@
 package org.laokou.iot.productCategory.model;
 
 import lombok.Getter;
-import lombok.Setter;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.IdGenerator;
+import org.laokou.common.i18n.common.ValidateName;
+import org.laokou.common.i18n.dto.AggregateRoot;
+import org.laokou.common.i18n.util.InstantUtils;
+import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.iot.productCategory.model.entity.ProductCategoryE;
+import org.laokou.iot.productCategory.model.validator.ProductCategoryParamValidator;
+import org.laokou.iot.thingModel.model.enums.OperateType;
 import org.springframework.beans.factory.annotation.Qualifier;
+
+import java.time.Instant;
 
 /**
  *
@@ -30,43 +38,15 @@ import org.springframework.beans.factory.annotation.Qualifier;
  * @author laokou
  */
 @Entity
-@Setter
 @Getter
-public class ProductCategoryE {
+public class ProductCategoryA extends AggregateRoot implements ValidateName {
 
-	private Long id;
-
-	/**
-	 * 产品类别名称.
-	 */
-	@Getter
-	@Setter
-	private String name;
+	private ProductCategoryE productCategoryE;
 
 	/**
-	 * 产品类别排序.
+	 * 操作类型【保存/修改】.
 	 */
-	@Getter
-	@Setter
-	private Integer sort;
-
-	/**
-	 * 产品类别父节点ID.
-	 */
-	@Getter
-	@Setter
-	private Long pid;
-
-	/**
-	 * 产品类别备注.
-	 */
-	@Getter
-	@Setter
-	private String remark;
-
-	@Setter
-	@Getter
-	private ProductCategoryOperateTypeEnum productCategoryOperateTypeEnum;
+	private OperateType operateType;
 
 	private final ProductCategoryParamValidator saveProductCategoryParamValidator;
 
@@ -74,26 +54,46 @@ public class ProductCategoryE {
 
 	private final IdGenerator idGenerator;
 
-	public ProductCategoryE(
+	public ProductCategoryA(IdGenerator idGenerator,
 			@Qualifier("saveProductCategoryParamValidator") ProductCategoryParamValidator saveProductCategoryParamValidator,
-			@Qualifier("modifyProductCategoryParamValidator") ProductCategoryParamValidator modifyProductCategoryParamValidator,
-			IdGenerator idGenerator) {
-		super();
+			@Qualifier("modifyProductCategoryParamValidator") ProductCategoryParamValidator modifyProductCategoryParamValidator) {
+		this.idGenerator = idGenerator;
 		this.saveProductCategoryParamValidator = saveProductCategoryParamValidator;
 		this.modifyProductCategoryParamValidator = modifyProductCategoryParamValidator;
-		this.idGenerator = idGenerator;
 	}
 
-	public Long getPrimaryKey() {
-		return idGenerator.getId();
+	public ProductCategoryA create(ProductCategoryE productCategoryE) {
+		this.productCategoryE = productCategoryE;
+		Long primaryKey = this.productCategoryE.getId();
+		super.createTime = InstantUtils.now();
+		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : idGenerator.getId();
+		this.operateType = ObjectUtils.isNotNull(primaryKey) ? OperateType.MODIFY : OperateType.SAVE;
+		return this;
 	}
 
 	public void checkProductCategoryParam() {
-		switch (productCategoryOperateTypeEnum) {
+		switch (operateType) {
 			case SAVE -> saveProductCategoryParamValidator.validateProductCategory(this);
 			case MODIFY -> modifyProductCategoryParamValidator.validateProductCategory(this);
 			default -> throw new UnsupportedOperationException("Unsupported operation");
 		}
+	}
+
+	public boolean isModify() {
+		return ObjectUtils.equals(OperateType.MODIFY, this.operateType);
+	}
+
+	public boolean isSave() {
+		return ObjectUtils.equals(OperateType.SAVE, this.operateType);
+	}
+
+	public Instant getCreateTime() {
+		return isSave() ? super.createTime : null;
+	}
+
+	@Override
+	public String getValidateName() {
+		return "ProductCategory";
 	}
 
 }

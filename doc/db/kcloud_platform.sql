@@ -773,13 +773,13 @@ CREATE TABLE "public"."sys_user" (
   "dept_id" int8 NOT NULL DEFAULT 1,
   "password" varchar(100) NOT NULL,
   "super_admin" int2 NOT NULL DEFAULT 0,
-  "mail" varchar(200),
-  "mobile" varchar(60),
+  "mail" varchar(200) NOT NULL,
+  "mobile" varchar(60) NOT NULL,
   "status" int2 NOT NULL DEFAULT 0,
   "avatar" int8 NOT NULL DEFAULT 1,
-  "username_phrase" varchar(1600),
-  "mail_phrase" varchar(1600),
-  "mobile_phrase" varchar(150),
+  "username_phrase" varchar(1600) NOT NULL,
+  "mail_phrase" varchar(1600) NOT NULL,
+  "mobile_phrase" varchar(150) NOT NULL,
   "username" varchar(200) NOT NULL
 )
 ;
@@ -806,17 +806,22 @@ COMMENT ON TABLE "public"."sys_user" IS '用户';
 
 ALTER TABLE "public"."sys_user" ADD CONSTRAINT "sys_user_pkey" PRIMARY KEY ("id");
 
-CREATE INDEX "sys_user_username_tenantId_idx" ON "public"."sys_user" USING btree (
-	"username",
-	"tenant_id"
+CREATE unique INDEX "sys_user_username_idx" ON "public"."sys_user" USING btree (
+	"username"
 );
-COMMENT ON INDEX "public"."sys_user_username_tenantId_idx" IS '用户名_租户ID_索引';
+COMMENT ON INDEX "public"."sys_user_username_idx" IS '用户名_唯一索引';
+
+CREATE unique INDEX "sys_user_mobile_idx" ON "public"."sys_user" USING btree (
+	"username"
+);
+COMMENT ON INDEX "public"."sys_user_mobile_idx" IS '手机号_唯一索引';
+
+CREATE unique INDEX "sys_user_mail_idx" ON "public"."sys_user" USING btree (
+	"mail"
+);
+COMMENT ON INDEX "public"."sys_user_mail_idx" IS '邮箱_唯一索引';
 
 INSERT INTO "public"."sys_user" VALUES (1, 1, 1, '2022-01-01 20:13:11+08', '2024-04-29 23:52:52+08', 0, 0, 1,1, '{bcrypt}$2a$10$bGXM7u58FPMDanMyqvZ7Reb9sqJiUTCdAcb1wN5IIkFa8nYOMOioK', 1, 'Ylh4QTF0YmdEWWJR2TEQZjlR4rzAz/73MsL8gxlNSv+/j3L7Sxne4hFAP+W9', 'Ylh4QTF0YmdEWWJR2j0YYjxS577BzIgIGdpZbU2I7EIUTVaxqvWu', 0, 1, 'Ylh4QTF0YmdEWWJRimFMPAPt8S6U+J8eEhIZiErF69o=~Ylh4QTF0YmdEWWJRj2hIO/7mcHvbRltmR9cojv2C2jE=', 'Ylh4QTF0YmdEWWJR2TEQZt/I7tdiOALwVrZXFxK5boI=~Ylh4QTF0YmdEWWJR3zQSZDEzo/mQ2Kt2ooeStwwy1DM=~Ylh4QTF0YmdEWWJR2jYQYvkuHP0mNYNzkmUPAkpRnNs=~Ylh4QTF0YmdEWWJR2DQWY04zb3FkQTCmuPFi97WrI08=~Ylh4QTF0YmdEWWJR2jIXZToqPakPCzCwmjz4XLwksmM=~Ylh4QTF0YmdEWWJR3DMRYRY/bEOz79QYxdiB5xtGMoU=~Ylh4QTF0YmdEWWJR3TUVYYBJ7iU6aLpsTeXBwNhb1lk=~Ylh4QTF0YmdEWWJR2zEVFRAKn1yHzG9spDDE8afQ1Ls=~Ylh4QTF0YmdEWWJR3zFhJLv17Ndjz3ymZABhpoKJPCE=~Ylh4QTF0YmdEWWJR30VQJOy8KF8pYc2r4yJkfOWIWnw=~Ylh4QTF0YmdEWWJRq3RQe8Vs9XmHQG6AkHOCtSwt6cA=~Ylh4QTF0YmdEWWJRmnQPNipHlgS+8wcVPz+EC5gdeeM=~Ylh4QTF0YmdEWWJRmitCOoJ+zG0CpSympji+U7NWxUw=~Ylh4QTF0YmdEWWJRxWZOOE8J8sq9k7iJhdxbniMpw9I=', 'Ylh4QTF0YmdEWWJR2j0YOQJF4W0Ofxd/k/LFC4GzoQ==~Ylh4QTF0YmdEWWJR3DEVZk3r4C1hv2eOukkPSzTOffA=~Ylh4QTF0YmdEWWJR2TAWY8HwM9jwPxZFMFE0pFibp9k=', 'Ylh4QTF0YmdEWWJRimFMPGaJmldyuWIb9BNmUN1ULMI7');
-INSERT INTO "public"."sys_user" VALUES (5, 1, 1, '2022-06-16 00:48:28+08', '2024-04-29 23:52:52+08', 0, 1, 1,1, '{bcrypt}$2a$10$RX9zW6rUMbGjybnlW77FWezhgbH0ZsFinGtKaoOsbovkEgij7kzNC', 0, NULL, NULL, 0, 1, 'Ylh4QTF0YmdEWWJRh2ROPuSvWyrTvf2MaPrw8GpjTBM=~Ylh4QTF0YmdEWWJRimpKYMTCzQiEJvp5Ar80c6jh1Wg=', NULL, NULL, 'Ylh4QTF0YmdEWWJRh2ROPj1LULONpfXTh6mWUOIX9SFO');
-INSERT INTO "public"."sys_user" VALUES (2, 1, 1, '2023-03-09 13:52:04+08', '2024-04-29 23:52:52+08', 0, 1, 1,1, '{bcrypt}$2a$10$J0DMR5098R33H6F.s5H/deeMLyo/j4yyzZgAn6gkyC0j537G7veKG', 0, NULL, NULL, 0, 1, 'Ylh4QTF0YmdEWWJRn2BSIeyAJZxxvGa9Rma06h4QOnQ=', NULL, NULL, 'Ylh4QTF0YmdEWWJRn2BSIeyAJZxxvGa9Rma06h4QOnQ=');
-INSERT INTO "public"."sys_user" VALUES (3, 1, 1, '2022-01-31 11:29:35+08', '2024-04-29 23:52:52+08', 0, 0, 1,1, '{bcrypt}$2a$10$ysAmruc249SiAUpIqQzrpeM8wcdpgIJ6nEdtsXQnDrBgvLZkt7tJ6', 0, NULL, NULL, 0, 1, 'Ylh4QTF0YmdEWWJRgGpUJiNPIjdI2XP1ZWEFUmonJDs=~Ylh4QTF0YmdEWWJRhHBSPSMrKeV2KZK27WU4BJGux6Q=~Ylh4QTF0YmdEWWJRnnZJYJsjtsAm+CPpK1W9SDWk46s=', NULL, NULL, 'Ylh4QTF0YmdEWWJRgGpUJmBT8fGpMah42bhHMZ9Aapk+jQ==');
-INSERT INTO "public"."sys_user" VALUES (4, 1, 1, '2022-06-16 00:33:39+08', '2024-04-29 23:52:52+08', 0, 0, 1,1, '{bcrypt}$2a$10$Wac.3sTE4A4pi/Zy6B/HWOstwLFjOH9g8Qrf4gHiBLa/avKAVcwpG', 0, NULL, NULL, 0, 1, 'Ylh4QTF0YmdEWWJRnHBMPWPaKJGlV652rAqtN8Q9MYg=~Ylh4QTF0YmdEWWJRnmhJYJS/YXrtS/sF9dNgHyAmxEI=', NULL, NULL, 'Ylh4QTF0YmdEWWJRnHBMPT3MJcA20x+AfW1mDSW5q1zV');
 
 -- ----------------------------
 -- -------------用户消息------------

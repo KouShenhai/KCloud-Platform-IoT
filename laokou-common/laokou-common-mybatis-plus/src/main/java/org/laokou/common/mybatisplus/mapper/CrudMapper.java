@@ -41,4 +41,6 @@ public interface CrudMapper<ID, VERSION, DO> extends BaseMapper<DO> {
 
 	List<DO> selectObjectList(@Param(PageQuery.PAGE_QUERY) PageQuery pageQuery);
 
+	void deleteObjectByIds(@Param("ids") List<Long> ids);
+
 }

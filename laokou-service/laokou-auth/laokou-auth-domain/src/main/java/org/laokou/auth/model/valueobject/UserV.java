@@ -30,12 +30,10 @@ import java.util.Set;
  * @param mail 邮箱.
  * @param mobile 手机号.
  * @param avatar 头像.
- * @param tenantId 租户ID.
- * @param tenantCode 租户编码.
  * @param permissions 权限标识集合.
  * @param dataScopes 数据权限集合.
  */
 @Builder(toBuilder = true)
-public record UserV(String username, String password, String avatar, String mail, String mobile, String tenantCode,
-		Long tenantId, Set<String> permissions, Set<String> dataScopes) {
+public record UserV(String username, String password, String avatar, String mail, String mobile,
+		Set<String> permissions, Set<String> dataScopes) {
 }

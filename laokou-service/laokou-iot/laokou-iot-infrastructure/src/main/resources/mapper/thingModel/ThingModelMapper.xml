@@ -79,4 +79,11 @@
     where id = #{id}
   </select>
 
+  <delete id="deleteObjectByIds">
+    delete from iot_thing_model where id in
+    <foreach collection="ids" item="item" separator="," open="(" close=")">
+      #{item}
+    </foreach>
+  </delete>
+
 </mapper>

@@ -26,11 +26,9 @@ import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.IdGenerator;
 import org.laokou.common.i18n.common.ValidateName;
-import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.i18n.util.StringExtUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.StringUtils;
@@ -164,9 +162,6 @@ public class UserA extends AggregateRoot implements ValidateName {
 	}
 
 	private String encryptMobile(String mobile) throws Exception {
-		if (StringExtUtils.isEmpty(mobile)) {
-			return StringConstants.EMPTY;
-		}
 		List<String> list = new ArrayList<>(3);
 		list.add(AESUtils.encrypt(mobile.substring(0, 3)));
 		list.add(AESUtils.encrypt(mobile.substring(3, 7)));
@@ -175,9 +170,6 @@ public class UserA extends AggregateRoot implements ValidateName {
 	}
 
 	private String encryptPhrase(String phrase) throws Exception {
-		if (StringExtUtils.isEmpty(phrase)) {
-			return StringConstants.EMPTY;
-		}
 		List<String> list = new ArrayList<>(30);
 		for (int i = 0; i <= phrase.length() - 4; i++) {
 			list.add(AESUtils.encrypt(phrase.substring(i, i + 4)));

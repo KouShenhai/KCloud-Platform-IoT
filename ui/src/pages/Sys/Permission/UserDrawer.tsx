@@ -153,7 +153,7 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({
 			/>
 
 			{ saveOnly && (<ProFormText.Password
-				initialValue={'laokou123'}
+				initialValue={'123456'}
 				name="password"
 				label={t('sys.user.password')}
 				tooltip={t('sys.user.tooltip.password')}
@@ -170,6 +170,14 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({
 				tooltip={t('sys.user.tooltip.mail')}
 				readonly={readOnly}
 				placeholder={t('sys.user.placeholder.mail')}
+				rules={[
+					{ required: true, message: t('sys.user.required.mail') },
+					{
+						pattern:
+							/^\w+(-+.\w+)*@\w+(-.\w+)*.\w+(-.\w+)*$/,
+						message: t('login.mail.invalid'),
+					},
+				]}
 			/>
 
 			<ProFormText
@@ -179,6 +187,13 @@ export const UserDrawer: React.FC<UserDrawerProps> = ({
 				tooltip={t('sys.user.tooltip.mobile')}
 				readonly={readOnly}
 				placeholder={t('sys.user.placeholder.mobile')}
+				rules={[
+					{ required: true, message: t('sys.user.required.mobile') },
+					{
+						pattern: /^1\d{10}$/,
+						message: t('login.mobile.invalid'),
+					},
+				]}
 			/>
 
 			<ProFormTreeSelect

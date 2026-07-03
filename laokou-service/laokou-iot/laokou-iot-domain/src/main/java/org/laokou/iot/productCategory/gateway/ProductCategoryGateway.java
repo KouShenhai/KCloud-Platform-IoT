@@ -17,7 +17,7 @@
 
 package org.laokou.iot.productCategory.gateway;
 
-import org.laokou.iot.productCategory.model.ProductCategoryE;
+import org.laokou.iot.productCategory.model.ProductCategoryA;
 
 /**
  *
@@ -30,12 +30,12 @@ public interface ProductCategoryGateway {
 	/**
 	 * 新增产品类别.
 	 */
-	void createProductCategory(ProductCategoryE productCategoryE);
+	void createProductCategory(ProductCategoryA productCategoryA);
 
 	/**
 	 * 修改产品类别.
 	 */
-	void updateProductCategory(ProductCategoryE productCategoryE);
+	void updateProductCategory(ProductCategoryA productCategoryA);
 
 	/**
 	 * 删除产品类别.

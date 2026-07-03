@@ -33,11 +33,6 @@ public final class OAuth2Constants {
 	public static final String DEPT_NOT_FOUND = "B_OAuth2_DeptNotFound";
 
 	/**
-	 * 租户不存在.
-	 */
-	public static final String TENANT_NOT_FOUND = "B_OAuth2_TenantNotFound";
-
-	/**
 	 * 令牌生成器无法生成刷新令牌.
 	 */
 	public static final String GENERATE_REFRESH_TOKEN_FAIL = "B_OAuth2_GenerateRefreshTokenFail";
@@ -121,11 +116,6 @@ public final class OAuth2Constants {
 	 * 邮箱不能为空.
 	 */
 	public static final String MAIL_REQUIRE = "P_OAuth2_MailIsNull";
-
-	/**
-	 * 租户编码不能为空.
-	 */
-	public static final String TENANT_CODE_REQUIRE = "P_OAuth2_TenantCodeIsNull";
 
 	/**
 	 * 邮箱错误.

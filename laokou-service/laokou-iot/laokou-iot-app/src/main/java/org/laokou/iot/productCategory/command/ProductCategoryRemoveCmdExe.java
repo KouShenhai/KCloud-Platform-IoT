@@ -19,6 +19,7 @@ package org.laokou.iot.productCategory.command;
 
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.laokou.common.tenant.constant.DSConstants;
@@ -32,6 +33,7 @@ import org.springframework.stereotype.Component;
  *
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class ProductCategoryRemoveCmdExe {
@@ -47,6 +49,10 @@ public class ProductCategoryRemoveCmdExe {
 			// 校验参数
 			transactionalUtils
 				.executeInTransaction(() -> productCategoryDomainService.deleteProductCategory(cmd.getIds()));
+		}
+		catch (Exception ex) {
+			log.error("删除产品类别失败，错误信息：{}", ex.getMessage(), ex);
+			throw ex;
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();
