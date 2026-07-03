@@ -42,7 +42,7 @@ spring:
             validation-timeout: 3000
             idle-timeout: 180000
             max-lifetime: 1800000
-            maximum-pool-size: 60
+            maximum-pool-size: 30
             minimum-idle: 10
             is-read-only: false
         domain:
@@ -57,7 +57,7 @@ spring:
             validation-timeout: 3000
             idle-timeout: 180000
             max-lifetime: 1800000
-            maximum-pool-size: 60
+            maximum-pool-size: 30
             minimum-idle: 10
             is-read-only: false
         iot:
@@ -72,7 +72,7 @@ spring:
             validation-timeout: 3000
             idle-timeout: 180000
             max-lifetime: 1800000
-            maximum-pool-size: 60
+            maximum-pool-size: 30
             minimum-idle: 10
             is-read-only: false
   data:
