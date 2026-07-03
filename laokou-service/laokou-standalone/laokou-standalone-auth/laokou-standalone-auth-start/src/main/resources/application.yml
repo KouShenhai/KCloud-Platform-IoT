@@ -78,10 +78,37 @@ spring:
   # security
   security:
     oauth2:
+      client:
+        registration:
+          default:
+            client-id: ${spring.security.oauth2.authorization-server.client.default.registration.client-id}
+            client-secret: FpHwIfw4wY92dO
+            client-name: OAuth2.1 M2M认证客户端
+            authorization-grant-type: client_credentials
+            client-authentication-method: client_secret_basic
+            scope:
+              - read
+            provider: local
+        provider:
+          local:
+            token-uri: http://127.0.0.1:${server.port}${server.servlet.context-path}${spring.security.oauth2.authorization-server.endpoint.token-uri}
       authorization-server:
         enabled: true
         # 多租户
         multiple-issuers-allowed: false
+        endpoint:
+          authorization-uri: /v1/oauth2/authorize
+          device-authorization-uri: /v1/oauth2/device_authorization
+          device-verification-uri: /v1/oauth2/device_verification
+          token-uri: /v1/oauth2/token
+          jwk-set-uri: /v1/oauth2/jwks
+          token-revocation-uri: /v1/oauth2/revoke
+          token-introspection-uri: /v1/oauth2/introspect
+          pushed-authorization-request-uri: /v1/oauth2/par
+          oidc:
+            logout-uri: /v1/oidc/connect/logout
+            client-registration-uri: /v1/oidc/connect/register
+            user-info-uri: /v1/oidc/userinfo
         client:
           default:
             token:
