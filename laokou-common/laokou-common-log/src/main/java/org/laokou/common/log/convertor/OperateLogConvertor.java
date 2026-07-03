@@ -98,14 +98,14 @@ public final class OperateLogConvertor {
 		operateLogDO.setOperator(operateEvent.getOperator());
 		operateLogDO.setServiceId(operateEvent.getServiceId());
 		operateLogDO.setServiceAddress(operateEvent.getServiceAddress());
-		operateLogDO.setStackTrace(operateEvent.getStackTrace());
+		operateLogDO.setStackTrace(truncate(operateEvent.getStackTrace(), 5000));
 		operateLogDO.setIpAddress(operateEvent.getIpAddress());
 		operateLogDO.setProfile(operateEvent.getProfile());
 		operateLogDO.setMethodName(operateEvent.getMethodName());
 		operateLogDO.setRequestParams(operateEvent.getRequestParams());
 		operateLogDO.setStatus(operateEvent.getStatus());
 		operateLogDO.setCostTime(operateEvent.getCostTime());
-		operateLogDO.setErrorMessage(truncate(operateEvent.getErrorMessage()));
+		operateLogDO.setErrorMessage(truncate(operateEvent.getErrorMessage(), 2000));
 		operateLogDO.setId(operateEvent.getId());
 		operateLogDO.setTenantId(operateEvent.getTenantId());
 		operateLogDO.setCreator(operateEvent.getCreator());
@@ -116,11 +116,11 @@ public final class OperateLogConvertor {
 		return operateLogDO;
 	}
 
-	private static String truncate(String str) {
+	private static String truncate(String str, int length) {
 		if (!StringExtUtils.isNotEmpty(str)) {
 			return null;
 		}
-		return str.length() > 2000 ? str.substring(0, 2000) : str;
+		return str.length() > length ? str.substring(0, length) : str;
 	}
 
 }

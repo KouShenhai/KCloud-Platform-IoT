@@ -34,5 +34,6 @@ import java.util.Set;
  * @param dataScopes 数据权限集合.
  */
 @Builder(toBuilder = true)
-public record UserV(String username, String password, String avatar, String mail, String mobile, Set<String> permissions, Set<String> dataScopes) {
+public record UserV(String username, String password, String avatar, String mail, String mobile,
+		Set<String> permissions, Set<String> dataScopes) {
 }

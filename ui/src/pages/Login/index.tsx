@@ -11,7 +11,6 @@ import {
 	MobileOutlined,
 	QqOutlined,
 	SafetyCertificateOutlined,
-	TeamOutlined,
 	UserOutlined,
 	WechatOutlined,
 } from '@ant-design/icons';

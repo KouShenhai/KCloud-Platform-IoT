@@ -535,15 +535,18 @@ class DomainServiceTest {
 	}
 
 	private UserV createUserVByUsernamePasswordWithUsernameNotFound() throws Exception {
-		return new UserV(AESUtils.encrypt("test"), this.password, null, StringConstants.EMPTY, StringConstants.EMPTY, tenantId, null, null);
+		return new UserV(AESUtils.encrypt("test"), this.password, null, StringConstants.EMPTY, StringConstants.EMPTY,
+				tenantId, null, null);
 	}
 
 	private UserV createUserVByMail() throws Exception {
-		return new UserV(StringConstants.EMPTY, null, null, AESUtils.encrypt(this.mail), StringConstants.EMPTY, tenantId, null, null);
+		return new UserV(StringConstants.EMPTY, null, null, AESUtils.encrypt(this.mail), StringConstants.EMPTY,
+				tenantId, null, null);
 	}
 
 	private UserV createUserVByMobile() throws Exception {
-		return new UserV(StringConstants.EMPTY, null, null, StringConstants.EMPTY, AESUtils.encrypt(this.mobile), tenantId, null, null);
+		return new UserV(StringConstants.EMPTY, null, null, StringConstants.EMPTY, AESUtils.encrypt(this.mobile),
+				tenantId, null, null);
 	}
 
 	private UserV createUserVByTest() throws Exception {
@@ -582,7 +585,8 @@ class DomainServiceTest {
 
 	}
 
-	private record UsernamePasswordAuthParam(String uuid, String captcha, String username, String password, String grantType) {
+	private record UsernamePasswordAuthParam(String uuid, String captcha, String username, String password,
+			String grantType) {
 	}
 
 	private record MobileAuthParam(String mobile, String code, String grantType) {
@@ -594,7 +598,8 @@ class DomainServiceTest {
 	private record TestAuthParam(String username, String password, String grantType) {
 	}
 
-	private record AuthorizationCodAuthParam(String uuid, String captcha, String username, String password, String grantType) {
+	private record AuthorizationCodAuthParam(String uuid, String captcha, String username, String password,
+			String grantType) {
 	}
 
 }

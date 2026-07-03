@@ -49,7 +49,7 @@ final class DictItemParamValidator {
 		if (StringExtUtils.isEmpty(code) || StringExtUtils.isEmpty(name)) {
 			return ParamValidator.invalidate("字典项编码和字典项名称不能为空");
 		}
-		if (RegexUtils.matches("^[a-z]+(?:_[a-z]+)*$", code)) {
+		if (!RegexUtils.matches("^[a-z]+(?:_[a-z]+)*$", code)) {
 			return ParamValidator.invalidate("字典项编码只能使用小写字母和下划线，必须以小写字母开头和结尾，下划线不能连续");
 		}
 		if (dictItemA.isSave() && dictItemMapper.selectCount(Wrappers.lambdaQuery(DictItemDO.class)
