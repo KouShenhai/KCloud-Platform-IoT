@@ -138,8 +138,6 @@ class DomainServiceTest {
 
 	private final String mobile = "18888888888";
 
-	private final Long tenantId = 1L;
-
 	@Test
 	@DisplayName("Test username password auth success")
 	void test_auth_usernamePassword_success() throws Exception {
@@ -531,32 +529,32 @@ class DomainServiceTest {
 
 	private UserV createUserVByUsernamePassword() throws Exception {
 		return new UserV(AESUtils.encrypt(this.username), this.password, null, StringConstants.EMPTY,
-				StringConstants.EMPTY, tenantId, null, null);
+				StringConstants.EMPTY, null, null);
 	}
 
 	private UserV createUserVByUsernamePasswordWithUsernameNotFound() throws Exception {
 		return new UserV(AESUtils.encrypt("test"), this.password, null, StringConstants.EMPTY, StringConstants.EMPTY,
-				tenantId, null, null);
+				null, null);
 	}
 
 	private UserV createUserVByMail() throws Exception {
-		return new UserV(StringConstants.EMPTY, null, null, AESUtils.encrypt(this.mail), StringConstants.EMPTY,
-				tenantId, null, null);
+		return new UserV(StringConstants.EMPTY, null, null, AESUtils.encrypt(this.mail), StringConstants.EMPTY, null,
+				null);
 	}
 
 	private UserV createUserVByMobile() throws Exception {
-		return new UserV(StringConstants.EMPTY, null, null, StringConstants.EMPTY, AESUtils.encrypt(this.mobile),
-				tenantId, null, null);
+		return new UserV(StringConstants.EMPTY, null, null, StringConstants.EMPTY, AESUtils.encrypt(this.mobile), null,
+				null);
 	}
 
 	private UserV createUserVByTest() throws Exception {
 		return new UserV(AESUtils.encrypt(this.username), this.password, null, StringConstants.EMPTY,
-				StringConstants.EMPTY, tenantId, null, null);
+				StringConstants.EMPTY, null, null);
 	}
 
 	private UserV createUserVByAuthorizationCode() throws Exception {
 		return new UserV(AESUtils.encrypt(this.username), this.password, null, StringConstants.EMPTY,
-				StringConstants.EMPTY, tenantId, null, null);
+				StringConstants.EMPTY, null, null);
 	}
 
 	private UserE createUserE() {
@@ -566,7 +564,7 @@ class DomainServiceTest {
 			.username(this.username)
 			.password(this.password)
 			.avatar(1L)
-			.tenantId(tenantId)
+			.tenantId(1L)
 			.mail(this.mail)
 			.mobile(this.mobile)
 			.deptId(1L)
