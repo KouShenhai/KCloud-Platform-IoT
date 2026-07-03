@@ -32,7 +32,6 @@ import org.laokou.auth.model.exception.CaptchaErrorException;
 import org.laokou.auth.model.exception.CaptchaExpiredException;
 import org.laokou.auth.model.exception.DeptNotFoundException;
 import org.laokou.auth.model.exception.PasswordErrorException;
-import org.laokou.auth.model.exception.TenantNotFoundException;
 import org.laokou.auth.model.exception.UserDisabledException;
 import org.laokou.auth.model.exception.UserForbiddenException;
 import org.laokou.auth.model.function.HttpRequest;
@@ -236,7 +235,6 @@ public final class AuthA extends AggregateRoot implements ValidateName {
 	public AuthA createCaptchaVBySend(String uuid, String tag, String tenantCode) {
 		this.sendCaptchaType = SendCaptchaType.getByCode(tag);
 		this.captchaV = CaptchaV.builder().uuid(uuid).build();
-		this.userV = UserV.builder().tenantCode(tenantCode).build();
 		return create();
 	}
 
@@ -247,10 +245,6 @@ public final class AuthA extends AggregateRoot implements ValidateName {
 
 	public String getCaptchaCacheKeyBySend() {
 		return sendCaptchaType.getCaptchaCacheKey(this.captchaV.uuid());
-	}
-
-	public void getTenantId(Supplier<Long> supplier) {
-		this.userV = this.userV.toBuilder().tenantId(supplier.get()).build();
 	}
 
 	public void getUserInfo(UserE userE) {
@@ -304,12 +298,6 @@ public final class AuthA extends AggregateRoot implements ValidateName {
 			case AUTHORIZATION_CODE -> this.authorizationCodeAuthParamValidator.validateAuth(this);
 			case TEST -> this.testAuthParamValidator.validateAuth(this);
 			default -> throw new UnsupportedOperationException("Unsupported grant type");
-		}
-	}
-
-	public void checkTenantId() {
-		if (ObjectUtils.isNull(this.userV.tenantId())) {
-			throw new TenantNotFoundException(OAuth2Constants.TENANT_NOT_FOUND);
 		}
 	}
 
@@ -428,11 +416,9 @@ public final class AuthA extends AggregateRoot implements ValidateName {
 		try {
 			String username = RSAUtils.decryptByPrivateKey(getParameterValue(Constants.USERNAME));
 			String password = RSAUtils.decryptByPrivateKey(getParameterValue(Constants.PASSWORD));
-			String tenantCode = getParameterValue(Constants.TENANT_CODE);
 			return UserV.builder()
 				.username(AESUtils.encrypt(username))
 				.password(password)
-				.tenantCode(tenantCode)
 				.mail(StringConstants.EMPTY)
 				.mobile(StringConstants.EMPTY)
 				.build();
@@ -454,11 +440,9 @@ public final class AuthA extends AggregateRoot implements ValidateName {
 		try {
 			String username = getParameterValue(Constants.USERNAME);
 			String password = getParameterValue(Constants.PASSWORD);
-			String tenantCode = getParameterValue(Constants.TENANT_CODE);
 			return UserV.builder()
 				.username(AESUtils.encrypt(username))
 				.password(password)
-				.tenantCode(tenantCode)
 				.mail(StringConstants.EMPTY)
 				.mobile(StringConstants.EMPTY)
 				.build();
@@ -476,7 +460,6 @@ public final class AuthA extends AggregateRoot implements ValidateName {
 		try {
 			return UserV.builder()
 				.username(StringConstants.EMPTY)
-				.tenantCode(getParameterValue(Constants.TENANT_CODE))
 				.mail(StringConstants.EMPTY)
 				.mobile(AESUtils.encrypt(this.captchaV.uuid()))
 				.build();
@@ -494,7 +477,6 @@ public final class AuthA extends AggregateRoot implements ValidateName {
 		try {
 			return UserV.builder()
 				.username(StringConstants.EMPTY)
-				.tenantCode(getParameterValue(Constants.TENANT_CODE))
 				.mail(AESUtils.encrypt(this.captchaV.uuid()))
 				.mobile(StringConstants.EMPTY)
 				.build();

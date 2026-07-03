@@ -33,7 +33,6 @@
     ,dept_id
     from sys_user
     <where>
-      and del_flag = 0
       <if test="user.username != null and user.username != ''">
         and username = #{user.username}
       </if>
@@ -43,6 +42,7 @@
       <if test="user.mobile != null and user.mobile != ''">
         and mobile = #{user.mobile}
       </if>
+      and del_flag = 0
     </where>
   </select>
 

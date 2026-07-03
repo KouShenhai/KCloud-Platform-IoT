@@ -535,8 +535,6 @@ export default {
 	'login.mobile': '手机号登录',
 	'login.mail': '邮箱登录',
 	'login.otherWays': '其他登录方式',
-	'login.tenantCode.placeholder': '请输入租户编码',
-	'login.tenantCode.required': '请输入租户编码',
 	'login.username.placeholder': '请输入用户名',
 	'login.username.required': '请输入用户名',
 	'login.password.placeholder': '请输入密码',

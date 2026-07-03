@@ -78,7 +78,6 @@ export default () => {
 					password: encodeURIComponent(
 						encrypt.encrypt(form.password as string),
 					),
-					tenant_code: form.tenant_code,
 					grant_type: USERNAME_PASSWORD.key,
 				};
 			}
@@ -86,14 +85,12 @@ export default () => {
 				return {
 					mail: form.mail,
 					code: form.mail_captcha,
-					tenant_code: form.tenant_code,
 					grant_type: MAIL.key,
 				};
 			case MOBILE.key:
 				return {
 					mobile: form.mobile,
 					code: form.mobile_captcha,
-					tenant_code: form.tenant_code,
 					grant_type: MOBILE.key,
 				};
 		}
@@ -124,7 +121,6 @@ export default () => {
 
 	const sendMailCaptcha = async () => {
 		const param = {
-			tenantCode: formRef?.current?.getFieldValue('tenant_code'),
 			uuid: formRef?.current?.getFieldValue(MAIL.key),
 		};
 		const co = { co: param };
@@ -139,7 +135,6 @@ export default () => {
 
 	const sendMobileCaptcha = async () => {
 		const param = {
-			tenantCode: formRef?.current?.getFieldValue('tenant_code'),
 			uuid: formRef?.current?.getFieldValue(MOBILE.key),
 		};
 		const co = { co: param };
@@ -426,25 +421,6 @@ export default () => {
 						setLoginType(activeKey as LoginType)
 					}
 				></Tabs>
-
-				<ProFormText
-					disabled={loading}
-					name="tenant_code"
-					initialValue={'laokouyun'}
-					fieldProps={{
-						size: 'large',
-						prefix: <TeamOutlined className={'prefixIcon'} />,
-						autoComplete: 'new-password',
-					}}
-					allowClear={true}
-					placeholder={t('login.tenantCode.placeholder')}
-					rules={[
-						{
-							required: true,
-							message: t('login.tenantCode.required'),
-						},
-					]}
-				/>
 
 				{loginType === USERNAME_PASSWORD.key && (
 					<>

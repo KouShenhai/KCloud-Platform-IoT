@@ -535,8 +535,6 @@ export default {
 	'login.mobile': 'Mobile login',
 	'login.mail': 'Mail login',
 	'login.otherWays': 'Other sign-in methods',
-	'login.tenantCode.placeholder': 'Please enter tenant code',
-	'login.tenantCode.required': 'Please enter tenant code',
 	'login.username.placeholder': 'Please enter username',
 	'login.username.required': 'Please enter username',
 	'login.password.placeholder': 'Please enter password',

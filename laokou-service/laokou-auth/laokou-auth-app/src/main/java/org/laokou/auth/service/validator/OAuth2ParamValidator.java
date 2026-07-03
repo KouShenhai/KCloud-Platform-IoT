@@ -79,14 +79,6 @@ final class OAuth2ParamValidator {
 		return ParamValidator.validate();
 	}
 
-	static ParamValidator.Validate validateTenantCode(String tenantCode) {
-		if (StringExtUtils.isEmpty(tenantCode)) {
-			return ParamValidator
-				.invalidate(ValidatorUtils.getMessage(OAuth2Constants.TENANT_CODE_REQUIRE, I18nUtils.getLocale()));
-		}
-		return ParamValidator.validate();
-	}
-
 	static ParamValidator.Validate validateCaptcha(String captcha) {
 		if (StringExtUtils.isEmpty(captcha)) {
 			return ParamValidator

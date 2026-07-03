@@ -76,11 +76,6 @@ public final class Constants {
 	public static final String CODE = "code";
 
 	/**
-	 * 租户编码.
-	 */
-	public static final String TENANT_CODE = "tenant_code";
-
-	/**
 	 * 认证类型.
 	 */
 	public static final String GRANT_TYPE = "grant_type";

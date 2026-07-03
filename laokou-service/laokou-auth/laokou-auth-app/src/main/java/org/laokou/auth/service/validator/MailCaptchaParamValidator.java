@@ -40,8 +40,6 @@ public class MailCaptchaParamValidator implements CaptchaParamValidator {
 		UserV userV = authA.getUserV();
 		CaptchaV captchaV = authA.getCaptchaV();
 		ParamValidator.validate(authA.getValidateName(),
-				// 校验租户编码
-				OAuth2ParamValidator.validateTenantCode(userV.tenantCode()),
 				// 校验邮箱
 				OAuth2ParamValidator.validateMail(captchaV.uuid()));
 	}

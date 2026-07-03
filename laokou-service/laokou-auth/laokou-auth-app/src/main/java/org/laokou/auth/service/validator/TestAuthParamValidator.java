@@ -38,8 +38,6 @@ public class TestAuthParamValidator implements AuthParamValidator {
 	public void validateAuth(AuthA authA) {
 		UserV userV = authA.getUserV();
 		ParamValidator.validate(authA.getValidateName(),
-				// 校验租户编码
-				OAuth2ParamValidator.validateTenantCode(userV.tenantCode()),
 				// 校验用户名
 				OAuth2ParamValidator.validateUsername(userV.username()),
 				// 校验密码

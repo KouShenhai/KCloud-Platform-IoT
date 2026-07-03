@@ -28,7 +28,6 @@ import org.laokou.auth.gateway.DeptGateway;
 import org.laokou.auth.gateway.MenuGateway;
 import org.laokou.auth.gateway.OssLogGateway;
 import org.laokou.auth.gateway.RoleGateway;
-import org.laokou.auth.gateway.TenantGateway;
 import org.laokou.auth.gateway.UserGateway;
 import org.laokou.auth.model.constant.Constants;
 import org.laokou.auth.model.entity.UserE;
@@ -83,9 +82,6 @@ class DomainServiceTest {
 	private MenuGateway menuGateway;
 
 	@MockitoBean
-	private TenantGateway tenantGateway;
-
-	@MockitoBean
 	private CaptchaGateway captchaGateway;
 
 	@MockitoBean
@@ -138,8 +134,6 @@ class DomainServiceTest {
 
 	private final String password = "admin123";
 
-	private final String tenantCode = "laokou";
-
 	private final String mail = "2413176044@qq.com";
 
 	private final String mobile = "18888888888";
@@ -153,7 +147,6 @@ class DomainServiceTest {
 		AuthA usernamePasswordAuth = createAuth().createUsernamePasswordAuth();
 		Assertions.assertThat(usernamePasswordAuth).isNotNull();
 		Assertions.assertThatCode(() -> domainService.auth(usernamePasswordAuth)).doesNotThrowAnyException();
-		Mockito.verify(tenantGateway, Mockito.times(1)).getTenantId(this.tenantCode);
 		Mockito.verify(httpRequest, Mockito.times(1)).getParameterMap();
 		Mockito.verify(captchaValidator, Mockito.times(1))
 			.validateCaptcha(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey(this.uuid), this.captcha);
@@ -177,7 +170,6 @@ class DomainServiceTest {
 		Assertions.assertThat(usernamePasswordAuthParamWithUsernameNotFound).isNotNull();
 		Assertions.assertThatCode(() -> domainService.auth(usernamePasswordAuthParamWithUsernameNotFound))
 			.isInstanceOf(UsernameNotFoundException.class);
-		Mockito.verify(tenantGateway, Mockito.times(1)).getTenantId(this.tenantCode);
 		Mockito.verify(httpRequest, Mockito.times(1)).getParameterMap();
 		Mockito.verify(captchaValidator, Mockito.times(1))
 			.validateCaptcha(RedisKeyUtils.getUsernamePasswordAuthCaptchaKey(this.uuid), this.captcha);
@@ -205,7 +197,6 @@ class DomainServiceTest {
 		AuthA mailAuth = createAuth().createMailAuth();
 		Assertions.assertThat(mailAuth).isNotNull();
 		Assertions.assertThatCode(() -> domainService.auth(mailAuth)).doesNotThrowAnyException();
-		Mockito.verify(tenantGateway, Mockito.times(1)).getTenantId(this.tenantCode);
 		Mockito.verify(httpRequest, Mockito.times(1)).getParameterMap();
 		Mockito.verify(captchaValidator, Mockito.times(1))
 			.validateCaptcha(RedisKeyUtils.getMailAuthCaptchaKey(this.mail), this.captcha);
@@ -237,7 +228,6 @@ class DomainServiceTest {
 		AuthA mobileAuth = createAuth().createMobileAuth();
 		Assertions.assertThat(mobileAuth).isNotNull();
 		Assertions.assertThatCode(() -> domainService.auth(mobileAuth)).doesNotThrowAnyException();
-		Mockito.verify(tenantGateway, Mockito.times(1)).getTenantId(this.tenantCode);
 		Mockito.verify(httpRequest, Mockito.times(1)).getParameterMap();
 		Mockito.verify(captchaValidator, Mockito.times(1))
 			.validateCaptcha(RedisKeyUtils.getMobileAuthCaptchaKey(this.mobile), this.captcha);
@@ -279,7 +269,6 @@ class DomainServiceTest {
 		AuthA testAuth = createAuth().createTestAuth();
 		Assertions.assertThat(testAuth).isNotNull();
 		Assertions.assertThatCode(() -> domainService.auth(testAuth)).doesNotThrowAnyException();
-		Mockito.verify(tenantGateway, Mockito.times(1)).getTenantId(this.tenantCode);
 		Mockito.verify(httpRequest, Mockito.times(1)).getParameterMap();
 		Mockito.verify(passwordValidator, Mockito.times(1)).validatePassword(this.password, this.password);
 		Mockito.verify(userGateway, Mockito.times(1)).getUserProfile(createUserVByTest());
@@ -300,7 +289,6 @@ class DomainServiceTest {
 		AuthA authorizationCodeAuth = createAuth().createAuthorizationCodeAuth();
 		Assertions.assertThat(authorizationCodeAuth).isNotNull();
 		Assertions.assertThatCode(() -> domainService.auth(authorizationCodeAuth)).doesNotThrowAnyException();
-		Mockito.verify(tenantGateway, Mockito.times(1)).getTenantId(this.tenantCode);
 		Mockito.verify(httpRequest, Mockito.times(1)).getParameterMap();
 		Mockito.verify(captchaValidator, Mockito.times(1))
 			.validateCaptcha(RedisKeyUtils.getAuthorizationCodeAuthCaptchaKey(this.uuid), this.captcha);
@@ -333,9 +321,6 @@ class DomainServiceTest {
 			AuthA authA = invocation.getArgument(0);
 			UserV userV = authA.getUserV();
 			CaptchaV captchaV = authA.getCaptchaV();
-			if (StringExtUtils.isEmpty(userV.tenantCode())) {
-				throw new IllegalArgumentException("tenant code must not be empty");
-			}
 			if (StringExtUtils.isEmpty(captchaV.captcha())) {
 				throw new IllegalArgumentException("captcha must not be empty");
 			}
@@ -348,7 +333,6 @@ class DomainServiceTest {
 			return null;
 		}).when(mailAuthParamValidator).validateAuth(Mockito.any());
 		Mockito.when(captchaValidator.validateCaptcha(Mockito.anyString(), Mockito.anyString())).thenReturn(true);
-		Mockito.when(tenantGateway.getTenantId(Mockito.anyString())).thenReturn(1L);
 		Mockito.when(roleGateway.getDataScopes(Mockito.any())).thenReturn(Set.of("self", "custom"));
 		Mockito.when(deptGateway.getDeptIds(Mockito.any(), Mockito.any())).thenReturn(Set.of(1L));
 		Mockito.when(userGateway.getUserProfile(Mockito.any())).thenReturn(createUserE());
@@ -357,7 +341,6 @@ class DomainServiceTest {
 		Map<String, String[]> params = new HashMap<>(4);
 		params.put(Constants.MAIL, new String[] { mailAuthParam.mail() });
 		params.put(Constants.CODE, new String[] { mailAuthParam.code() });
-		params.put(Constants.TENANT_CODE, new String[] { mailAuthParam.tenantCode() });
 		params.put(Constants.GRANT_TYPE, new String[] { mailAuthParam.grantType() });
 		Mockito.when(httpRequest.getParameterMap()).thenReturn(params);
 	}
@@ -368,9 +351,6 @@ class DomainServiceTest {
 			AuthA authA = invocation.getArgument(0);
 			UserV userV = authA.getUserV();
 			CaptchaV captchaV = authA.getCaptchaV();
-			if (StringExtUtils.isEmpty(userV.tenantCode())) {
-				throw new IllegalArgumentException("tenant code must not be empty");
-			}
 			if (StringExtUtils.isEmpty(captchaV.captcha())) {
 				throw new IllegalArgumentException("captcha must not be empty");
 			}
@@ -383,7 +363,6 @@ class DomainServiceTest {
 			return null;
 		}).when(mobileAuthParamValidator).validateAuth(Mockito.any());
 		Mockito.when(captchaValidator.validateCaptcha(Mockito.anyString(), Mockito.anyString())).thenReturn(true);
-		Mockito.when(tenantGateway.getTenantId(Mockito.anyString())).thenReturn(1L);
 		Mockito.when(roleGateway.getDataScopes(Mockito.any())).thenReturn(Set.of("self", "custom"));
 		Mockito.when(deptGateway.getDeptIds(Mockito.any(), Mockito.any())).thenReturn(Set.of(1L));
 		Mockito.when(userGateway.getUserProfile(Mockito.any())).thenReturn(createUserE());
@@ -392,7 +371,6 @@ class DomainServiceTest {
 		Map<String, String[]> params = new HashMap<>(4);
 		params.put(Constants.MOBILE, new String[] { mobileAuthParam.mobile() });
 		params.put(Constants.CODE, new String[] { mobileAuthParam.code() });
-		params.put(Constants.TENANT_CODE, new String[] { mobileAuthParam.tenantCode() });
 		params.put(Constants.GRANT_TYPE, new String[] { mobileAuthParam.grantType() });
 		Mockito.when(httpRequest.getParameterMap()).thenReturn(params);
 	}
@@ -402,9 +380,6 @@ class DomainServiceTest {
 		Mockito.doAnswer(invocation -> {
 			AuthA authA = invocation.getArgument(0);
 			UserV userV = authA.getUserV();
-			if (StringExtUtils.isEmpty(userV.tenantCode())) {
-				throw new IllegalArgumentException("tenant code must not be empty");
-			}
 			if (StringExtUtils.isEmpty(userV.username())) {
 				throw new IllegalArgumentException("username must not be empty");
 			}
@@ -414,7 +389,6 @@ class DomainServiceTest {
 			return null;
 		}).when(testAuthParamValidator).validateAuth(Mockito.any());
 		Mockito.when(passwordValidator.validatePassword(Mockito.anyString(), Mockito.anyString())).thenReturn(true);
-		Mockito.when(tenantGateway.getTenantId(Mockito.anyString())).thenReturn(1L);
 		Mockito.when(roleGateway.getDataScopes(Mockito.any())).thenReturn(Set.of("self", "custom"));
 		Mockito.when(deptGateway.getDeptIds(Mockito.any(), Mockito.any())).thenReturn(Set.of(1L));
 		Mockito.when(userGateway.getUserProfile(Mockito.any())).thenReturn(createUserE());
@@ -423,7 +397,6 @@ class DomainServiceTest {
 		Map<String, String[]> params = new HashMap<>(4);
 		params.put(Constants.USERNAME, new String[] { testAuthParam.username() });
 		params.put(Constants.PASSWORD, new String[] { testAuthParam.password() });
-		params.put(Constants.TENANT_CODE, new String[] { testAuthParam.tenantCode() });
 		params.put(Constants.GRANT_TYPE, new String[] { testAuthParam.grantType() });
 		Mockito.when(httpRequest.getParameterMap()).thenReturn(params);
 	}
@@ -434,9 +407,6 @@ class DomainServiceTest {
 			AuthA authA = invocation.getArgument(0);
 			UserV userV = authA.getUserV();
 			CaptchaV captchaV = authA.getCaptchaV();
-			if (StringExtUtils.isEmpty(userV.tenantCode())) {
-				throw new IllegalArgumentException("tenant code must not be empty");
-			}
 			if (StringExtUtils.isEmpty(captchaV.uuid())) {
 				throw new IllegalArgumentException("uuid must not be empty");
 			}
@@ -453,7 +423,6 @@ class DomainServiceTest {
 		}).when(authorizationCodeAuthParamValidator).validateAuth(Mockito.any());
 		Mockito.when(passwordValidator.validatePassword(Mockito.anyString(), Mockito.anyString())).thenReturn(true);
 		Mockito.when(captchaValidator.validateCaptcha(Mockito.anyString(), Mockito.anyString())).thenReturn(true);
-		Mockito.when(tenantGateway.getTenantId(Mockito.anyString())).thenReturn(1L);
 		Mockito.when(roleGateway.getDataScopes(Mockito.any())).thenReturn(Set.of("self", "custom"));
 		Mockito.when(deptGateway.getDeptIds(Mockito.any(), Mockito.any())).thenReturn(Set.of(1L));
 		Mockito.when(userGateway.getUserProfile(Mockito.any())).thenReturn(createUserE());
@@ -464,7 +433,6 @@ class DomainServiceTest {
 		params.put(Constants.PASSWORD, new String[] { authorizationCodeAuthParam.password() });
 		params.put(Constants.UUID, new String[] { authorizationCodeAuthParam.uuid() });
 		params.put(Constants.CAPTCHA, new String[] { authorizationCodeAuthParam.captcha() });
-		params.put(Constants.TENANT_CODE, new String[] { authorizationCodeAuthParam.tenantCode() });
 		params.put(Constants.GRANT_TYPE, new String[] { authorizationCodeAuthParam.grantType() });
 		Mockito.when(httpRequest.getParameterMap()).thenReturn(params);
 	}
@@ -475,9 +443,6 @@ class DomainServiceTest {
 			AuthA authA = invocation.getArgument(0);
 			UserV userV = authA.getUserV();
 			CaptchaV captchaV = authA.getCaptchaV();
-			if (StringExtUtils.isEmpty(userV.tenantCode())) {
-				throw new IllegalArgumentException("tenant code must not be empty");
-			}
 			if (StringExtUtils.isEmpty(captchaV.uuid())) {
 				throw new IllegalArgumentException("uuid must not be empty");
 			}
@@ -494,7 +459,6 @@ class DomainServiceTest {
 		}).when(usernamePasswordAuthParamValidator).validateAuth(Mockito.any());
 		Mockito.when(passwordValidator.validatePassword(Mockito.anyString(), Mockito.anyString())).thenReturn(true);
 		Mockito.when(captchaValidator.validateCaptcha(Mockito.anyString(), Mockito.anyString())).thenReturn(true);
-		Mockito.when(tenantGateway.getTenantId(Mockito.anyString())).thenReturn(1L);
 		Mockito.when(roleGateway.getDataScopes(Mockito.any())).thenReturn(Set.of("self", "custom"));
 		Mockito.when(deptGateway.getDeptIds(Mockito.any(), Mockito.any())).thenReturn(Set.of(1L));
 		if (ObjectUtils.equals(this.username, RSAUtils.decryptByPrivateKey(usernamePasswordAuthParam.username()))) {
@@ -508,7 +472,6 @@ class DomainServiceTest {
 		Map<String, String[]> params = MapUtils.newHashMap(6);
 		params.put(Constants.USERNAME, new String[] { usernamePasswordAuthParam.username() });
 		params.put(Constants.PASSWORD, new String[] { usernamePasswordAuthParam.password() });
-		params.put(Constants.TENANT_CODE, new String[] { usernamePasswordAuthParam.tenantCode() });
 		params.put(Constants.UUID, new String[] { usernamePasswordAuthParam.uuid() });
 		params.put(Constants.CAPTCHA, new String[] { usernamePasswordAuthParam.captcha() });
 		params.put(Constants.GRANT_TYPE, new String[] { usernamePasswordAuthParam.grantType() });
@@ -518,82 +481,79 @@ class DomainServiceTest {
 	private UsernamePasswordAuthParam createUsernamePasswordAuthParam() {
 		String username = RSAUtils.encryptByPublicKey(this.username);
 		String password = RSAUtils.encryptByPublicKey(this.password);
-		return new UsernamePasswordAuthParam(this.uuid, this.captcha, username, password, this.tenantCode,
+		return new UsernamePasswordAuthParam(this.uuid, this.captcha, username, password,
 				GrantType.USERNAME_PASSWORD.getCode());
 	}
 
 	private UsernamePasswordAuthParam createUsernamePasswordEmptyAuthParam() {
-		return new UsernamePasswordAuthParam(null, null, null, null, null, GrantType.USERNAME_PASSWORD.getCode());
+		return new UsernamePasswordAuthParam(null, null, null, null, GrantType.USERNAME_PASSWORD.getCode());
 	}
 
 	private UsernamePasswordAuthParam createUsernamePasswordAuthParamWithUsernameNotFound() {
 		String username = RSAUtils.encryptByPublicKey("test");
 		String password = RSAUtils.encryptByPublicKey(this.password);
-		return new UsernamePasswordAuthParam(this.uuid, this.captcha, username, password, this.tenantCode,
+		return new UsernamePasswordAuthParam(this.uuid, this.captcha, username, password,
 				GrantType.USERNAME_PASSWORD.getCode());
 	}
 
 	private MailAuthParam createMailAuthParam() {
-		return new MailAuthParam(this.mail, this.captcha, this.tenantCode, GrantType.MAIL.getCode());
+		return new MailAuthParam(this.mail, this.captcha, GrantType.MAIL.getCode());
 	}
 
 	private MobileAuthParam createMobileAuthParam() {
-		return new MobileAuthParam(this.mobile, this.captcha, this.tenantCode, GrantType.MOBILE.getCode());
+		return new MobileAuthParam(this.mobile, this.captcha, GrantType.MOBILE.getCode());
 	}
 
 	private TestAuthParam createTestAuthParam() {
-		return new TestAuthParam(this.username, this.password, this.tenantCode, GrantType.TEST.getCode());
+		return new TestAuthParam(this.username, this.password, GrantType.TEST.getCode());
 	}
 
 	private AuthorizationCodAuthParam createAuthorizationCodeAuthParam() {
-		return new AuthorizationCodAuthParam(this.uuid, this.captcha, this.username, this.password, this.tenantCode,
+		return new AuthorizationCodAuthParam(this.uuid, this.captcha, this.username, this.password,
 				GrantType.AUTHORIZATION_CODE.getCode());
 	}
 
 	private MailAuthParam createMailEmptyAuthParam() {
-		return new MailAuthParam(null, null, null, GrantType.MAIL.getCode());
+		return new MailAuthParam(null, null, GrantType.MAIL.getCode());
 	}
 
 	private MobileAuthParam createMobileEmptyAuthParam() {
-		return new MobileAuthParam(null, null, null, GrantType.MOBILE.getCode());
+		return new MobileAuthParam(null, null, GrantType.MOBILE.getCode());
 	}
 
 	private TestAuthParam createTestEmptyAuthParam() {
-		return new TestAuthParam(null, null, null, GrantType.TEST.getCode());
+		return new TestAuthParam(null, null, GrantType.TEST.getCode());
 	}
 
 	private AuthorizationCodAuthParam createAuthorizationCodeEmptyAuthParam() {
-		return new AuthorizationCodAuthParam(null, null, null, null, null, GrantType.AUTHORIZATION_CODE.getCode());
+		return new AuthorizationCodAuthParam(null, null, null, null, GrantType.AUTHORIZATION_CODE.getCode());
 	}
 
 	private UserV createUserVByUsernamePassword() throws Exception {
 		return new UserV(AESUtils.encrypt(this.username), this.password, null, StringConstants.EMPTY,
-				StringConstants.EMPTY, this.tenantCode, tenantId, null, null);
+				StringConstants.EMPTY, tenantId, null, null);
 	}
 
 	private UserV createUserVByUsernamePasswordWithUsernameNotFound() throws Exception {
-		return new UserV(AESUtils.encrypt("test"), this.password, null, StringConstants.EMPTY, StringConstants.EMPTY,
-				this.tenantCode, tenantId, null, null);
+		return new UserV(AESUtils.encrypt("test"), this.password, null, StringConstants.EMPTY, StringConstants.EMPTY, tenantId, null, null);
 	}
 
 	private UserV createUserVByMail() throws Exception {
-		return new UserV(StringConstants.EMPTY, null, null, AESUtils.encrypt(this.mail), StringConstants.EMPTY,
-				this.tenantCode, tenantId, null, null);
+		return new UserV(StringConstants.EMPTY, null, null, AESUtils.encrypt(this.mail), StringConstants.EMPTY, tenantId, null, null);
 	}
 
 	private UserV createUserVByMobile() throws Exception {
-		return new UserV(StringConstants.EMPTY, null, null, StringConstants.EMPTY, AESUtils.encrypt(this.mobile),
-				this.tenantCode, tenantId, null, null);
+		return new UserV(StringConstants.EMPTY, null, null, StringConstants.EMPTY, AESUtils.encrypt(this.mobile), tenantId, null, null);
 	}
 
 	private UserV createUserVByTest() throws Exception {
 		return new UserV(AESUtils.encrypt(this.username), this.password, null, StringConstants.EMPTY,
-				StringConstants.EMPTY, this.tenantCode, tenantId, null, null);
+				StringConstants.EMPTY, tenantId, null, null);
 	}
 
 	private UserV createUserVByAuthorizationCode() throws Exception {
 		return new UserV(AESUtils.encrypt(this.username), this.password, null, StringConstants.EMPTY,
-				StringConstants.EMPTY, this.tenantCode, tenantId, null, null);
+				StringConstants.EMPTY, tenantId, null, null);
 	}
 
 	private UserE createUserE() {
@@ -622,21 +582,19 @@ class DomainServiceTest {
 
 	}
 
-	private record UsernamePasswordAuthParam(String uuid, String captcha, String username, String password,
-			String tenantCode, String grantType) {
+	private record UsernamePasswordAuthParam(String uuid, String captcha, String username, String password, String grantType) {
 	}
 
-	private record MobileAuthParam(String mobile, String code, String tenantCode, String grantType) {
+	private record MobileAuthParam(String mobile, String code, String grantType) {
 	}
 
-	private record MailAuthParam(String mail, String code, String tenantCode, String grantType) {
+	private record MailAuthParam(String mail, String code, String grantType) {
 	}
 
-	private record TestAuthParam(String username, String password, String tenantCode, String grantType) {
+	private record TestAuthParam(String username, String password, String grantType) {
 	}
 
-	private record AuthorizationCodAuthParam(String uuid, String captcha, String username, String password,
-			String tenantCode, String grantType) {
+	private record AuthorizationCodAuthParam(String uuid, String captcha, String username, String password, String grantType) {
 	}
 
 }

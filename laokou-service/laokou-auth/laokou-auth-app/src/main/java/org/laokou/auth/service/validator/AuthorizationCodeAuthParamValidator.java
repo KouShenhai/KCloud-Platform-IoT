@@ -40,8 +40,6 @@ public class AuthorizationCodeAuthParamValidator implements AuthParamValidator {
 		UserV userV = authA.getUserV();
 		CaptchaV captchaV = authA.getCaptchaV();
 		ParamValidator.validate(authA.getValidateName(),
-				// 校验租户编码
-				OAuth2ParamValidator.validateTenantCode(userV.tenantCode()),
 				// 校验UUID
 				OAuth2ParamValidator.validateUuid(captchaV.uuid()),
 				// 校验验证码
