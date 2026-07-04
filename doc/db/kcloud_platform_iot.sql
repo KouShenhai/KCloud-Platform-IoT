@@ -311,8 +311,8 @@ CREATE TABLE "public"."iot_source" (
    "tenant_id" int8 NOT NULL DEFAULT 1,
    "dept_id" int8 NOT NULL DEFAULT 1,
    "name" varchar(50) NOT NULL,
-   "driver_class_name" varchar(100) NOT NULL,
-   "url" varchar(500) NOT NULL,
+   "type" varchar(50) NOT NULL,
+   "endpoint" varchar(500) NOT NULL,
    "username" varchar(100) NOT NULL,
    "password" varchar(100) NOT NULL
 );
@@ -326,8 +326,8 @@ COMMENT ON COLUMN "public"."iot_source"."version" IS '版本号';
 COMMENT ON COLUMN "public"."iot_source"."tenant_id" IS '租户ID';
 COMMENT ON COLUMN "public"."iot_source"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."iot_source"."name" IS '数据源名称';
-COMMENT ON COLUMN "public"."iot_source"."driver_class_name" IS '数据源的驱动名称';
-COMMENT ON COLUMN "public"."iot_source"."url" IS '数据源的连接信息';
+COMMENT ON COLUMN "public"."iot_source"."type" IS '数据源类型';
+COMMENT ON COLUMN "public"."iot_source"."endpoint" IS '数据源端点';
 COMMENT ON COLUMN "public"."iot_source"."username" IS '数据源的用户名';
 COMMENT ON COLUMN "public"."iot_source"."password" IS '数据源的密码';
 COMMENT ON TABLE "public"."iot_source" IS '数据源';

@@ -6,7 +6,7 @@ export async function modifySource(
 	body: API.SourceModifyCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/api/v1/sources', {
+	return request<any>('/api-proxy/iot/api/v1/sources', {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
@@ -21,7 +21,7 @@ export async function saveSource(
 	body: API.SourceSaveCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/api/v1/sources', {
+	return request<any>('/api-proxy/iot/api/v1/sources', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ export async function removeSource(
 	body: number[],
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/api/v1/sources', {
+	return request<any>('/api-proxy/iot/api/v1/sources', {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',
@@ -53,7 +53,7 @@ export async function getSourceById(
 	options?: { [key: string]: any },
 ) {
 	const { id: param0, ...queryParams } = params;
-	return request<API.Result>(`/api/v1/sources/${param0}`, {
+	return request<API.Result>(`/api-proxy/iot/api/v1/sources/${param0}`, {
 		method: 'GET',
 		params: { ...queryParams },
 		...(options || {}),
@@ -65,7 +65,7 @@ export async function exportSource(
 	body: API.SourceExportCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/api/v1/sources/export', {
+	return request<any>('/api-proxy/iot/api/v1/sources/export', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -103,7 +103,7 @@ export async function importSource(
 		}
 	});
 
-	return request<any>('/api/v1/sources/import', {
+	return request<any>('/api-proxy/iot/api/v1/sources/import', {
 		method: 'POST',
 		data: formData,
 		requestType: 'form',
@@ -116,7 +116,7 @@ export async function pageSource(
 	body: API.SourcePageQry,
 	options?: { [key: string]: any },
 ) {
-	return request<API.Result>('/api/v1/sources/page', {
+	return request<API.Result>('/api-proxy/iot/api/v1/sources/page', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -131,7 +131,7 @@ export async function testSource(
 	body: API.SourceTestCmd,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/api/v1/sources/test', {
+	return request<any>('/api-proxy/iot/api/v1/sources/test', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

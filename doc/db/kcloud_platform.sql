@@ -425,6 +425,11 @@ INSERT INTO "public"."sys_menu" VALUES (103, 1, 1, '2026-06-19 18:24:58.966455',
 INSERT INTO "public"."sys_menu" VALUES (91, 1, 1, '2026-06-19 18:24:58.966455', '2026-06-19 18:24:58.966455', 0, 0, 1, 1, 27, 'sys:dict:detail', 1, '查看字典', NULL, NULL, 1, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (97, 1, 1, '2026-06-19 18:24:58.966455', '2026-06-19 18:24:58.966455', 0, 0, 1, 1, 27, 'sys:dict:export', 1, '导出字典', NULL, NULL, 7, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (95, 1, 1, '2026-06-19 18:24:58.966455', '2026-06-19 18:24:58.966455', 0, 0, 1, 1, 27, 'sys:dict:page', 1, '分页查询字典列表', NULL, NULL, 5, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (125, 1, 1, '2026-07-04 11:36:48.737692', '2026-07-04 11:36:48.83058', 0, 0, 1, 1, 23, 'iot:source:detail', 1, '查看数据源', NULL, NULL, 1, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (126, 1, 1, '2026-07-04 11:37:38.934619', '2026-07-04 11:37:38.973142', 0, 0, 1, 1, 23, 'iot:source:remove', 1, '删除数据源', NULL, NULL, 2, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (127, 1, 1, '2026-07-04 11:37:59.70739', '2026-07-04 11:37:59.724989', 0, 0, 1, 1, 23, 'iot:source:modify', 1, '修改数据源', NULL, NULL, 3, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (128, 1, 1, '2026-07-04 11:38:17.37193', '2026-07-04 11:38:17.412162', 0, 0, 1, 1, 23, 'iot:source:save', 1, '保存数据源', NULL, NULL, 4, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (129, 1, 1, '2026-07-04 11:38:38.21395', '2026-07-04 11:38:38.232894', 0, 0, 1, 1, 23, 'iot:source:page', 1, '分页查询数据源列表', NULL, NULL, 5, 0, 0, NULL);
 
 -- ----------------------------
 -- -------------菜单套餐------------

@@ -17,14 +17,17 @@
 
 package org.laokou.iot.source.command.query;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.dto.Page;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.tenant.constant.DSConstants;
 import org.laokou.iot.source.convertor.SourceConvertor;
 import org.laokou.iot.source.dto.SourcePageQry;
 import org.laokou.iot.source.dto.clientobject.SourceCO;
-import org.laokou.common.i18n.dto.Page;
-import org.laokou.common.i18n.dto.Result;
-import org.laokou.iot.source.gatewayimpl.database.dataobject.SourceDO;
 import org.laokou.iot.source.gatewayimpl.database.SourceMapper;
+import org.laokou.iot.source.gatewayimpl.database.dataobject.SourceDO;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -34,6 +37,7 @@ import java.util.List;
  *
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class SourcePageQryExe {
@@ -41,9 +45,18 @@ public class SourcePageQryExe {
 	private final SourceMapper sourceMapper;
 
 	public Result<Page<SourceCO>> execute(SourcePageQry qry) {
-		List<SourceDO> list = sourceMapper.selectObjectPage(qry);
-		long total = sourceMapper.selectObjectCount(qry);
-		return Result.ok(Page.create(list.stream().map(SourceConvertor::toClientObject).toList(), total));
+		try {
+			DynamicDataSourceContextHolder.push(DSConstants.IOT);
+			List<SourceDO> list = sourceMapper.selectObjectPage(qry);
+			long total = sourceMapper.selectObjectCount(qry);
+			return Result.ok(Page.create(list.stream().map(SourceConvertor::toClientObject).toList(), total));}
+		catch (Exception ex) {
+			log.error("分页查询数据源失败，错误信息：{}", ex.getMessage(), ex);
+			throw ex;
+		}
+		finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 }
