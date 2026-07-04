@@ -15,41 +15,29 @@
  *
  */
 
-package org.laokou.iot.productCategory.gatewayimpl.database.dataobject;
+package org.laokou.iot.source.command;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
-import org.laokou.common.mybatisplus.mapper.BaseDO;
-import org.laokou.common.tenant.constant.DSConstants;
+import lombok.RequiredArgsConstructor;
+import org.laokou.iot.source.ability.SourceDomainService;
+import org.laokou.iot.source.convertor.SourceConvertor;
+import org.laokou.iot.source.dto.SourceTestCmd;
+import org.laokou.common.domain.annotation.CommandLog;
+import org.springframework.stereotype.Component;
 
 /**
- *
- * 产品类别数据对象.
+ * 测试数据源连接命令执行器.
  *
  * @author laokou
  */
-@Data
-@TableName(DSConstants.IoT.PRODUCT_CATEGORY_TABLE)
-public class ProductCategoryDO extends BaseDO {
+@Component
+@RequiredArgsConstructor
+public class SourceTestCmdExe {
 
-	/**
-	 * 产品类别名称.
-	 */
-	private String name;
+	private final SourceDomainService sourceDomainService;
 
-	/**
-	 * 排序.
-	 */
-	private Integer sort;
-
-	/**
-	 * 产品类别父节点ID.
-	 */
-	private Long pid;
-
-	/**
-	 * 备注.
-	 */
-	private String remark;
+	@CommandLog
+	public void executeVoid(SourceTestCmd cmd) {
+		sourceDomainService.testConnection(SourceConvertor.toEntity(cmd.getCo()));
+	}
 
 }

@@ -247,7 +247,7 @@ INSERT INTO "public"."sys_i18n_menu" VALUES (15, 1, 1, '2026-03-07 12:06:37', '2
 INSERT INTO "public"."sys_i18n_menu" VALUES (9, 1, 1, '2026-03-07 12:06:37', '2026-03-07 12:06:37', 0, 0, 1, 1,  'menu.iot.device.product', '产品');
 INSERT INTO "public"."sys_i18n_menu" VALUES (7, 1, 1, '2026-03-07 12:06:37', '2026-03-07 12:06:37', 0, 0, 1, 1,  'menu.iot.device.device', '设备');
 INSERT INTO "public"."sys_i18n_menu" VALUES (16, 1, 1, '2026-03-07 12:06:37', '2026-03-07 12:06:37', 0, 0, 1, 1, 'menu.sys.tenant', '租户管理');
-INSERT INTO "public"."sys_i18n_menu" VALUES (17, 1, 1, '2026-03-07 12:06:37', '2026-03-07 12:06:37', 0, 0, 1, 1, 'menu.sys.tenant.source', '数据源');
+INSERT INTO "public"."sys_i18n_menu" VALUES (17, 1, 1, '2026-03-07 12:06:37', '2026-03-07 12:06:37', 0, 0, 1, 1, 'menu.iot.device.source', '数据源');
 INSERT INTO "public"."sys_i18n_menu" VALUES (18, 1, 1, '2026-03-07 12:06:37', '2026-03-07 12:06:37', 0, 0, 1, 1, 'menu.sys.tenant.package', '套餐');
 INSERT INTO "public"."sys_i18n_menu" VALUES (19, 1, 1, '2026-03-07 12:06:37', '2026-03-07 12:06:37', 0, 0, 1, 1, 'menu.sys.tenant.tenant', '租户');
 INSERT INTO "public"."sys_i18n_menu" VALUES (20, 1, 1, '2026-03-07 12:06:37', '2026-03-07 12:06:37', 0, 0, 1, 1, 'menu.sys.base', '基础数据');
@@ -314,9 +314,9 @@ COMMENT ON INDEX "public"."sys_menu_type_tenantId_idx" IS '菜单类型_租户ID
 INSERT INTO "public"."sys_menu" VALUES (33, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 1, 1, 1, NULL, 0, '集群管理', '/sys/cluster', NULL, 3, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (19, 1, 1, '2025-01-21 05:19:17', '2026-05-29 01:19:54.280534', 0, 1, 1, 1, 17, NULL, 0, '部门', '/sys/permission/dept', NULL, 2, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (6, 1, 1, '2024-09-17 18:36:56', '2026-06-13 16:09:10.335754', 0, 1, 1, 1, 2, NULL, 0, '通知日志', '/sys/log/notice', '', 1, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (108, 1, 1, '2026-06-05 00:00:00', '2026-06-07 19:29:30.266887', 0, 1, 1, 1, 11, NULL, 0, '网络连接', '/iot/network/connection', NULL, 1, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (108, 1, 1, '2026-06-05 00:00:00', '2026-06-07 19:29:30.266887', 0, 1, 1, 1, 11, NULL, 0, '网络连接', '/iot/network/connection', NULL, 2, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (12, 1, 1, '2025-01-18 09:28:42', '2026-05-29 01:21:36.257117', 0, 1, 1, 1, 11, NULL, 0, '设备管理', '/iot/device', NULL, 1, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (13, 1, 1, '2025-01-18 09:30:03', '2026-05-29 01:23:03.948971', 0, 1, 1, 1, 12, NULL, 0, '设备', '/iot/device/index', NULL, 4, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (13, 1, 1, '2025-01-18 09:30:03', '2026-05-29 01:23:03.948971', 0, 1, 1, 1, 12, NULL, 0, '设备', '/iot/device/index', NULL, 5, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (20, 1, 1, '2025-01-21 05:19:17', '2026-05-29 01:19:59.024113', 0, 1, 1, 1, 17, NULL, 0, '角色', '/sys/permission/role', NULL, 3, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (18, 1, 1, '2025-01-21 05:19:17', '2026-05-29 01:19:49.281629', 0, 1, 1, 1, 17, NULL, 0, '菜单', '/sys/permission/menu', NULL, 1, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (88, 1, 1, '2025-08-02 09:46:49.7142', '2026-05-29 01:21:22.080322', 0, 1, 1, 1, 1, NULL, 0, '系统配置', '/sys/config', '', 7, 0, 0, NULL);
@@ -352,7 +352,7 @@ INSERT INTO "public"."sys_menu" VALUES (50, 1, 1, '2025-02-04 13:46:48.225873', 
 INSERT INTO "public"."sys_menu" VALUES (65, 1, 1, '2025-03-16 11:21:04.431009', '2025-03-16 11:21:04.431009', 0, 0, 1, 1, 16, 'iot:product-category:save', 1, '新增产品类别', NULL, NULL, 4, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (70, 1, 1, '2025-03-16 11:16:56.540728', '2025-03-16 11:18:02.393751', 0, 1, 1, 1, 15, 'iot:product:save', 1, '新增产品', NULL, NULL, 4, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (80, 1, 1, '2025-03-16 11:16:56.540728', '2025-03-16 11:18:02.393751', 0, 1, 1, 1, 31, 'sys:oss:save', 1, '新增OSS', NULL, NULL, 4, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (23, 1, 1, '2025-01-21 05:19:17', '2026-06-13 16:08:45.733221', 0, 1, 1, 1, 22, NULL, 0, '数据源', '/sys/tenant/source', NULL, 3, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (23, 1, 1, '2025-01-21 05:19:17', '2026-06-13 16:08:45.733221', 0, 1, 1, 1, 12, NULL, 0, '数据源', '/iot/device/source', NULL, 3, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (27, 1, 1, '2025-01-21 05:19:17', '2026-05-29 01:19:35.730272', 0, 1, 1, 1, 26, NULL, 0, '数据字典', '/sys/base/dict', NULL, 2, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (28, 1, 1, '2024-09-15 12:56:07', '2026-06-13 16:09:20.618716', 0, 1, 1, 1, 2, NULL, 0, '操作日志', '/sys/log/operate', '', 3, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (106, 1, 1, '2026-06-04 00:00:00', '2026-06-04 00:00:00', 0, 0, 1, 1, 13, 'iot:device:export', 1, '导出设备', NULL, NULL, 7, 0, 0, NULL);
@@ -397,7 +397,7 @@ INSERT INTO "public"."sys_menu" VALUES (69, 1, 1, '2025-03-16 11:17:16.858243', 
 INSERT INTO "public"."sys_menu" VALUES (79, 1, 1, '2025-03-16 11:17:16.858243', '2025-03-16 11:18:07.952616', 0, 1, 1, 1, 31, 'sys:oss:modify', 1, '修改OSS', NULL, NULL, 3, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (89, 1, 1, '2025-08-02 09:51:11', '2026-05-29 01:18:53.465782', 0, 2, 1, 1, 88, NULL, 0, '代码生成器', '/sys/config/generator', NULL, 1, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (16, 1, 1, '2025-01-18 09:39:31', '2026-05-29 01:22:48.423197', 0, 1, 1, 1, 12, NULL, 0, '产品类别', '/iot/device/productCategory', NULL, 2, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (15, 1, 1, '2025-01-18 09:38:58', '2026-05-29 01:22:57.821007', 0, 1, 1, 1, 12, NULL, 0, '产品', '/iot/device/product', NULL, 3, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (15, 1, 1, '2025-01-18 09:38:58', '2026-05-29 01:22:57.821007', 0, 1, 1, 1, 12, NULL, 0, '产品', '/iot/device/product', NULL, 4, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (82, 1, 1, '2025-03-15 12:15:37.277552', '2025-03-15 12:15:37.278549', 0, 0, 1, 1, 31, 'sys:oss:upload', 1, '上传文件', NULL, NULL, 5, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (90, 1, 1, '2026-05-20 07:08:34', '2026-05-29 01:19:03.585621', 0, 2, 1, 1, 88, NULL, 0, 'API文档', '/sys/config/apiDoc', NULL, 2, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (14, 1, 1, '2025-01-18 09:37:53', '2026-05-29 01:22:42.9652', 0, 1, 1, 1, 12, NULL, 0, '物模型', '/iot/device/thingModel', NULL, 1, 0, 0, NULL);
@@ -679,44 +679,6 @@ CREATE UNIQUE INDEX "sys_role_menu_roleId_menuId_idx" ON "public"."sys_role_menu
 	"menu_id"
 );
 COMMENT ON INDEX "public"."sys_role_menu_roleId_menuId_idx" IS '角色ID_菜单ID_唯一索引';
-
--- ----------------------------
--- -------------数据源------------
--- ----------------------------
-DROP TABLE IF EXISTS "public"."sys_source";
-CREATE TABLE "public"."sys_source" (
-	"id" int8 NOT NULL GENERATED BY DEFAULT AS IDENTITY,
-	"creator" int8 NOT NULL DEFAULT 0,
-	"editor" int8 NOT NULL DEFAULT 0,
-	"create_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	"update_time" timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	"del_flag" int2 NOT NULL DEFAULT 0,
-	"version" int4 NOT NULL DEFAULT 0,
-	"tenant_id" int8 NOT NULL DEFAULT 1,
-	"dept_id" int8 NOT NULL DEFAULT 1,
-	"name" varchar(50) NOT NULL,
-	"driver_class_name" varchar(100) NOT NULL,
-	"url" varchar(500) NOT NULL,
-	"username" varchar(100) NOT NULL,
-	"password" varchar(100) NOT NULL
-);
-COMMENT ON COLUMN "public"."sys_source"."id" IS 'ID';
-COMMENT ON COLUMN "public"."sys_source"."creator" IS '创建人';
-COMMENT ON COLUMN "public"."sys_source"."editor" IS '编辑人';
-COMMENT ON COLUMN "public"."sys_source"."create_time" IS '创建时间';
-COMMENT ON COLUMN "public"."sys_source"."update_time" IS '修改时间';
-COMMENT ON COLUMN "public"."sys_source"."del_flag" IS '删除标识 0未删除 1已删除';
-COMMENT ON COLUMN "public"."sys_source"."version" IS '版本号';
-COMMENT ON COLUMN "public"."sys_source"."tenant_id" IS '租户ID';
-COMMENT ON COLUMN "public"."sys_source"."dept_id" IS '部门ID';
-COMMENT ON COLUMN "public"."sys_source"."name" IS '数据源名称';
-COMMENT ON COLUMN "public"."sys_source"."driver_class_name" IS '数据源的驱动名称';
-COMMENT ON COLUMN "public"."sys_source"."url" IS '数据源的连接信息';
-COMMENT ON COLUMN "public"."sys_source"."username" IS '数据源的用户名';
-COMMENT ON COLUMN "public"."sys_source"."password" IS '数据源的密码';
-COMMENT ON TABLE "public"."sys_source" IS '数据源';
-
-ALTER TABLE "public"."sys_source" ADD CONSTRAINT "sys_source_pkey" PRIMARY KEY ("id");
 
 -- ----------------------------
 -- -------------租户------------

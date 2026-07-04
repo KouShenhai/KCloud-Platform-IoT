@@ -593,7 +593,7 @@ export default {
 	'menu.sys.tenant': 'Tenants',
 	'menu.sys.tenant.package': 'Packages',
 	'menu.sys.tenant.tenant': 'Tenants',
-	'menu.sys.tenant.source': 'Sources',
+	'menu.iot.device.source': 'Sources',
 	'menu.sys.base': 'Basic Data',
 	'menu.sys.base.dict': 'Dicts',
 	'menu.sys.base.i18n-menu': 'I18n Menu',

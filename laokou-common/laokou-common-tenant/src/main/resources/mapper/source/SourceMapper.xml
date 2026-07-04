@@ -18,10 +18,10 @@
  */
 -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.laokou.common.tenant.mapper.SourceMapper">
+<mapper namespace="org.laokou.iot.source.gatewayimpl.database.SourceMapper">
 
 	<select id="selectObjectPage"
-			resultType="org.laokou.common.tenant.mapper.SourceDO">
+			resultType="org.laokou.iot.source.gatewayimpl.database.dataobject.SourceDO">
 		SELECT *
 		from sys_source
 		where del_flag = 0

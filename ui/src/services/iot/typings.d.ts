@@ -297,12 +297,40 @@ declare namespace API {
 		enabled?: number;
 	};
 
-	type ConnectionRemoveCmd = {
-		ids?: number[];
-	};
-
 	type ConnectionSaveCmd = {
 		co?: ConnectionCO;
+	};
+
+	type SourceCO = {
+		extValues?: Record<string, any>;
+		id?: number;
+		name?: string;
+		driverClassName?: string;
+		url?: string;
+		username?: string;
+		password?: string;
+	};
+
+	type SourceExportCmd = true;
+
+	type SourceModifyCmd = {
+		co?: SourceCO;
+	};
+
+	type SourcePageQry = {
+		pageNum?: number;
+		pageSize?: number;
+		pageIndex?: number;
+		sqlFilter?: string;
+		params?: Record<string, any>;
+	};
+
+	type SourceSaveCmd = {
+		co?: SourceCO;
+	};
+
+	type SourceTestCmd = {
+		co?: SourceCO;
 	};
 
 }

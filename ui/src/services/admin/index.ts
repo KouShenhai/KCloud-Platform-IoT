@@ -12,7 +12,6 @@ import * as operateLog from './operateLog';
 import * as oss from './oss';
 import * as ossLog from './ossLog';
 import * as role from './role';
-import * as source from './source';
 import * as tenant from './tenant';
 import * as user from './user';
 
@@ -20,7 +19,6 @@ export default {
 	ossLog,
 	user,
 	tenant,
-	source,
 	role,
 	oss,
 	operateLog,

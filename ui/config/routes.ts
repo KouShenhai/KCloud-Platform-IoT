@@ -77,13 +77,7 @@ export default [
 						title: 'menu.sys.tenant.tenant',
 						path: '/sys/tenant/tenant',
 						component: './Sys/Tenant/tenant',
-					},
-					{
-						name: 'menu.sys.tenant.source',
-						title: 'menu.sys.tenant.source',
-						path: '/sys/tenant/source',
-						component: './Sys/Tenant/source',
-					},
+					}
 				],
 			},
 			{
@@ -192,6 +186,12 @@ export default [
 						title: 'menu.iot.device.productCategory',
 						path: '/iot/device/productCategory',
 						component: './IoT/Device/productCategory',
+					},
+					{
+						name: 'menu.iot.device.source',
+						title: 'menu.iot.device.source',
+						path: '/iot/device/source',
+						component: './IoT/Device/source',
 					},
 					{
 						name: 'menu.iot.device.product',

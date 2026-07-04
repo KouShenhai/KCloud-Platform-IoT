@@ -15,41 +15,30 @@
  *
  */
 
-package org.laokou.iot.productCategory.gatewayimpl.database.dataobject;
+package org.laokou.iot.source.gateway;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
-import org.laokou.common.mybatisplus.mapper.BaseDO;
-import org.laokou.common.tenant.constant.DSConstants;
+import org.laokou.iot.source.model.SourceE;
 
 /**
- *
- * 产品类别数据对象.
+ * 数据源网关【防腐】.
  *
  * @author laokou
  */
-@Data
-@TableName(DSConstants.IoT.PRODUCT_CATEGORY_TABLE)
-public class ProductCategoryDO extends BaseDO {
+public interface SourceGateway {
 
 	/**
-	 * 产品类别名称.
+	 * 新增数据源.
 	 */
-	private String name;
+	void createSource(SourceE sourceE);
 
 	/**
-	 * 排序.
+	 * 修改数据源.
 	 */
-	private Integer sort;
+	void updateSource(SourceE sourceE);
 
 	/**
-	 * 产品类别父节点ID.
+	 * 删除数据源.
 	 */
-	private Long pid;
-
-	/**
-	 * 备注.
-	 */
-	private String remark;
+	void deleteSource(Long[] ids);
 
 }

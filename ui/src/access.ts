@@ -115,29 +115,29 @@ export default (initialState: any) => {
 			scopes?.includes('write'),
 
 		canSourceGetDetail:
-			permissions?.includes('sys:source:detail') &&
+			permissions?.includes('iot:source:detail') &&
 			scopes?.includes('read'),
 
 		canSourcePage:
-			permissions?.includes('sys:source:page') && scopes?.includes('read'),
+			permissions?.includes('iot:source:page') && scopes?.includes('read'),
 
 		canSourceModify:
-			permissions?.includes('sys:source:modify') &&
+			permissions?.includes('iot:source:modify') &&
 			scopes?.includes('write'),
 
 		canSourceRemove:
-			permissions?.includes('sys:source:remove') &&
+			permissions?.includes('iot:source:remove') &&
 			scopes?.includes('write'),
 
 		canSourceSave:
-			permissions?.includes('sys:source:save') && scopes?.includes('write'),
+			permissions?.includes('iot:source:save') && scopes?.includes('write'),
 
 		canSourceImport:
-			permissions?.includes('sys:source:import') &&
+			permissions?.includes('iot:source:import') &&
 			scopes?.includes('write'),
 
 		canSourceExport:
-			permissions?.includes('sys:source:export') &&
+			permissions?.includes('iot:source:export') &&
 			scopes?.includes('write'),
 
 		canDeptGetDetail:

@@ -15,41 +15,17 @@
  *
  */
 
-package org.laokou.iot.productCategory.gatewayimpl.database.dataobject;
+package org.laokou.iot.source.dto;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import org.laokou.common.mybatisplus.mapper.BaseDO;
-import org.laokou.common.tenant.constant.DSConstants;
+import org.laokou.common.i18n.dto.PageQuery;
 
 /**
- *
- * 产品类别数据对象.
+ * 分页查询数据源命令.
  *
  * @author laokou
  */
 @Data
-@TableName(DSConstants.IoT.PRODUCT_CATEGORY_TABLE)
-public class ProductCategoryDO extends BaseDO {
-
-	/**
-	 * 产品类别名称.
-	 */
-	private String name;
-
-	/**
-	 * 排序.
-	 */
-	private Integer sort;
-
-	/**
-	 * 产品类别父节点ID.
-	 */
-	private Long pid;
-
-	/**
-	 * 备注.
-	 */
-	private String remark;
+public class SourcePageQry extends PageQuery {
 
 }

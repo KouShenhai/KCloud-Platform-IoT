@@ -15,41 +15,20 @@
  *
  */
 
-package org.laokou.iot.productCategory.gatewayimpl.database.dataobject;
+package org.laokou.iot.source.gatewayimpl.database;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
-import org.laokou.common.mybatisplus.mapper.BaseDO;
-import org.laokou.common.tenant.constant.DSConstants;
+import org.apache.ibatis.annotations.Mapper;
+import org.laokou.common.mybatisplus.mapper.CrudMapper;
+import org.laokou.iot.source.gatewayimpl.database.dataobject.SourceDO;
+import org.springframework.stereotype.Repository;
 
 /**
- *
- * 产品类别数据对象.
+ * 数据源数据库映射.
  *
  * @author laokou
  */
-@Data
-@TableName(DSConstants.IoT.PRODUCT_CATEGORY_TABLE)
-public class ProductCategoryDO extends BaseDO {
-
-	/**
-	 * 产品类别名称.
-	 */
-	private String name;
-
-	/**
-	 * 排序.
-	 */
-	private Integer sort;
-
-	/**
-	 * 产品类别父节点ID.
-	 */
-	private Long pid;
-
-	/**
-	 * 备注.
-	 */
-	private String remark;
+@Mapper
+@Repository
+public interface SourceMapper extends CrudMapper<Long, Integer, SourceDO> {
 
 }

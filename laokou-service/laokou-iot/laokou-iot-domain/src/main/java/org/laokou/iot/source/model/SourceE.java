@@ -15,56 +15,41 @@
  *
  */
 
-package org.laokou.iot.thingModel.gatewayimpl.database.dataobject;
+package org.laokou.iot.source.model;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import org.laokou.common.mybatisplus.mapper.BaseDO;
-import org.laokou.common.tenant.constant.DSConstants;
 
 /**
- *
- * 物模型数据对象.
+ * 数据源领域对象【实体】.
  *
  * @author laokou
  */
 @Data
-@TableName(DSConstants.IoT.THING_MODEL_TABLE)
-public class ThingModelDO extends BaseDO {
+public class SourceE {
 
 	/**
-	 * 模型名称.
+	 * ID.
+	 */
+	private Long id;
+
+	/**
+	 * 数据源名称.
 	 */
 	private String name;
 
 	/**
-	 * 模型编码.
-	 */
-	private String code;
-
-	/**
-	 * 物模型数据类型 int long text float double boolean.
-	 */
-	private String dataType;
-
-	/**
-	 * 模型类型 read读 write写.
+	 * 数据源类型.
 	 */
 	private String type;
 
 	/**
-	 * 物模型排序.
+	 * 数据源的用户名.
 	 */
-	private Integer sort;
+	private String username;
 
 	/**
-	 * 物模型规格.
+	 * 数据源的密码.
 	 */
-	private String spec;
-
-	/**
-	 * 物模型备注.
-	 */
-	private String remark;
+	private String password;
 
 }
