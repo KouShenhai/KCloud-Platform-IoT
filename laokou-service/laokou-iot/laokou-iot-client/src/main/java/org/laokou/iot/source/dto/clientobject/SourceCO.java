@@ -36,11 +36,11 @@ public class SourceCO extends ClientObject {
 	@Schema(name = "数据源名称", description = "数据源名称")
 	private String name;
 
-	@Schema(name = "数据源驱动名称", description = "数据源驱动名称")
-	private String driverClassName;
+	@Schema(name = "数据源地址", description = "数据源地址")
+	private String endpoint;
 
-	@Schema(name = "数据源连接信息", description = "数据源连接信息")
-	private String url;
+	@Schema(name = "数据源类型", description = "数据源类型")
+	private String type;
 
 	@Schema(name = "数据源用户名", description = "数据源用户名")
 	private String username;

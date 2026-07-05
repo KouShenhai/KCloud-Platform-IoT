@@ -18,7 +18,7 @@
 package org.laokou.iot.source.convertor;
 
 import org.laokou.iot.source.dto.clientobject.SourceCO;
-import org.laokou.iot.source.model.SourceE;
+import org.laokou.iot.source.model.entity.SourceE;
 import org.laokou.common.core.util.ConvertUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.iot.source.gatewayimpl.database.dataobject.SourceDO;
@@ -28,7 +28,9 @@ import org.laokou.iot.source.gatewayimpl.database.dataobject.SourceDO;
  *
  * @author laokou
  */
-public class SourceConvertor {
+public final class SourceConvertor {
+
+	private SourceConvertor() {}
 
 	public static SourceDO toDataObject(Long id, SourceE sourceE) {
 		SourceDO sourceDO = ConvertUtils.sourceToTarget(sourceE, SourceDO.class);

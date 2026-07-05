@@ -15,17 +15,30 @@
  *
  */
 
-package org.laokou.iot.source.model;
+package org.laokou.iot.source.model.entity;
 
-import lombok.Data;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.annotation.Entity;
+
+import java.io.Serializable;
 
 /**
  * 数据源领域对象【实体】.
  *
  * @author laokou
  */
-@Data
-public class SourceE {
+@Entity
+@Getter
+@Builder(toBuilder = true)
+@EqualsAndHashCode(callSuper = false)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class SourceE implements Serializable {
 
 	/**
 	 * ID.
@@ -51,5 +64,10 @@ public class SourceE {
 	 * 数据源的密码.
 	 */
 	private String password;
+
+	/**
+	 * 数据源地址.
+	 */
+	private String endpoint;
 
 }

@@ -51,4 +51,9 @@ public class SourceDO extends BaseDO {
 	 */
 	private String type;
 
+	/**
+	 * 数据源地址.
+	 */
+	private String endpoint;
+
 }

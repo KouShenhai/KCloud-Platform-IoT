@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.tdengine;
+package org.laokou.common.storage.tdengine;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;

@@ -15,13 +15,15 @@
  *
  */
 
-package org.laokou.common.tdengine;
+package org.laokou.iot.source.model.validator;
 
-import org.laokou.common.storage.Config;
+import org.laokou.iot.source.model.SourceA;
 
 /**
  * @author laokou
  */
-public class TDengineConfig extends Config {
+public interface SourceParamValidator {
+
+	void validateSource(SourceA sourceA);
 
 }

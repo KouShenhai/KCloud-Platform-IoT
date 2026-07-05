@@ -38,7 +38,7 @@ import java.util.stream.Collectors;
 @ConfigurationProperties("spring.data.elasticsearch")
 public class SpringElasticsearchProperties {
 
-	private Set<String> uris = new HashSet<>(Collections.singletonList("http://localhost:9200"));
+	private Set<String> uris = new HashSet<>(Collections.singletonList("http://127.0.0.1:9200"));
 
 	private String username;
 

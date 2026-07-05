@@ -15,27 +15,13 @@
  *
  */
 
-package org.laokou.common.storage.enums;
+package org.laokou.common.storage.tdengine;
 
-import lombok.Getter;
+import org.laokou.common.storage.Config;
 
 /**
  * @author laokou
  */
-@Getter
-public enum StorageLayout {
-
-	ROW("row", "行"),
-
-	COLUMN("column", "列");
-
-	private final String code;
-
-	private final String desc;
-
-	StorageLayout(String code, String desc) {
-		this.code = code;
-		this.desc = desc;
-	}
+public class TDengineConfig extends Config {
 
 }

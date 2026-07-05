@@ -15,21 +15,27 @@
  *
  */
 
-package org.laokou.common.mybatisplus.config;
+package org.laokou.iot.source.model.enums;
 
-import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
+import lombok.Getter;
 
-public final class DynamicDataSourceManager {
+/**
+ * @author laokou
+ */
+@Getter
+public enum OperateType {
 
-	private DynamicDataSourceManager() {
-	}
+	SAVE("save", "保存数据源"),
 
-	public static void pushContext(String ds) {
-		DynamicDataSourceContextHolder.push(ds);
-	}
+	MODIFY("modify", "修改数据源");
 
-	public static void clearContext() {
-		DynamicDataSourceContextHolder.clear();
+	private final String code;
+
+	private final String desc;
+
+	OperateType(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
 	}
 
 }
