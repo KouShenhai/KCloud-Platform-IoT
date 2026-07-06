@@ -17,6 +17,25 @@
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-tdengine</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-influxdb</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-elasticsearch</artifactId>
+      <version>${project.version}</version>
+    </dependency>
   </dependencies>
 
 </project>

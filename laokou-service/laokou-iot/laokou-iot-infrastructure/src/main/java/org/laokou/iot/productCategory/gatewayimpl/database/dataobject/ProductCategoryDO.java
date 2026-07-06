@@ -20,6 +20,7 @@ package org.laokou.iot.productCategory.gatewayimpl.database.dataobject;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
+import org.laokou.common.tenant.constant.DSConstants;
 
 /**
  *
@@ -28,7 +29,7 @@ import org.laokou.common.mybatisplus.mapper.BaseDO;
  * @author laokou
  */
 @Data
-@TableName("iot_product_category")
+@TableName(DSConstants.IoT.PRODUCT_CATEGORY_TABLE)
 public class ProductCategoryDO extends BaseDO {
 
 	/**

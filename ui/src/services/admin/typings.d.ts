@@ -64,9 +64,6 @@ declare namespace API {
 		status?: number;
 		dictId?: number;
 	};
-
-	type DictItemExportCmd = true;
-
 	type DictItemModifyCmd = {
 		co?: DictItemCO;
 	};
@@ -99,9 +96,6 @@ declare namespace API {
 		remark?: string;
 		status?: number;
 	};
-
-	type DictExportCmd = true;
-
 	type DictModifyCmd = {
 		co?: DictCO;
 	};
@@ -325,38 +319,6 @@ declare namespace API {
 		co?: RoleCO;
 	};
 
-	type SourceCO = {
-		extValues?: Record<string, any>;
-		id?: number;
-		name?: string;
-		driverClassName?: string;
-		url?: string;
-		username?: string;
-		password?: string;
-	};
-
-	type SourceExportCmd = true;
-
-	type SourceModifyCmd = {
-		co?: SourceCO;
-	};
-
-	type SourcePageQry = {
-		pageNum?: number;
-		pageSize?: number;
-		pageIndex?: number;
-		sqlFilter?: string;
-		params?: Record<string, any>;
-	};
-
-	type SourceSaveCmd = {
-		co?: SourceCO;
-	};
-
-	type SourceTestCmd = {
-		co?: SourceCO;
-	};
-
 	type TenantCO = {
 		extValues?: Record<string, any>;
 		id?: number;
@@ -365,9 +327,6 @@ declare namespace API {
 		sourceId?: number;
 		packageId?: number;
 	};
-
-	type TenantExportCmd = true;
-
 	type TenantModifyCmd = {
 		co?: TenantCO;
 	};

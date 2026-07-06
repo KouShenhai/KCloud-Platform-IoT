@@ -35,6 +35,21 @@ public final class DSConstants {
 		private IoT() {
 		}
 
+		/**
+		 * 数据源表.
+		 */
+		public static final String SOURCE_TABLE = "iot_source";
+
+		/**
+		 * 物模型表.
+		 */
+		public static final String THING_MODEL_TABLE = "iot_thing_model";
+
+		/**
+		 * 产品类别表.
+		 */
+		public static final String PRODUCT_CATEGORY_TABLE = "product_category_source";
+
 	}
 
 	public static final class Master {
@@ -91,11 +106,6 @@ public final class DSConstants {
 		 * 租户表.
 		 */
 		public static final String TENANT_TABLE = "sys_tenant";
-
-		/**
-		 * 数据源表.
-		 */
-		public static final String SOURCE_TABLE = "sys_source";
 
 	}
 

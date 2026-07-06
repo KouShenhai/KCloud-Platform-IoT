@@ -19,27 +19,23 @@ package org.laokou.common.influxdb.config;
 
 import com.influxdb.client.InfluxDBClient;
 import com.influxdb.client.InfluxDBClientFactory;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.annotation.Bean;
 
 /**
  * @author laokou
  */
-@AutoConfiguration
+// @AutoConfiguration
 public class InfluxDBAutoConfig {
 
-	@Bean(destroyMethod = "close")
-	@ConditionalOnProperty(prefix = "spring.influx-db", matchIfMissing = true, name = "type", havingValue = "TOKEN")
+	// @Bean(destroyMethod = "close")
+	// @ConditionalOnProperty(prefix = "spring.influx-db", matchIfMissing = true, name = "type", havingValue = "TOKEN")
 	public InfluxDBClient tokenInfluxDBClient(SpringInfluxDBProperties springInfluxDBProperties) {
 		return InfluxDBClientFactory.create(springInfluxDBProperties.getUrl(),
 				springInfluxDBProperties.getToken().toCharArray(), springInfluxDBProperties.getOrg(),
 				springInfluxDBProperties.getBucket());
 	}
 
-	@Bean(destroyMethod = "close")
-	@ConditionalOnProperty(prefix = "spring.influx-db", matchIfMissing = true, name = "type",
-			havingValue = "USERNAME_PASSWORD")
+	// @Bean(destroyMethod = "close")
+	// @ConditionalOnProperty(prefix = "spring.influx-db", matchIfMissing = true, name = "type", havingValue = "USERNAME_PASSWORD")
 	public InfluxDBClient usernamePasswordInfluxDBClient(SpringInfluxDBProperties springInfluxDBProperties) {
 		return InfluxDBClientFactory.create(springInfluxDBProperties.getUrl(), springInfluxDBProperties.getUsername(),
 				springInfluxDBProperties.getPassword().toCharArray());

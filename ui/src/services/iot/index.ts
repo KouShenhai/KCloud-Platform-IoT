@@ -5,9 +5,12 @@ import * as device from './device';
 import * as product from './product';
 import * as productCategory from './productCategory';
 import * as thingModel from './thingModel';
+import * as source from "./source";
+
 export default {
 	thingModel,
 	product,
+	source,
 	productCategory,
 	device,
 };

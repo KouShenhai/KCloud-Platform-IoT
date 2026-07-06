@@ -593,7 +593,7 @@ export default {
 	'menu.sys.tenant': '租户管理',
 	'menu.sys.tenant.package': '套餐',
 	'menu.sys.tenant.tenant': '租户',
-	'menu.sys.tenant.source': '数据源',
+	'menu.iot.device.source': '数据源',
 	'menu.sys.base': '基础数据',
 	'menu.sys.base.dict': '数据字典',
 	'menu.sys.base.i18n-menu': '国际化菜单',
