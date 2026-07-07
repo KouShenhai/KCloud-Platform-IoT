@@ -80,7 +80,7 @@ class GatewayApp implements CommandLineRunner {
 	public void run(@NotNull String... args) {
 		Thread.startVirtualThread(() -> nacosRouteDefinitionRepository.syncRouter()
 			.timeout(Duration.ofSeconds(15))
-			.block());
+			.block(Duration.ofSeconds(20)));
 	}
 	// @formatter:on
 

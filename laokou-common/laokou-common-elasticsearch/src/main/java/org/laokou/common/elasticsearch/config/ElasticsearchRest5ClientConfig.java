@@ -130,111 +130,115 @@ class ElasticsearchRest5ClientConfig {
 	}
 
 	record DefaultRest5ClientBuilderCustomizer(SpringElasticsearchProperties springElasticsearchProperties,
-											   SslBundles sslBundles) implements Rest5ClientBuilderCustomizer, Ordered {
+			SslBundles sslBundles) implements Rest5ClientBuilderCustomizer, Ordered {
 
-			@Override
-			public void customize(Rest5ClientBuilder restClientBuilder) {
-				String pathPrefix = springElasticsearchProperties.getPathPrefix();
-				if (StringExtUtils.isNotEmpty(pathPrefix)) {
-					restClientBuilder.setPathPrefix(pathPrefix);
+		@Override
+		public void customize(Rest5ClientBuilder restClientBuilder) {
+			String pathPrefix = springElasticsearchProperties.getPathPrefix();
+			if (StringExtUtils.isNotEmpty(pathPrefix)) {
+				restClientBuilder.setPathPrefix(pathPrefix);
+			}
+			Header[] headers = getHeaders();
+			if (ArrayUtils.isNotEmpty(headers)) {
+				restClientBuilder.setDefaultHeaders(headers);
+			}
+		}
+
+		@Override
+		public void customize(HttpAsyncClientBuilder httpClientBuilder) {
+			// 默认情况下，HTTP 客户端使用抢占式身份验证：它在初始请求中包含凭据。
+			// 您可能希望使用非抢占式身份验证，即发送不带凭据的请求，并在质询后使用标头重试401 Unauthorized。
+			// 为此，请设置一个HttpClientConfigCallback禁用身份验证缓存的参数。
+			httpClientBuilder.disableAuthCaching();
+			String proxy = springElasticsearchProperties.getProxy();
+			if (StringExtUtils.isNotEmpty(proxy)) {
+				try {
+					HttpRoutePlanner proxyRoutePlanner = new DefaultProxyRoutePlanner(HttpHost.create(proxy));
+					httpClientBuilder.setRoutePlanner(proxyRoutePlanner);
 				}
-				Header[] headers = getHeaders();
-				if (ArrayUtils.isNotEmpty(headers)) {
-					restClientBuilder.setDefaultHeaders(headers);
+				catch (URISyntaxException ex) {
+					throw new IllegalArgumentException("Could not create the proxy route planner", ex);
 				}
 			}
+			PropertyMapper map = PropertyMapper.get();
+			map.from(this.springElasticsearchProperties::isSocketKeepAlive)
+				.to((keepAlive) -> httpClientBuilder
+					.setIOReactorConfig(IOReactorConfig.custom().setSoKeepAlive(keepAlive).build()));
+		}
 
-			@Override
-			public void customize(HttpAsyncClientBuilder httpClientBuilder) {
-				// 默认情况下，HTTP 客户端使用抢占式身份验证：它在初始请求中包含凭据。
-				// 您可能希望使用非抢占式身份验证，即发送不带凭据的请求，并在质询后使用标头重试401 Unauthorized。
-				// 为此，请设置一个HttpClientConfigCallback禁用身份验证缓存的参数。
-				httpClientBuilder.disableAuthCaching();
-				String proxy = springElasticsearchProperties.getProxy();
-				if (StringExtUtils.isNotEmpty(proxy)) {
-					try {
-						HttpRoutePlanner proxyRoutePlanner = new DefaultProxyRoutePlanner(HttpHost.create(proxy));
-						httpClientBuilder.setRoutePlanner(proxyRoutePlanner);
-					} catch (URISyntaxException ex) {
-						throw new IllegalArgumentException("Could not create the proxy route planner", ex);
-					}
-				}
-				PropertyMapper map = PropertyMapper.get();
-				map.from(this.springElasticsearchProperties::isSocketKeepAlive)
-					.to((keepAlive) -> httpClientBuilder
-						.setIOReactorConfig(IOReactorConfig.custom().setSoKeepAlive(keepAlive).build()));
-			}
+		@Override
+		public void customize(ConnectionConfig.Builder connectionConfigBuilder) {
+			PropertyMapper map = PropertyMapper.get();
+			map.from(this.springElasticsearchProperties::getConnectionTimeout)
+				.as(Timeout::of)
+				.to(connectionConfigBuilder::setConnectTimeout);
+			map.from(this.springElasticsearchProperties::getSocketTimeout)
+				.as(Timeout::of)
+				.to(connectionConfigBuilder::setSocketTimeout);
+		}
 
-			@Override
-			public void customize(ConnectionConfig.Builder connectionConfigBuilder) {
-				PropertyMapper map = PropertyMapper.get();
-				map.from(this.springElasticsearchProperties::getConnectionTimeout)
-					.as(Timeout::of)
-					.to(connectionConfigBuilder::setConnectTimeout);
-				map.from(this.springElasticsearchProperties::getSocketTimeout)
-					.as(Timeout::of)
-					.to(connectionConfigBuilder::setSocketTimeout);
-			}
-
-			@Override
-			public void customize(PoolingAsyncClientConnectionManagerBuilder connectionManagerBuilder) {
-				SslBundle sslBundle = getSslBundle();
-				if (ObjectUtils.isNotNull(sslBundle)) {
-					SSLContext sslContext = sslBundle.createSslContext();
-					SslOptions sslOptions = sslBundle.getOptions();
-					DefaultClientTlsStrategy tlsStrategy = new DefaultClientTlsStrategy(sslContext,
+		@Override
+		public void customize(PoolingAsyncClientConnectionManagerBuilder connectionManagerBuilder) {
+			SslBundle sslBundle = getSslBundle();
+			if (ObjectUtils.isNotNull(sslBundle)) {
+				SSLContext sslContext = sslBundle.createSslContext();
+				SslOptions sslOptions = sslBundle.getOptions();
+				DefaultClientTlsStrategy tlsStrategy = new DefaultClientTlsStrategy(sslContext,
 						sslOptions.getEnabledProtocols(), sslOptions.getCiphers(), SSLBufferMode.STATIC,
 						NoopHostnameVerifier.INSTANCE);
-					connectionManagerBuilder.setTlsStrategy(tlsStrategy);
-				} else {
-					try {
-						connectionManagerBuilder.setTlsStrategy(
+				connectionManagerBuilder.setTlsStrategy(tlsStrategy);
+			}
+			else {
+				try {
+					connectionManagerBuilder.setTlsStrategy(
 							new DefaultClientTlsStrategy(SslUtils.sslContext(), NoopHostnameVerifier.INSTANCE));
-					} catch (NoSuchAlgorithmException | KeyManagementException ex) {
-						throw new IllegalArgumentException("Could not create the default ssl context", ex);
-					}
+				}
+				catch (NoSuchAlgorithmException | KeyManagementException ex) {
+					throw new IllegalArgumentException("Could not create the default ssl context", ex);
 				}
 			}
-
-			@Override
-			public int getOrder() {
-				return 0;
-			}
-
-			private SslBundle getSslBundle() {
-				SpringElasticsearchProperties.RestClient.Ssl ssl = springElasticsearchProperties.getRestClient().getSsl();
-				if (StringUtils.hasText(ssl.getBundle())) {
-					Assert.notNull(this.sslBundles, "SSL bundle name has been set but no SSL bundles found in context");
-					return this.sslBundles.getBundle(ssl.getBundle());
-				}
-				return null;
-			}
-
-			private Header[] getHeaders() {
-				List<Header> headers = new ArrayList<>(1);
-				String username = springElasticsearchProperties.getUsername();
-				String password = springElasticsearchProperties.getPassword();
-				if (StringExtUtils.isNotEmpty(username) && StringExtUtils.isNotEmpty(password)) {
-					headers.add(new BasicHeader(HttpHeaders.AUTHORIZATION,
-						StandardAuthScheme.BASIC + StringConstants.SPACE + encodeBasicAuth(username, password)));
-				}
-				return headers.toArray(Header[]::new);
-			}
-
-			private String encodeBasicAuth(String username, String password) {
-				Assert.notNull(username, "Username must not be null");
-				Assert.notNull(password, "Password must not be null");
-				CharsetEncoder encoder = StandardCharsets.UTF_8.newEncoder();
-				if (encoder.canEncode(username) && encoder.canEncode(password)) {
-					return Base64Utils.encodeToString((username + ":" + password).getBytes(StandardCharsets.UTF_8));
-				} else {
-					throw new IllegalArgumentException(
-						String.format("The username or password contains characters that cannot be encoded：%s",
-							StandardCharsets.UTF_8.displayName()));
-				}
-			}
-
 		}
+
+		@Override
+		public int getOrder() {
+			return 0;
+		}
+
+		private SslBundle getSslBundle() {
+			SpringElasticsearchProperties.RestClient.Ssl ssl = springElasticsearchProperties.getRestClient().getSsl();
+			if (StringUtils.hasText(ssl.getBundle())) {
+				Assert.notNull(this.sslBundles, "SSL bundle name has been set but no SSL bundles found in context");
+				return this.sslBundles.getBundle(ssl.getBundle());
+			}
+			return null;
+		}
+
+		private Header[] getHeaders() {
+			List<Header> headers = new ArrayList<>(1);
+			String username = springElasticsearchProperties.getUsername();
+			String password = springElasticsearchProperties.getPassword();
+			if (StringExtUtils.isNotEmpty(username) && StringExtUtils.isNotEmpty(password)) {
+				headers.add(new BasicHeader(HttpHeaders.AUTHORIZATION,
+						StandardAuthScheme.BASIC + StringConstants.SPACE + encodeBasicAuth(username, password)));
+			}
+			return headers.toArray(Header[]::new);
+		}
+
+		private String encodeBasicAuth(String username, String password) {
+			Assert.notNull(username, "Username must not be null");
+			Assert.notNull(password, "Password must not be null");
+			CharsetEncoder encoder = StandardCharsets.UTF_8.newEncoder();
+			if (encoder.canEncode(username) && encoder.canEncode(password)) {
+				return Base64Utils.encodeToString((username + ":" + password).getBytes(StandardCharsets.UTF_8));
+			}
+			else {
+				throw new IllegalArgumentException(
+						String.format("The username or password contains characters that cannot be encoded：%s",
+								StandardCharsets.UTF_8.displayName()));
+			}
+		}
+
+	}
 
 	@ConditionalOnMissingBean(Rest5ClientTransport.class)
 	@Configuration(proxyBeanMethods = false)

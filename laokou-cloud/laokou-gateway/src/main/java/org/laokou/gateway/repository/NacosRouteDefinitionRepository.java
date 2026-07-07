@@ -36,6 +36,7 @@ import org.springframework.data.redis.core.ReactiveHashOperations;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -89,7 +90,8 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 			@Override
 			public void receiveConfigInfo(String routes) {
 				log.info("监听路由配置信息，开始同步路由配置：{}", routes);
-				Thread.startVirtualThread(() -> syncRouter(getRoutes(routes)).timeout(Duration.ofSeconds(15)).block());
+				Thread.startVirtualThread(() -> syncRouter(getRoutes(routes)).timeout(Duration.ofSeconds(15))
+					.block(Duration.ofSeconds(20)));
 			}
 		});
 	}
@@ -143,19 +145,15 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	 * @param routes 路由
 	 * @return 同步结果
 	 */
+	@SuppressWarnings("DataFlowIssue")
 	private Mono<@NonNull Void> syncRouter(@NonNull Collection<RouteDefinition> routes) {
 		return reactiveHashOperations.delete(RedisKeyUtils.getRouteDefinitionHashKey())
 			.doOnError(throwable -> log.error("删除路由失败，错误信息：{}", throwable.getMessage(), throwable))
-			.doOnNext(_ -> publishRefreshRoutesEvent())
 			.thenMany(Flux.fromIterable(routes))
-			.flatMap(router -> {
-				if (StringExtUtils.isEmpty(router.getId())) {
-					return Mono.empty();
-				}
-				return reactiveHashOperations
-					.putIfAbsent(RedisKeyUtils.getRouteDefinitionHashKey(), router.getId(), router)
-					.doOnError(throwable -> log.error("保存路由失败，错误信息：{}", throwable.getMessage(), throwable));
-			})
+			.filter(route -> StringUtils.hasText(route.getId()))
+			.flatMap(router -> reactiveHashOperations
+				.put(RedisKeyUtils.getRouteDefinitionHashKey(), router.getId(), router)
+				.doOnError(throwable -> log.error("保存路由失败，错误信息：{}", throwable.getMessage(), throwable)))
 			.then()
 			.doOnSuccess(_ -> publishRefreshRoutesEvent());
 	}

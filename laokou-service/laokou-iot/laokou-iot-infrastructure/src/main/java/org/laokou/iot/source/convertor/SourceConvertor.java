@@ -30,7 +30,8 @@ import org.laokou.iot.source.gatewayimpl.database.dataobject.SourceDO;
  */
 public final class SourceConvertor {
 
-	private SourceConvertor() {}
+	private SourceConvertor() {
+	}
 
 	public static SourceDO toDataObject(Long id, SourceE sourceE) {
 		SourceDO sourceDO = ConvertUtils.sourceToTarget(sourceE, SourceDO.class);

@@ -159,14 +159,12 @@ class NacosRouteDefinitionRepositoryTest {
 		Assertions.assertThatNoException()
 			.isThrownBy(() -> configService.publishConfig("router.json", "DEFAULT_GROUP", routerJson));
 		Thread.sleep(Duration.ofSeconds(5));
-		nacosRouteDefinitionRepository.syncRouter()
-			.take(Duration.ofSeconds(15))
-			.subscribeOn(Schedulers.boundedElastic())
-			.block(Duration.ofSeconds(20));
-		List<RouteDefinition> firstSync = nacosRouteDefinitionRepository.getRouteDefinitions()
+		List<@NonNull RouteDefinition> first = nacosRouteDefinitionRepository.syncRouter()
+			.timeout(Duration.ofSeconds(15))
+			.thenMany(nacosRouteDefinitionRepository.getRouteDefinitions())
 			.collectList()
-			.block(Duration.ofSeconds(10));
-		Assertions.assertThat(firstSync).hasSize(5);
+			.block(Duration.ofSeconds(15));
+		Assertions.assertThat(first).hasSize(5);
 		// 第二次发布少量路由
 		String partialRouterJson = """
 				[
