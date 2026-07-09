@@ -52,19 +52,22 @@ public class SourceDomainService {
 	}
 
 	private void checkConnection(SourceE sourceE) {
-//		if ("com.taosdata.jdbc.rs.RestfulDriver".equals(sourceE.getDriverClassName())) {
-//			try {
-//				Class.forName(sourceE.getDriverClassName());
-//				DriverManager.setLoginTimeout(5);
-//				try (Connection ignored = DriverManager.getConnection(sourceE.getUrl(), sourceE.getUsername(),
-//						sourceE.getPassword())) {
-//					// 连接成功
-//				}
-//			}
-//			catch (ClassNotFoundException | SQLException e) {
-//				throw new SystemException("SOURCE_CONNECTION_FAILED", "TDengine 数据源连接失败：" + e.getMessage(), e);
-//			}
-//		}
+		// if ("com.taosdata.jdbc.rs.RestfulDriver".equals(sourceE.getDriverClassName()))
+		// {
+		// try {
+		// Class.forName(sourceE.getDriverClassName());
+		// DriverManager.setLoginTimeout(5);
+		// try (Connection ignored = DriverManager.getConnection(sourceE.getUrl(),
+		// sourceE.getUsername(),
+		// sourceE.getPassword())) {
+		// // 连接成功
+		// }
+		// }
+		// catch (ClassNotFoundException | SQLException e) {
+		// throw new SystemException("SOURCE_CONNECTION_FAILED", "TDengine 数据源连接失败：" +
+		// e.getMessage(), e);
+		// }
+		// }
 	}
 
 }

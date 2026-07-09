@@ -49,7 +49,8 @@ public class SourcePageQryExe {
 			DynamicDataSourceContextHolder.push(DSConstants.IOT);
 			List<SourceDO> list = sourceMapper.selectObjectPage(qry);
 			long total = sourceMapper.selectObjectCount(qry);
-			return Result.ok(Page.create(list.stream().map(SourceConvertor::toClientObject).toList(), total));}
+			return Result.ok(Page.create(list.stream().map(SourceConvertor::toClientObject).toList(), total));
+		}
 		catch (Exception ex) {
 			log.error("分页查询数据源失败，错误信息：{}", ex.getMessage(), ex);
 			throw ex;

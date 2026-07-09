@@ -9,7 +9,7 @@ import { useAccess, useIntl } from '@@/exports';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import { ProColumns, ProTable } from '@ant-design/pro-components';
 import type { ActionType } from '@ant-design/pro-components';
-import { Button, message, Modal, Space, Tag } from 'antd';
+import { Button, message, Modal } from 'antd';
 import { TableRowSelection } from 'antd/es/table/interface';
 import {useEffect, useRef, useState} from 'react';
 import { v7 as uuidV7 } from 'uuid';
@@ -28,7 +28,6 @@ export default () => {
 	const [ids, setIds] = useState<any>([]);
 	const [dataType, setDataType] = useState('int');
 	const [dataTypeOptions, setDataTypeOptions] = useState<any>([]);
-	const [typeOptions, setTypeOptions] = useState<any>([]);
 	const [requestId, setRequestId] = useState('');
 
 	type TableColumns = {
@@ -37,7 +36,6 @@ export default () => {
 		name: string | undefined;
 		sort: number | undefined;
 		dataType: string | undefined;
-		type: string | undefined;
 		spec: string | undefined;
 		remark: string | undefined;
 		createTime: string | undefined;
@@ -52,7 +50,6 @@ export default () => {
 			name: trim(params?.name),
 			dataType: params?.dataType,
 			category: params?.category,
-			type: params?.typeValue ? params?.typeValue.join(',') : '',
 			params: {
 				startTime: params?.startDate
 					? `${params.startDate} 00:00:00`
@@ -73,22 +70,11 @@ export default () => {
 		setDataTypeOptions(options)
 	}
 
-	const getType = async () => {
-		const  res = await listDictItem({dictCode: 'thing_model_type'});
-		const options: any[] = [];
-		res?.data?.forEach((item: any) => {
-			options.push({label: item.name, value: item.code})
-		})
-		setTypeOptions(options)
-	}
-
 	const getData = (data: any) => {
 		const spec = JSON.parse(data?.spec);
 		data.length = spec?.length;
-		data.unit = spec?.unit;
 		data.trueText = spec?.trueText;
 		data.falseText = spec?.falseText;
-		data.type = data?.type?.split(',');
 		return data;
 	};
 
@@ -104,7 +90,6 @@ export default () => {
 
 	useEffect(() => {
 		getDataType().catch(console.log)
-		getType().catch(console.log)
 	}, []);
 
 	const columns: ProColumns<TableColumns>[] = [
@@ -144,49 +129,6 @@ export default () => {
 				options: dataTypeOptions,
 			},
 			ellipsis: true,
-		},
-		{
-			title: t('iot.thingModel.type'),
-			key: 'typeValue',
-			dataIndex: 'typeValue',
-			valueType: 'select',
-			ellipsis: true,
-			hideInTable: true,
-			fieldProps: {
-				valueType: 'select',
-				mode: 'multiple',
-				placeholder: t('iot.thingModel.placeholder.type'),
-				options: typeOptions,
-			},
-		},
-		{
-			title: t('iot.thingModel.type'),
-			dataIndex: 'type',
-			disable: true,
-			hideInSearch: true,
-			ellipsis: true,
-			renderFormItem: (_, { defaultRender }) => {
-				return defaultRender(_);
-			},
-			render: (_, record) => {
-				const element: any = [];
-				record?.type?.split(',').forEach((item) => {
-					if (item === 'read') {
-						element.push(
-							<Tag color={'green-inverse'} key={'read'}>
-								读
-							</Tag>,
-						);
-					} else {
-						element.push(
-							<Tag color={'#fd5251'} key={'write'}>
-								写
-							</Tag>,
-						);
-					}
-				});
-				return <Space>{element}</Space>;
-			},
 		},
 		{
 			title: t('iot.thingModel.spec'),
@@ -349,7 +291,6 @@ export default () => {
 	return (
 		<>
 			<ThingModelDrawer
-				typeOptions={typeOptions}
 				dataTypeOptions={dataTypeOptions}
 				modalVisit={modalVisit}
 				setModalVisit={setModalVisit}

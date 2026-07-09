@@ -19,6 +19,7 @@ package org.laokou.iot.thingModel.command.query;
 
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.tenant.constant.DSConstants;
 import org.laokou.iot.thingModel.convertor.ThingModelConvertor;
@@ -32,6 +33,7 @@ import org.springframework.stereotype.Component;
  *
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class ThingModelGetQryExe {
@@ -42,6 +44,10 @@ public class ThingModelGetQryExe {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.IOT);
 			return Result.ok(ThingModelConvertor.toClientObject(thingModelMapper.selectById(qry.getId())));
+		}
+		catch (Exception ex) {
+			log.error("查看物模型详情失败，错误信息：{}", ex.getMessage(), ex);
+			throw ex;
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();

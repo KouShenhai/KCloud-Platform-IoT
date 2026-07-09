@@ -23,7 +23,6 @@ interface ThingModelDrawerProps {
 	requestId: string;
 	setRequestId: (requestId: string) => void;
 	dataTypeOptions: any[]
-	typeOptions: any[]
 }
 
 type TableColumns = {
@@ -51,7 +50,6 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 	  requestId,
 	  setRequestId,
 	  dataTypeOptions,
-	  typeOptions
   }) => {
 	const intl = useIntl();
 	const t = (id: string, values?: Record<string, any>) =>
@@ -97,8 +95,6 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 			onFinish={async (value) => {
 				setLoading(true);
 				value.spec = JSON.stringify(getSpec(value));
-				// @ts-ignore
-				value.type = value.type.join(',');
 				if (value.id === undefined) {
 					saveThingModel({ co: value }, requestId)
 						.then((res) => {
@@ -135,7 +131,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 			/>
 
 			<ProFormText
-				disabled={loading}
+				disabled={loading || dataSource.id !== undefined}
 				readonly={readOnly}
 				name="code"
 				label={t('iot.thingModel.code')}
@@ -155,33 +151,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 			/>
 
 			<ProFormSelect
-				disabled={loading}
-				name="type"
-				label={t('iot.thingModel.type')}
-				mode={'multiple'}
-				readonly={readOnly}
-				placeholder={t('iot.thingModel.placeholder.type')}
-				rules={[
-					{ required: true, message: t('iot.thingModel.required.type') },
-				]}
-				options={typeOptions}
-			/>
-
-			<ProFormDigit
-				disabled={loading}
-				name="sort"
-				label={t('iot.thingModel.sort')}
-				readonly={readOnly}
-				placeholder={t('iot.thingModel.placeholder.sort')}
-				min={1}
-				max={99999}
-				rules={[
-					{ required: true, message: t('iot.thingModel.required.sort') },
-				]}
-			/>
-
-			<ProFormSelect
-				disabled={loading}
+				disabled={loading || dataSource.id !== undefined}
 				name="dataType"
 				label={t('iot.thingModel.dataType')}
 				readonly={readOnly}
@@ -198,7 +168,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 
 			{dataType === 'text' && (
 				<ProFormDigit
-					disabled={loading}
+					disabled={loading || dataSource.id !== undefined}
 					readonly={readOnly}
 					name="length"
 					label={t('iot.thingModel.length')}
@@ -217,7 +187,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 				<Row gutter={24}>
 					<Col span={12}>
 						<ProFormText
-							disabled={loading}
+							disabled={loading || dataSource.id !== undefined}
 							readonly={readOnly}
 							name="trueText"
 							label={t('iot.thingModel.trueText')}
@@ -231,7 +201,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 					</Col>
 					<Col span={12}>
 						<ProFormText
-							disabled={loading}
+							disabled={loading || dataSource.id !== undefined}
 							readonly={readOnly}
 							name="falseText"
 							label={t('iot.thingModel.falseText')}
@@ -245,6 +215,19 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 					</Col>
 				</Row>
 			)}
+
+			<ProFormDigit
+				disabled={loading}
+				name="sort"
+				label={t('iot.thingModel.sort')}
+				readonly={readOnly}
+				placeholder={t('iot.thingModel.placeholder.sort')}
+				min={1}
+				max={99999}
+				rules={[
+					{ required: true, message: t('iot.thingModel.required.sort') },
+				]}
+			/>
 
 			<ProFormTextArea
 				disabled={loading}

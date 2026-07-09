@@ -43,7 +43,6 @@ public final class ThingModelConvertor {
 		thingModelDO.setName(thingModelE.getName());
 		thingModelDO.setCode(thingModelE.getCode());
 		thingModelDO.setDataType(thingModelE.getDataType());
-		thingModelDO.setType(thingModelE.getType());
 		thingModelDO.setSort(thingModelE.getSort());
 		thingModelDO.setSpec(thingModelE.getSpec());
 		thingModelDO.setRemark(thingModelE.getRemark());
@@ -60,7 +59,6 @@ public final class ThingModelConvertor {
 		thingModelCO.setName(thingModelDO.getName());
 		thingModelCO.setCode(thingModelDO.getCode());
 		thingModelCO.setDataType(thingModelDO.getDataType());
-		thingModelCO.setType(thingModelDO.getType());
 		thingModelCO.setSort(thingModelDO.getSort());
 		thingModelCO.setSpec(thingModelDO.getSpec());
 		thingModelCO.setRemark(thingModelDO.getRemark());
@@ -75,7 +73,6 @@ public final class ThingModelConvertor {
 			.name(thingModelCO.getName())
 			.code(thingModelCO.getCode())
 			.dataType(thingModelCO.getDataType())
-			.type(thingModelCO.getType())
 			.sort(thingModelCO.getSort())
 			.spec(thingModelCO.getSpec())
 			.remark(thingModelCO.getRemark())

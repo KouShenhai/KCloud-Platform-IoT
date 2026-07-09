@@ -34,18 +34,18 @@ public class SaveSourceParamValidator implements ThingModelParamValidator {
 
 	@Override
 	public void validateThingModel(ThingModelA thingModelA) {
-//		ParamValidator.validate(thingModelA.getValidateName(),
-//				// 校验物模型编码和物模型名称
-//				SourceParamValidator.validateCodeAndName(thingModelA,
-//						thingModelMapper),
-//				// 校验物模型数据类型
-//				SourceParamValidator.validateDataType(thingModelA),
-//				// 校验物模型规格
-//				SourceParamValidator.validateSpec(thingModelA),
-//				// 校验物模型类型
-//				SourceParamValidator.validateType(thingModelA),
-//				// 校验物模型排序
-//				SourceParamValidator.validateSort(thingModelA));
+		// ParamValidator.validate(thingModelA.getValidateName(),
+		// // 校验物模型编码和物模型名称
+		// SourceParamValidator.validateCodeAndName(thingModelA,
+		// thingModelMapper),
+		// // 校验物模型数据类型
+		// SourceParamValidator.validateDataType(thingModelA),
+		// // 校验物模型规格
+		// SourceParamValidator.validateSpec(thingModelA),
+		// // 校验物模型类型
+		// SourceParamValidator.validateType(thingModelA),
+		// // 校验物模型排序
+		// SourceParamValidator.validateSort(thingModelA));
 	}
 
 }

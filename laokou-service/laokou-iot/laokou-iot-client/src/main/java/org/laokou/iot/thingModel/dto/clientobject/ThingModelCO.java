@@ -45,9 +45,6 @@ public class ThingModelCO extends ClientObject {
 			description = "物模型数据类型 int long text float double boolean")
 	private String dataType;
 
-	@Schema(name = "物模型类型 read读 write写", description = "物模型类型 read读 write写")
-	private String type;
-
 	@Schema(name = "物模型排序", description = "物模型排序")
 	private Integer sort;
 

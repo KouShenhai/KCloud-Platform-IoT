@@ -59,11 +59,6 @@ public class ThingModelE implements Serializable {
 	private String dataType;
 
 	/**
-	 * 物模型类型 read读 write写.
-	 */
-	private String type;
-
-	/**
 	 * 物模型规格.
 	 */
 	private String spec;

@@ -45,8 +45,6 @@ public class ModifyThingModelParamValidator implements ThingModelParamValidator 
 				org.laokou.iot.thingModel.service.validator.ThingModelParamValidator.validateDataType(thingModelA),
 				// 校验物模型规格
 				org.laokou.iot.thingModel.service.validator.ThingModelParamValidator.validateSpec(thingModelA),
-				// 校验物模型类型
-				org.laokou.iot.thingModel.service.validator.ThingModelParamValidator.validateType(thingModelA),
 				// 校验物模型排序
 				org.laokou.iot.thingModel.service.validator.ThingModelParamValidator.validateSort(thingModelA));
 	}

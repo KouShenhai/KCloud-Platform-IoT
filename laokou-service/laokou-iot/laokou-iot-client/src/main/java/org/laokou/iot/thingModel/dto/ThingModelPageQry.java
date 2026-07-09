@@ -45,21 +45,12 @@ public class ThingModelPageQry extends PageQuery {
 	 */
 	private String dataType;
 
-	/**
-	 * 物模型类型 read读 write写.
-	 */
-	private String type;
-
 	public void setCode(String code) {
 		this.code = StringExtUtils.like(StringExtUtils.trim(code));
 	}
 
 	public void setName(String name) {
 		this.name = StringExtUtils.like(StringExtUtils.trim(name));
-	}
-
-	public void setType(String type) {
-		this.type = StringExtUtils.trim(type);
 	}
 
 }
