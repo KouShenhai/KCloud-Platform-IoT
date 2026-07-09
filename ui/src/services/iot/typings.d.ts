@@ -93,8 +93,6 @@ declare namespace API {
 		code?: string;
 		/** 物模型数据类型 int long text float double boolean */
 		dataType?: string;
-		/** 物模型类型 read读 write写 */
-		type?: string;
 		/** 物模型排序 */
 		sort?: number;
 		/** 物模型规格 */

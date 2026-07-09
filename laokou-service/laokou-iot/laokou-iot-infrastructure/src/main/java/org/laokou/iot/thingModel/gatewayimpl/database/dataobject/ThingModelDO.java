@@ -48,11 +48,6 @@ public class ThingModelDO extends BaseDO {
 	private String dataType;
 
 	/**
-	 * 模型类型 read读 write写.
-	 */
-	private String type;
-
-	/**
 	 * 物模型排序.
 	 */
 	private Integer sort;

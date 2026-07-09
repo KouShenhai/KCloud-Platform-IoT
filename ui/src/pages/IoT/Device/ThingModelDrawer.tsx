@@ -23,7 +23,6 @@ interface ThingModelDrawerProps {
 	requestId: string;
 	setRequestId: (requestId: string) => void;
 	dataTypeOptions: any[]
-	typeOptions: any[]
 }
 
 type TableColumns = {
@@ -51,7 +50,6 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 	  requestId,
 	  setRequestId,
 	  dataTypeOptions,
-	  typeOptions
   }) => {
 	const intl = useIntl();
 	const t = (id: string, values?: Record<string, any>) =>
@@ -97,8 +95,6 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 			onFinish={async (value) => {
 				setLoading(true);
 				value.spec = JSON.stringify(getSpec(value));
-				// @ts-ignore
-				value.type = value.type.join(',');
 				if (value.id === undefined) {
 					saveThingModel({ co: value }, requestId)
 						.then((res) => {
@@ -151,32 +147,6 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 				label={t('iot.thingModel.name')}
 				rules={[
 					{ required: true, message: t('iot.thingModel.required.name') },
-				]}
-			/>
-
-			<ProFormSelect
-				disabled={loading}
-				name="type"
-				label={t('iot.thingModel.type')}
-				mode={'multiple'}
-				readonly={readOnly}
-				placeholder={t('iot.thingModel.placeholder.type')}
-				rules={[
-					{ required: true, message: t('iot.thingModel.required.type') },
-				]}
-				options={typeOptions}
-			/>
-
-			<ProFormDigit
-				disabled={loading}
-				name="sort"
-				label={t('iot.thingModel.sort')}
-				readonly={readOnly}
-				placeholder={t('iot.thingModel.placeholder.sort')}
-				min={1}
-				max={99999}
-				rules={[
-					{ required: true, message: t('iot.thingModel.required.sort') },
 				]}
 			/>
 
@@ -245,6 +215,19 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 					</Col>
 				</Row>
 			)}
+
+			<ProFormDigit
+				disabled={loading}
+				name="sort"
+				label={t('iot.thingModel.sort')}
+				readonly={readOnly}
+				placeholder={t('iot.thingModel.placeholder.sort')}
+				min={1}
+				max={99999}
+				rules={[
+					{ required: true, message: t('iot.thingModel.required.sort') },
+				]}
+			/>
 
 			<ProFormTextArea
 				disabled={loading}

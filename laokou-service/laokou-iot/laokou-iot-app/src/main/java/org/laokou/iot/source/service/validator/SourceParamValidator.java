@@ -19,9 +19,7 @@ package org.laokou.iot.source.service.validator;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.laokou.common.context.util.UserUtils;
-import org.laokou.common.core.util.CollectionExtUtils;
 import org.laokou.common.core.util.RegexUtils;
-import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.laokou.iot.thingModel.gatewayimpl.database.ThingModelMapper;
@@ -29,7 +27,6 @@ import org.laokou.iot.thingModel.gatewayimpl.database.dataobject.ThingModelDO;
 import org.laokou.iot.thingModel.model.ThingModelA;
 import org.laokou.iot.thingModel.model.entity.ThingModelE;
 import org.laokou.iot.thingModel.model.enums.DataType;
-import org.laokou.iot.thingModel.model.enums.Type;
 import org.springframework.util.StringUtils;
 
 import java.util.Arrays;
@@ -87,19 +84,6 @@ final class SourceParamValidator {
 			return DataType.getByCode(thingModelA.getThingModelE().getDataType()).validate(spec);
 		}
 		return validate;
-	}
-
-	static ParamValidator.Validate validateType(ThingModelA thingModelA) {
-		String type = thingModelA.getThingModelE().getType();
-		if (ObjectUtils.isNull(type)) {
-			return ParamValidator.invalidate("物模型类型不能为空");
-		}
-		boolean isExist = CollectionExtUtils.containsAll(Arrays.stream(type.split(StringConstants.COMMA)).toList(),
-				Arrays.stream(Type.values()).map(Type::getCode).toList());
-		if (!isExist) {
-			return ParamValidator.invalidate("物模型类型不存在");
-		}
-		return ParamValidator.validate();
 	}
 
 	static ParamValidator.Validate validateDataType(ThingModelA thingModelA) {
