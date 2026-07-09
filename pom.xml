@@ -153,7 +153,7 @@
     <!-- micrometer-tracing版本 -->
     <micrometer-tracing.version>1.7.0</micrometer-tracing.version>
     <!-- netty版本 -->
-    <netty.version>4.2.15.Final</netty.version>
+    <netty.version>4.2.16.Final</netty.version>
     <!-- grpc版本 -->
     <grpc.version>1.82.0</grpc.version>
     <!-- jackson版本 -->
