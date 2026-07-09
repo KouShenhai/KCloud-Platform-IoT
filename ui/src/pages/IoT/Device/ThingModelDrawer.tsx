@@ -135,7 +135,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 			/>
 
 			<ProFormText
-				disabled={loading}
+				disabled={loading || dataSource.id !== undefined}
 				readonly={readOnly}
 				name="code"
 				label={t('iot.thingModel.code')}
@@ -181,7 +181,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 			/>
 
 			<ProFormSelect
-				disabled={loading}
+				disabled={loading || dataSource.id !== undefined}
 				name="dataType"
 				label={t('iot.thingModel.dataType')}
 				readonly={readOnly}
@@ -198,7 +198,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 
 			{dataType === 'text' && (
 				<ProFormDigit
-					disabled={loading}
+					disabled={loading || dataSource.id !== undefined}
 					readonly={readOnly}
 					name="length"
 					label={t('iot.thingModel.length')}
@@ -217,7 +217,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 				<Row gutter={24}>
 					<Col span={12}>
 						<ProFormText
-							disabled={loading}
+							disabled={loading || dataSource.id !== undefined}
 							readonly={readOnly}
 							name="trueText"
 							label={t('iot.thingModel.trueText')}
@@ -231,7 +231,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 					</Col>
 					<Col span={12}>
 						<ProFormText
-							disabled={loading}
+							disabled={loading || dataSource.id !== undefined}
 							readonly={readOnly}
 							name="falseText"
 							label={t('iot.thingModel.falseText')}
