@@ -102,12 +102,6 @@
         <AppenderRef ref="failover_kafka"/>
       </Failovers>
     </Failover>
-    <Async name="async_file" bufferSize="2000" blocking="false">
-      <AppenderRef ref="file"/>
-    </Async>
-    <Async name="async_kafka" bufferSize="2000" blocking="false">
-      <AppenderRef ref="failover"/>
-    </Async>
     <Kafka name="kafka" topic="gateway-trace-log" ignoreExceptions="false">
      <!--
 
@@ -139,12 +133,10 @@
         includeLocation="false" 关闭行号
         additivity="false"      不继承root
     -->
-    <AsyncLogger name="org.laokou" additivity="FALSE" includeLocation="FALSE" level="INFO">
-      <AppenderRef ref="async_kafka"/>
-    </AsyncLogger>
-    <AsyncRoot level="ERROR" additivity="FALSE" includeLocation="FALSE">
+    <Root level="INFO" includeLocation="false">
+      <AppenderRef ref="failover"/>
       <AppenderRef ref="console"/>
-      <AppenderRef ref="async_file"/>
-    </AsyncRoot>
+      <AppenderRef ref="file"/>
+    </Root>
   </Loggers>
 </Configuration>
