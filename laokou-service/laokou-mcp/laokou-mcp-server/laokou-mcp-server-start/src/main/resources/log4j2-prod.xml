@@ -139,12 +139,12 @@
         includeLocation="false" 关闭行号
         additivity="false"      不继承root
     -->
-    <AsyncLogger name="org.laokou" additivity="FALSE" includeLocation="FALSE" level="INFO">
+    <Logger name="org.laokou" additivity="false" includeLocation="false" level="INFO">
       <AppenderRef ref="async_kafka"/>
-    </AsyncLogger>
-    <AsyncRoot level="ERROR" additivity="FALSE" includeLocation="FALSE">
+    </Logger>
+    <Root level="ERROR" includeLocation="false">
       <AppenderRef ref="console"/>
       <AppenderRef ref="async_file"/>
-    </AsyncRoot>
+    </Root>
   </Loggers>
 </Configuration>

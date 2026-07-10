@@ -81,9 +81,9 @@
    includeLocation => 显示文件行数，方法名等信息，true显示，false不显示，可以减少日志输出的体积，加快日志写入速度
  -->
   <Loggers>
-    <AsyncRoot level="ERROR" additivity="FALSE" includeLocation="FALSE">
+    <Root level="ERROR" includeLocation="false">
       <AppenderRef ref="console"/>
       <AppenderRef ref="async_file"/>
-    </AsyncRoot>
+    </Root>
   </Loggers>
 </Configuration>
