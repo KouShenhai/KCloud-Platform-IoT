@@ -27,6 +27,7 @@ export default () => {
 	const [readOnly, setReadOnly] = useState(false);
 	const [ids, setIds] = useState<any>([]);
 	const [dataType, setDataType] = useState('int');
+	const [dataUnitOptions, setDataUnitOptions] = useState<any>([]);
 	const [dataTypeOptions, setDataTypeOptions] = useState<any>([]);
 	const [requestId, setRequestId] = useState('');
 
@@ -70,11 +71,23 @@ export default () => {
 		setDataTypeOptions(options)
 	}
 
+	const getDataUnit = async () => {
+		const  res = await listDictItem({dictCode: 'thing_model_data_unit'});
+		const options: any[] = [];
+		res?.data?.forEach((item: any) => {
+			options.push({label: item.name, value: item.code})
+		})
+		setDataUnitOptions(options)
+	}
+
 	const getData = (data: any) => {
 		const spec = JSON.parse(data?.spec);
 		data.length = spec?.length;
 		data.trueText = spec?.trueText;
 		data.falseText = spec?.falseText;
+		data.min = spec?.min;
+		data.max = spec?.max;
+		data.unit = spec?.unit;
 		return data;
 	};
 
@@ -90,6 +103,7 @@ export default () => {
 
 	useEffect(() => {
 		getDataType().catch(console.log)
+		getDataUnit().catch(console.log)
 	}, []);
 
 	const columns: ProColumns<TableColumns>[] = [
@@ -145,6 +159,30 @@ export default () => {
 				);
 				return (
 					<>
+						{(record?.dataType === 'int' || record?.dataType === 'long' || record?.dataType === 'float' || record?.dataType === 'double') && (
+							<div>
+								最小值：
+								<span style={{ color: '#fd5251' }}>
+									{data?.min}
+								</span>
+							</div>
+						)}
+						{(record?.dataType === 'int' || record?.dataType === 'long' || record?.dataType === 'float' || record?.dataType === 'double') && (
+							<div>
+								最大值：
+								<span style={{ color: '#fd5251' }}>
+									{data?.max}
+								</span>
+							</div>
+						)}
+						{(record?.dataType === 'int' || record?.dataType === 'long' || record?.dataType === 'float' || record?.dataType === 'double') && (
+							<div>
+								单位：
+								<span style={{ color: '#fd5251' }}>
+									{data?.unit}
+								</span>
+							</div>
+						)}
 						{record?.dataType === 'boolean' && (
 							<div>
 								{t('iot.thingModel.falseText')}：
@@ -297,6 +335,7 @@ export default () => {
 				title={title}
 				readOnly={readOnly}
 				dataSource={dataSource}
+				dataUnitOptions={dataUnitOptions}
 				onComponent={async () => {
 					// @ts-ignore
 					actionRef?.current?.reload();
