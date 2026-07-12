@@ -31,25 +31,25 @@ public enum DataType {
 	INT("int", "整数型") {
 		@Override
 		public ParamValidator.Validate validate(String spec) {
-			return ParamValidator.validate();
+			return JacksonUtils.toBean(spec, IntType.class).checkValue();
 		}
 	},
 	LONG("long", "长整数型") {
 		@Override
 		public ParamValidator.Validate validate(String spec) {
-			return ParamValidator.validate();
+			return JacksonUtils.toBean(spec, LongType.class).checkValue();
 		}
 	},
 	FLOAT("float", "单精度浮点型") {
 		@Override
 		public ParamValidator.Validate validate(String spec) {
-			return ParamValidator.validate();
+			return JacksonUtils.toBean(spec, FloatType.class).checkValue();
 		}
 	},
 	DOUBLE("double", "双精度浮点型") {
 		@Override
 		public ParamValidator.Validate validate(String spec) {
-			return ParamValidator.validate();
+			return JacksonUtils.toBean(spec, DoubleType.class).checkValue();
 		}
 	},
 
