@@ -10,6 +10,7 @@ import { ProFormTextArea } from '@ant-design/pro-form';
 import { Col, message, Row } from 'antd';
 import React, { useState } from 'react';
 import { v7 as uuidV7 } from 'uuid';
+import ProFormNumber from "@/pages/IoT/Device/ProFormNumber";
 
 interface ThingModelDrawerProps {
 	modalVisit: boolean;
@@ -23,6 +24,7 @@ interface ThingModelDrawerProps {
 	requestId: string;
 	setRequestId: (requestId: string) => void;
 	dataTypeOptions: any[]
+	dataUnitOptions: any[]
 }
 
 type TableColumns = {
@@ -50,6 +52,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 	  requestId,
 	  setRequestId,
 	  dataTypeOptions,
+	  dataUnitOptions,
   }) => {
 	const intl = useIntl();
 	const t = (id: string, values?: Record<string, any>) =>
@@ -65,7 +68,16 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 				};
 			case 'text':
 				return {
-					length: value.length,
+					length: value?.length,
+				};
+			case 'int':
+			case 'long':
+			case 'float':
+			case 'double':
+				return {
+					min: value?.min,
+					max: value?.max,
+					unit: value?.unit
 				};
 			default:
 				return {};
@@ -141,7 +153,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 			/>
 
 			<ProFormText
-				disabled={loading}
+				disabled={loading || dataSource.id !== undefined}
 				readonly={readOnly}
 				name="name"
 				label={t('iot.thingModel.name')}
@@ -165,6 +177,134 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 				options={dataTypeOptions}
 				onChange={setDataType}
 			/>
+
+			{dataType === 'int' && (
+				<Row gutter={24}>
+					<Col span={8}>
+						<ProFormNumber
+							disabled={loading || dataSource.id !== undefined}
+							readonly={readOnly}
+							name="min"
+							label="最小值"
+							type="int"
+							precision={0} />
+					</Col>
+					<Col span={8}>
+						<ProFormNumber
+							disabled={loading || dataSource.id !== undefined}
+							readonly={readOnly}
+							name="max"
+							label="最大值"
+							type="int"
+							precision={0} />
+					</Col>
+					<Col span={8}>
+						<ProFormSelect
+							disabled={loading || dataSource.id !== undefined}
+							readonly={readOnly}
+							name="unit"
+							label="单位"
+							options={dataUnitOptions}
+						/>
+					</Col>
+				</Row>
+			)}
+
+			{dataType === 'long' && (
+				<Row gutter={24}>
+					<Col span={8}>
+						<ProFormNumber
+							disabled={loading || dataSource.id !== undefined}
+							readonly={readOnly}
+							name="min"
+							label={"最小值"}
+							type="long"
+							precision={0} />
+					</Col>
+					<Col span={8}>
+						<ProFormNumber
+							disabled={loading || dataSource.id !== undefined}
+							readonly={readOnly}
+							name="max"
+							label={"最大值"}
+							type="long"
+							precision={0} />
+					</Col>
+					<Col span={8}>
+						<ProFormSelect
+							disabled={loading || dataSource.id !== undefined}
+							readonly={readOnly}
+							name="unit"
+							label="单位"
+							options={dataUnitOptions}
+						/>
+					</Col>
+				</Row>
+			)}
+
+			{dataType === 'float' && (
+				<Row gutter={24}>
+					<Col span={8}>
+						<ProFormNumber
+							disabled={loading || dataSource.id !== undefined}
+							readonly={readOnly}
+							name="min"
+							label={"最小值"}
+							type="float"
+							precision={3} />
+					</Col>
+					<Col span={8}>
+						<ProFormNumber
+							disabled={loading || dataSource.id !== undefined}
+							readonly={readOnly}
+							name="max"
+							label={"最大值"}
+							type="float"
+							precision={3} />
+					</Col>
+					<Col span={8}>
+						<ProFormSelect
+							disabled={loading || dataSource.id !== undefined}
+							readonly={readOnly}
+							name="unit"
+							label="单位"
+							options={dataUnitOptions}
+						/>
+					</Col>
+				</Row>
+			)}
+
+			{dataType === 'double' && (
+				<Row gutter={24}>
+					<Col span={8}>
+						<ProFormNumber
+							disabled={loading || dataSource.id !== undefined}
+							readonly={readOnly}
+							name="min"
+							label="最小值"
+							type="double"
+							precision={3} />
+					</Col>
+					<Col span={8}>
+						<ProFormNumber
+							disabled={loading || dataSource.id !== undefined}
+							readonly={readOnly}
+							name="max"
+							label={"最大值"}
+							type="double"
+							precision={3} />
+					</Col>
+					<Col span={8}>
+						<ProFormSelect
+							disabled={loading || dataSource.id !== undefined}
+							readonly={readOnly}
+							name="unit"
+							label="单位"
+							options={dataUnitOptions}
+						/>
+					</Col>
+				</Row>
+			)}
 
 			{dataType === 'text' && (
 				<ProFormDigit
