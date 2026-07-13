@@ -17,10 +17,13 @@
 
 package org.laokou.iot.productCategory.dto.clientobject;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.core.util.TreeUtils;
+import org.laokou.common.i18n.common.constant.DateConstants;
+
 import java.time.Instant;
 
 /**
@@ -41,6 +44,7 @@ public class ProductCategoryCO extends TreeUtils.TreeNode<ProductCategoryCO> {
 	private String remark;
 
 	@Schema(name = "创建时间", description = "创建时间")
+	@JsonFormat(pattern = DateConstants.YYYY_B_MM_B_DD_HH_R_MM_R_SS, timezone = DateConstants.DEFAULT_TIMEZONE)
 	private Instant createTime;
 
 }

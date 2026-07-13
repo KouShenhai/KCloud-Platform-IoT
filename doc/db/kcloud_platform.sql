@@ -194,7 +194,7 @@ INSERT INTO "public"."sys_dict_item" VALUES (5, 1, 1, '2026-06-28 17:34:53.70518
 INSERT INTO "public"."sys_dict_item" VALUES (6, 1, 1, '2026-06-28 17:35:28.144399', '2026-06-28 17:35:28.159035', 0, 0, 1, 1, 'boolean(布尔型)', 'boolean', 6, '', 0, 1);
 INSERT INTO "public"."sys_dict_item" VALUES (9, 1, 1, '2026-07-12 16:42:51.174665', '2026-07-12 16:42:51.207693', 0, 0, 1, 1, '百分比(%)', 'percent', 1, '百分比(%)', 0, 3);
 INSERT INTO "public"."sys_dict_item" VALUES (10, 1, 1, '2026-07-12 16:44:06.994159', '2026-07-12 16:44:07.015459', 0, 0, 1, 1, '转每分钟(r/min)', 'rpm', 2, '转每分钟(r/min)', 0, 3);
-INSERT INTO "public"."sys_dict_item" VALUES (43561583896428545, 1, 1, '2026-07-13 14:59:05.461603', '2026-07-13 14:59:05.497696', 0, 0, 1, 1, 'TDengine', 'tdengine', 1, 'TDengine', 0, 4);
+INSERT INTO "public"."sys_dict_item" VALUES (11, 1, 1, '2026-07-13 14:59:05.461603', '2026-07-13 14:59:05.497696', 0, 0, 1, 1, 'TDengine', 'tdengine', 1, 'TDengine', 0, 4);
 
 -- ----------------------------
 -- -------------国际化菜单------------

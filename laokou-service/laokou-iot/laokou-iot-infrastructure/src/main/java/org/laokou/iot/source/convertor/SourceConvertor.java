@@ -44,6 +44,7 @@ public final class SourceConvertor {
 		sourceDO.setPassword(sourceE.getPassword());
 		sourceDO.setEndpoint(sourceE.getEndpoint());
 		sourceDO.setType(sourceE.getType());
+		sourceDO.setDbName(sourceE.getDbName());
 		return sourceDO;
 	}
 
@@ -59,6 +60,7 @@ public final class SourceConvertor {
 		sourceCO.setPassword(sourceDO.getPassword());
 		sourceCO.setEndpoint(sourceDO.getEndpoint());
 		sourceCO.setType(sourceDO.getType());
+		sourceCO.setDbName(sourceDO.getDbName());
 		sourceCO.setCreateTime(sourceDO.getCreateTime());
 		return sourceCO;
 	}
@@ -71,6 +73,8 @@ public final class SourceConvertor {
 			.username(sourceCO.getUsername())
 			.password(sourceCO.getPassword())
 			.endpoint(sourceCO.getEndpoint())
+			.dbName(sourceCO.getDbName())
+			.type(sourceCO.getType())
 			.build();
 	}
 

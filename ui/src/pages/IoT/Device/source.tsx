@@ -6,7 +6,9 @@ import type {ActionType, ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
 import {Button, message, Modal} from 'antd';
 import type {TableRowSelection} from 'antd/es/table/interface';
-import {useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
+import {listDictItem} from "@/services/admin/dictItem";
+import {v7 as uuidV7} from "uuid";
 
 export default () => {
 	const access = useAccess();
@@ -16,6 +18,8 @@ export default () => {
 	const [dataSource, setDataSource] = useState<API.SourceCO>({});
 	const [title, setTitle] = useState('');
 	const [ids, setIds] = useState<number[]>([]);
+	const [sourceTypeOptions, setSourceTypeOptions] = useState<any>([]);
+	const [requestId, setRequestId] = useState('');
 
 	const reload = () => {
 		actionRef?.current?.reload();
@@ -30,6 +34,14 @@ export default () => {
 		};
 	};
 
+	const getSourceType = async () => {
+		const  res = await listDictItem({dictCode: 'source_type'});
+		setSourceTypeOptions(res?.data?.map((item: any) => ({
+			label: item.name,
+			value: item.code
+		})))
+	}
+
 	const rowSelection: TableRowSelection<API.SourceCO> = {
 		onChange: (selectedRowKeys) => {
 			const selectedIds: number[] = [];
@@ -39,6 +51,10 @@ export default () => {
 			setIds(selectedIds);
 		},
 	};
+
+	useEffect(() => {
+		getSourceType().catch(console.log)
+	}, []);
 
 	const showRemoveConfirm = (removeIds: number[]) => {
 		Modal.confirm({
@@ -75,19 +91,8 @@ export default () => {
 			ellipsis: true,
 		},
 		{
-			title: '驱动名称',
-			dataIndex: 'driverClassName',
-			ellipsis: true,
-		},
-		{
-			title: '连接地址',
-			dataIndex: 'url',
-			ellipsis: true,
-			hideInSearch: true,
-		},
-		{
-			title: '用户名',
-			dataIndex: 'username',
+			title: '数据源类型',
+			dataIndex: 'type',
 			ellipsis: true,
 			hideInSearch: true,
 		},
@@ -132,6 +137,9 @@ export default () => {
 				title={title}
 				readOnly={readOnly}
 				dataSource={dataSource}
+				sourceOptions={sourceTypeOptions}
+				setRequestId={setRequestId}
+				requestId={requestId}
 				onComponent={() => {
 					setIds([]);
 					reload();
@@ -167,16 +175,12 @@ export default () => {
 							type="primary"
 							icon={<PlusOutlined />}
 							onClick={() => {
+								setRequestId(uuidV7());
 								setTitle('新增数据源');
 								setReadOnly(false);
 								setModalVisit(true);
 								setDataSource({
 									id: undefined,
-									name: '',
-									driverClassName: 'com.taosdata.jdbc.rs.RestfulDriver',
-									url: '',
-									username: '',
-									password: ''
 								});
 							}}
 						>

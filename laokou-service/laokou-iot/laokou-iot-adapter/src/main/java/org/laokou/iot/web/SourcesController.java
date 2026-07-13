@@ -36,7 +36,6 @@ import org.laokou.iot.source.dto.SourceModifyCmd;
 import org.laokou.iot.source.dto.SourcePageQry;
 import org.laokou.iot.source.dto.SourceRemoveCmd;
 import org.laokou.iot.source.dto.SourceSaveCmd;
-import org.laokou.iot.source.dto.SourceTestCmd;
 import org.laokou.iot.source.dto.clientobject.SourceCO;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -103,14 +102,6 @@ public class SourcesController {
 	@Operation(summary = "导出数据源", description = "导出数据源")
 	public void exportSource(@RequestBody SourceExportCmd cmd) {
 		sourcesServiceI.exportSource(cmd);
-	}
-
-	@PostMapping("/v1/sources/test")
-	@PreAuthorize("hasAuthority('write') and (hasAuthority('iot:source:save') or hasAuthority('iot:source:modify'))")
-	@OperateLog(module = "数据源管理", operation = "测试数据源")
-	@Operation(summary = "测试数据源", description = "测试数据源")
-	public void testSource(@RequestBody SourceTestCmd cmd) {
-		sourcesServiceI.testSource(cmd);
 	}
 
 	@TraceLog
