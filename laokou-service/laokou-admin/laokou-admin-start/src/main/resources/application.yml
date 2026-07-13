@@ -130,8 +130,6 @@ spring:
         ttl: 5m
       user_menu:
         ttl: 5m
-      sources:
-        ttl: 5m
       tenants:
         ttl: 5m
       packages:

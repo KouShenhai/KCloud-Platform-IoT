@@ -27,6 +27,7 @@
    "password",
    "type",
    "endpoint",
+    db_name,
    create_time
   </sql>
 

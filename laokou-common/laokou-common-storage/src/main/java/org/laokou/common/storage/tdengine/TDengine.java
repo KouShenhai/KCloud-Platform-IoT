@@ -77,7 +77,7 @@ public class TDengine extends AbstractDataSource {
 		hikariConfig.setDriverClassName("com.taosdata.jdbc.ws.WebSocketDriver");
 		hikariConfig.setJdbcUrl(
 				String.format("jdbc:TAOS-WS://%s/%s?varcharAsString=true&batchErrorIgnore=true&timezone=Asia/Shanghai",
-						config.getAddress(), config.getDbName()));
+						config.getEndpoint(), config.getDbName()));
 		hikariConfig.setUsername(config.getUsername());
 		hikariConfig.setPassword(config.getPassword());
 		// 线程池名称
