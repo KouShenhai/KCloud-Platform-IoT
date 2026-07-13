@@ -1,6 +1,6 @@
 import {SourceDrawer} from './SourceDrawer';
 import {pageSource, removeSource, getSourceById} from '@/services/iot/source';
-import {useAccess} from '@@/exports';
+import { useAccess, useIntl } from '@@/exports';
 import {DeleteOutlined, PlusOutlined,} from '@ant-design/icons';
 import type {ActionType, ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
@@ -12,6 +12,9 @@ import {v7 as uuidV7} from "uuid";
 
 export default () => {
 	const access = useAccess();
+	const intl = useIntl();
+	const t = (id: string, values?: Record<string, any>) =>
+		intl.formatMessage({ id }, values);
 	const actionRef = useRef<ActionType | null>(null);
 	const [readOnly, setReadOnly] = useState(false);
 	const [modalVisit, setModalVisit] = useState(false);
@@ -31,6 +34,15 @@ export default () => {
 			pageNum: params?.current,
 			pageIndex: params?.pageSize * (params?.current - 1),
 			name: params?.name,
+			type: params?.type,
+			params: {
+				startTime: params?.startDate
+					? `${params.startDate} 00:00:00`
+					: undefined,
+				endTime: params?.endDate
+					? `${params.endDate} 23:59:59`
+					: undefined,
+			},
 		};
 	};
 
@@ -92,9 +104,42 @@ export default () => {
 		},
 		{
 			title: '数据源类型',
+			key: 'type',
 			dataIndex: 'type',
+			valueType: 'select',
+			fieldProps: {
+				valueType: 'select',
+				mode: 'single',
+				placeholder: '请选择数据源类型',
+				options: sourceTypeOptions,
+			},
 			ellipsis: true,
+		},
+		{
+			title: t('common.createTime'),
+			key: 'createTime',
+			dataIndex: 'createTime',
+			valueType: 'dateTime',
 			hideInSearch: true,
+			width: 160,
+			ellipsis: true,
+		},
+		{
+			title: t('common.createTime'),
+			dataIndex: 'createTimeValue',
+			valueType: 'dateRange',
+			hideInTable: true,
+			fieldProps: {
+				placeholder: [t('common.selectStartTime'), t('common.selectEndTime')],
+			},
+			search: {
+				transform: (value) => {
+					return {
+						startDate: value[0],
+						endDate: value[1],
+					};
+				},
+			},
 		},
 		{
 			title: '操作',
