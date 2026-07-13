@@ -16,21 +16,9 @@
  */
 
 package org.laokou.iot.source.service.validator;
-
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import org.laokou.common.context.util.UserUtils;
-import org.laokou.common.core.util.RegexUtils;
-import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.laokou.iot.source.model.SourceA;
-import org.laokou.iot.thingModel.gatewayimpl.database.ThingModelMapper;
-import org.laokou.iot.thingModel.gatewayimpl.database.dataobject.ThingModelDO;
-import org.laokou.iot.thingModel.model.ThingModelA;
-import org.laokou.iot.thingModel.model.entity.ThingModelE;
-import org.laokou.iot.thingModel.model.enums.DataType;
 import org.springframework.util.StringUtils;
-
-import java.util.Arrays;
 
 /**
  * @author laokou

@@ -21,9 +21,6 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.laokou.iot.source.model.SourceA;
 import org.laokou.iot.source.model.validator.SourceParamValidator;
-import org.laokou.iot.thingModel.gatewayimpl.database.ThingModelMapper;
-import org.laokou.iot.thingModel.model.ThingModelA;
-import org.laokou.iot.thingModel.model.validator.ThingModelParamValidator;
 import org.springframework.stereotype.Component;
 
 /**

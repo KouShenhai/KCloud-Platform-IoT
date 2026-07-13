@@ -20,7 +20,6 @@ package org.laokou.iot.source.ability;
 import lombok.RequiredArgsConstructor;
 import org.laokou.iot.source.gateway.SourceGateway;
 import org.laokou.iot.source.model.SourceA;
-import org.laokou.iot.source.model.entity.SourceE;
 import org.springframework.stereotype.Component;
 
 /**

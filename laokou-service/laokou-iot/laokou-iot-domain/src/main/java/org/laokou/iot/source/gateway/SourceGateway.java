@@ -18,7 +18,6 @@
 package org.laokou.iot.source.gateway;
 
 import org.laokou.iot.source.model.SourceA;
-import org.laokou.iot.source.model.entity.SourceE;
 
 /**
  * 数据源网关【防腐】.
