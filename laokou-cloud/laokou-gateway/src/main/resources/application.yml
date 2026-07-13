@@ -134,6 +134,12 @@ spring:
                 - Path=/api-gateway/admin/scalar
               filters:
                 - name: Scalar
+            - id: laokou-iot-scalar
+              uri: lb://laokou-iot
+              predicates:
+                - Path=/api-gateway/iot/scalar
+              filters:
+                - name: Scalar
     # sentinel配置
     sentinel:
       filter:
