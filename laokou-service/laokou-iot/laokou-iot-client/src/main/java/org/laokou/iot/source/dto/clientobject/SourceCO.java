@@ -21,6 +21,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.laokou.common.i18n.dto.ClientObject;
 
+import java.time.Instant;
+
 /**
  * 数据源客户端对象.
  *
@@ -47,5 +49,8 @@ public class SourceCO extends ClientObject {
 
 	@Schema(name = "数据源的密码", description = "数据源的密码")
 	private String password;
+
+	@Schema(name = "创建时间", description = "创建时间")
+	private Instant createTime;
 
 }

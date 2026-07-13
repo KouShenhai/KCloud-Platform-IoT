@@ -10,7 +10,6 @@ import {useRef, useState} from 'react';
 
 export default () => {
 	const access = useAccess();
-
 	const actionRef = useRef<ActionType | null>(null);
 	const [readOnly, setReadOnly] = useState(false);
 	const [modalVisit, setModalVisit] = useState(false);

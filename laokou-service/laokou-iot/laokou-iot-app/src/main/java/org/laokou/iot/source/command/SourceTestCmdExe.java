@@ -18,10 +18,9 @@
 package org.laokou.iot.source.command;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.iot.source.ability.SourceDomainService;
-import org.laokou.iot.source.convertor.SourceConvertor;
-import org.laokou.iot.source.dto.SourceTestCmd;
 import org.laokou.common.domain.annotation.CommandLog;
+import org.laokou.iot.source.ability.SourceDomainService;
+import org.laokou.iot.source.dto.SourceTestCmd;
 import org.springframework.stereotype.Component;
 
 /**
@@ -37,7 +36,7 @@ public class SourceTestCmdExe {
 
 	@CommandLog
 	public void executeVoid(SourceTestCmd cmd) {
-		sourceDomainService.testConnection(SourceConvertor.toEntity(cmd.getCo()));
+		// sourceDomainService.testConnection(SourceConvertor.toEntity(cmd.getCo()));
 	}
 
 }

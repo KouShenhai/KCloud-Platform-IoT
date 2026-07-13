@@ -15,31 +15,23 @@
  *
  */
 
-package org.laokou.iot.source.gateway;
+package org.laokou.iot.source.factory;
 
+import org.laokou.common.i18n.util.SpringContextUtils;
 import org.laokou.iot.source.model.SourceA;
 import org.laokou.iot.source.model.entity.SourceE;
 
-/**
- * 数据源网关【防腐】.
- *
- * @author laokou
- */
-public interface SourceGateway {
+public final class SourceDomainFactory {
 
-	/**
-	 * 新增数据源.
-	 */
-	void createSource(SourceA sourceA);
+	private SourceDomainFactory() {
+	}
 
-	/**
-	 * 修改数据源.
-	 */
-	void updateSource(SourceA sourceA);
+	public static SourceE createSourceE() {
+		return SpringContextUtils.getBeanProvider(SourceE.class);
+	}
 
-	/**
-	 * 删除数据源.
-	 */
-	void deleteSource(Long[] ids);
+	public static SourceA createSourceA() {
+		return SpringContextUtils.getBeanProvider(SourceA.class);
+	}
 
 }

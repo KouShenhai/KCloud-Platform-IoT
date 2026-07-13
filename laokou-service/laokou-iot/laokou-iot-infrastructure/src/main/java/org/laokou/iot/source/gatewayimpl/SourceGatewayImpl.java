@@ -20,9 +20,9 @@ package org.laokou.iot.source.gatewayimpl;
 import lombok.RequiredArgsConstructor;
 import org.laokou.iot.source.convertor.SourceConvertor;
 import org.laokou.iot.source.gateway.SourceGateway;
-import org.laokou.iot.source.model.entity.SourceE;
-import org.laokou.iot.source.gatewayimpl.database.dataobject.SourceDO;
 import org.laokou.iot.source.gatewayimpl.database.SourceMapper;
+import org.laokou.iot.source.gatewayimpl.database.dataobject.SourceDO;
+import org.laokou.iot.source.model.SourceA;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -39,14 +39,14 @@ public class SourceGatewayImpl implements SourceGateway {
 	private final SourceMapper sourceMapper;
 
 	@Override
-	public void createSource(SourceE sourceE) {
-		sourceMapper.insert(SourceConvertor.toDataObject(1L, sourceE));
+	public void createSource(SourceA sourceA) {
+		sourceMapper.insert(SourceConvertor.toDataObject(sourceA));
 	}
 
 	@Override
-	public void updateSource(SourceE sourceE) {
-		SourceDO sourceDO = SourceConvertor.toDataObject(null, sourceE);
-		sourceDO.setVersion(sourceMapper.selectVersion(sourceE.getId()));
+	public void updateSource(SourceA sourceA) {
+		SourceDO sourceDO = SourceConvertor.toDataObject(sourceA);
+		sourceDO.setVersion(sourceMapper.selectVersion(sourceA.getId()));
 		sourceMapper.updateById(sourceDO);
 	}
 
