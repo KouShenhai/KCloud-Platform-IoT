@@ -327,8 +327,4 @@ declare namespace API {
 		co?: SourceCO;
 	};
 
-	type SourceTestCmd = {
-		co?: SourceCO;
-	};
-
 }

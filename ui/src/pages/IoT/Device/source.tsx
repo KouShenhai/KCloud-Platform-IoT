@@ -1,5 +1,5 @@
 import {SourceDrawer} from './SourceDrawer';
-import {pageSource, removeSource,} from '@/services/iot/source';
+import {pageSource, removeSource, getSourceById} from '@/services/iot/source';
 import {useAccess} from '@@/exports';
 import {DeleteOutlined, PlusOutlined,} from '@ant-design/icons';
 import type {ActionType, ProColumns} from '@ant-design/pro-components';
@@ -102,6 +102,24 @@ export default () => {
 			key: 'option',
 			width: 180,
 			render: (_, record) => [
+				access.canSourceGetDetail && (
+					<a
+						key="get"
+						onClick={() => {
+							// @ts-ignore
+							getSourceById({ id: record?.id }).then(
+								(res: any) => {
+									setTitle('查看数据源');
+									setDataSource(res?.data);
+									setModalVisit(true);
+									setReadOnly(true);
+								},
+							);
+						}}
+					>
+						查看
+					</a>
+				),
 				access.canSourceModify && (
 					<a
 						key="modify"

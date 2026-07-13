@@ -16,6 +16,7 @@
  */
 
 package org.laokou.iot.source.service.validator;
+
 import org.laokou.common.i18n.util.ParamValidator;
 import org.laokou.iot.source.model.SourceA;
 import org.springframework.util.StringUtils;
