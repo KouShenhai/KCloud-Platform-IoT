@@ -25,7 +25,7 @@ import lombok.Data;
 @Data
 public abstract class Config {
 
-	protected String address;
+	protected String endpoint;
 
 	protected String username;
 

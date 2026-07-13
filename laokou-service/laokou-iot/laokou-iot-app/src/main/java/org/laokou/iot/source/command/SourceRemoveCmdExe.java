@@ -17,7 +17,10 @@
 
 package org.laokou.iot.source.command;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.tenant.constant.DSConstants;
 import org.laokou.iot.source.ability.SourceDomainService;
 import org.laokou.iot.source.dto.SourceRemoveCmd;
 import org.laokou.common.domain.annotation.CommandLog;
@@ -29,6 +32,7 @@ import org.springframework.stereotype.Component;
  *
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class SourceRemoveCmdExe {
@@ -39,8 +43,18 @@ public class SourceRemoveCmdExe {
 
 	@CommandLog
 	public void executeVoid(SourceRemoveCmd cmd) {
-		// 校验参数
-		transactionalUtils.executeInTransaction(() -> sourceDomainService.deleteSource(cmd.getIds()));
+		try {
+			DynamicDataSourceContextHolder.push(DSConstants.IOT);
+			// 校验参数
+			transactionalUtils.executeInTransaction(() -> sourceDomainService.deleteSource(cmd.getIds()));
+		}
+		catch (Exception ex) {
+			log.error("删除数据源失败，错误信息：{}", ex.getMessage(), ex);
+			throw ex;
+		}
+		finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 }

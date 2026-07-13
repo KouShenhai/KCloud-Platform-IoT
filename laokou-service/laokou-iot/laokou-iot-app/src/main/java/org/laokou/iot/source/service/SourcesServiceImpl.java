@@ -18,13 +18,14 @@
 package org.laokou.iot.source.service;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.i18n.dto.Page;
+import org.laokou.common.i18n.dto.Result;
 import org.laokou.iot.source.api.SourcesServiceI;
 import org.laokou.iot.source.command.SourceExportCmdExe;
 import org.laokou.iot.source.command.SourceImportCmdExe;
 import org.laokou.iot.source.command.SourceModifyCmdExe;
 import org.laokou.iot.source.command.SourceRemoveCmdExe;
 import org.laokou.iot.source.command.SourceSaveCmdExe;
-import org.laokou.iot.source.command.SourceTestCmdExe;
 import org.laokou.iot.source.command.query.SourceGetQryExe;
 import org.laokou.iot.source.command.query.SourcePageQryExe;
 import org.laokou.iot.source.dto.SourceExportCmd;
@@ -34,10 +35,7 @@ import org.laokou.iot.source.dto.SourceModifyCmd;
 import org.laokou.iot.source.dto.SourcePageQry;
 import org.laokou.iot.source.dto.SourceRemoveCmd;
 import org.laokou.iot.source.dto.SourceSaveCmd;
-import org.laokou.iot.source.dto.SourceTestCmd;
 import org.laokou.iot.source.dto.clientobject.SourceCO;
-import org.laokou.common.i18n.dto.Page;
-import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Service;
 
 /**
@@ -62,8 +60,6 @@ public class SourcesServiceImpl implements SourcesServiceI {
 	private final SourcePageQryExe sourcePageQryExe;
 
 	private final SourceGetQryExe sourceGetQryExe;
-
-	private final SourceTestCmdExe sourceTestCmdExe;
 
 	@Override
 	public void saveSource(SourceSaveCmd cmd) {
@@ -98,11 +94,6 @@ public class SourcesServiceImpl implements SourcesServiceI {
 	@Override
 	public Result<SourceCO> getSourceById(SourceGetQry qry) {
 		return sourceGetQryExe.execute(qry);
-	}
-
-	@Override
-	public void testSource(SourceTestCmd cmd) {
-		sourceTestCmdExe.executeVoid(cmd);
 	}
 
 }

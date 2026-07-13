@@ -17,7 +17,7 @@
 
 package org.laokou.iot.source.gateway;
 
-import org.laokou.iot.source.model.entity.SourceE;
+import org.laokou.iot.source.model.SourceA;
 
 /**
  * 数据源网关【防腐】.
@@ -29,12 +29,12 @@ public interface SourceGateway {
 	/**
 	 * 新增数据源.
 	 */
-	void createSource(SourceE sourceE);
+	void createSource(SourceA sourceA);
 
 	/**
 	 * 修改数据源.
 	 */
-	void updateSource(SourceE sourceE);
+	void updateSource(SourceA sourceA);
 
 	/**
 	 * 删除数据源.

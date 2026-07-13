@@ -303,8 +303,8 @@ declare namespace API {
 		extValues?: Record<string, any>;
 		id?: number;
 		name?: string;
-		driverClassName?: string;
-		url?: string;
+		endpoint?: string;
+		type?: string;
 		username?: string;
 		password?: string;
 	};
@@ -324,10 +324,6 @@ declare namespace API {
 	};
 
 	type SourceSaveCmd = {
-		co?: SourceCO;
-	};
-
-	type SourceTestCmd = {
 		co?: SourceCO;
 	};
 

@@ -18,10 +18,12 @@
 package org.laokou.iot.source.convertor;
 
 import org.laokou.iot.source.dto.clientobject.SourceCO;
-import org.laokou.iot.source.model.entity.SourceE;
-import org.laokou.common.core.util.ConvertUtils;
-import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.iot.source.factory.SourceDomainFactory;
 import org.laokou.iot.source.gatewayimpl.database.dataobject.SourceDO;
+import org.laokou.iot.source.model.SourceA;
+import org.laokou.iot.source.model.entity.SourceE;
+
+import java.util.List;
 
 /**
  * 数据源转换器.
@@ -33,20 +35,47 @@ public final class SourceConvertor {
 	private SourceConvertor() {
 	}
 
-	public static SourceDO toDataObject(Long id, SourceE sourceE) {
-		SourceDO sourceDO = ConvertUtils.sourceToTarget(sourceE, SourceDO.class);
-		if (ObjectUtils.isNull(sourceDO.getId())) {
-			sourceDO.setId(id);
-		}
+	public static SourceDO toDataObject(SourceA sourceA) {
+		SourceDO sourceDO = new SourceDO();
+		SourceE sourceE = sourceA.getSourceE();
+		sourceDO.setId(sourceA.getId());
+		sourceDO.setName(sourceE.getName());
+		sourceDO.setUsername(sourceE.getUsername());
+		sourceDO.setPassword(sourceE.getPassword());
+		sourceDO.setEndpoint(sourceE.getEndpoint());
+		sourceDO.setType(sourceE.getType());
+		sourceDO.setDbName(sourceE.getDbName());
 		return sourceDO;
 	}
 
+	public static List<SourceCO> toClientObjects(List<SourceDO> list) {
+		return list.stream().map(SourceConvertor::toClientObject).toList();
+	}
+
 	public static SourceCO toClientObject(SourceDO sourceDO) {
-		return ConvertUtils.sourceToTarget(sourceDO, SourceCO.class);
+		SourceCO sourceCO = new SourceCO();
+		sourceCO.setId(sourceDO.getId());
+		sourceCO.setName(sourceDO.getName());
+		sourceCO.setUsername(sourceDO.getUsername());
+		sourceCO.setPassword(sourceDO.getPassword());
+		sourceCO.setEndpoint(sourceDO.getEndpoint());
+		sourceCO.setType(sourceDO.getType());
+		sourceCO.setDbName(sourceDO.getDbName());
+		sourceCO.setCreateTime(sourceDO.getCreateTime());
+		return sourceCO;
 	}
 
 	public static SourceE toEntity(SourceCO sourceCO) {
-		return ConvertUtils.sourceToTarget(sourceCO, SourceE.class);
+		return SourceDomainFactory.createSourceE()
+			.toBuilder()
+			.id(sourceCO.getId())
+			.name(sourceCO.getName())
+			.username(sourceCO.getUsername())
+			.password(sourceCO.getPassword())
+			.endpoint(sourceCO.getEndpoint())
+			.dbName(sourceCO.getDbName())
+			.type(sourceCO.getType())
+			.build();
 	}
 
 }

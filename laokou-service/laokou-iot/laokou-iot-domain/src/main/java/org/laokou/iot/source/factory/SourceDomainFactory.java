@@ -15,34 +15,23 @@
  *
  */
 
-package org.laokou.iot.source.ability;
+package org.laokou.iot.source.factory;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.iot.source.gateway.SourceGateway;
+import org.laokou.common.i18n.util.SpringContextUtils;
 import org.laokou.iot.source.model.SourceA;
-import org.springframework.stereotype.Component;
+import org.laokou.iot.source.model.entity.SourceE;
 
-/**
- * 数据源领域服务.
- *
- * @author laokou
- */
-@Component
-@RequiredArgsConstructor
-public class SourceDomainService {
+public final class SourceDomainFactory {
 
-	private final SourceGateway sourceGateway;
-
-	public void createSource(SourceA sourceA) {
-		sourceGateway.createSource(sourceA);
+	private SourceDomainFactory() {
 	}
 
-	public void updateSource(SourceA sourceA) {
-		sourceGateway.updateSource(sourceA);
+	public static SourceE createSourceE() {
+		return SpringContextUtils.getBeanProvider(SourceE.class);
 	}
 
-	public void deleteSource(Long[] ids) {
-		sourceGateway.deleteSource(ids);
+	public static SourceA createSourceA() {
+		return SpringContextUtils.getBeanProvider(SourceA.class);
 	}
 
 }
