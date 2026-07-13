@@ -142,6 +142,8 @@ https://docs.qq.com/sheet/DUGhCdGVZWmVxT0VJ[开发计划（需要登录）]
 
 🚀 数据字典管理【查询/保存/修改/删除/查看】
 
+🚀 数据源管理【查询/保存/修改/删除/查看】
+
 === 💡 系统架构
 
 image::doc/image/老寇IoT云平台架构图.png[架构图,align=center]
