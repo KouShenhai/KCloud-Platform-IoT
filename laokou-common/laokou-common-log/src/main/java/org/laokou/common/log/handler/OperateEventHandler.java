@@ -49,8 +49,10 @@ public class OperateEventHandler {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);
 			for (ConsumerRecord<String, Object> record : messages) {
-				transactionalUtils.executeInTransaction(
-						() -> operateLogMapper.insert(OperateLogConvertor.toDataObject((OperateEvent) record.value())));
+				if (record.value() instanceof OperateEvent operateEvent) {
+					transactionalUtils.executeInTransaction(
+							() -> operateLogMapper.insert(OperateLogConvertor.toDataObject(operateEvent)));
+				}
 			}
 		}
 		finally {
