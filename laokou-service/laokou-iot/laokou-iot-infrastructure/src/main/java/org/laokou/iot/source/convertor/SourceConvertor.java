@@ -17,6 +17,7 @@
 
 package org.laokou.iot.source.convertor;
 
+import org.laokou.common.storage.model.valueobject.SourceV;
 import org.laokou.iot.source.dto.clientobject.SourceCO;
 import org.laokou.iot.source.factory.SourceDomainFactory;
 import org.laokou.iot.source.gatewayimpl.database.dataobject.SourceDO;
@@ -76,6 +77,11 @@ public final class SourceConvertor {
 			.dbName(sourceCO.getDbName())
 			.type(sourceCO.getType())
 			.build();
+	}
+
+	public static SourceV toValueObject(SourceA sourceA) {
+		return new SourceV(sourceA.getSourceE().getEndpoint(), sourceA.getSourceE().getDbName(),
+				sourceA.getSourceE().getUsername(), sourceA.getSourceE().getPassword());
 	}
 
 }

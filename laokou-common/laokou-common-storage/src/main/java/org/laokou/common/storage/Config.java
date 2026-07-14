@@ -17,20 +17,22 @@
 
 package org.laokou.common.storage;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 /**
  * @author laokou
  */
-@Data
+@Getter
+@RequiredArgsConstructor
 public abstract class Config {
 
-	protected String endpoint;
+	protected final String endpoint;
 
-	protected String username;
+	protected final String username;
 
-	protected String password;
+	protected final String password;
 
-	protected String dbName;
+	protected final String dbName;
 
 }

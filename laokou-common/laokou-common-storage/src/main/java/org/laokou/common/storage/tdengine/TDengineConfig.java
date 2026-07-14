@@ -24,4 +24,8 @@ import org.laokou.common.storage.Config;
  */
 public class TDengineConfig extends Config {
 
+	public TDengineConfig(String endpoint, String username, String password, String dbName) {
+		super(endpoint, username, password, dbName);
+	}
+
 }

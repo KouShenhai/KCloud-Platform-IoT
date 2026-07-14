@@ -78,10 +78,10 @@ public class TransactionalUtils {
 			try {
 				executor.execute();
 			}
-			catch (Exception e) {
+			catch (Exception ex) {
 				r.setRollbackOnly();
-				log.error("操作失败，错误信息：{}", e.getMessage());
-				throw new SystemException("S_DS_OperateError", e.getMessage(), e);
+				log.error("操作失败，错误信息：{}", ex.getMessage(), ex);
+				throw new SystemException("S_DS_OperateError", ex.getMessage(), ex);
 			}
 		}, propagationBehavior,isolationLevel, readOnly);
 	}
