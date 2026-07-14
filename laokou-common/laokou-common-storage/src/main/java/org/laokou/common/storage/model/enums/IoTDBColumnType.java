@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.storage.enums;
+package org.laokou.common.storage.model.enums;
 
 import lombok.Getter;
 

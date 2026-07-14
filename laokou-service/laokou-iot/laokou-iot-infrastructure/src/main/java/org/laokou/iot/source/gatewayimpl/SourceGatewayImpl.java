@@ -18,6 +18,9 @@
 package org.laokou.iot.source.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.storage.DataSource;
+import org.laokou.common.storage.model.enums.StoragePolicy;
+import org.laokou.common.storage.model.valueobject.SourceV;
 import org.laokou.iot.source.convertor.SourceConvertor;
 import org.laokou.iot.source.gateway.SourceGateway;
 import org.laokou.iot.source.gatewayimpl.database.SourceMapper;
@@ -40,11 +43,13 @@ public class SourceGatewayImpl implements SourceGateway {
 
 	@Override
 	public void createSource(SourceA sourceA) {
+		verifyConnection(sourceA);
 		sourceMapper.insert(SourceConvertor.toDataObject(sourceA));
 	}
 
 	@Override
 	public void updateSource(SourceA sourceA) {
+		verifyConnection(sourceA);
 		SourceDO sourceDO = SourceConvertor.toDataObject(sourceA);
 		sourceDO.setVersion(sourceMapper.selectVersion(sourceA.getId()));
 		sourceMapper.updateById(sourceDO);
@@ -53,6 +58,13 @@ public class SourceGatewayImpl implements SourceGateway {
 	@Override
 	public void deleteSource(Long[] ids) {
 		sourceMapper.deleteByIds(Arrays.asList(ids));
+	}
+
+	private void verifyConnection(SourceA sourceA) {
+		SourceV sourceV = SourceConvertor.toValueObject(sourceA);
+		StoragePolicy storagePolicy = StoragePolicy.getByCode(sourceA.getSourceE().getType());
+		DataSource dataSource = storagePolicy.toDataSource(sourceV);
+		dataSource.verifyConnection();
 	}
 
 }

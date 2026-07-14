@@ -15,14 +15,10 @@
  *
  */
 
-package org.laokou.common.storage.enums;
-
-import lombok.Getter;
+package org.laokou.common.storage.model.valueobject;
 
 /**
  * @author laokou
  */
-@Getter
-public enum InfluxDBColumnType {
-
+public record SourceV(String endpoint, String dbName, String username, String password) {
 }

@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.storage.enums;
+package org.laokou.common.storage.model.enums;
 
 import lombok.Getter;
 
@@ -23,6 +23,17 @@ import lombok.Getter;
  * @author laokou
  */
 @Getter
-public enum ClickHouseColumnType {
+public enum TimescaleDBColumType {
+
+	;
+
+	private final String code;
+
+	private final String desc;
+
+	TimescaleDBColumType(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
 
 }

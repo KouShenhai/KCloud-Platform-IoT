@@ -334,4 +334,4 @@ COMMENT ON TABLE "public"."iot_source" IS '数据源';
 
 ALTER TABLE "public"."iot_source" ADD CONSTRAINT "iot_source_pkey" PRIMARY KEY ("id");
 
-INSERT INTO "public"."iot_source" VALUES (1, 1, 1, '2026-07-13 22:37:37.171034', '2026-07-13 23:16:46.219868', 0, 2, 1, 1, 'TDengine默认数据库', 'tdengine', '127.0.0.1:6030', 'root', 'taosdata', 'kcloud_platform_iot');
+INSERT INTO "public"."iot_source" VALUES (1, 1, 1, '2026-07-13 22:37:37.171034', '2026-07-13 23:16:46.219868', 0, 2, 1, 1, 'TDengine默认数据库', 'tdengine', '127.0.0.1:6041', 'root', 'taosdata', 'kcloud_platform_iot');

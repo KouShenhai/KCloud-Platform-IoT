@@ -20,10 +20,16 @@ package org.laokou.common.storage.tdengine;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.storage.AbstractDataSource;
 import org.laokou.common.storage.Config;
 import org.laokou.common.storage.Table;
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 /**
  * @author laokou
@@ -35,7 +41,7 @@ public class TDengine extends AbstractDataSource {
 
 	private volatile HikariDataSource hikariDataSource;
 
-	protected TDengine(Config config) {
+	public TDengine(Config config) {
 		super(config);
 	}
 
@@ -58,6 +64,23 @@ public class TDengine extends AbstractDataSource {
 	@Override
 	public void create(Table table) {
 
+	}
+
+	@Override
+	public void verifyConnection() {
+		HikariDataSource hikariDataSource = getHikariDataSource();
+		DriverManager.setLoginTimeout(1);
+		try (Connection conn = DriverManager.getConnection(hikariDataSource.getJdbcUrl(),
+				hikariDataSource.getUsername(), hikariDataSource.getPassword());
+				PreparedStatement ps = conn.prepareStatement("SELECT 1")) {
+			ps.setQueryTimeout(1);
+			ps.executeQuery();
+			log.info("TDengine 数据源连接成功");
+		}
+		catch (SQLException ex) {
+			log.error("连接 TDengine 数据源失败，错误信息：{}", ex.getMessage(), ex);
+			throw new BizException("B_Datasource_TDengineConnectionFailed", "连接 TDengine 数据源失败，请检查数据源配置", ex);
+		}
 	}
 
 	private void initTable() {
