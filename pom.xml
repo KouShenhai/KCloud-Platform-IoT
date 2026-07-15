@@ -145,7 +145,7 @@
     <!-- testcontainers版本 -->
     <testcontainers.version>2.0.5</testcontainers.version>
     <!-- vertx版本 -->
-    <vertx.version>5.1.4</vertx.version>
+    <vertx.version>5.1.5</vertx.version>
     <!-- mybatis-plus版本 -->
     <mybatis-plus.version>3.5.17</mybatis-plus.version>
     <!-- nacos版本 -->
@@ -157,7 +157,7 @@
     <!-- grpc版本 -->
     <grpc.version>1.82.2</grpc.version>
     <!-- jackson版本 -->
-    <jackson.version>3.2.0</jackson.version>
+    <jackson.version>3.2.1</jackson.version>
     <!-- okhttp版本 -->
     <okhttp.version>5.4.0</okhttp.version>
     <!-- protobuf版本 -->
@@ -213,7 +213,7 @@
     <!-- browscap-java版本 -->
     <browscap-java.version>1.5.1</browscap-java.version>
     <!-- flyway版本 -->
-    <flyway.version>12.10.0</flyway.version>
+    <flyway.version>12.11.0</flyway.version>
     <!-- snail-job版本 -->
     <snail-job.version>2.0.0</snail-job.version>
     <!-- archunit-junit5版本 -->
