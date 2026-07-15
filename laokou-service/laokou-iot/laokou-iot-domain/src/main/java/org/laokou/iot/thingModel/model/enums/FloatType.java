@@ -24,6 +24,7 @@ import org.springframework.util.StringUtils;
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * @author laokou
@@ -48,8 +49,8 @@ public class FloatType implements Serializable {
 		if (!StringUtils.hasText(min) || !StringUtils.hasText(max)) {
 			return ParamValidator.validate();
 		}
-		BigDecimal minValue = new BigDecimal(min);
-		BigDecimal maxValue = new BigDecimal(max);
+		BigDecimal minValue = new BigDecimal(min).setScale(3, RoundingMode.HALF_UP).stripTrailingZeros();
+		BigDecimal maxValue = new BigDecimal(max).setScale(3, RoundingMode.HALF_UP).stripTrailingZeros();
 		if (minVal.compareTo(minValue) > 0 || maxValue.compareTo(maxVal) > 0) {
 			return ParamValidator.invalidate(String.format("数值超出范围，数值必须为%s~%s", minVal, maxVal));
 		}
