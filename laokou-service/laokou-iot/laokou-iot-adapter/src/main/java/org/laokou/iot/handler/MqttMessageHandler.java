@@ -17,15 +17,49 @@
 
 package org.laokou.iot.handler;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.util.JacksonUtils;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.stereotype.Component;
+
+import java.util.Map;
 
 /**
  * @author laokou
  */
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class MqttMessageHandler {
+
+	// private final GatewayCommandServiceI gatewayCommandServiceI;
+
+	/**
+	 * 处理网关指令回执消息.
+	 * <p>
+	 * 上行主题：persistent://laokouyun/mqtt/up-*-command-reply，回执报文格式：
+	 * {"commandId":123,"code":1,"result":"..."}，其中 code 1成功 2失败。
+	 * </p>
+	 * TODO: 待MQTT/Pulsar消费者接入后，通过 @PulsarListener 监听 up-*-command-reply 主题并调用本方法。
+	 * @param message 回执报文
+	 */
+	public void handleCommandReplyMessage(byte[] message) {
+		if (ObjectUtils.isNull(message)) {
+			return;
+		}
+		Map<String, Object> reply = JacksonUtils.toMap(new String(message), String.class, Object.class);
+		Object commandId = reply.get("commandId");
+		Object code = reply.get("code");
+		Object result = reply.get("result");
+		if (ObjectUtils.isNull(commandId) || ObjectUtils.isNull(code)) {
+			log.warn("网关指令回执报文缺少必要字段：{}", reply);
+			return;
+		}
+		// gatewayCommandServiceI.handleReply(Long.valueOf(commandId.toString()),
+		// Integer.valueOf(code.toString()),
+		// ObjectUtils.isNull(result) ? null : result.toString());
+	}
 
 	// @PulsarListeners(value = { @PulsarListener(topicPattern =
 	// "persistent://laokouyun/mqtt/up-property-report",

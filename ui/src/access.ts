@@ -235,6 +235,38 @@ export default (initialState: any) => {
 			permissions?.includes('iot:device:export') &&
 			scopes?.includes('write'),
 
+		canGatewayGetDetail:
+			permissions?.includes('iot:gateway:detail') &&
+			scopes?.includes('read'),
+
+		canGatewayPage:
+			permissions?.includes('iot:gateway:page') &&
+			scopes?.includes('read'),
+
+		canGatewayModify:
+			permissions?.includes('iot:gateway:modify') &&
+			scopes?.includes('write'),
+
+		canGatewayRemove:
+			permissions?.includes('iot:gateway:remove') &&
+			scopes?.includes('write'),
+
+		canGatewaySave:
+			permissions?.includes('iot:gateway:save') &&
+			scopes?.includes('write'),
+
+		canGatewayImport:
+			permissions?.includes('iot:gateway:import') &&
+			scopes?.includes('write'),
+
+		canGatewayExport:
+			permissions?.includes('iot:gateway:export') &&
+			scopes?.includes('write'),
+
+		canGatewayCommand:
+			permissions?.includes('iot:gateway:command') &&
+			scopes?.includes('write'),
+
 		canProductGetDetail:
 			permissions?.includes('iot:product:detail') &&
 			scopes?.includes('read'),

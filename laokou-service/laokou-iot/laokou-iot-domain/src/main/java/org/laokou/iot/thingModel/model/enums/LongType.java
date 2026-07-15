@@ -19,6 +19,7 @@ package org.laokou.iot.thingModel.model.enums;
 
 import lombok.Data;
 import org.laokou.common.i18n.util.ParamValidator;
+import org.springframework.util.StringUtils;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -32,14 +33,26 @@ public class LongType implements Serializable {
 	@Serial
 	private static final long serialVersionUID = -1L;
 
-	private Long min;
+	private String min;
 
-	private Long max;
+	private String max;
 
 	private String unit;
 
+	private final Long minVal = -1000000000000L;
+
+	private final Long maxVal = 1000000000000L;
+
 	public ParamValidator.Validate checkValue() {
-		if (min != null && max != null && min >= max) {
+		if (!StringUtils.hasText(min) || !StringUtils.hasText(max)) {
+			return ParamValidator.validate();
+		}
+		long minValue = Long.parseLong(min);
+		long maxValue = Long.parseLong(max);
+		if (minValue < minVal || maxValue > maxVal) {
+			return ParamValidator.invalidate(String.format("数值超出范围，数值必须为%d~%d", minVal, maxVal));
+		}
+		if (minValue >= maxValue) {
 			return ParamValidator.invalidate("最大值必须大于最小值");
 		}
 		return ParamValidator.validate();

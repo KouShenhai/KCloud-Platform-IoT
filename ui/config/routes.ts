@@ -208,6 +208,19 @@ export default [
 				],
 			},
 			{
+				name: 'menu.iot.gateway',
+				title: 'menu.iot.gateway',
+				path: '/iot/gateway',
+				routes: [
+					{
+						name: 'menu.iot.gateway.gateway',
+						title: 'menu.iot.gateway.gateway',
+						path: '/iot/gateway/gateway',
+						component: './IoT/Gateway/gateway',
+					},
+				],
+			},
+			{
 				name: 'menu.iot.network.connection',
 				title: 'menu.iot.network.connection',
 				path: '/iot/network/connection',

@@ -327,4 +327,109 @@ declare namespace API {
 		co?: SourceCO;
 	};
 
+	type GatewayCO = {
+		extValues?: Record<string, any>;
+		/** ID */
+		id?: number;
+		/** 网关标识 */
+		gatewayKey?: string;
+		/** 网关名称 */
+		name?: string;
+		/** 网关状态 0在线 1离线 */
+		status?: number;
+		/** 产品ID */
+		productId?: number;
+		/** 网关地址 */
+		address?: string;
+		/** 网关经度 */
+		longitude?: number;
+		/** 网关纬度 */
+		latitude?: number;
+		/** 网关备注 */
+		remark?: string;
+		/** 创建时间 */
+		createTime?: string;
+	};
+
+	type GatewaySaveCmd = {
+		co?: GatewayCO;
+	};
+
+	type GatewayModifyCmd = {
+		co?: GatewayCO;
+	};
+
+	type GatewayPageQry = {
+		pageNum?: number;
+		pageSize?: number;
+		pageIndex?: number;
+		sqlFilter?: string;
+		params?: Record<string, any>;
+		gatewayKey?: string;
+		name?: string;
+		status?: number;
+		productId?: number;
+	};
+
+	type GatewayExportCmd = {
+		pageNum?: number;
+		pageSize?: number;
+		pageIndex?: number;
+		sqlFilter?: string;
+		params?: Record<string, any>;
+		gatewayKey?: string;
+		name?: string;
+		status?: number;
+		productId?: number;
+	};
+
+	type GatewayRebootCmd = {
+		gatewayId?: number;
+	};
+
+	type GatewayReadPropertyCmd = {
+		gatewayId?: number;
+		deviceKey?: string;
+		identifiers?: string[];
+	};
+
+	type GatewayWritePropertyCmd = {
+		gatewayId?: number;
+		deviceKey?: string;
+		properties?: Record<string, any>;
+	};
+
+	type GatewayCommandLogPageQry = {
+		pageNum?: number;
+		pageSize?: number;
+		pageIndex?: number;
+		sqlFilter?: string;
+		params?: Record<string, any>;
+		gatewayId?: number;
+	};
+
+	type GatewayCommandLogCO = {
+		extValues?: Record<string, any>;
+		/** ID */
+		id?: number;
+		/** 指令ID */
+		commandId?: number;
+		/** 网关ID */
+		gatewayId?: number;
+		/** 网关标识 */
+		gatewayKey?: string;
+		/** 指令类型 1重启网关 2读取设备属性 3写入设备属性 */
+		type?: number;
+		/** 设备标识 */
+		deviceKey?: string;
+		/** 指令内容 */
+		payload?: string;
+		/** 指令状态 0待处理 1成功 2失败 */
+		status?: number;
+		/** 指令回执 */
+		result?: string;
+		/** 创建时间 */
+		createTime?: string;
+	};
+
 }

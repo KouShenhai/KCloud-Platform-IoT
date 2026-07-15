@@ -283,7 +283,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 							name="min"
 							label="最小值"
 							type="double"
-							precision={3} />
+							precision={6} />
 					</Col>
 					<Col span={8}>
 						<ProFormNumber
@@ -292,7 +292,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 							name="max"
 							label={"最大值"}
 							type="double"
-							precision={3} />
+							precision={6} />
 					</Col>
 					<Col span={8}>
 						<ProFormSelect
