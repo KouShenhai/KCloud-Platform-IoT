@@ -149,7 +149,7 @@
     <!-- mybatis-plus版本 -->
     <mybatis-plus.version>3.5.17</mybatis-plus.version>
     <!-- nacos版本 -->
-    <nacos.version>3.2.2</nacos.version>
+    <nacos.version>3.2.3</nacos.version>
     <!-- micrometer-tracing版本 -->
     <micrometer-tracing.version>1.7.0</micrometer-tracing.version>
     <!-- netty版本 -->
