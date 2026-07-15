@@ -51,7 +51,7 @@ public class FloatType implements Serializable {
 		BigDecimal minValue = new BigDecimal(min);
 		BigDecimal maxValue = new BigDecimal(max);
 		if (minVal.compareTo(minValue) > 0 || maxValue.compareTo(maxVal) > 0) {
-			return ParamValidator.invalidate(String.format("数值超出范围，数值必须为%f~%f", minVal, maxVal));
+			return ParamValidator.invalidate(String.format("数值超出范围，数值必须为%s~%s", minVal, maxVal));
 		}
 		if (minValue.compareTo(maxValue) >= 0) {
 			return ParamValidator.invalidate("最大值必须大于最小值");
