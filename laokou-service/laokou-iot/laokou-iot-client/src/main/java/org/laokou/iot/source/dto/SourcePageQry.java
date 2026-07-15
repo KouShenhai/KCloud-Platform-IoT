@@ -19,6 +19,7 @@ package org.laokou.iot.source.dto;
 
 import lombok.Data;
 import org.laokou.common.i18n.dto.PageQuery;
+import org.laokou.common.i18n.util.StringExtUtils;
 
 /**
  * 分页查询数据源命令.
@@ -27,5 +28,13 @@ import org.laokou.common.i18n.dto.PageQuery;
  */
 @Data
 public class SourcePageQry extends PageQuery {
+
+	private String name;
+
+	private String type;
+
+	public void setName(String name) {
+		this.name = StringExtUtils.like(StringExtUtils.trim(name));
+	}
 
 }

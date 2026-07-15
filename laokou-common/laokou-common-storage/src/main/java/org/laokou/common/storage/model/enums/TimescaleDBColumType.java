@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.storage.enums;
+package org.laokou.common.storage.model.enums;
 
 import lombok.Getter;
 
@@ -23,23 +23,15 @@ import lombok.Getter;
  * @author laokou
  */
 @Getter
-public enum StoragePolicy {
+public enum TimescaleDBColumType {
 
-	TIMESCALEDB("timescaledb", "TimescaleDB"),
-
-	CLICKHOUSE("clickhouse", "ClickHouse"),
-
-	IOTDB("iotdb", "IoTDB"),
-
-	INFLUXDB("influxdb", "InfluxDB"),
-
-	TDENGINE("tdengine", "TDengine");
+	;
 
 	private final String code;
 
 	private final String desc;
 
-	StoragePolicy(String code, String desc) {
+	TimescaleDBColumType(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}

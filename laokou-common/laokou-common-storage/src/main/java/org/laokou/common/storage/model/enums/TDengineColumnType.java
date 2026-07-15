@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.storage.enums;
+package org.laokou.common.storage.model.enums;
 
 import lombok.Getter;
 
@@ -23,6 +23,17 @@ import lombok.Getter;
  * @author laokou
  */
 @Getter
-public enum IoTDBColumnType {
+public enum TDengineColumnType {
+
+	;
+
+	private final String code;
+
+	private final String desc;
+
+	TDengineColumnType(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
 
 }

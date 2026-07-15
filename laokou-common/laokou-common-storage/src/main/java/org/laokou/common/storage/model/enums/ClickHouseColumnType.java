@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.storage.enums;
+package org.laokou.common.storage.model.enums;
 
 import lombok.Getter;
 
@@ -23,6 +23,6 @@ import lombok.Getter;
  * @author laokou
  */
 @Getter
-public enum InfluxDBColumnType {
+public enum ClickHouseColumnType {
 
 }

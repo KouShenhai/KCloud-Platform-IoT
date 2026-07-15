@@ -93,7 +93,7 @@
     <!-- maven-checkstyle-plugin版本 -->
     <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
     <!-- spotbugs-maven-plugin版本 -->
-    <spotbugs-maven-plugin.version>4.10.2.0</spotbugs-maven-plugin.version>
+    <spotbugs-maven-plugin.version>4.10.3.0</spotbugs-maven-plugin.version>
     <!-- native-maven-plugin版本 -->
     <native-maven-plugin.version>1.1.1</native-maven-plugin.version>
     <!-- versions-maven-plugin版本 -->
@@ -147,7 +147,7 @@
     <!-- vertx版本 -->
     <vertx.version>5.1.4</vertx.version>
     <!-- mybatis-plus版本 -->
-    <mybatis-plus.version>3.5.16</mybatis-plus.version>
+    <mybatis-plus.version>3.5.17</mybatis-plus.version>
     <!-- nacos版本 -->
     <nacos.version>3.2.2</nacos.version>
     <!-- micrometer-tracing版本 -->
@@ -195,7 +195,7 @@
     <!-- httpcore5版本 -->
     <httpcore5.version>5.4.3</httpcore5.version>
     <!-- hibernate-validator版本 -->
-    <hibernate-validator.version>9.1.1.Final</hibernate-validator.version>
+    <hibernate-validator.version>9.1.2.Final</hibernate-validator.version>
     <!-- ip2region版本 -->
     <ip2region.version>3.3.7</ip2region.version>
     <!-- spring-kafka版本 -->
@@ -245,7 +245,7 @@
     <!-- jctools版本 -->
     <jctools.version>4.0.6</jctools.version>
     <!-- spotbugs版本 -->
-    <spotbugs.version>4.10.2</spotbugs.version>
+    <spotbugs.version>4.10.3</spotbugs.version>
     <!-- docker主机 -->
     <docker.host>tcp://127.0.0.1:2375</docker.host>
     <!-- docker仓库 -->

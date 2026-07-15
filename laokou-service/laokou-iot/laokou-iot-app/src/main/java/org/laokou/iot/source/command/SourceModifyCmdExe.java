@@ -17,12 +17,17 @@
 
 package org.laokou.iot.source.command;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.tenant.constant.DSConstants;
 import org.laokou.iot.source.ability.SourceDomainService;
 import org.laokou.iot.source.convertor.SourceConvertor;
 import org.laokou.iot.source.dto.SourceModifyCmd;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
+import org.laokou.iot.source.factory.SourceDomainFactory;
+import org.laokou.iot.source.model.SourceA;
 import org.springframework.stereotype.Component;
 
 /**
@@ -30,6 +35,7 @@ import org.springframework.stereotype.Component;
  *
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class SourceModifyCmdExe {
@@ -40,9 +46,20 @@ public class SourceModifyCmdExe {
 
 	@CommandLog
 	public void executeVoid(SourceModifyCmd cmd) {
-		// 校验参数
-		transactionalUtils
-			.executeInTransaction(() -> sourceDomainService.updateSource(SourceConvertor.toEntity(cmd.getCo())));
+		try {
+			DynamicDataSourceContextHolder.push(DSConstants.IOT);
+			SourceA sourceA = SourceDomainFactory.createSourceA().create(SourceConvertor.toEntity(cmd.getCo()));
+			// 校验参数
+			sourceA.checkSourceParam();
+			transactionalUtils.executeInTransaction(() -> sourceDomainService.updateSource(sourceA));
+		}
+		catch (Exception ex) {
+			log.error("保存数据源失败，错误信息：{}", ex.getMessage(), ex);
+			throw ex;
+		}
+		finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 }

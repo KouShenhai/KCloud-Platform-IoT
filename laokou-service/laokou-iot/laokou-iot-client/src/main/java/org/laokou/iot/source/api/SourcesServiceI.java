@@ -17,6 +17,8 @@
 
 package org.laokou.iot.source.api;
 
+import org.laokou.common.i18n.dto.Page;
+import org.laokou.common.i18n.dto.Result;
 import org.laokou.iot.source.dto.SourceExportCmd;
 import org.laokou.iot.source.dto.SourceGetQry;
 import org.laokou.iot.source.dto.SourceImportCmd;
@@ -24,10 +26,7 @@ import org.laokou.iot.source.dto.SourceModifyCmd;
 import org.laokou.iot.source.dto.SourcePageQry;
 import org.laokou.iot.source.dto.SourceRemoveCmd;
 import org.laokou.iot.source.dto.SourceSaveCmd;
-import org.laokou.iot.source.dto.SourceTestCmd;
 import org.laokou.iot.source.dto.clientobject.SourceCO;
-import org.laokou.common.i18n.dto.Page;
-import org.laokou.common.i18n.dto.Result;
 
 /**
  * 数据源接口.
@@ -78,11 +77,5 @@ public interface SourcesServiceI {
 	 * @return 数据源详情
 	 */
 	Result<SourceCO> getSourceById(SourceGetQry qry);
-
-	/**
-	 * 测试数据源连通性.
-	 * @param cmd 测试数据源连接命令
-	 */
-	void testSource(SourceTestCmd cmd);
 
 }

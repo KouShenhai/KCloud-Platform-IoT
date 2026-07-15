@@ -525,6 +525,7 @@ export default {
 	// sys/apiDoc
 	'sys.apiDoc.auth': 'Auth',
 	'sys.apiDoc.admin': 'Admin',
+	'sys.apiDoc.iot': 'IoT',
 
 	// login
 	'login.subtitle': 'Enterprise level multi tenant IoT cloud platform',

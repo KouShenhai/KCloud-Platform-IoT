@@ -37,6 +37,20 @@ export default () => {
 					hideClientButton: true,
 					orderRequiredPropertiesFirst: true,
 					expandAllModelSections: false,
+				},
+				{
+					sources: [
+						{
+							title: t('sys.apiDoc.iot'),
+							url: "/api-proxy/iot/api/v3/api-docs",
+							default: true,
+						}
+					],
+					proxyUrl: "/api-proxy/iot/scalar",
+					expandAllResponses: true,
+					hideClientButton: true,
+					orderRequiredPropertiesFirst: true,
+					expandAllModelSections: false,
 				}
 			]
 		}

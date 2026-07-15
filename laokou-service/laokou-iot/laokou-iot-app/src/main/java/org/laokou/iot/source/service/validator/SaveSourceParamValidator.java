@@ -18,9 +18,9 @@
 package org.laokou.iot.source.service.validator;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.iot.thingModel.gatewayimpl.database.ThingModelMapper;
-import org.laokou.iot.thingModel.model.ThingModelA;
-import org.laokou.iot.thingModel.model.validator.ThingModelParamValidator;
+import org.laokou.common.i18n.util.ParamValidator;
+import org.laokou.iot.source.model.SourceA;
+import org.laokou.iot.source.model.validator.SourceParamValidator;
 import org.springframework.stereotype.Component;
 
 /**
@@ -28,24 +28,21 @@ import org.springframework.stereotype.Component;
  */
 @Component("saveSourceParamValidator")
 @RequiredArgsConstructor
-public class SaveSourceParamValidator implements ThingModelParamValidator {
-
-	private final ThingModelMapper thingModelMapper;
+public class SaveSourceParamValidator implements SourceParamValidator {
 
 	@Override
-	public void validateThingModel(ThingModelA thingModelA) {
-		// ParamValidator.validate(thingModelA.getValidateName(),
-		// // 校验物模型编码和物模型名称
-		// SourceParamValidator.validateCodeAndName(thingModelA,
-		// thingModelMapper),
-		// // 校验物模型数据类型
-		// SourceParamValidator.validateDataType(thingModelA),
-		// // 校验物模型规格
-		// SourceParamValidator.validateSpec(thingModelA),
-		// // 校验物模型类型
-		// SourceParamValidator.validateType(thingModelA),
-		// // 校验物模型排序
-		// SourceParamValidator.validateSort(thingModelA));
+	public void validateSource(SourceA sourceA) {
+		ParamValidator.validate(sourceA.getValidateName(),
+				// 校验数据源名称
+				org.laokou.iot.source.service.validator.SourceParamValidator.validateName(sourceA),
+				// 校验数据源用户名
+				org.laokou.iot.source.service.validator.SourceParamValidator.validateUsername(sourceA),
+				// 校验数据源密码
+				org.laokou.iot.source.service.validator.SourceParamValidator.validatePassword(sourceA),
+				// 校验数据源地址
+				org.laokou.iot.source.service.validator.SourceParamValidator.validateEndpoint(sourceA),
+				// 校验数据源类型
+				org.laokou.iot.source.service.validator.SourceParamValidator.validateType(sourceA));
 	}
 
 }

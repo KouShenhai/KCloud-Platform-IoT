@@ -312,7 +312,8 @@ CREATE TABLE "public"."iot_source" (
    "type" varchar(50) NOT NULL,
    "endpoint" varchar(500) NOT NULL,
    "username" varchar(100) NOT NULL,
-   "password" varchar(100) NOT NULL
+   "password" varchar(100) NOT NULL,
+	"db_name" varchar(50) NOT null
 );
 COMMENT ON COLUMN "public"."iot_source"."id" IS 'ID';
 COMMENT ON COLUMN "public"."iot_source"."creator" IS '创建人';
@@ -328,6 +329,9 @@ COMMENT ON COLUMN "public"."iot_source"."type" IS '数据源类型';
 COMMENT ON COLUMN "public"."iot_source"."endpoint" IS '数据源地址';
 COMMENT ON COLUMN "public"."iot_source"."username" IS '数据源的用户名';
 COMMENT ON COLUMN "public"."iot_source"."password" IS '数据源的密码';
+COMMENT ON COLUMN "public"."iot_source"."db_name" IS '数据源的数据库名称';
 COMMENT ON TABLE "public"."iot_source" IS '数据源';
 
 ALTER TABLE "public"."iot_source" ADD CONSTRAINT "iot_source_pkey" PRIMARY KEY ("id");
+
+INSERT INTO "public"."iot_source" VALUES (1, 1, 1, '2026-07-13 22:37:37.171034', '2026-07-13 23:16:46.219868', 0, 2, 1, 1, 'TDengine默认数据库', 'tdengine', '127.0.0.1:6041', 'root', 'taosdata', 'kcloud_platform_iot');
