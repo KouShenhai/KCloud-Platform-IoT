@@ -15,14 +15,23 @@
  *
  */
 
-package org.laokou.common.storage.enums;
+package org.laokou.iot.source.factory;
 
-import lombok.Getter;
+import org.laokou.common.i18n.util.SpringContextUtils;
+import org.laokou.iot.source.model.SourceA;
+import org.laokou.iot.source.model.entity.SourceE;
 
-/**
- * @author laokou
- */
-@Getter
-public enum ClickHouseColumnType {
+public final class SourceDomainFactory {
+
+	private SourceDomainFactory() {
+	}
+
+	public static SourceE createSourceE() {
+		return SpringContextUtils.getBeanProvider(SourceE.class);
+	}
+
+	public static SourceA createSourceA() {
+		return SpringContextUtils.getBeanProvider(SourceA.class);
+	}
 
 }

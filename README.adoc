@@ -76,8 +76,8 @@ image:doc/image/img.png[COLA架构图,400,400,align=center]
 |image:doc/image/project/5.png[用户页面]    |image:doc/image/project/6.png[登录日志页面]
 |image:doc/image/project/7.png[通知日志页面]    |image:doc/image/project/8.png[操作日志页面]
 |image:doc/image/project/9.png[物模型页面]    |image:doc/image/project/10.png[产品类别页面]
-|image:doc/image/project/11.png[国际化菜单]    |image:doc/image/project/12.png[API文档]
-|image:doc/image/project/13.png[数据字典]    |
+|image:doc/image/project/11.png[国际化菜单页面]    |image:doc/image/project/12.png[API文档页面]
+|image:doc/image/project/13.png[数据字典页面]    |image:doc/image/project/14.png[数据源页面]
 |===
 
 === 🌿 服务器配置
@@ -141,6 +141,8 @@ https://docs.qq.com/sheet/DUGhCdGVZWmVxT0VJ[开发计划（需要登录）]
 🚀 国际化菜单管理【查询/保存/修改/删除/查看】
 
 🚀 数据字典管理【查询/保存/修改/删除/查看】
+
+🚀 数据源管理【查询/保存/修改/删除/查看】
 
 === 💡 系统架构
 

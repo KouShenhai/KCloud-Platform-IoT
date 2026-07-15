@@ -19,11 +19,13 @@ export async function modifySource(
 /** 保存数据源 保存数据源 POST /api/v1/sources */
 export async function saveSource(
 	body: API.SourceSaveCmd,
+	requestId: string,
 	options?: { [key: string]: any },
 ) {
 	return request<any>('/api-proxy/iot/api/v1/sources', {
 		method: 'POST',
 		headers: {
+			'request-id': requestId,
 			'Content-Type': 'application/json',
 		},
 		data: body,
@@ -117,21 +119,6 @@ export async function pageSource(
 	options?: { [key: string]: any },
 ) {
 	return request<API.Result>('/api-proxy/iot/api/v1/sources/page', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-		data: body,
-		...(options || {}),
-	});
-}
-
-/** 测试数据源 测试数据源 POST /api/v1/sources/test */
-export async function testSource(
-	body: API.SourceTestCmd,
-	options?: { [key: string]: any },
-) {
-	return request<any>('/api-proxy/iot/api/v1/sources/test', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

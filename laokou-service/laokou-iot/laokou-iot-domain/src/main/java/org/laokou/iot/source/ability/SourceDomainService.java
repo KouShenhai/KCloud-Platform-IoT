@@ -19,7 +19,7 @@ package org.laokou.iot.source.ability;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.iot.source.gateway.SourceGateway;
-import org.laokou.iot.source.model.entity.SourceE;
+import org.laokou.iot.source.model.SourceA;
 import org.springframework.stereotype.Component;
 
 /**
@@ -33,41 +33,16 @@ public class SourceDomainService {
 
 	private final SourceGateway sourceGateway;
 
-	public void createSource(SourceE sourceE) {
-		checkConnection(sourceE);
-		sourceGateway.createSource(sourceE);
+	public void createSource(SourceA sourceA) {
+		sourceGateway.createSource(sourceA);
 	}
 
-	public void updateSource(SourceE sourceE) {
-		checkConnection(sourceE);
-		sourceGateway.updateSource(sourceE);
+	public void updateSource(SourceA sourceA) {
+		sourceGateway.updateSource(sourceA);
 	}
 
 	public void deleteSource(Long[] ids) {
 		sourceGateway.deleteSource(ids);
-	}
-
-	public void testConnection(SourceE sourceE) {
-		checkConnection(sourceE);
-	}
-
-	private void checkConnection(SourceE sourceE) {
-		// if ("com.taosdata.jdbc.rs.RestfulDriver".equals(sourceE.getDriverClassName()))
-		// {
-		// try {
-		// Class.forName(sourceE.getDriverClassName());
-		// DriverManager.setLoginTimeout(5);
-		// try (Connection ignored = DriverManager.getConnection(sourceE.getUrl(),
-		// sourceE.getUsername(),
-		// sourceE.getPassword())) {
-		// // 连接成功
-		// }
-		// }
-		// catch (ClassNotFoundException | SQLException e) {
-		// throw new SystemException("SOURCE_CONNECTION_FAILED", "TDengine 数据源连接失败：" +
-		// e.getMessage(), e);
-		// }
-		// }
 	}
 
 }

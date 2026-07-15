@@ -17,12 +17,15 @@
 
 package org.laokou.iot.source.command.query;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.tenant.constant.DSConstants;
 import org.laokou.iot.source.convertor.SourceConvertor;
 import org.laokou.iot.source.dto.SourceGetQry;
 import org.laokou.iot.source.dto.clientobject.SourceCO;
 import org.laokou.iot.source.gatewayimpl.database.SourceMapper;
-import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -30,6 +33,7 @@ import org.springframework.stereotype.Component;
  *
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class SourceGetQryExe {
@@ -37,7 +41,18 @@ public class SourceGetQryExe {
 	private final SourceMapper sourceMapper;
 
 	public Result<SourceCO> execute(SourceGetQry qry) {
-		return Result.ok(SourceConvertor.toClientObject(sourceMapper.selectById(qry.getId())));
+
+		try {
+			DynamicDataSourceContextHolder.push(DSConstants.IOT);
+			return Result.ok(SourceConvertor.toClientObject(sourceMapper.selectById(qry.getId())));
+		}
+		catch (Exception ex) {
+			log.error("查看数据源详情失败，错误信息：{}", ex.getMessage(), ex);
+			throw ex;
+		}
+		finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 }

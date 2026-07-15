@@ -20,12 +20,14 @@ package org.laokou.common.storage;
 /**
  * @author laokou
  */
-interface DataSource {
+public interface DataSource {
 
 	void open();
 
 	void close();
 
 	void create(Table table);
+
+	void verifyConnection();
 
 }

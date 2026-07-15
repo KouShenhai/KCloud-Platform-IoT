@@ -58,8 +58,9 @@ public class DomainEventHandler {
 	public void handleLoginLog(List<ConsumerRecord<String, Object>> messages, Acknowledgment acknowledgment) {
 		try {
 			for (ConsumerRecord<String, Object> record : messages) {
-				loginLogServiceI
-					.saveLoginLog(new LoginLogSaveCmd(LoginLogConvertor.toClientObject((LoginEvent) record.value())));
+				if (record.value() instanceof LoginEvent loginEvent) {
+					loginLogServiceI.saveLoginLog(new LoginLogSaveCmd(LoginLogConvertor.toClientObject(loginEvent)));
+				}
 			}
 		}
 		finally {
@@ -72,9 +73,10 @@ public class DomainEventHandler {
 	public void handleMailCaptcha(List<ConsumerRecord<String, Object>> messages, Acknowledgment acknowledgment) {
 		try {
 			for (ConsumerRecord<String, Object> record : messages) {
-				SendCaptchaEvent evt = (SendCaptchaEvent) record.value();
-				noticeLogServiceI.saveNoticeLog(
-						new NoticeLogSaveCmd(NoticeLogConvertor.toClientObject(evt, mailService.send(evt.getUuid()))));
+				if (record.value() instanceof SendCaptchaEvent sendCaptchaEvent) {
+					noticeLogServiceI.saveNoticeLog(new NoticeLogSaveCmd(NoticeLogConvertor
+						.toClientObject(sendCaptchaEvent, mailService.send(sendCaptchaEvent.getUuid()))));
+				}
 			}
 		}
 		finally {
@@ -87,9 +89,10 @@ public class DomainEventHandler {
 	public void handleMobileCaptcha(List<ConsumerRecord<String, Object>> messages, Acknowledgment acknowledgment) {
 		try {
 			for (ConsumerRecord<String, Object> record : messages) {
-				SendCaptchaEvent evt = (SendCaptchaEvent) record.value();
-				noticeLogServiceI.saveNoticeLog(
-						new NoticeLogSaveCmd(NoticeLogConvertor.toClientObject(evt, smsService.send(evt.getUuid()))));
+				if (record.value() instanceof SendCaptchaEvent sendCaptchaEvent) {
+					noticeLogServiceI.saveNoticeLog(new NoticeLogSaveCmd(NoticeLogConvertor
+						.toClientObject(sendCaptchaEvent, smsService.send(sendCaptchaEvent.getUuid()))));
+				}
 			}
 		}
 		finally {

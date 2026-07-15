@@ -1,22 +1,28 @@
 import {SourceDrawer} from './SourceDrawer';
-import {pageSource, removeSource,} from '@/services/iot/source';
-import {useAccess} from '@@/exports';
+import {pageSource, removeSource, getSourceById} from '@/services/iot/source';
+import { useAccess, useIntl } from '@@/exports';
 import {DeleteOutlined, PlusOutlined,} from '@ant-design/icons';
 import type {ActionType, ProColumns} from '@ant-design/pro-components';
 import {ProTable} from '@ant-design/pro-components';
 import {Button, message, Modal} from 'antd';
 import type {TableRowSelection} from 'antd/es/table/interface';
-import {useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
+import {listDictItem} from "@/services/admin/dictItem";
+import {v7 as uuidV7} from "uuid";
 
 export default () => {
 	const access = useAccess();
-
+	const intl = useIntl();
+	const t = (id: string, values?: Record<string, any>) =>
+		intl.formatMessage({ id }, values);
 	const actionRef = useRef<ActionType | null>(null);
 	const [readOnly, setReadOnly] = useState(false);
 	const [modalVisit, setModalVisit] = useState(false);
 	const [dataSource, setDataSource] = useState<API.SourceCO>({});
 	const [title, setTitle] = useState('');
 	const [ids, setIds] = useState<number[]>([]);
+	const [sourceTypeOptions, setSourceTypeOptions] = useState<any>([]);
+	const [requestId, setRequestId] = useState('');
 
 	const reload = () => {
 		actionRef?.current?.reload();
@@ -28,8 +34,25 @@ export default () => {
 			pageNum: params?.current,
 			pageIndex: params?.pageSize * (params?.current - 1),
 			name: params?.name,
+			type: params?.type,
+			params: {
+				startTime: params?.startDate
+					? `${params.startDate} 00:00:00`
+					: undefined,
+				endTime: params?.endDate
+					? `${params.endDate} 23:59:59`
+					: undefined,
+			},
 		};
 	};
+
+	const getSourceType = async () => {
+		const  res = await listDictItem({dictCode: 'source_type'});
+		setSourceTypeOptions(res?.data?.map((item: any) => ({
+			label: item.name,
+			value: item.code
+		})))
+	}
 
 	const rowSelection: TableRowSelection<API.SourceCO> = {
 		onChange: (selectedRowKeys) => {
@@ -40,6 +63,10 @@ export default () => {
 			setIds(selectedIds);
 		},
 	};
+
+	useEffect(() => {
+		getSourceType().catch(console.log)
+	}, []);
 
 	const showRemoveConfirm = (removeIds: number[]) => {
 		Modal.confirm({
@@ -76,21 +103,43 @@ export default () => {
 			ellipsis: true,
 		},
 		{
-			title: '驱动名称',
-			dataIndex: 'driverClassName',
+			title: '数据源类型',
+			key: 'type',
+			dataIndex: 'type',
+			valueType: 'select',
+			fieldProps: {
+				valueType: 'select',
+				mode: 'single',
+				placeholder: '请选择数据源类型',
+				options: sourceTypeOptions,
+			},
 			ellipsis: true,
 		},
 		{
-			title: '连接地址',
-			dataIndex: 'url',
-			ellipsis: true,
+			title: t('common.createTime'),
+			key: 'createTime',
+			dataIndex: 'createTime',
+			valueType: 'dateTime',
 			hideInSearch: true,
+			width: 160,
+			ellipsis: true,
 		},
 		{
-			title: '用户名',
-			dataIndex: 'username',
-			ellipsis: true,
-			hideInSearch: true,
+			title: t('common.createTime'),
+			dataIndex: 'createTimeValue',
+			valueType: 'dateRange',
+			hideInTable: true,
+			fieldProps: {
+				placeholder: [t('common.selectStartTime'), t('common.selectEndTime')],
+			},
+			search: {
+				transform: (value) => {
+					return {
+						startDate: value[0],
+						endDate: value[1],
+					};
+				},
+			},
 		},
 		{
 			title: '操作',
@@ -98,6 +147,24 @@ export default () => {
 			key: 'option',
 			width: 180,
 			render: (_, record) => [
+				access.canSourceGetDetail && (
+					<a
+						key="get"
+						onClick={() => {
+							// @ts-ignore
+							getSourceById({ id: record?.id }).then(
+								(res: any) => {
+									setTitle('查看数据源');
+									setDataSource(res?.data);
+									setModalVisit(true);
+									setReadOnly(true);
+								},
+							);
+						}}
+					>
+						查看
+					</a>
+				),
 				access.canSourceModify && (
 					<a
 						key="modify"
@@ -133,6 +200,9 @@ export default () => {
 				title={title}
 				readOnly={readOnly}
 				dataSource={dataSource}
+				sourceOptions={sourceTypeOptions}
+				setRequestId={setRequestId}
+				requestId={requestId}
 				onComponent={() => {
 					setIds([]);
 					reload();
@@ -168,16 +238,12 @@ export default () => {
 							type="primary"
 							icon={<PlusOutlined />}
 							onClick={() => {
+								setRequestId(uuidV7());
 								setTitle('新增数据源');
 								setReadOnly(false);
 								setModalVisit(true);
 								setDataSource({
 									id: undefined,
-									name: '',
-									driverClassName: 'com.taosdata.jdbc.rs.RestfulDriver',
-									url: '',
-									username: '',
-									password: ''
 								});
 							}}
 						>

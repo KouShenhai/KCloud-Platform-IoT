@@ -64,11 +64,10 @@ export default () => {
 
 	const getDataType = async () => {
 		const  res = await listDictItem({dictCode: 'thing_model_data_type'});
-		const options: any[] = [];
-		res?.data?.forEach((item: any) => {
-			options.push({label: item.name, value: item.code})
-		})
-		setDataTypeOptions(options)
+		setDataTypeOptions(res?.data?.map((item: any) => ({
+			label: item.name,
+			value: item.code
+		})))
 	}
 
 	const getDataUnit = async () => {
@@ -160,7 +159,7 @@ export default () => {
 				return (
 					<>
 						{(record?.dataType === 'int' || record?.dataType === 'long' || record?.dataType === 'float' || record?.dataType === 'double') && (
-							<div>
+							<div style={{fontSize: '12px'}}>
 								最小值：
 								<span style={{ color: '#fd5251' }}>
 									{data?.min}
@@ -168,7 +167,7 @@ export default () => {
 							</div>
 						)}
 						{(record?.dataType === 'int' || record?.dataType === 'long' || record?.dataType === 'float' || record?.dataType === 'double') && (
-							<div>
+							<div style={{fontSize: '12px'}}>
 								最大值：
 								<span style={{ color: '#fd5251' }}>
 									{data?.max}
@@ -176,15 +175,15 @@ export default () => {
 							</div>
 						)}
 						{(record?.dataType === 'int' || record?.dataType === 'long' || record?.dataType === 'float' || record?.dataType === 'double') && (
-							<div>
+							<div style={{fontSize: '12px'}}>
 								单位：
 								<span style={{ color: '#fd5251' }}>
-									{data?.unit}
+									{dataUnitOptions?.find((opt: any) => opt.value === data?.unit)?.label}
 								</span>
 							</div>
 						)}
 						{record?.dataType === 'boolean' && (
-							<div>
+							<div style={{fontSize: '12px'}}>
 								{t('iot.thingModel.falseText')}：
 								<span style={{ color: '#fd5251' }}>
 									{data?.falseText}
@@ -192,7 +191,7 @@ export default () => {
 							</div>
 						)}
 						{record?.dataType === 'boolean' && (
-							<div>
+							<div style={{fontSize: '12px'}}>
 								{t('iot.thingModel.trueText')}：
 								<span style={{ color: '#fd5251' }}>
 									{data?.trueText}
@@ -200,7 +199,7 @@ export default () => {
 							</div>
 						)}
 						{record?.dataType === 'text' && (
-							<div>
+							<div style={{fontSize: '12px'}}>
 								{t('iot.thingModel.length')}：
 								<span style={{ color: '#fd5251' }}>
 									{data?.length}

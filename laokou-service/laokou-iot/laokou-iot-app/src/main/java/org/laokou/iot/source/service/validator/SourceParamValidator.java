@@ -17,19 +17,9 @@
 
 package org.laokou.iot.source.service.validator;
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import org.laokou.common.context.util.UserUtils;
-import org.laokou.common.core.util.RegexUtils;
-import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.ParamValidator;
-import org.laokou.iot.thingModel.gatewayimpl.database.ThingModelMapper;
-import org.laokou.iot.thingModel.gatewayimpl.database.dataobject.ThingModelDO;
-import org.laokou.iot.thingModel.model.ThingModelA;
-import org.laokou.iot.thingModel.model.entity.ThingModelE;
-import org.laokou.iot.thingModel.model.enums.DataType;
+import org.laokou.iot.source.model.SourceA;
 import org.springframework.util.StringUtils;
-
-import java.util.Arrays;
 
 /**
  * @author laokou
@@ -40,59 +30,44 @@ final class SourceParamValidator {
 
 	}
 
-	static ParamValidator.Validate validateId(ThingModelA thingModelA) {
-		Long id = thingModelA.getId();
-		if (id == null) {
-			return ParamValidator.invalidate("物模型ID不能为空");
+	static ParamValidator.Validate validateId(SourceA sourceA) {
+		if (sourceA.getId() == null) {
+			return ParamValidator.invalidate("数据源ID不能为空");
 		}
 		return ParamValidator.validate();
 	}
 
-	static ParamValidator.Validate validateCodeAndName(ThingModelA thingModelA, ThingModelMapper thingModelMapper) {
-		ThingModelE thingModelE = thingModelA.getThingModelE();
-		String code = thingModelE.getCode();
-		String name = thingModelE.getName();
-		if (!StringUtils.hasText(code) || !StringUtils.hasText(name)) {
-			return ParamValidator.invalidate("物模型编码和物模型名称不能为空");
-		}
-		if (!RegexUtils.matches("^[a-z]+(?:_[a-z]+)*$", code)) {
-			return ParamValidator.invalidate("物模型编码只能使用小写字母和下划线，必须以小写字母开头和结尾，下划线不能连续");
-		}
-		if (thingModelA.isSave() && thingModelMapper.selectCount(Wrappers.lambdaQuery(ThingModelDO.class)
-			.eq(ThingModelDO::getCode, code)
-			.eq(ThingModelDO::getName, name)
-			.eq(ThingModelDO::getTenantId, UserUtils.getTenantId())) > 0) {
-			return ParamValidator.invalidate("物模型编码和物模型名称已存在");
-		}
-		if (thingModelA.isModify() && thingModelMapper.selectCount(Wrappers.lambdaQuery(ThingModelDO.class)
-			.eq(ThingModelDO::getCode, code)
-			.eq(ThingModelDO::getName, name)
-			.eq(ThingModelDO::getTenantId, UserUtils.getTenantId())
-			.ne(ThingModelDO::getId, thingModelE.getId())) > 0) {
-			return ParamValidator.invalidate("物模型编码和物模型名称已存在");
+	static ParamValidator.Validate validateName(SourceA sourceA) {
+		if (!StringUtils.hasText(sourceA.getSourceE().getName())) {
+			return ParamValidator.invalidate("数据源名称不能为空");
 		}
 		return ParamValidator.validate();
 	}
 
-	static ParamValidator.Validate validateSpec(ThingModelA thingModelA) {
-		String spec = thingModelA.getThingModelE().getSpec();
-		if (!StringUtils.hasText(spec)) {
-			return ParamValidator.invalidate("物模型规格不能为空");
+	static ParamValidator.Validate validateType(SourceA sourceA) {
+		if (!StringUtils.hasText(sourceA.getSourceE().getType())) {
+			return ParamValidator.invalidate("数据源类型不能为空");
 		}
-		ParamValidator.Validate validate = validateDataType(thingModelA);
-		if (validate.isValidate()) {
-			return DataType.getByCode(thingModelA.getThingModelE().getDataType()).validate(spec);
-		}
-		return validate;
+		return ParamValidator.validate();
 	}
 
-	static ParamValidator.Validate validateDataType(ThingModelA thingModelA) {
-		String dataType = thingModelA.getThingModelE().getDataType();
-		if (ObjectUtils.isNull(dataType)) {
-			return ParamValidator.invalidate("物模型数据类型不能为空");
+	static ParamValidator.Validate validateUsername(SourceA sourceA) {
+		if (!StringUtils.hasText(sourceA.getSourceE().getUsername())) {
+			return ParamValidator.invalidate("数据源用户名不能为空");
 		}
-		if (!Arrays.stream(DataType.values()).map(DataType::getCode).toList().contains(dataType)) {
-			return ParamValidator.invalidate("物模型数据类型不存在");
+		return ParamValidator.validate();
+	}
+
+	static ParamValidator.Validate validatePassword(SourceA sourceA) {
+		if (!StringUtils.hasText(sourceA.getSourceE().getPassword())) {
+			return ParamValidator.invalidate("数据源密码不能为空");
+		}
+		return ParamValidator.validate();
+	}
+
+	static ParamValidator.Validate validateEndpoint(SourceA sourceA) {
+		if (!StringUtils.hasText(sourceA.getSourceE().getEndpoint())) {
+			return ParamValidator.invalidate("数据源地址不能为空");
 		}
 		return ParamValidator.validate();
 	}

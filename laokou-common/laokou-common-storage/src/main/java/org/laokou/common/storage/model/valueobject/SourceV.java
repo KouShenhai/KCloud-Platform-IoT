@@ -15,25 +15,10 @@
  *
  */
 
-package org.laokou.common.storage.enums;
-
-import lombok.Getter;
+package org.laokou.common.storage.model.valueobject;
 
 /**
  * @author laokou
  */
-@Getter
-public enum TDengineColumnType {
-
-	;
-
-	private final String code;
-
-	private final String desc;
-
-	TDengineColumnType(String code, String desc) {
-		this.code = code;
-		this.desc = desc;
-	}
-
+public record SourceV(String endpoint, String dbName, String username, String password) {
 }

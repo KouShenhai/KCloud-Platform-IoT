@@ -525,6 +525,7 @@ export default {
 	// sys/apiDoc
 	'sys.apiDoc.auth': '认证授权',
 	'sys.apiDoc.admin': '后台管理',
+	'sys.apiDoc.iot': '物联管理',
 
 	// login
 	'login.subtitle': '企业级多租户IoT云平台',

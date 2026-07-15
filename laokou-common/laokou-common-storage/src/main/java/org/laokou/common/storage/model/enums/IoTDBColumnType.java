@@ -15,29 +15,14 @@
  *
  */
 
-package org.laokou.iot.source.command;
+package org.laokou.common.storage.model.enums;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.iot.source.ability.SourceDomainService;
-import org.laokou.iot.source.convertor.SourceConvertor;
-import org.laokou.iot.source.dto.SourceTestCmd;
-import org.laokou.common.domain.annotation.CommandLog;
-import org.springframework.stereotype.Component;
+import lombok.Getter;
 
 /**
- * 测试数据源连接命令执行器.
- *
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class SourceTestCmdExe {
-
-	private final SourceDomainService sourceDomainService;
-
-	@CommandLog
-	public void executeVoid(SourceTestCmd cmd) {
-		sourceDomainService.testConnection(SourceConvertor.toEntity(cmd.getCo()));
-	}
+@Getter
+public enum IoTDBColumnType {
 
 }
