@@ -19,6 +19,7 @@ package org.laokou.iot.thingModel.model.enums;
 
 import lombok.Data;
 import org.laokou.common.i18n.util.ParamValidator;
+import org.springframework.util.StringUtils;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -32,14 +33,19 @@ public class TextType implements Serializable {
 	@Serial
 	private static final long serialVersionUID = -1L;
 
-	private Integer length;
+	private String length;
+
+	private final Integer minVal = 1;
+
+	private final Integer maxVal = 10000;
 
 	public ParamValidator.Validate checkValue() {
-		if (length == null) {
+		if (!StringUtils.hasText(length)) {
 			return ParamValidator.invalidate("长度不能为空");
 		}
-		if (length < 1 || length > 10000) {
-			return ParamValidator.invalidate("长度必须为1-10000");
+		int len = Integer.parseInt(length);
+		if (len < minVal || len > maxVal) {
+			return ParamValidator.invalidate(String.format("数值超出范围，数值必须为%d~%d", minVal, maxVal));
 		}
 		return ParamValidator.validate();
 	}

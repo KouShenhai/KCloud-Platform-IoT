@@ -58,8 +58,8 @@ public class GatewayDomainService {
 
 	private void checkGatewayParam(GatewayE gatewayE, boolean modify) {
 		ParamValidator.validate("Gateway", validateCo(gatewayE), validateId(gatewayE, modify),
-				validateGatewayKey(gatewayE), validateName(gatewayE), validateStatus(gatewayE), validateRemark(gatewayE),
-				validateProduct(gatewayE), validateUniqueGatewayKey(gatewayE));
+				validateGatewayKey(gatewayE), validateName(gatewayE), validateStatus(gatewayE),
+				validateRemark(gatewayE), validateProduct(gatewayE), validateUniqueGatewayKey(gatewayE));
 	}
 
 	private void checkRemoveParam(Long[] ids) {

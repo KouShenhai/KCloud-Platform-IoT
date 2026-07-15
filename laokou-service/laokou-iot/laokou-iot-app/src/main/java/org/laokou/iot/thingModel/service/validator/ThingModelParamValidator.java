@@ -55,8 +55,8 @@ final class ThingModelParamValidator {
 		if (!StringUtils.hasText(code) || !StringUtils.hasText(name)) {
 			return ParamValidator.invalidate("物模型编码和物模型名称不能为空");
 		}
-		if (!RegexUtils.matches("^[a-z]+(?:_[a-z]+)*$", code)) {
-			return ParamValidator.invalidate("物模型编码只能使用小写字母和下划线，必须以小写字母开头和结尾，下划线不能连续");
+		if (!RegexUtils.matches("^[a-z]+(?:_[a-z]+)*[0-9]*$", code)) {
+			return ParamValidator.invalidate("物模型编码强制使用小写字母、数字和下划线，必须以小写字母开头，小写字母或数字结尾，数字只能在末尾，下划线不能连续");
 		}
 		if (thingModelA.isSave() && thingModelMapper.selectCount(Wrappers.lambdaQuery(ThingModelDO.class)
 			.eq(ThingModelDO::getCode, code)

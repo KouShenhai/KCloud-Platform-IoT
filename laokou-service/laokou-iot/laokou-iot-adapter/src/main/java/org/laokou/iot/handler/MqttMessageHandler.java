@@ -21,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.iot.gateway.api.GatewayCommandServiceI;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -34,7 +33,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class MqttMessageHandler {
 
-	private final GatewayCommandServiceI gatewayCommandServiceI;
+	// private final GatewayCommandServiceI gatewayCommandServiceI;
 
 	/**
 	 * 处理网关指令回执消息.
@@ -57,8 +56,9 @@ public class MqttMessageHandler {
 			log.warn("网关指令回执报文缺少必要字段：{}", reply);
 			return;
 		}
-		gatewayCommandServiceI.handleReply(Long.valueOf(commandId.toString()), Integer.valueOf(code.toString()),
-				ObjectUtils.isNull(result) ? null : result.toString());
+		// gatewayCommandServiceI.handleReply(Long.valueOf(commandId.toString()),
+		// Integer.valueOf(code.toString()),
+		// ObjectUtils.isNull(result) ? null : result.toString());
 	}
 
 	// @PulsarListeners(value = { @PulsarListener(topicPattern =

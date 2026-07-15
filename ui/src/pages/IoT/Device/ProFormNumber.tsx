@@ -17,20 +17,20 @@ interface Props extends ProFormTextProps {
 
 const RANGE = {
 	int: {
-		min: BigInt("0"),
-		max: BigInt("2147483647"),
+		min: BigInt("-1000000"),
+		max: BigInt("1000000"),
 	},
 	long: {
-		min: BigInt("0"),
-		max: BigInt("9223372036854775807"),
+		min: BigInt("-1000000000000"),
+		max: BigInt("1000000000000"),
 	},
 	float: {
-		min: 0,
-		max: 3.4028235e38,
+		min: -1000000.000,
+		max: 1000000.000,
 	},
 	double: {
-		min: 0,
-		max: 1.7976931348623157e308,
+		min: -1000000000.000000,
+		max: 1000000000.000000,
 	},
 } as const;
 
