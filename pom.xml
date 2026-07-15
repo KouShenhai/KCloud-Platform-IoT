@@ -149,13 +149,13 @@
     <!-- mybatis-plus版本 -->
     <mybatis-plus.version>3.5.17</mybatis-plus.version>
     <!-- nacos版本 -->
-    <nacos.version>3.2.2</nacos.version>
+    <nacos.version>3.2.3</nacos.version>
     <!-- micrometer-tracing版本 -->
     <micrometer-tracing.version>1.7.0</micrometer-tracing.version>
     <!-- netty版本 -->
     <netty.version>4.2.16.Final</netty.version>
     <!-- grpc版本 -->
-    <grpc.version>1.82.0</grpc.version>
+    <grpc.version>1.82.2</grpc.version>
     <!-- jackson版本 -->
     <jackson.version>3.2.0</jackson.version>
     <!-- okhttp版本 -->
@@ -169,7 +169,7 @@
     <!-- postgresql版本 -->
     <postgresql.version>42.7.13</postgresql.version>
     <!-- spring-boot-admin版本 -->
-    <spring-boot-admin.version>4.1.1</spring-boot-admin.version>
+    <spring-boot-admin.version>4.1.2</spring-boot-admin.version>
     <!-- jsoup版本 -->
     <jsoup.version>1.22.2</jsoup.version>
     <!-- jasypt版本 -->
