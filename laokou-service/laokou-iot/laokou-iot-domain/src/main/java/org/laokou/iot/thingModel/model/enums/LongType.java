@@ -44,15 +44,21 @@ public class LongType implements Serializable {
 	private final Long maxVal = 1000000000000L;
 
 	public ParamValidator.Validate checkValue() {
-		if (!StringUtils.hasText(min) || !StringUtils.hasText(max)) {
-			return ParamValidator.validate();
+		Long minValue = null;
+		Long maxValue = null;
+		if (StringUtils.hasText(min)) {
+			minValue = Long.parseLong(min);
 		}
-		long minValue = Long.parseLong(min);
-		long maxValue = Long.parseLong(max);
-		if (minValue < minVal || maxValue > maxVal) {
-			return ParamValidator.invalidate(String.format("数值超出范围，数值必须为%d~%d", minVal, maxVal));
+		if (StringUtils.hasText(max)) {
+			maxValue = Long.parseLong(max);
 		}
-		if (minValue >= maxValue) {
+		if (minValue != null && (minValue < minVal || minValue > maxVal)) {
+			return ParamValidator.invalidate(String.format("最小值超出范围，最小值必须为%d~%d", minVal, maxVal));
+		}
+		if (maxValue != null && (maxValue < minVal || maxValue > maxVal)) {
+			return ParamValidator.invalidate(String.format("最大值超出范围，最大值必须为%d~%d", minVal, maxVal));
+		}
+		if (minValue != null && maxValue != null && minValue >= maxValue) {
 			return ParamValidator.invalidate("最大值必须大于最小值");
 		}
 		return ParamValidator.validate();

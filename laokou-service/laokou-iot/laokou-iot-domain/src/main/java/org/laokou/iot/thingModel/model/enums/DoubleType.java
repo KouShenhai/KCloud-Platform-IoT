@@ -46,15 +46,21 @@ public class DoubleType implements Serializable {
 	private final BigDecimal maxVal = new BigDecimal("1000000000.000000");
 
 	public ParamValidator.Validate checkValue() {
-		if (!StringUtils.hasText(min) || !StringUtils.hasText(max)) {
-			return ParamValidator.validate();
+		BigDecimal minValue = null;
+		BigDecimal maxValue = null;
+		if (StringUtils.hasText(min)) {
+			minValue = new BigDecimal(min).setScale(6, RoundingMode.HALF_UP).stripTrailingZeros();
 		}
-		BigDecimal minValue = new BigDecimal(min).setScale(6, RoundingMode.HALF_UP).stripTrailingZeros();
-		BigDecimal maxValue = new BigDecimal(max).setScale(6, RoundingMode.HALF_UP).stripTrailingZeros();
-		if (minVal.compareTo(minValue) > 0 || maxValue.compareTo(maxVal) > 0) {
-			return ParamValidator.invalidate(String.format("数值超出范围，数值必须为%s~%s", minVal, maxVal));
+		if (StringUtils.hasText(max)) {
+			maxValue = new BigDecimal(max).setScale(6, RoundingMode.HALF_UP).stripTrailingZeros();
 		}
-		if (minValue.compareTo(maxValue) >= 0) {
+		if (minValue != null && (minVal.compareTo(minValue) > 0 || minValue.compareTo(maxVal) > 0)) {
+			return ParamValidator.invalidate(String.format("最小值超出范围，最小值必须为%s~%s", minVal, maxVal));
+		}
+		if (maxValue != null && (minVal.compareTo(maxValue) > 0 || maxValue.compareTo(maxVal) > 0)) {
+			return ParamValidator.invalidate(String.format("最大值超出范围，最大值必须为%s~%s", minVal, maxVal));
+		}
+		if (minValue != null && maxValue != null && minValue.compareTo(maxValue) >= 0) {
 			return ParamValidator.invalidate("最大值必须大于最小值");
 		}
 		return ParamValidator.validate();
