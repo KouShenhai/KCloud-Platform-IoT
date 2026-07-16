@@ -41,11 +41,11 @@ public class TextType implements Serializable {
 
 	public ParamValidator.Validate checkValue() {
 		if (!StringUtils.hasText(length)) {
-			return ParamValidator.invalidate("长度不能为空");
+			return ParamValidator.invalidate("文本长度不能为空");
 		}
 		int len = Integer.parseInt(length);
 		if (len < minVal || len > maxVal) {
-			return ParamValidator.invalidate(String.format("数值超出范围，数值必须为%d~%d", minVal, maxVal));
+			return ParamValidator.invalidate(String.format("文本长度超出范围，长度必须为%d~%d", minVal, maxVal));
 		}
 		return ParamValidator.validate();
 	}
