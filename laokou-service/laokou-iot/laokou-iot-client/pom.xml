@@ -18,6 +18,10 @@
       <artifactId>laokou-common-core</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-core</artifactId>
+    </dependency>
   </dependencies>
 
 </project>

@@ -2,7 +2,7 @@
 
 ## Purpose
 
-本规格说明网络连接管理能力，提供对各类网络连接（MQTT Server、HTTP Server、MQTT Client、Kafka、RabbitMQ）的增删改查与控制台管理页面，支持多租户隔离、权限管控及幂等/乐观锁等生产级特性。
+本规格说明网络会话管理能力，提供对各类网络连接（MQTT Server、HTTP Server、MQTT Client、Kafka、RabbitMQ）的增删改查与控制台管理页面，支持多租户隔离、权限管控及幂等/乐观锁等生产级特性。
 
 ## Requirements
 
@@ -102,9 +102,9 @@
 - **WHEN** 用户未勾选任何记录即点击批量删除
 - **THEN** 前端提示「至少选择一条」且不发起请求
 
-### Requirement: 网络连接管理控制台页面
+### Requirement: 网络会话管理控制台页面
 
-系统 SHALL 在控制台 `/network/connection` 路由下提供网络连接管理页面，基于 Ant Design Pro `ProTable` 与 `DrawerForm` 实现，支持中英文国际化，并依据用户权限位（`canConnectionPage/GetDetail/Save/Modify/Remove`）显隐操作入口。新增/修改抽屉 MUST 根据所选连接类型动态渲染该类型的特有配置字段。
+系统 SHALL 在控制台 `/network/connection` 路由下提供网络会话管理页面，基于 Ant Design Pro `ProTable` 与 `DrawerForm` 实现，支持中英文国际化，并依据用户权限位（`canConnectionPage/GetDetail/Save/Modify/Remove`）显隐操作入口。新增/修改抽屉 MUST 根据所选连接类型动态渲染该类型的特有配置字段。
 
 #### Scenario: 进入网络管理菜单
 

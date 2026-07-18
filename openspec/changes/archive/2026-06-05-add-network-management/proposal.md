@@ -8,7 +8,7 @@
 
 - 在 `laokou-network` 服务补齐 DDD COLA 全链路（client / adapter / app / domain / infrastructure），首次为该服务引入 Web 控制器、MyBatis-Plus 持久化与 Spring Security 鉴权（技术栈对齐 `laokou-iot`）。
 - 新增统一连接实体 `network_connection`：以 `type` 字段区分 5 类连接（1 MQTT Server / 2 HTTP Server / 3 MQTT Client / 4 Kafka / 5 RabbitMQ），通用字段（name / type / host / port / enabled / remark）落库为列，各类型特有参数以 JSON 文本存入 `config` 列。
-- 新增后端连接管理接口：分页查询、按条件检索、查看详情、新增、修改、删除（单条/批量），路径 `/network/api/v1/connections*`，权限点 `network:connection:*`。
+- 新增后端会话管理接口：分页查询、按条件检索、查看详情、新增、修改、删除（单条/批量），路径 `/network/api/v1/connections*`，权限点 `network:connection:*`。
 - 新增前端「网络管理」控制台页面（Ant Design Pro `ProTable` + `DrawerForm`，Umi Max）：列表支持按连接名称/类型/启用状态检索；新增/修改抽屉按所选 `type` 动态渲染该类型的特有配置字段；支持中英文国际化与按权限位显隐操作。
 - 在前端注册 `/network/connection` 路由，补充 `access.ts` 权限位、`zh-CN` / `en-US` 国际化文案，新增 `services/network/connection.ts` 请求层（`saveConnection` 带 `request-id` 幂等头）。
 - Kafka / RabbitMQ 连接基于 Vertx 实现：新增 `vertx-kafka-client`、`vertx-rabbitmq-client` 依赖，并补充对应的 Vertx 连接配置 POJO（与现有 `MqttServerConfig` 等同构），供后续运行时部署使用。
