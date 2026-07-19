@@ -92,9 +92,14 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 		if (!stopping.compareAndSet(false, true)) {
 			return Future.succeededFuture();
 		}
+
 		cancelReconnectTimer();
-		return mqttClient.unsubscribe(getTopics().keySet().stream().toList())
-			.compose(v -> mqttClient.disconnect())
+
+		if (!mqttClient.isConnected()) {
+			return Future.succeededFuture();
+		}
+
+		return mqttClient.disconnect()
 			.onSuccess(_ -> log.info("【Vertx-MQTT-Client】 => MQTT断开连接成功，客户端ID：{}", mqttClientProperties.getClientId()))
 			.onFailure(ex -> log.error("【Vertx-MQTT-Client】 => MQTT断开连接失败，客户端ID：{}，错误信息：{}",
 					mqttClientProperties.getClientId(), ex.getMessage(), ex));
@@ -108,8 +113,16 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 	 * @param isDup if the message is a duplicate
 	 * @param isRetain if the message needs to be retained
 	 */
-	public void publish(String topic, int qos, String payload, boolean isDup, boolean isRetain) {
-		mqttClient.publish(topic, Buffer.buffer(payload), VertxMqttUtils.convertQos(qos), isDup, isRetain);
+	public Future<Void> publish(String topic, int qos, String payload, boolean isDup, boolean isRetain) {
+		if (stopping.get()) {
+			return Future.failedFuture("MQTT客户端正在关闭");
+		}
+
+		if (!mqttClient.isConnected()) {
+			return Future.failedFuture("MQTT客户端未连接");
+		}
+		return mqttClient.publish(topic, Buffer.buffer(payload), VertxMqttUtils.convertQos(qos), isDup, isRetain)
+			.mapEmpty();
 	}
 
 	private Future<Void> connectAndSubscribe() {
@@ -126,25 +139,28 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 			return Future.succeededFuture();
 		}
 
-		return mqttClient.connect(mqttClientProperties.getPort(), mqttClientProperties.getHost()).onSuccess(connAck -> {
-			log.info("【Vertx-MQTT-Client】 => MQTT连接成功，主机：{}，端口：{}，客户端ID：{}，返回码：{}，存在会话：{}",
+		return mqttClient.connect(mqttClientProperties.getPort(), mqttClientProperties.getHost())
+			.onSuccess(connAck -> log.info("【Vertx-MQTT-Client】 => MQTT连接成功，主机：{}，端口：{}，客户端ID：{}，返回码：{}，存在会话：{}",
 					mqttClientProperties.getHost(), mqttClientProperties.getPort(), mqttClientProperties.getClientId(),
-					connAck.code(), connAck.isSessionPresent());
-		}).compose(_ -> subscribe()).onFailure(ex -> {
-			log.error("【Vertx-MQTT-Client】 => MQTT连接或订阅失败，主机：{}，端口：{}，客户端ID：{}，异常类型：{}，原因：{}",
-					mqttClientProperties.getHost(), mqttClientProperties.getPort(), mqttClientProperties.getClientId(),
-					ex.getClass().getName(), ex.getMessage(), ex);
-			/*
-			 * 初次连接过程中，如果TCP连接成功但CONNACK之前连接被关闭， Vert.x不会触发用户注册的closeHandler，只会让connect
-			 * Future失败. 因此这里也必须重连.
-			 */
-			if (!mqttClient.isConnected()) {
-				scheduleReconnect();
-			}
-		}).eventually(() -> {
-			connecting.set(false);
-			return Future.succeededFuture();
-		});
+					connAck.code(), connAck.isSessionPresent()))
+			.compose(_ -> subscribe())
+			.onSuccess(_ -> cancelReconnectTimer())
+			.onFailure(ex -> {
+				log.error("【Vertx-MQTT-Client】 => MQTT连接或订阅失败，主机：{}，端口：{}，客户端ID：{}，异常类型：{}，原因：{}",
+						mqttClientProperties.getHost(), mqttClientProperties.getPort(),
+						mqttClientProperties.getClientId(), ex.getClass().getName(), ex.getMessage(), ex);
+				/*
+				 * 初次连接过程中，如果TCP连接成功但CONNACK之前连接被关闭，
+				 * Vert.x不会触发用户注册的closeHandler，只会让connect Future失败. 因此这里也必须重连.
+				 */
+				if (!mqttClient.isConnected()) {
+					scheduleReconnect();
+				}
+			})
+			.eventually(() -> {
+				connecting.set(false);
+				return Future.succeededFuture();
+			});
 	}
 
 	private synchronized void scheduleReconnect() {
