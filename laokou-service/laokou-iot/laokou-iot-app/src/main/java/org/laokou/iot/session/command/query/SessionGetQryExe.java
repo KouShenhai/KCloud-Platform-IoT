@@ -19,7 +19,6 @@ package org.laokou.iot.session.command.query;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.iot.session.convertor.SessionConvertor;
 import org.laokou.iot.session.dto.SessionGetQry;
 import org.laokou.iot.session.dto.clientobject.SessionCO;
 import org.laokou.iot.session.gatewayimpl.database.SessionMapper;
@@ -35,7 +34,9 @@ public class SessionGetQryExe {
 	private final SessionMapper sessionMapper;
 
 	public Result<SessionCO> execute(SessionGetQry qry) {
-		return Result.ok(SessionConvertor.toClientObject(sessionMapper.selectById(qry.getId())));
+		// return
+		// Result.ok(SessionConvertor.toClientObject(sessionMapper.selectById(qry.getId())));
+		return null;
 	}
 
 }

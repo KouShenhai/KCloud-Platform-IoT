@@ -21,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.laokou.iot.session.ability.SessionDomainService;
-import org.laokou.iot.session.convertor.SessionConvertor;
 import org.laokou.iot.session.dto.SessionSaveCmd;
 import org.springframework.stereotype.Component;
 
@@ -40,8 +39,7 @@ public class SessionSaveCmdExe {
 
 	@CommandLog
 	public void executeVoid(SessionSaveCmd cmd) {
-		transactionalUtils.executeInTransaction(
-				() -> sessionDomainService.createSession(SessionConvertor.toEntity(cmd == null ? null : cmd.getCo())));
+
 	}
 
 }

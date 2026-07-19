@@ -20,14 +20,9 @@ package org.laokou.iot.session.command.query;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.network.connection.convertor.ConnectionConvertor;
-import org.laokou.network.connection.dto.ConnectionPageQry;
-import org.laokou.network.connection.dto.clientobject.ConnectionCO;
-import org.laokou.network.connection.gatewayimpl.database.ConnectionMapper;
-import org.laokou.network.connection.gatewayimpl.database.dataobject.ConnectionDO;
+import org.laokou.iot.session.dto.SessionPageQry;
+import org.laokou.iot.session.dto.clientobject.SessionCO;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * Network connection page query executor.
@@ -38,12 +33,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SessionPageQryExe {
 
-	private final ConnectionMapper connectionMapper;
-
-	public Result<Page<ConnectionCO>> execute(ConnectionPageQry qry) {
-		List<ConnectionDO> list = connectionMapper.selectObjectPage(qry);
-		long total = connectionMapper.selectObjectCount(qry);
-		return Result.ok(Page.create(list.stream().map(ConnectionConvertor::toClientObject).toList(), total));
+	public Result<Page<SessionCO>> execute(SessionPageQry qry) {
+		return null;
 	}
 
 }

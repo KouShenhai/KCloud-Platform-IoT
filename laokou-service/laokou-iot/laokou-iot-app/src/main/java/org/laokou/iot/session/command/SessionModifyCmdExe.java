@@ -20,9 +20,7 @@ package org.laokou.iot.session.command;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
-import org.laokou.network.connection.ability.ConnectionDomainService;
-import org.laokou.network.connection.convertor.ConnectionConvertor;
-import org.laokou.network.connection.dto.ConnectionModifyCmd;
+import org.laokou.iot.session.dto.SessionModifyCmd;
 import org.springframework.stereotype.Component;
 
 /**
@@ -34,14 +32,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class SessionModifyCmdExe {
 
-	private final ConnectionDomainService connectionDomainService;
-
 	private final TransactionalUtils transactionalUtils;
 
 	@CommandLog
-	public void executeVoid(ConnectionModifyCmd cmd) {
-		transactionalUtils.executeInTransaction(() -> connectionDomainService
-			.updateConnection(ConnectionConvertor.toEntity(cmd == null ? null : cmd.getCo())));
+	public void executeVoid(SessionModifyCmd cmd) {
+
 	}
 
 }

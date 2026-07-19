@@ -18,7 +18,6 @@
 package org.laokou.iot.session.model;
 
 /**
- *
  * @author laokou
  */
 public class SessionA {

@@ -18,15 +18,10 @@
 package org.laokou.iot.session.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.i18n.common.IdGenerator;
-import org.laokou.network.connection.convertor.ConnectionConvertor;
-import org.laokou.network.connection.gateway.ConnectionGateway;
-import org.laokou.network.connection.gatewayimpl.database.ConnectionMapper;
-import org.laokou.network.connection.gatewayimpl.database.dataobject.ConnectionDO;
-import org.laokou.network.connection.model.ConnectionE;
+import org.laokou.iot.session.gateway.SessionGateway;
+import org.laokou.iot.session.gatewayimpl.database.SessionMapper;
+import org.laokou.iot.session.model.SessionA;
 import org.springframework.stereotype.Component;
-
-import java.util.Arrays;
 
 /**
  * Network connection gateway implementation.
@@ -35,43 +30,23 @@ import java.util.Arrays;
  */
 @Component
 @RequiredArgsConstructor
-public class SessionGatewayImpl implements ConnectionGateway {
+public class SessionGatewayImpl implements SessionGateway {
 
-	private final ConnectionMapper connectionMapper;
-
-	private final IdGenerator idGenerator;
+	private final SessionMapper sessionMapper;
 
 	@Override
-	public void createConnection(ConnectionE connectionE) {
-		connectionMapper.insert(ConnectionConvertor.toDataObject(idGenerator.getId(), connectionE, true));
+	public void createSession(SessionA sessionA) {
+
 	}
 
 	@Override
-	public void updateConnection(ConnectionE connectionE) {
-		ConnectionDO connectionDO = ConnectionConvertor.toDataObject(null, connectionE, false);
-		connectionDO.setVersion(connectionMapper.selectVersion(connectionE.getId()));
-		connectionMapper.updateById(connectionDO);
+	public void updateSession(SessionA sessionA) {
+
 	}
 
 	@Override
-	public void deleteConnection(Long[] ids) {
-		connectionMapper.deleteByIds(Arrays.asList(ids));
-	}
+	public void deleteSession(Long[] ids) {
 
-	@Override
-	public boolean existsConnection(Long id) {
-		return connectionMapper.selectById(id) != null;
-	}
-
-	@Override
-	public boolean existsConnection(Long[] ids) {
-		return Arrays.stream(ids).allMatch(this::existsConnection);
-	}
-
-	@Override
-	public Integer getConnectionType(Long id) {
-		ConnectionDO connectionDO = connectionMapper.selectById(id);
-		return connectionDO == null ? null : connectionDO.getType();
 	}
 
 }
