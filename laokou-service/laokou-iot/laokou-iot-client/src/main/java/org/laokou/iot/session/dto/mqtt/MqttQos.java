@@ -15,20 +15,29 @@
  *
  */
 
-package org.laokou.iot.common.config.mqtt;
+package org.laokou.iot.session.dto.mqtt;
 
-import io.vertx.mqtt.messages.MqttPublishMessage;
-import org.laokou.iot.session.dto.mqtt.MqttMessageV;
+import lombok.Getter;
 
-/**
- * 消息处理器.
- *
+/***
  * @author laokou
  */
-public interface MessageHandler {
+@Getter
+enum MqttQos {
 
-	void handle(MqttPublishMessage publishMessage, MqttMessageV mqttMessageV);
+	AT_MOST_ONCE(0, "最多一次"),
 
-	boolean isSubscribe(String topic);
+	AT_LEAST_ONCE(1, "至少一次"),
+
+	EXACTLY_ONCE(2, "恰好一次");
+
+	private final int code;
+
+	private final String desc;
+
+	MqttQos(int code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
 
 }

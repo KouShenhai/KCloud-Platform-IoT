@@ -17,7 +17,6 @@
 
 package org.laokou.iot.common.config.mqtt;
 
-import io.netty.handler.codec.mqtt.MqttQoS;
 import io.netty.handler.codec.mqtt.MqttVersion;
 import io.vertx.core.Future;
 import io.vertx.core.Vertx;
@@ -185,7 +184,7 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 	}
 
 	private Map<String, Integer> getTopics() {
-		return MqttMessageType.getTopics(systemSettingsProperties.getTenantCode(), MqttQoS.AT_MOST_ONCE.value());
+		return MqttMessageType.getTopics(systemSettingsProperties.getTenantCode());
 	}
 
 	private MqttClient init() {
@@ -213,7 +212,7 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 				for (MessageHandler messageHandler : messageHandlers) {
 					Thread.startVirtualThread(() -> {
 						try {
-							messageHandler.handle(topic, messageV);
+							messageHandler.handle(publishMessage, messageV);
 						}
 						catch (Exception ex) {
 							log.error("【Vertx-MQTT-Client】 => MQTT消息处理失败，Topic：{}，处理器：{}，错误信息：{}", topic,
@@ -233,8 +232,15 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 
 	private MqttClientOptions getMqttClientOptions(MqttClientConfig mqttClientProperties) {
 		MqttClientOptions options = new MqttClientOptions();
+		if (mqttClientProperties.isAuth()) {
+			options.setPassword(mqttClientProperties.getPassword());
+			options.setUsername(mqttClientProperties.getUsername());
+		}
+		options.setTcpNoDelay(mqttClientProperties.isTcpNoDelay());
+		options.setTcpKeepAlive(mqttClientProperties.isTcpKeepAlive());
+		options.setConnectTimeout(mqttClientProperties.getConnectTimeout());
+		options.setSoLinger(mqttClientProperties.getSoLinger());
 		options.setClientId(mqttClientProperties.getClientId());
-		options.setCleanSession(mqttClientProperties.isClearSession());
 		options.setAutoKeepAlive(mqttClientProperties.isAutoKeepAlive());
 		options.setKeepAliveInterval(mqttClientProperties.getKeepAliveInterval());
 		options.setReconnectAttempts(mqttClientProperties.getReconnectAttempts());
@@ -245,10 +251,8 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 		options.setReceiveBufferSize(mqttClientProperties.getReceiveBufferSize());
 		options.setMaxMessageSize(mqttClientProperties.getMaxMessageSize());
 		options.setSsl(mqttClientProperties.isSsl());
-		if (mqttClientProperties.isAuth()) {
-			options.setPassword(mqttClientProperties.getPassword());
-			options.setUsername(mqttClientProperties.getUsername());
-		}
+		options.setCleanSession(MqttClientOptions.DEFAULT_CLEAN_SESSION);
+		options.setSessionExpireInterval(0L);
 		options.setVersion(MqttVersion.MQTT_5.protocolLevel());
 		return options;
 	}

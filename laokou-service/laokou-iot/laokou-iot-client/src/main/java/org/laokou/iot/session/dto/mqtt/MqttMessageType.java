@@ -24,6 +24,8 @@ import java.util.Map;
 
 /***
  * mqtt消息类型枚举.
+ *
+ * @author laokou
  */
 @Getter
 public enum MqttMessageType {
@@ -38,6 +40,11 @@ public enum MqttMessageType {
 		public String getMqTopic() {
 			return "iot-down-command-gateway-message";
 		}
+
+		@Override
+		MqttQos getMqttQos() {
+			return MqttQos.AT_LEAST_ONCE;
+		}
 	},
 
 	UP_COMMAND_REPLY_GATEWAY_MESSAGE("up_command_reply_gateway_message", "网关指令回复【上行】") {
@@ -49,6 +56,11 @@ public enum MqttMessageType {
 		@Override
 		public String getMqTopic() {
 			return "iot-up-command-reply-gateway-message";
+		}
+
+		@Override
+		MqttQos getMqttQos() {
+			return MqttQos.AT_LEAST_ONCE;
 		}
 	},
 
@@ -62,6 +74,11 @@ public enum MqttMessageType {
 		public String getMqTopic() {
 			return "iot-up-report-ota-gateway-message";
 		}
+
+		@Override
+		MqttQos getMqttQos() {
+			return MqttQos.AT_LEAST_ONCE;
+		}
 	},
 
 	DOWN_REPORT_OTA_REPLY_GATEWAY_MESSAGE("down_report_ota_reply_gateway_message", "上报网关固件信息回复【下行】") {
@@ -73,6 +90,11 @@ public enum MqttMessageType {
 		@Override
 		public String getMqTopic() {
 			return "iot-down-report-ota-reply-gateway-message";
+		}
+
+		@Override
+		MqttQos getMqttQos() {
+			return MqttQos.AT_LEAST_ONCE;
 		}
 	},
 
@@ -86,6 +108,11 @@ public enum MqttMessageType {
 		public String getMqTopic() {
 			return "iot-up-upgrade-ota-gateway-message";
 		}
+
+		@Override
+		MqttQos getMqttQos() {
+			return MqttQos.AT_LEAST_ONCE;
+		}
 	},
 
 	DOWN_UPGRADE_OTA_REPLY_GATEWAY_MESSAGE("down_upgrade_ota_reply_gateway_message", "升级网关固件回复【下行】") {
@@ -98,6 +125,12 @@ public enum MqttMessageType {
 		public String getMqTopic() {
 			return "iot-down-upgrade-ota-reply-gateway-message";
 		}
+
+		@Override
+		MqttQos getMqttQos() {
+			return MqttQos.AT_LEAST_ONCE;
+		}
+
 	},
 
 	UP_UPGRADE_OTA_PROGRESS_GATEWAY_MESSAGE("up_upgrade_ota_progress_gateway_message", "升级网关固件进度【上行】") {
@@ -110,6 +143,12 @@ public enum MqttMessageType {
 		public String getMqTopic() {
 			return "iot-up-upgrade-ota-process-gateway-message";
 		}
+
+		@Override
+		MqttQos getMqttQos() {
+			return MqttQos.AT_LEAST_ONCE;
+		}
+
 	},
 
 	UP_HEARTBEAT_GATEWAY_MESSAGE("up_heartbeat_gateway_message", "网关心跳【上行】") {
@@ -122,6 +161,12 @@ public enum MqttMessageType {
 		public String getMqTopic() {
 			return "iot-up-heartbeat-gateway-message";
 		}
+
+		@Override
+		MqttQos getMqttQos() {
+			return MqttQos.AT_MOST_ONCE;
+		}
+
 	},
 
 	UP_REPORT_PROPERTIES_GATEWAY_MESSAGE("up_report_properties_gateway_message", "上报设备属性【上行】") {
@@ -134,6 +179,12 @@ public enum MqttMessageType {
 		public String getMqTopic() {
 			return "iot-up-report-properties-gateway-message";
 		}
+
+		@Override
+		MqttQos getMqttQos() {
+			return MqttQos.AT_MOST_ONCE;
+		}
+
 	},
 
 	UP_ALARM_EVENT_GATEWAY_MESSAGE("up_event_gateway_message", "设备预警/报警事件【上行】") {
@@ -147,6 +198,12 @@ public enum MqttMessageType {
 		public String getMqTopic() {
 			return "iot-up-alarm-event-gateway-message";
 		}
+
+		@Override
+		MqttQos getMqttQos() {
+			return MqttQos.AT_LEAST_ONCE;
+		}
+
 	};
 
 	private final String code;
@@ -162,16 +219,18 @@ public enum MqttMessageType {
 
 	public abstract String getMqTopic();
 
+	abstract MqttQos getMqttQos();
+
 	private static final MqttMessageType[] VALUES = values();
 
-	public static Map<String, Integer> getTopics(String tenantCode, Integer qos) {
+	public static Map<String, Integer> getTopics(String tenantCode) {
 		Map<String, Integer> topics = Maps.newHashMapWithExpectedSize(VALUES.length);
 		for (MqttMessageType messageType : VALUES) {
 			String topic = messageType.getTopic();
 			int plusIndex = topic.indexOf('+');
 			String replacedTopic = plusIndex > 0
 					? topic.substring(0, plusIndex) + tenantCode + topic.substring(plusIndex + 1) : topic;
-			topics.put(getShareTopicPrefix(tenantCode) + replacedTopic, qos);
+			topics.put(getShareTopicPrefix(tenantCode) + replacedTopic, messageType.getMqttQos().getCode());
 		}
 		return topics;
 	}
