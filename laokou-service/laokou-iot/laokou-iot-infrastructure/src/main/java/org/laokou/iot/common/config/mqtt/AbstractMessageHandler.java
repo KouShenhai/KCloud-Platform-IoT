@@ -15,14 +15,20 @@
  *
  */
 
-package org.laokou.iot.session.dto.mqtt;
+package org.laokou.iot.common.config.mqtt;
 
-import io.vertx.core.buffer.Buffer;
-import lombok.Builder;
+import org.laokou.iot.common.util.VertxMqttUtils;
+import org.laokou.iot.session.dto.mqtt.MqttMessageType;
 
 /**
  * @author laokou
  */
-@Builder(toBuilder = true)
-public record MqttMessageV(Buffer payload, String topic) {
+public abstract class AbstractMessageHandler implements MessageHandler {
+
+	protected boolean isSubscribe(String topic) {
+		return VertxMqttUtils.matchTopic(getMatchTopic().getTopic(), topic);
+	}
+
+	protected abstract MqttMessageType getMatchTopic();
+
 }

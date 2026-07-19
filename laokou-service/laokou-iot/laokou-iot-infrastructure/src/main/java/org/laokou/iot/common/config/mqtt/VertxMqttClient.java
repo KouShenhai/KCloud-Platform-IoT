@@ -27,7 +27,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.iot.common.util.VertxMqttUtils;
 import org.laokou.iot.session.dto.mqtt.MqttMessageType;
-import org.laokou.iot.session.dto.mqtt.MqttMessageV;
 
 import java.util.List;
 import java.util.Map;
@@ -208,11 +207,10 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 				String topic = publishMessage.topicName();
 				log.debug("【Vertx-MQTT-Client】 => MQTT接收到消息，Topic：{}，QoS：{}，数据包ID：{}", topic, publishMessage.qosLevel(),
 						publishMessage.messageId());
-				MqttMessageV messageV = MqttMessageV.builder().topic(topic).payload(publishMessage.payload()).build();
 				for (MessageHandler messageHandler : messageHandlers) {
 					Thread.startVirtualThread(() -> {
 						try {
-							messageHandler.handle(publishMessage, messageV);
+							messageHandler.handle(publishMessage);
 						}
 						catch (Exception ex) {
 							log.error("【Vertx-MQTT-Client】 => MQTT消息处理失败，Topic：{}，处理器：{}，错误信息：{}", topic,

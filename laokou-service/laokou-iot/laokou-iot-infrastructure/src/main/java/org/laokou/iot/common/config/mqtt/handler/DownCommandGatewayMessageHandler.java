@@ -20,10 +20,8 @@ package org.laokou.iot.common.config.mqtt.handler;
 import io.vertx.mqtt.messages.MqttPublishMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.iot.common.config.mqtt.MessageHandler;
-import org.laokou.iot.common.util.VertxMqttUtils;
+import org.laokou.iot.common.config.mqtt.AbstractMessageHandler;
 import org.laokou.iot.session.dto.mqtt.MqttMessageType;
-import org.laokou.iot.session.dto.mqtt.MqttMessageV;
 import org.springframework.stereotype.Component;
 
 /**
@@ -34,16 +32,16 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class DownCommandGatewayMessageHandler implements MessageHandler {
+public class DownCommandGatewayMessageHandler extends AbstractMessageHandler {
 
 	@Override
-	public void handle(MqttPublishMessage publishMessage, MqttMessageV mqttMessageV) {
+	public void handle(MqttPublishMessage publishMessage) {
 
 	}
 
 	@Override
-	public boolean isSubscribe(String topic) {
-		return VertxMqttUtils.matchTopic(MqttMessageType.DOWN_COMMAND_GATEWAY_MESSAGE.getTopic(), topic);
+	protected MqttMessageType getMatchTopic() {
+		return MqttMessageType.DOWN_COMMAND_GATEWAY_MESSAGE;
 	}
 
 }
