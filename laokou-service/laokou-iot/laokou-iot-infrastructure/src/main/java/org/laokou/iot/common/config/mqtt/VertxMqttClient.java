@@ -17,7 +17,6 @@
 
 package org.laokou.iot.common.config.mqtt;
 
-import io.netty.handler.codec.mqtt.MqttQoS;
 import io.netty.handler.codec.mqtt.MqttVersion;
 import io.vertx.core.Future;
 import io.vertx.core.Vertx;
@@ -185,7 +184,7 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 	}
 
 	private Map<String, Integer> getTopics() {
-		return MqttMessageType.getTopics(systemSettingsProperties.getTenantCode(), MqttQoS.AT_MOST_ONCE.value());
+		return MqttMessageType.getTopics(systemSettingsProperties.getTenantCode());
 	}
 
 	private MqttClient init() {
