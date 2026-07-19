@@ -43,7 +43,7 @@ public enum MqttMessageType {
 
 		@Override
 		MqttQos getMqttQos() {
-			return MqttQos.EXACTLY_ONCE;
+			return MqttQos.AT_LEAST_ONCE;
 		}
 	},
 
@@ -60,7 +60,7 @@ public enum MqttMessageType {
 
 		@Override
 		MqttQos getMqttQos() {
-			return MqttQos.EXACTLY_ONCE;
+			return MqttQos.AT_LEAST_ONCE;
 		}
 	},
 
@@ -77,7 +77,7 @@ public enum MqttMessageType {
 
 		@Override
 		MqttQos getMqttQos() {
-			return MqttQos.EXACTLY_ONCE;
+			return MqttQos.AT_LEAST_ONCE;
 		}
 	},
 
@@ -94,7 +94,7 @@ public enum MqttMessageType {
 
 		@Override
 		MqttQos getMqttQos() {
-			return MqttQos.EXACTLY_ONCE;
+			return MqttQos.AT_LEAST_ONCE;
 		}
 	},
 
@@ -111,7 +111,7 @@ public enum MqttMessageType {
 
 		@Override
 		MqttQos getMqttQos() {
-			return MqttQos.EXACTLY_ONCE;
+			return MqttQos.AT_LEAST_ONCE;
 		}
 	},
 
@@ -128,7 +128,7 @@ public enum MqttMessageType {
 
 		@Override
 		MqttQos getMqttQos() {
-			return MqttQos.EXACTLY_ONCE;
+			return MqttQos.AT_LEAST_ONCE;
 		}
 
 	},
@@ -146,7 +146,7 @@ public enum MqttMessageType {
 
 		@Override
 		MqttQos getMqttQos() {
-			return MqttQos.EXACTLY_ONCE;
+			return MqttQos.AT_LEAST_ONCE;
 		}
 
 	},
@@ -182,7 +182,7 @@ public enum MqttMessageType {
 
 		@Override
 		MqttQos getMqttQos() {
-			return MqttQos.AT_LEAST_ONCE;
+			return MqttQos.AT_MOST_ONCE;
 		}
 
 	},
