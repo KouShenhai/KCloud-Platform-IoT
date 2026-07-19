@@ -16,7 +16,7 @@ export async function modifyConnection(
 	});
 }
 
-/** Save network connection POST /api/v1/connections */
+/** Save session POST /api/v1/connections */
 export async function saveConnection(
 	body: API.ConnectionSaveCmd,
 	requestId: string,
@@ -33,7 +33,7 @@ export async function saveConnection(
 	});
 }
 
-/** Remove network connection DELETE /api/v1/connections */
+/** Remove session DELETE /api/v1/connections */
 export async function removeConnection(
 	body: number[],
 	options?: { [key: string]: any },
@@ -48,7 +48,7 @@ export async function removeConnection(
 	});
 }
 
-/** Get network connection detail GET /api/v1/connections/${param0} */
+/** Get session detail GET /api/v1/connections/${param0} */
 export async function getConnectionById(
 	params: API.ConnectionGetByIdParams,
 	options?: { [key: string]: any },
@@ -61,7 +61,7 @@ export async function getConnectionById(
 	});
 }
 
-/** Page network connections POST /api/v1/connections/page */
+/** Page sessions POST /api/v1/connections/page */
 export async function pageConnection(
 	body: API.ConnectionPageQry,
 	options?: { [key: string]: any },

@@ -22,9 +22,11 @@ import org.jspecify.annotations.NonNull;
 import org.laokou.auth.convertor.UserConvertor;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.AuthA;
+import org.laokou.auth.model.enums.MqTopic;
 import org.laokou.common.context.util.UserExtDetails;
 import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.common.core.util.RequestUtils;
+import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.laokou.common.redis.util.RedisUtils;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -40,8 +42,9 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-record UserDetailsServiceImpl(@NonNull OAuth2UsernamePasswordAuthentication oAuth2UsernamePasswordAuthentication,
-		RedisUtils redisUtils, SystemSettingsProperties systemSettingsProperties) implements UserDetailsService {
+record UserDetailsServiceImpl(@NonNull OAuth2UsernamePasswordAuthentication auth2UsernamePasswordAuthentication,
+		RedisUtils redisUtils, SystemSettingsProperties systemSettingsProperties,
+		DomainEventPublisher kafkaDomainEventPublisher) implements UserDetailsService {
 
 	/**
 	 * 获取用户信息.
@@ -51,13 +54,21 @@ record UserDetailsServiceImpl(@NonNull OAuth2UsernamePasswordAuthentication oAut
 	@NonNull
 	@Override
 	public UserDetails loadUserByUsername(@NonNull String username) {
-		AuthA authA = oAuth2UsernamePasswordAuthentication.authentication(
-				DomainFactory.createAuth().createAuthorizationCodeAuth(), RequestUtils.getHttpServletRequest());
-		UserExtDetails userDetails = UserConvertor.toUserDetails(authA);
-		redisUtils.set(RedisKeyUtils.getUserDetailKey(username), userDetails,
-				systemSettingsProperties.getProfileExpire().toSeconds());
-		return new User(userDetails.username(), userDetails.password(),
-				AuthorityUtils.createAuthorityList(userDetails.permissions()));
+		AuthA authA = DomainFactory.createAuth().createAuthorizationCodeAuth();
+		try {
+			auth2UsernamePasswordAuthentication.authentication(authA, RequestUtils.getHttpServletRequest());
+			UserExtDetails userDetails = UserConvertor.toUserDetails(authA);
+			redisUtils.set(RedisKeyUtils.getUserDetailKey(username), userDetails,
+					systemSettingsProperties.getProfileExpire().toSeconds());
+			return new User(userDetails.username(), userDetails.password(),
+					AuthorityUtils.createAuthorityList(userDetails.permissions()));
+		}
+		finally {
+			// 发布领域事件
+			authA.getEvents().forEach(event -> kafkaDomainEventPublisher.publish(MqTopic.LOGIN_LOG.getTopic(), event));
+			// 清空领域事件
+			authA.clearEvents();
+		}
 	}
 
 }
