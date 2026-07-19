@@ -77,5 +77,6 @@ class IotApp {
 		stopWatch.stop();
 		log.info("{}", stopWatch.prettyPrint());
 	}
+	// @formatter:on
 
 }

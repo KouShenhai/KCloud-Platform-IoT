@@ -43,7 +43,7 @@ public abstract class AbstractVertxService<T> extends AbstractVerticle implement
 	@Override
 	public void undeploy() {
 		// 卸载服务
-		deploymentIdFuture = doUndeploy();
+		doUndeploy();
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public abstract class AbstractVertxService<T> extends AbstractVerticle implement
 
 	public abstract Future<String> doDeploy();
 
-	public abstract Future<String> doUndeploy();
+	public abstract void doUndeploy();
 
 	public abstract Future<T> doOpen();
 
