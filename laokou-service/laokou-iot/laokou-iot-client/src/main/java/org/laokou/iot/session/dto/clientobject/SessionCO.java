@@ -52,7 +52,7 @@ public class SessionCO extends ClientObject {
 	@Schema(name = "会话密码", description = "会话密码")
 	private String password;
 
-	@Schema(name = "开关状态，0关闭，1打开", description = "开关状态，0关闭，1打开")
+	@Schema(name = "会话状态，0关闭，1打开", description = "会话状态，0关闭，1打开")
 	private Integer state;
 
 	@Schema(name = "创建时间", description = "创建时间")

@@ -638,7 +638,7 @@ export default {
 	'menu.iot.device.device': 'Devices',
 	'menu.iot.gateway': 'Gateway Management',
 	'menu.iot.gateway.gateway': 'Gateways',
-	'menu.iot.network.connection': 'Network Connections',
+	'menu.iot.device.session': 'Session',
 	'menu.sys.tenant': 'Tenants',
 	'menu.sys.tenant.package': 'Packages',
 	'menu.sys.tenant.tenant': 'Tenants',

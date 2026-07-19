@@ -33,7 +33,7 @@
   - 修改 `laokou-network-*` 各 `pom.xml`：infrastructure 引入 `laokou-common-mybatis-plus`/security/web 依赖与 `vertx-kafka-client`、`vertx-rabbitmq-client`；client 引入 i18n；adapter 引入 web/security。
   - 修改 `laokou-network-start`：`application.yml` 增加数据源/MyBatis-Plus/安全相关配置，`NetworkApp` 视情况调整为可对外暴露 Web API。
 - 前端（`ui/`）：
-  - 新增：`src/pages/Network/Connection/index.tsx`、`ConnectionDrawer.tsx`、`src/services/network/connection.ts`、`src/services/network/typings.d.ts`。
+  - 新增：`src/pages/Network/Connection/index.tsx`、`SessionDrawer.tsx`、`src/services/network/connection.ts`、`src/services/network/typings.d.ts`。
   - 修改：`config/routes.ts`（新增 `menu.network` 菜单与 `/network/connection` 路由）、`src/access.ts`（`canConnection*` 权限位）、`src/locales/zh-CN.ts`、`src/locales/en-US.ts`（`menu.network.*`、`network.connection.*` 文案）。
 - API：新增 `/network/api/v1/connections`（POST/PUT/DELETE）、`/connections/page`、`/connections/{id}`；网关需放行 `laokou-network` 的 API 前缀；鉴权前缀 `network:connection:*`。向后兼容（全新端点，不影响既有接口）。
 - 数据库：新增 `network_connection` 表（IoT 业务库），新增 `network:connection:page/detail/save/modify/remove` 权限与菜单种子；通过幂等迁移脚本与初始化 SQL 维护，新环境一致。

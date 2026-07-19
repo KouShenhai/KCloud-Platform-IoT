@@ -638,7 +638,7 @@ export default {
 	'menu.iot.device.device': '设备',
 	'menu.iot.gateway': '网关管理',
 	'menu.iot.gateway.gateway': '网关',
-	'menu.iot.network.connection': '网络连接',
+	'menu.iot.device.session': '会话',
 	'menu.sys.tenant': '租户管理',
 	'menu.sys.tenant.package': '套餐',
 	'menu.sys.tenant.tenant': '租户',

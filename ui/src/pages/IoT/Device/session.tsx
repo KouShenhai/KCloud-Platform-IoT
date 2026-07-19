@@ -1,4 +1,4 @@
-import { ConnectionDrawer } from '@/pages/IoT/Network/ConnectionDrawer';
+import { SessionDrawer } from '@/pages/IoT/Device/SessionDrawer';
 import {
 	getConnectionById,
 	pageConnection,
@@ -247,7 +247,7 @@ export default () => {
 
 	return (
 		<>
-			<ConnectionDrawer
+			<SessionDrawer
 				modalVisit={modalVisit}
 				setModalVisit={setModalVisit}
 				title={title}
@@ -346,8 +346,8 @@ export default () => {
 				]}
 				dateFormatter="string"
 				toolbar={{
-					title: t('menu.iot.network.connection'),
-					tooltip: t('menu.iot.network.connection'),
+					title: t('menu.iot.device.session'),
+					tooltip: t('menu.iot.device.session'),
 				}}
 			/>
 		</>

@@ -130,7 +130,7 @@ const toConnectionCO = (value: ConnectionFormValues): API.ConnectionCO => {
 	};
 };
 
-export const ConnectionDrawer: React.FC<ConnectionDrawerProps> = ({
+export const SessionDrawer: React.FC<ConnectionDrawerProps> = ({
 	modalVisit,
 	setModalVisit,
 	title,

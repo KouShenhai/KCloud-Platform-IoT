@@ -264,7 +264,7 @@ INSERT INTO "public"."sys_i18n_menu" VALUES (28, 1, 1, '2026-03-07 12:06:37', '2
 INSERT INTO "public"."sys_i18n_menu" VALUES (29, 1, 1, '2026-03-07 12:06:37', '2026-03-07 12:06:37', 0, 0, 1, 1, 'menu.sys.config.generator', '代码生成器');
 INSERT INTO "public"."sys_i18n_menu" VALUES (27, 1, 1, '2026-03-07 12:06:37', '2026-03-07 12:06:37', 0, 0, 1, 1, 'menu.sys.cluster', '集群管理');
 INSERT INTO "public"."sys_i18n_menu" VALUES (30, 1, 1, '2026-05-07 12:06:37', '2026-05-07 12:06:37', 0, 0, 1, 1, 'menu.sys.config.apiDoc', 'API文档');
-INSERT INTO "public"."sys_i18n_menu" VALUES (32, 1, 1, '2026-06-05 00:00:00', '2026-06-05 00:00:00', 0, 0, 1, 1, 'menu.iot.network.connection', '网络连接');
+INSERT INTO "public"."sys_i18n_menu" VALUES (32, 1, 1, '2026-06-05 00:00:00', '2026-06-05 00:00:00', 0, 0, 1, 1, 'menu.iot.device.session', '会话');
 
 -- ----------------------------
 -- -------------菜单------------
@@ -317,9 +317,9 @@ COMMENT ON INDEX "public"."sys_menu_type_tenantId_idx" IS '菜单类型_租户ID
 INSERT INTO "public"."sys_menu" VALUES (33, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 1, 1, 1, NULL, 0, '集群管理', '/sys/cluster', NULL, 3, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (19, 1, 1, '2025-01-21 05:19:17', '2026-05-29 01:19:54.280534', 0, 1, 1, 1, 17, NULL, 0, '部门', '/sys/permission/dept', NULL, 2, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (6, 1, 1, '2024-09-17 18:36:56', '2026-06-13 16:09:10.335754', 0, 1, 1, 1, 2, NULL, 0, '通知日志', '/sys/log/notice', '', 1, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (108, 1, 1, '2026-06-05 00:00:00', '2026-06-07 19:29:30.266887', 0, 1, 1, 1, 11, NULL, 0, '网络连接', '/iot/network/connection', NULL, 2, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (108, 1, 1, '2026-06-05 00:00:00', '2026-06-07 19:29:30.266887', 0, 1, 1, 1, 12, NULL, 0, '会话', '/iot/device/session', NULL, 4, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (12, 1, 1, '2025-01-18 09:28:42', '2026-05-29 01:21:36.257117', 0, 1, 1, 1, 11, NULL, 0, '设备管理', '/iot/device', NULL, 1, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (13, 1, 1, '2025-01-18 09:30:03', '2026-05-29 01:23:03.948971', 0, 1, 1, 1, 12, NULL, 0, '设备', '/iot/device/index', NULL, 5, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (13, 1, 1, '2025-01-18 09:30:03', '2026-05-29 01:23:03.948971', 0, 1, 1, 1, 12, NULL, 0, '设备', '/iot/device/index', NULL, 7, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (20, 1, 1, '2025-01-21 05:19:17', '2026-05-29 01:19:59.024113', 0, 1, 1, 1, 17, NULL, 0, '角色', '/sys/permission/role', NULL, 3, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (18, 1, 1, '2025-01-21 05:19:17', '2026-05-29 01:19:49.281629', 0, 1, 1, 1, 17, NULL, 0, '菜单', '/sys/permission/menu', NULL, 1, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (88, 1, 1, '2025-08-02 09:46:49.7142', '2026-05-29 01:21:22.080322', 0, 1, 1, 1, 1, NULL, 0, '系统配置', '/sys/config', '', 7, 0, 0, NULL);
@@ -334,7 +334,7 @@ INSERT INTO "public"."sys_menu" VALUES (34, 1, 1, '2025-01-21 05:19:17', '2025-0
 INSERT INTO "public"."sys_menu" VALUES (66, 1, 1, '2025-03-16 11:20:40.603807', '2025-03-16 11:20:40.603807', 0, 0, 1, 1, 16, 'iot:product-category:list-tree', 1, '查询产品类别树列表', NULL, NULL, 5, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (40, 1, 1, '2025-02-02 13:24:26.26515', '2025-02-02 13:24:26.26515', 0, 0, 1, 11, 19, 'sys:dept:detail', 1, '查看部门', NULL, NULL, 1, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (10, 1, 1, '2025-01-11 14:13:13', '2026-06-13 16:09:28.784516', 0, 1, 1, 1, 6, 'sys:notice-log:detail', 1, '查看通知日志', NULL, NULL, 1, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (109, 1, 1, '2026-06-05 00:00:00', '2026-06-05 00:00:00', 0, 0, 1, 1, 108, 'iot:session:detail', 1, '查看连接', NULL, NULL, 1, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (109, 1, 1, '2026-06-05 00:00:00', '2026-06-05 00:00:00', 0, 0, 1, 1, 108, 'iot:session:detail', 1, '查看会话', NULL, NULL, 1, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (57, 1, 1, '2025-03-16 11:24:21.93876', '2025-03-16 11:24:21.93876', 0, 0, 1, 1, 13, 'iot:device:detail', 1, '查看设备', NULL, NULL, 1, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (48, 1, 1, '2025-02-03 10:21:33.499697', '2025-02-03 10:21:33.499697', 0, 0, 1, 1, 20, 'sys:role:detail', 1, '查看角色', NULL, NULL, 1, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (37, 1, 1, '2025-01-31 13:08:53.459704', '2025-01-31 13:08:53.459779', 0, 0, 1, 1, 18, 'sys:menu:detail', 1, '查看菜单', NULL, NULL, 1, 0, 0, NULL);
@@ -347,7 +347,7 @@ INSERT INTO "public"."sys_menu" VALUES (77, 1, 1, '2025-03-16 11:19:25.506634', 
 INSERT INTO "public"."sys_menu" VALUES (17, 1, 1, '2025-01-21 05:19:17', '2026-05-29 01:17:20.847036', 0, 1, 1, 1, 1, NULL, 0, '权限管理', '/sys/permission', NULL, 1, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (2, 1, 1, '2024-06-04 17:27:14', '2026-05-29 01:21:10.0442', 0, 2, 1, 1, 1, NULL, 0, '日志管理', '/sys/log', '', 6, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (41, 1, 1, '2025-02-02 13:36:39.981857', '2025-02-02 13:36:39.981857', 0, 0, 1, 1, 19, 'sys:dept:save', 1, '新增部门', NULL, NULL, 4, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (112, 1, 1, '2026-06-05 00:00:00', '2026-06-05 00:00:00', 0, 0, 1, 1, 108, 'iot:session:save', 1, '新增连接', NULL, NULL, 4, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (112, 1, 1, '2026-06-05 00:00:00', '2026-06-05 00:00:00', 0, 0, 1, 1, 108, 'iot:session:save', 1, '新增会话', NULL, NULL, 4, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (60, 1, 1, '2025-03-16 11:23:23.056863', '2025-03-16 11:23:23.056863', 0, 0, 1, 1, 13, 'iot:device:save', 1, '新增设备', NULL, NULL, 4, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (45, 1, 1, '2025-02-03 10:19:23.231544', '2025-02-03 10:19:23.232089', 0, 0, 1, 1, 20, 'sys:role:save', 1, '新增角色', NULL, NULL, 4, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (36, 1, 1, '2025-01-21 05:19:17', '2025-01-29 14:32:03.026995', 0, 0, 1, 1, 18, 'sys:menu:save', 1, '新增菜单', '', NULL, 4, 0, 0, NULL);
@@ -371,7 +371,7 @@ INSERT INTO "public"."sys_menu" VALUES (24, 1, 1, '2025-01-21 05:19:17', '2026-0
 INSERT INTO "public"."sys_menu" VALUES (26, 1, 1, '2025-01-21 05:19:17', '2025-01-21 05:19:20', 0, 0, 1, 1, 1, NULL, 0, '基础数据', '/sys/base', NULL, 2, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (29, 1, 1, '2025-01-21 05:19:17', '2026-05-29 01:19:30.944246', 0, 1, 1, 1, 26, NULL, 0, '国际化菜单', '/sys/base/i18nMenu', NULL, 1, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (43, 1, 1, '2025-02-02 13:37:56.611868', '2025-02-02 13:38:04.173925', 0, 1, 1, 1, 19, 'sys:dept:remove', 1, '删除部门', NULL, NULL, 2, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (110, 1, 1, '2026-06-05 00:00:00', '2026-06-05 00:00:00', 0, 0, 1, 1, 108, 'iot:session:remove', 1, '删除连接', NULL, NULL, 2, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (110, 1, 1, '2026-06-05 00:00:00', '2026-06-05 00:00:00', 0, 0, 1, 1, 108, 'iot:session:remove', 1, '删除会话', NULL, NULL, 2, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (58, 1, 1, '2025-03-16 11:24:02.28912', '2025-03-16 11:24:02.28912', 0, 0, 1, 1, 13, 'iot:device:remove', 1, '删除设备', NULL, NULL, 2, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (47, 1, 1, '2025-02-03 10:20:55.204108', '2025-02-03 10:20:55.204108', 0, 0, 1, 1, 20, 'sys:role:remove', 1, '删除角色', NULL, NULL, 2, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (35, 1, 1, '2025-01-21 05:19:17', '2025-01-29 11:20:15.092772', 0, 0, 1, 1, 18, 'sys:menu:remove', 1, '删除菜单', '', NULL, 2, 0, 0, NULL);
@@ -380,7 +380,7 @@ INSERT INTO "public"."sys_menu" VALUES (63, 1, 1, '2025-03-16 11:22:00.290849', 
 INSERT INTO "public"."sys_menu" VALUES (68, 1, 1, '2025-03-16 11:18:43.37544', '2025-03-16 11:18:43.37544', 0, 0, 1, 1, 15, 'iot:product:remove', 1, '删除产品', NULL, NULL, 2, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (78, 1, 1, '2025-03-16 11:18:43.375444', '2025-03-16 11:18:43.375444', 0, 0, 1, 1, 31, 'sys:oss:remove', 1, '删除OSS', NULL, NULL, 2, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (7, 1, 1, '2024-09-17 18:38:24', '2026-06-13 16:09:35.963941', 0, 1, 1, 1, 6, 'sys:notice-log:page', 1, '分页查询通知日志列表', NULL, '', 3, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (113, 1, 1, '2026-06-05 00:00:00', '2026-06-05 00:00:00', 0, 0, 1, 1, 108, 'iot:session:page', 1, '分页查询连接', NULL, NULL, 5, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (113, 1, 1, '2026-06-05 00:00:00', '2026-06-05 00:00:00', 0, 0, 1, 1, 108, 'iot:session:page', 1, '分页查询会话列表', NULL, NULL, 5, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (61, 1, 1, '2025-03-16 11:22:56.958172', '2025-03-16 11:22:56.958172', 0, 0, 1, 1, 13, 'iot:device:page', 1, '分页查询设备', NULL, NULL, 5, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (44, 1, 1, '2025-02-03 10:18:36.114539', '2025-02-03 10:18:36.115538', 0, 0, 1, 1, 20, 'sys:role:page', 1, '分页查询角色列表', NULL, NULL, 5, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (4, 1, 1, '2024-06-04 17:27:14', '2026-06-13 16:09:52.60364', 0, 1, 1, 1, 3, 'sys:login-log:page', 1, '分页查询登录日志列表', NULL, '', 3, 0, 0, NULL);
@@ -390,7 +390,7 @@ INSERT INTO "public"."sys_menu" VALUES (71, 1, 1, '2025-03-16 11:04:36.477875', 
 INSERT INTO "public"."sys_menu" VALUES (83, 1, 1, '2025-07-29 21:39:07', '2025-07-29 21:39:08', 0, 0, 1, 1, 32, 'sys:oss-log:page', 1, '分页查询OSS日志列表', NULL, NULL, 5, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (81, 1, 1, '2025-03-16 11:04:36.477875', '2025-03-16 11:04:36.477875', 0, 0, 1, 1, 31, 'sys:oss:page', 1, '分页查询OSS列表', NULL, NULL, 5, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (42, 1, 1, '2025-02-02 13:37:18.191332', '2025-02-02 13:37:26.503011', 0, 1, 1, 1, 19, 'sys:dept:modify', 1, '修改部门', NULL, NULL, 3, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (111, 1, 1, '2026-06-05 00:00:00', '2026-06-05 00:00:00', 0, 0, 1, 1, 108, 'iot:session:modify', 1, '修改连接', NULL, NULL, 3, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (111, 1, 1, '2026-06-05 00:00:00', '2026-06-05 00:00:00', 0, 0, 1, 1, 108, 'iot:session:modify', 1, '修改会话', NULL, NULL, 3, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (59, 1, 1, '2025-03-16 11:23:41.504246', '2025-03-16 11:23:41.504246', 0, 0, 1, 1, 13, 'iot:device:modify', 1, '修改设备', NULL, NULL, 3, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (46, 1, 1, '2025-02-03 10:20:30.753445', '2025-02-03 10:20:30.753445', 0, 0, 1, 1, 20, 'sys:role:modify', 1, '修改角色', NULL, NULL, 3, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (38, 1, 1, '2025-01-31 13:50:50.855744', '2025-01-31 13:50:50.856767', 0, 0, 1, 1, 18, 'sys:menu:modify', 1, '修改菜单', NULL, NULL, 3, 0, 0, NULL);
@@ -400,7 +400,7 @@ INSERT INTO "public"."sys_menu" VALUES (69, 1, 1, '2025-03-16 11:17:16.858243', 
 INSERT INTO "public"."sys_menu" VALUES (79, 1, 1, '2025-03-16 11:17:16.858243', '2025-03-16 11:18:07.952616', 0, 1, 1, 1, 31, 'sys:oss:modify', 1, '修改OSS', NULL, NULL, 3, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (89, 1, 1, '2025-08-02 09:51:11', '2026-05-29 01:18:53.465782', 0, 2, 1, 1, 88, NULL, 0, '代码生成器', '/sys/config/generator', NULL, 1, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (16, 1, 1, '2025-01-18 09:39:31', '2026-05-29 01:22:48.423197', 0, 1, 1, 1, 12, NULL, 0, '产品类别', '/iot/device/productCategory', NULL, 2, 0, 0, NULL);
-INSERT INTO "public"."sys_menu" VALUES (15, 1, 1, '2025-01-18 09:38:58', '2026-05-29 01:22:57.821007', 0, 1, 1, 1, 12, NULL, 0, '产品', '/iot/device/product', NULL, 4, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (15, 1, 1, '2025-01-18 09:38:58', '2026-05-29 01:22:57.821007', 0, 1, 1, 1, 12, NULL, 0, '产品', '/iot/device/product', NULL, 6, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (82, 1, 1, '2025-03-15 12:15:37.277552', '2025-03-15 12:15:37.278549', 0, 0, 1, 1, 31, 'sys:oss:upload', 1, '上传文件', NULL, NULL, 5, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (90, 1, 1, '2026-05-20 07:08:34', '2026-05-29 01:19:03.585621', 0, 2, 1, 1, 88, NULL, 0, 'API文档', '/sys/config/apiDoc', NULL, 2, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (14, 1, 1, '2025-01-18 09:37:53', '2026-05-29 01:22:42.9652', 0, 1, 1, 1, 12, NULL, 0, '物模型', '/iot/device/thingModel', NULL, 1, 0, 0, NULL);
