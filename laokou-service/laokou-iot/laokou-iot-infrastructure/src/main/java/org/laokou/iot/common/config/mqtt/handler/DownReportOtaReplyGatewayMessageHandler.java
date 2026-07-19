@@ -19,10 +19,8 @@ package org.laokou.iot.common.config.mqtt.handler;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.network.config.mqtt.MessageHandler;
-import org.laokou.network.config.util.VertxMqttUtils;
-import org.laokou.network.model.enums.MqttMessageType;
-import org.laokou.network.model.valueobject.MqttMessageV;
+import org.laokou.iot.common.config.mqtt.MessageHandler;
+import org.laokou.iot.session.dto.mqtt.MqttMessageType;
 import org.springframework.stereotype.Component;
 
 /**

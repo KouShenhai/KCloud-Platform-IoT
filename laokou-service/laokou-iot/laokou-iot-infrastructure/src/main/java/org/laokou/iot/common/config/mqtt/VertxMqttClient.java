@@ -25,10 +25,9 @@ import io.vertx.mqtt.MqttClient;
 import io.vertx.mqtt.MqttClientOptions;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.config.SystemSettingsProperties;
-import org.laokou.network.config.AbstractVertxService;
-import org.laokou.network.model.enums.MqttMessageType;
-import org.laokou.network.model.valueobject.MqttMessageV;
-import org.laokou.network.config.util.VertxMqttUtils;
+import org.laokou.iot.common.util.VertxMqttUtils;
+import org.laokou.iot.session.dto.mqtt.MqttMessageType;
+import org.laokou.iot.session.dto.mqtt.MqttMessageV;
 
 import java.util.List;
 import java.util.Map;
@@ -94,7 +93,7 @@ final class VertxMqttClient extends AbstractVertxService<Void> {
 			if (connectResult.succeeded()) {
 				log.info("【Vertx-MQTT-Client】 => MQTT连接成功，主机：{}，端口：{}，客户端ID：{}", mqttClientProperties.getHost(),
 						mqttClientProperties.getPort(), mqttClientProperties.getClientId());
-				subscribe();
+				Thread.startVirtualThread(this::subscribe);
 			}
 			else {
 				Throwable ex = connectResult.cause();
@@ -142,7 +141,7 @@ final class VertxMqttClient extends AbstractVertxService<Void> {
 	}
 
 	private void subscribe() {
-		Map<String, Integer> topics = MqttMessageType.getTopics(systemSettingsProperties.getTenantValue(),
+		Map<String, Integer> topics = MqttMessageType.getTopics(systemSettingsProperties.getTenantCode(),
 				MqttQoS.AT_MOST_ONCE.value());
 		mqttClient.subscribe(topics).onComplete(subscribeResult -> {
 			if (subscribeResult.succeeded()) {

@@ -59,7 +59,7 @@ public class MqttClientConfig {
 
 	private boolean autoKeepAlive = true;
 
-	private long reconnectInterval = 1000;
+	private long reconnectInterval = 3000;
 
 	private int reconnectAttempts = Integer.MAX_VALUE;
 

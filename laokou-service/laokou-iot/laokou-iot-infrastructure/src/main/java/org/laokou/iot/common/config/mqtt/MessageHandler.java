@@ -17,7 +17,7 @@
 
 package org.laokou.iot.common.config.mqtt;
 
-import org.laokou.network.model.valueobject.MqttMessageV;
+import org.laokou.iot.session.dto.mqtt.MqttMessageV;
 
 /**
  * 消息处理器.

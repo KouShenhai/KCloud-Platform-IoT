@@ -35,7 +35,7 @@ import java.util.Arrays;
  */
 @Component
 @RequiredArgsConstructor
-public class ConnectionGatewayImpl implements ConnectionGateway {
+public class SessionGatewayImpl implements ConnectionGateway {
 
 	private final ConnectionMapper connectionMapper;
 

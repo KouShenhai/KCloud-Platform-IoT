@@ -18,7 +18,6 @@
 package org.laokou.iot.session.dto.mqtt;
 
 import lombok.Data;
-import org.laokou.network.model.entity.EventDeviceMessage;
 
 /**
  * 设备预警/报警事件消息【上行】.

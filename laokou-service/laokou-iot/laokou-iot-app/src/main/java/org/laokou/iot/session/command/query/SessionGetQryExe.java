@@ -19,12 +19,13 @@ package org.laokou.iot.session.command.query;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.iot.session.convertor.SessionConvertor;
 import org.laokou.iot.session.dto.SessionGetQry;
 import org.laokou.iot.session.dto.clientobject.SessionCO;
+import org.laokou.iot.session.gatewayimpl.database.SessionMapper;
 import org.springframework.stereotype.Component;
 
 /**
- *
  * @author laokou
  */
 @Component

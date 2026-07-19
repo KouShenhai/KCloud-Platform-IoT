@@ -28,7 +28,7 @@ import org.laokou.common.mybatisplus.mapper.BaseDO;
  */
 @Data
 @TableName("network_connection")
-public class ConnectionDO extends BaseDO {
+public class SessionDO extends BaseDO {
 
 	private String name;
 

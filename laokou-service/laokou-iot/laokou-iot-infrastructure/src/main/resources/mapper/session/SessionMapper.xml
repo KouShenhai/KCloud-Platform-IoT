@@ -18,7 +18,7 @@
  */
 -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.laokou.iot.session.gatewayimpl.database.ConnectionMapper">
+<mapper namespace="org.laokou.iot.session.gatewayimpl.database.SessionMapper">
 
   <sql id="selectColumns">
          id,
@@ -59,7 +59,7 @@
   </sql>
 
   <select id="selectObjectPage"
-          resultType="org.laokou.iot.session.gatewayimpl.database.dataobject.ConnectionDO">
+          resultType="org.laokou.iot.session.gatewayimpl.database.dataobject.SessionDO">
     <include refid="selectObjectList"/>
     limit ${pageQuery.pageSize} offset ${pageQuery.pageIndex}
   </select>

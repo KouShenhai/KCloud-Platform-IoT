@@ -15,27 +15,12 @@
  *
  */
 
-package org.laokou.iot.session.gateway;
-
-import org.laokou.network.connection.model.ConnectionE;
+package org.laokou.iot.session.model;
 
 /**
- * Network connection gateway.
  *
  * @author laokou
  */
-public interface ConnectionGateway {
-
-	void createConnection(ConnectionE connectionE);
-
-	void updateConnection(ConnectionE connectionE);
-
-	void deleteConnection(Long[] ids);
-
-	boolean existsConnection(Long id);
-
-	boolean existsConnection(Long[] ids);
-
-	Integer getConnectionType(Long id);
+public class SessionA {
 
 }

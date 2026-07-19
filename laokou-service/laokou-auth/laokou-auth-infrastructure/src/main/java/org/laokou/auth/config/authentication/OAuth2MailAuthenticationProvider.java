@@ -17,12 +17,12 @@
 
 package org.laokou.auth.config.authentication;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.laokou.auth.factory.DomainFactory;
+import org.laokou.auth.model.AuthA;
+import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.security.config.OAuth2ModelMapper;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2Token;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
@@ -40,8 +40,9 @@ final class OAuth2MailAuthenticationProvider extends AbstractOAuth2Authenticatio
 
 	public OAuth2MailAuthenticationProvider(OAuth2AuthorizationService authorizationService,
 			OAuth2TokenGenerator<@NonNull OAuth2Token> tokenGenerator,
-			OAuth2UsernamePasswordAuthentication usernamePasswordAuthentication) {
-		super(authorizationService, tokenGenerator, usernamePasswordAuthentication);
+			OAuth2UsernamePasswordAuthentication usernamePasswordAuthentication,
+			DomainEventPublisher kafkaDomainEventPublisher) {
+		super(authorizationService, tokenGenerator, usernamePasswordAuthentication, kafkaDomainEventPublisher);
 	}
 
 	@Override
@@ -50,8 +51,8 @@ final class OAuth2MailAuthenticationProvider extends AbstractOAuth2Authenticatio
 	}
 
 	@Override
-	Authentication authenticate(HttpServletRequest request) {
-		return authentication(DomainFactory.createAuth().createMailAuth(), request);
+	AuthA createAuth() {
+		return DomainFactory.createAuth().createMailAuth();
 	}
 
 	@Override

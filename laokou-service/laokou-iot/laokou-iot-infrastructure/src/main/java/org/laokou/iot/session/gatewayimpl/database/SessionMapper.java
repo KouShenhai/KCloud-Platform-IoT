@@ -15,20 +15,20 @@
  *
  */
 
-package org.laokou.iot.session.dto.mqtt;
+package org.laokou.iot.session.gatewayimpl.database;
 
-import lombok.Data;
-
-import java.util.Map;
+import org.apache.ibatis.annotations.Mapper;
+import org.laokou.common.mybatisplus.mapper.CrudMapper;
+import org.laokou.iot.session.gatewayimpl.database.dataobject.SessionDO;
+import org.springframework.stereotype.Repository;
 
 /**
- * 上报设备属性消息【上行】.
+ * 会话数据库映射.
  *
  * @author laokou
  */
-@Data
-public class UpReportPropertiesGatewayMessage extends DeviceMessage {
-
-	private Map<String, String> properties;
+@Mapper
+@Repository
+public interface SessionMapper extends CrudMapper<Long, Integer, SessionDO> {
 
 }

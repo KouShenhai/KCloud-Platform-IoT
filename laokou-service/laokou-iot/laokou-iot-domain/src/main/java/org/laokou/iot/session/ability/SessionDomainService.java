@@ -15,26 +15,34 @@
  *
  */
 
-package org.laokou.iot.session.model;
+package org.laokou.iot.session.ability;
 
-import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import org.laokou.iot.session.gateway.SessionGateway;
+import org.laokou.iot.session.model.SessionA;
+import org.springframework.stereotype.Component;
 
 /**
- * Network connection domain entity.
+ * 会话领域服务.
  *
  * @author laokou
  */
-@Data
-public class ConnectionE {
+@Component
+@RequiredArgsConstructor
+public class SessionDomainService {
 
-	private Long id;
+	private final SessionGateway sessionGateway;
 
-	private String name;
+	public void createSession(SessionA sessionA) {
+		sessionGateway.createSession(sessionA);
+	}
 
-	private Integer type;
+	public void updateSession(SessionA sessionA) {
+		sessionGateway.updateSession(sessionA);
+	}
 
-	private String host;
-
-	private Integer port;
+	public void deleteSession(Long[] ids) {
+		sessionGateway.deleteSession(ids);
+	}
 
 }

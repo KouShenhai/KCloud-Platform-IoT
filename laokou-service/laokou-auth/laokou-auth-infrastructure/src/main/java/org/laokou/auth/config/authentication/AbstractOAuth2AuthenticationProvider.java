@@ -17,14 +17,15 @@
 
 package org.laokou.auth.config.authentication;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
+import org.laokou.auth.convertor.UserConvertor;
 import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.constant.OAuth2Constants;
+import org.laokou.auth.model.enums.MqTopic;
 import org.laokou.common.core.util.RequestUtils;
-import org.laokou.common.i18n.common.constant.StringConstants;
+import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
@@ -63,7 +64,6 @@ import org.springframework.util.StringUtils;
 import java.security.Principal;
 import java.util.LinkedHashSet;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -83,18 +83,28 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 
 	private final OAuth2UsernamePasswordAuthentication usernamePasswordAuthentication;
 
+	private final DomainEventPublisher kafkaDomainEventPublisher;
+
 	/**
 	 * 认证授权.
 	 * @param authentication 认证对象
 	 */
 	@Override
 	public Authentication authenticate(@NonNull Authentication authentication) {
+		AuthA authA = createAuth();
 		try {
-			return authentication(authentication, authenticate(RequestUtils.getHttpServletRequest()));
+			usernamePasswordAuthentication.authentication(authA, RequestUtils.getHttpServletRequest());
+			return toAuthentication(authA, authentication);
 		}
 		catch (GlobalException gex) {
 			// 抛出OAuth2认证异常，SpringSecurity全局异常处理并响应前端
 			throw OAuth2ExceptionHandler.getOAuth2AuthenticationException(gex.getCode(), gex.getMsg());
+		}
+		finally {
+			// 发布领域事件
+			authA.getEvents().forEach(event -> kafkaDomainEventPublisher.publish(MqTopic.LOGIN_LOG.getTopic(), event));
+			// 清空领域事件
+			authA.clearEvents();
 		}
 	}
 
@@ -108,10 +118,9 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 	abstract public boolean supports(@NonNull Class<?> authentication);
 
 	/**
-	 * 认证.
-	 * @param request 请求对象
+	 * 创建认证对象.
 	 */
-	abstract Authentication authenticate(HttpServletRequest request);
+	abstract AuthA createAuth();
 
 	/**
 	 * 获取认证类型.
@@ -120,23 +129,13 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 	abstract AuthorizationGrantType getGrantType();
 
 	/**
-	 * 获取用户信息.
-	 * @param authA 认证聚合根
-	 * @return 认证信息
-	 */
-	protected Authentication authentication(AuthA authA, HttpServletRequest request) {
-		return usernamePasswordAuthentication
-			.authentication(usernamePasswordAuthentication.authentication(authA, request));
-	}
-
-	/**
 	 * 获取令牌.
 	 * @param authentication 认证对象
-	 * @param usernamePasswordAuthentication 认证对象
+	 * @param authA 认证聚合根
 	 * @return 令牌
 	 */
-	protected Authentication authentication(Authentication authentication,
-			@NonNull Authentication usernamePasswordAuthentication) {
+	private Authentication toAuthentication(AuthA authA, Authentication authentication) {
+		Authentication usernamePasswordAuthentication = UserConvertor.toOAuth2Authentication(authA);
 		// 查看 OAuth2DeviceCodeAuthenticationProvider#authenticate(Authentication)
 		AbstractOAuth2AuthenticationToken abstractOAuth2Authentication = (AbstractOAuth2AuthenticationToken) authentication;
 		OAuth2ClientAuthenticationToken clientPrincipal = getAuthenticatedClientElseThrowInvalidClient(
@@ -147,10 +146,6 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 		}
 		// 获取认证范围
 		Set<String> authorizedScopes = new LinkedHashSet<>(registeredClient.getScopes());
-		// 登录名称
-		String loginName = Optional.ofNullable(usernamePasswordAuthentication.getName())
-			.map(Object::toString)
-			.orElse(StringConstants.EMPTY);
 		// 认证类型
 		AuthorizationGrantType grantType = getGrantType();
 		// JWT
@@ -169,7 +164,7 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 			tokenContextBuilder.put(OAuth2TokenContext.DPOP_PROOF_KEY, dPoPProof);
 		}
 		OAuth2Authorization.Builder authorizationBuilder = OAuth2Authorization.withRegisteredClient(registeredClient)
-			.principalName(loginName)
+			.principalName(authA.getUserV().username())
 			.authorizedScopes(authorizedScopes)
 			.authorizationGrantType(grantType);
 		// ----- Access token -----

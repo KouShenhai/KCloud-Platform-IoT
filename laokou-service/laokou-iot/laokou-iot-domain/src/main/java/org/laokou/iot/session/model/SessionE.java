@@ -15,20 +15,26 @@
  *
  */
 
-package org.laokou.iot.session.dto.mqtt;
+package org.laokou.iot.session.model;
 
 import lombok.Data;
 
-import java.util.Map;
-
 /**
- * 上报设备属性消息【上行】.
+ * Network connection domain entity.
  *
  * @author laokou
  */
 @Data
-public class UpReportPropertiesGatewayMessage extends DeviceMessage {
+public class SessionE {
 
-	private Map<String, String> properties;
+	private Long id;
+
+	private String name;
+
+	private Integer type;
+
+	private String host;
+
+	private Integer port;
 
 }

@@ -18,8 +18,12 @@
 package org.laokou.common.i18n.dto;
 
 import lombok.Getter;
+import org.laokou.common.i18n.util.ObjectUtils;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * 聚合根.
@@ -33,5 +37,29 @@ public abstract class AggregateRoot extends Identifier {
 	 * 创建时间.
 	 */
 	protected Instant createTime;
+
+	private List<DomainEvent> events;
+
+	private List<DomainEvent> events() {
+		if (ObjectUtils.isNull(events)) {
+			events = new ArrayList<>(16);
+		}
+		return events;
+	}
+
+	public void addEvent(DomainEvent event) {
+		events().add(event);
+	}
+
+	public List<DomainEvent> getEvents() {
+		return Collections.unmodifiableList(events());
+	}
+
+	public void clearEvents() {
+		if (ObjectUtils.isNotNull(events)) {
+			events.clear();
+			events = null;
+		}
+	}
 
 }

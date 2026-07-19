@@ -18,7 +18,6 @@
 package org.laokou.iot.session.dto.mqtt;
 
 import lombok.Data;
-import org.laokou.network.model.entity.GatewayMessage;
 
 /**
  * 上报网关固件信息消息【上行】.

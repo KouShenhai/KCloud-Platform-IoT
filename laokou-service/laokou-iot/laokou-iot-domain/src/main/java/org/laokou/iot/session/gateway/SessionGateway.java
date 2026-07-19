@@ -15,20 +15,21 @@
  *
  */
 
-package org.laokou.iot.session.gatewayimpl.database;
+package org.laokou.iot.session.gateway;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.laokou.common.mybatisplus.mapper.CrudMapper;
-import org.laokou.network.connection.gatewayimpl.database.dataobject.ConnectionDO;
-import org.springframework.stereotype.Repository;
+import org.laokou.iot.session.model.SessionA;
 
 /**
- * Network connection mapper.
+ * Network connection gateway.
  *
  * @author laokou
  */
-@Mapper
-@Repository
-public interface ConnectionMapper extends CrudMapper<Long, Integer, ConnectionDO> {
+public interface SessionGateway {
+
+	void createSession(SessionA sessionA);
+
+	void updateSession(SessionA sessionA);
+
+	void deleteSession(Long[] ids);
 
 }

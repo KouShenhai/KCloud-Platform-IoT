@@ -52,9 +52,6 @@ public class SessionCO extends ClientObject {
 	@Schema(name = "会话密码", description = "会话密码")
 	private String password;
 
-	@Schema(name = "会话数量", description = "会话数量")
-	private Integer count;
-
 	@Schema(name = "开关状态，0关闭，1打开", description = "开关状态，0关闭，1打开")
 	private Integer state;
 

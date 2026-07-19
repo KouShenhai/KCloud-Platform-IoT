@@ -53,10 +53,9 @@ public class SessionsServiceImpl implements SessionsServiceI {
 
 	private final SessionGetQryExe sessionGetQryExe;
 
-
 	@Override
 	public void saveSession(SessionSaveCmd cmd) {
-
+		sessionSaveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
@@ -78,4 +77,5 @@ public class SessionsServiceImpl implements SessionsServiceI {
 	public Result<SessionCO> getSessionById(SessionGetQry qry) {
 		return sessionGetQryExe.execute(qry);
 	}
+
 }

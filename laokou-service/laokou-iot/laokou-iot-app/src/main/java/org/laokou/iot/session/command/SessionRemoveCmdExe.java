@@ -20,8 +20,8 @@ package org.laokou.iot.session.command;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
-import org.laokou.network.connection.ability.ConnectionDomainService;
-import org.laokou.network.connection.dto.ConnectionRemoveCmd;
+import org.laokou.iot.session.ability.SessionDomainService;
+import org.laokou.iot.session.dto.SessionRemoveCmd;
 import org.springframework.stereotype.Component;
 
 /**
