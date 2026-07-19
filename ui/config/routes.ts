@@ -194,6 +194,12 @@ export default [
 						component: './IoT/Device/source',
 					},
 					{
+						name: 'menu.iot.device.session',
+						title: 'menu.iot.device.session',
+						path: '/iot/device/session',
+						component: './IoT/Device/session',
+					},
+					{
 						name: 'menu.iot.device.product',
 						title: 'menu.iot.device.product',
 						path: '/iot/device/product',
@@ -219,13 +225,7 @@ export default [
 						component: './IoT/Gateway/gateway',
 					},
 				],
-			},
-			{
-				name: 'menu.iot.network.connection',
-				title: 'menu.iot.network.connection',
-				path: '/iot/network/connection',
-				component: './IoT/Network/connection'
-			},
+			}
 		],
 	}
 ];

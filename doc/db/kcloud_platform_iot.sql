@@ -69,12 +69,11 @@ CREATE TABLE IF NOT EXISTS "public"."iot_session" (
 "tenant_id" int8 NOT NULL DEFAULT 1,
 "dept_id" int8 NOT NULL DEFAULT 1,
 "name" varchar(100) NOT NULL,
-"type" int2 NOT NULL,
-"host" varchar(255),
-"port" int4,
-"enabled" int2 NOT NULL DEFAULT 0,
-"config" text NOT NULL,
-"remark" varchar(400)
+"host" inet NOT NULL ,
+"port" int4 NOT NULL ,
+"username" varchar(50) NOT NULL,
+"password" varchar(50) NOT NULL,
+"state" int2 NOT NULL
 )
 ;
 COMMENT ON COLUMN "public"."iot_session"."id" IS 'ID';
@@ -86,12 +85,12 @@ COMMENT ON COLUMN "public"."iot_session"."del_flag" IS '删除标识 0未删除 
 COMMENT ON COLUMN "public"."iot_session"."version" IS '版本号';
 COMMENT ON COLUMN "public"."iot_session"."tenant_id" IS '租户ID';
 COMMENT ON COLUMN "public"."iot_session"."dept_id" IS '部门ID';
-COMMENT ON COLUMN "public"."iot_session"."name" IS '连接名称';
-COMMENT ON COLUMN "public"."iot_session"."type" IS '连接类型 1 MQTT Server 2 HTTP Server 3 MQTT Client 4 Kafka 5 RabbitMQ';
+COMMENT ON COLUMN "public"."iot_session"."name" IS '会话名称';
 COMMENT ON COLUMN "public"."iot_session"."host" IS '会话主机';
 COMMENT ON COLUMN "public"."iot_session"."port" IS '会话端口';
-COMMENT ON COLUMN "public"."iot_session"."state" IS '';
-COMMENT ON COLUMN "public"."iot_session"."remark" IS '备注';
+COMMENT ON COLUMN "public"."iot_session"."username" IS '会话用户名';
+COMMENT ON COLUMN "public"."iot_session"."password" IS '会话密码';
+COMMENT ON COLUMN "public"."iot_session"."state" IS '会话状态，0关闭，1打开';
 COMMENT ON TABLE "public"."iot_session" IS '会话';
 ALTER TABLE "public"."iot_session" ADD CONSTRAINT "iot_session_pkey" PRIMARY KEY ("id");
 

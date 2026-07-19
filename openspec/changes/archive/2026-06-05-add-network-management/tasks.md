@@ -71,7 +71,7 @@
 
 - [x] 11.1 新增 `ui/src/pages/Network/Connection/index.tsx`，以 `product.tsx` 为模板用 `ProTable` 实现列表：列含 name、type(select 5 枚举 + map 渲染)、host、port、enabled(select 0/1)、createTime + 时间区间搜索；查询参数组装 `getPageQueryParam`（name 模糊、type、enabled、时间区间）
 - [x] 11.2 在 index.tsx 实现 查看/修改/删除 行操作与 新增/批量删除 工具栏按钮，按 `access.canConnection*` 显隐，删除走 `Modal.confirm`，新增时用 `uuid v7` 生成 requestId
-- [x] 11.3 新增 `ui/src/pages/Network/Connection/ConnectionDrawer.tsx`，以 `ProductDrawer.tsx` 为模板：通用字段固定渲染；用 `ProFormDependency` 监听 `type`，按所选类型渲染对应特有字段组（MQTT Server / HTTP Server / MQTT Client / Kafka / RabbitMQ）
+- [x] 11.3 新增 `ui/src/pages/Network/Connection/SessionDrawer.tsx`，以 `ProductDrawer.tsx` 为模板：通用字段固定渲染；用 `ProFormDependency` 监听 `type`，按所选类型渲染对应特有字段组（MQTT Server / HTTP Server / MQTT Client / Kafka / RabbitMQ）
 - [x] 11.4 在抽屉提交时把类型特有字段聚合为 `config` JSON 字符串提交；查看/修改时按 `config` 反序列化回显；保存调 `saveConnection`(带 requestId)、修改调 `modifyConnection`，只读模式禁用编辑并隐藏提交按钮
 
 ## 12. 测试与验证

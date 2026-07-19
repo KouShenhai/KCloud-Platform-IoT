@@ -31,7 +31,7 @@ public enum MqttMessageType {
 	DOWN_COMMAND_GATEWAY_MESSAGE("down_command_gateway_message", "网关指令【下行】") {
 		@Override
 		public String getTopic() {
-			return "/down/+/+/command";
+			return "down/+/+/command";
 		}
 
 		@Override
@@ -43,7 +43,7 @@ public enum MqttMessageType {
 	UP_COMMAND_REPLY_GATEWAY_MESSAGE("up_command_reply_gateway_message", "网关指令回复【上行】") {
 		@Override
 		public String getTopic() {
-			return "/up/+/+/command/reply";
+			return "up/+/+/command/reply";
 		}
 
 		@Override
@@ -55,7 +55,7 @@ public enum MqttMessageType {
 	UP_REPORT_OTA_GATEWAY_MESSAGE("up_report_ota_gateway_message", "上报网关固件信息【上行】") {
 		@Override
 		public String getTopic() {
-			return "/up/+/+/ota/report";
+			return "up/+/+/ota/report";
 		}
 
 		@Override
@@ -67,7 +67,7 @@ public enum MqttMessageType {
 	DOWN_REPORT_OTA_REPLY_GATEWAY_MESSAGE("down_report_ota_reply_gateway_message", "上报网关固件信息回复【下行】") {
 		@Override
 		public String getTopic() {
-			return "/up/+/+/ota/report/reply";
+			return "up/+/+/ota/report/reply";
 		}
 
 		@Override
@@ -79,7 +79,7 @@ public enum MqttMessageType {
 	UP_UPGRADE_OTA_GATEWAY_MESSAGE("up_upgrade_ota_gateway_message", "升级网关固件【上行】") {
 		@Override
 		public String getTopic() {
-			return "/up/+/+/ota/upgrade";
+			return "up/+/+/ota/upgrade";
 		}
 
 		@Override
@@ -91,7 +91,7 @@ public enum MqttMessageType {
 	DOWN_UPGRADE_OTA_REPLY_GATEWAY_MESSAGE("down_upgrade_ota_reply_gateway_message", "升级网关固件回复【下行】") {
 		@Override
 		public String getTopic() {
-			return "/down/+/+/ota/upgrade/reply";
+			return "down/+/+/ota/upgrade/reply";
 		}
 
 		@Override
@@ -103,7 +103,7 @@ public enum MqttMessageType {
 	UP_UPGRADE_OTA_PROGRESS_GATEWAY_MESSAGE("up_upgrade_ota_progress_gateway_message", "升级网关固件进度【上行】") {
 		@Override
 		public String getTopic() {
-			return "/up/+/+/ota/upgrade/process";
+			return "up/+/+/ota/upgrade/process";
 		}
 
 		@Override
@@ -115,7 +115,7 @@ public enum MqttMessageType {
 	UP_HEARTBEAT_GATEWAY_MESSAGE("up_heartbeat_gateway_message", "网关心跳【上行】") {
 		@Override
 		public String getTopic() {
-			return "/up/+/+/heartbeat";
+			return "up/+/+/heartbeat";
 		}
 
 		@Override
@@ -127,7 +127,7 @@ public enum MqttMessageType {
 	UP_REPORT_PROPERTIES_GATEWAY_MESSAGE("up_report_properties_gateway_message", "上报设备属性【上行】") {
 		@Override
 		public String getTopic() {
-			return "/up/+/+/properties/report";
+			return "up/+/+/properties/report";
 		}
 
 		@Override
@@ -140,7 +140,7 @@ public enum MqttMessageType {
 
 		@Override
 		public String getTopic() {
-			return "/up/+/+/event/alarm";
+			return "up/+/+/event/alarm";
 		}
 
 		@Override
@@ -169,7 +169,7 @@ public enum MqttMessageType {
 		for (MqttMessageType messageType : VALUES) {
 			String topic = messageType.getTopic();
 			int plusIndex = topic.indexOf('+');
-			String replacedTopic = plusIndex >= 0
+			String replacedTopic = plusIndex > 0
 					? topic.substring(0, plusIndex) + tenantCode + topic.substring(plusIndex + 1) : topic;
 			topics.put(getShareTopicPrefix(tenantCode) + replacedTopic, qos);
 		}
@@ -177,7 +177,7 @@ public enum MqttMessageType {
 	}
 
 	private static String getShareTopicPrefix(String tenantCode) {
-		return String.format("$share/kcloud-platform-iot-%s", tenantCode);
+		return String.format("$share/kcloud-platform-iot-%s/", tenantCode);
 	}
 
 }
