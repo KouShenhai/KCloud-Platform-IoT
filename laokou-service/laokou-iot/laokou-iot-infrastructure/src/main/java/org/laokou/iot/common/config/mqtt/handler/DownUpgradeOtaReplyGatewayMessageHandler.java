@@ -21,10 +21,8 @@ import io.vertx.mqtt.messages.MqttPublishMessage;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.iot.common.config.mqtt.MessageHandler;
-import org.laokou.iot.common.util.VertxMqttUtils;
+import org.laokou.iot.common.config.mqtt.AbstractMessageHandler;
 import org.laokou.iot.session.dto.mqtt.MqttMessageType;
-import org.laokou.iot.session.dto.mqtt.MqttMessageV;
 import org.springframework.stereotype.Component;
 
 /**
@@ -36,16 +34,16 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @Data
-public class DownUpgradeOtaReplyGatewayMessageHandler implements MessageHandler {
+public class DownUpgradeOtaReplyGatewayMessageHandler extends AbstractMessageHandler {
 
 	@Override
-	public void handle(MqttPublishMessage publishMessage, MqttMessageV mqttMessageV) {
+	public void handle(MqttPublishMessage publishMessage) {
 
 	}
 
 	@Override
-	public boolean isSubscribe(String topic) {
-		return VertxMqttUtils.matchTopic(MqttMessageType.DOWN_UPGRADE_OTA_REPLY_GATEWAY_MESSAGE.getTopic(), topic);
+	protected MqttMessageType getMatchTopic() {
+		return MqttMessageType.DOWN_UPGRADE_OTA_REPLY_GATEWAY_MESSAGE;
 	}
 
 }
