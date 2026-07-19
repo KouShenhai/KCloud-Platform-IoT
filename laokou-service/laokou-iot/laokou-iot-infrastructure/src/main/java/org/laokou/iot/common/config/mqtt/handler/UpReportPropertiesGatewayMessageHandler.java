@@ -17,6 +17,7 @@
 
 package org.laokou.iot.common.config.mqtt.handler;
 
+import io.vertx.mqtt.messages.MqttPublishMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.iot.common.config.mqtt.MessageHandler;
@@ -36,7 +37,7 @@ import org.springframework.stereotype.Component;
 public class UpReportPropertiesGatewayMessageHandler implements MessageHandler {
 
 	@Override
-	public void handle(String topic, MqttMessageV mqttMessageV) {
+	public void handle(MqttPublishMessage publishMessage, MqttMessageV mqttMessageV) {
 
 	}
 

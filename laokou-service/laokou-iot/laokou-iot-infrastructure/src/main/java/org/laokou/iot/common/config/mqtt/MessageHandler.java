@@ -17,6 +17,7 @@
 
 package org.laokou.iot.common.config.mqtt;
 
+import io.vertx.mqtt.messages.MqttPublishMessage;
 import org.laokou.iot.session.dto.mqtt.MqttMessageV;
 
 /**
@@ -26,7 +27,7 @@ import org.laokou.iot.session.dto.mqtt.MqttMessageV;
  */
 public interface MessageHandler {
 
-	void handle(String topic, MqttMessageV mqttMessageV);
+	void handle(MqttPublishMessage publishMessage, MqttMessageV mqttMessageV);
 
 	boolean isSubscribe(String topic);
 

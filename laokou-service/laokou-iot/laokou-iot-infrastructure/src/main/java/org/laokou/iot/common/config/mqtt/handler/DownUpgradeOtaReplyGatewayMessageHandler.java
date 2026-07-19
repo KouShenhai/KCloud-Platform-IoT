@@ -17,6 +17,7 @@
 
 package org.laokou.iot.common.config.mqtt.handler;
 
+import io.vertx.mqtt.messages.MqttPublishMessage;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +39,7 @@ import org.springframework.stereotype.Component;
 public class DownUpgradeOtaReplyGatewayMessageHandler implements MessageHandler {
 
 	@Override
-	public void handle(String topic, MqttMessageV mqttMessageV) {
+	public void handle(MqttPublishMessage publishMessage, MqttMessageV mqttMessageV) {
 
 	}
 
