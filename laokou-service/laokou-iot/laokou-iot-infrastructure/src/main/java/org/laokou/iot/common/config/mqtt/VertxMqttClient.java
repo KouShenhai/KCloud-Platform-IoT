@@ -18,41 +18,48 @@
 package org.laokou.iot.common.config.mqtt;
 
 import io.netty.handler.codec.mqtt.MqttVersion;
+import io.vertx.core.Context;
 import io.vertx.core.Future;
+import io.vertx.core.Promise;
 import io.vertx.core.Vertx;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.mqtt.MqttClient;
 import io.vertx.mqtt.MqttClientOptions;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.iot.common.util.VertxMqttUtils;
 import org.laokou.iot.session.dto.mqtt.MqttMessageType;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Supplier;
 
 /**
+ * 生产级 Vert.x MQTT 5 客户端.
+ * <p>核心保证：</p>
+ * <ul>
+ *     <li>所有 MQTT 客户端操作都串行切回绑定的 Vert.x Context。</li>
+ *     <li>订阅必须等待 SUBACK，拒绝码不会被误判为订阅成功。</li>
+ *     <li>关闭顺序为：停止读取 -> 排空业务 -> 断开连接 -> 关闭线程池。</li>
+ *     <li>不在 Vert.x EventLoop 上执行 awaitTermination、Future#get 等阻塞操作。</li>
+ * </ul>
  * @author laokou
  */
 @Slf4j
 public final class VertxMqttClient extends AbstractVertxService<Void> {
 
 	private final MqttClientConfig mqttClientProperties;
-
-	private final MqttClientOptions mqttClientOptions;
-
-	private final List<MessageHandler> messageHandlers;
-
-	private final MqttClient mqttClient;
-
-	private final AtomicBoolean stopping;
-
-	private final AtomicBoolean connecting;
-
-	private long reconnectTimerId;
-
 	private final SystemSettingsProperties systemSettingsProperties;
+	private final MqttClientOptions mqttClientOptions;
+	private final List<MessageHandler> messageHandlers;
+	private final MqttClient mqttClient;
+	private final Context boundContext;
+	private final AtomicReference<State> state;
+	private final ExecutorService executor;
 
 	public VertxMqttClient(Vertx vertx, MqttClientConfig mqttClientProperties, List<MessageHandler> messageHandlers,
 			SystemSettingsProperties systemSettingsProperties) {
@@ -60,11 +67,17 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 		this.mqttClientOptions = getMqttClientOptions(mqttClientProperties);
 		this.mqttClientProperties = mqttClientProperties;
 		this.messageHandlers = messageHandlers;
-		this.mqttClient = init();
+		this.mqttClient = createClient();
 		this.systemSettingsProperties = systemSettingsProperties;
-		this.stopping = new AtomicBoolean(false);
-		this.connecting = new AtomicBoolean(false);
-		this.reconnectTimerId = -1L;
+		this.boundContext = vertx.getOrCreateContext();
+		this.state = new AtomicReference<>(State.NEW);
+		this.executor = Executors.newThreadPerTaskExecutor(
+			Thread.ofVirtual()
+				.name("mqtt-client-message-", 0)
+				.uncaughtExceptionHandler((thread, throwable) ->
+					log.error("【Vertx-MQTT-Client】 => 虚拟线程未捕获异常，线程：{}", thread.getName(), throwable))
+				.factory()
+		);
 	}
 
 	@Override
@@ -202,10 +215,13 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 		return MqttMessageType.getTopics(systemSettingsProperties.getTenantCode());
 	}
 
-	private MqttClient init() {
+	private MqttClient createClient() {
 		return MqttClient.create(vertx, mqttClientOptions)
-			.exceptionHandler(ex -> log.error("【Vertx-MQTT-Client】 => MQTT底层网络或协议异常，客户端ID：{}，异常类型：{}，错误信息：{}",
-					mqttClientProperties.getClientId(), ex.getClass().getName(), ex.getMessage(), ex))
+			.exceptionHandler(ex -> {
+				log.error("【Vertx-MQTT-Client】 => MQTT底层网络或协议异常，状态：{}，客户端ID：{}，异常类型：{}，错误信息：{}", state.get(),
+					mqttClientProperties.getClientId(), ex.getClass().getName(), ex.getMessage(), ex);
+
+			})
 			.disconnectMessageHandler(
 					message -> log.error("【Vertx-MQTT-Client】 => Broker发送DISCONNECT，客户端ID：{}，原因码：{}，属性：{}",
 							mqttClientProperties.getClientId(), message.code(), message.properties()))
@@ -242,6 +258,46 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 					ack -> log.debug("【Vertx-MQTT-Client】 => 接收MQTT的SUBACK数据包，数据包ID：{}", ack.messageId()))
 			.unsubscribeCompletionHandler(id -> log.debug("【Vertx-MQTT-Client】 => 接收MQTT的UNSUBACK数据包，数据包ID：{}", id))
 			.pingResponseHandler(_ -> log.debug("【Vertx-MQTT-Client】 => 接收MQTT的PINGRESP数据包"));
+	}
+
+	private <T> Future<T> executeOnContext(@NonNull Supplier<Future<T>> action) {
+		if (Vertx.currentContext() == boundContext) {
+			try {
+				return action.get();
+			} catch (Throwable throwable) {
+				return Future.failedFuture(throwable);
+			}
+		}
+		Promise<T> promise = Promise.promise();
+		boundContext.runOnContext(ignored -> {
+			try {
+				Future<T> future = action.get();
+				future.onComplete(promise);
+			} catch (Throwable throwable) {
+				promise.fail(throwable);
+			}
+		});
+		return promise.future();
+	}
+
+	private void runOnContext(@NonNull Runnable action) {
+		if (Vertx.currentContext() == boundContext) {
+			try {
+				action.run();
+			} catch (Throwable throwable) {
+				log.error("【Vertx-MQTT-Client】 => Context任务执行失败，客户端ID：{}，错误信息：{}",
+					mqttClientOptions.getClientId(), throwable.getMessage(), throwable);
+			}
+			return;
+		}
+		boundContext.runOnContext(ignored -> {
+			try {
+				action.run();
+			} catch (Throwable throwable) {
+				log.error("【Vertx-MQTT-Client】 => Context任务执行失败，客户端ID：{}，错误信息：{}",
+					mqttClientOptions.getClientId(), throwable.getMessage(), throwable);
+			}
+		});
 	}
 
 	private MqttClientOptions getMqttClientOptions(MqttClientConfig mqttClientProperties) {

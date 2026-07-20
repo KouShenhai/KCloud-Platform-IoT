@@ -17,6 +17,7 @@
 
 package org.laokou.common.core.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 
 import java.util.concurrent.ThreadFactory;
@@ -26,6 +27,7 @@ import java.util.concurrent.ThreadFactory;
  *
  * @author laokou
  */
+@Slf4j
 final class VirtualThreadFactory implements ThreadFactory {
 
 	public static final VirtualThreadFactory INSTANCE = new VirtualThreadFactory();
@@ -34,8 +36,9 @@ final class VirtualThreadFactory implements ThreadFactory {
 	public Thread newThread(@NonNull Runnable r) {
 		Thread thread = new Thread(r);
 		return Thread.ofVirtual()
-			.name("iot-virtual-" + thread.getName())
+			.name(String.format("iot-virtual-%s", thread.getName()))
 			.inheritInheritableThreadLocals(true)
+			.uncaughtExceptionHandler((t, ex) -> log.error("虚拟线程未捕获异常，线程：{}", t.getName(), ex))
 			.unstarted(r);
 	}
 
