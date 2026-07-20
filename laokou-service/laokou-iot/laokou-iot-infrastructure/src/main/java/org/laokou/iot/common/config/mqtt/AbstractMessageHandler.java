@@ -17,6 +17,8 @@
 
 package org.laokou.iot.common.config.mqtt;
 
+import io.netty.handler.codec.mqtt.MqttQoS;
+import io.vertx.mqtt.messages.MqttPublishMessage;
 import org.laokou.iot.common.util.VertxMqttUtils;
 import org.laokou.iot.session.dto.mqtt.MqttMessageType;
 
@@ -25,8 +27,16 @@ import org.laokou.iot.session.dto.mqtt.MqttMessageType;
  */
 public abstract class AbstractMessageHandler implements MessageHandler {
 
-	protected boolean isSubscribe(String topic) {
+	@Override
+	public final boolean supports(String topic) {
 		return VertxMqttUtils.matchTopic(getMatchTopic().getTopic(), topic);
+	}
+
+	protected void ack(MqttPublishMessage publishMessage) {
+		if (publishMessage.qosLevel() == MqttQoS.AT_MOST_ONCE) {
+			return;
+		}
+		publishMessage.ack();
 	}
 
 	protected abstract MqttMessageType getMatchTopic();

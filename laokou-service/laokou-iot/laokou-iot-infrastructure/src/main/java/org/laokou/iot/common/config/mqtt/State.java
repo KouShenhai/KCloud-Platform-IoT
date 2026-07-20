@@ -17,31 +17,12 @@
 
 package org.laokou.iot.common.config.mqtt;
 
-import lombok.Getter;
-
 /**
  * @author laokou
  */
-@Getter
 enum State {
-	NEW(0, ""),
-	STARTING(0, ""),
-	CONNECTING(0, ""),
-	SUBSCRIBING(0, ""),
-	CONNECTED(0, ""),
-	PAUSED(0, ""),
-	DISCONNECTED(0, ""),
-	RECONNECTING(0, ""),
-	CLOSING(0, ""),
-	CLOSED(0, "");
 
-	private final int code;
-	private final String desc;
-
-	State(int code, String desc) {
-		this.code = code;
-		this.desc = desc;
-	}
+	NEW, STARTING, CONNECTING, SUBSCRIBING, CONNECTED, PAUSED, DISCONNECTED, RECONNECTING, CLOSING, CLOSED;
 
 	boolean isOperational() {
 		return this == CONNECTED || this == PAUSED;
