@@ -209,11 +209,11 @@
     <!-- taos-jdbcdriver版本 -->
     <taos-jdbcdriver.version>3.9.0</taos-jdbcdriver.version>
     <!-- fory版本 -->
-    <fory.version>1.3.0</fory.version>
+    <fory.version>1.4.0</fory.version>
     <!-- browscap-java版本 -->
     <browscap-java.version>1.5.1</browscap-java.version>
     <!-- flyway版本 -->
-    <flyway.version>12.11.0</flyway.version>
+    <flyway.version>13.0.0</flyway.version>
     <!-- snail-job版本 -->
     <snail-job.version>2.0.0</snail-job.version>
     <!-- archunit-junit5版本 -->
