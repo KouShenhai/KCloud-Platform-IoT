@@ -23,6 +23,7 @@ spring:
       cache:
         maximum-size: 1000
         enabled: true
+        initial-capacity: 128
   datasource:
     dynamic:
       # 默认false,建议线上关闭
