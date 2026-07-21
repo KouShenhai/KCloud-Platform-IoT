@@ -30,9 +30,9 @@ public final class MqttClientConfig {
 
 	private boolean ssl = false;
 
-	private String username;
+	private String username = "root";
 
-	private String password;
+	private String password = "laokou123";
 
 	private String host = "127.0.0.1";
 
@@ -41,14 +41,14 @@ public final class MqttClientConfig {
 	/**
 	 * 生产环境必须显式配置稳定的客户端ID，否则应用重启后无法恢复持久会话.
 	 */
-	private String clientId;
+	private String clientId = "KCLOUD-PLATFORM-IOT";
 
-	private int receiveBufferSize = -1;
+	private int receiveBufferSize = 1024 * 1024;
 
 	/**
-	 * 默认限制单条消息为100MiB，避免异常大包耗尽堆外内存.
+	 * 默认限制单条消息为10MiB，避免异常大包耗尽堆外内存.
 	 */
-	private int maxMessageSize = 100 * 1024 * 1024;
+	private int maxMessageSize = 10 * 1024 * 1024;
 
 	/**
 	 * 心跳包每隔60秒发一次.
@@ -59,7 +59,7 @@ public final class MqttClientConfig {
 
 	private long reconnectInterval = 5000;
 
-	private int reconnectAttempts = Integer.MAX_VALUE;
+	private int reconnectAttempts = 0;
 
 	private int ackTimeout = 30;
 
@@ -75,9 +75,11 @@ public final class MqttClientConfig {
 
 	private int soLinger = 0;
 
-	private long sessionExpireInterval = 0L;
+	private long sessionExpireInterval = 30;
 
-	private boolean cleanSession = true;
+	private boolean tcpFastOpen = true;
+
+	private boolean cleanSession = false;
 
 	private byte version = MqttVersion.MQTT_5.protocolLevel();
 
