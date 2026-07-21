@@ -19,8 +19,10 @@ package org.laokou.iot.common.config.mqtt;
 
 import io.netty.handler.codec.mqtt.MqttConnectReturnCode;
 import io.vertx.core.AsyncResult;
+import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Future;
 import io.vertx.core.Promise;
+import io.vertx.core.ThreadingModel;
 import io.vertx.core.Vertx;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.mqtt.MqttClient;
@@ -102,7 +104,7 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 
 	@Override
 	public Future<String> doDeploy() {
-		return vertx.deployVerticle(this)
+		return vertx.deployVerticle(this, buildOptions())
 			.onSuccess(deploymentId -> log.info("【Vertx-MQTT-Client】 => MQTT服务部署成功，deploymentId：{}，客户端ID：{}",
 					deploymentId, config.getClientId()))
 			.onFailure(ex -> log.error("【Vertx-MQTT-Client】 => MQTT服务部署失败，客户端ID：{}", config.getClientId(), ex));
@@ -132,6 +134,12 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 		Future<Void> waitForConnect = connecting == null ? Future.succeededFuture()
 				: connecting.future().recover(_ -> Future.succeededFuture());
 		return waitForConnect.compose(_ -> disconnect());
+	}
+
+	private DeploymentOptions buildOptions() {
+		DeploymentOptions deploymentOptions = new DeploymentOptions();
+		deploymentOptions.setThreadingModel(ThreadingModel.VIRTUAL_THREAD);
+		return deploymentOptions;
 	}
 
 	private Future<Void> disconnect() {
