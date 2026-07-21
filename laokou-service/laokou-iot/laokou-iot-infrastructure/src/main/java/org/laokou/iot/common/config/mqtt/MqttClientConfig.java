@@ -43,12 +43,12 @@ public final class MqttClientConfig {
 	 */
 	private String clientId = "KCLOUD-PLATFORM-IOT";
 
-	private int receiveBufferSize = 1024 * 1024;
+	private int receiveBufferSize = 50 * 1024 * 1024;
 
 	/**
 	 * 默认限制单条消息为10MiB，避免异常大包耗尽堆外内存.
 	 */
-	private int maxMessageSize = 10 * 1024 * 1024;
+	private int maxMessageSize = 20 * 1024 * 1024;
 
 	/**
 	 * 心跳包每隔60秒发一次.
@@ -61,7 +61,7 @@ public final class MqttClientConfig {
 
 	private int reconnectAttempts = 0;
 
-	private int ackTimeout = 30;
+	private int ackTimeout = 60;
 
 	private boolean autoAck = false;
 
@@ -75,7 +75,7 @@ public final class MqttClientConfig {
 
 	private int soLinger = 0;
 
-	private long sessionExpireInterval = 30;
+	private long sessionExpireInterval = 60;
 
 	private boolean tcpFastOpen = true;
 
