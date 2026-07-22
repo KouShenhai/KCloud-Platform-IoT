@@ -275,3 +275,4 @@ system-settings:
   data-id: ${DATA_ID:1}
   work-id: ${WORK_ID:1}
   app-mode: monolith
+  service-id: ${spring.application.name}

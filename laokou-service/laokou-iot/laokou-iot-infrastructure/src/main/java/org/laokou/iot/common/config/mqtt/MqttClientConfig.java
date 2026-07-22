@@ -61,7 +61,7 @@ public final class MqttClientConfig {
 
 	private int reconnectAttempts = 0;
 
-	private int ackTimeout = 60;
+	private int ackTimeout = 30;
 
 	private boolean autoAck = false;
 

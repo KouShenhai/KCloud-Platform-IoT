@@ -169,7 +169,7 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 	 * @param isDup if the message is a duplicate
 	 * @param isRetain if the message needs to be retained
 	 */
-	public Future<Void> publish(@NonNull String topic, int qos, @NonNull Buffer payload, boolean isDup,
+	public Future<Integer> publish(@NonNull String topic, int qos, @NonNull Buffer payload, boolean isDup,
 			boolean isRetain) {
 		if (stopping.get()) {
 			return Future.failedFuture("MQTT客户端正在关闭");
@@ -178,7 +178,7 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 		if (!mqttClient.isConnected()) {
 			return Future.failedFuture("MQTT客户端未连接");
 		}
-		return mqttClient.publish(topic, payload, VertxMqttUtils.convertQos(qos), isDup, isRetain).mapEmpty();
+		return mqttClient.publish(topic, payload, VertxMqttUtils.convertQos(qos), isDup, isRetain);
 	}
 
 	private MqttClient createClient(MqttClientOptions options) {
@@ -296,6 +296,7 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 		mqttClient.disconnect().onComplete(ar -> {
 			try {
 				if (stopping.get()) {
+					log.debug("【Vertx-MQTT-Client】 => MQTT客户端正在停止，不允许重连，客户端ID：{}", config.getClientId());
 					return;
 				}
 				if (ar.failed()) {
