@@ -39,6 +39,8 @@ public class SystemSettingsProperties implements Serializable {
 
 	private Long nodeId = 1L;
 
+	private String serviceId;
+
 	private Duration captchaExpire = Duration.ofMinutes(5);
 
 	private Duration idempotentExpire = Duration.ofMinutes(5);
@@ -52,8 +54,6 @@ public class SystemSettingsProperties implements Serializable {
 	private String tenantCode = "laokouyun";
 
 	private Long tenantValue = 1L;
-
-	private String ignoreAuthServiceId = "laokou-auth";
 
 	private Mode appMode = Mode.MICROSERVICE;
 

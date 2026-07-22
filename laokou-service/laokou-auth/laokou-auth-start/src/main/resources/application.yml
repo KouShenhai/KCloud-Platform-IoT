@@ -298,3 +298,4 @@ system-settings:
   node-id: ${NODE_ID:1}
   app-mode: microservice
   profile-expire: ${spring.security.oauth2.authorization-server.client.pkce.token.refresh-token-time-to-live}
+  service-id: ${spring.application.name}

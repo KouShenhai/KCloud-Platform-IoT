@@ -153,3 +153,4 @@ logging:
 system-settings:
   node-id: ${NODE_ID:1}
   app-mode: microservice
+  service-id: ${spring.application.name}
