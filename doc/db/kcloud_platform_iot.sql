@@ -346,13 +346,9 @@ CREATE TABLE "public"."iot_gateway" (
 "version" int4 NOT NULL DEFAULT 0,
 "tenant_id" int8 NOT NULL DEFAULT 1,
 "dept_id" int8 NOT NULL DEFAULT 1,
-"gateway_key" varchar(64)  NOT NULL,
+"sn" varchar(64)  NOT NULL,
 "name" varchar(50)  NOT NULL,
-"status" int2 NOT NULL DEFAULT 1,
-"product_id" int8 NOT NULL,
-"address" varchar(200),
-"longitude" float8,
-"latitude" float8,
+"endpoint" varchar(200),
 "remark" varchar(400)
 )
 ;
@@ -365,13 +361,9 @@ COMMENT ON COLUMN "public"."iot_gateway"."del_flag" IS '删除标识 0未删除 
 COMMENT ON COLUMN "public"."iot_gateway"."version" IS '版本号';
 COMMENT ON COLUMN "public"."iot_gateway"."tenant_id" IS '租户ID';
 COMMENT ON COLUMN "public"."iot_gateway"."dept_id" IS '部门ID';
-COMMENT ON COLUMN "public"."iot_gateway"."gateway_sn" IS '网关标识';
+COMMENT ON COLUMN "public"."iot_gateway"."sn" IS '网关序列号';
 COMMENT ON COLUMN "public"."iot_gateway"."name" IS '网关名称';
-COMMENT ON COLUMN "public"."iot_gateway"."status" IS '网关状态 0在线 1离线';
-COMMENT ON COLUMN "public"."iot_gateway"."product_id" IS '产品ID';
-COMMENT ON COLUMN "public"."iot_gateway"."address" IS '网关地址';
-COMMENT ON COLUMN "public"."iot_gateway"."longitude" IS '网关经度';
-COMMENT ON COLUMN "public"."iot_gateway"."latitude" IS '网关纬度';
+COMMENT ON COLUMN "public"."iot_gateway"."endpoint" IS '网关地址';
 COMMENT ON COLUMN "public"."iot_gateway"."remark" IS '网关备注';
 COMMENT ON TABLE "public"."iot_gateway" IS '网关';
 ALTER TABLE "public"."iot_gateway" ADD CONSTRAINT "iot_gateway_pkey" PRIMARY KEY ("id");
