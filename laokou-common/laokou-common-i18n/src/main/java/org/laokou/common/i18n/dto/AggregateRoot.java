@@ -40,26 +40,31 @@ public abstract class AggregateRoot extends Identifier {
 
 	private List<DomainEvent> events;
 
+	public void addEvent(DomainEvent event) {
+		events().add(event);
+	}
+
+	public void publishEvent(DomainEventPublisher publisher) {
+		getEvents().forEach(publisher::publish);
+		clearEvents();
+	}
+
+	private List<DomainEvent> getEvents() {
+		return Collections.unmodifiableList(events());
+	}
+
+	private void clearEvents() {
+		if (ObjectUtils.isNotNull(events)) {
+			events.clear();
+			events = null;
+		}
+	}
+
 	private List<DomainEvent> events() {
 		if (ObjectUtils.isNull(events)) {
 			events = new ArrayList<>(16);
 		}
 		return events;
-	}
-
-	public void addEvent(DomainEvent event) {
-		events().add(event);
-	}
-
-	public List<DomainEvent> getEvents() {
-		return Collections.unmodifiableList(events());
-	}
-
-	public void clearEvents() {
-		if (ObjectUtils.isNotNull(events)) {
-			events.clear();
-			events = null;
-		}
 	}
 
 }

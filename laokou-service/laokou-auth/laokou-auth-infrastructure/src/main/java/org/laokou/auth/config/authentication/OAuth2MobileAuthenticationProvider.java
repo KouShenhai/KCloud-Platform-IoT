@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.AuthA;
-import org.laokou.common.domain.support.DomainEventPublisher;
+import org.laokou.common.i18n.dto.DomainEventPublisher;
 import org.laokou.common.security.config.OAuth2ModelMapper;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2Token;

@@ -46,4 +46,6 @@ public abstract class DomainEvent implements Serializable {
 
 	protected final Long deptId;
 
+	private final String mqTopic;
+
 }
