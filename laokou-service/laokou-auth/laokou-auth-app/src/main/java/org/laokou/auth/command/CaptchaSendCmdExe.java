@@ -23,7 +23,7 @@ import org.laokou.auth.dto.CaptchaSendCmd;
 import org.laokou.auth.dto.clientobject.CaptchaCO;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.common.domain.annotation.CommandLog;
-import org.laokou.common.domain.support.DomainEventPublisher;
+import org.laokou.common.i18n.dto.DomainEventPublisher;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 

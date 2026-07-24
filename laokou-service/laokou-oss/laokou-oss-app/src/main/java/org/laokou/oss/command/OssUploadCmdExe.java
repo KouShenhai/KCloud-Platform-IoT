@@ -18,14 +18,13 @@
 package org.laokou.oss.command;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.domain.support.DomainEventPublisher;
 import org.laokou.common.i18n.common.exception.GlobalException;
+import org.laokou.common.i18n.dto.DomainEventPublisher;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.oss.ability.OssDomainService;
 import org.laokou.oss.convertor.OssConvertor;
 import org.laokou.oss.dto.OssUploadCmd;
 import org.laokou.oss.dto.clientobject.OssUploadCO;
-import org.laokou.oss.model.Mq;
 import org.laokou.oss.model.OssA;
 import org.springframework.stereotype.Component;
 
@@ -58,7 +57,8 @@ public class OssUploadCmdExe {
 		finally {
 			// 发布领域事件
 			if (ossA.isPublishEvent()) {
-				domainEventPublisher.publish(Mq.OSS_LOG_TOPIC, OssConvertor.toDomainEvent(ossA));
+				// domainEventPublisher.publish(Mq.OSS_LOG_TOPIC,
+				// OssConvertor.toDomainEvent(ossA));
 			}
 		}
 	}

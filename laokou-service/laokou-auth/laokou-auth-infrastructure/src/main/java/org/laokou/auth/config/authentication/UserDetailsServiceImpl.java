@@ -22,11 +22,10 @@ import org.jspecify.annotations.NonNull;
 import org.laokou.auth.convertor.UserConvertor;
 import org.laokou.auth.factory.DomainFactory;
 import org.laokou.auth.model.AuthA;
-import org.laokou.auth.model.enums.MqTopic;
 import org.laokou.common.context.util.UserExtDetails;
 import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.common.core.util.RequestUtils;
-import org.laokou.common.domain.support.DomainEventPublisher;
+import org.laokou.common.i18n.dto.DomainEventPublisher;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.laokou.common.redis.util.RedisUtils;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -65,9 +64,7 @@ record UserDetailsServiceImpl(@NonNull OAuth2UsernamePasswordAuthentication auth
 		}
 		finally {
 			// 发布领域事件
-			authA.getEvents().forEach(event -> kafkaDomainEventPublisher.publish(MqTopic.LOGIN_LOG.getTopic(), event));
-			// 清空领域事件
-			authA.clearEvents();
+			authA.publishEvent(kafkaDomainEventPublisher);
 		}
 	}
 

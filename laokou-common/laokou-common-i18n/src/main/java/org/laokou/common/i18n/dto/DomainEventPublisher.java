@@ -15,9 +15,7 @@
  *
  */
 
-package org.laokou.common.domain.support;
-
-import org.laokou.common.i18n.dto.DomainEvent;
+package org.laokou.common.i18n.dto;
 
 /**
  * 领域事件发布器.
@@ -30,6 +28,6 @@ public interface DomainEventPublisher {
 	 * 发布领域事件.
 	 * @param payload 内容
 	 */
-	void publish(String topic, DomainEvent payload);
+	void publish(DomainEvent payload);
 
 }

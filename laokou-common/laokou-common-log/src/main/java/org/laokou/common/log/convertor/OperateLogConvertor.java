@@ -30,6 +30,7 @@ import org.laokou.common.log.factory.DomainFactory;
 import org.laokou.common.log.handler.event.OperateEvent;
 import org.laokou.common.log.mapper.OperateLogDO;
 import org.laokou.common.log.model.OperateLogA;
+import org.laokou.common.log.model.enums.Mq;
 import org.lionsoul.ip2region.xdb.InetAddressException;
 
 import java.io.IOException;
@@ -84,6 +85,7 @@ public final class OperateLogConvertor {
 			.creator(UserUtils.getUserId())
 			.deptId(UserUtils.getDeptId())
 			.operator(UserUtils.getUserName())
+			.mqTopic(Mq.OPERATE_LOG.getTopic())
 			.build();
 	}
 

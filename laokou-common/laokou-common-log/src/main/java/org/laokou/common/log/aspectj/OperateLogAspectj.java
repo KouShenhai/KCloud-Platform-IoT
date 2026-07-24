@@ -22,14 +22,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.laokou.common.domain.support.DomainEventPublisher;
+import org.laokou.common.i18n.dto.DomainEventPublisher;
 import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.i18n.util.SpringUtils;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.log.convertor.OperateLogConvertor;
 import org.laokou.common.log.factory.DomainFactory;
 import org.laokou.common.log.model.OperateLogA;
-import org.laokou.common.log.model.enums.Mq;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -82,9 +81,10 @@ public class OperateLogAspectj {
 			operateLogA.calculateTaskTime(stopWatch);
 			// 获取错误
 			operateLogA.getThrowable(throwable);
+			// 新增领域事件
+			operateLogA.addEvent(OperateLogConvertor.toDomainEvent(operateLogA));
 			// 发布领域事件
-			kafkaDomainEventPublisher.publish(Mq.OPERATE_LOG.getTopic(),
-					OperateLogConvertor.toDomainEvent(operateLogA));
+			operateLogA.publishEvent(kafkaDomainEventPublisher);
 		}
 	}
 

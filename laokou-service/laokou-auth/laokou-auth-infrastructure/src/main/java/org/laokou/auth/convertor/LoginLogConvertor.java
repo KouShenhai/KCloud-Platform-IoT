@@ -29,6 +29,7 @@ import org.laokou.auth.model.AuthA;
 import org.laokou.auth.model.entity.LoginLogE;
 import org.laokou.auth.model.entity.UserE;
 import org.laokou.auth.model.enums.LoginStatus;
+import org.laokou.auth.model.enums.MqTopic;
 import org.laokou.common.core.util.AddressUtils;
 import org.laokou.common.core.util.IpUtils;
 import org.laokou.common.core.util.RequestUtils;
@@ -132,10 +133,11 @@ public final class LoginLogConvertor {
 				.tenantId(tenantId)
 				.creator(creator)
 				.deptId(deptId)
+				.mqTopic(MqTopic.LOGIN_LOG.getTopic())
 				.build();
 		}
 		catch (InetAddressException | IOException | InterruptedException ex) {
-			log.error("错误信息：{}", ex.getMessage(), ex);
+			log.error("登录事件创建失败，错误信息：{}", ex.getMessage(), ex);
 			throw new IllegalArgumentException(ex.getMessage());
 		}
 	}
