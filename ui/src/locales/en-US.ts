@@ -424,10 +424,7 @@ export default {
 	'iot.thingModel.required.falseText': 'Please enter text for 0',
 	'iot.thingModel.required.enumItems': 'Please add at least one enum item',
 	'iot.thingModel.required.enum.code': 'Please enter an enum code',
-	'iot.thingModel.required.enum.codeDuplicate':
-		'Enum codes cannot be duplicated',
-	'iot.thingModel.required.enum.description':
-		'Please enter an enum description',
+	'iot.thingModel.required.enum.description': 'Please enter an enum description',
 
 	// sys/menu
 	'sys.menu.pid': 'Parent Menu',

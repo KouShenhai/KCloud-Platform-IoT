@@ -204,7 +204,12 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 				<ProFormList
 					name="enumItems"
 					label={t('iot.thingModel.enumItems')}
-					initialValue={[{ code: '', desc: '' }]}
+					readonly={readOnly}
+					initialValue={
+						(initialValues as any)?.enumItems === undefined
+							? [{ code: '', desc: '' }]
+							: undefined
+					}
 					rules={[
 						{
 							validator: async (_, value) => {
@@ -218,9 +223,11 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 					]}
 					copyIconProps={false}
 					deleteIconProps={
-						readOnly || loading
+						readOnly
 							? false
-							: { tooltipText: t('iot.thingModel.enum.delete') }
+							: {
+									tooltipText: t('iot.thingModel.enum.delete'),
+							  }
 					}
 					creatorButtonProps={
 						readOnly
@@ -229,7 +236,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 									creatorButtonText: t(
 										'iot.thingModel.enum.add',
 									),
-									disabled: loading,
+									disabled: loading || dataSource.id !== undefined,
 							  }
 					}
 				>
@@ -237,7 +244,6 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 						<Col span={12}>
 							<ProFormText
 								disabled={loading || dataSource.id !== undefined}
-								readonly={readOnly}
 								name="code"
 								label={t('iot.thingModel.enum.code')}
 								placeholder={t('iot.thingModel.required.enum.code')}
@@ -248,36 +254,12 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 											'iot.thingModel.required.enum.code',
 										),
 									},
-									({ getFieldValue }) => ({
-										validator(_, value) {
-											const code = value?.trim();
-											if (!code) {
-												return Promise.resolve();
-											}
-											const duplicateCount = (
-												getFieldValue('enumItems') ?? []
-											).filter(
-												(item: any) =>
-													item?.code?.trim() === code,
-											).length;
-											return duplicateCount > 1
-												? Promise.reject(
-														new Error(
-															t(
-																'iot.thingModel.required.enum.codeDuplicate',
-															),
-														),
-												  )
-												: Promise.resolve();
-										},
-									}),
 								]}
 							/>
 						</Col>
 						<Col span={12}>
 							<ProFormText
 								disabled={loading || dataSource.id !== undefined}
-								readonly={readOnly}
 								name="desc"
 								label={t('iot.thingModel.enum.description')}
 								placeholder={t('iot.thingModel.required.enum.description')}

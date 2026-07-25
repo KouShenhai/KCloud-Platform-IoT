@@ -424,7 +424,6 @@ export default {
 	'iot.thingModel.required.falseText': '请输入0对应文本',
 	'iot.thingModel.required.enumItems': '请至少新增一条枚举项',
 	'iot.thingModel.required.enum.code': '请输入枚举编码',
-	'iot.thingModel.required.enum.codeDuplicate': '枚举编码不能重复',
 	'iot.thingModel.required.enum.description': '请输入枚举描述',
 
 	// sys/menu
