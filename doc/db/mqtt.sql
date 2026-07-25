@@ -26,3 +26,5 @@ CREATE TABLE mqtt_acl(
 	 retain smallint
 );
 CREATE INDEX mqtt_acl_username_idx ON mqtt_acl(username);
+
+INSERT INTO mqtt_acl (username,	permission,	action,	topic) VALUES ('root','allow','subscribe','$SYS/brokers/+/clients/#');
