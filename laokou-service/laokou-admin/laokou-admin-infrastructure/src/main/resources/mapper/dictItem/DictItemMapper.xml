@@ -92,6 +92,7 @@
     <if test="qry.dictCode != null and qry.dictCode != ''">
       and sd.code = #{qry.dictCode}
     </if>
+    order by sdi.sort asc
   </select>
 
 </mapper>

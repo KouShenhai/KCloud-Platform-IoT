@@ -64,6 +64,13 @@ public enum DataType {
 		public ParamValidator.Validate validate(String spec) {
 			return JacksonUtils.toBean(spec, BooleanType.class).checkValue();
 		}
+	},
+
+	ENUM("enum", "枚举") {
+		@Override
+		public ParamValidator.Validate validate(String spec) {
+			return ParamValidator.validate();
+		}
 	};
 
 	private final String code;

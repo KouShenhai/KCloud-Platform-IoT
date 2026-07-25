@@ -19,7 +19,6 @@ package org.laokou.iot.gateway.command;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.domain.annotation.CommandLog;
-import org.laokou.common.i18n.common.IdGenerator;
 import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.laokou.iot.gateway.ability.GatewayCommandDomainService;
@@ -44,13 +43,10 @@ public class GatewayRebootCmdExe {
 
 	private final TransactionalUtils transactionalUtils;
 
-	private final IdGenerator idGenerator;
-
 	@CommandLog
 	public Long execute(GatewayRebootCmd cmd) {
-		Long commandId = idGenerator.getId();
 		GatewayCommandE gatewayCommandE = new GatewayCommandE();
-		gatewayCommandE.setCommandId(commandId);
+		gatewayCommandE.setCommandId(1L);
 		gatewayCommandE.setGatewayId(cmd.getGatewayId());
 		gatewayCommandE.setGatewayKey(gatewayGateway.findGatewayKeyById(cmd.getGatewayId()));
 		gatewayCommandE.setType(GatewayCommandE.TYPE_REBOOT);
@@ -58,7 +54,7 @@ public class GatewayRebootCmdExe {
 		gatewayCommandE.setPayload("{}");
 		gatewayCommandE.setTimestamp(InstantUtils.now().toEpochMilli());
 		transactionalUtils.executeInTransaction(() -> gatewayCommandDomainService.dispatch(gatewayCommandE));
-		return commandId;
+		return 1L;
 	}
 
 }

@@ -400,11 +400,16 @@ export default {
 	'iot.thingModel.sort': 'Thing Model Sort',
 	'iot.thingModel.remark': 'Thing Model Remark',
 	'iot.thingModel.dataType': 'Thing Model Data Type',
-	'iot.thingModel.specs': 'Thing Model Spec',
+	'iot.thingModel.spec': 'Thing Model Spec',
 	'iot.thingModel.length': 'Length',
 	'iot.thingModel.unit': 'Unit',
 	'iot.thingModel.trueText': 'Text for 1',
 	'iot.thingModel.falseText': 'Text for 0',
+	'iot.thingModel.enumItems': 'Enum Items',
+	'iot.thingModel.enum.code': 'Code',
+	'iot.thingModel.enum.description': 'Description',
+	'iot.thingModel.enum.add': 'Add Item',
+	'iot.thingModel.enum.delete': 'Delete',
 	'iot.thingModel.placeholder.code': 'Please enter code',
 	'iot.thingModel.placeholder.name': 'Please enter name',
 	'iot.thingModel.placeholder.sort': 'Please enter sort',
@@ -417,6 +422,12 @@ export default {
 	'iot.thingModel.required.length': 'Please enter length',
 	'iot.thingModel.required.trueText': 'Please enter text for 1',
 	'iot.thingModel.required.falseText': 'Please enter text for 0',
+	'iot.thingModel.required.enumItems': 'Please add at least one enum item',
+	'iot.thingModel.required.enum.code': 'Please enter an enum code',
+	'iot.thingModel.required.enum.codeDuplicate':
+		'Enum codes cannot be duplicated',
+	'iot.thingModel.required.enum.description':
+		'Please enter an enum description',
 
 	// sys/menu
 	'sys.menu.pid': 'Parent Menu',
