@@ -158,15 +158,17 @@ export default () => {
 				);
 				return (
 					<>
-						{(record?.dataType === 'enum') && (
-							data?.map((item: any) => {
-								<div style={{fontSize: '12px'}}>
-								<span style={{ color: '#fd5251' }}>
-									{item?.desc}
-								</span>
+						{record?.dataType === 'enum' && Array.isArray(data?.list) && data?.list.map((item: any, index: number) => (
+								<div
+									key={item?.code ?? index}
+									style={{ fontSize: '12px' }}
+								>
+									{item?.desc}：
+									<span style={{ color: '#fd5251' }}>
+										{item?.code}
+									</span>
 								</div>
-							})
-						)}
+							))}
 						{(record?.dataType === 'int' || record?.dataType === 'long' || record?.dataType === 'float' || record?.dataType === 'double') && (
 							<div style={{fontSize: '12px'}}>
 								最小值：

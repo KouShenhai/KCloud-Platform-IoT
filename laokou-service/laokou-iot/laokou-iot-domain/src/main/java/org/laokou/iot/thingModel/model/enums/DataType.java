@@ -69,7 +69,7 @@ public enum DataType {
 	ENUM("enum", "枚举") {
 		@Override
 		public ParamValidator.Validate validate(String spec) {
-			return ParamValidator.validate();
+			return JacksonUtils.toBean(spec, EnumType.class).checkValue();
 		}
 	};
 

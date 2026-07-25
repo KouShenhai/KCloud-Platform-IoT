@@ -44,7 +44,6 @@ public class GatewayReadPropertyCmdExe {
 
 	private final TransactionalUtils transactionalUtils;
 
-
 	@CommandLog
 	public Long execute(GatewayReadPropertyCmd cmd) {
 		GatewayCommandE gatewayCommandE = new GatewayCommandE();

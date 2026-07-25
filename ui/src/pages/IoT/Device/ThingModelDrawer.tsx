@@ -70,7 +70,11 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 			const spec = dataSource?.spec ? JSON.parse(dataSource.spec) : {};
 			return {
 				...dataSource,
-				enumItems: Array.isArray(spec) ? spec : undefined,
+				enumItems: Array.isArray(spec)
+					? spec
+					: Array.isArray(spec?.list)
+						? spec.list
+						: undefined,
 			};
 		} catch {
 			return dataSource;
@@ -98,8 +102,12 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 					unit: value?.unit
 				};
 			case 'enum': {
-				value = value?.enumItems
-				return value;
+				return {
+					list: value?.enumItems?.map((item: any) => ({
+						code: item?.code?.trim(),
+						desc: item?.desc?.trim(),
+					})),
+				};
 			}
 			default:
 				return {};
@@ -223,7 +231,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 					]}
 					copyIconProps={false}
 					deleteIconProps={
-						readOnly
+						readOnly || loading || dataSource.id !== undefined
 							? false
 							: {
 									tooltipText: t('iot.thingModel.enum.delete'),
