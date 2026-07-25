@@ -87,7 +87,7 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 	private final int maxInFlight;
 
 	public VertxMqttClient(Vertx vertx, Long snowflakeId, MqttClientConfig config, List<MessageHandler> messageHandlers,
-	                       SystemSettingsProperties systemSettingsProperties) {
+			SystemSettingsProperties systemSettingsProperties) {
 		super(vertx);
 		this.snowflakeId = snowflakeId;
 		this.config = config;

@@ -36,7 +36,7 @@ import org.springframework.stereotype.Component;
 public class UpHeartbeatGatewayMessageHandler extends AbstractMessageHandler {
 
 	@Override
-	public Future<Void> handle(Long snowflakeId,  MqttPublishMessage publishMessage) {
+	public Future<Void> handle(Long snowflakeId, MqttPublishMessage publishMessage) {
 		log.debug("【Vertx-MQTT-Client】 => 网关心跳消息【上行】处理器，接收雪花ID【{}】，主题【{}】消息", snowflakeId, publishMessage.topicName());
 		return Future.succeededFuture();
 	}

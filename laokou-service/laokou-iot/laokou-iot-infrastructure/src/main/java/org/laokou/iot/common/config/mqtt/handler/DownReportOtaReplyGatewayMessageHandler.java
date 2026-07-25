@@ -36,8 +36,9 @@ import org.springframework.stereotype.Component;
 public class DownReportOtaReplyGatewayMessageHandler extends AbstractMessageHandler {
 
 	@Override
-	public Future<Void> handle(Long snowflakeId,  MqttPublishMessage publishMessage) {
-		log.debug("【Vertx-MQTT-Client】 => 上报网关固件信息回复消息【下行】处理器，接收雪花ID【{}】，主题【{}】消息", snowflakeId, publishMessage.topicName());
+	public Future<Void> handle(Long snowflakeId, MqttPublishMessage publishMessage) {
+		log.debug("【Vertx-MQTT-Client】 => 上报网关固件信息回复消息【下行】处理器，接收雪花ID【{}】，主题【{}】消息", snowflakeId,
+				publishMessage.topicName());
 		return Future.succeededFuture();
 	}
 
