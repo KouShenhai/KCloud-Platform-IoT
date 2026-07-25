@@ -297,6 +297,7 @@ services:
       - EMQX_NODE_NAME=emqx@node1.emqx.local
       - EMQX_NODE__COOKIE=emqx-cluster-cookie
       - EMQX_CLUSTER__DISCOVERY_STRATEGY=static
+      - EMQX_DEFAULT_LOG_HANDLER=file
       - EMQX_CLUSTER__STATIC__SEEDS="[emqx@node1.emqx.local,emqx@node2.emqx.local,emqx@node3.emqx.local]"
     volumes:
       # 挂载数据存储
@@ -323,6 +324,7 @@ services:
       - EMQX_NODE_NAME=emqx@node2.emqx.local
       - EMQX_NODE__COOKIE=emqx-cluster-cookie
       - EMQX_CLUSTER__DISCOVERY_STRATEGY=static
+      - EMQX_DEFAULT_LOG_HANDLER=file
       - EMQX_CLUSTER__STATIC__SEEDS="[emqx@node1.emqx.local,emqx@node2.emqx.local,emqx@node3.emqx.local]"
     volumes:
       # 挂载数据存储
@@ -349,6 +351,7 @@ services:
       - EMQX_NODE_NAME=emqx@node3.emqx.local
       - EMQX_NODE__COOKIE=emqx-cluster-cookie
       - EMQX_CLUSTER__DISCOVERY_STRATEGY=static
+      - EMQX_DEFAULT_LOG_HANDLER=file
       - EMQX_CLUSTER__STATIC__SEEDS="[emqx@node1.emqx.local,emqx@node2.emqx.local,emqx@node3.emqx.local]"
     volumes:
       # 挂载数据存储
