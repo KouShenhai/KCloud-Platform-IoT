@@ -22,6 +22,7 @@ import io.vertx.mqtt.messages.MqttPublishMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.iot.common.config.mqtt.AbstractMessageHandler;
+import org.laokou.iot.common.config.mqtt.MqttClientConfig;
 import org.laokou.iot.session.dto.mqtt.MqttMessageType;
 import org.springframework.stereotype.Component;
 
@@ -34,14 +35,14 @@ import org.springframework.stereotype.Component;
 final class UpClientDisconnectedSystemMessageHandler extends AbstractMessageHandler {
 
 	@Override
-	protected MqttMessageType getMatchTopic() {
+	protected MqttMessageType getMatchTopic(MqttClientConfig config) {
 		return null;
 	}
 
 	@Override
 	public Future<Void> handle(Long snowflakeId, MqttPublishMessage publishMessage) {
 		log.debug("【Vertx-MQTT-Client】 => 网关指令回复消息【上行】处理器，接收雪花ID【{}】，主题【{}】消息", snowflakeId,
-			publishMessage.topicName());
+				publishMessage.topicName());
 		return Future.succeededFuture();
 	}
 

@@ -169,7 +169,7 @@ export default () => {
 									</span>
 								</div>
 							))}
-						{(record?.dataType === 'int' || record?.dataType === 'long' || record?.dataType === 'float' || record?.dataType === 'double') && (
+						{(record?.dataType === 'int' || record?.dataType === 'long' || record?.dataType === 'float' || record?.dataType === 'double') && data?.min && (
 							<div style={{fontSize: '12px'}}>
 								最小值：
 								<span style={{ color: '#fd5251' }}>
@@ -177,7 +177,7 @@ export default () => {
 								</span>
 							</div>
 						)}
-						{(record?.dataType === 'int' || record?.dataType === 'long' || record?.dataType === 'float' || record?.dataType === 'double') && (
+						{(record?.dataType === 'int' || record?.dataType === 'long' || record?.dataType === 'float' || record?.dataType === 'double') && data?.max && (
 							<div style={{fontSize: '12px'}}>
 								最大值：
 								<span style={{ color: '#fd5251' }}>
@@ -185,7 +185,7 @@ export default () => {
 								</span>
 							</div>
 						)}
-						{(record?.dataType === 'int' || record?.dataType === 'long' || record?.dataType === 'float' || record?.dataType === 'double') && (
+						{(record?.dataType === 'int' || record?.dataType === 'long' || record?.dataType === 'float' || record?.dataType === 'double') && data?.unit && (
 							<div style={{fontSize: '12px'}}>
 								单位：
 								<span style={{ color: '#fd5251' }}>

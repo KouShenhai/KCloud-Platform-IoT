@@ -22,6 +22,7 @@ import io.vertx.mqtt.messages.MqttPublishMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.iot.common.config.mqtt.AbstractMessageHandler;
+import org.laokou.iot.common.config.mqtt.MqttClientConfig;
 import org.laokou.iot.session.dto.mqtt.MqttMessageType;
 import org.springframework.stereotype.Component;
 
@@ -42,7 +43,7 @@ final class UpUpgradeOtaGatewayMessageHandler extends AbstractMessageHandler {
 		return Future.succeededFuture();
 	}
 
-	protected MqttMessageType getMatchTopic() {
+	protected MqttMessageType getMatchTopic(MqttClientConfig config) {
 		return MqttMessageType.UP_UPGRADE_OTA_GATEWAY_MESSAGE;
 	}
 
