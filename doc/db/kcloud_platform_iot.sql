@@ -73,7 +73,8 @@ CREATE TABLE IF NOT EXISTS "public"."iot_session" (
 "port" int4 NOT NULL ,
 "username" varchar(50) NOT NULL,
 "password" varchar(50) NOT NULL,
-"state" int2 NOT NULL
+"state" int2 NOT NULL,
+"broker_name" varchar(30) NOT NULL
 )
 ;
 COMMENT ON COLUMN "public"."iot_session"."id" IS 'ID';
@@ -91,8 +92,16 @@ COMMENT ON COLUMN "public"."iot_session"."port" IS '会话端口';
 COMMENT ON COLUMN "public"."iot_session"."username" IS '会话用户名';
 COMMENT ON COLUMN "public"."iot_session"."password" IS '会话密码';
 COMMENT ON COLUMN "public"."iot_session"."state" IS '会话状态，0关闭，1打开';
+COMMENT ON COLUMN "public"."iot_session"."broker_name" IS 'MQTT代理服务器名称';
 COMMENT ON TABLE "public"."iot_session" IS '会话';
 ALTER TABLE "public"."iot_session" ADD CONSTRAINT "iot_session_pkey" PRIMARY KEY ("id");
+
+CREATE unique INDEX "iot_session_host_port_idx" ON "public"."iot_session" USING btree (
+	"host" ,
+	"port" ,
+	"tenant_id"
+);
+COMMENT ON INDEX "public"."iot_session_host_port_idx" IS '主机_端口_租户ID_唯一索引';
 
 DROP TABLE IF EXISTS "public"."iot_thing_model";
 CREATE TABLE "public"."iot_thing_model" (
@@ -155,7 +164,7 @@ INSERT INTO "public"."iot_thing_model" VALUES (13, 1, 1, '2026-07-01 22:17:53.89
 INSERT INTO "public"."iot_thing_model" VALUES (14, 1, 1, '2026-07-01 22:18:19.858725', '2026-07-12 16:34:23.254347', 0, 1, 1, 1, '单次加工数', 'single_work_pieces', 'int', 13, '{"min":"0","max":"100000","unit":""}', '单次加工数');
 INSERT INTO "public"."iot_thing_model" VALUES (15, 1, 1, '2026-07-01 22:18:58.710393', '2026-07-01 22:18:58.710393', 0, 0, 1, 1, '工件计数', 'work_pieces', 'int', 14, '{"min":"0","max":"100000","unit":""}', '工件计数');
 INSERT INTO "public"."iot_thing_model" VALUES (16, 1, 1, '2026-07-01 22:19:39.355857', '2026-07-01 22:19:39.355857', 0, 0, 1, 1, '工作模式', 'work_mode', 'text', 15, '{"length":"30"}', '工作模式');
-INSERT INTO "public"."iot_thing_model" VALUES (17, 1, 1, '2026-07-01 22:20:33.96301', '2026-07-01 22:33:34.499222', 0, 2, 1, 1, '运行状态', 'running_status', 'text', 16, '{"length":"30"}', '运行状态');
+INSERT INTO "public"."iot_thing_model" VALUES (17, 1, 1, '2026-07-25 19:38:51.923256', '2026-07-26 03:21:09.982506', 0, 1, 1, 1, '运行状态', 'running_status', 'enum', 16, '{"list": [{"code": "unknown", "desc": "未知"}, {"code": "idle", "desc": "待机"}, {"code": "running", "desc": "运行"}, {"code": "paused", "desc": "暂停"}, {"code": "stopped", "desc": "停止"}, {"code": "maintenance", "desc": "维护"}]}', '运行状态');
 INSERT INTO "public"."iot_thing_model" VALUES (18, 1, 1, '2026-07-01 22:21:07.976719', '2026-07-01 22:21:07.976719', 0, 0, 1, 1, '急停状态', 'emergency_stop_status', 'boolean', 17, '{"trueText":"正常运行","falseText":"已急停"}', '急停状态');
 INSERT INTO "public"."iot_thing_model" VALUES (19, 1, 1, '2026-07-01 22:21:54.853973', '2026-07-01 22:21:54.853973', 0, 0, 1, 1, '报警状态', 'alarm_status', 'boolean', 18, '{"trueText":"正常运行","falseText":"已报警"}', '报警状态');
 INSERT INTO "public"."iot_thing_model" VALUES (20, 1, 1, '2026-07-01 22:23:18.265921', '2026-07-01 22:23:18.265921', 0, 0, 1, 1, '已注册程序数量', 'program_registered_number', 'int', 19, '{"min":"0","max":"100000","unit":""}', '已注册程序数量');

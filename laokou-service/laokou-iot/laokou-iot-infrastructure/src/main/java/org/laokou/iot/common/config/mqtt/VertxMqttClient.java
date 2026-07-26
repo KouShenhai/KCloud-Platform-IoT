@@ -53,6 +53,8 @@ import java.util.concurrent.atomic.AtomicReference;
 @Slf4j
 public final class VertxMqttClient extends AbstractVertxService<Void> {
 
+	private final Long snowflakeId;
+
 	private final MqttClientConfig config;
 
 	private final SystemSettingsProperties systemSettingsProperties;
@@ -84,9 +86,10 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 
 	private final int maxInFlight;
 
-	public VertxMqttClient(Vertx vertx, MqttClientConfig config, List<MessageHandler> messageHandlers,
+	public VertxMqttClient(Vertx vertx, Long snowflakeId, MqttClientConfig config, List<MessageHandler> messageHandlers,
 			SystemSettingsProperties systemSettingsProperties) {
 		super(vertx);
+		this.snowflakeId = snowflakeId;
 		this.config = config;
 		this.timerInactive = -1;
 		this.timerCreating = -2;
@@ -262,7 +265,7 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 		for (MessageHandler handler : messageHandlers) {
 			try {
 				if (handler.supports(message.topicName())) {
-					return handler.handle(message);
+					return handler.handle(snowflakeId, message);
 				}
 			}
 			catch (Throwable ex) {

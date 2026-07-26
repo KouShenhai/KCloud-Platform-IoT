@@ -405,6 +405,11 @@ export default {
 	'iot.thingModel.unit': '单位',
 	'iot.thingModel.trueText': '1对应文本',
 	'iot.thingModel.falseText': '0对应文本',
+	'iot.thingModel.enumItems': '枚举项',
+	'iot.thingModel.enum.code': '编码',
+	'iot.thingModel.enum.description': '描述',
+	'iot.thingModel.enum.add': '新增一条',
+	'iot.thingModel.enum.delete': '删除',
 	'iot.thingModel.placeholder.code': '请输入物模型编码',
 	'iot.thingModel.placeholder.name': '请输入物模型名称',
 	'iot.thingModel.placeholder.sort': '请输入物模型排序',
@@ -417,6 +422,9 @@ export default {
 	'iot.thingModel.required.length': '请输入长度',
 	'iot.thingModel.required.trueText': '请输入1对应文本',
 	'iot.thingModel.required.falseText': '请输入0对应文本',
+	'iot.thingModel.required.enumItems': '请至少新增一条枚举项',
+	'iot.thingModel.required.enum.code': '请输入枚举编码',
+	'iot.thingModel.required.enum.description': '请输入枚举描述',
 
 	// sys/menu
 	'sys.menu.pid': '父级菜单',

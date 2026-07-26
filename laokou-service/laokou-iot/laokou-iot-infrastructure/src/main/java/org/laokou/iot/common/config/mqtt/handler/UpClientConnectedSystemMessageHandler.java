@@ -26,25 +26,24 @@ import org.laokou.iot.session.dto.mqtt.MqttMessageType;
 import org.springframework.stereotype.Component;
 
 /**
- * 上报设备属性消息【上行】处理器.
- *
  * @author laokou
  */
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
-final class UpReportPropertiesGatewayMessageHandler extends AbstractMessageHandler {
-
-	@Override
-	public Future<Void> handle(Long snowflakeId, MqttPublishMessage publishMessage) {
-		log.debug("【Vertx-MQTT-Client】 => 上报设备属性消息【上行】处理器，接收雪花ID【{}】，主题【{}】消息", snowflakeId,
-				publishMessage.topicName());
-		return Future.succeededFuture();
-	}
+final class UpClientConnectedSystemMessageHandler extends AbstractMessageHandler {
 
 	@Override
 	protected MqttMessageType getMatchTopic() {
-		return MqttMessageType.UP_REPORT_PROPERTIES_GATEWAY_MESSAGE;
+		return null;
+	}
+
+	@Override
+	public Future<Void> handle(Long snowflakeId, MqttPublishMessage publishMessage) {
+		log.debug("【Vertx-MQTT-Client】 => 网关指令回复消息【上行】处理器，接收雪花ID【{}】，主题【{}】消息", snowflakeId,
+			publishMessage.topicName());
+		return Future.succeededFuture();
 	}
 
 }

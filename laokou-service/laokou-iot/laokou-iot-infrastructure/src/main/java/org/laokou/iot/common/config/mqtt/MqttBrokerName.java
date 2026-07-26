@@ -17,19 +17,25 @@
 
 package org.laokou.iot.common.config.mqtt;
 
-import org.laokou.iot.common.util.VertxMqttUtils;
-import org.laokou.iot.session.dto.mqtt.MqttMessageType;
+import lombok.Getter;
 
 /**
  * @author laokou
  */
-public abstract class AbstractMessageHandler implements MessageHandler {
+@Getter
+enum MqttBrokerName {
 
-	@Override
-	public final boolean supports(String topic) {
-		return VertxMqttUtils.matchTopic(getMatchTopic().getTopic(), topic);
+	EMQX("emqx", "EMQX"),
+
+	NANOMQ("nanomq", "NanoMQ");
+
+	private final String code;
+
+	private final String desc;
+
+	MqttBrokerName(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
 	}
-
-	protected abstract MqttMessageType getMatchTopic();
 
 }

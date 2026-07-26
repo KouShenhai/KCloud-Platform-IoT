@@ -48,8 +48,9 @@ public interface MessageHandler {
 	 * 成功后确认 MQTT 消息。
 	 * </p>
 	 * @param publishMessage MQTT 发布消息
+	 * @param snowflakeId 雪花ID
 	 * @return 业务处理完成信号，不能返回 {@code null}
 	 */
-	Future<Void> handle(MqttPublishMessage publishMessage);
+	Future<Void> handle(Long snowflakeId, MqttPublishMessage publishMessage);
 
 }

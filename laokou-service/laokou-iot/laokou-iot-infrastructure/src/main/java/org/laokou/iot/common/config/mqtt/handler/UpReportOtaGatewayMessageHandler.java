@@ -33,10 +33,12 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class UpReportOtaGatewayMessageHandler extends AbstractMessageHandler {
+final class UpReportOtaGatewayMessageHandler extends AbstractMessageHandler {
 
 	@Override
-	public Future<Void> handle(MqttPublishMessage publishMessage) {
+	public Future<Void> handle(Long snowflakeId, MqttPublishMessage publishMessage) {
+		log.debug("【Vertx-MQTT-Client】 => 上报网关固件信息消息【上行】处理器，接收雪花ID【{}】，主题【{}】消息", snowflakeId,
+				publishMessage.topicName());
 		return Future.succeededFuture();
 	}
 

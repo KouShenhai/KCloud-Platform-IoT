@@ -47,6 +47,7 @@ public class ForySerialCaffeineJsqlParseCache extends AbstractCaffeineJsqlParseC
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.expression.ExtractExpression.class);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.expression.FilterOverImpl.class);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.expression.Function.class);
+		ForyFactory.INSTANCE.register(net.sf.jsqlparser.expression.Function.HavingClause.class);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.expression.HexValue.class);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.expression.IntervalExpression.class);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.expression.JdbcNamedParameter.class);

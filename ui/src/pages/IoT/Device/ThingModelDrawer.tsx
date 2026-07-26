@@ -3,6 +3,7 @@ import { useIntl } from '@@/exports';
 import {
 	DrawerForm,
 	ProFormDigit,
+	ProFormList,
 	ProFormSelect,
 	ProFormText,
 } from '@ant-design/pro-components';
@@ -58,6 +59,27 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 	const t = (id: string, values?: Record<string, any>) =>
 		intl.formatMessage({ id }, values);
 	const [loading, setLoading] = useState(false);
+	const initialValues = React.useMemo(() => {
+		if (
+			dataSource?.dataType !== 'enum' ||
+			Array.isArray((dataSource as any)?.enumItems)
+		) {
+			return dataSource;
+		}
+		try {
+			const spec = dataSource?.spec ? JSON.parse(dataSource.spec) : {};
+			return {
+				...dataSource,
+				enumItems: Array.isArray(spec)
+					? spec
+					: Array.isArray(spec?.list)
+						? spec.list
+						: undefined,
+			};
+		} catch {
+			return dataSource;
+		}
+	}, [dataSource]);
 
 	const getSpec = (value: any) => {
 		switch (value.dataType) {
@@ -79,6 +101,14 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 					max: value?.max,
 					unit: value?.unit
 				};
+			case 'enum': {
+				return {
+					list: value?.enumItems?.map((item: any) => ({
+						code: item?.code?.trim(),
+						desc: item?.desc?.trim(),
+					})),
+				};
+			}
 			default:
 				return {};
 		}
@@ -93,7 +123,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 				closable: true,
 				maskClosable: true,
 			}}
-			initialValues={dataSource}
+			initialValues={initialValues}
 			onOpenChange={setModalVisit}
 			autoFocusFirstInput
 			submitter={{
@@ -177,6 +207,83 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 				options={dataTypeOptions}
 				onChange={setDataType}
 			/>
+
+			{dataType === 'enum' && (
+				<ProFormList
+					name="enumItems"
+					label={t('iot.thingModel.enumItems')}
+					readonly={readOnly}
+					initialValue={
+						(initialValues as any)?.enumItems === undefined
+							? [{ code: '', desc: '' }]
+							: undefined
+					}
+					rules={[
+						{
+							validator: async (_, value) => {
+								if (!value?.length) {
+									throw new Error(
+										t('iot.thingModel.required.enumItems'),
+									);
+								}
+							},
+						},
+					]}
+					copyIconProps={false}
+					deleteIconProps={
+						readOnly || loading || dataSource.id !== undefined
+							? false
+							: {
+									tooltipText: t('iot.thingModel.enum.delete'),
+							  }
+					}
+					creatorButtonProps={
+						readOnly
+							? false
+							: {
+									creatorButtonText: t(
+										'iot.thingModel.enum.add',
+									),
+									disabled: loading || dataSource.id !== undefined,
+							  }
+					}
+				>
+					<Row gutter={24}>
+						<Col span={12}>
+							<ProFormText
+								disabled={loading || dataSource.id !== undefined}
+								name="code"
+								label={t('iot.thingModel.enum.code')}
+								placeholder={t('iot.thingModel.required.enum.code')}
+								rules={[
+									{
+										required: true,
+										message: t(
+											'iot.thingModel.required.enum.code',
+										),
+									},
+								]}
+							/>
+						</Col>
+						<Col span={12}>
+							<ProFormText
+								disabled={loading || dataSource.id !== undefined}
+								name="desc"
+								label={t('iot.thingModel.enum.description')}
+								placeholder={t('iot.thingModel.required.enum.description')}
+								rules={[
+									{
+										required: true,
+										message: t(
+											'iot.thingModel.required.enum.description',
+										),
+									},
+								]}
+							/>
+						</Col>
+					</Row>
+				</ProFormList>
+			)}
 
 			{dataType === 'int' && (
 				<Row gutter={24}>

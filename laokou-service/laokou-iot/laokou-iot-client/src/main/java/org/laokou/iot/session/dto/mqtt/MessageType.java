@@ -15,21 +15,27 @@
  *
  */
 
-package org.laokou.iot.common.config.mqtt;
+package org.laokou.iot.session.dto.mqtt;
 
-import org.laokou.iot.common.util.VertxMqttUtils;
-import org.laokou.iot.session.dto.mqtt.MqttMessageType;
+import lombok.Getter;
 
 /**
  * @author laokou
  */
-public abstract class AbstractMessageHandler implements MessageHandler {
+@Getter
+public enum MessageType {
 
-	@Override
-	public final boolean supports(String topic) {
-		return VertxMqttUtils.matchTopic(getMatchTopic().getTopic(), topic);
+	GATEWAY("gateway", "网关消息"),
+
+	SYSTEM("system", "系统消息");
+
+	private final String code;
+
+	private final String desc;
+
+	MessageType(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
 	}
-
-	protected abstract MqttMessageType getMatchTopic();
 
 }

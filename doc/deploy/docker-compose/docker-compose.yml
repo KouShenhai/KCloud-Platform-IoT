@@ -259,7 +259,7 @@ services:
       - iot_network
   # docker部署 => sudo docker run -d --name emqx  --restart always --network bridge -v /home/ubuntu/emqx/data:/opt/emqx/data:rw -v /home/ubuntu/emqx/log:/opt/emqx/log:rw -p 1883:1883 -p 8083:8083 -p 8084:8084 -p 8883:8883 -p 18083:18083 emqx/emqx:5.8.6
   emqx:
-    image: emqx/emqx:latest
+    image: emqx/emqx:5.8.8
     container_name: emqx
     # 保持容器在没有守护程序的情况下运行
     tty: true
@@ -277,6 +277,87 @@ services:
       - ./emqx/data:/opt/emqx/data
       # 挂载日志文件
       - ./emqx/log:/opt/emqx/log
+    networks:
+      - iot_network
+  emqx1:
+    image: emqx/emqx:5.8.8
+    container_name: emqx1
+    hostname: node1.emqx.local
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "11883:1883"
+      - "8083:8083"
+      - "18883:8883"
+      - "18083:18083"
+    environment:
+      - TZ=Asia/Shanghai
+      - EMQX_NODE_NAME=emqx@node1.emqx.local
+      - EMQX_NODE__COOKIE=emqx-cluster-cookie
+      - EMQX_CLUSTER__DISCOVERY_STRATEGY=static
+      - EMQX_DEFAULT_LOG_HANDLER=file
+      - EMQX_CLUSTER__STATIC__SEEDS="[emqx@node1.emqx.local,emqx@node2.emqx.local,emqx@node3.emqx.local]"
+    volumes:
+      # 挂载数据存储
+      - ./emqx-cluster/emqx1/data:/opt/emqx/data
+      # 挂载日志文件
+      - ./emqx-cluster/emqx1/log:/opt/emqx/log
+    networks:
+      - iot_network
+  emqx2:
+    image: emqx/emqx:5.8.8
+    container_name: emqx2
+    hostname: node2.emqx.local
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "21883:1883"
+      - "28083:8083"
+      - "28883:8883"
+      - "38083:18083"
+    environment:
+      - TZ=Asia/Shanghai
+      - EMQX_NODE_NAME=emqx@node2.emqx.local
+      - EMQX_NODE__COOKIE=emqx-cluster-cookie
+      - EMQX_CLUSTER__DISCOVERY_STRATEGY=static
+      - EMQX_DEFAULT_LOG_HANDLER=file
+      - EMQX_CLUSTER__STATIC__SEEDS="[emqx@node1.emqx.local,emqx@node2.emqx.local,emqx@node3.emqx.local]"
+    volumes:
+      # 挂载数据存储
+      - ./emqx-cluster/emqx2/data:/opt/emqx/data
+      # 挂载日志文件
+      - ./emqx-cluster/emqx2/log:/opt/emqx/log
+    networks:
+      - iot_network
+  emqx3:
+    image: emqx/emqx:5.8.8
+    container_name: emqx3
+    hostname: node3.emqx.local
+    # 保持容器在没有守护程序的情况下运行
+    tty: true
+    restart: always
+    privileged: true
+    ports:
+      - "31883:1883"
+      - "48083:8083"
+      - "38883:8883"
+      - "58083:18083"
+    environment:
+      - TZ=Asia/Shanghai
+      - EMQX_NODE_NAME=emqx@node3.emqx.local
+      - EMQX_NODE__COOKIE=emqx-cluster-cookie
+      - EMQX_CLUSTER__DISCOVERY_STRATEGY=static
+      - EMQX_DEFAULT_LOG_HANDLER=file
+      - EMQX_CLUSTER__STATIC__SEEDS="[emqx@node1.emqx.local,emqx@node2.emqx.local,emqx@node3.emqx.local]"
+    volumes:
+      # 挂载数据存储
+      - ./emqx-cluster/emqx3/data:/opt/emqx/data
+      # 挂载日志文件
+      - ./emqx-cluster/emqx3/log:/opt/emqx/log
     networks:
       - iot_network
   postgresql:
