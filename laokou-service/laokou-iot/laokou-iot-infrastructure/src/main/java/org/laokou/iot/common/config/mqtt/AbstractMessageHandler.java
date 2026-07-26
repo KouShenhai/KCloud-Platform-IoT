@@ -26,10 +26,10 @@ import org.laokou.iot.session.dto.mqtt.MqttMessageType;
 public abstract class AbstractMessageHandler implements MessageHandler {
 
 	@Override
-	public final boolean supports(String topic) {
-		return VertxMqttUtils.matchTopic(getMatchTopic().getTopic(), topic);
+	public final boolean supports(String topic, MqttClientConfig config) {
+		return VertxMqttUtils.matchTopic(getMatchTopic(config).getTopic(), topic);
 	}
 
-	protected abstract MqttMessageType getMatchTopic();
+	protected abstract MqttMessageType getMatchTopic(MqttClientConfig config);
 
 }

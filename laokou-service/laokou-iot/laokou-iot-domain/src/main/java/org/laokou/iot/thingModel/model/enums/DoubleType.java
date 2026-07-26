@@ -18,6 +18,7 @@
 package org.laokou.iot.thingModel.model.enums;
 
 import lombok.Data;
+import org.laokou.common.core.util.BigDecimalUtils;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.springframework.util.StringUtils;
 
@@ -45,13 +46,27 @@ public class DoubleType implements Serializable {
 
 	private final BigDecimal maxVal = new BigDecimal("1000000000.000000");
 
+	public void setMax(String max) {
+		this.max = StringUtils.hasText(max) ? max.trim() : null;
+	}
+
+	public void setMin(String min) {
+		this.min = StringUtils.hasText(min) ? min.trim() : null;
+	}
+
 	public ParamValidator.Validate checkValue() {
 		BigDecimal minValue = null;
 		BigDecimal maxValue = null;
 		if (StringUtils.hasText(min)) {
+			if (BigDecimalUtils.isScaleValid(min, 6)) {
+				return ParamValidator.invalidate("最小值小数位不允许超过6位");
+			}
 			minValue = new BigDecimal(min).setScale(6, RoundingMode.HALF_UP).stripTrailingZeros();
 		}
 		if (StringUtils.hasText(max)) {
+			if (BigDecimalUtils.isScaleValid(max, 6)) {
+				return ParamValidator.invalidate("最大值小数位不允许超过6位");
+			}
 			maxValue = new BigDecimal(max).setScale(6, RoundingMode.HALF_UP).stripTrailingZeros();
 		}
 		if (minValue != null && (minVal.compareTo(minValue) > 0 || minValue.compareTo(maxVal) > 0)) {

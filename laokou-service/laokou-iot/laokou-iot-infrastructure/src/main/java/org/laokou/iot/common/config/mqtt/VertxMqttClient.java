@@ -264,7 +264,7 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 	private Future<Void> findHandler(MqttPublishMessage message) {
 		for (MessageHandler handler : messageHandlers) {
 			try {
-				if (handler.supports(message.topicName())) {
+				if (handler.supports(message.topicName(), config)) {
 					return handler.handle(snowflakeId, message);
 				}
 			}
