@@ -83,4 +83,6 @@ public final class MqttClientConfig {
 
 	private int maxInflightQueue = 1024;
 
+	private MqttBrokerName mqttBrokerName = MqttBrokerName.EMQX;
+
 }

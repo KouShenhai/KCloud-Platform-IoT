@@ -33,7 +33,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class UpAlarmEventGatewayMessageHandler extends AbstractMessageHandler {
+final class UpAlarmEventGatewayMessageHandler extends AbstractMessageHandler {
 
 	@Override
 	public Future<Void> handle(Long snowflakeId, MqttPublishMessage publishMessage) {

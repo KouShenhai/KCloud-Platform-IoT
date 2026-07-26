@@ -295,23 +295,23 @@ export default (initialState: any) => {
 			permissions?.includes('iot:product:export') &&
 			scopes?.includes('write'),
 
-		canConnectionGetDetail:
+		canSessionGetDetail:
 			permissions?.includes('iot:session:detail') &&
 			scopes?.includes('read'),
 
-		canConnectionPage:
+		canSessionPage:
 			permissions?.includes('iot:session:page') &&
 			scopes?.includes('read'),
 
-		canConnectionModify:
+		canSessionModify:
 			permissions?.includes('iot:session:modify') &&
 			scopes?.includes('write'),
 
-		canConnectionRemove:
+		canSessionRemove:
 			permissions?.includes('iot:session:remove') &&
 			scopes?.includes('write'),
 
-		canConnectionSave:
+		canSessionSave:
 			permissions?.includes('iot:session:save') &&
 			scopes?.includes('write'),
 

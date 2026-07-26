@@ -35,7 +35,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @Data
-public class DownUpgradeOtaReplyGatewayMessageHandler extends AbstractMessageHandler {
+final class DownUpgradeOtaReplyGatewayMessageHandler extends AbstractMessageHandler {
 
 	@Override
 	public Future<Void> handle(Long snowflakeId, MqttPublishMessage publishMessage) {

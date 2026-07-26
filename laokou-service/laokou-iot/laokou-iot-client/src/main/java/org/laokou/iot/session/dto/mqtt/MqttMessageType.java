@@ -20,6 +20,7 @@ package org.laokou.iot.session.dto.mqtt;
 import com.google.common.collect.Maps;
 import lombok.Getter;
 
+import java.util.Arrays;
 import java.util.Map;
 
 /***
@@ -45,6 +46,12 @@ public enum MqttMessageType {
 		MqttQos getMqttQos() {
 			return MqttQos.AT_LEAST_ONCE;
 		}
+
+		@Override
+		MessageType getMessageType() {
+			return MessageType.GATEWAY;
+		}
+
 	},
 
 	UP_COMMAND_REPLY_GATEWAY_MESSAGE("up_command_reply_gateway_message", "网关指令回复【上行】") {
@@ -62,6 +69,12 @@ public enum MqttMessageType {
 		MqttQos getMqttQos() {
 			return MqttQos.AT_LEAST_ONCE;
 		}
+
+		@Override
+		MessageType getMessageType() {
+			return MessageType.GATEWAY;
+		}
+
 	},
 
 	UP_REPORT_OTA_GATEWAY_MESSAGE("up_report_ota_gateway_message", "上报网关固件信息【上行】") {
@@ -79,6 +92,12 @@ public enum MqttMessageType {
 		MqttQos getMqttQos() {
 			return MqttQos.AT_LEAST_ONCE;
 		}
+
+		@Override
+		MessageType getMessageType() {
+			return MessageType.GATEWAY;
+		}
+
 	},
 
 	DOWN_REPORT_OTA_REPLY_GATEWAY_MESSAGE("down_report_ota_reply_gateway_message", "上报网关固件信息回复【下行】") {
@@ -95,6 +114,11 @@ public enum MqttMessageType {
 		@Override
 		MqttQos getMqttQos() {
 			return MqttQos.AT_LEAST_ONCE;
+		}
+
+		@Override
+		MessageType getMessageType() {
+			return MessageType.GATEWAY;
 		}
 	},
 
@@ -113,6 +137,12 @@ public enum MqttMessageType {
 		MqttQos getMqttQos() {
 			return MqttQos.AT_LEAST_ONCE;
 		}
+
+		@Override
+		MessageType getMessageType() {
+			return MessageType.GATEWAY;
+		}
+
 	},
 
 	DOWN_UPGRADE_OTA_REPLY_GATEWAY_MESSAGE("down_upgrade_ota_reply_gateway_message", "升级网关固件回复【下行】") {
@@ -129,6 +159,11 @@ public enum MqttMessageType {
 		@Override
 		MqttQos getMqttQos() {
 			return MqttQos.AT_LEAST_ONCE;
+		}
+
+		@Override
+		MessageType getMessageType() {
+			return MessageType.GATEWAY;
 		}
 
 	},
@@ -149,6 +184,11 @@ public enum MqttMessageType {
 			return MqttQos.AT_LEAST_ONCE;
 		}
 
+		@Override
+		MessageType getMessageType() {
+			return MessageType.GATEWAY;
+		}
+
 	},
 
 	UP_HEARTBEAT_GATEWAY_MESSAGE("up_heartbeat_gateway_message", "网关心跳【上行】") {
@@ -167,6 +207,11 @@ public enum MqttMessageType {
 			return MqttQos.AT_MOST_ONCE;
 		}
 
+		@Override
+		MessageType getMessageType() {
+			return MessageType.GATEWAY;
+		}
+
 	},
 
 	UP_REPORT_PROPERTIES_GATEWAY_MESSAGE("up_report_properties_gateway_message", "上报设备属性【上行】") {
@@ -183,6 +228,11 @@ public enum MqttMessageType {
 		@Override
 		MqttQos getMqttQos() {
 			return MqttQos.AT_MOST_ONCE;
+		}
+
+		@Override
+		MessageType getMessageType() {
+			return MessageType.GATEWAY;
 		}
 
 	},
@@ -204,6 +254,11 @@ public enum MqttMessageType {
 			return MqttQos.AT_LEAST_ONCE;
 		}
 
+		@Override
+		MessageType getMessageType() {
+			return MessageType.GATEWAY;
+		}
+
 	};
 
 	private final String code;
@@ -221,11 +276,15 @@ public enum MqttMessageType {
 
 	abstract MqttQos getMqttQos();
 
+	abstract MessageType getMessageType();
+
 	private static final MqttMessageType[] VALUES = values();
 
 	public static Map<String, Integer> getTopics(String tenantCode) {
 		Map<String, Integer> topics = Maps.newHashMapWithExpectedSize(VALUES.length);
-		for (MqttMessageType messageType : VALUES) {
+		for (MqttMessageType messageType : Arrays.stream(VALUES)
+			.filter(item -> item.getMessageType() == MessageType.GATEWAY)
+			.toList()) {
 			String topic = messageType.getTopic();
 			int plusIndex = topic.indexOf('+');
 			String replacedTopic = plusIndex > 0

@@ -185,7 +185,7 @@ export default () => {
 			valueType: 'option',
 			key: 'option',
 			render: (_, record) => [
-				access.canConnectionGetDetail && (
+				access.canSessionGetDetail && (
 					<a
 						key="get"
 						onClick={() => {
@@ -200,7 +200,7 @@ export default () => {
 						{t('common.view')}
 					</a>
 				),
-				access.canConnectionModify && (
+				access.canSessionModify && (
 					<a
 						key="modify"
 						onClick={() => {
@@ -215,7 +215,7 @@ export default () => {
 						{t('common.modify')}
 					</a>
 				),
-				access.canConnectionRemove && (
+				access.canSessionRemove && (
 					<a
 						key="remove"
 						onClick={() => {
@@ -285,7 +285,7 @@ export default () => {
 				}}
 				rowSelection={{ ...rowSelection }}
 				toolBarRender={() => [
-					access.canConnectionSave && (
+					access.canSessionSave && (
 						<Button
 							key="save"
 							type="primary"
@@ -310,7 +310,7 @@ export default () => {
 							{t('common.insert')}
 						</Button>
 					),
-					access.canConnectionRemove && (
+					access.canSessionRemove && (
 						<Button
 							key="remove"
 							type="primary"
