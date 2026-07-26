@@ -25,6 +25,6 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public final class VertxServiceManager {
 
-	private final Map<Long, VertxService> vertxServiceMap = new ConcurrentHashMap<>(8196);
+	private final Map<Long, VertxService> vertxServiceMap = new ConcurrentHashMap<>(8192);
 
 }
