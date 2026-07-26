@@ -179,7 +179,7 @@
     <!-- guava版本 -->
     <guava.version>33.6.0-jre</guava.version>
     <!-- oshi版本 -->
-    <oshi.version>7.4.1</oshi.version>
+    <oshi.version>7.4.2</oshi.version>
     <!-- elasticsearch版本 -->
     <elasticsearch.version>9.4.4</elasticsearch.version>
     <!-- jakarta.servlet-api版本 -->
@@ -187,7 +187,7 @@
     <!-- fesod版本 -->
     <fesod.version>2.0.2-incubating</fesod.version>
     <!-- s3版本 -->
-    <s3.version>2.49.1</s3.version>
+    <s3.version>2.49.3</s3.version>
     <!-- dynamic-datasource版本 -->
     <dynamic-datasource.version>4.5.0</dynamic-datasource.version>
     <!-- httpclient5版本 -->
@@ -215,7 +215,7 @@
     <!-- flyway版本 -->
     <flyway.version>13.0.0</flyway.version>
     <!-- snail-job版本 -->
-    <snail-job.version>2.0.0</snail-job.version>
+    <snail-job.version>2.0.2</snail-job.version>
     <!-- archunit-junit5版本 -->
     <archunit-junit5.version>1.4.2</archunit-junit5.version>
     <!-- caffeine版本 -->
