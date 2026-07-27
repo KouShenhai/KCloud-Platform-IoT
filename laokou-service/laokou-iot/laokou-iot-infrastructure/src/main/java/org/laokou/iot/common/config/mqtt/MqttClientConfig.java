@@ -20,6 +20,7 @@ package org.laokou.iot.common.config.mqtt;
 import io.netty.handler.codec.mqtt.MqttVersion;
 import lombok.Data;
 import org.laokou.common.core.util.UUIDGenerator;
+import org.laokou.iot.session.dto.mqtt.MqttBrokerName;
 
 /**
  * @author laokou

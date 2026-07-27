@@ -39,7 +39,7 @@ import java.util.List;
 public class MenuTreeListQryExe {
 
 	static {
-		ForyFactory.INSTANCE.register(org.laokou.admin.menu.dto.clientobject.MenuTreeCO.class);
+		ForyFactory.INSTANCE.register(org.laokou.admin.menu.dto.clientobject.MenuTreeCO.class, ForyFactory.C_246);
 	}
 
 	private final MenuTree userMenuTree;

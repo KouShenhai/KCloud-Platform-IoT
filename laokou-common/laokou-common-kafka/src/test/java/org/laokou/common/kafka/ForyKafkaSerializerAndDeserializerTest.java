@@ -68,9 +68,9 @@ class ForyKafkaSerializerAndDeserializerTest {
 	@BeforeAll
 	static void setup() {
 		// 注册测试用的类到 ForyFactory
-		ForyFactory.INSTANCE.register(TestMessage.class);
-		ForyFactory.INSTANCE.register(TestOrder.class);
-		ForyFactory.INSTANCE.register(ArrayList.class);
+		ForyFactory.INSTANCE.register(TestMessage.class, 1010);
+		ForyFactory.INSTANCE.register(TestOrder.class, 1011);
+		ForyFactory.INSTANCE.register(ArrayList.class, 1012);
 	}
 
 	// ==================== 单元测试 ====================
