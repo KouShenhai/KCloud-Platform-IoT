@@ -38,7 +38,7 @@ import org.springframework.stereotype.Component;
 public class MenuSaveCmdExe {
 
 	static {
-		ForyFactory.INSTANCE.register(org.laokou.admin.menu.dto.clientobject.MenuCO.class);
+		ForyFactory.INSTANCE.register(org.laokou.admin.menu.dto.clientobject.MenuCO.class, ForyFactory.C_245);
 	}
 
 	private final MenuDomainService menuDomainService;

@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.iot.common.config.mqtt;
+package org.laokou.iot.session.dto.mqtt;
 
 import lombok.Getter;
 
@@ -23,11 +23,33 @@ import lombok.Getter;
  * @author laokou
  */
 @Getter
-enum MqttBrokerName {
+public enum MqttBrokerName {
 
-	EMQX("emqx", "EMQX"),
+	EMQX("emqx", "EMQX") {
+		@Override
+		String getConnectTopic() {
+			return "$SYS/brokers/+/clients/+/connected";
+		}
 
-	NANOMQ("nanomq", "NanoMQ");
+		@Override
+		String getDisConnectTopic() {
+			return "$SYS/brokers/+/clients/+/disconnected";
+		}
+	},
+
+	NANOMQ("nanomq", "NanoMQ") {
+
+		@Override
+		String getConnectTopic() {
+			return "$SYS/brokers/client_status/+";
+		}
+
+		@Override
+		String getDisConnectTopic() {
+			return "$SYS/brokers/client_status/+";
+		}
+
+	};
 
 	private final String code;
 
@@ -37,5 +59,9 @@ enum MqttBrokerName {
 		this.code = code;
 		this.desc = desc;
 	}
+
+	abstract String getConnectTopic();
+
+	abstract String getDisConnectTopic();
 
 }

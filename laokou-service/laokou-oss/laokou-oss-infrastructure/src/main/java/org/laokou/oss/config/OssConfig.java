@@ -31,7 +31,7 @@ import org.springframework.kafka.core.KafkaAdmin;
 public class OssConfig {
 
 	static {
-		ForyFactory.INSTANCE.register(org.laokou.oss.dto.domainevent.OssUploadEvent.class);
+		ForyFactory.INSTANCE.register(org.laokou.oss.dto.domainevent.OssUploadEvent.class, ForyFactory.C_240);
 	}
 
 	@Bean("authNewTopics")

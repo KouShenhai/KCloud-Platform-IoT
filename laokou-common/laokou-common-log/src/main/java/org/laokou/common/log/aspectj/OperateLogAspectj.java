@@ -53,7 +53,7 @@ public class OperateLogAspectj {
 	private final DomainEventPublisher kafkaDomainEventPublisher;
 
 	static {
-		ForyFactory.INSTANCE.register(org.laokou.common.log.handler.event.OperateEvent.class);
+		ForyFactory.INSTANCE.register(org.laokou.common.log.handler.event.OperateEvent.class, ForyFactory.C_243);
 	}
 
 	@Around("@annotation(operateLog)")

@@ -38,7 +38,7 @@ import org.springframework.stereotype.Component;
 public class DeptSaveCmdExe {
 
 	static {
-		ForyFactory.INSTANCE.register(org.laokou.admin.dept.dto.clientobject.DeptCO.class);
+		ForyFactory.INSTANCE.register(org.laokou.admin.dept.dto.clientobject.DeptCO.class, ForyFactory.C_244);
 	}
 
 	private final DeptDomainService deptDomainService;

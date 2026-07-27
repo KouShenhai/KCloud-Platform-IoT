@@ -80,8 +80,8 @@ public class UsersServiceImpl implements UsersServiceI {
 	private final UserUploadCmdExe userUploadCmdEx;
 
 	static {
-		ForyFactory.INSTANCE.register(org.laokou.common.i18n.dto.Result.class);
-		ForyFactory.INSTANCE.register(org.laokou.admin.user.dto.clientobject.UserCO.class);
+		ForyFactory.INSTANCE.register(org.laokou.common.i18n.dto.Result.class, ForyFactory.C_247);
+		ForyFactory.INSTANCE.register(org.laokou.admin.user.dto.clientobject.UserCO.class, ForyFactory.C_248);
 	}
 
 	@Override

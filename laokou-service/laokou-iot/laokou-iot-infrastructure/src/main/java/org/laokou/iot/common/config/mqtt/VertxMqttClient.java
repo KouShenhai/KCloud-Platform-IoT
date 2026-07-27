@@ -121,22 +121,23 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 	}
 
 	@Override
-	public Future<Void> doOpen() {
+	public void doOpen() {
 		if (stopping.get()) {
-			return Future.failedFuture("MQTT客户端正在关闭");
+			Future.failedFuture("MQTT客户端正在关闭");
+			return;
 		}
-		return connectAndSubscribe();
+		connectAndSubscribe();
 	}
 
 	@Override
-	public Future<Void> doClose() {
+	public void doClose() {
 		if (!stopping.compareAndSet(false, true)) {
-			return Future.succeededFuture();
+			return;
 		}
 		Promise<Void> connecting = connectionPromise.get();
 		Future<Void> waitForConnect = connecting == null ? Future.succeededFuture()
 				: connecting.future().recover(_ -> Future.succeededFuture());
-		return waitForConnect.compose(_ -> disconnect());
+		waitForConnect.compose(_ -> disconnect());
 	}
 
 	private DeploymentOptions buildOptions() {
