@@ -546,10 +546,12 @@ public final class ForyFactory {
 		.withAsyncCompilation(true)
 		// 启用类注册
 		.requireClassRegistration(true)
-		// 支持反序列化不存在或未知的类
-		.withDeserializeUnknownClass(true)
+		// 关闭反序列化不存在或未知的类
+		.withDeserializeUnknownClass(false)
 		// 限制嵌套反序列化深度
 		.withMaxDepth(100)
+		// 启用运行时代码生成
+		.withCodegen(true)
 		.buildThreadSafeFory();
 
 	public <T> void register(Class<T> clazz, int num) {
