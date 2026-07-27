@@ -51,7 +51,7 @@
   <module name="TreeWalker">
 
     <!-- 匹配句子末尾的格式 https://checkstyle.sourceforge.io/checks/javadoc/javadocstyle.html#JavadocStyle -->
-    <module name=com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocStyleCheck>
+    <module name="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocStyleCheck">
       <property name="endOfSentenceFormat" value="([.?!。？！][ \t\n\r\f&lt;])|([.?!。？！]$)"/>
       <property name="checkHtml" value="false"/>
     </module>
