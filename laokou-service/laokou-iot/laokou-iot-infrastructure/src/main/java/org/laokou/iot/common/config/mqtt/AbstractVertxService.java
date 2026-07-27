@@ -26,8 +26,6 @@ import io.vertx.core.Vertx;
  */
 public abstract class AbstractVertxService<T> extends AbstractVerticle implements VertxService {
 
-	protected Future<T> serverFuture;
-
 	protected Future<String> deploymentIdFuture;
 
 	protected AbstractVertxService(Vertx vertx) {
@@ -49,21 +47,21 @@ public abstract class AbstractVertxService<T> extends AbstractVerticle implement
 	@Override
 	public void start() {
 		// 启动服务
-		serverFuture = doOpen();
+		doOpen();
 	}
 
 	@Override
 	public void stop() {
 		// 停止服务
-		serverFuture = doClose();
+		doClose();
 	}
 
 	public abstract Future<String> doDeploy();
 
 	public abstract void doUndeploy();
 
-	public abstract Future<T> doOpen();
+	public abstract void doOpen();
 
-	public abstract Future<T> doClose();
+	public abstract void doClose();
 
 }

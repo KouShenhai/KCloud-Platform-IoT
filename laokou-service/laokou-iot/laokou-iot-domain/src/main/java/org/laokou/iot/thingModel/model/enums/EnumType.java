@@ -21,7 +21,6 @@ import lombok.Data;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.springframework.util.StringUtils;
 
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -30,7 +29,7 @@ import java.util.Set;
  * @author laokou
  */
 @Data
-public class EnumType implements Serializable {
+public class EnumType {
 
 	private List<EnumOption> list;
 

@@ -58,9 +58,9 @@ class ForySchemaIntegrationTest {
 
 	static {
 		// Register test classes for Fory serialization
-		ForyFactory.INSTANCE.register(PulsarTestMessage.class, 1000);
-		ForyFactory.INSTANCE.register(PulsarTestEvent.class, 1002);
-		ForyFactory.INSTANCE.register(ArrayList.class, 1003);
+		ForyFactory.INSTANCE.register(PulsarTestMessage.class);
+		ForyFactory.INSTANCE.register(PulsarTestEvent.class);
+		ForyFactory.INSTANCE.register(ArrayList.class);
 	}
 
 	@BeforeAll

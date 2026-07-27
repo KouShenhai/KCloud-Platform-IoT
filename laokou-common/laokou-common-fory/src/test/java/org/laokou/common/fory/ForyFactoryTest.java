@@ -44,9 +44,9 @@ class ForyFactoryTest {
 	static void setup() {
 		foryFactory = ForyFactory.INSTANCE;
 		// 注册测试用的类
-		foryFactory.register(User.class, 1020);
-		foryFactory.register(Order.class, 1021);
-		foryFactory.register(ArrayList.class, 1022);
+		foryFactory.register(User.class);
+		foryFactory.register(Order.class);
+		foryFactory.register(ArrayList.class);
 	}
 
 	@Test

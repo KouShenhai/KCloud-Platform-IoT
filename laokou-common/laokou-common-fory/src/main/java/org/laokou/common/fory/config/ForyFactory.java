@@ -558,6 +558,10 @@ public final class ForyFactory {
 		fory.register(clazz, num);
 	}
 
+	public <T> void register(Class<T> clazz) {
+		fory.register(clazz);
+	}
+
 	public byte[] serialize(Object object) {
 		if (object == null) {
 			return new byte[0];
