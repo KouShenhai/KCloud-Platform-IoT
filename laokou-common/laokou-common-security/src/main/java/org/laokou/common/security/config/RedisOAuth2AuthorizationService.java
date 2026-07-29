@@ -33,6 +33,7 @@
 
 package org.laokou.common.security.config;
 
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import org.laokou.common.security.config.entity.OAuth2AuthorizationGrantAuthorization;
 import org.laokou.common.security.config.repository.OAuth2AuthorizationGrantAuthorizationRepository;
@@ -61,7 +62,7 @@ public record RedisOAuth2AuthorizationService(RegisteredClientRepository registe
 	}
 
 	@Override
-	public void save(OAuth2Authorization authorization) {
+	public void save(@NonNull OAuth2Authorization authorization) {
 		Assert.notNull(authorization, "Authorization cannot be null");
 		OAuth2AuthorizationGrantAuthorization authorizationGrantAuthorization = OAuth2ModelMapper
 			.convertOAuth2AuthorizationGrantAuthorization(authorization);
@@ -70,7 +71,7 @@ public record RedisOAuth2AuthorizationService(RegisteredClientRepository registe
 	}
 
 	@Override
-	public void remove(OAuth2Authorization authorization) {
+	public void remove(@NonNull OAuth2Authorization authorization) {
 		Assert.notNull(authorization, "authorization cannot be null");
 		this.authorizationGrantAuthorizationRepository.deleteById(authorization.getId());
 	}

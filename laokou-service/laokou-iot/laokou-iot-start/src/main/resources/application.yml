@@ -3,7 +3,7 @@ jasypt:
   encryptor:
     password: ${SECRET_KEY:laokou}
 server:
-  port: ${SERVER_PORT:10005}
+  port: ${SERVER_PORT:12000}
   compression:
     enabled: true
   ssl:
