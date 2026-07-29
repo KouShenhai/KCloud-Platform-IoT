@@ -51,7 +51,7 @@
   <select id="selectObjectPage"
           resultType="org.laokou.admin.dept.gatewayimpl.database.dataobject.DeptDO">
     <include refid="selectObjectList"/>
-    limit ${pageQuery.pageSize} offset ${pageQuery.pageIndex}
+    limit #{pageQuery.pageSize} offset #{pageQuery.pageIndex}
   </select>
 
   <select id="selectObjectCount" resultType="long">

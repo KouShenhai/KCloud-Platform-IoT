@@ -30,13 +30,13 @@
 		from sys_cluster
 		where del_flag = 0
         <if test="pageQuery.params.startDate != null and pageQuery.params.startDate != ''">
-            and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ >= ]]> ${pageQuery.params.startDate}
+            and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ >= ]]> #{pageQuery.params.startDate}
         </if>
         <if test="pageQuery.params.endDate != null and pageQuery.params.endDate != ''">
-            and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ <= ]]> ${pageQuery.params.endDate}
+            and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ <= ]]> #{pageQuery.params.endDate}
         </if>
 		order by create_time desc, id desc
-		limit ${pageQuery.pageSize} offset ${pageQuery.pageIndex}
+		limit #{pageQuery.pageSize} offset #{pageQuery.pageIndex}
 	</select>
 
 	<select id="selectObjectCount" resultType="long">
@@ -44,10 +44,10 @@
 		from sys_cluster
 		where del_flag = 0
         <if test="pageQuery.params.startDate != null and pageQuery.params.startDate != ''">
-            and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ >= ]]> ${pageQuery.params.startDate}
+            and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ >= ]]> #{pageQuery.params.startDate}
         </if>
         <if test="pageQuery.params.endDate != null and pageQuery.params.endDate != ''">
-            and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ <= ]]> ${pageQuery.params.endDate}
+            and to_char(create_time, 'YYYY-MM-DD') <![CDATA[ <= ]]> #{pageQuery.params.endDate}
         </if>
 	</select>
 

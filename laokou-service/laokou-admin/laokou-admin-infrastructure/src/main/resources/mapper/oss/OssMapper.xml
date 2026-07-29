@@ -26,7 +26,7 @@
 		from sys_oss
 		where del_flag = 0
 		order by id desc
-		limit ${pageQuery.pageSize} offset ${pageQuery.pageIndex}
+		limit #{pageQuery.pageSize} offset #{pageQuery.pageIndex}
 	</select>
 
 	<select id="selectObjectCount" resultType="long">

@@ -106,7 +106,7 @@ sequenceDiagram
 ## Risks / Trade-offs
 
 - [Risk] 前端 `TenantCO.label` 与后端 `TenantCO.code` 不一致 -> 修正前端类型和页面字段，保持请求体使用 `code`。
-- [Risk] `TenantMapper.xml` 当前使用 `${pageQuery.pageSize}` 和 `${pageQuery.pageIndex}` -> 本次优先沿用项目现状并补过滤条件，后续可统一治理 SQL 参数化。
+- [Risk] `TenantMapper.xml` 当前使用 `#{pageQuery.pageSize}` 和 `#{pageQuery.pageIndex}` -> 本次优先沿用项目现状并补过滤条件，后续可统一治理 SQL 参数化。
 - [Risk] 现有数据库可能已有重复 `code` 的未删除租户 -> 新增唯一约束前必须先检查重复；本次先在领域层拦截新增/修改重复。
 - [Risk] 导入导出后端仍为占位 -> 前端入口可见但后端不会生成实际文件；任务中会验证当前接口契约，完整 Excel 能力另行增强。
 - [Risk] 默认租户删除保护可能阻止某些测试清库操作 -> 提供明确业务错误，测试环境如需清理应走数据库重置脚本而非业务接口。
