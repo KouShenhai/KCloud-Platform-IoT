@@ -13,9 +13,9 @@ export default {
 	dev: {
 		'/api-proxy/': {
 			// Nginx单体代理地址
-			// target: 'http://nginx:99',
+			target: 'http://127.0.0.1:98',
 			// Nginx微服务代理地址
-			target: 'http://127.0.0.1:88/api-gateway',
+			// target: 'http://127.0.0.1:88/api-gateway',
 			changeOrigin: true,
 			pathRewrite: { '^/api-proxy': '' },
 		}

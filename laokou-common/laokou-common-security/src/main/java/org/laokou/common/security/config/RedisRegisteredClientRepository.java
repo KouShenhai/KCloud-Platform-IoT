@@ -53,6 +53,7 @@ public record RedisRegisteredClientRepository(
 		Assert.notNull(registeredClient, "RegisteredClient cannot be null");
 		OAuth2RegisteredClient oauth2RegisteredClient = OAuth2ModelMapper
 			.convertOAuth2RegisteredClient(registeredClient);
+		this.registeredClientRepository.deleteById(oauth2RegisteredClient.getId());
 		this.registeredClientRepository.save(oauth2RegisteredClient);
 	}
 

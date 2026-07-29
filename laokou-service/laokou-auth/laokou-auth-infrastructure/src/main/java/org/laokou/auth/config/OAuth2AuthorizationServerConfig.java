@@ -113,6 +113,7 @@ class OAuth2AuthorizationServerConfig {
 				// 开启OpenID Connect 1.0
 				authorizationServer.oidc(Customizer.withDefaults())
 					// https://docs.spring.io/spring-authorization-server/docs/current/reference/html/protocol-endpoints.html#oauth2-token-endpoint
+					// OAuth2TokenEndpointConfigurer#createDefaultAuthenticationConverters
 					.tokenEndpoint((tokenEndpoint) -> tokenEndpoint.accessTokenRequestConverter(new DelegatingAuthenticationConverter(
 							new OAuth2UsernamePasswordAuthenticationConverter(),
 							new OAuth2TestAuthenticationConverter(),
