@@ -61,7 +61,7 @@
 		from iot_gateway
 		<include refid="selectConditions"/>
 		order by id desc
-		limit ${pageQuery.pageSize} offset ${pageQuery.pageIndex}
+		limit #{pageQuery.pageSize} offset #{pageQuery.pageIndex}
 	</select>
 
 	<select id="selectObjectCount" resultType="long">
