@@ -30,7 +30,6 @@ import org.laokou.common.crypto.util.AESUtils;
 import org.laokou.common.sensitive.util.SensitiveUtils;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -132,7 +131,6 @@ public final class UserConvertor {
 			.mobile(userCO.getMobile())
 			.status(userCO.getStatus())
 			.avatar(userCO.getAvatar())
-			.userIds(Collections.singletonList(userCO.getId()))
 			.roleIds(userCO.getRoleIds())
 			.deptId(userCO.getDeptId())
 			.build();

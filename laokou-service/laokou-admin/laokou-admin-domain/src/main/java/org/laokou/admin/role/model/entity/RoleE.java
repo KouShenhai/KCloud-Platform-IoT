@@ -75,19 +75,4 @@ public class RoleE implements Serializable {
 	 */
 	private List<String> deptIds;
 
-	/**
-	 * 角色菜单IDS.
-	 */
-	private List<Long> roleMenuIds;
-
-	/**
-	 * 角色部门IDS.
-	 */
-	private List<Long> roleDeptIds;
-
-	/**
-	 * 角色IDS.
-	 */
-	private List<Long> roleIds;
-
 }

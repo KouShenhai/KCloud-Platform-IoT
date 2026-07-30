@@ -78,7 +78,7 @@ public record RedisOAuth2AuthorizationService(RegisteredClientRepository registe
 
 	@Nullable
 	@Override
-	public OAuth2Authorization findById(String id) {
+	public OAuth2Authorization findById(@NonNull String id) {
 		Assert.hasText(id, "id cannot be empty");
 		return this.authorizationGrantAuthorizationRepository.findById(id)
 			.map(this::toOAuth2Authorization)
@@ -87,7 +87,7 @@ public record RedisOAuth2AuthorizationService(RegisteredClientRepository registe
 
 	@Nullable
 	@Override
-	public OAuth2Authorization findByToken(String token, OAuth2TokenType tokenType) {
+	public OAuth2Authorization findByToken(@NonNull String token, OAuth2TokenType tokenType) {
 		Assert.hasText(token, "Token cannot be empty");
 		OAuth2AuthorizationGrantAuthorization authorizationGrantAuthorization = null;
 		if (tokenType == null) {
