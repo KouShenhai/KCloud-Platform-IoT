@@ -63,14 +63,6 @@ public class RoleConvertor {
 		return list;
 	}
 
-	public static List<RoleMenuDO> toDataObjects(List<Long> roleMenuIds) {
-		return roleMenuIds.stream().map(id -> {
-			RoleMenuDO roleMenuDO = new RoleMenuDO();
-			roleMenuDO.setId(id);
-			return roleMenuDO;
-		}).toList();
-	}
-
 	public static List<RoleDeptDO> toDataObjs(RoleA roleA) {
 		Long roleId = roleA.getId();
 		List<String> deptIds = roleA.getRoleE().getDeptIds();
@@ -85,14 +77,6 @@ public class RoleConvertor {
 			list.add(roleDeptDO);
 		}
 		return list;
-	}
-
-	public static List<RoleDeptDO> toDataObjs(List<Long> roleDeptIds) {
-		return roleDeptIds.stream().map(id -> {
-			RoleDeptDO roleDeptDO = new RoleDeptDO();
-			roleDeptDO.setId(id);
-			return roleDeptDO;
-		}).toList();
 	}
 
 	public static List<RoleCO> toClientObjects(List<RoleDO> roleDOList) {

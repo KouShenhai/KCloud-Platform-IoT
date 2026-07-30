@@ -55,7 +55,6 @@ public class RoleDomainService {
 	}
 
 	public void updateAuthorityRole(RoleA roleA) throws InterruptedException {
-		roleA.checkRoleParam();
 		List<Callable<Boolean>> futures = new ArrayList<>(3);
 		futures.add(() -> {
 			roleGateway.updateRole(roleA);

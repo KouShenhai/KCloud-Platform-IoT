@@ -59,14 +59,6 @@ public final class UserConvertor {
 		return list;
 	}
 
-	public static List<UserRoleDO> toDataObjects(List<Long> userRoleIds) {
-		return userRoleIds.stream().map(id -> {
-			UserRoleDO userRoleDO = new UserRoleDO();
-			userRoleDO.setId(id);
-			return userRoleDO;
-		}).toList();
-	}
-
 	public static UserDO toDataObject(UserA userA) {
 		UserDO userDO = new UserDO();
 		UserE userE = userA.getUserE();

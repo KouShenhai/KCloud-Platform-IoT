@@ -80,7 +80,7 @@ final class UserParamValidator {
 			return ParamValidator.invalidate("用户名不能超过30个字符");
 		}
 		if (!RegexUtils.matches("^[A-Za-z]+$|^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z0-9]+$", username)) {
-			return ParamValidator.invalidate("用户名只能为大小写字母或大小写字母与数字的组合");
+			return ParamValidator.invalidate("用户名只能为【大小写字母】或【大小写字母与数字组合】");
 		}
 		if (userA.isSave() && userMapper
 			.selectCount(Wrappers.lambdaQuery(UserDO.class).eq(UserDO::getUsername, encryptUsername)) > 0) {

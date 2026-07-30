@@ -66,9 +66,8 @@ public class RoleDeptGatewayImpl implements RoleDeptGateway {
 
 	private void deleteRoleDept(List<Long> roleDeptIds) {
 		// 删除角色菜单关联表
-		List<RoleDeptDO> list = RoleConvertor.toDataObjs(roleDeptIds);
-		if (CollectionExtUtils.isNotEmpty(list)) {
-			roleDeptMapper.deleteByIds(list.stream().map(RoleDeptDO::getId).toList());
+		if (CollectionExtUtils.isNotEmpty(roleDeptIds)) {
+			roleDeptMapper.deleteByIds(roleDeptIds);
 		}
 	}
 

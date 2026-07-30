@@ -71,16 +71,6 @@ public final class NameConstants {
 	public static final String SOURCES = "sources";
 
 	/**
-	 * 用户缓存配置.
-	 */
-	public static final String USERS = "users";
-
-	/**
-	 * 角色缓存配置.
-	 */
-	public static final String ROLES = "roles";
-
-	/**
 	 * 用户菜单缓存配置.
 	 */
 	public static final String USER_MENU = "user_menu";
