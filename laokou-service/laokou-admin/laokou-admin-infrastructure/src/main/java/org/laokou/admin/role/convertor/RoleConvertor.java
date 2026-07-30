@@ -26,7 +26,6 @@ import org.laokou.admin.role.model.RoleA;
 import org.laokou.admin.role.model.entity.RoleE;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -102,7 +101,6 @@ public class RoleConvertor {
 			.menuIds(roleCO.getMenuIds())
 			.dataScope(roleCO.getDataScope())
 			.deptIds(roleCO.getDeptIds())
-			.roleIds(Collections.singletonList(roleCO.getId()))
 			.build();
 	}
 

@@ -47,13 +47,13 @@ public class RoleMenuGatewayImpl implements RoleMenuGateway {
 
 	@Override
 	public void updateRoleMenu(RoleA roleA) {
-		deleteRoleMenu(getRoleMenuIds(roleA.getRoleE().getRoleIds()));
+		deleteRoleMenu(getRoleMenuIds(roleA.getRoleE().getId()));
 		insertRoleMenu(roleA);
 	}
 
 	@Override
 	public void deleteRoleMenu(Long[] roleIds) {
-		deleteRoleMenu(Arrays.asList(roleIds));
+		deleteRoleMenu(getRoleMenuIds(Arrays.asList(roleIds)));
 	}
 
 	private void insertRoleMenu(RoleA roleA) {
@@ -73,6 +73,10 @@ public class RoleMenuGatewayImpl implements RoleMenuGateway {
 
 	private List<Long> getRoleMenuIds(List<Long> roleIds) {
 		return roleMenuMapper.selectRoleMenuIdsByRoleIds(roleIds); // 增强型指数退避策略
+	}
+
+	private List<Long> getRoleMenuIds(Long roleId) {
+		return roleMenuMapper.selectRoleMenuIdsByRoleId(roleId); // 增强型指数退避策略
 	}
 
 }

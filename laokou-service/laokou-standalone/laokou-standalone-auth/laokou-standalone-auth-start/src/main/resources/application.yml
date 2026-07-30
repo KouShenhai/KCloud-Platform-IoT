@@ -154,6 +154,7 @@ spring:
               # 对client-secret进行加密【原值 => DpAkPfz4eW18d2】
               client-secret: "{bcrypt}$2a$10$i2Y4II7czKcLqwAxWLgHqeJaIczss4wHArWmthzn3QoLhpCZtdN0O"
               client-authentication-methods:
+                # ClientSecretAuthenticationProvider
                 - client_secret_basic
               authorization-grant-types:
                 - authorization_code

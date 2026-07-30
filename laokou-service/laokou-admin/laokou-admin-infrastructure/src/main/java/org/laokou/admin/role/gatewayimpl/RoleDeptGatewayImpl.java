@@ -47,7 +47,7 @@ public class RoleDeptGatewayImpl implements RoleDeptGateway {
 
 	@Override
 	public void updateRoleDept(RoleA roleA) {
-		deleteRoleDept(getRoleDeptIds(roleA.getRoleE().getRoleIds()));
+		deleteRoleDept(getRoleDeptIds(roleA.getRoleE().getId()));
 		insertRoleDept(roleA);
 	}
 
@@ -73,6 +73,10 @@ public class RoleDeptGatewayImpl implements RoleDeptGateway {
 
 	private List<Long> getRoleDeptIds(List<Long> roleIds) {
 		return roleDeptMapper.selectRoleDeptIdsByRoleIds(roleIds);
+	}
+
+	private List<Long> getRoleDeptIds(Long roleId) {
+		return roleDeptMapper.selectRoleDeptIdsByRoleId(roleId);
 	}
 
 }

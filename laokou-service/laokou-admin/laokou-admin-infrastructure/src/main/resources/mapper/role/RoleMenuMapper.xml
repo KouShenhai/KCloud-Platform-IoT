@@ -32,6 +32,12 @@
     </where>
   </select>
 
+  <select id="selectRoleMenuIdsByRoleId" resultType="java.lang.Long">
+    select id
+    from sys_role_menu
+    where role_id = #{roleId} and del_flag = 0
+  </select>
+
   <select id="selectMenuIdsByRoleId" resultType="java.lang.String">
     select menu_id
     from sys_role_menu

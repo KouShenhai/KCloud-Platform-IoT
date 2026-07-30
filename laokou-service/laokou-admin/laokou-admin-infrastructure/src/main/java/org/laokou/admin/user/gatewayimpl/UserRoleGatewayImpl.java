@@ -47,7 +47,7 @@ public class UserRoleGatewayImpl implements UserRoleGateway {
 
 	@Override
 	public void updateUserRole(UserA userA) {
-		deleteUserRole(getUserRoleIds(userA.getUserE().getUserIds()));
+		deleteUserRole(getUserRoleIds(userA.getUserE().getId()));
 		insertUserRole(userA);
 	}
 
@@ -73,6 +73,10 @@ public class UserRoleGatewayImpl implements UserRoleGateway {
 
 	private List<Long> getUserRoleIds(List<Long> userIds) {
 		return userRoleMapper.selectUserRoleIdsByUserIds(userIds);
+	}
+
+	private List<Long> getUserRoleIds(Long userId) {
+		return userRoleMapper.selectUserRoleIdsByUserId(userId);
 	}
 
 }
