@@ -171,7 +171,7 @@
     <!-- spring-boot-admin版本 -->
     <spring-boot-admin.version>4.1.2</spring-boot-admin.version>
     <!-- jsoup版本 -->
-    <jsoup.version>1.22.2</jsoup.version>
+    <jsoup.version>1.23.1</jsoup.version>
     <!-- jasypt版本 -->
     <jasypt.version>4.0.4</jasypt.version>
     <!-- easy-captcha版本 -->
