@@ -53,7 +53,7 @@ public class ThingModelGatewayImpl implements ThingModelGateway {
 
 	@Override
 	public void deleteThingModel(Long[] ids) {
-		thingModelMapper.deleteObjectByIds(Arrays.asList(ids));
+		thingModelMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }

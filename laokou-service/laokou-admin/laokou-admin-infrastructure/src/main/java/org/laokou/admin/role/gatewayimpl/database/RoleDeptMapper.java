@@ -36,6 +36,4 @@ public interface RoleDeptMapper extends CrudMapper<Long, Integer, RoleDeptDO> {
 
 	List<String> selectDeptIdsByRoleId(@Param("roleId") Long roleId);
 
-	void deleteRoleDeptById(@Param("roleDeptDO") RoleDeptDO roleDeptDO);
-
 }

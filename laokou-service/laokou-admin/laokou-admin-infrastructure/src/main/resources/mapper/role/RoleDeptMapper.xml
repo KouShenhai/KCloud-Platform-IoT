@@ -20,22 +20,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.laokou.admin.role.gatewayimpl.database.RoleDeptMapper">
 
-  <delete id="deleteRoleDeptById">
-    delete from sys_role_dept where id = #{roleDeptDO.id}
-  </delete>
-
   <select id="selectRoleDeptIdsByRoleIds" resultType="java.lang.Long">
     select id
     from sys_role_dept
-    where role_id in
-    <foreach collection="roleIds" item="item" open="(" close=")">
-      #{item}
-    </foreach>
+    <where>
+      role_id in
+      <foreach collection="roleIds" item="item" open="(" close=")">
+        #{item}
+      </foreach>
+      and del_flag = 0
+    </where>
   </select>
 
   <select id="selectDeptIdsByRoleId" resultType="java.lang.String">
     select dept_id
     from sys_role_dept
-    where role_id = #{roleId}
+    where role_id = #{roleId} and del_flag = 0
   </select>
 </mapper>

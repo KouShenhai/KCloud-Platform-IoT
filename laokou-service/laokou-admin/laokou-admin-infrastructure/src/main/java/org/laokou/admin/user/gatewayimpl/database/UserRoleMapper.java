@@ -36,6 +36,4 @@ public interface UserRoleMapper extends CrudMapper<Long, Integer, UserRoleDO> {
 
 	List<String> selectRoleIdsByUserId(@Param("userId") Long userId);
 
-	void deleteUserRoleById(@Param("userRoleDO") UserRoleDO userRoleDO);
-
 }
