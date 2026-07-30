@@ -68,7 +68,7 @@ public class RoleDeptGatewayImpl implements RoleDeptGateway {
 		// 删除角色菜单关联表
 		List<RoleDeptDO> list = RoleConvertor.toDataObjs(roleDeptIds);
 		if (CollectionExtUtils.isNotEmpty(list)) {
-			mybatisUtils.batch(list, RoleDeptMapper.class, RoleDeptMapper::deleteRoleDeptById, virtualTaskExecutor);
+			roleDeptMapper.deleteByIds(list.stream().map(RoleDeptDO::getId).toList());
 		}
 	}
 

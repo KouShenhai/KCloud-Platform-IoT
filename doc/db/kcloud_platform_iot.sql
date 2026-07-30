@@ -100,7 +100,7 @@ CREATE unique INDEX "iot_session_host_port_idx" ON "public"."iot_session" USING 
 	"host" ,
 	"port" ,
 	"tenant_id"
-);
+) where del_flag = 0;
 COMMENT ON INDEX "public"."iot_session_host_port_idx" IS '主机_端口_租户ID_唯一索引';
 
 DROP TABLE IF EXISTS "public"."iot_thing_model";
@@ -145,7 +145,7 @@ CREATE unique INDEX "iot_thing_model_code_name_tenantId_idx" ON "public"."iot_th
 "code" ,
 "name" ,
 "tenant_id"
-);
+) where del_flag = 0;
 COMMENT ON INDEX "public"."iot_thing_model_code_name_tenantId_idx" IS '编码_名称_租户ID_唯一索引';
 
 INSERT INTO "public"."iot_thing_model" VALUES (1, 1, 1, '2026-07-01 22:00:33.262271', '2026-07-01 22:00:33.262271', 0, 0, 1, 1, '程序编号', 'program_number', 'text', 3, '{"length":"30"}', '程序编号');

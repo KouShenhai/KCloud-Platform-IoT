@@ -38,6 +38,4 @@ public interface RoleMenuMapper extends CrudMapper<Long, Integer, RoleMenuDO> {
 
 	List<String> selectMenuIdsByRoleId(@Param("roleId") Long roleId);
 
-	void deleteRoleMenuById(@Param("roleMenuDO") RoleMenuDO roleMenuDO);
-
 }

@@ -68,7 +68,7 @@ public class UserRoleGatewayImpl implements UserRoleGateway {
 		// 删除用户角色关联表
 		List<UserRoleDO> list = UserConvertor.toDataObjects(userRoleIds);
 		if (CollectionExtUtils.isNotEmpty(list)) {
-			mybatisUtils.batch(list, UserRoleMapper.class, UserRoleMapper::deleteUserRoleById, virtualTaskExecutor);
+			userRoleMapper.deleteByIds(list.stream().map(UserRoleDO::getId).toList());
 		}
 	}
 

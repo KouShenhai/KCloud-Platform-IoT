@@ -72,11 +72,4 @@
     where id = #{id}
   </select>
 
-  <delete id="deleteObjectByIds">
-    delete from iot_source where id in
-    <foreach collection="ids" item="item" separator="," open="(" close=")">
-      #{item}
-    </foreach>
-  </delete>
-
 </mapper>

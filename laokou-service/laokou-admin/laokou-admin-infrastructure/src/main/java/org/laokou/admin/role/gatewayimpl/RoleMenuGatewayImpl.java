@@ -68,7 +68,7 @@ public class RoleMenuGatewayImpl implements RoleMenuGateway {
 		// 删除角色菜单关联表
 		List<RoleMenuDO> list = RoleConvertor.toDataObjects(roleMenuIds);
 		if (CollectionExtUtils.isNotEmpty(list)) {
-			mybatisUtils.batch(list, RoleMenuMapper.class, RoleMenuMapper::deleteRoleMenuById, virtualTaskExecutor);
+			roleMenuMapper.deleteByIds(list.stream().map(RoleMenuDO::getId).toList());
 		}
 	}
 
