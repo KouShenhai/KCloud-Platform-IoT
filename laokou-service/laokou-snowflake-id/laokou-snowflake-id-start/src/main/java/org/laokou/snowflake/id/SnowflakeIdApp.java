@@ -19,7 +19,9 @@ package org.laokou.snowflake.id;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.annotation.EnableWarmUp;
 import org.laokou.common.i18n.util.SslUtils;
+import org.laokou.common.nacos.annotation.EnablePrintRouter;
 import org.laokou.common.security.annotation.EnableSecurity;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -40,7 +42,9 @@ import java.security.NoSuchAlgorithmException;
  * @author laokou
  */
 @Slf4j
+@EnableWarmUp
 @EnableSecurity
+@EnablePrintRouter
 @EnableAspectJAutoProxy
 @EnableEncryptableProperties
 @EnableConfigurationProperties
@@ -52,7 +56,7 @@ class SnowflakeIdApp {
 	static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
 		StopWatch stopWatch = new StopWatch("SnowflakeId应用程序");
 		stopWatch.start();
-		System.setProperty("ENDPOINT", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("spring.grpc.server.port", "19094")));
+		System.setProperty("ENDPOINT", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("spring.grpc.server.port", "20000")));
 		// 配置关闭nacos日志，因为nacos的log4j2导致本项目的日志不输出的问题
 		System.setProperty("nacos.logging.default.config.enabled", "false");
 		// 关闭sentinel健康检查 https://github.com/alibaba/Sentinel/issues/1494

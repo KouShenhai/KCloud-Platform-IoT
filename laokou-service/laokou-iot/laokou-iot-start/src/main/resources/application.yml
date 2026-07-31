@@ -48,7 +48,7 @@ spring:
   lifecycle:
     timeout-per-shutdown-phase: "2m"
   websocket-server:
-    port: 1001
+    port: 13000
     service-id: ${spring.application.name}-websocket
     key-cert-private-key-password: laokou
   # security
@@ -59,9 +59,9 @@ spring:
         request-matcher:
           ignore-patterns:
             GET:
-              - /v3/api-docs/**=laokou-iot
-              - /actuator/**=laokou-iot
-              - /scalar/**=laokou-iot
+              - /v3/api-docs/**=${spring.application.name}
+              - /actuator/**=${spring.application.name}
+              - /scalar/**=${spring.application.name}
   grpc:
     client:
       channel:

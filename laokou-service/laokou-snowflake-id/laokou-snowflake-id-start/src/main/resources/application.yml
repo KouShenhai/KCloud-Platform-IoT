@@ -40,6 +40,16 @@ spring:
         enabled: false
       port: ${GRPC_PORT:20000}
       enabled: true
+  security:
+    oauth2:
+      resource-server:
+        enabled: true
+        request-matcher:
+          ignore-patterns:
+            GET:
+              - /v3/api-docs/**=${spring.application.name}
+              - /actuator/**=${spring.application.name}
+              - /scalar/**=${spring.application.name}
 
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml

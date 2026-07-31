@@ -171,20 +171,20 @@ spring:
         request-matcher:
           ignore-patterns:
             GET:
-              - /v3/api-docs/**=laokou-standalone-auth
-              - /actuator/**=laokou-standalone-auth
-              - /error=laokou-standalone-auth
-              - /v1/username-password/captchas/{uuid}=laokou-standalone-auth
-              - /v1/authorization-code/captchas/{uuid}=laokou-standalone-auth
-              - /v1/secrets=laokou-standalone-auth
-              - /doc.html=laokou-standalone-auth
-              - /img/**=laokou-standalone-auth
-              - /js/**=laokou-standalone-auth
+              - /v3/api-docs/**=${spring.application.name}
+              - /actuator/**=${spring.application.name}
+              - /error=${spring.application.name}
+              - /v1/username-password/captchas/{uuid}=${spring.application.name}
+              - /v1/authorization-code/captchas/{uuid}=${spring.application.name}
+              - /v1/secrets=${spring.application.name}
+              - /doc.html=${spring.application.name}
+              - /img/**=${spring.application.name}
+              - /js/**=${spring.application.name}
             POST:
-              - /v1/captchas/send-mail=laokou-standalone-auth
-              - /v1/captchas/send-mobile=laokou-standalone-auth
+              - /v1/captchas/send-mail=${spring.application.name}
+              - /v1/captchas/send-mobile=${spring.application.name}
             DELETE:
-              - /v1/tokens=laokou-standalone-auth
+              - /v1/tokens=${spring.application.name}
   cache:
     configs:
       oss_resource:
