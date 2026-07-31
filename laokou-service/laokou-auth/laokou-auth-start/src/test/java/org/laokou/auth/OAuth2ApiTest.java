@@ -25,6 +25,7 @@ import org.junit.jupiter.api.Test;
 import org.laokou.auth.dto.CaptchaSendCmd;
 import org.laokou.auth.dto.TokenRemoveCmd;
 import org.laokou.auth.dto.clientobject.CaptchaCO;
+import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.common.core.util.HttpUtils;
 import org.laokou.common.core.util.OkHttpUtils;
 import org.laokou.common.core.util.ThreadUtils;
@@ -101,6 +102,8 @@ class OAuth2ApiTest {
 	private final PasswordEncoder passwordEncoder;
 
 	private final JwtDecoder jwtDecoder;
+
+	private final SystemSettingsProperties systemSettingsProperties;
 
 	@Test
 	void test_sendMailCaptcha() {
@@ -182,7 +185,7 @@ class OAuth2ApiTest {
 		log.info("---------- 模拟认证开始 ----------");
 		Assertions.assertThat(token).isNotBlank();
 		OAuth2OpaqueTokenIntrospector introspector = new OAuth2OpaqueTokenIntrospector(authorizationService, redisUtils,
-				jwtDecoder);
+				jwtDecoder, systemSettingsProperties);
 		log.info("认证数据：{}", JacksonUtils.toJsonStr(introspector.introspect(token)));
 		log.info("---------- 模拟认证结束 ----------");
 		log.info("---------- 用户名密码认证模式结束 ----------");

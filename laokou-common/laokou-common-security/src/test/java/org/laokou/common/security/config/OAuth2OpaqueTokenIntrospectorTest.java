@@ -20,6 +20,7 @@ package org.laokou.common.security.config;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.common.redis.util.RedisUtils;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -51,11 +52,14 @@ class OAuth2OpaqueTokenIntrospectorTest {
 	@Mock
 	private JwtDecoder jwtDecoder;
 
+	@Mock
+	private SystemSettingsProperties systemSettingsProperties;
+
 	@Test
 	void test_introspect_throws_exception_when_authorization_is_null() {
 		// Given
 		OAuth2OpaqueTokenIntrospector introspector = new OAuth2OpaqueTokenIntrospector(authorizationService, redisUtils,
-				jwtDecoder);
+				jwtDecoder, systemSettingsProperties);
 		Mockito.when(authorizationService.findByToken("invalid-token", OAuth2TokenType.ACCESS_TOKEN)).thenReturn(null);
 
 		// Then
@@ -66,7 +70,7 @@ class OAuth2OpaqueTokenIntrospectorTest {
 	void test_introspect_throws_exception_when_accessToken_is_null() {
 		// Given
 		OAuth2OpaqueTokenIntrospector introspector = new OAuth2OpaqueTokenIntrospector(authorizationService, redisUtils,
-				jwtDecoder);
+				jwtDecoder, systemSettingsProperties);
 		RegisteredClient registeredClient = createRegisteredClient();
 		OAuth2Authorization authorization = OAuth2Authorization.withRegisteredClient(registeredClient)
 			.principalName("user")
@@ -83,7 +87,7 @@ class OAuth2OpaqueTokenIntrospectorTest {
 	void test_record_constructor() {
 		// When
 		OAuth2OpaqueTokenIntrospector introspector = new OAuth2OpaqueTokenIntrospector(authorizationService, redisUtils,
-				jwtDecoder);
+				jwtDecoder, systemSettingsProperties);
 
 		// Then
 		Assertions.assertThat(introspector.authorizationService()).isEqualTo(authorizationService);

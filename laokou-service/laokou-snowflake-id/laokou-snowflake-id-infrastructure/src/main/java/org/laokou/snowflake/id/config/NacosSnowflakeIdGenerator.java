@@ -347,7 +347,7 @@ public final class NacosSnowflakeIdGenerator implements IdGenerator {
 	}
 
 	private int getServerPort() {
-		return Integer.parseInt(environment.getProperty("server.port", System.getProperty("server.port", "9094")));
+		return Integer.parseInt(environment.getProperty("server.port", System.getProperty("server.port", "20000")));
 	}
 
 	private int getGrpcServerPort() {

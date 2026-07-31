@@ -17,7 +17,10 @@
 
 package org.laokou.snowflake.id;
 
+import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.util.SslUtils;
+import org.laokou.common.security.annotation.EnableSecurity;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -28,6 +31,8 @@ import org.springframework.util.StopWatch;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * 系统服务启动类. exposeProxy=true => 使用Cglib代理，在切面中暴露代理对象，进行方法增强
@@ -35,14 +40,16 @@ import java.net.UnknownHostException;
  * @author laokou
  */
 @Slf4j
+@EnableSecurity
 @EnableAspectJAutoProxy
+@EnableEncryptableProperties
 @EnableConfigurationProperties
 @EnableDiscoveryClient(autoRegister = false)
 @SpringBootApplication(scanBasePackages = "org.laokou")
 class SnowflakeIdApp {
 
 	// @formatter:off
-	static void main(String[] args) throws UnknownHostException {
+	static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
 		StopWatch stopWatch = new StopWatch("SnowflakeId应用程序");
 		stopWatch.start();
 		System.setProperty("ENDPOINT", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("spring.grpc.server.port", "19094")));
@@ -50,6 +57,9 @@ class SnowflakeIdApp {
 		System.setProperty("nacos.logging.default.config.enabled", "false");
 		// 关闭sentinel健康检查 https://github.com/alibaba/Sentinel/issues/1494
 		System.setProperty("management.health.sentinel.enabled", "false");
+		// nacos认证 => HttpLoginProcessor，https://github.com/alibaba/nacos/pull/3654
+		// 忽略SSL认证
+		SslUtils.ignoreSSLTrust();
 		new SpringApplicationBuilder(SnowflakeIdApp.class).web(WebApplicationType.SERVLET).run(args);
 		stopWatch.stop();
 		log.info("{}", stopWatch.prettyPrint());

@@ -14,6 +14,10 @@
 #    * limitations under the License.
 #    *
 #    */
+jasypt:
+  encryptor:
+    password: ${SECRET_KEY:laokou}
+
 spring:
   application:
     name: ${SERVICE_ID:laokou-snowflake-id}
@@ -30,17 +34,15 @@ spring:
       ignored-interfaces:
         - docker0
         - veth.*
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          jwk-set-uri: http://127.0.0.1:90/api/v1/oauth2/jwks
   grpc:
     server:
       servlet:
         enabled: false
-      port: ${GRPC_PORT:19094}
+      port: ${GRPC_PORT:20000}
       enabled: true
 
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml
+
+system-settings:
+  app-mode: microservice
