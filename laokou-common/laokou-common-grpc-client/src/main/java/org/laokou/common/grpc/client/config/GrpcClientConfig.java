@@ -24,7 +24,7 @@ import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.grpc.client.annotation.GrpcClientBeanPostProcessor;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.laokou.common.grpc.client.constant.GrpcClientConstants;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.context.annotation.Bean;
@@ -60,7 +60,6 @@ final class GrpcClientConfig {
 	}
 
 	@Bean
-	@ConditionalOnBean(GrpcClientFactory.class)
 	GrpcClientBeanPostProcessor grpcClientBeanPostProcessor(GrpcClientFactory grpcClientFactory) {
 		return new GrpcClientBeanPostProcessor(grpcClientFactory);
 	}
@@ -81,7 +80,7 @@ final class GrpcClientConfig {
 	private String getAccessToken(SystemSettingsProperties systemSettingsProperties) {
 		HttpServletRequest request = RequestUtils.getHttpServletRequest();
 		String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
-		if (StringUtils.hasText(authorization)) {
+		if (StringUtils.hasText(authorization) && authorization.startsWith(GrpcClientConstants.BEARER_PREFIX)) {
 			return authorization.substring(7);
 		}
 		return systemSettingsProperties.getAnonymousAuthToken();

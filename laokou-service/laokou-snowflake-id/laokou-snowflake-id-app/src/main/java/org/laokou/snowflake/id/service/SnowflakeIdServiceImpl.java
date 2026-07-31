@@ -46,7 +46,7 @@ public class SnowflakeIdServiceImpl extends SnowflakeIdServiceIGrpc.SnowflakeIdS
 	private final String resultMsg = MessageUtils.getMessage(StatusCode.OK);
 
 	@Override
-	@PreAuthorize("hasAuthority('SCOPE_read')")
+	@PreAuthorize("hasAuthority('read')")
 	public void generateId(GenerateIdRequest request, StreamObserver<GenerateIdResponse> responseObserver) {
 		GenerateIdResponse response = GenerateIdResponse.newBuilder()
 			.setCode(StatusCode.OK)
@@ -58,7 +58,7 @@ public class SnowflakeIdServiceImpl extends SnowflakeIdServiceIGrpc.SnowflakeIdS
 	}
 
 	@Override
-	@PreAuthorize("hasAuthority('SCOPE_read')")
+	@PreAuthorize("hasAuthority('read')")
 	public void generateBatchIds(GenerateBatchIdsRequest request,
 			StreamObserver<GenerateBatchIdsResponse> responseObserver) {
 		GenerateBatchIdsResponse.Builder builder = GenerateBatchIdsResponse.newBuilder()

@@ -17,6 +17,7 @@
 
 package org.laokou.auth.convertor;
 
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.blueconic.browscap.Capabilities;
 import io.micrometer.common.util.StringUtils;
 import jakarta.servlet.http.HttpServletRequest;
@@ -106,21 +107,22 @@ public final class LoginLogConvertor {
 
 	public static LoginEvent toDomainEvent(HttpServletRequest request, AuthA authA, GlobalException gex) {
 		try {
+			Long id = authA.getId();
 			Capabilities capabilities = RequestUtils.getCapabilities(request);
 			String ipAddress = IpUtils.getIpAddress(request);
 			int status = LoginStatus.OK.getCode();
 			UserE userE = authA.getUserE();
-			Optional<UserE> optional = Optional.ofNullable(userE);
-			Long creator = optional.map(UserE::getId).orElse(null);
-			Long tenantId = optional.map(UserE::getTenantId).orElse(null);
-			Long deptId = optional.map(UserE::getDeptId).orElse(null);
+			Optional<UserE> userOptional = Optional.ofNullable(userE);
+			Long creator = userOptional.map(UserE::getId).orElse(null);
+			Long tenantId = userOptional.map(UserE::getTenantId).orElse(null);
+			Long deptId = userOptional.map(UserE::getDeptId).orElse(null);
 			String errorMessage = StringConstants.EMPTY;
 			if (ObjectUtils.isNotNull(gex)) {
 				status = LoginStatus.FAIL.getCode();
 				errorMessage = gex.getMsg();
 			}
 			return LoginEvent.builder()
-				.id(authA.getId())
+				.id(ObjectUtils.isNotNull(id) ? id : IdWorker.getId())
 				.username(authA.getLoginName())
 				.ipAddress(ipAddress)
 				.address(AddressUtils.getRealAddress(ipAddress))

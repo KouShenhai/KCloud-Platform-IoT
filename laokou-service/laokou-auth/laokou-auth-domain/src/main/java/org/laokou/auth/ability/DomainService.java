@@ -55,6 +55,8 @@ public class DomainService {
 	}
 
 	public void auth(AuthA authA) {
+		// 初始化
+		authA.init();
 		// 校验认证参数
 		authA.checkAuthParam();
 		// 校验验证码

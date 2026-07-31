@@ -19,14 +19,13 @@ package org.laokou.snowflake.id;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.annotation.EnableWarmUp;
 import org.laokou.common.i18n.util.SslUtils;
-import org.laokou.common.nacos.annotation.EnablePrintRouter;
 import org.laokou.common.security.annotation.EnableSecurity;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.grpc.server.autoconfigure.security.GrpcServerOAuth2ResourceServerAutoConfiguration;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.util.StopWatch;
@@ -42,14 +41,12 @@ import java.security.NoSuchAlgorithmException;
  * @author laokou
  */
 @Slf4j
-@EnableWarmUp
 @EnableSecurity
-@EnablePrintRouter
 @EnableAspectJAutoProxy
 @EnableEncryptableProperties
 @EnableConfigurationProperties
 @EnableDiscoveryClient(autoRegister = false)
-@SpringBootApplication(scanBasePackages = "org.laokou")
+@SpringBootApplication(scanBasePackages = "org.laokou", exclude = GrpcServerOAuth2ResourceServerAutoConfiguration.class)
 class SnowflakeIdApp {
 
 	// @formatter:off

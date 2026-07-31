@@ -17,7 +17,6 @@
 
 package org.laokou.common.grpc.server.config;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.grpc.server.GlobalServerInterceptor;
@@ -46,8 +45,8 @@ class GrpcOAuth2Config {
 
 	@Bean
 	@GlobalServerInterceptor
-	@ConditionalOnBean(OpaqueTokenIntrospector.class)
-	AuthenticationProcessInterceptor jwtAuthenticationProcessInterceptor(GrpcSecurity grpc, OpaqueTokenIntrospector opaqueTokenIntrospector) throws Exception {
+	AuthenticationProcessInterceptor opaqueTokenAuthenticationProcessIntrospector(GrpcSecurity grpc,
+			OpaqueTokenIntrospector opaqueTokenIntrospector) throws Exception {
 		return grpc.authorizeRequests(requests -> requests.allRequests().authenticated())
 			.oauth2ResourceServer(
 					resource -> resource.opaqueToken(token -> token.introspector(opaqueTokenIntrospector)))

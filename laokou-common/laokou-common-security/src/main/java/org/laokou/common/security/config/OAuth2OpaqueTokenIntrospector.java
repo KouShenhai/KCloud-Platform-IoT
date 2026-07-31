@@ -27,7 +27,6 @@ import org.laokou.common.context.util.UserConvertor;
 import org.laokou.common.context.util.UserExtDetails;
 import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.common.i18n.common.exception.StatusCode;
-import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.laokou.common.redis.util.RedisUtils;
@@ -48,8 +47,8 @@ import org.springframework.security.oauth2.server.resource.introspection.OpaqueT
 
 import java.security.Principal;
 import java.time.Instant;
-import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -87,7 +86,7 @@ public record OAuth2OpaqueTokenIntrospector(OAuth2AuthorizationService authoriza
 	private CachedPrincipal getCachedPrincipal(@NonNull String token) {
 		if (ObjectUtils.equals(systemSettingsProperties.getAnonymousAuthToken(), token)) {
 			// 匿名认证
-			return new CachedPrincipal(new DefaultOAuth2AuthenticatedPrincipal("anonymous", Collections.emptyMap(), AuthorityUtils.createAuthorityList(List.of(GrantedAuthority.WRITE.getCode(), GrantedAuthority.READ.getCode()))), InstantUtils.now());
+			return new CachedPrincipal(new DefaultOAuth2AuthenticatedPrincipal("anonymous", Map.of("sub", "anonymous"), AuthorityUtils.createAuthorityList(List.of(GrantedAuthority.WRITE.getCode(), GrantedAuthority.READ.getCode()))), null);
 		}
 		Jwt jwt = jwtDecoder.decode(token);
 		Instant expiresAt = jwt.getExpiresAt();
