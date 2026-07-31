@@ -38,8 +38,8 @@ import java.io.Serializable;
 @Getter
 @Builder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@AllArgsConstructor(access = AccessLevel.PUBLIC)
 public class UserE implements Serializable {
 
 	/**

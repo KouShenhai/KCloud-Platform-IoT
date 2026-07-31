@@ -19,6 +19,7 @@ package org.laokou.common.log.config;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.laokou.common.i18n.common.IdGenerator;
+import org.laokou.common.i18n.util.SpringUtils;
 import org.laokou.common.log.model.enums.Mq;
 import org.laokou.common.log.rpc.IdGeneratorMapper;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -42,8 +43,8 @@ public class OperateLogConfig {
 	@Bean(name = "idGenerator")
 	@ConditionalOnProperty(prefix = "system-settings", name = "app-mode", havingValue = "MICROSERVICE",
 			matchIfMissing = true)
-	IdGenerator idGeneratorMapper() {
-		return new IdGeneratorMapper();
+	IdGenerator idGeneratorMapper(SpringUtils springUtils) {
+		return new IdGeneratorMapper(springUtils);
 	}
 
 }

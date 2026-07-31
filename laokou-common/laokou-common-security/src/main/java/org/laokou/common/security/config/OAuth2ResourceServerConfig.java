@@ -36,6 +36,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
+import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
 import org.springframework.security.web.SecurityFilterChain;
 
 import java.util.HashSet;
@@ -89,7 +90,7 @@ public class OAuth2ResourceServerConfig {
 	@Bean
 	@Order(Ordered.HIGHEST_PRECEDENCE + 1000)
 	@ConditionalOnMissingBean(SecurityFilterChain.class)
-	SecurityFilterChain resourceFilterChain(OAuth2OpaqueTokenIntrospector opaqueTokenIntrospector,
+	SecurityFilterChain resourceFilterChain(OpaqueTokenIntrospector opaqueTokenIntrospector,
                                             SpringUtils springUtils, OAuth2ResourceServerProperties oAuth2ResourceServerProperties, HttpSecurity http)
 			{
 		return http

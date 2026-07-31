@@ -121,6 +121,7 @@ public final class OAuth2AuthenticatedExtPrincipal implements OAuth2Authenticate
 	 * @return the OAuth 2.0 token attributes
 	 */
 	@Override
+	@NullMarked
 	public Map<String, Object> getAttributes() {
 		return Collections.emptyMap();
 	}

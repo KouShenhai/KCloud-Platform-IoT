@@ -22,8 +22,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.grpc.server.GlobalServerInterceptor;
 import org.springframework.grpc.server.security.AuthenticationProcessInterceptor;
 import org.springframework.grpc.server.security.GrpcSecurity;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
 
 /**
  *
@@ -45,9 +45,11 @@ class GrpcOAuth2Config {
 
 	@Bean
 	@GlobalServerInterceptor
-	AuthenticationProcessInterceptor jwtAuthenticationProcessInterceptor(GrpcSecurity grpc) throws Exception {
+	AuthenticationProcessInterceptor opaqueTokenAuthenticationProcessIntrospector(GrpcSecurity grpc,
+			OpaqueTokenIntrospector opaqueTokenIntrospector) throws Exception {
 		return grpc.authorizeRequests(requests -> requests.allRequests().authenticated())
-			.oauth2ResourceServer((resourceServer) -> resourceServer.jwt(Customizer.withDefaults()))
+			.oauth2ResourceServer(
+					resource -> resource.opaqueToken(token -> token.introspector(opaqueTokenIntrospector)))
 			.build();
 	}
 

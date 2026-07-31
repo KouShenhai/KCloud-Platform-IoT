@@ -198,44 +198,55 @@ public final class AuthA extends AggregateRoot implements ValidateName {
 	}
 	// @formatter:on
 
+	public void init() {
+		super.createTime = InstantUtils.now();
+		super.id = idGenerator.getId();
+	}
+
+	public AuthA createDefaultAuth(String grantType) {
+		super.id = System.currentTimeMillis();
+		super.createTime = InstantUtils.now();
+		return this;
+	}
+
 	public AuthA createUsernamePasswordAuth() {
 		this.grantType = GrantType.USERNAME_PASSWORD;
 		this.captchaV = getCaptchaVByUsernamePasswordAuth();
 		this.userV = getUserVByUsernamePasswordAuth();
-		return create();
+		return this;
 	}
 
 	public AuthA createMobileAuth() {
 		this.grantType = GrantType.MOBILE;
 		this.captchaV = getCaptchaVByMobileAuth();
 		this.userV = getUserVByMobileAuth();
-		return create();
+		return this;
 	}
 
 	public AuthA createMailAuth() {
 		this.grantType = GrantType.MAIL;
 		this.captchaV = getCaptchaVByMailAuth();
 		this.userV = getUserVByMailAuth();
-		return create();
+		return this;
 	}
 
 	public AuthA createAuthorizationCodeAuth() {
 		this.grantType = GrantType.AUTHORIZATION_CODE;
 		this.captchaV = getCaptchaVByAuthorizationCodeAuth();
 		this.userV = getUserVByAuthorizationCodeAuth();
-		return create();
+		return this;
 	}
 
 	public AuthA createTestAuth() {
 		this.grantType = GrantType.TEST;
 		this.userV = getUserVByTestAuth();
-		return create();
+		return this;
 	}
 
-	public AuthA createCaptchaVBySend(String uuid, String tag, String tenantCode) {
+	public AuthA createCaptchaVBySend(String uuid, String tag) {
 		this.sendCaptchaType = SendCaptchaType.getByCode(tag);
 		this.captchaV = CaptchaV.builder().uuid(uuid).build();
-		return create();
+		return this;
 	}
 
 	public String getCaptchaBySend() {
@@ -488,12 +499,6 @@ public final class AuthA extends AggregateRoot implements ValidateName {
 			log.error("getUserVByMailAuth error: {}", ex.getMessage(), ex);
 			throw new IllegalArgumentException(ex.getMessage());
 		}
-	}
-
-	private AuthA create() {
-		super.id = idGenerator.getId();
-		super.createTime = InstantUtils.now();
-		return this;
 	}
 
 }
