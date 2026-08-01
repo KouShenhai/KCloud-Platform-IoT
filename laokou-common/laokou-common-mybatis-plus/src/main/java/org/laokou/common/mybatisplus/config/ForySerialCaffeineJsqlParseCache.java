@@ -106,12 +106,14 @@ public class ForySerialCaffeineJsqlParseCache extends AbstractCaffeineJsqlParseC
 				ForyConstants.C_66);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.expression.operators.arithmetic.BitwiseXor.class,
 				ForyConstants.C_67);
-		ForyFactory.INSTANCE.register(net.sf.jsqlparser.expression.operators.arithmetic.Concat.class, ForyConstants.C_68);
+		ForyFactory.INSTANCE.register(net.sf.jsqlparser.expression.operators.arithmetic.Concat.class,
+				ForyConstants.C_68);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.expression.operators.arithmetic.Division.class,
 				ForyConstants.C_69);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.expression.operators.arithmetic.IntegerDivision.class,
 				ForyConstants.C_70);
-		ForyFactory.INSTANCE.register(net.sf.jsqlparser.expression.operators.arithmetic.Modulo.class, ForyConstants.C_71);
+		ForyFactory.INSTANCE.register(net.sf.jsqlparser.expression.operators.arithmetic.Modulo.class,
+				ForyConstants.C_71);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.expression.operators.arithmetic.Multiplication.class,
 				ForyConstants.C_72);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.expression.operators.arithmetic.Subtraction.class,
@@ -214,8 +216,10 @@ public class ForySerialCaffeineJsqlParseCache extends AbstractCaffeineJsqlParseC
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.alter.AlterExpression.ColumnDropNotNull.class,
 				ForyConstants.C_135);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.alter.AlterSession.class, ForyConstants.C_136);
-		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.alter.AlterSystemStatement.class, ForyConstants.C_137);
-		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.alter.RenameTableStatement.class, ForyConstants.C_138);
+		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.alter.AlterSystemStatement.class,
+				ForyConstants.C_137);
+		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.alter.RenameTableStatement.class,
+				ForyConstants.C_138);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.alter.sequence.AlterSequence.class,
 				ForyConstants.C_139);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.analyze.Analyze.class, ForyConstants.C_140);
@@ -225,7 +229,8 @@ public class ForySerialCaffeineJsqlParseCache extends AbstractCaffeineJsqlParseC
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.create.index.CreateIndex.class, ForyConstants.C_143);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.create.procedure.CreateProcedure.class,
 				ForyConstants.C_144);
-		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.create.schema.CreateSchema.class, ForyConstants.C_145);
+		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.create.schema.CreateSchema.class,
+				ForyConstants.C_145);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.create.sequence.CreateSequence.class,
 				ForyConstants.C_146);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.create.synonym.CreateSynonym.class,
@@ -253,8 +258,10 @@ public class ForySerialCaffeineJsqlParseCache extends AbstractCaffeineJsqlParseC
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.execute.Execute.class, ForyConstants.C_162);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.grant.Grant.class, ForyConstants.C_163);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.insert.Insert.class, ForyConstants.C_164);
-		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.insert.InsertConflictAction.class, ForyConstants.C_165);
-		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.insert.InsertConflictTarget.class, ForyConstants.C_166);
+		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.insert.InsertConflictAction.class,
+				ForyConstants.C_165);
+		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.insert.InsertConflictTarget.class,
+				ForyConstants.C_166);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.merge.Merge.class, ForyConstants.C_167);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.merge.MergeDelete.class, ForyConstants.C_168);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.merge.MergeInsert.class, ForyConstants.C_169);
@@ -280,7 +287,8 @@ public class ForySerialCaffeineJsqlParseCache extends AbstractCaffeineJsqlParseC
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.select.Offset.class, ForyConstants.C_188);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.select.OptimizeFor.class, ForyConstants.C_189);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.select.OrderByElement.class, ForyConstants.C_190);
-		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.select.ParenthesedFromItem.class, ForyConstants.C_191);
+		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.select.ParenthesedFromItem.class,
+				ForyConstants.C_191);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.select.ParenthesedSelect.class, ForyConstants.C_192);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.select.Pivot.class, ForyConstants.C_193);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.select.PivotXml.class, ForyConstants.C_194);
@@ -305,8 +313,10 @@ public class ForySerialCaffeineJsqlParseCache extends AbstractCaffeineJsqlParseC
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.update.Update.class, ForyConstants.C_212);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.update.UpdateSet.class, ForyConstants.C_213);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.upsert.Upsert.class, ForyConstants.C_214);
-		ForyFactory.INSTANCE.register(net.sf.jsqlparser.util.cnfexpression.MultiAndExpression.class, ForyConstants.C_215);
-		ForyFactory.INSTANCE.register(net.sf.jsqlparser.util.cnfexpression.MultiOrExpression.class, ForyConstants.C_216);
+		ForyFactory.INSTANCE.register(net.sf.jsqlparser.util.cnfexpression.MultiAndExpression.class,
+				ForyConstants.C_215);
+		ForyFactory.INSTANCE.register(net.sf.jsqlparser.util.cnfexpression.MultiOrExpression.class,
+				ForyConstants.C_216);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.expression.BinaryExpression.class, ForyConstants.C_217);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.expression.operators.relational.ComparisonOperator.class,
 				ForyConstants.C_218);
@@ -317,7 +327,8 @@ public class ForySerialCaffeineJsqlParseCache extends AbstractCaffeineJsqlParseC
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.CreateFunctionalStatement.class, ForyConstants.C_221);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.select.Select.class, ForyConstants.C_222);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.select.SetOperation.class, ForyConstants.C_223);
-		ForyFactory.INSTANCE.register(net.sf.jsqlparser.util.cnfexpression.MultipleExpression.class, ForyConstants.C_224);
+		ForyFactory.INSTANCE.register(net.sf.jsqlparser.util.cnfexpression.MultipleExpression.class,
+				ForyConstants.C_224);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.insert.InsertModifierPriority.class,
 				ForyConstants.C_225);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.select.OrderByElement.NullOrdering.class,
@@ -334,8 +345,10 @@ public class ForySerialCaffeineJsqlParseCache extends AbstractCaffeineJsqlParseC
 				ForyConstants.C_232);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.schema.Partition.class, ForyConstants.C_233);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.insert.ConflictActionType.class, ForyConstants.C_234);
-		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.select.ForClause.ForOption.class, ForyConstants.C_235);
-		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.select.KSQLWindow.TimeUnit.class, ForyConstants.C_236);
+		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.select.ForClause.ForOption.class,
+				ForyConstants.C_235);
+		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.select.KSQLWindow.TimeUnit.class,
+				ForyConstants.C_236);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.select.First.Keyword.class, ForyConstants.C_237);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.expression.WindowElement.Type.class, ForyConstants.C_238);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.expression.WindowOffset.Type.class, ForyConstants.C_239);
