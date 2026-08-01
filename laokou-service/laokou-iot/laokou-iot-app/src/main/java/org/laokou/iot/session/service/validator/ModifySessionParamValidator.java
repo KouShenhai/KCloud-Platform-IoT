@@ -34,4 +34,5 @@ public class ModifySessionParamValidator implements SessionParamValidator {
 	public void validateSession(SessionA sessionA) {
 		ParamValidator.validate(sessionA.getValidateName());
 	}
+
 }

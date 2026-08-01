@@ -54,8 +54,8 @@ public class SessionA extends AggregateRoot implements ValidateName {
 	private final SessionParamValidator modifySessionParamValidator;
 
 	public SessionA(IdGenerator idGenerator,
-	                   @Qualifier("saveSessionParamValidator") SessionParamValidator saveSessionParamValidator,
-	                   @Qualifier("modifySessionParamValidator") SessionParamValidator modifySessionParamValidator) {
+			@Qualifier("saveSessionParamValidator") SessionParamValidator saveSessionParamValidator,
+			@Qualifier("modifySessionParamValidator") SessionParamValidator modifySessionParamValidator) {
 		this.idGenerator = idGenerator;
 		this.saveSessionParamValidator = saveSessionParamValidator;
 		this.modifySessionParamValidator = modifySessionParamValidator;

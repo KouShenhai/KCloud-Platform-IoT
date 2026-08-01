@@ -10,7 +10,7 @@
 - 新增统一连接实体 `network_connection`：以 `type` 字段区分 5 类连接（1 MQTT Server / 2 HTTP Server / 3 MQTT Client / 4 Kafka / 5 RabbitMQ），通用字段（name / type / host / port / enabled / remark）落库为列，各类型特有参数以 JSON 文本存入 `config` 列。
 - 新增后端会话管理接口：分页查询、按条件检索、查看详情、新增、修改、删除（单条/批量），路径 `/network/api/v1/connections*`，权限点 `network:connection:*`。
 - 新增前端「网络管理」控制台页面（Ant Design Pro `ProTable` + `DrawerForm`，Umi Max）：列表支持按连接名称/类型/启用状态检索；新增/修改抽屉按所选 `type` 动态渲染该类型的特有配置字段；支持中英文国际化与按权限位显隐操作。
-- 在前端注册 `/network/connection` 路由，补充 `access.ts` 权限位、`zh-CN` / `en-US` 国际化文案，新增 `services/network/connection.ts` 请求层（`saveConnection` 带 `request-id` 幂等头）。
+- 在前端注册 `/network/connection` 路由，补充 `access.ts` 权限位、`zh-CN` / `en-US` 国际化文案，新增 `services/network/session.ts` 请求层（`saveConnection` 带 `request-id` 幂等头）。
 - Kafka / RabbitMQ 连接基于 Vertx 实现：新增 `vertx-kafka-client`、`vertx-rabbitmq-client` 依赖，并补充对应的 Vertx 连接配置 POJO（与现有 `MqttServerConfig` 等同构），供后续运行时部署使用。
 - 数据库新增 `network_connection` 表与 `network:connection:*` 权限/菜单种子（幂等迁移脚本 + 初始化 SQL）。
 
@@ -33,7 +33,7 @@
   - 修改 `laokou-network-*` 各 `pom.xml`：infrastructure 引入 `laokou-common-mybatis-plus`/security/web 依赖与 `vertx-kafka-client`、`vertx-rabbitmq-client`；client 引入 i18n；adapter 引入 web/security。
   - 修改 `laokou-network-start`：`application.yml` 增加数据源/MyBatis-Plus/安全相关配置，`NetworkApp` 视情况调整为可对外暴露 Web API。
 - 前端（`ui/`）：
-  - 新增：`src/pages/Network/Connection/index.tsx`、`SessionDrawer.tsx`、`src/services/network/connection.ts`、`src/services/network/typings.d.ts`。
+  - 新增：`src/pages/Network/Connection/index.tsx`、`SessionDrawer.tsx`、`src/services/network/session.ts`、`src/services/network/typings.d.ts`。
   - 修改：`config/routes.ts`（新增 `menu.network` 菜单与 `/network/connection` 路由）、`src/access.ts`（`canConnection*` 权限位）、`src/locales/zh-CN.ts`、`src/locales/en-US.ts`（`menu.network.*`、`network.connection.*` 文案）。
 - API：新增 `/network/api/v1/connections`（POST/PUT/DELETE）、`/connections/page`、`/connections/{id}`；网关需放行 `laokou-network` 的 API 前缀；鉴权前缀 `network:connection:*`。向后兼容（全新端点，不影响既有接口）。
 - 数据库：新增 `network_connection` 表（IoT 业务库），新增 `network:connection:page/detail/save/modify/remove` 权限与菜单种子；通过幂等迁移脚本与初始化 SQL 维护，新环境一致。

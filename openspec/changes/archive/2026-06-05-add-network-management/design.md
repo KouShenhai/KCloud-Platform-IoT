@@ -85,7 +85,7 @@
 
 - 新增 `ui/src/pages/Network/Connection/index.tsx`（复刻 `product.tsx` 的 `ProTable` 结构）：列含 名称、类型（select，5 枚举，列表以可读文案渲染）、host、port、启用状态（select 0/1）、创建时间 + 时间区间搜索；行操作 查看/修改/删除，工具栏 新增/批量删除，按 `access.canConnection*` 显隐。
 - 新增 `SessionDrawer.tsx`（复刻 `ProductDrawer.tsx`）：通用字段固定渲染；**监听 `type` 字段**（`ProFormSelect` + `dependency` / `ProFormDependency`），按所选类型渲染该类型特有字段（MQTT Server / HTTP Server / MQTT Client / Kafka / RabbitMQ 各一组）；提交时把特有字段聚合为 `config` JSON 字符串，回显时反序列化。保存调 `saveConnection`(带 `requestId`)、修改调 `modifyConnection`。
-- 新增 `ui/src/services/network/connection.ts`（复刻 `services/iot/product.ts`，URL 前缀 `/api-proxy/network/api/v1/connections`）+ `services/network/typings.d.ts`。
+- 新增 `ui/src/services/network/session.ts`（复刻 `services/iot/product.ts`，URL 前缀 `/api-proxy/network/api/v1/connections`）+ `services/network/typings.d.ts`。
 - `routes.ts` 新增 `menu.network` 顶级菜单 + `/network/connection` 子路由；`access.ts` 新增 `canConnectionPage/GetDetail/Save/Modify/Remove`；`zh-CN.ts`/`en-US.ts` 新增 `menu.network.*` 与 `network.connection.*`（含各类型字段标签/占位/校验）文案。
 
 - **理由**：单页面 + 动态表单契合「统一实体」建模；`ProFormDependency` 是 Ant Design Pro 的标准类型联动方案，无需自造。
