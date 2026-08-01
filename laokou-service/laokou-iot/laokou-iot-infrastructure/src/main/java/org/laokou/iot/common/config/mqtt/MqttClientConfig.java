@@ -20,7 +20,6 @@ package org.laokou.iot.common.config.mqtt;
 import io.netty.handler.codec.mqtt.MqttVersion;
 import lombok.Data;
 import org.laokou.common.core.util.UUIDGenerator;
-import org.laokou.iot.session.dto.mqtt.MqttBrokerName;
 
 /**
  * @author laokou
@@ -83,7 +82,5 @@ public final class MqttClientConfig {
 	private byte version = MqttVersion.MQTT_5.protocolLevel();
 
 	private int maxInflightQueue = 1024;
-
-	private MqttBrokerName mqttBrokerName = MqttBrokerName.EMQX;
 
 }

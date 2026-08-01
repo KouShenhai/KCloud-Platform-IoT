@@ -36,7 +36,7 @@ public interface MessageHandler {
 	 * @param topic MQTT主题
 	 * @return 是否处理
 	 */
-	default boolean supports(String topic, MqttClientConfig config) {
+	default boolean supports(String topic) {
 		return true;
 	}
 

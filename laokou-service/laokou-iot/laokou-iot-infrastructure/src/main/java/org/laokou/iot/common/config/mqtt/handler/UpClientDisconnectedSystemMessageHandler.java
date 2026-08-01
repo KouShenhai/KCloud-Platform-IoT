@@ -22,7 +22,6 @@ import io.vertx.mqtt.messages.MqttPublishMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.iot.common.config.mqtt.AbstractMessageHandler;
-import org.laokou.iot.common.config.mqtt.MqttClientConfig;
 import org.laokou.iot.session.dto.mqtt.MqttMessageType;
 import org.springframework.stereotype.Component;
 
@@ -35,8 +34,8 @@ import org.springframework.stereotype.Component;
 final class UpClientDisconnectedSystemMessageHandler extends AbstractMessageHandler {
 
 	@Override
-	protected MqttMessageType getMatchTopic(MqttClientConfig config) {
-		return null;
+	protected MqttMessageType getMatchTopic() {
+		return MqttMessageType.UP_CLIENT_DISCONNECTED_SYSTEM_MESSAGE;
 	}
 
 	@Override
