@@ -38,7 +38,7 @@ public final class StatusExceptionHandler {
 	public static BizException handle(StatusException ex1, BizException ex2, String serviceId) {
 		String message = ex1.getMessage();
 		if (ObjectUtils.equals(UNAUTHENTICATED, message)) {
-			return new BizException(StatusCode.FORBIDDEN, String.format("【%s】" + FORBIDDEN_MESSAGE, serviceId));
+			return new BizException(StatusCode.FORBIDDEN, String.format("【%s】%s", serviceId, FORBIDDEN_MESSAGE));
 		}
 		return ex2;
 	}

@@ -25,6 +25,7 @@ import org.laokou.admin.dept.factory.DeptDomainFactory;
 import org.laokou.admin.dept.model.DeptA;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.fory.config.ForyFactory;
+import org.laokou.common.fory.constant.ForyConstants;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.springframework.stereotype.Component;
 
@@ -38,7 +39,7 @@ import org.springframework.stereotype.Component;
 public class DeptSaveCmdExe {
 
 	static {
-		ForyFactory.INSTANCE.register(org.laokou.admin.dept.dto.clientobject.DeptCO.class, ForyFactory.C_244);
+		ForyFactory.INSTANCE.register(org.laokou.admin.dept.dto.clientobject.DeptCO.class, ForyConstants.C_244);
 	}
 
 	private final DeptDomainService deptDomainService;

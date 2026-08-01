@@ -116,9 +116,9 @@ public class TDengine extends AbstractDataSource {
 		// 获取连接超时时间(10秒)
 		hikariConfig.setConnectionTimeout(10000);
 		// 核心保持的空闲连接数
-		hikariConfig.setMinimumIdle(5);
+		hikariConfig.setMinimumIdle(2);
 		// 最大连接数
-		hikariConfig.setMaximumPoolSize(30);
+		hikariConfig.setMaximumPoolSize(10);
 		// 每 60 秒发送一次 PING 帧保持连接活跃
 		hikariConfig.setKeepaliveTime(60000);
 		return new HikariDataSource(hikariConfig);
