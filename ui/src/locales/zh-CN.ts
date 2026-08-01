@@ -247,6 +247,8 @@ export default {
 	'iot.session.port': '会话端口',
 	'iot.session.username': '会话用户名',
 	'iot.session.password': '会话密码',
+	'iot.session.state': '会话状态',
+	'iot.session.status': '连接状态',
 	'iot.session.insert': '新增会话',
 	'iot.session.view': '查看会话',
 	'iot.session.modify': '修改会话',

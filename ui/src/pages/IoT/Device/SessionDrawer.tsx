@@ -25,63 +25,6 @@ interface ConnectionDrawerProps {
 
 type ConnectionFormValues = API.SessionCO & Record<string, any>;
 
-const TYPE_CONFIG_FIELDS: Record<number, string[]> = {
-	1: [
-		'auth',
-		'username',
-		'password',
-		'maxMessageSize',
-		'isAutoClientId',
-		'useWebSocket',
-		'tcpNoDelay',
-		'tcpKeepAlive',
-		'ssl',
-	],
-	2: [
-		'auth',
-		'compressionSupported',
-		'compressionLevel',
-		'maxHeaderSize',
-		'maxWebSocketFrameSize',
-		'http2ClearTextEnabled',
-	],
-	3: [
-		'auth',
-		'subscribe',
-		'username',
-		'password',
-		'clientId',
-		'clearSession',
-		'keepAliveInterval',
-		'autoKeepAlive',
-		'reconnectInterval',
-	],
-	4: [
-		'bootstrapServers',
-		'clientId',
-		'groupId',
-		'topic',
-		'acks',
-		'autoOffsetReset',
-		'enableAutoCommit',
-		'securityProtocol',
-		'username',
-		'password',
-	],
-	5: [
-		'virtualHost',
-		'username',
-		'password',
-		'exchange',
-		'routingKey',
-		'queue',
-		'requestedHeartbeat',
-		'automaticRecoveryEnabled',
-		'ssl',
-		'trustAll',
-	],
-};
-
 const parseConfig = (config?: string) => {
 	if (!config) {
 		return {};
@@ -196,7 +139,7 @@ export const SessionDrawer: React.FC<ConnectionDrawerProps> = ({
 				rules={[
 					{
 						required: true,
-						message: t('iot.session.required.name'),
+						message: t('iot.session.placeholder.name'),
 					},
 				]}
 			/>
@@ -207,6 +150,12 @@ export const SessionDrawer: React.FC<ConnectionDrawerProps> = ({
 				name="host"
 				label={t('iot.session.host')}
 				placeholder={t('iot.session.placeholder.host')}
+				rules={[
+					{
+						required: true,
+						message: t('iot.session.placeholder.host'),
+					},
+				]}
 			/>
 
 			<ProFormDigit
@@ -218,6 +167,12 @@ export const SessionDrawer: React.FC<ConnectionDrawerProps> = ({
 				min={1}
 				max={65535}
 				fieldProps={{ precision: 0 }}
+				rules={[
+					{
+						required: true,
+						message: t('iot.session.placeholder.port'),
+					},
+				]}
 			/>
 
 			<ProFormText
@@ -226,6 +181,12 @@ export const SessionDrawer: React.FC<ConnectionDrawerProps> = ({
 				name="username"
 				label={t('iot.session.username')}
 				placeholder={t('iot.session.placeholder.username')}
+				rules={[
+					{
+						required: true,
+						message: t('iot.session.placeholder.username'),
+					},
+				]}
 			/>
 
 			<ProFormText
@@ -234,6 +195,12 @@ export const SessionDrawer: React.FC<ConnectionDrawerProps> = ({
 				name="password"
 				label={t('iot.session.password')}
 				placeholder={t('iot.session.placeholder.password')}
+				rules={[
+					{
+						required: true,
+						message: t('iot.session.placeholder.password'),
+					},
+				]}
 			/>
 
 			{readOnly && (

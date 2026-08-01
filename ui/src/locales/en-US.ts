@@ -247,6 +247,8 @@ export default {
 	'iot.session.port': 'Session Port',
 	'iot.session.username': 'Session Username',
 	'iot.session.password': 'Session Password',
+	'iot.session.state': 'Session State',
+	'iot.session.status': 'Connection Status',
 	'iot.session.insert': 'Insert Session',
 	'iot.session.view': 'View Session',
 	'iot.session.modify': 'Modify Session',
