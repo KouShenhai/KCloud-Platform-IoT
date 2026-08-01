@@ -15,31 +15,23 @@
  *
  */
 
-package org.laokou.iot.session.gatewayimpl.database.dataobject;
+package org.laokou.iot.session.factory;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
-import org.laokou.common.mybatisplus.mapper.BaseDO;
+import org.laokou.common.i18n.util.SpringContextUtils;
+import org.laokou.iot.session.model.SessionA;
+import org.laokou.iot.session.model.entity.SessionE;
 
-/**
- * Session data object.
- *
- * @author laokou
- */
-@Data
-@TableName("iot_session")
-public class SessionDO extends BaseDO {
+public final class SessionDomainFactory {
 
-	private String name;
+	private SessionDomainFactory() {
+	}
 
-	private String host;
+	public static SessionE createSessionE() {
+		return SpringContextUtils.getBeanProvider(SessionE.class);
+	}
 
-	private Integer port;
-
-	private String username;
-
-	private String password;
-
-	private Integer state;
+	public static SessionA createSessionA() {
+		return SpringContextUtils.getBeanProvider(SessionA.class);
+	}
 
 }

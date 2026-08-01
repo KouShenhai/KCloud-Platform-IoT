@@ -67,8 +67,8 @@ public class RoleA extends AggregateRoot implements ValidateName {
 		this.roleE = roleE;
 		Long primaryKey = this.roleE.getId();
 		super.createTime = InstantUtils.now();
-		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : idGenerator.getId();
 		this.operateType = operateType;
+		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : idGenerator.getId();
 		return this;
 	}
 

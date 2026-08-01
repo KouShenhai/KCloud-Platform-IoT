@@ -65,8 +65,8 @@ public class DictA extends AggregateRoot implements ValidateName {
 		this.dictE = dictE;
 		Long primaryKey = this.dictE.getId();
 		super.createTime = InstantUtils.now();
-		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : idGenerator.getId();
 		this.operateType = ObjectUtils.isNotNull(primaryKey) ? OperateType.MODIFY : OperateType.SAVE;
+		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : idGenerator.getId();
 		return this;
 	}
 

@@ -15,20 +15,31 @@
  *
  */
 
-package org.laokou.iot.session.gatewayimpl.database.dataobject;
+package org.laokou.iot.session.model.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
-import org.laokou.common.mybatisplus.mapper.BaseDO;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.annotation.Entity;
 
 /**
- * Session data object.
+ *
+ * 会话领域对象【实体】.
  *
  * @author laokou
  */
-@Data
-@TableName("iot_session")
-public class SessionDO extends BaseDO {
+@Entity
+@Getter
+@Builder(toBuilder = true)
+@EqualsAndHashCode(callSuper = false)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class SessionE {
+
+	private Long id;
 
 	private String name;
 

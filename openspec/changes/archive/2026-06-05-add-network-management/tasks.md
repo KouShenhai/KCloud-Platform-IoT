@@ -57,7 +57,7 @@
 
 ## 9. 前端 service 与类型（ui）
 
-- [x] 9.1 新增 `ui/src/services/network/connection.ts`（复刻 `services/iot/product.ts`：modify/save(带 requestId 头)/remove/getById/page，URL 前缀 `/api-proxy/network/api/v1/connections`）
+- [x] 9.1 新增 `ui/src/services/network/session.ts`（复刻 `services/iot/product.ts`：modify/save(带 requestId 头)/remove/getById/page，URL 前缀 `/api-proxy/network/api/v1/connections`）
 - [x] 9.2 新增 `ui/src/services/network/typings.d.ts`（`ConnectionCO`/`ConnectionSaveCmd`/`ConnectionModifyCmd`/`ConnectionPageQry` 等类型，字段与后端一致，id 小写）
 
 ## 10. 前端权限、路由与国际化（ui）

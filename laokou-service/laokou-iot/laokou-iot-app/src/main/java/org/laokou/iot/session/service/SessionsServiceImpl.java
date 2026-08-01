@@ -60,17 +60,17 @@ public class SessionsServiceImpl implements SessionsServiceI {
 
 	@Override
 	public void modifySession(SessionModifyCmd cmd) {
-
+		sessionModifyCmdExe.executeVoid(cmd);
 	}
 
 	@Override
 	public void removeSession(SessionRemoveCmd cmd) {
-
+		sessionRemoveCmdExe.executeVoid(cmd);
 	}
 
 	@Override
 	public Result<Page<SessionCO>> pageSession(SessionPageQry qry) {
-		return null;
+		return sessionPageQryExe.execute(qry);
 	}
 
 	@Override

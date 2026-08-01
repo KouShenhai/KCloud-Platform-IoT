@@ -17,12 +17,11 @@
 
 package org.laokou.iot.session.convertor;
 
-import org.laokou.iot.thingModel.convertor.ThingModelConvertor;
-import org.laokou.iot.thingModel.dto.clientobject.ThingModelCO;
-import org.laokou.iot.thingModel.factory.ThingModelDomainFactory;
-import org.laokou.iot.thingModel.gatewayimpl.database.dataobject.ThingModelDO;
-import org.laokou.iot.thingModel.model.ThingModelA;
-import org.laokou.iot.thingModel.model.entity.ThingModelE;
+import org.laokou.iot.session.dto.clientobject.SessionCO;
+import org.laokou.iot.session.factory.SessionDomainFactory;
+import org.laokou.iot.session.gatewayimpl.database.dataobject.SessionDO;
+import org.laokou.iot.session.model.SessionA;
+import org.laokou.iot.session.model.entity.SessionE;
 
 import java.util.List;
 
@@ -36,46 +35,46 @@ public final class SessionConvertor {
 	private SessionConvertor() {
 	}
 
-	public static ThingModelDO toDataObject(ThingModelA thingModelA) {
-		ThingModelDO thingModelDO = new ThingModelDO();
-		ThingModelE thingModelE = thingModelA.getThingModelE();
-		thingModelDO.setId(thingModelA.getId());
-		thingModelDO.setName(thingModelE.getName());
-		thingModelDO.setCode(thingModelE.getCode());
-		thingModelDO.setDataType(thingModelE.getDataType());
-		thingModelDO.setSort(thingModelE.getSort());
-		thingModelDO.setSpec(thingModelE.getSpec());
-		thingModelDO.setRemark(thingModelE.getRemark());
-		return thingModelDO;
+	public static SessionDO toDataObject(SessionA sessionA) {
+		SessionDO sessionDO = new SessionDO();
+		SessionE sessionE = sessionA.getSessionE();
+		sessionDO.setId(sessionA.getId());
+		sessionDO.setName(sessionE.getName());
+		sessionDO.setHost(sessionE.getHost());
+		sessionDO.setPort(sessionE.getPort());
+		sessionDO.setUsername(sessionE.getUsername());
+		sessionDO.setPassword(sessionE.getPassword());
+		sessionDO.setState(sessionE.getState());
+		return sessionDO;
 	}
 
-	public static List<ThingModelCO> toClientObjects(List<ThingModelDO> list) {
-		return list.stream().map(ThingModelConvertor::toClientObject).toList();
+	public static List<SessionCO> toClientObjects(List<SessionDO> list) {
+		return list.stream().map(SessionConvertor::toClientObject).toList();
 	}
 
-	public static ThingModelCO toClientObject(ThingModelDO thingModelDO) {
-		ThingModelCO thingModelCO = new ThingModelCO();
-		thingModelCO.setId(thingModelDO.getId());
-		thingModelCO.setName(thingModelDO.getName());
-		thingModelCO.setCode(thingModelDO.getCode());
-		thingModelCO.setDataType(thingModelDO.getDataType());
-		thingModelCO.setSort(thingModelDO.getSort());
-		thingModelCO.setSpec(thingModelDO.getSpec());
-		thingModelCO.setRemark(thingModelDO.getRemark());
-		thingModelCO.setCreateTime(thingModelDO.getCreateTime());
-		return thingModelCO;
+	public static SessionCO toClientObject(SessionDO sessionDO) {
+		SessionCO sessionCO = new SessionCO();
+		sessionCO.setId(sessionDO.getId());
+		sessionCO.setName(sessionDO.getName());
+		sessionCO.setHost(sessionDO.getHost());
+		sessionCO.setPort(sessionDO.getPort());
+		sessionCO.setUsername(sessionDO.getUsername());
+		sessionCO.setPassword(sessionDO.getPassword());
+		sessionCO.setState(sessionDO.getState());
+		sessionCO.setCreateTime(sessionDO.getCreateTime());
+		return sessionCO;
 	}
 
-	public static ThingModelE toEntity(ThingModelCO thingModelCO) {
-		return ThingModelDomainFactory.createThingModelE()
+	public static SessionE toEntity(SessionCO SessionCO) {
+		return SessionDomainFactory.createSessionE()
 			.toBuilder()
-			.id(thingModelCO.getId())
-			.name(thingModelCO.getName())
-			.code(thingModelCO.getCode())
-			.dataType(thingModelCO.getDataType())
-			.sort(thingModelCO.getSort())
-			.spec(thingModelCO.getSpec())
-			.remark(thingModelCO.getRemark())
+			.id(SessionCO.getId())
+			.name(SessionCO.getName())
+			.host(SessionCO.getHost())
+			.port(SessionCO.getPort())
+			.username(SessionCO.getUsername())
+			.password(SessionCO.getPassword())
+			.state(SessionCO.getState())
 			.build();
 	}
 

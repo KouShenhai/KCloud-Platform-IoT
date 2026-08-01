@@ -17,18 +17,22 @@
 
 package org.laokou.iot.session.command;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
+import org.laokou.common.tenant.constant.DSConstants;
 import org.laokou.iot.session.ability.SessionDomainService;
 import org.laokou.iot.session.dto.SessionRemoveCmd;
 import org.springframework.stereotype.Component;
 
 /**
- * Remove session command executor.
+ * 删除会话命令执行器.
  *
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class SessionRemoveCmdExe {
@@ -39,8 +43,18 @@ public class SessionRemoveCmdExe {
 
 	@CommandLog
 	public void executeVoid(SessionRemoveCmd cmd) {
-		transactionalUtils
-			.executeInTransaction(() -> sessionDomainService.deleteSession(cmd == null ? null : cmd.getIds()));
+		try {
+			DynamicDataSourceContextHolder.push(DSConstants.IOT);
+			// 校验参数
+			transactionalUtils.executeInTransaction(() -> sessionDomainService.deleteSession(cmd.getIds()));
+		}
+		catch (Exception ex) {
+			log.error("删除物模型失败，错误信息：{}", ex.getMessage(), ex);
+			throw ex;
+		}
+		finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 }

@@ -15,26 +15,27 @@
  *
  */
 
-package org.laokou.iot.session.model;
+package org.laokou.iot.session.model.enums;
 
-import lombok.Data;
+import lombok.Getter;
 
 /**
- * Network connection domain entity.
- *
  * @author laokou
  */
-@Data
-public class SessionE {
+@Getter
+public enum OperateType {
 
-	private Long id;
+	SAVE("save", "保存会话"),
 
-	private String name;
+	MODIFY("modify", "修改会话");
 
-	private Integer type;
+	private final String code;
 
-	private String host;
+	private final String desc;
 
-	private Integer port;
+	OperateType(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
 
 }

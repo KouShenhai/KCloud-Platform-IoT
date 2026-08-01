@@ -17,8 +17,12 @@
 
 package org.laokou.iot.session.command.query;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.tenant.constant.DSConstants;
+import org.laokou.iot.session.convertor.SessionConvertor;
 import org.laokou.iot.session.dto.SessionGetQry;
 import org.laokou.iot.session.dto.clientobject.SessionCO;
 import org.laokou.iot.session.gatewayimpl.database.SessionMapper;
@@ -27,6 +31,7 @@ import org.springframework.stereotype.Component;
 /**
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class SessionGetQryExe {
@@ -34,9 +39,17 @@ public class SessionGetQryExe {
 	private final SessionMapper sessionMapper;
 
 	public Result<SessionCO> execute(SessionGetQry qry) {
-		// return
-		// Result.ok(SessionConvertor.toClientObject(sessionMapper.selectById(qry.getId())));
-		return null;
+		try {
+			DynamicDataSourceContextHolder.push(DSConstants.IOT);
+			return Result.ok(SessionConvertor.toClientObject(sessionMapper.selectById(qry.getId())));
+		}
+		catch (Exception ex) {
+			log.error("查看会话详情失败，错误信息：{}", ex.getMessage(), ex);
+			throw ex;
+		}
+		finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 }

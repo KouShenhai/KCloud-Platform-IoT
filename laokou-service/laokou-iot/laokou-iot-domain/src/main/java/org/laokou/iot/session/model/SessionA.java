@@ -17,9 +17,82 @@
 
 package org.laokou.iot.session.model;
 
+import lombok.Getter;
+import org.laokou.common.i18n.annotation.Entity;
+import org.laokou.common.i18n.common.IdGenerator;
+import org.laokou.common.i18n.common.ValidateName;
+import org.laokou.common.i18n.dto.AggregateRoot;
+import org.laokou.common.i18n.util.InstantUtils;
+import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.iot.session.model.entity.SessionE;
+import org.laokou.iot.session.model.enums.OperateType;
+import org.laokou.iot.session.model.validator.SessionParamValidator;
+import org.springframework.beans.factory.annotation.Qualifier;
+
+import java.time.Instant;
+
 /**
+ * 会话聚合根.
+ *
  * @author laokou
  */
-public class SessionA {
+@Entity
+@Getter
+public class SessionA extends AggregateRoot implements ValidateName {
+
+	private SessionE sessionE;
+
+	/**
+	 * 操作类型【保存/修改】.
+	 */
+	private OperateType operateType;
+
+	private final IdGenerator idGenerator;
+
+	private final SessionParamValidator saveSessionParamValidator;
+
+	private final SessionParamValidator modifySessionParamValidator;
+
+	public SessionA(IdGenerator idGenerator,
+			@Qualifier("saveSessionParamValidator") SessionParamValidator saveSessionParamValidator,
+			@Qualifier("modifySessionParamValidator") SessionParamValidator modifySessionParamValidator) {
+		this.idGenerator = idGenerator;
+		this.saveSessionParamValidator = saveSessionParamValidator;
+		this.modifySessionParamValidator = modifySessionParamValidator;
+	}
+
+	public SessionA create(SessionE sessionE) {
+		this.sessionE = sessionE;
+		Long primaryKey = this.sessionE.getId();
+		super.createTime = InstantUtils.now();
+		this.operateType = ObjectUtils.isNotNull(primaryKey) ? OperateType.MODIFY : OperateType.SAVE;
+		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : idGenerator.getId();
+		return this;
+	}
+
+	public void checkSessionParam() {
+		switch (operateType) {
+			case SAVE -> saveSessionParamValidator.validateSession(this);
+			case MODIFY -> modifySessionParamValidator.validateSession(this);
+			default -> throw new UnsupportedOperationException("Unsupported operation type");
+		}
+	}
+
+	public boolean isModify() {
+		return ObjectUtils.equals(OperateType.MODIFY, this.operateType);
+	}
+
+	public boolean isSave() {
+		return ObjectUtils.equals(OperateType.SAVE, this.operateType);
+	}
+
+	public Instant getCreateTime() {
+		return isSave() ? super.createTime : null;
+	}
+
+	@Override
+	public String getValidateName() {
+		return "Session";
+	}
 
 }

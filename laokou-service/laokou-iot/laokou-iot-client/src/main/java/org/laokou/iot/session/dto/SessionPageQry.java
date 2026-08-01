@@ -31,6 +31,8 @@ public class SessionPageQry extends PageQuery {
 
 	private String name;
 
+	private Integer state;
+
 	public void setName(String name) {
 		this.name = StringExtUtils.like(StringExtUtils.trim(name));
 	}

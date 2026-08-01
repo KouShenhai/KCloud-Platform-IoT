@@ -32,22 +32,24 @@
   </sql>
 
   <sql id="selectConditions">
-    where del_flag = 0
-    <if test="pageQuery.name != null and pageQuery.name != ''">
-      and "name" like #{pageQuery.name}
-    </if>
-    <if test="pageQuery.code != null and pageQuery.code != ''">
-      and "code" like #{pageQuery.code}
-    </if>
-    <if test="pageQuery.dataType != null and pageQuery.dataType != ''">
-      and data_type = #{pageQuery.dataType}
-    </if>
-    <if test="pageQuery.params.startTime != null and pageQuery.params.startTime != ''">
-      and create_time <![CDATA[ >= ]]> #{pageQuery.params.startTime}
-    </if>
-    <if test="pageQuery.params.endTime != null and pageQuery.params.endTime != ''">
-      and create_time <![CDATA[ <= ]]> #{pageQuery.params.endTime}
-    </if>
+    <where>
+      <if test="pageQuery.name != null and pageQuery.name != ''">
+        and "name" like #{pageQuery.name}
+      </if>
+      <if test="pageQuery.code != null and pageQuery.code != ''">
+        and "code" like #{pageQuery.code}
+      </if>
+      <if test="pageQuery.dataType != null and pageQuery.dataType != ''">
+        and data_type = #{pageQuery.dataType}
+      </if>
+      <if test="pageQuery.params.startTime != null and pageQuery.params.startTime != ''">
+        and create_time <![CDATA[ >= ]]> #{pageQuery.params.startTime}
+      </if>
+      <if test="pageQuery.params.endTime != null and pageQuery.params.endTime != ''">
+        and create_time <![CDATA[ <= ]]> #{pageQuery.params.endTime}
+      </if>
+      and del_flag = 0
+    </where>
   </sql>
 
   <sql id="selectObjectList">

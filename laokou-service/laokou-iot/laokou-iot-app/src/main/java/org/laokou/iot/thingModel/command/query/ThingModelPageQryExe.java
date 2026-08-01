@@ -33,7 +33,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * 分页物查询模型请求执行器.
+ * 分页查询物模型请求执行器.
  *
  * @author laokou
  */

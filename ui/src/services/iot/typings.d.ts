@@ -254,49 +254,46 @@ declare namespace API {
 		remark?: string;
 	};
 
-	type ConnectionCO = {
+	type SessionCO = {
 		extValues?: Record<string, any>;
 		/** ID */
 		id?: number;
 		/** Connection name */
 		name?: string;
-		/** 1 MQTT Server, 2 HTTP Server, 3 MQTT Client, 4 Kafka, 5 RabbitMQ */
-		type?: number;
 		/** Host */
 		host?: string;
 		/** Port */
 		port?: number;
-		/** 0 enabled, 1 disabled */
-		enabled?: number;
-		/** Type-specific JSON config */
-		config?: string;
-		/** Remark */
-		remark?: string;
+		/** Username */
+		username?: string;
+		/** Password */
+		password?: string;
+		/** State **/
+		state?: number;
 		/** Created time */
 		createTime?: string;
 	};
 
-	type ConnectionGetByIdParams = {
+	type SessionGetByIdParams = {
 		id: number;
 	};
 
-	type ConnectionModifyCmd = {
-		co?: ConnectionCO;
+	type SessionModifyCmd = {
+		co?: SessionCO;
 	};
 
-	type ConnectionPageQry = {
+	type SessionPageQry = {
 		pageNum?: number;
 		pageSize?: number;
 		pageIndex?: number;
 		sqlFilter?: string;
 		params?: Record<string, any>;
 		name?: string;
-		type?: number;
-		enabled?: number;
+		state?: number;
 	};
 
-	type ConnectionSaveCmd = {
-		co?: ConnectionCO;
+	type SessionSaveCmd = {
+		co?: SessionCO;
 	};
 
 	type SourceCO = {

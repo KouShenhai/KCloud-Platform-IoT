@@ -15,44 +15,36 @@
  *
  */
 
-package org.laokou.iot.session.gatewayimpl;
+package org.laokou.iot.session.service.validator;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.iot.session.convertor.SessionConvertor;
-import org.laokou.iot.session.gateway.SessionGateway;
+import org.laokou.common.i18n.util.ParamValidator;
 import org.laokou.iot.session.gatewayimpl.database.SessionMapper;
-import org.laokou.iot.session.gatewayimpl.database.dataobject.SessionDO;
 import org.laokou.iot.session.model.SessionA;
+import org.laokou.iot.session.model.validator.SessionParamValidator;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-
 /**
- * 会话网关实现.
- *
  * @author laokou
  */
-@Component
+@Component("saveSessionParamValidator")
 @RequiredArgsConstructor
-public class SessionGatewayImpl implements SessionGateway {
+public class SaveSessionParamValidator implements SessionParamValidator {
 
 	private final SessionMapper sessionMapper;
 
 	@Override
-	public void createSession(SessionA sessionA) {
-		sessionMapper.insert(SessionConvertor.toDataObject(sessionA));
-	}
-
-	@Override
-	public void updateSession(SessionA sessionA) {
-		SessionDO sessionDO = SessionConvertor.toDataObject(sessionA);
-		sessionDO.setVersion(sessionMapper.selectVersion(sessionA.getId()));
-		sessionMapper.updateById(sessionDO);
-	}
-
-	@Override
-	public void deleteSession(Long[] ids) {
-		sessionMapper.deleteByIds(Arrays.asList(ids));
+	public void validateSession(SessionA sessionA) {
+		ParamValidator.validate(sessionA.getValidateName(),
+				// 校验会话主机和会话端口
+				org.laokou.iot.session.service.validator.SessionParamValidator.validateHostAndPort(sessionA,
+						sessionMapper),
+				// 校验会话名称
+				org.laokou.iot.session.service.validator.SessionParamValidator.validateName(sessionA),
+				// 校验会话用户名
+				org.laokou.iot.session.service.validator.SessionParamValidator.validateUsername(sessionA),
+				// 校验会话密码
+				org.laokou.iot.session.service.validator.SessionParamValidator.validatePassword(sessionA));
 	}
 
 }

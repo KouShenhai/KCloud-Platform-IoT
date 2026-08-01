@@ -1,9 +1,9 @@
 import { SessionDrawer } from '@/pages/IoT/Device/SessionDrawer';
 import {
-	getConnectionById,
-	pageConnection,
-	removeConnection,
-} from '@/services/iot/connection';
+	getSessionById,
+	pageSession,
+	removeSession,
+} from '@/services/iot/session';
 import { trim } from '@/utils/format';
 import { useAccess, useIntl } from '@@/exports';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
@@ -17,12 +17,11 @@ import { v7 as uuidV7 } from 'uuid';
 type TableColumns = {
 	id: number;
 	name: string | undefined;
-	type: number | undefined;
 	host: string | undefined;
 	port: number | undefined;
-	enabled: number | undefined;
-	config: string | undefined;
-	remark: string | undefined;
+	username: string | undefined;
+	password: string | undefined;
+	state: number | undefined;
 	createTime: string | undefined;
 };
 
@@ -39,37 +38,13 @@ export default () => {
 	const [ids, setIds] = useState<any>([]);
 	const [requestId, setRequestId] = useState('');
 
-	const typeOptions = [
-		{ value: 1, label: t('network.connection.type.mqttServer') },
-		{ value: 2, label: t('network.connection.type.httpServer') },
-		{ value: 3, label: t('network.connection.type.mqttClient') },
-		{ value: 4, label: t('network.connection.type.kafka') },
-		{ value: 5, label: t('network.connection.type.rabbitmq') },
-	];
-
-	const enabledOptions = [
-		{ value: 0, label: t('network.connection.enabled.enabled') },
-		{ value: 1, label: t('network.connection.enabled.disabled') },
-	];
-
-	const typeMap = typeOptions.reduce<Record<number, string>>((map, item) => {
-		map[item.value] = item.label;
-		return map;
-	}, {});
-
-	const enabledMap = enabledOptions.reduce<Record<number, string>>((map, item) => {
-		map[item.value] = item.label;
-		return map;
-	}, {});
-
 	const getPageQueryParam = (params: any) => {
 		return {
 			pageSize: params?.pageSize,
 			pageNum: params?.current,
 			pageIndex: params?.pageSize * (params?.current - 1),
 			name: trim(params?.name),
-			type: params?.type,
-			enabled: params?.enabled,
+			state: params?.state,
 			params: {
 				startTime: params?.startDate
 					? `${params.startDate} 00:00:00`
@@ -99,57 +74,72 @@ export default () => {
 			width: 85,
 		},
 		{
-			title: t('network.connection.name'),
+			title: t('iot.session.name'),
 			dataIndex: 'name',
 			valueType: 'text',
 			ellipsis: true,
 			fieldProps: {
-				placeholder: t('network.connection.placeholder.name'),
+				placeholder: t('iot.session.placeholder.name'),
 			},
 		},
 		{
-			title: t('network.connection.type'),
-			key: 'type',
-			dataIndex: 'type',
-			valueType: 'select',
-			ellipsis: true,
-			fieldProps: {
-				placeholder: t('network.connection.placeholder.type'),
-				options: typeOptions,
-			},
-			render: (_, record) => {
-				return record?.type !== undefined ? typeMap[record.type] || record.type : '-';
-			},
-		},
-		{
-			title: t('network.connection.host'),
+			title: t('iot.session.host'),
 			dataIndex: 'host',
 			valueType: 'text',
 			ellipsis: true,
 			hideInSearch: true,
 		},
 		{
-			title: t('network.connection.port'),
+			title: t('iot.session.port'),
 			dataIndex: 'port',
 			valueType: 'digit',
 			hideInSearch: true,
 			width: 90,
+			fieldProps: {
+				stringMode: true,
+			},
 		},
 		{
-			title: t('network.connection.enabled'),
-			key: 'enabled',
-			dataIndex: 'enabled',
+			title: t('iot.session.username'),
+			dataIndex: 'username',
+			valueType: 'text',
+			ellipsis: true,
+			hideInSearch: true,
+		},
+		{
+			title: t('iot.session.password'),
+			dataIndex: 'password',
+			valueType: 'text',
+			ellipsis: true,
+			hideInSearch: true,
+		},
+		{
+			title: t('iot.session.state'),
+			dataIndex: 'state',
+			ellipsis: true,
 			valueType: 'select',
-			width: 110,
 			fieldProps: {
-				placeholder: t('network.connection.placeholder.enabled'),
-				options: enabledOptions,
+				valueType: 'select',
+				mode: 'single',
+				placeholder: t('iot.session.placeholder.state'),
+				options: [
+					{
+						value: 0,
+						label: '关闭',
+					},
+					{
+						value: 1,
+						label: '打开',
+					},
+				],
 			},
-			render: (_, record) => {
-				return record?.enabled !== undefined
-					? enabledMap[record.enabled] || record.enabled
-					: '-';
-			},
+		},
+		{
+			title: t('iot.session.status'),
+			dataIndex: 'status',
+			valueType: 'text',
+			ellipsis: true,
+			hideInSearch: true,
 		},
 		{
 			title: t('common.createTime'),
@@ -189,8 +179,8 @@ export default () => {
 					<a
 						key="get"
 						onClick={() => {
-							getConnectionById({ id: record?.id }).then((res) => {
-								setTitle(t('network.connection.view'));
+							getSessionById({ id: record?.id }).then((res) => {
+								setTitle(t('iot.session.view'));
 								setDataSource(res?.data);
 								setModalVisit(true);
 								setReadOnly(true);
@@ -204,8 +194,8 @@ export default () => {
 					<a
 						key="modify"
 						onClick={() => {
-							getConnectionById({ id: record?.id }).then((res) => {
-								setTitle(t('network.connection.modify'));
+							getSessionById({ id: record?.id }).then((res) => {
+								setTitle(t('iot.session.modify'));
 								setDataSource(res?.data);
 								setModalVisit(true);
 								setReadOnly(false);
@@ -225,7 +215,7 @@ export default () => {
 								okText: t('common.ok'),
 								cancelText: t('common.cancel'),
 								onOk: () => {
-									removeConnection([record?.id]).then((res) => {
+									removeSession([record?.id]).then((res) => {
 										if (res.code === 'OK') {
 											message
 												.success(t('toast.deleteSuccess'))
@@ -265,7 +255,7 @@ export default () => {
 				actionRef={actionRef}
 				columns={columns}
 				request={async (params) => {
-					return pageConnection(getPageQueryParam(params)).then((res) => {
+					return pageSession(getPageQueryParam(params)).then((res) => {
 						return Promise.resolve({
 							data: res?.data?.records,
 							total: parseInt(res?.data?.total || 0),
@@ -291,19 +281,18 @@ export default () => {
 							type="primary"
 							icon={<PlusOutlined />}
 							onClick={() => {
-								setTitle(t('network.connection.insert'));
+								setTitle(t('iot.session.insert'));
 								setRequestId(uuidV7());
 								setReadOnly(false);
 								setModalVisit(true);
 								setDataSource({
 									id: undefined,
 									name: '',
-									type: 1,
-									host: '',
-									port: undefined,
-									enabled: 0,
-									config: '{}',
-									remark: '',
+									host: '127.0.0.1',
+									port: 1883,
+									username: '',
+									password: '',
+									state: 0,
 								});
 							}}
 						>
@@ -327,7 +316,7 @@ export default () => {
 									okText: t('common.ok'),
 									cancelText: t('common.cancel'),
 									onOk: async () => {
-										removeConnection(ids).then((res) => {
+										removeSession(ids).then((res) => {
 											if (res.code === 'OK') {
 												message
 													.success(t('toast.deleteSuccess'))

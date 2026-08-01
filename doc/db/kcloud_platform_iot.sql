@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS "public"."iot_session" (
 "port" int4 NOT NULL ,
 "username" varchar(50) NOT NULL,
 "password" varchar(50) NOT NULL,
-"state" int2 NOT NULL
+"state" int2 NOT NULL DEFAULT 0
 )
 ;
 COMMENT ON COLUMN "public"."iot_session"."id" IS 'ID';

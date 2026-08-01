@@ -59,7 +59,7 @@ public class SessionsController {
 	@PreAuthorize("hasAuthority('write') and hasAuthority('iot:session:save')")
 	@OperateLog(module = "会话管理", operation = "保存会话")
 	@Operation(summary = "保存会话", description = "保存会话")
-	public void saveConnection(@RequestBody SessionSaveCmd cmd) {
+	public void saveSession(@RequestBody SessionSaveCmd cmd) {
 		sessionsServiceI.saveSession(cmd);
 	}
 
@@ -67,7 +67,7 @@ public class SessionsController {
 	@PreAuthorize("hasAuthority('write') and hasAuthority('iot:session:modify')")
 	@OperateLog(module = "会话管理", operation = "修改会话")
 	@Operation(summary = "修改会话", description = "修改会话")
-	public void modifyConnection(@RequestBody SessionModifyCmd cmd) {
+	public void modifySession(@RequestBody SessionModifyCmd cmd) {
 		sessionsServiceI.modifySession(cmd);
 	}
 
@@ -75,7 +75,7 @@ public class SessionsController {
 	@PreAuthorize("hasAuthority('write') and hasAuthority('iot:session:remove')")
 	@OperateLog(module = "会话管理", operation = "删除会话")
 	@Operation(summary = "删除会话", description = "删除会话")
-	public void removeConnection(@RequestBody Long[] ids) {
+	public void removeSession(@RequestBody Long[] ids) {
 		sessionsServiceI.removeSession(new SessionRemoveCmd(ids));
 	}
 
@@ -83,7 +83,7 @@ public class SessionsController {
 	@PostMapping("/v1/sessions/page")
 	@PreAuthorize("hasAuthority('read') and hasAuthority('iot:session:page')")
 	@Operation(summary = "分页查询会话列表", description = "分页查询会话列表")
-	public Result<Page<SessionCO>> pageConnection(@Validated @RequestBody SessionPageQry qry) {
+	public Result<Page<SessionCO>> pageSession(@Validated @RequestBody SessionPageQry qry) {
 		return sessionsServiceI.pageSession(qry);
 	}
 
@@ -91,7 +91,7 @@ public class SessionsController {
 	@GetMapping("/v1/sessions/{id}")
 	@PreAuthorize("hasAuthority('read') and hasAuthority('iot:session:detail')")
 	@Operation(summary = "查看会话详情", description = "查看会话详情")
-	public Result<SessionCO> getConnectionById(@PathVariable("id") Long id) {
+	public Result<SessionCO> getSessionById(@PathVariable Long id) {
 		return sessionsServiceI.getSessionById(new SessionGetQry(id));
 	}
 

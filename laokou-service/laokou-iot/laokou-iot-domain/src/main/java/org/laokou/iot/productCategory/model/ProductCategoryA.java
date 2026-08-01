@@ -66,8 +66,8 @@ public class ProductCategoryA extends AggregateRoot implements ValidateName {
 		this.productCategoryE = productCategoryE;
 		Long primaryKey = this.productCategoryE.getId();
 		super.createTime = InstantUtils.now();
-		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : idGenerator.getId();
 		this.operateType = ObjectUtils.isNotNull(primaryKey) ? OperateType.MODIFY : OperateType.SAVE;
+		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : idGenerator.getId();
 		return this;
 	}
 
