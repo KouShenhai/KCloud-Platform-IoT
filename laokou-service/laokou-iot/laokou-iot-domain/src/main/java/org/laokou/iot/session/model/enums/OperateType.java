@@ -15,31 +15,27 @@
  *
  */
 
-package org.laokou.iot.session.gatewayimpl.database.dataobject;
+package org.laokou.iot.session.model.enums;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
-import org.laokou.common.mybatisplus.mapper.BaseDO;
+import lombok.Getter;
 
 /**
- * Session data object.
- *
  * @author laokou
  */
-@Data
-@TableName("iot_session")
-public class SessionDO extends BaseDO {
+@Getter
+public enum OperateType {
 
-	private String name;
+	SAVE("save", "保存会话"),
 
-	private String host;
+	MODIFY("modify", "修改会话");
 
-	private Integer port;
+	private final String code;
 
-	private String username;
+	private final String desc;
 
-	private String password;
-
-	private Integer state;
+	OperateType(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
 
 }

@@ -17,10 +17,17 @@
 
 package org.laokou.iot.session.command;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
+import org.laokou.common.tenant.constant.DSConstants;
+import org.laokou.iot.session.ability.SessionDomainService;
+import org.laokou.iot.session.convertor.SessionConvertor;
 import org.laokou.iot.session.dto.SessionModifyCmd;
+import org.laokou.iot.session.factory.SessionDomainFactory;
+import org.laokou.iot.session.model.SessionA;
 import org.springframework.stereotype.Component;
 
 /**
@@ -28,15 +35,31 @@ import org.springframework.stereotype.Component;
  *
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class SessionModifyCmdExe {
+
+	private final SessionDomainService sessionDomainService;
 
 	private final TransactionalUtils transactionalUtils;
 
 	@CommandLog
 	public void executeVoid(SessionModifyCmd cmd) {
-
+		try {
+			DynamicDataSourceContextHolder.push(DSConstants.IOT);
+			SessionA sessionA = SessionDomainFactory.createSessionA().create(SessionConvertor.toEntity(cmd.getCo()));
+			// 校验参数
+			sessionA.checkSessionParam();
+			transactionalUtils.executeInTransaction(() -> sessionDomainService.updateSession(sessionA));
+		}
+		catch (Exception ex) {
+			log.error("修改会话失败，错误信息：{}", ex.getMessage(), ex);
+			throw ex;
+		}
+		finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 }

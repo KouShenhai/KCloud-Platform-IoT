@@ -23,56 +23,53 @@
   <sql id="selectColumns">
          id,
          "name",
-         "type",
          host,
          port,
-         enabled,
-         config,
-         remark,
+         "username",
+          "password",
+          "state",
          create_time
   </sql>
 
   <sql id="selectConditions">
-    where del_flag = 0
-    <if test="pageQuery.name != null and pageQuery.name != ''">
-      and "name" like #{pageQuery.name}
-    </if>
-    <if test="pageQuery.type != null">
-      and "type" = #{pageQuery.type}
-    </if>
-    <if test="pageQuery.enabled != null">
-      and enabled = #{pageQuery.enabled}
-    </if>
-    <if test="pageQuery.params.startTime != null and pageQuery.params.startTime != ''">
-      and create_time <![CDATA[ >= ]]> #{pageQuery.params.startTime}
-    </if>
-    <if test="pageQuery.params.endTime != null and pageQuery.params.endTime != ''">
-      and create_time <![CDATA[ <= ]]> #{pageQuery.params.endTime}
-    </if>
+   <where>
+     <if test="pageQuery.name != null and pageQuery.name != ''">
+       and "name" like #{pageQuery.name}
+     </if>
+     <if test="pageQuery.state != null">
+       and "state" = #{pageQuery.state}
+     </if>
+     <if test="pageQuery.params.startTime != null and pageQuery.params.startTime != ''">
+       and create_time <![CDATA[ >= ]]> #{pageQuery.params.startTime}
+     </if>
+     <if test="pageQuery.params.endTime != null and pageQuery.params.endTime != ''">
+       and create_time <![CDATA[ <= ]]> #{pageQuery.params.endTime}
+     </if>
+     and del_flag = 0
+   </where>
   </sql>
 
   <sql id="selectObjectList">
     SELECT <include refid="selectColumns"/>
-    from network_connection
+    from iot_session
     <include refid="selectConditions"/>
     order by id desc
   </sql>
 
-  <select id="selectObjectPage"
-          resultType="org.laokou.iot.session.gatewayimpl.database.dataobject.SessionDO">
+  <select id="selectObjectPage" resultType="org.laokou.iot.session.gatewayimpl.database.dataobject.SessionDO">
     <include refid="selectObjectList"/>
     limit #{pageQuery.pageSize} offset #{pageQuery.pageIndex}
   </select>
 
   <select id="selectObjectCount" resultType="long">
     SELECT count(1)
-    from network_connection
+    from iot_session
     <include refid="selectConditions"/>
   </select>
 
   <select id="selectVersion" resultType="integer">
     select version
-    from network_connection
+    from iot_session
     where id = #{id}
   </select>
 

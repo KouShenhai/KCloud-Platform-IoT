@@ -65,8 +65,8 @@ public class ThingModelA extends AggregateRoot implements ValidateName {
 		this.thingModelE = thingModelE;
 		Long primaryKey = this.thingModelE.getId();
 		super.createTime = InstantUtils.now();
-		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : idGenerator.getId();
 		this.operateType = ObjectUtils.isNotNull(primaryKey) ? OperateType.MODIFY : OperateType.SAVE;
+		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : idGenerator.getId();
 		return this;
 	}
 

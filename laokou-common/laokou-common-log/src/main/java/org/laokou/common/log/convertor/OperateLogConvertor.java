@@ -17,6 +17,7 @@
 
 package org.laokou.common.log.convertor;
 
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.google.common.net.HttpHeaders;
 import jakarta.servlet.http.HttpServletRequest;
 import org.laokou.common.context.util.UserUtils;
@@ -24,6 +25,7 @@ import org.laokou.common.core.util.AddressUtils;
 import org.laokou.common.core.util.IpUtils;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.common.entity.OperateLogE;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.log.factory.DomainFactory;
@@ -61,9 +63,10 @@ public final class OperateLogConvertor {
 	}
 
 	public static OperateEvent toDomainEvent(OperateLogA operateLogA) {
+		Long id = operateLogA.getId();
 		OperateLogE operateLogE = operateLogA.getOperateLogE();
 		return OperateEvent.builder()
-			.id(operateLogA.getId())
+			.id(ObjectUtils.isNotNull(id) ? id : IdWorker.getId())
 			.name(operateLogE.getName())
 			.moduleName(operateLogE.getModuleName())
 			.uri(operateLogE.getUri())

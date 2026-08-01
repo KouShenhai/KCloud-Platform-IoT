@@ -93,8 +93,8 @@ public class UserA extends AggregateRoot implements ValidateName {
 		this.userE = userE;
 		Long primaryKey = this.userE.getId();
 		super.createTime = InstantUtils.now();
-		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : idGenerator.getId();
 		this.operateType = operateType;
+		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : idGenerator.getId();
 		return this;
 	}
 

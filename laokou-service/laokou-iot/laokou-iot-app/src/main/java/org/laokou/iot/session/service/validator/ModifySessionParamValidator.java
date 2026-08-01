@@ -15,31 +15,23 @@
  *
  */
 
-package org.laokou.iot.session.gatewayimpl.database.dataobject;
+package org.laokou.iot.session.service.validator;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
-import org.laokou.common.mybatisplus.mapper.BaseDO;
+import lombok.RequiredArgsConstructor;
+import org.laokou.common.i18n.util.ParamValidator;
+import org.laokou.iot.session.model.SessionA;
+import org.laokou.iot.session.model.validator.SessionParamValidator;
+import org.springframework.stereotype.Component;
 
 /**
- * Session data object.
- *
  * @author laokou
  */
-@Data
-@TableName("iot_session")
-public class SessionDO extends BaseDO {
+@Component("modifySessionParamValidator")
+@RequiredArgsConstructor
+public class ModifySessionParamValidator implements SessionParamValidator {
 
-	private String name;
-
-	private String host;
-
-	private Integer port;
-
-	private String username;
-
-	private String password;
-
-	private Integer state;
-
+	@Override
+	public void validateSession(SessionA sessionA) {
+		ParamValidator.validate(sessionA.getValidateName());
+	}
 }

@@ -15,26 +15,24 @@
  *
  */
 
-package org.laokou.iot.session.model;
+package org.laokou.iot.session.service.validator;
 
-import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import org.laokou.common.i18n.util.ParamValidator;
+import org.laokou.iot.session.model.SessionA;
+import org.laokou.iot.session.model.validator.SessionParamValidator;
+import org.springframework.stereotype.Component;
 
 /**
- * Network connection domain entity.
- *
  * @author laokou
  */
-@Data
-public class SessionE {
+@Component("saveSessionParamValidator")
+@RequiredArgsConstructor
+public class SaveSessionParamValidator implements SessionParamValidator {
 
-	private Long id;
-
-	private String name;
-
-	private Integer type;
-
-	private String host;
-
-	private Integer port;
+	@Override
+	public void validateSession(SessionA sessionA) {
+		ParamValidator.validate(sessionA.getValidateName());
+	}
 
 }

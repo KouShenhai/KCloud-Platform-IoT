@@ -65,8 +65,8 @@ public class I18nMenuA extends AggregateRoot implements ValidateName {
 		this.i18nMenuE = i18nMenuE;
 		Long primaryKey = this.i18nMenuE.getId();
 		super.createTime = InstantUtils.now();
-		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : idGenerator.getId();
 		this.operateType = ObjectUtils.isNotNull(primaryKey) ? OperateType.MODIFY : OperateType.SAVE;
+		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : idGenerator.getId();
 		return this;
 	}
 

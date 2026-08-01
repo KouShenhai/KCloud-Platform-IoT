@@ -15,31 +15,15 @@
  *
  */
 
-package org.laokou.iot.session.gatewayimpl.database.dataobject;
-
-import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
-import org.laokou.common.mybatisplus.mapper.BaseDO;
+package org.laokou.iot.session.service.validator;
 
 /**
- * Session data object.
- *
  * @author laokou
  */
-@Data
-@TableName("iot_session")
-public class SessionDO extends BaseDO {
+final class SessionParamValidator {
 
-	private String name;
+	private SessionParamValidator() {
 
-	private String host;
-
-	private Integer port;
-
-	private String username;
-
-	private String password;
-
-	private Integer state;
+	}
 
 }

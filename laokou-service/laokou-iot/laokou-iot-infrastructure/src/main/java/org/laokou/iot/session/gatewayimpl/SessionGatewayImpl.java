@@ -18,13 +18,17 @@
 package org.laokou.iot.session.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.iot.session.convertor.SessionConvertor;
 import org.laokou.iot.session.gateway.SessionGateway;
 import org.laokou.iot.session.gatewayimpl.database.SessionMapper;
+import org.laokou.iot.session.gatewayimpl.database.dataobject.SessionDO;
 import org.laokou.iot.session.model.SessionA;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+
 /**
- * Network connection gateway implementation.
+ * 会话网关实现.
  *
  * @author laokou
  */
@@ -36,17 +40,19 @@ public class SessionGatewayImpl implements SessionGateway {
 
 	@Override
 	public void createSession(SessionA sessionA) {
-
+		sessionMapper.insert(SessionConvertor.toDataObject(sessionA));
 	}
 
 	@Override
 	public void updateSession(SessionA sessionA) {
-
+		SessionDO sessionDO = SessionConvertor.toDataObject(sessionA);
+		sessionDO.setVersion(sessionMapper.selectVersion(sessionA.getId()));
+		sessionMapper.updateById(sessionDO);
 	}
 
 	@Override
 	public void deleteSession(Long[] ids) {
-
+		sessionMapper.deleteByIds(Arrays.asList(ids));
 	}
 
 }
