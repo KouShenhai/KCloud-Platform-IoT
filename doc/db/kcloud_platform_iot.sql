@@ -73,8 +73,7 @@ CREATE TABLE IF NOT EXISTS "public"."iot_session" (
 "port" int4 NOT NULL ,
 "username" varchar(50) NOT NULL,
 "password" varchar(50) NOT NULL,
-"state" int2 NOT NULL,
-"broker_name" varchar(30) NOT NULL
+"state" int2 NOT NULL
 )
 ;
 COMMENT ON COLUMN "public"."iot_session"."id" IS 'ID';
@@ -92,7 +91,6 @@ COMMENT ON COLUMN "public"."iot_session"."port" IS '会话端口';
 COMMENT ON COLUMN "public"."iot_session"."username" IS '会话用户名';
 COMMENT ON COLUMN "public"."iot_session"."password" IS '会话密码';
 COMMENT ON COLUMN "public"."iot_session"."state" IS '会话状态，0关闭，1打开';
-COMMENT ON COLUMN "public"."iot_session"."broker_name" IS 'MQTT代理服务器名称';
 COMMENT ON TABLE "public"."iot_session" IS '会话';
 ALTER TABLE "public"."iot_session" ADD CONSTRAINT "iot_session_pkey" PRIMARY KEY ("id");
 

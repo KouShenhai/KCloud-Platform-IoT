@@ -20,7 +20,6 @@ package org.laokou.iot.session.dto.mqtt;
 import com.google.common.collect.Maps;
 import lombok.Getter;
 
-import java.util.Arrays;
 import java.util.Map;
 
 /***
@@ -30,6 +29,39 @@ import java.util.Map;
  */
 @Getter
 public enum MqttMessageType {
+
+	UP_CLIENT_CONNECTED_SYSTEM_MESSAGE("up_client_connected_system_message", "MQTT客户端建立连接【上行】") {
+		@Override
+		public String getTopic() {
+			return "$SYS/brokers/+/clients/+/connected";
+		}
+
+		@Override
+		public String getMqTopic() {
+			return "iot-up-client-connected-system-message";
+		}
+
+		@Override
+		MqttQos getMqttQos() {
+			return MqttQos.AT_LEAST_ONCE;
+		}
+	},
+	UP_CLIENT_DISCONNECTED_SYSTEM_MESSAGE("up_client_disconnected_system_message", "MQTT客户端断开连接【上行】") {
+		@Override
+		public String getTopic() {
+			return "$SYS/brokers/+/clients/+/disconnected";
+		}
+
+		@Override
+		public String getMqTopic() {
+			return "iot-up-client-disconnected-system-message";
+		}
+
+		@Override
+		MqttQos getMqttQos() {
+			return MqttQos.AT_LEAST_ONCE;
+		}
+	},
 
 	DOWN_COMMAND_GATEWAY_MESSAGE("down_command_gateway_message", "网关指令【下行】") {
 		@Override
@@ -45,11 +77,6 @@ public enum MqttMessageType {
 		@Override
 		MqttQos getMqttQos() {
 			return MqttQos.AT_LEAST_ONCE;
-		}
-
-		@Override
-		MessageType getMessageType() {
-			return MessageType.GATEWAY;
 		}
 
 	},
@@ -70,11 +97,6 @@ public enum MqttMessageType {
 			return MqttQos.AT_LEAST_ONCE;
 		}
 
-		@Override
-		MessageType getMessageType() {
-			return MessageType.GATEWAY;
-		}
-
 	},
 
 	UP_REPORT_OTA_GATEWAY_MESSAGE("up_report_ota_gateway_message", "上报网关固件信息【上行】") {
@@ -91,11 +113,6 @@ public enum MqttMessageType {
 		@Override
 		MqttQos getMqttQos() {
 			return MqttQos.AT_LEAST_ONCE;
-		}
-
-		@Override
-		MessageType getMessageType() {
-			return MessageType.GATEWAY;
 		}
 
 	},
@@ -116,10 +133,6 @@ public enum MqttMessageType {
 			return MqttQos.AT_LEAST_ONCE;
 		}
 
-		@Override
-		MessageType getMessageType() {
-			return MessageType.GATEWAY;
-		}
 	},
 
 	UP_UPGRADE_OTA_GATEWAY_MESSAGE("up_upgrade_ota_gateway_message", "升级网关固件【上行】") {
@@ -136,11 +149,6 @@ public enum MqttMessageType {
 		@Override
 		MqttQos getMqttQos() {
 			return MqttQos.AT_LEAST_ONCE;
-		}
-
-		@Override
-		MessageType getMessageType() {
-			return MessageType.GATEWAY;
 		}
 
 	},
@@ -161,11 +169,6 @@ public enum MqttMessageType {
 			return MqttQos.AT_LEAST_ONCE;
 		}
 
-		@Override
-		MessageType getMessageType() {
-			return MessageType.GATEWAY;
-		}
-
 	},
 
 	UP_UPGRADE_OTA_PROGRESS_GATEWAY_MESSAGE("up_upgrade_ota_progress_gateway_message", "升级网关固件进度【上行】") {
@@ -182,11 +185,6 @@ public enum MqttMessageType {
 		@Override
 		MqttQos getMqttQos() {
 			return MqttQos.AT_LEAST_ONCE;
-		}
-
-		@Override
-		MessageType getMessageType() {
-			return MessageType.GATEWAY;
 		}
 
 	},
@@ -207,11 +205,6 @@ public enum MqttMessageType {
 			return MqttQos.AT_MOST_ONCE;
 		}
 
-		@Override
-		MessageType getMessageType() {
-			return MessageType.GATEWAY;
-		}
-
 	},
 
 	UP_REPORT_PROPERTIES_GATEWAY_MESSAGE("up_report_properties_gateway_message", "上报设备属性【上行】") {
@@ -228,11 +221,6 @@ public enum MqttMessageType {
 		@Override
 		MqttQos getMqttQos() {
 			return MqttQos.AT_MOST_ONCE;
-		}
-
-		@Override
-		MessageType getMessageType() {
-			return MessageType.GATEWAY;
 		}
 
 	},
@@ -254,11 +242,6 @@ public enum MqttMessageType {
 			return MqttQos.AT_LEAST_ONCE;
 		}
 
-		@Override
-		MessageType getMessageType() {
-			return MessageType.GATEWAY;
-		}
-
 	};
 
 	private final String code;
@@ -276,15 +259,11 @@ public enum MqttMessageType {
 
 	abstract MqttQos getMqttQos();
 
-	abstract MessageType getMessageType();
-
 	private static final MqttMessageType[] VALUES = values();
 
 	public static Map<String, Integer> getTopics(String tenantCode) {
 		Map<String, Integer> topics = Maps.newHashMapWithExpectedSize(VALUES.length);
-		for (MqttMessageType messageType : Arrays.stream(VALUES)
-			.filter(item -> item.getMessageType() == MessageType.GATEWAY)
-			.toList()) {
+		for (MqttMessageType messageType : VALUES) {
 			String topic = messageType.getTopic();
 			int plusIndex = topic.indexOf('+');
 			String replacedTopic = plusIndex > 0
