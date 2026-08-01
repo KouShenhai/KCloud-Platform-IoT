@@ -22,7 +22,7 @@ export async function saveCSession(
 	requestId: string,
 	options?: { [key: string]: any },
 ) {
-	return request<any>('/api-proxy/iot/api/v1/csessions', {
+	return request<any>('/api-proxy/iot/api/v1/sessions', {
 		method: 'POST',
 		headers: {
 			'request-id': requestId,

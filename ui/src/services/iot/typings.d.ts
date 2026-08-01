@@ -265,9 +265,11 @@ declare namespace API {
 		/** Port */
 		port?: number;
 		/** Username */
-		username?: number;
+		username?: string;
 		/** Password */
 		password?: string;
+		/** State **/
+		state?: number;
 		/** Created time */
 		createTime?: string;
 	};

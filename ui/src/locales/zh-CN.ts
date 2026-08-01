@@ -252,6 +252,7 @@ export default {
 	'iot.session.insert': '新增会话',
 	'iot.session.view': '查看会话',
 	'iot.session.modify': '修改会话',
+	'iot.session.placeholder.state': '请选择会话状态',
 	'iot.session.placeholder.name': '请输入会话名称',
 	'iot.session.placeholder.host': '请输入会话主机',
 	'iot.session.placeholder.port': '请输入会话端口',

@@ -52,8 +52,9 @@ const toConnectionCO = (value: ConnectionFormValues): API.SessionCO => {
 		name: value.name,
 		host: value.host,
 		port: value.port,
-		username: value.enabled,
+		username: value.username,
 		password: value.password,
+		state: value.state,
 	};
 };
 
@@ -72,6 +73,7 @@ export const SessionDrawer: React.FC<ConnectionDrawerProps> = ({
 		intl.formatMessage({ id }, values);
 	const [loading, setLoading] = useState(false);
 
+	// @ts-ignore
 	return (
 		<DrawerForm<ConnectionFormValues>
 			open={modalVisit}
@@ -145,7 +147,7 @@ export const SessionDrawer: React.FC<ConnectionDrawerProps> = ({
 			/>
 
 			<ProFormText
-				disabled={loading}
+				disabled={loading || dataSource.id !== undefined}
 				readonly={readOnly}
 				name="host"
 				label={t('iot.session.host')}
@@ -159,14 +161,17 @@ export const SessionDrawer: React.FC<ConnectionDrawerProps> = ({
 			/>
 
 			<ProFormDigit
-				disabled={loading}
+				disabled={loading || dataSource.id !== undefined}
 				readonly={readOnly}
 				name="port"
 				label={t('iot.session.port')}
 				placeholder={t('iot.session.placeholder.port')}
 				min={1}
 				max={65535}
-				fieldProps={{ precision: 0 }}
+				fieldProps={{
+					precision: 0,
+					stringMode: true,
+				}}
 				rules={[
 					{
 						required: true,
@@ -176,7 +181,7 @@ export const SessionDrawer: React.FC<ConnectionDrawerProps> = ({
 			/>
 
 			<ProFormText
-				disabled={loading}
+				disabled={loading || dataSource.id !== undefined}
 				readonly={readOnly}
 				name="username"
 				label={t('iot.session.username')}
@@ -190,7 +195,7 @@ export const SessionDrawer: React.FC<ConnectionDrawerProps> = ({
 			/>
 
 			<ProFormText
-				disabled={loading}
+				disabled={loading || dataSource.id !== undefined}
 				readonly={readOnly}
 				name="password"
 				label={t('iot.session.password')}
@@ -201,6 +206,16 @@ export const SessionDrawer: React.FC<ConnectionDrawerProps> = ({
 						message: t('iot.session.placeholder.password'),
 					},
 				]}
+			/>
+
+			<ProFormDigit
+				hidden={true}
+				name="state"
+				label={t('iot.session.state')}
+				placeholder={t('iot.session.placeholder.state')}
+				min={1}
+				max={1}
+				fieldProps={{ precision: 0 }}
 			/>
 
 			{readOnly && (

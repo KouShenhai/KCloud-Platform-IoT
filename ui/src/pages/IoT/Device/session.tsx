@@ -95,6 +95,9 @@ export default () => {
 			valueType: 'digit',
 			hideInSearch: true,
 			width: 90,
+			fieldProps: {
+				stringMode: true,
+			},
 		},
 		{
 			title: t('iot.session.username'),
@@ -114,8 +117,22 @@ export default () => {
 			title: t('iot.session.state'),
 			dataIndex: 'state',
 			ellipsis: true,
-			valueType: 'text',
-			hideInSearch: true,
+			valueType: 'select',
+			fieldProps: {
+				valueType: 'select',
+				mode: 'single',
+				placeholder: t('iot.session.placeholder.state'),
+				options: [
+					{
+						value: 0,
+						label: '关闭',
+					},
+					{
+						value: 1,
+						label: '打开',
+					},
+				],
+			},
 		},
 		{
 			title: t('iot.session.status'),
@@ -271,8 +288,8 @@ export default () => {
 								setDataSource({
 									id: undefined,
 									name: '',
-									host: '',
-									port: undefined,
+									host: '127.0.0.1',
+									port: 1883,
 									username: '',
 									password: '',
 									state: 0,

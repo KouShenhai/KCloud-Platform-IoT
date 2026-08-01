@@ -139,7 +139,6 @@ COMMENT ON INDEX "public"."sys_dict_code_tenantId_idx" IS '编码_租户ID_索�
 INSERT INTO "public"."sys_dict" VALUES (1, 1, 1, '2026-06-28 17:29:34.520198', '2026-06-28 17:29:34.602805', 0, 0, 1, 1, '物模型数据类型', 'thing_model_data_type', '物模型数据类型', 0);
 INSERT INTO "public"."sys_dict" VALUES (3, 1, 1, '2026-07-12 16:37:02.573449', '2026-07-12 16:37:18.726788', 0, 1, 1, 1, '物模型数据单位', 'thing_model_data_unit', '物模型数据单位', 0);
 INSERT INTO "public"."sys_dict" VALUES (4, 1, 1, '2026-07-13 14:58:04.072383', '2026-07-13 14:58:04.15763', 0, 0, 1, 1, '数据源类型', 'source_type', '数据源类型', 0);
-INSERT INTO "public"."sys_dict" VALUES (5, 1, 1, '2026-07-26 15:39:21.649446', '2026-07-26 15:39:21.793927', 0, 0, 1, 1, 'MQTT代理服务器名称', 'mqtt_broker_name', 'MQTT代理服务器名称', 0);
 
 -- ----------------------------
 -- -------------字典项------------
@@ -198,8 +197,6 @@ INSERT INTO "public"."sys_dict_item" VALUES (9, 1, 1, '2026-07-12 16:42:51.17466
 INSERT INTO "public"."sys_dict_item" VALUES (10, 1, 1, '2026-07-12 16:44:06.994159', '2026-07-12 16:44:07.015459', 0, 0, 1, 1, '转每分钟(r/min)', 'rpm', 2, '转每分钟(r/min)', 0, 3);
 INSERT INTO "public"."sys_dict_item" VALUES (11, 1, 1, '2026-07-13 14:59:05.461603', '2026-07-13 14:59:05.497696', 0, 0, 1, 1, 'TDengine', 'tdengine', 1, 'TDengine', 0, 4);
 INSERT INTO "public"."sys_dict_item" VALUES (12, 1, 1, '2026-07-25 11:54:21.346795', '2026-07-25 11:54:28.647473', 0, 1, 1, 1, 'enum(枚举)', 'enum', 7, '', 0, 1);
-INSERT INTO "public"."sys_dict_item" VALUES (13, 1, 1, '2026-07-26 15:39:51.538564', '2026-07-26 15:39:51.578955', 0, 0, 1, 1, 'EMQX', 'emqx', 1, '', 0, 5);
-INSERT INTO "public"."sys_dict_item" VALUES (14, 1, 1, '2026-07-26 15:40:24.18725', '2026-07-26 15:40:24.21939', 0, 0, 1, 1, 'NanoMQ', 'nanomq', 2, '', 0, 5);
 
 -- ----------------------------
 -- -------------国际化菜单------------

@@ -252,6 +252,7 @@ export default {
 	'iot.session.insert': 'Insert Session',
 	'iot.session.view': 'View Session',
 	'iot.session.modify': 'Modify Session',
+	'iot.session.placeholder.state': 'Please select session state',
 	'iot.session.placeholder.name': 'Please enter session name',
 	'iot.session.placeholder.host': 'Please enter session host',
 	'iot.session.placeholder.port': 'Please enter session port',

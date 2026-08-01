@@ -19,6 +19,7 @@ package org.laokou.iot.session.service.validator;
 
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.util.ParamValidator;
+import org.laokou.iot.session.gatewayimpl.database.SessionMapper;
 import org.laokou.iot.session.model.SessionA;
 import org.laokou.iot.session.model.validator.SessionParamValidator;
 import org.springframework.stereotype.Component;
@@ -30,9 +31,20 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class SaveSessionParamValidator implements SessionParamValidator {
 
+	private final SessionMapper sessionMapper;
+
 	@Override
 	public void validateSession(SessionA sessionA) {
-		ParamValidator.validate(sessionA.getValidateName());
+		ParamValidator.validate(sessionA.getValidateName(),
+				// 校验会话主机和会话端口
+				org.laokou.iot.session.service.validator.SessionParamValidator.validateHostAndPort(sessionA,
+						sessionMapper),
+				// 校验会话名称
+				org.laokou.iot.session.service.validator.SessionParamValidator.validateName(sessionA),
+				// 校验会话用户名
+				org.laokou.iot.session.service.validator.SessionParamValidator.validateUsername(sessionA),
+				// 校验会话密码
+				org.laokou.iot.session.service.validator.SessionParamValidator.validatePassword(sessionA));
 	}
 
 }
