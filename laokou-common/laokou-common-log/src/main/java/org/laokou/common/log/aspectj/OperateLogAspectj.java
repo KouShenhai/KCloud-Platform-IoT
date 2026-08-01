@@ -22,8 +22,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.laokou.common.i18n.dto.DomainEventPublisher;
 import org.laokou.common.fory.config.ForyFactory;
+import org.laokou.common.fory.constant.ForyConstants;
+import org.laokou.common.i18n.dto.DomainEventPublisher;
 import org.laokou.common.i18n.util.SpringUtils;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.log.convertor.OperateLogConvertor;
@@ -53,7 +54,7 @@ public class OperateLogAspectj {
 	private final DomainEventPublisher kafkaDomainEventPublisher;
 
 	static {
-		ForyFactory.INSTANCE.register(org.laokou.common.log.handler.event.OperateEvent.class, ForyFactory.C_243);
+		ForyFactory.INSTANCE.register(org.laokou.common.log.handler.event.OperateEvent.class, ForyConstants.C_243);
 	}
 
 	@Around("@annotation(operateLog)")

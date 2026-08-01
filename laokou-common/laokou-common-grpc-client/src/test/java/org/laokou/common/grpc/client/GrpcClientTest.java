@@ -18,17 +18,24 @@
 package org.laokou.common.grpc.client;
 
 import io.grpc.StatusException;
+import jakarta.servlet.http.HttpServletRequest;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.grpc.client.annotation.GrpcClient;
 import org.laokou.common.grpc.proto.HelloWorldProto;
 import org.laokou.common.grpc.proto.SimpleGrpc;
 import org.laokou.common.testcontainers.util.DockerImageNames;
+import org.mockito.Mockito;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.http.HttpHeaders;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.testcontainers.consul.ConsulContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -42,6 +49,18 @@ class GrpcClientTest {
 
 	@Container
 	static ConsulContainer consul = new ConsulContainer(DockerImageNames.consul());
+
+	@BeforeEach
+	void setUpRequestContext() {
+		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
+		Mockito.when(request.getHeader(HttpHeaders.AUTHORIZATION)).thenReturn("Bearer mock-access-token");
+		RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+	}
+
+	@AfterEach
+	void clearRequestContext() {
+		RequestContextHolder.resetRequestAttributes();
+	}
 
 	@DynamicPropertySource
 	static void consulProperties(DynamicPropertyRegistry registry) {

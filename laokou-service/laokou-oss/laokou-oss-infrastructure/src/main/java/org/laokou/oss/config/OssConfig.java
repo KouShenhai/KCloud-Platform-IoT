@@ -19,6 +19,7 @@ package org.laokou.oss.config;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.laokou.common.fory.config.ForyFactory;
+import org.laokou.common.fory.constant.ForyConstants;
 import org.laokou.oss.model.Mq;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,7 +32,7 @@ import org.springframework.kafka.core.KafkaAdmin;
 public class OssConfig {
 
 	static {
-		ForyFactory.INSTANCE.register(org.laokou.oss.dto.domainevent.OssUploadEvent.class, ForyFactory.C_240);
+		ForyFactory.INSTANCE.register(org.laokou.oss.dto.domainevent.OssUploadEvent.class, ForyConstants.C_240);
 	}
 
 	@Bean("authNewTopics")

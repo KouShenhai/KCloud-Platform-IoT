@@ -30,6 +30,7 @@ import org.laokou.auth.model.function.HttpRequest;
 import org.laokou.auth.model.validator.CaptchaValidator;
 import org.laokou.auth.model.validator.PasswordValidator;
 import org.laokou.common.fory.config.ForyFactory;
+import org.laokou.common.fory.constant.ForyConstants;
 import org.laokou.common.i18n.common.IdGenerator;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.SpringUtils;
@@ -88,8 +89,8 @@ class OAuth2AuthorizationServerConfig {
 	private final RedisUtils redisUtils;
 
 	static {
-		ForyFactory.INSTANCE.register(org.laokou.auth.dto.domainevent.LoginEvent.class, ForyFactory.C_241);
-		ForyFactory.INSTANCE.register(org.laokou.auth.dto.domainevent.SendCaptchaEvent.class, ForyFactory.C_242);
+		ForyFactory.INSTANCE.register(org.laokou.auth.dto.domainevent.LoginEvent.class, ForyConstants.C_241);
+		ForyFactory.INSTANCE.register(org.laokou.auth.dto.domainevent.SendCaptchaEvent.class, ForyConstants.C_242);
 	}
 
 	// @formatter:on
