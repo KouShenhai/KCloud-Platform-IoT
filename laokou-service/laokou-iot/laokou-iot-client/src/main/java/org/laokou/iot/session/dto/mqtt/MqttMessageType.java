@@ -375,11 +375,10 @@ public enum MqttMessageType {
 
 	public abstract MessageType getMessageType();
 
-	public static final MqttMessageType[] VALUES = values();
-
 	public static Map<String, Integer> getTopics(String tenantCode) {
-		Map<String, Integer> topics = Maps.newHashMapWithExpectedSize(VALUES.length);
-		for (MqttMessageType messageType : VALUES) {
+		MqttMessageType[] values = values();
+		Map<String, Integer> topics = Maps.newHashMapWithExpectedSize(values.length);
+		for (MqttMessageType messageType : values) {
 			String topic = messageType.getTopic();
 			int plusIndex = topic.indexOf('+');
 			String replacedTopic = plusIndex > 0

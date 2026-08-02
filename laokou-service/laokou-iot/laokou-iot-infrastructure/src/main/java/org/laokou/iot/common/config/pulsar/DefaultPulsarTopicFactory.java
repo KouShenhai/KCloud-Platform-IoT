@@ -65,7 +65,7 @@ final class DefaultPulsarTopicFactory implements PulsarTopicFactory {
 			namespaces.createNamespace(namespace);
 		}
 		log.info("create topic for namespace {}", namespace);
-		for (MqttMessageType mqttMessageType : Arrays.stream(MqttMessageType.VALUES)
+		for (MqttMessageType mqttMessageType : Arrays.stream(MqttMessageType.values())
 			.filter(item -> item.getMessageType() == MessageType.GATEWAY)
 			.toList()) {
 			createTopic(topics, namespace, mqttMessageType);
