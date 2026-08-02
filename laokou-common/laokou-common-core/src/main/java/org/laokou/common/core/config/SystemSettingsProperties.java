@@ -49,11 +49,7 @@ public class SystemSettingsProperties implements Serializable {
 
 	private Long defaultTenantValue = 1L;
 
-	private String defaultTenantCode = "laokouyun";
-
 	private String tenantCode = "laokouyun";
-
-	private Long tenantValue = 1L;
 
 	private String anonymousAuthToken = "48aA4CD5uithlID8GaDffYtOYeY8Fa5TB7S4RyXzfH313WYlAxUBR3tHoA93seZT";
 

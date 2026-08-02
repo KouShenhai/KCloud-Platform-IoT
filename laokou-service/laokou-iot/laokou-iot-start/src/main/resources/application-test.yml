@@ -16,14 +16,22 @@
 #    */
 spring:
   pulsar:
+    defaults:
+      topic:
+        enabled: false
     client:
-      service-url: pulsar://pulsar:6650
+      service-url: pulsar://127.0.0.1:16650
     producer:
       batching-enabled: true
       cache:
         maximum-size: 1000
         enabled: true
         initial-capacity: 128
+    admin:
+      service-url: http://127.0.0.1:18080
+      connection-timeout: 1m
+      request-timeout: 5m
+      read-timeout: 1m
   datasource:
     dynamic:
       # 默认false,建议线上关闭
