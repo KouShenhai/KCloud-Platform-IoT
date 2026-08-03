@@ -698,7 +698,7 @@ services:
   # 创建主题
   # bin/pulsar-admin topics create-partitioned-topic xxx/gateway/xxx -p 4
   pulsar:
-    image: apachepulsar/pulsar:4.2.3
+    image: apachepulsar/pulsar:4.2.4
     container_name: pulsar
     # 保持容器在没有守护程序的情况下运行
     tty: true
