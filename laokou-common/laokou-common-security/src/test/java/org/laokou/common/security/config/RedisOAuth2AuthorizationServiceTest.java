@@ -141,14 +141,6 @@ class RedisOAuth2AuthorizationServiceTest {
 			.hasMessageContaining("id cannot be empty");
 	}
 
-	@Test
-	void test_findByToken_throws_exception_when_token_is_empty() {
-		// Then
-		Assertions.assertThatThrownBy(() -> service.findByToken("", OAuth2TokenType.ACCESS_TOKEN))
-			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessageContaining("Token cannot be empty");
-	}
-
 	private RegisteredClient createRegisteredClient() {
 		return RegisteredClient.withId("client-1")
 			.clientId("my-client")

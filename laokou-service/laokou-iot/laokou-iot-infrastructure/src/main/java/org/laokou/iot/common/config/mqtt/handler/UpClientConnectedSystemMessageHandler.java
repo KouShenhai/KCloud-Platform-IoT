@@ -36,7 +36,7 @@ final class UpClientConnectedSystemMessageHandler extends AbstractMessageHandler
 
 	@Override
 	protected MqttMessageType getMatchTopic() {
-		return MqttMessageType.UP_CLIENT_CONNECTED_SYSTEM_MESSAGE;
+		return MqttMessageType.UP_CLIENT_CONNECTED_GATEWAY_MESSAGE;
 	}
 
 	@Override

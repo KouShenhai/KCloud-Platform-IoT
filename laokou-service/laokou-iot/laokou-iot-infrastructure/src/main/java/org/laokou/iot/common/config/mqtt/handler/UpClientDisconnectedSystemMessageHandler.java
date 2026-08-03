@@ -35,7 +35,7 @@ final class UpClientDisconnectedSystemMessageHandler extends AbstractMessageHand
 
 	@Override
 	protected MqttMessageType getMatchTopic() {
-		return MqttMessageType.UP_CLIENT_DISCONNECTED_SYSTEM_MESSAGE;
+		return MqttMessageType.UP_CLIENT_DISCONNECTED_GATEWAY_MESSAGE;
 	}
 
 	@Override
