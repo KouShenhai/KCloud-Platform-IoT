@@ -17,6 +17,9 @@
 
 package org.laokou.iot.common.config.mqtt;
 
+import io.netty.handler.codec.mqtt.MqttQoS;
+import io.vertx.core.Future;
+import io.vertx.mqtt.messages.MqttPublishMessage;
 import org.laokou.iot.common.util.VertxMqttUtils;
 import org.laokou.iot.session.dto.mqtt.MqttMessageType;
 
@@ -30,6 +33,22 @@ public abstract class AbstractMessageHandler implements MessageHandler {
 		return VertxMqttUtils.matchTopic(getMatchTopic().getTopic(), topic);
 	}
 
+	@Override
+	public Future<Void> handle(Long snowflakeId, MqttPublishMessage publishMessage) {
+		Future<Void> future = handleMessage(snowflakeId, publishMessage);
+		ack(publishMessage);
+		return future;
+	}
+
 	protected abstract MqttMessageType getMatchTopic();
+
+	protected abstract Future<Void> handleMessage(Long snowflakeId, MqttPublishMessage publishMessage);
+
+	private void ack(MqttPublishMessage publishMessage) {
+		if (publishMessage.qosLevel() == MqttQoS.AT_MOST_ONCE) {
+			return;
+		}
+		publishMessage.ack();
+	}
 
 }

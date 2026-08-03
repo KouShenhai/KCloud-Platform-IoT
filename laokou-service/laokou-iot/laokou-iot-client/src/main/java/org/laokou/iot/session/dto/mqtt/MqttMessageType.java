@@ -30,7 +30,30 @@ import java.util.Map;
 @Getter
 public enum MqttMessageType {
 
-	UP_CLIENT_CONNECTED_SYSTEM_MESSAGE("up_client_connected_system_message", "MQTT客户端建立连接【上行】") {
+	DOWN_VERTX_EVENT_GATEWAY_MESSAGE("down_vertx_event_gateway_message", "VERTX事件【下行】") {
+		@Override
+		public String getTopic() {
+			return "";
+		}
+
+		@Override
+		public String getMqTopic() {
+			return "iot-vertx-event-gateway-message";
+		}
+
+		@Override
+		MqttQos getMqttQos() {
+			return MqttQos.AT_LEAST_ONCE;
+		}
+
+		@Override
+		public int getNumPartitions() {
+			return 2;
+		}
+
+	},
+
+	UP_CLIENT_CONNECTED_GATEWAY_MESSAGE("up_client_connected_gateway_message", "MQTT客户端建立连接【上行】") {
 		@Override
 		public String getTopic() {
 			return "$SYS/brokers/+/clients/+/connected";
@@ -38,7 +61,7 @@ public enum MqttMessageType {
 
 		@Override
 		public String getMqTopic() {
-			return "iot-up-client-connected-system-message";
+			return "iot-up-client-connected-gateway-message";
 		}
 
 		@Override
@@ -48,15 +71,11 @@ public enum MqttMessageType {
 
 		@Override
 		public int getNumPartitions() {
-			return 0;
+			return 2;
 		}
 
-		@Override
-		public MessageType getMessageType() {
-			return MessageType.SYSTEM;
-		}
 	},
-	UP_CLIENT_DISCONNECTED_SYSTEM_MESSAGE("up_client_disconnected_system_message", "MQTT客户端断开连接【上行】") {
+	UP_CLIENT_DISCONNECTED_GATEWAY_MESSAGE("up_client_disconnected_gateway_message", "MQTT客户端断开连接【上行】") {
 		@Override
 		public String getTopic() {
 			return "$SYS/brokers/+/clients/+/disconnected";
@@ -64,7 +83,7 @@ public enum MqttMessageType {
 
 		@Override
 		public String getMqTopic() {
-			return "iot-up-client-disconnected-system-message";
+			return "iot-up-client-disconnected-gateway-message";
 		}
 
 		@Override
@@ -74,13 +93,9 @@ public enum MqttMessageType {
 
 		@Override
 		public int getNumPartitions() {
-			return 0;
+			return 2;
 		}
 
-		@Override
-		public MessageType getMessageType() {
-			return MessageType.SYSTEM;
-		}
 	},
 
 	DOWN_COMMAND_GATEWAY_MESSAGE("down_command_gateway_message", "网关指令【下行】") {
@@ -104,10 +119,6 @@ public enum MqttMessageType {
 			return 4;
 		}
 
-		@Override
-		public MessageType getMessageType() {
-			return MessageType.GATEWAY;
-		}
 	},
 
 	UP_COMMAND_REPLY_GATEWAY_MESSAGE("up_command_reply_gateway_message", "网关指令回复【上行】") {
@@ -131,10 +142,6 @@ public enum MqttMessageType {
 			return 4;
 		}
 
-		@Override
-		public MessageType getMessageType() {
-			return MessageType.GATEWAY;
-		}
 	},
 
 	UP_REPORT_OTA_GATEWAY_MESSAGE("up_report_ota_gateway_message", "上报网关固件信息【上行】") {
@@ -158,10 +165,6 @@ public enum MqttMessageType {
 			return 2;
 		}
 
-		@Override
-		public MessageType getMessageType() {
-			return MessageType.GATEWAY;
-		}
 	},
 
 	DOWN_REPORT_OTA_REPLY_GATEWAY_MESSAGE("down_report_ota_reply_gateway_message", "上报网关固件信息回复【下行】") {
@@ -185,10 +188,6 @@ public enum MqttMessageType {
 			return 2;
 		}
 
-		@Override
-		public MessageType getMessageType() {
-			return MessageType.GATEWAY;
-		}
 	},
 
 	UP_UPGRADE_OTA_GATEWAY_MESSAGE("up_upgrade_ota_gateway_message", "升级网关固件【上行】") {
@@ -212,10 +211,6 @@ public enum MqttMessageType {
 			return 2;
 		}
 
-		@Override
-		public MessageType getMessageType() {
-			return MessageType.GATEWAY;
-		}
 	},
 
 	DOWN_UPGRADE_OTA_REPLY_GATEWAY_MESSAGE("down_upgrade_ota_reply_gateway_message", "升级网关固件回复【下行】") {
@@ -239,10 +234,6 @@ public enum MqttMessageType {
 			return 2;
 		}
 
-		@Override
-		public MessageType getMessageType() {
-			return MessageType.GATEWAY;
-		}
 	},
 
 	UP_UPGRADE_OTA_PROGRESS_GATEWAY_MESSAGE("up_upgrade_ota_progress_gateway_message", "升级网关固件进度【上行】") {
@@ -266,10 +257,6 @@ public enum MqttMessageType {
 			return 2;
 		}
 
-		@Override
-		public MessageType getMessageType() {
-			return MessageType.GATEWAY;
-		}
 	},
 
 	UP_HEARTBEAT_GATEWAY_MESSAGE("up_heartbeat_gateway_message", "网关心跳【上行】") {
@@ -293,10 +280,6 @@ public enum MqttMessageType {
 			return 8;
 		}
 
-		@Override
-		public MessageType getMessageType() {
-			return MessageType.GATEWAY;
-		}
 	},
 
 	UP_REPORT_PROPERTIES_GATEWAY_MESSAGE("up_report_properties_gateway_message", "上报设备属性【上行】") {
@@ -318,11 +301,6 @@ public enum MqttMessageType {
 		@Override
 		public int getNumPartitions() {
 			return 16;
-		}
-
-		@Override
-		public MessageType getMessageType() {
-			return MessageType.GATEWAY;
 		}
 
 	},
@@ -349,11 +327,6 @@ public enum MqttMessageType {
 			return 8;
 		}
 
-		@Override
-		public MessageType getMessageType() {
-			return MessageType.GATEWAY;
-		}
-
 	};
 
 	private final String code;
@@ -372,8 +345,6 @@ public enum MqttMessageType {
 	abstract MqttQos getMqttQos();
 
 	public abstract int getNumPartitions();
-
-	public abstract MessageType getMessageType();
 
 	public static Map<String, Integer> getTopics(String tenantCode) {
 		MqttMessageType[] values = values();
