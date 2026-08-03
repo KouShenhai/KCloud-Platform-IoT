@@ -21,10 +21,10 @@ import io.grpc.ClientInterceptor;
 import io.grpc.netty.NettyChannelBuilder;
 import jakarta.servlet.http.HttpServletRequest;
 import org.jspecify.annotations.NonNull;
-import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.grpc.client.annotation.GrpcClientBeanPostProcessor;
 import org.laokou.common.grpc.client.constant.GrpcClientConstants;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.context.annotation.Bean;
@@ -73,17 +73,17 @@ final class GrpcClientConfig {
 
 	@Bean
 	@GlobalClientInterceptor
-	ClientInterceptor clientInterceptor(SystemSettingsProperties systemSettingsProperties) {
-		return new BearerTokenAuthenticationInterceptor(() -> getAccessToken(systemSettingsProperties));
+	ClientInterceptor clientInterceptor(ObjectProvider<OAuth2AuthorizedToken> objectProvider) {
+		return new BearerTokenAuthenticationInterceptor(() -> getAccessToken(objectProvider));
 	}
 
-	private String getAccessToken(SystemSettingsProperties systemSettingsProperties) {
+	private String getAccessToken(ObjectProvider<OAuth2AuthorizedToken> objectProvider) {
 		HttpServletRequest request = RequestUtils.getHttpServletRequest();
 		String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
 		if (StringUtils.hasText(authorization) && authorization.startsWith(GrpcClientConstants.BEARER_PREFIX)) {
 			return authorization.substring(7);
 		}
-		return systemSettingsProperties.getAnonymousAuthToken();
+		return objectProvider.getObject().getAccessToken();
 	}
 
 }

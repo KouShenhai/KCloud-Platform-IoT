@@ -25,7 +25,6 @@ import org.junit.jupiter.api.Test;
 import org.laokou.auth.dto.CaptchaSendCmd;
 import org.laokou.auth.dto.TokenRemoveCmd;
 import org.laokou.auth.dto.clientobject.CaptchaCO;
-import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.common.core.util.HttpUtils;
 import org.laokou.common.core.util.OkHttpUtils;
 import org.laokou.common.core.util.ThreadUtils;
@@ -39,6 +38,7 @@ import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.common.redis.util.RedisUtils;
 import org.laokou.common.security.config.OAuth2OpaqueTokenIntrospector;
+import org.laokou.common.security.config.RedisRegisteredClientRepository;
 import org.laokou.common.trace.util.MDCUtils;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.Ssl;
@@ -103,7 +103,7 @@ class OAuth2ApiTest {
 
 	private final JwtDecoder jwtDecoder;
 
-	private final SystemSettingsProperties systemSettingsProperties;
+	private final RedisRegisteredClientRepository redisRegisteredClientRepository;
 
 	@Test
 	void test_sendMailCaptcha() {
@@ -185,7 +185,7 @@ class OAuth2ApiTest {
 		log.info("---------- 模拟认证开始 ----------");
 		Assertions.assertThat(token).isNotBlank();
 		OAuth2OpaqueTokenIntrospector introspector = new OAuth2OpaqueTokenIntrospector(authorizationService, redisUtils,
-				jwtDecoder, systemSettingsProperties);
+				jwtDecoder, redisRegisteredClientRepository);
 		log.info("认证数据：{}", JacksonUtils.toJsonStr(introspector.introspect(token)));
 		log.info("---------- 模拟认证结束 ----------");
 		log.info("---------- 用户名密码认证模式结束 ----------");

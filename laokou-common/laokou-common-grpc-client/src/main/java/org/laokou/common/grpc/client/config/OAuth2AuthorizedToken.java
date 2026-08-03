@@ -15,27 +15,13 @@
  *
  */
 
-package org.laokou.common.security.config;
-
-import lombok.Getter;
+package org.laokou.common.grpc.client.config;
 
 /**
  * @author laokou
  */
-@Getter
-enum GrantedAuthority {
+public interface OAuth2AuthorizedToken {
 
-	READ("read", "读"),
-
-	WRITE("write", "写");
-
-	private final String code;
-
-	private final String desc;
-
-	GrantedAuthority(String code, String desc) {
-		this.code = code;
-		this.desc = desc;
-	}
+	String getAccessToken();
 
 }
