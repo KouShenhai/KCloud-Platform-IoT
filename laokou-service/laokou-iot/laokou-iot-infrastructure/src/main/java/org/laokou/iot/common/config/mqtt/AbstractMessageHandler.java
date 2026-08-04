@@ -35,7 +35,10 @@ public abstract class AbstractMessageHandler implements MessageHandler {
 
 	@Override
 	public Future<Void> handle(Long snowflakeId, MqttPublishMessage publishMessage) {
-		return handleMessage(snowflakeId, publishMessage).onSuccess(_ -> ack(publishMessage));
+		return handleMessage(snowflakeId, publishMessage).compose(_ -> {
+			ack(publishMessage);
+			return Future.succeededFuture();
+		});
 	}
 
 	protected abstract MqttMessageType getMatchTopic();
@@ -43,10 +46,9 @@ public abstract class AbstractMessageHandler implements MessageHandler {
 	protected abstract Future<Void> handleMessage(Long snowflakeId, MqttPublishMessage publishMessage);
 
 	private void ack(MqttPublishMessage publishMessage) {
-		if (publishMessage.qosLevel() == MqttQoS.AT_MOST_ONCE) {
-			return;
+		if (publishMessage.qosLevel() != MqttQoS.AT_MOST_ONCE) {
+			publishMessage.ack();
 		}
-		publishMessage.ack();
 	}
 
 }
