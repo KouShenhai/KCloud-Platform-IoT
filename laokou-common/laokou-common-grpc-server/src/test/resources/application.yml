@@ -4,6 +4,9 @@ server:
 spring:
   application:
     name: laokou-common-grpc-server
+  threads:
+    virtual:
+      enabled: true
   data:
     redis:
       client-type: lettuce
@@ -30,11 +33,21 @@ spring:
         enabled: false
       port: 10022
       enabled: true
+    client:
+      enabled: true
+      channel:
+        test-grpc:
+          target: localhost:${spring.grpc.server.port}
+          keepalive:
+            time: 10s
+            timeout: 30s
+          idle:
+            timeout: 30s
   security:
     oauth2:
       client:
         registration:
-          default:
+          grpc:
             client-id: client-id
             client-secret: client-secret
             client-name: OAuth2.1 M2M认证客户端

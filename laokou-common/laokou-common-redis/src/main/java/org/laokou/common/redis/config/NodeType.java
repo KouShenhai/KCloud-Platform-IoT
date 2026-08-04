@@ -17,10 +17,9 @@
 
 package org.laokou.common.redis.config;
 
-import io.netty.channel.MultiThreadIoEventLoopGroup;
-import io.netty.channel.nio.NioIoHandler;
 import lombok.Getter;
 import org.redisson.config.Config;
+import org.springframework.util.StringUtils;
 
 import java.util.concurrent.ExecutorService;
 
@@ -167,13 +166,14 @@ public enum NodeType {
 	private static Config createDefaultConfig(ExecutorService virtualThreadExecutor,
 			SpringRedissonProperties springRedissonProperties) {
 		Config config = new Config();
-		config.setPassword(springRedissonProperties.getPassword());
+		String password = springRedissonProperties.getPassword();
+		if (StringUtils.hasText(password)) {
+			config.setPassword(password);
+		}
 		config.setThreads(springRedissonProperties.getThreads());
 		config.setCodec(springRedissonProperties.getCodec().getCodec());
 		config.setTransportMode(springRedissonProperties.getTransportMode());
 		config.setExecutor(virtualThreadExecutor);
-		config.setEventLoopGroup(new MultiThreadIoEventLoopGroup(springRedissonProperties.getNettyThreads(),
-				virtualThreadExecutor, NioIoHandler.newFactory()));
 		config.setNettyExecutor(virtualThreadExecutor);
 		config.setReferenceEnabled(springRedissonProperties.isReferenceEnabled());
 		config.setNettyThreads(springRedissonProperties.getNettyThreads());
