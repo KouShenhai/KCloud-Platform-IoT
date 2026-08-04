@@ -88,7 +88,6 @@ public record RedisOAuth2AuthorizationService(RegisteredClientRepository registe
 	@Nullable
 	@Override
 	public OAuth2Authorization findByToken(@NonNull String token, OAuth2TokenType tokenType) {
-		Assert.hasText(token, "Token cannot be empty");
 		OAuth2AuthorizationGrantAuthorization authorizationGrantAuthorization = null;
 		if (tokenType == null) {
 			authorizationGrantAuthorization = this.authorizationGrantAuthorizationRepository
@@ -106,6 +105,10 @@ public record RedisOAuth2AuthorizationService(RegisteredClientRepository registe
 					.findByDeviceStateOrDeviceCode_TokenValueOrUserCode_TokenValue(token, token, token);
 			}
 		}
+		else if (OAuth2TokenType.ACCESS_TOKEN.equals(tokenType)) {
+			authorizationGrantAuthorization = this.authorizationGrantAuthorizationRepository
+				.findByAccessToken_TokenValue(token);
+		}
 		else if (OAuth2ParameterNames.STATE.equals(tokenType.getValue())) {
 			authorizationGrantAuthorization = this.authorizationGrantAuthorizationRepository.findByState(token);
 			if (authorizationGrantAuthorization == null) {
@@ -116,10 +119,6 @@ public record RedisOAuth2AuthorizationService(RegisteredClientRepository registe
 		else if (OAuth2ParameterNames.CODE.equals(tokenType.getValue())) {
 			authorizationGrantAuthorization = this.authorizationGrantAuthorizationRepository
 				.findByAuthorizationCode_TokenValue(token);
-		}
-		else if (OAuth2TokenType.ACCESS_TOKEN.equals(tokenType)) {
-			authorizationGrantAuthorization = this.authorizationGrantAuthorizationRepository
-				.findByAccessToken_TokenValue(token);
 		}
 		else if (OidcParameterNames.ID_TOKEN.equals(tokenType.getValue())) {
 			authorizationGrantAuthorization = this.authorizationGrantAuthorizationRepository

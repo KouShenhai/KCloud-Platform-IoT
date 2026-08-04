@@ -36,11 +36,11 @@ final class UpClientConnectedSystemMessageHandler extends AbstractMessageHandler
 
 	@Override
 	protected MqttMessageType getMatchTopic() {
-		return MqttMessageType.UP_CLIENT_CONNECTED_SYSTEM_MESSAGE;
+		return MqttMessageType.UP_CLIENT_CONNECTED_GATEWAY_MESSAGE;
 	}
 
 	@Override
-	public Future<Void> handle(Long snowflakeId, MqttPublishMessage publishMessage) {
+	public Future<Void> handleMessage(Long snowflakeId, MqttPublishMessage publishMessage) {
 		log.debug("【Vertx-MQTT-Client】 => 网关指令回复消息【上行】处理器，接收雪花ID【{}】，主题【{}】消息", snowflakeId,
 				publishMessage.topicName());
 		return Future.succeededFuture();

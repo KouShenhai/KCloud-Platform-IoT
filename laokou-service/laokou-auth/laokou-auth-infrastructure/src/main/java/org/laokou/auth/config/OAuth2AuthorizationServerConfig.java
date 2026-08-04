@@ -31,6 +31,7 @@ import org.laokou.auth.model.validator.CaptchaValidator;
 import org.laokou.auth.model.validator.PasswordValidator;
 import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.fory.constant.ForyConstants;
+import org.laokou.common.grpc.client.config.OAuth2AuthorizedToken;
 import org.laokou.common.i18n.common.IdGenerator;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.SpringUtils;
@@ -39,6 +40,7 @@ import org.laokou.common.security.config.RedisOAuth2AuthorizationConsentService;
 import org.laokou.common.security.config.RedisRegisteredClientRepository;
 import org.laokou.common.security.config.repository.OAuth2RegisteredClientRepository;
 import org.laokou.common.security.config.repository.OAuth2UserConsentRepository;
+import org.laokou.common.security.constant.Constants;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -55,6 +57,14 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.AuthorizedClientServiceOAuth2AuthorizedClientManager;
+import org.springframework.security.oauth2.client.OAuth2AuthorizeRequest;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientProvider;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientProviderBuilder;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.core.OAuth2Token;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
@@ -71,6 +81,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.DelegatingAuthenticationConverter;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
+import org.springframework.util.Assert;
 
 import java.util.List;
 
@@ -238,6 +249,30 @@ class OAuth2AuthorizationServerConfig {
 			return null;
 		}
 		return code.equalsIgnoreCase(captcha.toString());
+	}
+
+	@Bean
+	OAuth2AuthorizedClientManager authorizedClientManager(ClientRegistrationRepository registrations,
+			OAuth2AuthorizedClientService service) {
+		OAuth2AuthorizedClientProvider provider = OAuth2AuthorizedClientProviderBuilder.builder()
+			.clientCredentials()
+			.build();
+		AuthorizedClientServiceOAuth2AuthorizedClientManager manager = new AuthorizedClientServiceOAuth2AuthorizedClientManager(
+				registrations, service);
+		manager.setAuthorizedClientProvider(provider);
+		return manager;
+	}
+
+	@Bean
+	OAuth2AuthorizedToken oAuth2AuthorizedClientToken(OAuth2AuthorizedClientManager authorizedClientManager) {
+		return () -> {
+			OAuth2AuthorizeRequest request = OAuth2AuthorizeRequest.withClientRegistrationId(Constants.GRPC)
+				.principal(Constants.GRPC)
+				.build();
+			OAuth2AuthorizedClient client = authorizedClientManager.authorize(request);
+			Assert.notNull(client, "authorized client is null");
+			return client.getAccessToken().getTokenValue();
+		};
 	}
 
 }

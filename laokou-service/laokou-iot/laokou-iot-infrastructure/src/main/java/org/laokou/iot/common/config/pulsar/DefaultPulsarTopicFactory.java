@@ -26,10 +26,8 @@ import org.apache.pulsar.client.admin.Tenants;
 import org.apache.pulsar.client.admin.Topics;
 import org.apache.pulsar.common.policies.data.TenantInfoImpl;
 import org.laokou.common.core.config.SystemSettingsProperties;
-import org.laokou.iot.session.dto.mqtt.MessageType;
 import org.laokou.iot.session.dto.mqtt.MqttMessageType;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -65,9 +63,7 @@ final class DefaultPulsarTopicFactory implements PulsarTopicFactory {
 			namespaces.createNamespace(namespace);
 		}
 		log.info("create topic for namespace {}", namespace);
-		for (MqttMessageType mqttMessageType : Arrays.stream(MqttMessageType.values())
-			.filter(item -> item.getMessageType() == MessageType.GATEWAY)
-			.toList()) {
+		for (MqttMessageType mqttMessageType : MqttMessageType.values()) {
 			createTopic(topics, namespace, mqttMessageType);
 		}
 	}

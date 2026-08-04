@@ -51,8 +51,6 @@ public class SystemSettingsProperties implements Serializable {
 
 	private String tenantCode = "laokouyun";
 
-	private String anonymousAuthToken = "48aA4CD5uithlID8GaDffYtOYeY8Fa5TB7S4RyXzfH313WYlAxUBR3tHoA93seZT";
-
 	private Mode appMode = Mode.MICROSERVICE;
 
 	@Getter

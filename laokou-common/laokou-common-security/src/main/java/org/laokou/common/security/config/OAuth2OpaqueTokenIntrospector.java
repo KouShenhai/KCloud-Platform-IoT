@@ -25,24 +25,27 @@ import org.jspecify.annotations.NonNull;
 import org.laokou.common.context.util.OAuth2Authentication;
 import org.laokou.common.context.util.UserConvertor;
 import org.laokou.common.context.util.UserExtDetails;
-import org.laokou.common.core.config.SystemSettingsProperties;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.StatusCode;
-import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.laokou.common.redis.util.RedisUtils;
 import org.laokou.common.security.handler.OAuth2ExceptionHandler;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.DefaultOAuth2AuthenticatedPrincipal;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.security.oauth2.core.OAuth2RefreshToken;
+import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.jwt.JwtClaimNames;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
+import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
 
 import java.security.Principal;
@@ -56,7 +59,8 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 public record OAuth2OpaqueTokenIntrospector(OAuth2AuthorizationService authorizationService, RedisUtils redisUtils,
-		JwtDecoder jwtDecoder, SystemSettingsProperties systemSettingsProperties) implements OpaqueTokenIntrospector {
+		JwtDecoder jwtDecoder,
+		RedisRegisteredClientRepository redisRegisteredClientRepository) implements OpaqueTokenIntrospector {
 
 	private static final Cache<@NonNull String, @NonNull CachedPrincipal> PRINCIPAL_CACHE = Caffeine.newBuilder()
 		.initialCapacity(100000)
@@ -84,14 +88,21 @@ public record OAuth2OpaqueTokenIntrospector(OAuth2AuthorizationService authoriza
 	}
 
 	private CachedPrincipal getCachedPrincipal(@NonNull String token) {
-		if (ObjectUtils.equals(systemSettingsProperties.getAnonymousAuthToken(), token)) {
-			// 匿名认证
-			return new CachedPrincipal(new DefaultOAuth2AuthenticatedPrincipal("anonymous", Map.of("sub", "anonymous"), AuthorityUtils.createAuthorityList(List.of(GrantedAuthority.WRITE.getCode(), GrantedAuthority.READ.getCode()))), null);
-		}
 		Jwt jwt = jwtDecoder.decode(token);
 		Instant expiresAt = jwt.getExpiresAt();
 		if (expiresAt != null && expiresAt.isBefore(Instant.now())) {
 			throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED);
+		}
+		Map<String,Object> claims = jwt.getClaims();
+		String sub = claims.getOrDefault(JwtClaimNames.SUB, StringConstants.EMPTY).toString();
+		RegisteredClient registeredClient = redisRegisteredClientRepository.findByClientId(sub);
+		if (registeredClient != null && registeredClient.getAuthorizationGrantTypes().contains(AuthorizationGrantType.CLIENT_CREDENTIALS)) {
+			Object scopes = claims.get(OAuth2ParameterNames.SCOPE);
+			if (scopes != null) {
+				return new CachedPrincipal(new DefaultOAuth2AuthenticatedPrincipal(sub, claims, AuthorityUtils.createAuthorityList((List<String>)scopes)), expiresAt);
+			} else {
+				throw OAuth2ExceptionHandler.getException(StatusCode.FORBIDDEN);
+			}
 		}
 		OAuth2Authorization authorization = authorizationService.findByToken(token, OAuth2TokenType.ACCESS_TOKEN);
 		if (authorization == null) {

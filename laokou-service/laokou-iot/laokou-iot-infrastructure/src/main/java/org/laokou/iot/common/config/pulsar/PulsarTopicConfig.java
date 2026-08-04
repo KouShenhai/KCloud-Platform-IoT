@@ -18,7 +18,6 @@
 package org.laokou.iot.common.config.pulsar;
 
 import org.apache.pulsar.client.admin.PulsarAdmin;
-import org.apache.pulsar.client.admin.PulsarAdminException;
 import org.apache.pulsar.client.api.PulsarClientException;
 import org.laokou.common.core.config.SystemSettingsProperties;
 import org.springframework.context.annotation.Bean;
@@ -43,7 +42,7 @@ public class PulsarTopicConfig {
 
 	@Bean(initMethod = "createTopic")
 	public PulsarTopicFactory pulsarTopicFactory(PulsarAdmin pulsarAdmin,
-			SystemSettingsProperties systemSettingsProperties) throws PulsarAdminException {
+			SystemSettingsProperties systemSettingsProperties) {
 		return new DefaultPulsarTopicFactory(pulsarAdmin, systemSettingsProperties);
 	}
 

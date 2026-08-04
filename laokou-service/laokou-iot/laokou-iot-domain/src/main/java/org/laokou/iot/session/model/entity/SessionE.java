@@ -25,6 +25,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.laokou.common.i18n.annotation.Entity;
 
+import java.io.Serializable;
+
 /**
  *
  * 会话领域对象【实体】.
@@ -37,7 +39,7 @@ import org.laokou.common.i18n.annotation.Entity;
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class SessionE {
+public class SessionE implements Serializable {
 
 	private Long id;
 
