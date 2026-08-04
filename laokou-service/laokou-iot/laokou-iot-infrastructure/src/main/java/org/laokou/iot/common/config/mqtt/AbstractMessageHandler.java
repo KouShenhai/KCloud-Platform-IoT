@@ -35,9 +35,7 @@ public abstract class AbstractMessageHandler implements MessageHandler {
 
 	@Override
 	public Future<Void> handle(Long snowflakeId, MqttPublishMessage publishMessage) {
-		Future<Void> future = handleMessage(snowflakeId, publishMessage);
-		ack(publishMessage);
-		return future;
+		return handleMessage(snowflakeId, publishMessage).onSuccess(_ -> ack(publishMessage));
 	}
 
 	protected abstract MqttMessageType getMatchTopic();
