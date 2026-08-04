@@ -83,25 +83,12 @@ public final class DockerImageNames {
 		return postgresql(LATEST);
 	}
 
-	public static DockerImageName pymodbus(String tag) {
-		return DockerImageName.parse("iotechsys/pymodbus-sim").withTag(tag);
+	public static DockerImageName oauth2(String tag) {
+		return DockerImageName.parse("koushenhai/oauth2-test").withTag(tag);
 	}
 
-	public static DockerImageName pymodbus() {
-		return pymodbus("1.0");
-	}
-
-	/**
-	 * 自定义 Modbus TCP/UDP 服务器镜像.
-	 * @param tag 镜像标签
-	 * @return DockerImageName
-	 */
-	public static DockerImageName modbusSim(String tag) {
-		return DockerImageName.parse("koushenhai/modbus-sim").withTag(tag);
-	}
-
-	public static DockerImageName modbusSim() {
-		return modbusSim(LATEST);
+	public static DockerImageName oauth2() {
+		return oauth2(LATEST);
 	}
 
 	public static DockerImageName kafka(String tag) {

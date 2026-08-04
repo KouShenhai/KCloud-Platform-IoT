@@ -1,0 +1,48 @@
+server:
+  port: 9122
+
+spring:
+  application:
+    name: laokou-common-grpc-server
+  data:
+    redis:
+      client-type: lettuce
+      host: localhost
+      port: 6379
+      password:
+      connect-timeout: 60000ms #连接超时时长（毫秒）
+      timeout: 60000ms #超时时长（毫秒）
+      lettuce:
+        pool:
+          max-active: 1000 #连接池最大连接数
+          max-wait: 2m #连接池最大阻塞等待时间
+          max-idle: 500 #连接池最大空闲连接
+          min-idle: 200 #连接池最小空间连接
+  redisson:
+    password: ${spring.data.redis.password}
+    node:
+      type: single
+      single:
+        address: redis://${spring.data.redis.host}:${spring.data.redis.port}
+  grpc:
+    server:
+      servlet:
+        enabled: false
+      port: 10022
+      enabled: true
+  security:
+    oauth2:
+      client:
+        registration:
+          default:
+            client-id: client-id
+            client-secret: client-secret
+            client-name: OAuth2.1 M2M认证客户端
+            authorization-grant-type: client_credentials
+            client-authentication-method: client_secret_basic
+            scope:
+              - read
+            provider: local
+        provider:
+          local:
+            token-uri: http://localhost:9088/oauth2/token

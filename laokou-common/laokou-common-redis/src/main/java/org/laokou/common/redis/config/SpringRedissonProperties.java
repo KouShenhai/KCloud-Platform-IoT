@@ -18,13 +18,11 @@
 package org.laokou.common.redis.config;
 
 import lombok.Data;
-import org.laokou.common.i18n.util.StringExtUtils;
 import org.redisson.config.Config;
 import org.redisson.config.ReadMode;
 import org.redisson.config.ShardedSubscriptionMode;
 import org.redisson.config.SubscriptionMode;
 import org.redisson.config.TransportMode;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -39,7 +37,7 @@ import java.util.concurrent.TimeUnit;
 @Data
 @Component
 @ConfigurationProperties(prefix = "spring.redisson")
-public class SpringRedissonProperties implements InitializingBean {
+public class SpringRedissonProperties {
 
 	private String password;
 
@@ -90,13 +88,6 @@ public class SpringRedissonProperties implements InitializingBean {
 	private CodecType codec = CodecType.JACKSON;
 
 	private Node node = new Node();
-
-	@Override
-	public void afterPropertiesSet() {
-		if (StringExtUtils.isEmpty(this.password)) {
-			throw new IllegalStateException("password must not be empty.");
-		}
-	}
 
 	@Data
 	static class Base {
