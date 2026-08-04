@@ -15,13 +15,14 @@
  *
  */
 
-package org.laokou.common.grpc.client;
+package org.laokou.common.grpc.server;
 
 import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.grpc.proto.HelloWorldProto;
 import org.laokou.common.grpc.proto.SimpleGrpc;
 import org.springframework.grpc.server.service.GrpcService;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 /**
  * @author laokou
@@ -31,6 +32,7 @@ import org.springframework.grpc.server.service.GrpcService;
 public class GrpcServerService extends SimpleGrpc.SimpleImplBase {
 
 	@Override
+	@PreAuthorize("hasAuthority('read')")
 	public void sayHello(HelloWorldProto.HelloRequest req,
 			StreamObserver<HelloWorldProto.HelloReply> responseObserver) {
 		log.info("Hello {}", req.getName());

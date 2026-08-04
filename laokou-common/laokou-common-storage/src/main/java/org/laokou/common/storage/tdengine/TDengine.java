@@ -85,14 +85,9 @@ public class TDengine extends AbstractDataSource {
 
 	private void initTable() {
 		Thread.startVirtualThread(this::createDeviceAlarm);
-		Thread.startVirtualThread(this::createDeviceStatus);
 	}
 
 	private void createDeviceAlarm() {
-	}
-
-	private void createDeviceStatus() {
-
 	}
 
 	private HikariDataSource getHikariDataSource() {
