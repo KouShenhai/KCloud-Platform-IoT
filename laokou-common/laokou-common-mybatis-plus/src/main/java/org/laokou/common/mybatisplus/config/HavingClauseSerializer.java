@@ -24,7 +24,6 @@ import org.apache.fory.context.ReadContext;
 import org.apache.fory.context.WriteContext;
 import org.apache.fory.serializer.Serializer;
 import org.apache.fory.serializer.Shareable;
-import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -78,12 +77,8 @@ final class HavingClauseSerializer extends Serializer<Function.HavingClause> imp
 	@Override
 	public Function.HavingClause read(ReadContext context) {
 		try {
-			String havingTypeName = (String) context.readRef();
+			Object havingType = enumValueOf(context.readRef().toString());
 			Expression expression = (Expression) context.readRef();
-			Object havingType = null;
-			if (StringUtils.hasText(havingTypeName)) {
-				havingType = enumValueOf(havingTypeName);
-			}
 			return CONSTRUCTOR.newInstance(havingType, expression);
 		}
 		catch (ReflectiveOperationException ex) {
