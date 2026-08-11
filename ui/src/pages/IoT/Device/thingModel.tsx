@@ -159,17 +159,14 @@ export default () => {
 				return (
 					<>
 						{record?.dataType === 'enum' && Array.isArray(data?.list) && data?.list.map((item: any, index: number) => (
-								<div
-									key={item?.code ?? index}
-									style={{ fontSize: '12px' }}
-								>
-									{item?.desc}：
-									<span style={{ color: '#fd5251' }}>
-										{item?.code}
-									</span>
-								</div>
-							))}
-						{(record?.dataType === 'int' || record?.dataType === 'long' || record?.dataType === 'float' || record?.dataType === 'double') && data?.min && (
+							<div key={item?.code ?? index} style={{ fontSize: '12px' }}>
+								{item?.desc}：
+								<span style={{ color: '#fd5251' }}>
+									{item?.code}
+								</span>
+							</div>)
+						)}
+						{(record?.dataType === 'int' || record?.dataType === 'long') && data?.min && (
 							<div style={{fontSize: '12px'}}>
 								最小值：
 								<span style={{ color: '#fd5251' }}>
@@ -177,7 +174,7 @@ export default () => {
 								</span>
 							</div>
 						)}
-						{(record?.dataType === 'int' || record?.dataType === 'long' || record?.dataType === 'float' || record?.dataType === 'double') && data?.max && (
+						{(record?.dataType === 'int' || record?.dataType === 'long') && data?.max && (
 							<div style={{fontSize: '12px'}}>
 								最大值：
 								<span style={{ color: '#fd5251' }}>
@@ -185,7 +182,7 @@ export default () => {
 								</span>
 							</div>
 						)}
-						{(record?.dataType === 'int' || record?.dataType === 'long' || record?.dataType === 'float' || record?.dataType === 'double') && data?.unit && (
+						{(record?.dataType === 'int' || record?.dataType === 'long') && data?.unit && (
 							<div style={{fontSize: '12px'}}>
 								单位：
 								<span style={{ color: '#fd5251' }}>

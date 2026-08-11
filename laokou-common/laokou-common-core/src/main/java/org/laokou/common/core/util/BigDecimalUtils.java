@@ -17,8 +17,6 @@
 
 package org.laokou.common.core.util;
 
-import org.springframework.util.StringUtils;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -143,29 +141,6 @@ public final class BigDecimalUtils {
 		BigDecimal b1 = BigDecimal.valueOf(v1);
 		BigDecimal b2 = BigDecimal.valueOf(v2);
 		return b1.compareTo(b2);
-	}
-
-	/**
-	 * 判断数值的小数位是否不超过指定长度。
-	 * @param value 数值字符串
-	 * @param maxScale 最大小数位数
-	 * @return true：小数位超过限制
-	 */
-	public static boolean isScaleValid(String value, int maxScale) {
-		if (!StringUtils.hasText(value) || maxScale < 0) {
-			return true;
-		}
-		try {
-			BigDecimal decimal = new BigDecimal(value);
-			/*
-			 * 去掉末尾无意义的 0： 1.230000 -> 1.23 1.000000 -> 1
-			 */
-			int scale = Math.max(decimal.stripTrailingZeros().scale(), 0);
-			return scale > maxScale;
-		}
-		catch (NumberFormatException ex) {
-			return true;
-		}
 	}
 
 }

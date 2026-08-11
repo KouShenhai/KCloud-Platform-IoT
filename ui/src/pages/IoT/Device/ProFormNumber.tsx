@@ -2,7 +2,7 @@ import React from "react";
 // @ts-ignore
 import { ProFormText, ProFormTextProps } from "@ant-design/pro-components";
 
-export type NumberType = "int" | "long" | "float" | "double";
+export type NumberType = "int" | "long";
 
 interface Props extends ProFormTextProps {
 	type: NumberType;
@@ -17,21 +17,13 @@ interface Props extends ProFormTextProps {
 
 const RANGE = {
 	int: {
-		min: BigInt("-1000000"),
-		max: BigInt("1000000"),
+		min: BigInt("-100000000"),
+		max: BigInt("100000000"),
 	},
 	long: {
-		min: BigInt("-1000000000000"),
-		max: BigInt("1000000000000"),
-	},
-	float: {
-		min: -1000000.000,
-		max: 1000000.000,
-	},
-	double: {
-		min: -1000000000.000000,
-		max: 1000000000.000000,
-	},
+		min: BigInt("-10000000000000000"),
+		max: BigInt("10000000000000000"),
+	}
 } as const;
 
 export default function ProFormNumber({
@@ -40,7 +32,7 @@ export default function ProFormNumber({
 										  type,
 										  readonly,
 										  disabled,
-										  precision = 3,
+										  precision = 0,
 										  rules = [],
 										  fieldProps,
 											  ...rest
@@ -64,7 +56,6 @@ export default function ProFormNumber({
 							return Promise.resolve();
 						}
 
-						// eslint-disable-next-line no-param-reassign
 						value = value.trim();
 
 						switch (type) {
@@ -101,31 +92,6 @@ export default function ProFormNumber({
 									);
 								}
 
-								return Promise.resolve();
-							}
-
-							case "float":
-							case "double": {
-								const regex = new RegExp(
-									`^-?\\d+(\\.\\d{1,${precision}})?$`
-								);
-								if (!regex.test(value)) {
-									return Promise.reject(new Error(`请输入正确的 ${type}，最多保留 ${precision} 位小数`));
-								}
-								const num = Number(value);
-								if (Number.isNaN(num)) {
-									return Promise.reject(new Error("请输入数字"));
-								}
-								const floatValue = Math.fround(num);
-								if (!Number.isFinite(floatValue)) {
-									return Promise.reject(new Error(`超出 ${type} 范围`));
-								}
-								const range = RANGE[type];
-								if (num < range.min || num > range.max) {
-									return Promise.reject(
-										new Error(`超出 ${type} 范围`)
-									);
-								}
 								return Promise.resolve();
 							}
 
