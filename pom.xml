@@ -115,7 +115,7 @@
     <!-- spring-asciidoctor-backends版本 -->
     <spring-asciidoctor-backends.version>0.0.7</spring-asciidoctor-backends.version>
     <!-- protobuf-maven-plugin版本 -->
-    <protobuf-maven-plugin.version>5.1.7</protobuf-maven-plugin.version>
+    <protobuf-maven-plugin.version>5.1.8</protobuf-maven-plugin.version>
     <!-- central-publishing-maven-plugin版本 -->
     <central-publishing-maven-plugin.version>0.11.0</central-publishing-maven-plugin.version>
     <!-- maven-source-plugin版本 -->
@@ -191,7 +191,7 @@
     <!-- dynamic-datasource版本 -->
     <dynamic-datasource.version>4.5.0</dynamic-datasource.version>
     <!-- httpclient5版本 -->
-    <httpclient5.version>5.6.3</httpclient5.version>
+    <httpclient5.version>5.6.4</httpclient5.version>
     <!-- httpcore5版本 -->
     <httpcore5.version>5.4.3</httpcore5.version>
     <!-- hibernate-validator版本 -->
