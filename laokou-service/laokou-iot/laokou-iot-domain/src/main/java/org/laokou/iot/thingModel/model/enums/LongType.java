@@ -23,6 +23,7 @@ import org.springframework.util.StringUtils;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * @author laokou
@@ -39,11 +40,11 @@ public class LongType implements Serializable {
 
 	private String unit;
 
-	private final Long minVal = -1000000000000L;
-
-	private final Long maxVal = 1000000000000L;
+	private String step;
 
 	public ParamValidator.Validate checkValue() {
+		long minVal = getMinVal();
+		long maxVal = getMaxVal();
 		Long minValue = null;
 		Long maxValue = null;
 		if (StringUtils.hasText(min)) {
@@ -61,7 +62,21 @@ public class LongType implements Serializable {
 		if (minValue != null && maxValue != null && minValue >= maxValue) {
 			return ParamValidator.invalidate("最大值必须大于最小值");
 		}
+		if (StringUtils.hasText(step)) {
+			return ParamValidator.invalidate("步长不能为空");
+		}
+		if (!Arrays.stream(Step.values()).map(Step::getCode).toList().contains(step)) {
+			return ParamValidator.invalidate("步长不存在");
+		}
 		return ParamValidator.validate();
+	}
+
+	protected long getMinVal() {
+		return -10000000000000000L;
+	}
+
+	protected long getMaxVal() {
+		return 10000000000000000L;
 	}
 
 }

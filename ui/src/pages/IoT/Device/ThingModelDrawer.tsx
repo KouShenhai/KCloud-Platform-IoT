@@ -94,8 +94,6 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 				};
 			case 'int':
 			case 'long':
-			case 'float':
-			case 'double':
 				return {
 					min: value?.min,
 					max: value?.max,
@@ -336,70 +334,6 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 							label={"最大值"}
 							type="long"
 							precision={0} />
-					</Col>
-					<Col span={8}>
-						<ProFormSelect
-							disabled={loading || dataSource.id !== undefined}
-							readonly={readOnly}
-							name="unit"
-							label="单位"
-							options={dataUnitOptions}
-						/>
-					</Col>
-				</Row>
-			)}
-
-			{dataType === 'float' && (
-				<Row gutter={24}>
-					<Col span={8}>
-						<ProFormNumber
-							disabled={loading || dataSource.id !== undefined}
-							readonly={readOnly}
-							name="min"
-							label={"最小值"}
-							type="float"
-							precision={3} />
-					</Col>
-					<Col span={8}>
-						<ProFormNumber
-							disabled={loading || dataSource.id !== undefined}
-							readonly={readOnly}
-							name="max"
-							label={"最大值"}
-							type="float"
-							precision={3} />
-					</Col>
-					<Col span={8}>
-						<ProFormSelect
-							disabled={loading || dataSource.id !== undefined}
-							readonly={readOnly}
-							name="unit"
-							label="单位"
-							options={dataUnitOptions}
-						/>
-					</Col>
-				</Row>
-			)}
-
-			{dataType === 'double' && (
-				<Row gutter={24}>
-					<Col span={8}>
-						<ProFormNumber
-							disabled={loading || dataSource.id !== undefined}
-							readonly={readOnly}
-							name="min"
-							label="最小值"
-							type="double"
-							precision={6} />
-					</Col>
-					<Col span={8}>
-						<ProFormNumber
-							disabled={loading || dataSource.id !== undefined}
-							readonly={readOnly}
-							name="max"
-							label={"最大值"}
-							type="double"
-							precision={6} />
 					</Col>
 					<Col span={8}>
 						<ProFormSelect

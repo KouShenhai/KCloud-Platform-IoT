@@ -31,6 +31,8 @@ import org.laokou.common.fory.constant.ForyConstants;
 public class ForySerialCaffeineJsqlParseCache extends AbstractCaffeineJsqlParseCache {
 
 	static {
+		ForyFactory.INSTANCE.registerSerializer(net.sf.jsqlparser.expression.Function.HavingClause.class,
+				HavingClauseSerializer.class);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.expression.Alias.class, ForyConstants.C_1);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.expression.Alias.AliasColumn.class, ForyConstants.C_2);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.expression.AllValue.class, ForyConstants.C_3);
