@@ -111,7 +111,7 @@
     <!-- checkstyle版本 -->
     <checkstyle.version>13.8.0</checkstyle.version>
     <!-- spring-javaformat-checkstyle版本 -->
-    <spring-javaformat-checkstyle.version>0.0.47</spring-javaformat-checkstyle.version>
+    <spring-javaformat-checkstyle.version>0.0.48</spring-javaformat-checkstyle.version>
     <!-- spring-asciidoctor-backends版本 -->
     <spring-asciidoctor-backends.version>0.0.7</spring-asciidoctor-backends.version>
     <!-- protobuf-maven-plugin版本 -->
