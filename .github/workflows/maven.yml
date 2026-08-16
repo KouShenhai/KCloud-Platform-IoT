@@ -47,6 +47,10 @@ jobs:
             </servers>
           </settings>
           EOF
+      - name: Pull Elasticsearch Image
+        run: docker pull koushenhai/elasticsearch9:latest
+      - name: Pull OAuth2 Test Image
+        run: docker pull koushenhai/oauth2-test:latest
       - name: Build with Maven Mvnd
         run: mvnd -T 1.5C clean install -Ptest -U
       - name: Upload coverage reports to Codecov
