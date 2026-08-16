@@ -243,7 +243,7 @@
     <!-- commons-logging版本 -->
     <commons-logging.version>1.4.0</commons-logging.version>
     <!-- jctools版本 -->
-    <jctools.version>4.0.6</jctools.version>
+    <jctools.version>4.0.7</jctools.version>
     <!-- spotbugs版本 -->
     <spotbugs.version>4.10.3</spotbugs.version>
     <!-- docker主机 -->
