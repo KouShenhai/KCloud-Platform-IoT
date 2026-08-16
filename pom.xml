@@ -103,7 +103,7 @@
     <!-- asciidoctor-maven-plugin版本 -->
     <asciidoctor-maven-plugin.version>3.2.0</asciidoctor-maven-plugin.version>
     <!-- spring-javaformat-maven-plugin版本 -->
-    <spring-javaformat-maven-plugin.version>0.0.47</spring-javaformat-maven-plugin.version>
+    <spring-javaformat-maven-plugin.version>0.0.48</spring-javaformat-maven-plugin.version>
     <!-- maven-archetype-plugin版本 -->
     <maven-archetype-plugin.version>3.4.1</maven-archetype-plugin.version>
     <!-- jacoco-maven-plugin版本 -->
