@@ -89,7 +89,7 @@
     <!-- maven-enforcer-plugin版本 -->
     <maven-enforcer-plugin.version>3.6.3</maven-enforcer-plugin.version>
     <!-- docker-maven-plugin版本 -->
-    <docker-maven-plugin.version>0.48.1</docker-maven-plugin.version>
+    <docker-maven-plugin.version>0.49.0</docker-maven-plugin.version>
     <!-- maven-checkstyle-plugin版本 -->
     <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
     <!-- spotbugs-maven-plugin版本 -->
@@ -243,7 +243,7 @@
     <!-- commons-logging版本 -->
     <commons-logging.version>1.4.0</commons-logging.version>
     <!-- jctools版本 -->
-    <jctools.version>4.0.6</jctools.version>
+    <jctools.version>4.0.7</jctools.version>
     <!-- spotbugs版本 -->
     <spotbugs.version>4.10.3</spotbugs.version>
     <!-- docker主机 -->
