@@ -189,8 +189,6 @@ COMMENT ON INDEX "public"."sys_dict_item_code_dictId_tenantId_idx" IS '编码_�
 
 INSERT INTO "public"."sys_dict_item" VALUES (1, 1, 1, '2026-06-28 17:32:46.558703', '2026-06-28 17:32:46.5829', 0, 0, 1, 1, 'int(整数型)', 'int', 1, '', 0, 1);
 INSERT INTO "public"."sys_dict_item" VALUES (2, 1, 1, '2026-06-28 17:33:06.47766', '2026-06-28 17:33:06.497407', 0, 0, 1, 1, 'long(长整数型)', 'long', 2, '', 0, 1);
-INSERT INTO "public"."sys_dict_item" VALUES (3, 1, 1, '2026-06-28 17:33:51.971941', '2026-06-28 17:33:51.986855', 0, 0, 1, 1, 'float(单精度浮点型)', 'float', 3, '', 0, 1);
-INSERT INTO "public"."sys_dict_item" VALUES (4, 1, 1, '2026-06-28 17:34:19.22565', '2026-06-28 17:34:19.245028', 0, 0, 1, 1, 'double(双精度浮点型)', 'double', 4, '', 0, 1);
 INSERT INTO "public"."sys_dict_item" VALUES (5, 1, 1, '2026-06-28 17:34:53.705181', '2026-06-28 17:35:05.016846', 0, 1, 1, 1, 'text(文本型)', 'text', 5, '', 0, 1);
 INSERT INTO "public"."sys_dict_item" VALUES (6, 1, 1, '2026-06-28 17:35:28.144399', '2026-06-28 17:35:28.159035', 0, 0, 1, 1, 'boolean(布尔型)', 'boolean', 6, '', 0, 1);
 INSERT INTO "public"."sys_dict_item" VALUES (9, 1, 1, '2026-07-12 16:42:51.174665', '2026-07-12 16:42:51.207693', 0, 0, 1, 1, '百分比(%)', 'percent', 1, '百分比(%)', 0, 3);

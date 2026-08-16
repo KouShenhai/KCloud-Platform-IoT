@@ -40,19 +40,6 @@ public enum DataType {
 			return JacksonUtils.toBean(spec, LongType.class).checkValue();
 		}
 	},
-	FLOAT("float", "单精度浮点型") {
-		@Override
-		public ParamValidator.Validate validate(String spec) {
-			return JacksonUtils.toBean(spec, FloatType.class).checkValue();
-		}
-	},
-	DOUBLE("double", "双精度浮点型") {
-		@Override
-		public ParamValidator.Validate validate(String spec) {
-			return JacksonUtils.toBean(spec, DoubleType.class).checkValue();
-		}
-	},
-
 	TEXT("text", "文本型") {
 		@Override
 		public ParamValidator.Validate validate(String spec) {
@@ -65,7 +52,6 @@ public enum DataType {
 			return JacksonUtils.toBean(spec, BooleanType.class).checkValue();
 		}
 	},
-
 	ENUM("enum", "枚举") {
 		@Override
 		public ParamValidator.Validate validate(String spec) {

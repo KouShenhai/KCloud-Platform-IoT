@@ -89,7 +89,7 @@
     <!-- maven-enforcer-plugin版本 -->
     <maven-enforcer-plugin.version>3.6.3</maven-enforcer-plugin.version>
     <!-- docker-maven-plugin版本 -->
-    <docker-maven-plugin.version>0.48.1</docker-maven-plugin.version>
+    <docker-maven-plugin.version>0.49.0</docker-maven-plugin.version>
     <!-- maven-checkstyle-plugin版本 -->
     <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
     <!-- spotbugs-maven-plugin版本 -->
@@ -97,25 +97,25 @@
     <!-- native-maven-plugin版本 -->
     <native-maven-plugin.version>1.1.1</native-maven-plugin.version>
     <!-- versions-maven-plugin版本 -->
-    <native-maven-plugin.version>1.1.6</native-maven-plugin.version>
+    <native-maven-plugin.version>1.1.9</native-maven-plugin.version>
     <!--versions-maven-plugin版本-->
     <versions-maven-plugin.version>2.21.0</versions-maven-plugin.version>
     <!-- asciidoctor-maven-plugin版本 -->
     <asciidoctor-maven-plugin.version>3.2.0</asciidoctor-maven-plugin.version>
     <!-- spring-javaformat-maven-plugin版本 -->
-    <spring-javaformat-maven-plugin.version>0.0.47</spring-javaformat-maven-plugin.version>
+    <spring-javaformat-maven-plugin.version>0.0.48</spring-javaformat-maven-plugin.version>
     <!-- maven-archetype-plugin版本 -->
     <maven-archetype-plugin.version>3.4.1</maven-archetype-plugin.version>
     <!-- jacoco-maven-plugin版本 -->
     <jacoco-maven-plugin.version>0.8.15</jacoco-maven-plugin.version>
     <!-- checkstyle版本 -->
-    <checkstyle.version>13.8.0</checkstyle.version>
+    <checkstyle.version>13.10.0</checkstyle.version>
     <!-- spring-javaformat-checkstyle版本 -->
-    <spring-javaformat-checkstyle.version>0.0.47</spring-javaformat-checkstyle.version>
+    <spring-javaformat-checkstyle.version>0.0.48</spring-javaformat-checkstyle.version>
     <!-- spring-asciidoctor-backends版本 -->
     <spring-asciidoctor-backends.version>0.0.7</spring-asciidoctor-backends.version>
     <!-- protobuf-maven-plugin版本 -->
-    <protobuf-maven-plugin.version>5.1.7</protobuf-maven-plugin.version>
+    <protobuf-maven-plugin.version>5.1.8</protobuf-maven-plugin.version>
     <!-- central-publishing-maven-plugin版本 -->
     <central-publishing-maven-plugin.version>0.11.0</central-publishing-maven-plugin.version>
     <!-- maven-source-plugin版本 -->
@@ -179,9 +179,9 @@
     <!-- guava版本 -->
     <guava.version>33.6.0-jre</guava.version>
     <!-- oshi版本 -->
-    <oshi.version>7.4.3</oshi.version>
+    <oshi.version>7.4.4</oshi.version>
     <!-- elasticsearch版本 -->
-    <elasticsearch.version>9.5.0</elasticsearch.version>
+    <elasticsearch.version>9.5.1</elasticsearch.version>
     <!-- jakarta.servlet-api版本 -->
     <jakarta-servlet-api.version>6.1.0</jakarta-servlet-api.version>
     <!-- fesod版本 -->
@@ -213,7 +213,7 @@
     <!-- browscap-java版本 -->
     <browscap-java.version>1.5.1</browscap-java.version>
     <!-- flyway版本 -->
-    <flyway.version>13.2.0</flyway.version>
+    <flyway.version>13.3.0</flyway.version>
     <!-- snail-job版本 -->
     <snail-job.version>2.0.2</snail-job.version>
     <!-- archunit-junit5版本 -->
@@ -243,7 +243,7 @@
     <!-- commons-logging版本 -->
     <commons-logging.version>1.4.0</commons-logging.version>
     <!-- jctools版本 -->
-    <jctools.version>4.0.6</jctools.version>
+    <jctools.version>4.0.7</jctools.version>
     <!-- spotbugs版本 -->
     <spotbugs.version>4.10.3</spotbugs.version>
     <!-- docker主机 -->

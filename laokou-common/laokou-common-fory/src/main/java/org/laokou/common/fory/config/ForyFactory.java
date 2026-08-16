@@ -22,6 +22,7 @@ import org.apache.fory.ThreadSafeFory;
 import org.apache.fory.config.CompatibleMode;
 import org.apache.fory.config.ForyBuilder;
 import org.apache.fory.config.Language;
+import org.apache.fory.serializer.Serializer;
 
 import java.nio.charset.StandardCharsets;
 
@@ -33,30 +34,38 @@ public final class ForyFactory {
 
 	public static final ForyFactory INSTANCE = new ForyFactory();
 
-	private final ThreadSafeFory fory = new ForyBuilder()
-		// 关闭多语言序列化
-		.withXlang(false)
-		// 启用JAVA序列化
-		.withLanguage(Language.JAVA)
-		// 启用循环引用引用跟踪.
-		.withRefTracking(true)
-		// 压缩整数以节省空间
-		.withIntCompressed(true)
-		// 压缩长整数以节省空间
-		.withLongCompressed(true)
-		// CompatibleMode.SCHEMA_CONSISTENT模式序列化对象
-		.withCompatibleMode(CompatibleMode.SCHEMA_CONSISTENT)
-		// 启用异步多线程编译
-		.withAsyncCompilation(true)
-		// 启用类注册
-		.requireClassRegistration(true)
-		// 关闭反序列化不存在或未知的类
-		.withDeserializeUnknownClass(false)
-		// 限制嵌套反序列化深度
-		.withMaxDepth(100)
-		// 启用运行时代码生成
-		.withCodegen(true)
-		.buildThreadSafeFory();
+	private final ThreadSafeFory fory;
+
+	public ForyFactory() {
+		fory = new ForyBuilder()
+			// 关闭多语言序列化
+			.withXlang(false)
+			// 启用JAVA序列化
+			.withLanguage(Language.JAVA)
+			// 关闭循环引用跟踪
+			.withRefTracking(false)
+			// 压缩整数以节省空间
+			.withIntCompressed(true)
+			// 压缩长整数以节省空间
+			.withLongCompressed(true)
+			// CompatibleMode.SCHEMA_CONSISTENT模式序列化对象
+			.withCompatibleMode(CompatibleMode.SCHEMA_CONSISTENT)
+			// 启用异步多线程编译
+			.withAsyncCompilation(true)
+			// 启用类注册
+			.requireClassRegistration(true)
+			// 关闭反序列化不存在或未知的类
+			.withDeserializeUnknownClass(false)
+			// 限制嵌套反序列化深度
+			.withMaxDepth(100)
+			// 启用运行时代码生成
+			.withCodegen(true)
+			.buildThreadSafeFory();
+	}
+
+	public <T> void registerSerializer(Class<T> type, Class<? extends Serializer<?>> serializerClass) {
+		fory.registerSerializer(type, serializerClass);
+	}
 
 	public <T> void register(Class<T> clazz, int num) {
 		fory.register(clazz, num);

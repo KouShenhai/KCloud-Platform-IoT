@@ -33,6 +33,8 @@ public class EnumType {
 
 	private List<EnumOption> list;
 
+	private Integer length;
+
 	public ParamValidator.Validate checkValue() {
 		for (int i = 0; i < list.size(); i++) {
 			int index = i + 1;

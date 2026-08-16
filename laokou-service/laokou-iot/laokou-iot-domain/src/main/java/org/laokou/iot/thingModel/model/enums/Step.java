@@ -17,40 +17,26 @@
 
 package org.laokou.iot.thingModel.model.enums;
 
-import lombok.Data;
-import org.laokou.common.i18n.util.ParamValidator;
+import lombok.Getter;
+import org.laokou.common.i18n.util.EnumParser;
 
-import java.io.Serial;
+@Getter
+public enum Step {
 
-/**
- * @author laokou
- */
-@Data
-public class IntType extends LongType {
+	_1("1", "1"), _0_1("0.1", "0.1"), _0_01("0.01", "0.01"), _0_001("0.001", "0.001"), _0_0001("0.0001", "0.0001"),
+	_0_00001("0.00001", "0.00001"), _0_000001("0.000001", "0.000001");
 
-	@Serial
-	private static final long serialVersionUID = -1L;
+	private final String code;
 
-	private String min;
+	private final String desc;
 
-	private String max;
-
-	private String unit;
-
-	private String step;
-
-	public ParamValidator.Validate checkValue() {
-		return super.checkValue();
+	Step(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
 	}
 
-	@Override
-	public long getMinVal() {
-		return -100000000;
-	}
-
-	@Override
-	public long getMaxVal() {
-		return 100000000;
+	public static Step getByCode(String code) {
+		return EnumParser.parse(Step.class, Step::getCode, code);
 	}
 
 }
