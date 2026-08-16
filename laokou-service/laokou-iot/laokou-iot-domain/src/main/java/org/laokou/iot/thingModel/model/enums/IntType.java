@@ -18,7 +18,6 @@
 package org.laokou.iot.thingModel.model.enums;
 
 import lombok.Data;
-import org.laokou.common.i18n.util.ParamValidator;
 
 import java.io.Serial;
 
@@ -38,10 +37,6 @@ public class IntType extends LongType {
 	private String unit;
 
 	private String step;
-
-	public ParamValidator.Validate checkValue() {
-		return super.checkValue();
-	}
 
 	@Override
 	public long getMinVal() {
