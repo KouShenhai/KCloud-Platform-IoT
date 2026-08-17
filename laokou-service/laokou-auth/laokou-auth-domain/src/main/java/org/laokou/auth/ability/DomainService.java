@@ -38,7 +38,7 @@ public class DomainService {
 
 	private final MenuGateway menuGateway;
 
-	private final OssLogGateway authOssLogGateway;
+	private final OssLogGateway ossLogGateway;
 
 	private final CaptchaGateway captchaGateway;
 
@@ -49,7 +49,6 @@ public class DomainService {
 	public void createCaptcha(AuthA authA) {
 		// 校验验证码参数
 		authA.checkCaptchaParam();
-
 		// 保存验证码
 		captchaGateway.createCaptcha(authA.getCaptchaCacheKeyBySend(), authA.getCaptchaBySend());
 	}
@@ -81,7 +80,7 @@ public class DomainService {
 		// 校验数据权限
 		authA.checkDataFilter();
 		// 获取用户头像
-		authA.getUserAvatar(authOssLogGateway.getOssUrl(authA.getUserE().getAvatar()));
+		authA.getUserAvatar(ossLogGateway.getOssUrl(authA.getUserE().getAvatar()));
 	}
 
 }
