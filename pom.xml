@@ -159,7 +159,7 @@
     <!-- jackson版本 -->
     <jackson.version>3.2.2</jackson.version>
     <!-- okhttp版本 -->
-    <okhttp.version>5.4.0</okhttp.version>
+    <okhttp.version>5.5.0</okhttp.version>
     <!-- protobuf版本 -->
     <protobuf.version>4.34.2</protobuf.version>
     <!-- redisson版本 -->
