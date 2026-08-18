@@ -79,6 +79,11 @@ public class GlobalExceptionHandler {
 		return Result.fail(ex.getCode(), ex.getMsg(), ex.getData());
 	}
 
+	/**
+	 * 请求方式不支持异常.
+	 * @param ex 请求方式不支持异常
+	 * @return 响应结果
+	 */
 	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
 	public Result<?> handle(HttpRequestMethodNotSupportedException ex) {
 		// log.error("请求方式不支持，错误信息：{}", ex.getMessage(), ex);
