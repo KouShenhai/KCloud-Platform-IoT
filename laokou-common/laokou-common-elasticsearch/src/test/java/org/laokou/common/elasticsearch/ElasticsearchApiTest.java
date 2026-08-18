@@ -85,11 +85,17 @@ class ElasticsearchApiTest {
 
 	@Container
 	static final ElasticsearchContainer elasticsearch = new ElasticsearchContainer(DockerImageNames.elasticsearch())
-		.withPassword("laokou123");
+		.withPassword("laokou123")
+		.withEnv("discovery.type", "single-node")
+		.withEnv("xpack.security.enabled", "false")
+		.withEnv("xpack.security.http.ssl.enabled", "false")
+		.withEnv("xpack.security.transport.ssl.enabled", "false")
+		.withEnv("ES_JAVA_OPTS", "-Xms512m -Xmx512m")
+		.withStartupTimeout(Duration.ofMinutes(2));
 
 	@DynamicPropertySource
 	static void configureProperties(DynamicPropertyRegistry registry) {
-		registry.add("spring.data.elasticsearch.uris", () -> "https://" + elasticsearch.getHttpHostAddress());
+		registry.add("spring.data.elasticsearch.uris", () -> "http://" + elasticsearch.getHttpHostAddress());
 		registry.add("spring.data.elasticsearch.username", () -> "elastic");
 		registry.add("spring.data.elasticsearch.password", () -> "laokou123");
 		registry.add("spring.data.elasticsearch.client-version", () -> "9.5.1");
@@ -100,7 +106,7 @@ class ElasticsearchApiTest {
 
 	@BeforeAll
 	static void beforeAll() throws InterruptedException {
-		Thread.sleep(Duration.ofSeconds(30));
+		Thread.sleep(Duration.ofMinutes(1));
 	}
 
 	@Test
