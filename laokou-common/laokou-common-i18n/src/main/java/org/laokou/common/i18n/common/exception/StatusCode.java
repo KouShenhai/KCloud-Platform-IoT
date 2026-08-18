@@ -69,6 +69,11 @@ public final class StatusCode {
 	 */
 	public static final String SERVICE_UNAVAILABLE = "Service_Unavailable";
 
+	/**
+	 * 请求方式不支持.
+	 */
+	public static final String METHOD_NOT_ALLOWED = "Method_Not_Allowed";
+
 	private StatusCode() {
 	}
 
