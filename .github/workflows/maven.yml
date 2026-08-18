@@ -51,8 +51,10 @@ jobs:
         run: docker pull koushenhai/elasticsearch9:latest
       - name: Pull OAuth2 Test Image
         run: docker pull koushenhai/oauth2-test:latest
+      - name: Configure Elasticsearch
+        run: sudo sysctl -w vm.max_map_count=1048576
       - name: Build with Maven Mvnd
-        run: mvnd -T 1.5C clean install -Ptest -U
+        run: mvnd -T 1.5C clean install -Pdev -U
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v7.0.0
         env:
