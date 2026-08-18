@@ -19,13 +19,17 @@ package org.laokou.common.core.exception.handler;
 
 import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.common.exception.ParamException;
+import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.i18n.util.I18nUtils;
+import org.laokou.common.i18n.util.MessageUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -75,6 +79,17 @@ public class GlobalExceptionHandler {
 		return Result.fail(ex.getCode(), ex.getMsg(), ex.getData());
 	}
 
+	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+	public Result<?> handle(HttpRequestMethodNotSupportedException ex) {
+		// log.error("请求方式不支持，错误信息：{}", ex.getMessage(), ex);
+		String[] arr = ex.getSupportedMethods();
+		if (arr != null) {
+			return Result.fail(StatusCode.METHOD_NOT_ALLOWED, MessageUtils.getMessage(StatusCode.METHOD_NOT_ALLOWED,
+					new Object[] { String.join(StringConstants.ERECT, arr) }, I18nUtils.getLocale()));
+		}
+		throw new RuntimeException(ex);
+	}
+
 	/**
 	 * 参数校验异常.
 	 * @param ex 参数校验异常
@@ -82,14 +97,12 @@ public class GlobalExceptionHandler {
 	 */
 	@ExceptionHandler({ MethodArgumentNotValidException.class, ValidationException.class })
 	public Result<?> handle(Exception ex) {
-		// log.error("参数校验异常，错误信息：{}", ex.getMsg(), ex);
-		if (ex instanceof MethodArgumentNotValidException mane) {
-			FieldError fieldError = mane.getFieldError();
-			if (ObjectUtils.isNotNull(fieldError)) {
-				return Result.fail(fieldError.getCode(), fieldError.getDefaultMessage());
-			}
+		// log.error("参数校验异常，错误信息：{}", ex.getMessage(), ex);
+		if (ex instanceof MethodArgumentNotValidException mane
+				&& mane.getFieldError() instanceof FieldError fieldError) {
+			return Result.fail(fieldError.getCode(), fieldError.getDefaultMessage());
 		}
-		return Result.fail("S_UnKnow_Error", ex.getMessage());
+		throw new RuntimeException(ex);
 	}
 
 }
