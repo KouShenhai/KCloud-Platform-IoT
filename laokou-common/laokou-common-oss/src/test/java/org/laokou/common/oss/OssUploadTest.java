@@ -18,8 +18,6 @@
 package org.laokou.common.oss;
 
 import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.i18n.util.ResourceExtUtils;
@@ -33,6 +31,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.Resource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestConstructor;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,6 +40,7 @@ import java.io.InputStream;
 /**
  * @author laokou
  */
+@Testcontainers
 @ContextConfiguration(classes = { StorageAutoConfig.class })
 @RequiredArgsConstructor
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
@@ -50,18 +51,9 @@ class OssUploadTest {
 
 	private File file;
 
+	@Container
 	static final MinIOContainer minIO = new MinIOContainer(DockerImageNames.minIO()).withUsername("minio")
 		.withPassword("laokou123");
-
-	@BeforeAll
-	static void beforeAll() {
-		minIO.start();
-	}
-
-	@AfterAll
-	static void afterAll() {
-		minIO.stop();
-	}
 
 	@BeforeEach
 	void setUp() throws IOException {
