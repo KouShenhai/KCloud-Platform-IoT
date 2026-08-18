@@ -19,8 +19,6 @@ package org.laokou.common.ftp;
 
 import lombok.RequiredArgsConstructor;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.ftp.config.SFtpProperties;
 import org.laokou.common.ftp.template.SFtpTemplate;
@@ -33,6 +31,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.TestConstructor;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,6 +42,7 @@ import java.io.InputStream;
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @RequiredArgsConstructor
+@Testcontainers
 @EnableConfigurationProperties
 @ContextConfiguration(classes = { SFtpProperties.class, SFtpTemplate.class })
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
@@ -51,17 +52,8 @@ class SFtpTest {
 
 	private final SFtpProperties sftpProperties;
 
+	@Container
 	static final SFtpContainer sftp = new SFtpContainer(DockerImageNames.sftp()).withPassword("laokou", "laokou123");
-
-	@BeforeAll
-	static void beforeAll() {
-		sftp.start();
-	}
-
-	@AfterAll
-	static void afterAll() {
-		sftp.stop();
-	}
 
 	@DynamicPropertySource
 	static void configureProperties(DynamicPropertyRegistry registry) {

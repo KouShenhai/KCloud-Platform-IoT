@@ -20,8 +20,6 @@ package org.laokou.common.mybatisplus;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
@@ -31,6 +29,8 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.TestConstructor;
 import org.springframework.transaction.TransactionDefinition;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.postgresql.PostgreSQLContainer;
 
 import java.util.List;
@@ -38,6 +38,7 @@ import java.util.List;
 /**
  * @author laokou
  */
+@Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
@@ -47,20 +48,11 @@ class TransactionalUtilsTest {
 
 	private final TransactionalUtils transactionalUtils;
 
+	@Container
 	static PostgreSQLContainer postgres = new PostgreSQLContainer(DockerImageNames.postgresql()).withUsername("root")
 		.withPassword("laokou123")
 		.withInitScripts("init.sql")
 		.withDatabaseName("kcloud_platform_test");
-
-	@BeforeAll
-	static void beforeAll() {
-		postgres.start();
-	}
-
-	@AfterAll
-	static void afterAll() {
-		postgres.stop();
-	}
 
 	@DynamicPropertySource
 	static void configureProperties(DynamicPropertyRegistry registry) {

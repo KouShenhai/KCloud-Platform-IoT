@@ -28,7 +28,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.ThreadUtils;
@@ -43,10 +42,10 @@ import org.laokou.common.elasticsearch.annotation.Setting;
 import org.laokou.common.elasticsearch.annotation.SubField;
 import org.laokou.common.elasticsearch.annotation.Type;
 import org.laokou.common.elasticsearch.config.ElasticsearchAutoConfig;
-import org.laokou.common.elasticsearch.template.Search;
 import org.laokou.common.elasticsearch.template.ElasticsearchDocumentTemplate;
 import org.laokou.common.elasticsearch.template.ElasticsearchIndexTemplate;
 import org.laokou.common.elasticsearch.template.ElasticsearchSearchTemplate;
+import org.laokou.common.elasticsearch.template.Search;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.testcontainers.util.DockerImageNames;
 import org.springframework.boot.ssl.DefaultSslBundleRegistry;
@@ -57,6 +56,8 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.TestConstructor;
 import org.testcontainers.elasticsearch.ElasticsearchContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -71,6 +72,7 @@ import java.util.Set;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @RequiredArgsConstructor
 @TestConfiguration
+@Testcontainers
 @ContextConfiguration(classes = { ElasticsearchAutoConfig.class, DefaultSslBundleRegistry.class })
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class ElasticsearchApiTest {
@@ -81,19 +83,9 @@ class ElasticsearchApiTest {
 
 	private final ElasticsearchDocumentTemplate elasticsearchDocumentTemplate;
 
+	@Container
 	static final ElasticsearchContainer elasticsearch = new ElasticsearchContainer(DockerImageNames.elasticsearch())
 		.withPassword("laokou123");
-
-	@BeforeAll
-	static void beforeAll() throws InterruptedException {
-		elasticsearch.start();
-		Thread.sleep(Duration.ofSeconds(10L));
-	}
-
-	@AfterAll
-	static void afterAll() {
-		elasticsearch.stop();
-	}
 
 	@DynamicPropertySource
 	static void configureProperties(DynamicPropertyRegistry registry) {
@@ -104,6 +96,11 @@ class ElasticsearchApiTest {
 		registry.add("spring.data.elasticsearch.version", () -> "9.5.1");
 		registry.add("spring.data.elasticsearch.connection-timeout", () -> "60s");
 		registry.add("spring.data.elasticsearch.socket-timeout", () -> "60s");
+	}
+
+	@BeforeAll
+	static void beforeAll() throws InterruptedException {
+		Thread.sleep(Duration.ofSeconds(30));
 	}
 
 	@Test
