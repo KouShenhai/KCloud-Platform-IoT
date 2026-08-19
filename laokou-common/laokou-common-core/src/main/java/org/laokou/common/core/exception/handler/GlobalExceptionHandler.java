@@ -92,7 +92,7 @@ public class GlobalExceptionHandler {
 			return Result.fail(StatusCode.METHOD_NOT_ALLOWED, MessageUtils.getMessage(StatusCode.METHOD_NOT_ALLOWED,
 					new Object[] { String.join(StringConstants.ERECT, arr) }, I18nUtils.getLocale()));
 		}
-		throw new RuntimeException(ex);
+		throw new IllegalArgumentException(ex);
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class GlobalExceptionHandler {
 				&& mane.getFieldError() instanceof FieldError fieldError) {
 			return Result.fail(fieldError.getCode(), fieldError.getDefaultMessage());
 		}
-		throw new RuntimeException(ex);
+		throw new IllegalArgumentException(ex);
 	}
 
 }
