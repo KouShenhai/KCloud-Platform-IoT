@@ -45,9 +45,9 @@ public class CryptoTypeHandler implements TypeHandler<String> {
 			}
 			preparedStatement.setString(parameterIndex, content);
 		}
-		catch (Exception e) {
-			log.error("加密失败，错误信息：{}", e.getMessage(), e);
-			throw new RuntimeException(e);
+		catch (Exception ex) {
+			log.error("加密失败，错误信息：{}", ex.getMessage(), ex);
+			throw new IllegalArgumentException(ex);
 		}
 	}
 
@@ -60,9 +60,9 @@ public class CryptoTypeHandler implements TypeHandler<String> {
 			}
 			return AESUtils.decrypt(data.trim());
 		}
-		catch (Exception e) {
-			log.error("解密失败，错误信息：{}", e.getMessage(), e);
-			throw new RuntimeException(e);
+		catch (Exception ex) {
+			log.error("解密失败，错误信息：{}", ex.getMessage(), ex);
+			throw new IllegalArgumentException(ex);
 		}
 	}
 
@@ -75,9 +75,9 @@ public class CryptoTypeHandler implements TypeHandler<String> {
 			}
 			return AESUtils.decrypt(data.trim());
 		}
-		catch (Exception e) {
-			log.error("解密失败，错误信息：{}", e.getMessage(), e);
-			throw new RuntimeException(e);
+		catch (Exception ex) {
+			log.error("解密失败，错误信息：{}", ex.getMessage(), ex);
+			throw new IllegalArgumentException(ex);
 		}
 	}
 
@@ -90,9 +90,9 @@ public class CryptoTypeHandler implements TypeHandler<String> {
 			}
 			return AESUtils.decrypt(data.trim());
 		}
-		catch (Exception e) {
-			log.error("解密失败，错误信息：{}", e.getMessage(), e);
-			throw new RuntimeException(e);
+		catch (Exception ex) {
+			log.error("解密失败，错误信息：{}", ex.getMessage(), ex);
+			throw new IllegalArgumentException(ex);
 		}
 	}
 
