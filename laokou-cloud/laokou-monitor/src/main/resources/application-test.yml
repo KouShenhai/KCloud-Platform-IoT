@@ -15,13 +15,17 @@
 #    *
 #    */
 spring:
+  config:
+    import:
+      # 临时配置文件【解决拉取nacos配置文件时，group默认为DEFAULT_GROUP问题】
+      - optional:nacos:laokou-monitor.yaml?refreshEnabled=true&group=${NACOS_GROUP:IOT_GROUP}
   cloud:
     nacos:
       discovery:
         # 开启服务注册&发现
         enabled: true
         server-addr: ${NACOS_DISCOVERY_ADDRESS:nacos:8848,nacos:8858,nacos:8868}
-        namespace: ${NACOS-NAMESPACE}
+        namespace: ${NACOS_NAMESPACE:a61abd4c-ef96-42a5-99a1-616adee531f3}
         username: ${NACOS_USERNAME:nacos}
         password: ${NACOS_PASSWORD:nacos}
         group: ${NACOS_GROUP:IOT_GROUP}
@@ -41,7 +45,7 @@ spring:
         # 开启配置中心
         enabled: true
         server-addr: ${NACOS_CONFIG_ADDRESS:nacos:8848,nacos:8858,nacos:8868}
-        namespace: ${NACOS-NAMESPACE}
+        namespace: ${NACOS_NAMESPACE:a61abd4c-ef96-42a5-99a1-616adee531f3}
         username: ${NACOS_USERNAME:nacos}
         password: ${NACOS_PASSWORD:nacos}
         cluster-name: ${NACOS_CLUSTER_NAME:iot-cluster}

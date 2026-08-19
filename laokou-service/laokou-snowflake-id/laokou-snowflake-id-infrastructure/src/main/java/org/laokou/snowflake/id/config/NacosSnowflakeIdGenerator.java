@@ -396,7 +396,8 @@ public final class NacosSnowflakeIdGenerator implements IdGenerator {
 	private boolean tryRegisterMetadata() {
 		try {
 			Map<String, String> metadata = Map.of(DATACENTER_ID_KEY, String.valueOf(this.datacenterId), MACHINE_ID_KEY,
-					String.valueOf(this.machineId), GRPC_PORT_KEY, String.valueOf(getGrpcServerPort()));
+					String.valueOf(this.machineId), GRPC_PORT_KEY, String.valueOf(getGrpcServerPort()),
+					"management.context-path", "/api/actuator");
 			Instance instance = new Instance();
 			instance.setIp(currentIp);
 			instance.setPort(currentPort);

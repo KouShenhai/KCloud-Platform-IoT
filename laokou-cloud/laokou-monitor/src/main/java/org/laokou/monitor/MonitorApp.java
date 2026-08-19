@@ -19,11 +19,13 @@ package org.laokou.monitor;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import de.codecentric.boot.admin.server.config.EnableAdminServer;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.util.SslUtils;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.util.StopWatch;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -35,6 +37,7 @@ import java.security.NoSuchAlgorithmException;
  *
  * @author laokou
  */
+@Slf4j
 @EnableAdminServer
 @EnableDiscoveryClient
 @SpringBootApplication
@@ -43,12 +46,16 @@ class MonitorApp {
 
 	// @formatter:off
 	static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
+		StopWatch stopWatch = new StopWatch("Admin应用程序");
+		stopWatch.start();
 		System.setProperty("ENDPOINT", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "5000")));
 		// 配置关闭nacos日志，因为nacos的log4j2导致本项目的日志不输出的问题
 		System.setProperty("nacos.logging.default.config.enabled", "false");
 		// 忽略SSL认证
 		SslUtils.ignoreSSLTrust();
 		new SpringApplicationBuilder(MonitorApp.class).web(WebApplicationType.REACTIVE).run(args);
+		stopWatch.stop();
+		log.info("{}", stopWatch.prettyPrint());
 	}
 	// @formatter:on
 
