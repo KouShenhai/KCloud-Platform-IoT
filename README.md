@@ -169,7 +169,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级单体架构和微�
 |        Flyway        |    12.9.0    |
 |      Snail Job       |    1.8.0     |
 |       Sentinel       |    1.8.9     |
-|         Fory         |    1.1.0     |
+|         Fory         |    1.6.0     |
 
 #### 🍺 相关技术
 
@@ -337,6 +337,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级单体架构和微�
 | 10 |  ![LeiZhiMin1的头像](https://avatars.githubusercontent.com/u/32741993?s=64&v=4)   |   [LeiZhiMin1](https://github.com/LeiZhiMin1)   |
 | 11 |  ![FlySkyBear的头像](https://avatars.githubusercontent.com/u/24284648?s=64&v=4)   |   [FlySkyBear](https://github.com/FlySkyBear)   |
 | 12 | ![sd-xiaoZheng的头像](https://avatars.githubusercontent.com/u/121850259?s=60&v=4) | [sd-xiaoZheng](https://github.com/sd-xiaoZheng) |
+| 13 |  ![freshm4n1的头像](https://avatars.githubusercontent.com/u/105087851?s=60&v=4)   |    [freshm4n1](https://github.com/freshm4n1)    |
 ### ⛳️ 赞助列表（感谢各位大佬的赞助）
 
 |     时间     |  网名   |   赞助    |         备注         |
