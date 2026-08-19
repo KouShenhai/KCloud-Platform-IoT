@@ -42,6 +42,7 @@ import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtClaimNames;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
@@ -80,7 +81,7 @@ public record OAuth2OpaqueTokenIntrospector(OAuth2AuthorizationService authoriza
 				throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED);
 			}
 			return cachedPrincipal.principal();
-		} catch (Exception ex) {
+		} catch (JwtException ex) {
 			log.debug("JWT解析失败，错误信息：{}", ex.getMessage(), ex);
 			invalidate(token);
 			throw OAuth2ExceptionHandler.getException(StatusCode.UNAUTHORIZED);

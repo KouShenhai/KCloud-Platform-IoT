@@ -20,6 +20,7 @@ package org.laokou.common.core.util;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.dto.ClientObject;
 import org.laokou.common.i18n.util.ObjectUtils;
 
@@ -67,7 +68,7 @@ public final class TreeUtils {
 	 */
 	private static <T extends TreeNode<T>> T buildTreeNode(List<T> treeNodes, T rootNode) {
 		if (ObjectUtils.isNull(rootNode)) {
-			throw new RuntimeException("请构造根节点");
+			throw new BizException("B_Menu_TreeNodeBuildFailed", "请构造根节点");
 		}
 		List<T> nodes = new ArrayList<>(treeNodes);
 		// 添加根节点
