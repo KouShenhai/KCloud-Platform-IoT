@@ -177,7 +177,7 @@
     <!-- easy-captcha版本 -->
     <easy-captcha.version>1.6.2</easy-captcha.version>
     <!-- guava版本 -->
-    <guava.version>33.6.0-jre</guava.version>
+    <guava.version>33.7.1-jre</guava.version>
     <!-- oshi版本 -->
     <oshi.version>7.5.0</oshi.version>
     <!-- elasticsearch版本 -->
