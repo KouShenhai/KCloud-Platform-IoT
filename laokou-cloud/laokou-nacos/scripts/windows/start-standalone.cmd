@@ -10,7 +10,7 @@ set NACOS_CONSOLE_PORT=8048
 set NACOS_SERVER_PORT=8848
 set NACOS_AI_REGISTRY_PORT=9080
 set NACOS_DEPLOYMENT_TYPE=merged
-set NACOS_LOG_PATH=./logs/nacos-standalone
+set NACOS_LOG_PATH=%~dp0logs\nacos-standalone
 set NACOS_HOME=%~dp0/logs/nacos-standalone
 
 set NACOS_DS_PLATFORM=postgresql
