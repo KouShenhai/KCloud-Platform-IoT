@@ -10,8 +10,8 @@ set NACOS_CONSOLE_PORT=8048
 set NACOS_SERVER_PORT=8848
 set NACOS_AI_REGISTRY_PORT=9080
 set NACOS_DEPLOYMENT_TYPE=merged
-set NACOS_LOG_PATH=./logs/nacos-node1
-set NACOS_HOME=%~dp0/logs/nacos-node1
+set NACOS_LOG_PATH=%~dp0logs\nacos-node1
+set NACOS_HOME=%~dp0logs\nacos-node1
 set NACOS_IP=127.0.0.1
 
 set NACOS_MEMBER_LIST=127.0.0.1:8848,127.0.0.1:8858,127.0.0.1:8868
@@ -25,7 +25,7 @@ set SECRET-KEY=your_secret_key
 
 set JAVA_OPT=-Xms512m -Xmx512m -XX:+UseZGC -XX:+ZGenerational
 set JAVA_OPT=%JAVA_OPT% -Dnacos.standalone=false
-set JAVA_OPT=%JAVA_OPT% -Dnacos.home=%NACOS_HOME%
+set JAVA_OPT=%JAVA_OPT% -Dnacos.home="%NACOS_HOME%"
 set JAVA_OPT=%JAVA_OPT% -Dnacos.inetutils.ip-address=%NACOS_IP%
 set JAVA_OPT=%JAVA_OPT% -Dnacos.core.member.lookup.type=file
 set JAVA_OPT=%JAVA_OPT% -Dnacos.member.list=%NACOS_MEMBER_LIST%
