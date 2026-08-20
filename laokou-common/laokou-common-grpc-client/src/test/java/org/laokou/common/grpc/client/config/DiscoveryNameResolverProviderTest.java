@@ -27,6 +27,7 @@ import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.client.discovery.event.HeartbeatEvent;
 
 import java.net.URI;
+import java.util.Map;
 
 /**
  * @author laokou
@@ -38,7 +39,12 @@ class DiscoveryNameResolverProviderTest {
 	@BeforeEach
 	void setUp() {
 		DiscoveryClient discoveryClient = Mockito.mock(DiscoveryClient.class);
-		GrpcClientProperties grpcClientProperties = Mockito.mock(GrpcClientProperties.class);
+		GrpcClientProperties grpcClientProperties = new GrpcClientProperties();
+		Map<String, GrpcClientProperties.Channel> channelMap = grpcClientProperties.getChannel();
+		GrpcClientProperties.Channel channel = new GrpcClientProperties.Channel();
+		channel.setUserAgent("v1");
+		channel.setTarget("discovery://test");
+		channelMap.put("test", channel);
 		provider = new DiscoveryNameResolverProvider(discoveryClient, grpcClientProperties);
 	}
 
@@ -59,18 +65,18 @@ class DiscoveryNameResolverProviderTest {
 
 	@Test
 	void testNewNameResolver() {
-		URI uri = URI.create("discovery://laokou-auth");
+		URI uri = URI.create("discovery://test");
 		NameResolver.Args args = Mockito.mock(NameResolver.Args.class);
 		Mockito.when(args.getServiceConfigParser()).thenReturn(Mockito.mock(NameResolver.ServiceConfigParser.class));
 
 		NameResolver resolver = provider.newNameResolver(uri, args);
 		Assertions.assertThat(resolver).isExactlyInstanceOf(DiscoveryNameResolver.class);
-		Assertions.assertThat(resolver.getServiceAuthority()).isEqualTo("laokou-auth");
+		Assertions.assertThat(resolver.getServiceAuthority()).isEqualTo("test");
 	}
 
 	@Test
 	void testOnHeartbeatEvent() {
-		URI uri = URI.create("discovery://laokou-auth");
+		URI uri = URI.create("discovery://test");
 		NameResolver.Args args = Mockito.mock(NameResolver.Args.class);
 		Mockito.when(args.getServiceConfigParser()).thenReturn(Mockito.mock(NameResolver.ServiceConfigParser.class));
 

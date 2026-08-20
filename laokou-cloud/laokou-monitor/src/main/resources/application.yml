@@ -61,11 +61,11 @@ spring:
       # laokou123
       password: ENC(BhsqlMbKjWVxPseo9OX8osLuL2Y4rWfGTyBRXaZTsAdzZ1Z4rBewBmoXjf2Hnu4o)
   # mail
-  mail:
-    host: smtp.163.com
-    username: koushenhai@163.com
-    password: ENC(lyyF4qBHGnbwEHfz/RSj2JtahbLqWjMrkFz0hGqcND3Hp19Ea6aJejxqNBYCCGnL7iw8n11Y1xvM7Hp9EDPgtg==)
-    default-encoding: UTF-8
+#  mail:
+#    host: smtp.163.com
+#    username: koushenhai@163.com
+#    password: ENC(lyyF4qBHGnbwEHfz/RSj2JtahbLqWjMrkFz0hGqcND3Hp19Ea6aJejxqNBYCCGnL7iw8n11Y1xvM7Hp9EDPgtg==)
+#    default-encoding: UTF-8
 
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml
