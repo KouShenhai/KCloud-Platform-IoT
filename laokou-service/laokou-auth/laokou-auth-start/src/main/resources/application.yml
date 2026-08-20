@@ -85,6 +85,7 @@ spring:
             timeout: 30s
           idle:
             timeout: 30s
+          user-agent: ${spring.cloud.nacos.discovery.metadata.version}
   # security
   security:
     oauth2:

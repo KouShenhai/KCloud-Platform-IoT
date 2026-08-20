@@ -22,6 +22,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.boot.grpc.client.autoconfigure.GrpcClientProperties;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.client.discovery.event.HeartbeatEvent;
 
@@ -37,7 +38,8 @@ class DiscoveryNameResolverProviderTest {
 	@BeforeEach
 	void setUp() {
 		DiscoveryClient discoveryClient = Mockito.mock(DiscoveryClient.class);
-		provider = new DiscoveryNameResolverProvider(discoveryClient);
+		GrpcClientProperties grpcClientProperties = Mockito.mock(GrpcClientProperties.class);
+		provider = new DiscoveryNameResolverProvider(discoveryClient, grpcClientProperties);
 	}
 
 	@Test

@@ -26,6 +26,7 @@ import org.laokou.common.grpc.client.annotation.GrpcClientBeanPostProcessor;
 import org.laokou.common.grpc.client.constant.GrpcClientConstants;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.grpc.client.autoconfigure.GrpcClientProperties;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -49,8 +50,9 @@ import java.util.List;
 final class GrpcClientConfig {
 
 	@Bean
-	DiscoveryNameResolverProvider discoveryNameResolverProvider(DiscoveryClient discoveryClient) {
-		return new DiscoveryNameResolverProvider(discoveryClient);
+	DiscoveryNameResolverProvider discoveryNameResolverProvider(DiscoveryClient discoveryClient,
+			GrpcClientProperties grpcClientProperties) {
+		return new DiscoveryNameResolverProvider(discoveryClient, grpcClientProperties);
 	}
 
 	@Bean

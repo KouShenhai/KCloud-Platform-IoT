@@ -44,6 +44,8 @@ final class DiscoveryNameResolver extends NameResolver {
 
 	private final String serviceId;
 
+	private final String version;
+
 	private final DiscoveryClient discoveryClient;
 
 	private final List<ServiceInstance> serviceInstances;
@@ -52,8 +54,9 @@ final class DiscoveryNameResolver extends NameResolver {
 
 	private Listener2 listener;
 
-	public DiscoveryNameResolver(String serviceId, DiscoveryClient discoveryClient) {
+	public DiscoveryNameResolver(String serviceId, String version, DiscoveryClient discoveryClient) {
 		this.serviceId = serviceId;
+		this.version = version;
 		this.discoveryClient = discoveryClient;
 		this.serviceInstances = new CopyOnWriteArrayList<>();
 		this.resolving = new AtomicBoolean(false);
@@ -98,7 +101,10 @@ final class DiscoveryNameResolver extends NameResolver {
 	}
 
 	private List<ServiceInstance> resolveInternal() {
-		List<ServiceInstance> newServiceInstanceList = this.discoveryClient.getInstances(this.serviceId);
+		List<ServiceInstance> newServiceInstanceList = this.discoveryClient.getInstances(this.serviceId)
+			.stream()
+			.filter(item -> ObjectUtils.equals(version, getGrpcVersion(item)))
+			.toList();
 		if (CollectionExtUtils.isEmpty(newServiceInstanceList)) {
 			listener.onError(Status.UNAVAILABLE.withDescription("No servers found for " + serviceId));
 			return Collections.emptyList();
@@ -153,6 +159,14 @@ final class DiscoveryNameResolver extends NameResolver {
 			return Integer.parseInt(metadata.getOrDefault("grpc_port", "9090"));
 		}
 		return 9090;
+	}
+
+	private String getGrpcVersion(ServiceInstance serviceInstance) {
+		Map<String, String> metadata = serviceInstance.getMetadata();
+		if (ObjectUtils.isNotNull(metadata) && !metadata.isEmpty()) {
+			return metadata.getOrDefault("grpc_version", "v1");
+		}
+		return "v1";
 	}
 
 }

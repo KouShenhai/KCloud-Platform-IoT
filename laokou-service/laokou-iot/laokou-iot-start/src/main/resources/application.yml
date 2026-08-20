@@ -72,6 +72,7 @@ spring:
             timeout: 30s
           idle:
             timeout: 30s
+          user-agent: ${spring.cloud.nacos.discovery.metadata.version}
   cloud:
     # Loadbalancer配置
     loadbalancer:

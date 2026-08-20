@@ -60,6 +60,8 @@ public final class NacosSnowflakeIdGenerator implements IdGenerator {
 
 	private static final String GRPC_PORT_KEY = "grpc_port";
 
+	private static final String GRPC_VERSION_KEY = "grpc_version";
+
 	/**
 	 * 序列号标识占用的位数.
 	 */
@@ -355,6 +357,10 @@ public final class NacosSnowflakeIdGenerator implements IdGenerator {
 				System.getProperty("spring.grpc.server.port", "10111")));
 	}
 
+	private String getGrpcVersion() {
+		return environment.getProperty("spring.cloud.nacos.discovery.metadata.version", "v1");
+	}
+
 	private String getServiceId() {
 		return environment.getProperty("spring.application.name",
 				System.getProperty("spring.application.name", "laokou-distributed-id-snowflake"));
@@ -397,7 +403,7 @@ public final class NacosSnowflakeIdGenerator implements IdGenerator {
 		try {
 			Map<String, String> metadata = Map.of(DATACENTER_ID_KEY, String.valueOf(this.datacenterId), MACHINE_ID_KEY,
 					String.valueOf(this.machineId), GRPC_PORT_KEY, String.valueOf(getGrpcServerPort()),
-					"management.context-path", "/api/actuator");
+					GRPC_VERSION_KEY, getGrpcVersion(), "management.context-path", "/api/actuator");
 			Instance instance = new Instance();
 			instance.setIp(currentIp);
 			instance.setPort(currentPort);

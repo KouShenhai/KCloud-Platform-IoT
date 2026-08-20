@@ -20,6 +20,7 @@ package org.laokou.common.grpc.client.config;
 import io.grpc.NameResolver;
 import io.grpc.NameResolverProvider;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.grpc.client.autoconfigure.GrpcClientProperties;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.client.discovery.event.HeartbeatEvent;
 import org.springframework.context.event.EventListener;
@@ -38,9 +39,12 @@ final class DiscoveryNameResolverProvider extends NameResolverProvider {
 
 	private final Set<DiscoveryNameResolver> discoveryNameResolvers;
 
-	public DiscoveryNameResolverProvider(DiscoveryClient discoveryClient) {
+	private final GrpcClientProperties grpcClientProperties;
+
+	public DiscoveryNameResolverProvider(DiscoveryClient discoveryClient, GrpcClientProperties grpcClientProperties) {
 		this.discoveryClient = discoveryClient;
 		this.discoveryNameResolvers = new HashSet<>(512);
+		this.grpcClientProperties = grpcClientProperties;
 	}
 
 	@Override
@@ -55,7 +59,8 @@ final class DiscoveryNameResolverProvider extends NameResolverProvider {
 
 	@Override
 	public NameResolver newNameResolver(URI uri, NameResolver.Args args) {
-		DiscoveryNameResolver discoveryNameResolver = new DiscoveryNameResolver(uri.getHost(), discoveryClient);
+		DiscoveryNameResolver discoveryNameResolver = new DiscoveryNameResolver(uri.getHost(),
+				grpcClientProperties.getChannel().get(uri.getHost()).getUserAgent(), discoveryClient);
 		discoveryNameResolvers.add(discoveryNameResolver);
 		return discoveryNameResolver;
 	}
