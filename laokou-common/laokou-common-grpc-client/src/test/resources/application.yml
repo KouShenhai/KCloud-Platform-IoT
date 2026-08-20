@@ -18,3 +18,4 @@ spring:
             timeout: 30s
           idle:
             timeout: 30s
+          user-agent: v1

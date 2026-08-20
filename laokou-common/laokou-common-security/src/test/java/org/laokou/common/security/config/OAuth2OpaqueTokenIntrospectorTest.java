@@ -20,12 +20,16 @@ package org.laokou.common.security.config;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.redis.util.RedisUtils;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
+import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.jwt.JwtClaimNames;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
@@ -59,10 +63,13 @@ class OAuth2OpaqueTokenIntrospectorTest {
 		// Given
 		OAuth2OpaqueTokenIntrospector introspector = new OAuth2OpaqueTokenIntrospector(authorizationService, redisUtils,
 				jwtDecoder, redisRegisteredClientRepository);
+		Mockito.when(jwtDecoder.decode("invalid-token")).thenReturn(createJwt("invalid-token"));
 		Mockito.when(authorizationService.findByToken("invalid-token", OAuth2TokenType.ACCESS_TOKEN)).thenReturn(null);
 
 		// Then
-		Assertions.assertThatThrownBy(() -> introspector.introspect("invalid-token")).isNotNull();
+		Assertions.assertThatThrownBy(() -> introspector.introspect("invalid-token"))
+			.isInstanceOfSatisfying(OAuth2AuthenticationException.class,
+					ex -> Assertions.assertThat(ex.getError().getErrorCode()).isEqualTo(StatusCode.UNAUTHORIZED));
 	}
 
 	@Test
@@ -75,11 +82,14 @@ class OAuth2OpaqueTokenIntrospectorTest {
 			.principalName("user")
 			.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
 			.build();
+		Mockito.when(jwtDecoder.decode("token-without-access")).thenReturn(createJwt("token-without-access"));
 		Mockito.when(authorizationService.findByToken("token-without-access", OAuth2TokenType.ACCESS_TOKEN))
 			.thenReturn(authorization);
 
 		// Then
-		Assertions.assertThatThrownBy(() -> introspector.introspect("token-without-access")).isNotNull();
+		Assertions.assertThatThrownBy(() -> introspector.introspect("token-without-access"))
+			.isInstanceOfSatisfying(OAuth2AuthenticationException.class,
+					ex -> Assertions.assertThat(ex.getError().getErrorCode()).isEqualTo(StatusCode.UNAUTHORIZED));
 	}
 
 	@Test
@@ -90,6 +100,10 @@ class OAuth2OpaqueTokenIntrospectorTest {
 
 		// Then
 		Assertions.assertThat(introspector.authorizationService()).isEqualTo(authorizationService);
+	}
+
+	private Jwt createJwt(String token) {
+		return Jwt.withTokenValue(token).header("alg", "none").claim(JwtClaimNames.SUB, "user").build();
 	}
 
 	private RegisteredClient createRegisteredClient() {

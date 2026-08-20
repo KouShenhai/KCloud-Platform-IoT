@@ -66,6 +66,11 @@ module.exports = {
 							{text: 'FRP内网穿透', link: '/pages/01381a/'},
 						]
 					},
+					{
+						text: '物联网', link: '/pages/252f6c/', items: [
+							{text: 'PLC数采实施', link: '/pages/252f6c/'},
+						]
+					},
 				]
 			},
 			{text: '赞助', link: '/pages/1b12ed/'},

@@ -144,7 +144,7 @@ spring:
         # 元数据
         metadata:
           version: ${APP_VERSION:v1}
-          node_id: ${spring.id-generator.segment.node-id}
+          management.context-path: /api/actuator
       config:
         # 开启配置中心
         enabled: true
