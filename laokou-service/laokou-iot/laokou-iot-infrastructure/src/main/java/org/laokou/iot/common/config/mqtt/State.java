@@ -25,23 +25,23 @@ import lombok.Getter;
 @Getter
 public enum State {
 
-	INIT(0, "初始化连接"),
+	INIT("init", "初始化连接"),
 
-	CONNECTING(1, "正在建立连接"),
+	CONNECTING("connecting", "正在建立连接"),
 
-	CONNECTED(2, "已建立连接"),
+	CONNECTED("connected", "已建立连接"),
 
-	DISCONNECTING(3, "正在断开连接"),
+	DISCONNECTING("disconnecting", "正在断开连接"),
 
-	DISCONNECTED(4, "已断开连接"),
+	DISCONNECTED("disconnected", "已断开连接"),
 
-	RECONNECTING(5, "正在重新连接");
+	RECONNECTING("reconnecting", "正在重新连接");
 
-	private final int code;
+	private final String code;
 
 	private final String desc;
 
-	State(int code, String desc) {
+	State(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}
