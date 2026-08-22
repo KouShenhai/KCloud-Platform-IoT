@@ -21,21 +21,24 @@ import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
 import io.vertx.core.Vertx;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 /**
  * @author laokou
  */
 public abstract class AbstractVertxService<T> extends AbstractVerticle implements VertxService {
 
-	protected Future<String> deploymentIdFuture;
+	protected final AtomicReference<Future<String>> deploymentIdFuture;
 
 	protected AbstractVertxService(Vertx vertx) {
 		super.vertx = vertx;
+		deploymentIdFuture = new AtomicReference<>();
 	}
 
 	@Override
 	public void deploy() {
 		// 部署服务
-		deploymentIdFuture = doDeploy();
+		deploymentIdFuture.set(doDeploy());
 	}
 
 	@Override
