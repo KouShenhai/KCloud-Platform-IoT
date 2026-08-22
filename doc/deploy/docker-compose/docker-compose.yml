@@ -378,7 +378,7 @@ services:
     networks:
       - iot_network
   redis:
-    image: redis:8.10.0
+    image: redis:8.10.1
     container_name: redis
     # 保持容器在没有守护程序的情况下运行
     tty: true
@@ -444,7 +444,7 @@ services:
         hard: -1
   # ./bin/elasticsearch-setup-passwords interactive
   kibana:
-    image: docker.elastic.co/kibana/kibana:9.5.1
+    image: docker.elastic.co/kibana/kibana:9.5.2
     container_name: kibana
     # 保持容器在没有守护程序的情况下运行
     tty: true
