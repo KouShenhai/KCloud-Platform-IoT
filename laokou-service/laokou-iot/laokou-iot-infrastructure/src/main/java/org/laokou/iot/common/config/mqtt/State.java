@@ -17,15 +17,33 @@
 
 package org.laokou.iot.common.config.mqtt;
 
+import lombok.Getter;
+
 /**
  * @author laokou
  */
-public interface VertxService {
+@Getter
+public enum State {
 
-	void deploy();
+	INIT("init", "初始化连接"),
 
-	void undeploy();
+	CONNECTING("connecting", "正在建立连接"),
 
-	State state();
+	CONNECTED("connected", "已建立连接"),
+
+	DISCONNECTING("disconnecting", "正在断开连接"),
+
+	DISCONNECTED("disconnected", "已断开连接"),
+
+	RECONNECTING("reconnecting", "正在重新连接");
+
+	private final String code;
+
+	private final String desc;
+
+	State(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
 
 }
