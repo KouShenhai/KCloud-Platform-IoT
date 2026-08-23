@@ -133,7 +133,7 @@
     <!-- spring-framework版本 -->
     <spring-framework.version>7.0.9</spring-framework.version>
     <!-- spring-data版本 -->
-    <spring-data.version>2026.0.0</spring-data.version>
+    <spring-data.version>2026.0.1</spring-data.version>
     <!-- spring-security版本 -->
     <spring-security.version>7.1.1</spring-security.version>
     <!-- spring-ai版本 -->
@@ -231,7 +231,7 @@
     <!-- wiremock版本 -->
     <wiremock.version>3.13.2</wiremock.version>
     <!-- jsch版本 -->
-    <jsch.version>2.28.6</jsch.version>
+    <jsch.version>2.28.7</jsch.version>
     <!-- minio版本 -->
     <minio.version>9.0.3</minio.version>
     <!-- swagger-annotations-jakarta版本 -->
