@@ -83,7 +83,8 @@ final class GrpcClientConfig {
 	ClientInterceptor clientInterceptor(ObjectProvider<OAuth2AuthorizedToken> objectProvider) {
 		return new ClientInterceptor() {
 			@Override
-			public <ReqT, RespT> ClientCall<ReqT, RespT> interceptCall(MethodDescriptor<ReqT, RespT> method, CallOptions callOptions, Channel next) {
+			public <ReqT, RespT> ClientCall<ReqT, RespT> interceptCall(MethodDescriptor<ReqT, RespT> method,
+					CallOptions callOptions, Channel next) {
 				return new ForwardingClientCall.SimpleForwardingClientCall<>(next.newCall(method, callOptions)) {
 					public void start(ClientCall.Listener<RespT> responseListener, io.grpc.Metadata headers) {
 						headers.put(GrpcHeaders.AUTHORIZATION_KEY, getAccessToken(objectProvider));
