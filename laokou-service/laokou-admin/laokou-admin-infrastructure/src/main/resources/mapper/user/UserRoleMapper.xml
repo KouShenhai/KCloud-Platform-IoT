@@ -25,7 +25,7 @@
     from sys_user_role
     <where>
       user_id in
-      <foreach collection="userIds" item="item" open="(" close=")">
+      <foreach collection="userIds" item="item" open="(" separator="," close=")">
         #{item}
       </foreach>
       and del_flag = 0

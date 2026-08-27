@@ -23,11 +23,6 @@ import org.laokou.admin.user.gateway.UserRoleGateway;
 import org.laokou.admin.user.model.UserA;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-
 /**
  * 用户领域服务.
  *
@@ -41,8 +36,6 @@ public class UserDomainService {
 
 	private final UserRoleGateway userRoleGateway;
 
-	private final ExecutorService virtualTaskExecutor;
-
 	public void createUser(UserA userA) {
 		userGateway.createUser(userA);
 	}
@@ -51,26 +44,13 @@ public class UserDomainService {
 		userGateway.updateUser(userA);
 	}
 
-	public void updateAuthorityUser(UserA userA) throws Exception {
-		List<Callable<Boolean>> futures = new ArrayList<>(1);
-		futures.add(() -> {
-			userRoleGateway.updateUserRole(userA);
-			return true;
-		});
-		virtualTaskExecutor.invokeAll(futures);
+	public void updateAuthorityUser(UserA userA) {
+		userRoleGateway.updateUserRole(userA);
 	}
 
-	public void deleteUser(Long[] ids) throws InterruptedException {
-		List<Callable<Boolean>> futures = new ArrayList<>(2);
-		futures.add(() -> {
-			userGateway.deleteUser(ids);
-			return true;
-		});
-		futures.add(() -> {
-			userRoleGateway.deleteUserRole(ids);
-			return true;
-		});
-		virtualTaskExecutor.invokeAll(futures);
+	public void deleteUser(Long[] ids) {
+		userGateway.deleteUser(ids);
+		userRoleGateway.deleteUserRole(ids);
 	}
 
 }

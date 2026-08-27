@@ -18,6 +18,7 @@
 package org.laokou.common.nacos.handler;
 
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.i18n.util.ResourceExtUtils;
 import org.laokou.common.i18n.util.SpringUtils;
@@ -40,7 +41,7 @@ import java.util.Map;
 public record RouterHandler(SpringUtils springUtils) implements ApplicationListener<ApplicationReadyEvent> {
 
 	@Override
-	public void onApplicationEvent(ApplicationReadyEvent event) {
+	public void onApplicationEvent(@NonNull ApplicationReadyEvent event) {
 		try {
 			String serviceId = springUtils.getServiceId();
 			Assert.isTrue(StringExtUtils.isNotEmpty(serviceId), "ServiceID is empty");

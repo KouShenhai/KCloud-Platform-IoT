@@ -25,7 +25,7 @@
     from sys_role_menu
     <where>
       role_id in
-      <foreach collection="roleIds" item="item" open="(" close=")">
+      <foreach collection="roleIds" item="item" open="(" separator="," close=")">
         #{item}
       </foreach>
       and del_flag = 0

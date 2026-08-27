@@ -23,6 +23,7 @@ import org.laokou.common.context.util.UserExtDetails;
 import org.laokou.common.data.cache.aspectj.OperateType;
 import org.laokou.common.data.cache.constant.NameConstants;
 import org.laokou.common.domain.annotation.CommandLog;
+import org.laokou.common.grpc.client.constant.GrpcClientConstants;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
@@ -75,7 +76,7 @@ public class TokenRemoveCmdExe {
 		if (StringExtUtils.isEmpty(token)) {
 			return;
 		}
-		OAuth2Authorization authorization = authorizationService.findByToken(token.substring(7),
+		OAuth2Authorization authorization = authorizationService.findByToken(token.substring(GrpcClientConstants.BEARER_PREFIX.length()),
 				OAuth2TokenType.ACCESS_TOKEN);
 		if (ObjectUtils.isNotNull(authorization)) {
 			// 移除菜单缓存
