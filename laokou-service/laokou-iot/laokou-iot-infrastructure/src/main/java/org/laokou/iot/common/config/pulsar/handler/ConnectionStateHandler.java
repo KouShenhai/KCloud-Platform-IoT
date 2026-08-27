@@ -15,15 +15,22 @@
  *
  */
 
-package org.laokou.iot.common.config.mqtt;
+package org.laokou.iot.common.config.pulsar.handler;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 /**
  * @author laokou
  */
-public interface VertxService {
+@Slf4j
+@Component
+@RequiredArgsConstructor
+public final class ConnectionStateHandler {
 
-	void deploy();
+	public void handle(State state) {
 
-	void undeploy();
+	}
 
 }
