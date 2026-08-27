@@ -40,6 +40,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * @author laokou
@@ -76,7 +77,7 @@ final class GrpcClientConfig {
 	@Bean
 	@GlobalClientInterceptor
 	ClientInterceptor clientInterceptor(ObjectProvider<OAuth2AuthorizedToken> objectProvider) {
-		return new BearerTokenAuthenticationInterceptor(() -> getAccessToken(objectProvider));
+		return new BearerTokenAuthenticationInterceptor((Supplier<String>) () -> getAccessToken(objectProvider));
 	}
 
 	private String getAccessToken(ObjectProvider<OAuth2AuthorizedToken> objectProvider) {
