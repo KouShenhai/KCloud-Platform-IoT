@@ -48,7 +48,6 @@ public class RoleDomainService {
 	}
 
 	public void updateAuthorityRole(RoleA roleA) {
-		roleGateway.updateRole(roleA);
 		roleMenuGateway.updateRoleMenu(roleA);
 		roleDeptGateway.updateRoleDept(roleA);
 	}

@@ -17,6 +17,7 @@
 
 package org.laokou.admin.user.gatewayimpl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.user.convertor.UserConvertor;
@@ -24,12 +25,10 @@ import org.laokou.admin.user.gateway.UserRoleGateway;
 import org.laokou.admin.user.gatewayimpl.database.UserRoleMapper;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserRoleDO;
 import org.laokou.admin.user.model.UserA;
-import org.laokou.common.core.util.CollectionExtUtils;
-import org.laokou.common.mybatisplus.util.MybatisUtils;
 import org.springframework.stereotype.Component;
+
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
 
 /**
  * @author laokou
@@ -39,44 +38,39 @@ import java.util.concurrent.ExecutorService;
 @RequiredArgsConstructor
 public class UserRoleGatewayImpl implements UserRoleGateway {
 
-	private final MybatisUtils mybatisUtils;
-
 	private final UserRoleMapper userRoleMapper;
-
-	private final ExecutorService virtualTaskExecutor;
 
 	@Override
 	public void updateUserRole(UserA userA) {
-		deleteUserRole(getUserRoleIds(userA.getUserE().getId()));
+		deleteUserRole(userA.getUserE().getId());
 		insertUserRole(userA);
 	}
 
 	@Override
 	public void deleteUserRole(Long[] userIds) {
-		deleteUserRole(getUserRoleIds(Arrays.asList(userIds)));
+		deleteUserRoleBatch(Arrays.asList(userIds));
 	}
 
 	private void insertUserRole(UserA userA) {
-		// 新增用户角色关联表
-		List<UserRoleDO> list = UserConvertor.toDataObjects(userA);
-		if (CollectionExtUtils.isNotEmpty(list)) {
-			mybatisUtils.batch(list, UserRoleMapper.class, UserRoleMapper::insert, virtualTaskExecutor);
-		}
+		userRoleMapper.insert(UserConvertor.toDataObjects(userA));
 	}
 
-	private void deleteUserRole(List<Long> userRoleIds) {
-		// 删除用户角色关联表
-		if (CollectionExtUtils.isNotEmpty(userRoleIds)) {
-			userRoleMapper.deleteByIds(userRoleIds);
-		}
+	private void deleteUserRole(Long userId) {
+		userRoleMapper.update(Wrappers.lambdaUpdate(UserRoleDO.class)
+			.set(UserRoleDO::getDelFlag, 1)
+			.set(UserRoleDO::getVersion, 1)
+			.eq(UserRoleDO::getRoleId, userId)
+			.eq(UserRoleDO::getVersion, 0)
+			.eq(UserRoleDO::getDelFlag, 0));
 	}
 
-	private List<Long> getUserRoleIds(List<Long> userIds) {
-		return userRoleMapper.selectUserRoleIdsByUserIds(userIds);
-	}
-
-	private List<Long> getUserRoleIds(Long userId) {
-		return userRoleMapper.selectUserRoleIdsByUserId(userId);
+	private void deleteUserRoleBatch(List<Long> userIds) {
+		userRoleMapper.update(Wrappers.lambdaUpdate(UserRoleDO.class)
+			.set(UserRoleDO::getDelFlag, 1)
+			.set(UserRoleDO::getVersion, 1)
+			.in(UserRoleDO::getRoleId, userIds)
+			.eq(UserRoleDO::getVersion, 0)
+			.eq(UserRoleDO::getDelFlag, 0));
 	}
 
 }

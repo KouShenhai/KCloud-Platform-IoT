@@ -32,10 +32,6 @@ import java.util.List;
 @Repository
 public interface UserRoleMapper extends CrudMapper<Long, Integer, UserRoleDO> {
 
-	List<Long> selectUserRoleIdsByUserIds(@Param("userIds") List<Long> userIds);
-
-	List<Long> selectUserRoleIdsByUserId(@Param("userId") Long userId);
-
 	List<String> selectRoleIdsByUserId(@Param("userId") Long userId);
 
 }

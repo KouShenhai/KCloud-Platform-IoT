@@ -17,6 +17,7 @@
 
 package org.laokou.admin.role.gatewayimpl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.role.convertor.RoleConvertor;
@@ -24,12 +25,10 @@ import org.laokou.admin.role.gateway.RoleMenuGateway;
 import org.laokou.admin.role.gatewayimpl.database.RoleMenuMapper;
 import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleMenuDO;
 import org.laokou.admin.role.model.RoleA;
-import org.laokou.common.core.util.CollectionExtUtils;
-import org.laokou.common.mybatisplus.util.MybatisUtils;
 import org.springframework.stereotype.Component;
+
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
 
 /**
  * @author laokou
@@ -39,44 +38,39 @@ import java.util.concurrent.ExecutorService;
 @RequiredArgsConstructor
 public class RoleMenuGatewayImpl implements RoleMenuGateway {
 
-	private final MybatisUtils mybatisUtils;
-
 	private final RoleMenuMapper roleMenuMapper;
-
-	private final ExecutorService virtualTaskExecutor;
 
 	@Override
 	public void updateRoleMenu(RoleA roleA) {
-		deleteRoleMenu(getRoleMenuIds(roleA.getRoleE().getId()));
+		deleteRoleMenu(roleA.getRoleE().getId());
 		insertRoleMenu(roleA);
 	}
 
 	@Override
 	public void deleteRoleMenu(Long[] roleIds) {
-		deleteRoleMenu(getRoleMenuIds(Arrays.asList(roleIds)));
+		deleteRoleMenuBatch(Arrays.asList(roleIds));
 	}
 
 	private void insertRoleMenu(RoleA roleA) {
-		// 新增角色菜单关联表
-		List<RoleMenuDO> list = RoleConvertor.toDataObjects(roleA);
-		if (CollectionExtUtils.isNotEmpty(list)) {
-			mybatisUtils.batch(list, RoleMenuMapper.class, RoleMenuMapper::insert, virtualTaskExecutor);
-		}
+		roleMenuMapper.insert(RoleConvertor.toDataObjects(roleA));
 	}
 
-	private void deleteRoleMenu(List<Long> roleMenuIds) {
-		// 删除角色菜单关联表
-		if (CollectionExtUtils.isNotEmpty(roleMenuIds)) {
-			roleMenuMapper.deleteByIds(roleMenuIds);
-		}
+	private void deleteRoleMenu(Long roleId) {
+		roleMenuMapper.update(Wrappers.lambdaUpdate(RoleMenuDO.class)
+			.set(RoleMenuDO::getDelFlag, 1)
+			.set(RoleMenuDO::getVersion, 1)
+			.eq(RoleMenuDO::getRoleId, roleId)
+			.eq(RoleMenuDO::getVersion, 0)
+			.eq(RoleMenuDO::getDelFlag, 0));
 	}
 
-	private List<Long> getRoleMenuIds(List<Long> roleIds) {
-		return roleMenuMapper.selectRoleMenuIdsByRoleIds(roleIds); // 增强型指数退避策略
-	}
-
-	private List<Long> getRoleMenuIds(Long roleId) {
-		return roleMenuMapper.selectRoleMenuIdsByRoleId(roleId); // 增强型指数退避策略
+	private void deleteRoleMenuBatch(List<Long> roleIds) {
+		roleMenuMapper.update(Wrappers.lambdaUpdate(RoleMenuDO.class)
+			.set(RoleMenuDO::getDelFlag, 1)
+			.set(RoleMenuDO::getVersion, 1)
+			.in(RoleMenuDO::getRoleId, roleIds)
+			.eq(RoleMenuDO::getVersion, 0)
+			.eq(RoleMenuDO::getDelFlag, 0));
 	}
 
 }

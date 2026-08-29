@@ -17,6 +17,7 @@
 
 package org.laokou.admin.role.gatewayimpl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.admin.role.convertor.RoleConvertor;
@@ -24,12 +25,10 @@ import org.laokou.admin.role.gateway.RoleDeptGateway;
 import org.laokou.admin.role.gatewayimpl.database.RoleDeptMapper;
 import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleDeptDO;
 import org.laokou.admin.role.model.RoleA;
-import org.laokou.common.core.util.CollectionExtUtils;
-import org.laokou.common.mybatisplus.util.MybatisUtils;
 import org.springframework.stereotype.Component;
+
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
 
 /**
  * @author laokou
@@ -41,42 +40,37 @@ public class RoleDeptGatewayImpl implements RoleDeptGateway {
 
 	private final RoleDeptMapper roleDeptMapper;
 
-	private final MybatisUtils mybatisUtils;
-
-	private final ExecutorService virtualTaskExecutor;
-
 	@Override
 	public void updateRoleDept(RoleA roleA) {
-		deleteRoleDept(getRoleDeptIds(roleA.getRoleE().getId()));
+		deleteRoleDept(roleA.getRoleE().getId());
 		insertRoleDept(roleA);
 	}
 
 	@Override
 	public void deleteRoleDept(Long[] roleIds) {
-		deleteRoleDept(getRoleDeptIds(Arrays.asList(roleIds)));
+		deleteRoleDeptBatch(Arrays.asList(roleIds));
 	}
 
 	private void insertRoleDept(RoleA roleA) {
-		// 新增角色菜单关联表
-		List<RoleDeptDO> list = RoleConvertor.toDataObjs(roleA);
-		if (CollectionExtUtils.isNotEmpty(list)) {
-			mybatisUtils.batch(list, RoleDeptMapper.class, RoleDeptMapper::insert, virtualTaskExecutor);
-		}
+		roleDeptMapper.insert(RoleConvertor.toDataObjs(roleA));
 	}
 
-	private void deleteRoleDept(List<Long> roleDeptIds) {
-		// 删除角色菜单关联表
-		if (CollectionExtUtils.isNotEmpty(roleDeptIds)) {
-			roleDeptMapper.deleteByIds(roleDeptIds);
-		}
+	private void deleteRoleDept(Long roleId) {
+		roleDeptMapper.update(Wrappers.lambdaUpdate(RoleDeptDO.class)
+			.set(RoleDeptDO::getDelFlag, 1)
+			.set(RoleDeptDO::getVersion, 1)
+			.eq(RoleDeptDO::getRoleId, roleId)
+			.eq(RoleDeptDO::getVersion, 0)
+			.eq(RoleDeptDO::getDelFlag, 0));
 	}
 
-	private List<Long> getRoleDeptIds(List<Long> roleIds) {
-		return roleDeptMapper.selectRoleDeptIdsByRoleIds(roleIds);
-	}
-
-	private List<Long> getRoleDeptIds(Long roleId) {
-		return roleDeptMapper.selectRoleDeptIdsByRoleId(roleId);
+	private void deleteRoleDeptBatch(List<Long> roleIds) {
+		roleDeptMapper.update(Wrappers.lambdaUpdate(RoleDeptDO.class)
+			.set(RoleDeptDO::getDelFlag, 1)
+			.set(RoleDeptDO::getVersion, 1)
+			.in(RoleDeptDO::getRoleId, roleIds)
+			.eq(RoleDeptDO::getVersion, 0)
+			.eq(RoleDeptDO::getDelFlag, 0));
 	}
 
 }
