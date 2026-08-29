@@ -138,8 +138,8 @@ export const RoleModifyAuthorityDrawer: React.FC<RoleAuthorityProps> = ({
 					treeCheckable: true,
 					// 展示策略
 					showCheckedStrategy: 'SHOW_ALL',
-					// 取消父子节点联动
-					treeCheckStrictly: true,
+					// 开启父子节点联动，选择菜单时自动勾选父级节点
+					treeCheckStrictly: false,
 					// 默认展示所有节点
 					treeDefaultExpandAll: true,
 					// 高度
