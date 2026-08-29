@@ -17,9 +17,12 @@
 
 package org.laokou.admin.role.gatewayimpl;
 
+import com.baomidou.mybatisplus.core.batch.MybatisBatch;
+import com.baomidou.mybatisplus.core.toolkit.MybatisBatchUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.laokou.admin.role.convertor.RoleConvertor;
 import org.laokou.admin.role.gateway.RoleDeptGateway;
 import org.laokou.admin.role.gatewayimpl.database.RoleDeptMapper;
@@ -40,6 +43,8 @@ public class RoleDeptGatewayImpl implements RoleDeptGateway {
 
 	private final RoleDeptMapper roleDeptMapper;
 
+	private final SqlSessionFactory sqlSessionFactory;
+
 	@Override
 	public void updateRoleDept(RoleA roleA) {
 		deleteRoleDept(roleA.getRoleE().getId());
@@ -52,7 +57,8 @@ public class RoleDeptGatewayImpl implements RoleDeptGateway {
 	}
 
 	private void insertRoleDept(RoleA roleA) {
-		roleDeptMapper.insert(RoleConvertor.toDataObjs(roleA));
+		MybatisBatch.Method<RoleDeptDO> mapperMethod = new MybatisBatch.Method<>(RoleDeptMapper.class);
+		MybatisBatchUtils.execute(sqlSessionFactory, RoleConvertor.toDataObjs(roleA), mapperMethod.insert());
 	}
 
 	private void deleteRoleDept(Long roleId) {

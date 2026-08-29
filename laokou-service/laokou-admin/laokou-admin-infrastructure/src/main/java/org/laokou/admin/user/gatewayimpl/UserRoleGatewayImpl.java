@@ -17,9 +17,12 @@
 
 package org.laokou.admin.user.gatewayimpl;
 
+import com.baomidou.mybatisplus.core.batch.MybatisBatch;
+import com.baomidou.mybatisplus.core.toolkit.MybatisBatchUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.laokou.admin.user.convertor.UserConvertor;
 import org.laokou.admin.user.gateway.UserRoleGateway;
 import org.laokou.admin.user.gatewayimpl.database.UserRoleMapper;
@@ -40,6 +43,8 @@ public class UserRoleGatewayImpl implements UserRoleGateway {
 
 	private final UserRoleMapper userRoleMapper;
 
+	private final SqlSessionFactory sqlSessionFactory;
+
 	@Override
 	public void updateUserRole(UserA userA) {
 		deleteUserRole(userA.getUserE().getId());
@@ -52,7 +57,8 @@ public class UserRoleGatewayImpl implements UserRoleGateway {
 	}
 
 	private void insertUserRole(UserA userA) {
-		userRoleMapper.insert(UserConvertor.toDataObjects(userA));
+		MybatisBatch.Method<UserRoleDO> mapperMethod = new MybatisBatch.Method<>(UserRoleMapper.class);
+		MybatisBatchUtils.execute(sqlSessionFactory, UserConvertor.toDataObjects(userA), mapperMethod.insert());
 	}
 
 	private void deleteUserRole(Long userId) {
