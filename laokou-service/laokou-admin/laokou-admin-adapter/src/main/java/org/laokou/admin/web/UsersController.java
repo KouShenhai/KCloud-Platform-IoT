@@ -89,7 +89,7 @@ public class UsersController {
 	@PreAuthorize("hasAuthority('write') and hasAuthority('sys:user:remove')")
 	@OperateLog(module = "用户管理", operation = "删除用户")
 	@Operation(summary = "删除用户", description = "删除用户")
-	public void removeUser(@RequestBody Long[] ids) throws InterruptedException {
+	public void removeUser(@RequestBody Long[] ids) throws Exception {
 		usersServiceI.removeUser(new UserRemoveCmd(ids));
 	}
 

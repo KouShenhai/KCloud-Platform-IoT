@@ -96,7 +96,7 @@ public class UsersServiceImpl implements UsersServiceI {
 	}
 
 	@Override
-	public void removeUser(UserRemoveCmd cmd) throws InterruptedException {
+	public void removeUser(UserRemoveCmd cmd) throws Exception {
 		userRemoveCmdExe.executeVoid(cmd);
 	}
 
