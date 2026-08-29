@@ -112,7 +112,7 @@ public class OssController {
 	@GetMapping("/v1/oss/{id}")
 	@PreAuthorize("hasAuthority('read') and hasAuthority('sys:oss:detail')")
 	@Operation(summary = "查看OSS详情", description = "查看OSS详情")
-	public Result<OssCO> getOssById(@PathVariable("id") Long id) {
+	public Result<OssCO> getOssById(@PathVariable Long id) {
 		return ossServiceI.getOssById(new OssGetQry(id));
 	}
 

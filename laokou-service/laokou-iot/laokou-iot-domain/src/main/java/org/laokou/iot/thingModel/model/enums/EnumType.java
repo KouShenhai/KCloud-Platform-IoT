@@ -29,32 +29,34 @@ import java.util.Set;
  * @author laokou
  */
 @Data
-public class EnumType {
+public class EnumType extends TextType {
 
 	private List<EnumOption> list;
 
-	private Integer length;
-
+	@Override
 	public ParamValidator.Validate checkValue() {
-		for (int i = 0; i < list.size(); i++) {
-			int index = i + 1;
-			String code = list.get(i).getCode();
-			String desc = list.get(i).getDesc();
-			if (!StringUtils.hasText(code)) {
-				return ParamValidator.invalidate(String.format("第%d行编码不能为空", index));
+		ParamValidator.Validate validate = super.checkValue();
+		if (validate.isValidate()) {
+			for (int i = 0; i < list.size(); i++) {
+				int index = i + 1;
+				String code = list.get(i).getCode();
+				String desc = list.get(i).getDesc();
+				if (!StringUtils.hasText(code)) {
+					return ParamValidator.invalidate(String.format("第%d行编码不能为空", index));
+				}
+				if (!StringUtils.hasText(desc)) {
+					return ParamValidator.invalidate(String.format("第%d行描述不能为空", index));
+				}
 			}
-			if (!StringUtils.hasText(desc)) {
-				return ParamValidator.invalidate(String.format("第%d行描述不能为空", index));
+			List<String> codes = list.stream().map(EnumOption::getCode).toList();
+			Set<String> codeSet = new HashSet<>(codes.size());
+			for (String code : codes) {
+				if (!codeSet.add(code)) {
+					return ParamValidator.invalidate(String.format("编码【%s】已存在，请重新输入", code));
+				}
 			}
 		}
-		List<String> codes = list.stream().map(EnumOption::getCode).toList();
-		Set<String> codeSet = new HashSet<>(codes.size());
-		for (String code : codes) {
-			if (!codeSet.add(code)) {
-				return ParamValidator.invalidate(String.format("编码【%s】已存在，请重新输入", code));
-			}
-		}
-		return ParamValidator.validate();
+		return validate;
 	}
 
 	@Data

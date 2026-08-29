@@ -124,7 +124,7 @@ public class DictItemsController {
 	@GetMapping("/v1/dict-items/{id}")
 	@PreAuthorize("hasAuthority('read') and hasAuthority('sys:dict-item:detail')")
 	@Operation(summary = "查看字典项详情", description = "查看字典项详情")
-	public Result<DictItemCO> getDictItemById(@PathVariable("id") Long id) {
+	public Result<DictItemCO> getDictItemById(@PathVariable Long id) {
 		return dictItemsServiceI.getDictItemById(new DictItemGetQry(id));
 	}
 

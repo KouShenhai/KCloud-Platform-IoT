@@ -113,7 +113,7 @@ public class ClustersController {
 	@GetMapping("/v1/clusters/{id}")
 	@PreAuthorize("hasAuthority('read') and hasAuthority('sys:cluster:detail')")
 	@Operation(summary = "查看集群详情", description = "查看集群详情")
-	public Result<ClusterCO> getClusterById(@PathVariable("id") Long id) {
+	public Result<ClusterCO> getClusterById(@PathVariable Long id) {
 		return clustersServiceI.getClusterById(new ClusterGetQry(id));
 	}
 

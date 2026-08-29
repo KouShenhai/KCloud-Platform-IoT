@@ -116,7 +116,7 @@ public class NoticeLogsController {
 	@GetMapping("/v1/notice-logs/{id}")
 	@PreAuthorize("hasAuthority('read') and hasAuthority('sys:notice-log:detail')")
 	@Operation(summary = "查看通知日志详情", description = "查看通知日志详情")
-	public Result<NoticeLogCO> getNoticeLogById(@PathVariable("id") Long id) {
+	public Result<NoticeLogCO> getNoticeLogById(@PathVariable Long id) {
 		return noticeLogsServiceI.getNoticeLogById(new NoticeLogGetQry(id));
 	}
 

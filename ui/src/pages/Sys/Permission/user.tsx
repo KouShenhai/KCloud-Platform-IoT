@@ -2,7 +2,7 @@ import { UserDrawer } from '@/pages/Sys/Permission/UserDrawer';
 import { UserModifyAuthorityDrawer } from '@/pages/Sys/Permission/UserModifyAuthorityDrawer';
 import { UserResetPwdDrawer } from '@/pages/Sys/Permission/UserResetPwdDrawer';
 import { listSelectTreeDept } from '@/services/admin/dept';
-import {listRole, pageRole} from '@/services/admin/role';
+import { listRole } from '@/services/admin/role';
 import { getUserById, pageUser, removeUser } from '@/services/admin/user';
 import { trim } from '@/utils/format';
 import { useAccess, useIntl } from '@@/exports';

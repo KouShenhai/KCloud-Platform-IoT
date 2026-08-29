@@ -117,7 +117,7 @@ public class SourcesController {
 	@DataCache(name = NameConstants.SOURCES, key = "#id")
 	@PreAuthorize("hasAuthority('read') and hasAuthority('iot:source:detail')")
 	@Operation(summary = "查看数据源详情", description = "查看数据源详情")
-	public Result<SourceCO> getSourceById(@PathVariable("id") Long id) {
+	public Result<SourceCO> getSourceById(@PathVariable Long id) {
 		return sourcesServiceI.getSourceById(new SourceGetQry(id));
 	}
 

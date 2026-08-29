@@ -18,24 +18,23 @@
 package org.laokou.iot.thingModel.model.enums;
 
 import lombok.Getter;
-import org.laokou.common.i18n.util.EnumParser;
 
 @Getter
 public enum Step {
 
-	_1("step_1", "1(整数)"),
+	STEP_1("step_1", "1(整数)"),
 
-	_0_1("step_0_1", "0.1(保留1位小数)"),
+	STEP_0_1("step_0_1", "0.1(保留1位小数)"),
 
-	_0_01("step_0_01", "0.01(保留2位小数)"),
+	STEP_0_01("step_0_01", "0.01(保留2位小数)"),
 
-	_0_001("step_0_001", "0.001(保留3位小数)"),
+	STEP_0_001("step_0_001", "0.001(保留3位小数)"),
 
-	_0_0001("step_0_0001", "0.0001(保留4位小数)"),
+	STEP_0_0001("step_0_0001", "0.0001(保留4位小数)"),
 
-	_0_00001("step_0_00001", "0.00001(保留5位小数)"),
+	STEP_0_00001("step_0_00001", "0.00001(保留5位小数)"),
 
-	_0_000001("step_0_000001", "0.000001(保留6位小数)");
+	STEP_0_000001("step_0_000001", "0.000001(保留6位小数)");
 
 	private final String code;
 
@@ -44,10 +43,6 @@ public enum Step {
 	Step(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
-	}
-
-	public static Step getByCode(String code) {
-		return EnumParser.parse(Step.class, Step::getCode, code);
 	}
 
 }

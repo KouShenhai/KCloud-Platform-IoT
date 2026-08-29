@@ -135,7 +135,7 @@ public class RolesController {
 	@GetMapping("/v1/roles/{id}")
 	@PreAuthorize("hasAuthority('read') and hasAuthority('sys:role:detail')")
 	@Operation(summary = "查看角色详情", description = "查看角色详情")
-	public Result<RoleCO> getRoleById(@PathVariable("id") Long id) {
+	public Result<RoleCO> getRoleById(@PathVariable Long id) {
 		return rolesServiceI.getRoleById(new RoleGetQry(id));
 	}
 

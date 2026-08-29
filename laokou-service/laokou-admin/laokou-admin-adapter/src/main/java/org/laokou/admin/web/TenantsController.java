@@ -117,7 +117,7 @@ public class TenantsController {
 	@DataCache(name = NameConstants.TENANTS, key = "#id")
 	@PreAuthorize("hasAuthority('read') and hasAuthority('sys:tenant:detail')")
 	@Operation(summary = "查看租户详情", description = "查看租户详情")
-	public Result<TenantCO> getTenantById(@PathVariable("id") Long id) {
+	public Result<TenantCO> getTenantById(@PathVariable Long id) {
 		return tenantsServiceI.getTenantById(new TenantGetQry(id));
 	}
 
