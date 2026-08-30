@@ -97,7 +97,7 @@
     <!-- native-maven-plugin版本 -->
     <native-maven-plugin.version>1.1.1</native-maven-plugin.version>
     <!-- versions-maven-plugin版本 -->
-    <native-maven-plugin.version>1.1.10</native-maven-plugin.version>
+    <native-maven-plugin.version>1.1.11</native-maven-plugin.version>
     <!--versions-maven-plugin版本-->
     <versions-maven-plugin.version>2.21.0</versions-maven-plugin.version>
     <!-- asciidoctor-maven-plugin版本 -->
@@ -179,7 +179,7 @@
     <!-- guava版本 -->
     <guava.version>33.7.1-jre</guava.version>
     <!-- oshi版本 -->
-    <oshi.version>7.5.0</oshi.version>
+    <oshi.version>7.6.0</oshi.version>
     <!-- elasticsearch版本 -->
     <elasticsearch.version>9.5.1</elasticsearch.version>
     <!-- jakarta.servlet-api版本 -->
@@ -187,7 +187,7 @@
     <!-- fesod版本 -->
     <fesod.version>2.0.2-incubating</fesod.version>
     <!-- s3版本 -->
-    <s3.version>2.54.1</s3.version>
+    <s3.version>2.54.6</s3.version>
     <!-- dynamic-datasource版本 -->
     <dynamic-datasource.version>4.5.0</dynamic-datasource.version>
     <!-- httpclient5版本 -->
