@@ -29,6 +29,7 @@ export default () => {
 	const [dataType, setDataType] = useState('int');
 	const [dataUnitOptions, setDataUnitOptions] = useState<any>([]);
 	const [dataTypeOptions, setDataTypeOptions] = useState<any>([]);
+	const [dataStepOptions, setDataStepOptions] = useState<any>([]);
 	const [requestId, setRequestId] = useState('');
 
 	type TableColumns = {
@@ -72,11 +73,18 @@ export default () => {
 
 	const getDataUnit = async () => {
 		const  res = await listDictItem({dictCode: 'thing_model_data_unit'});
-		const options: any[] = [];
-		res?.data?.forEach((item: any) => {
-			options.push({label: item.name, value: item.code})
-		})
-		setDataUnitOptions(options)
+		setDataUnitOptions(res?.data?.map((item: any) => ({
+			label: item.name,
+			value: item.code
+		})))
+	}
+
+	const getDataStep = async () => {
+		const  res = await listDictItem({dictCode: 'thing_model_data_step'});
+		setDataStepOptions(res?.data?.map((item: any) => ({
+			label: item.name,
+			value: item.code
+		})))
 	}
 
 	const getData = (data: any) => {
@@ -103,6 +111,7 @@ export default () => {
 	useEffect(() => {
 		getDataType().catch(console.log)
 		getDataUnit().catch(console.log)
+		getDataStep().catch(console.log)
 	}, []);
 
 	const columns: ProColumns<TableColumns>[] = [
@@ -179,6 +188,14 @@ export default () => {
 								最大值：
 								<span style={{ color: '#fd5251' }}>
 									{data?.max}
+								</span>
+							</div>
+						)}
+						{(record?.dataType === 'int' || record?.dataType === 'long') && data?.step && (
+							<div style={{fontSize: '12px'}}>
+								最大值：
+								<span style={{ color: '#fd5251' }}>
+									{data?.step}
 								</span>
 							</div>
 						)}
@@ -336,13 +353,14 @@ export default () => {
 	return (
 		<>
 			<ThingModelDrawer
-				dataTypeOptions={dataTypeOptions}
 				modalVisit={modalVisit}
 				setModalVisit={setModalVisit}
 				title={title}
 				readOnly={readOnly}
 				dataSource={dataSource}
 				dataUnitOptions={dataUnitOptions}
+				dataStepOptions={dataStepOptions}
+				dataTypeOptions={dataTypeOptions}
 				onComponent={async () => {
 					// @ts-ignore
 					actionRef?.current?.reload();
