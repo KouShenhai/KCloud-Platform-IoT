@@ -167,6 +167,14 @@ export default () => {
 				);
 				return (
 					<>
+						{record?.dataType === 'enum' && (
+							<div style={{fontSize: '12px'}}>
+								{t('iot.thingModel.length')}：
+								<span style={{ color: '#fd5251' }}>
+									{data?.length}
+								</span>
+							</div>
+						)}
 						{record?.dataType === 'enum' && Array.isArray(data?.list) && data?.list.map((item: any, index: number) => (
 							<div key={item?.code ?? index} style={{ fontSize: '12px' }}>
 								{item?.desc}：
@@ -193,7 +201,7 @@ export default () => {
 						)}
 						{(record?.dataType === 'int' || record?.dataType === 'long') && data?.step && (
 							<div style={{fontSize: '12px'}}>
-								最大值：
+								步长：
 								<span style={{ color: '#fd5251' }}>
 									{data?.step}
 								</span>

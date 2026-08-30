@@ -91,7 +91,7 @@ declare namespace API {
 		name?: string;
 		/** 物模型编码 */
 		code?: string;
-		/** 物模型数据类型 int long text float double boolean */
+		/** 物模型数据类型 int long text enum boolean */
 		dataType?: string;
 		/** 物模型排序 */
 		sort?: number;

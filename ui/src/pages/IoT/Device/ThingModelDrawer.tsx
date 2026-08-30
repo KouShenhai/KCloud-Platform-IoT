@@ -104,6 +104,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 				};
 			case 'enum': {
 				return {
+					length: value?.length,
 					list: value?.enumItems?.map((item: any) => ({
 						code: item?.code?.trim(),
 						desc: item?.desc?.trim(),
@@ -208,6 +209,23 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 				options={dataTypeOptions}
 				onChange={setDataType}
 			/>
+
+			{dataType === 'enum' && (
+				<ProFormDigit
+					disabled={loading || dataSource.id !== undefined}
+					readonly={readOnly}
+					name="length"
+					label={t('iot.thingModel.length')}
+					min={1}
+					max={10000}
+					rules={[
+						{
+							required: true,
+							message: t('iot.thingModel.required.length'),
+						}
+					]}
+				/>
+			)}
 
 			{dataType === 'enum' && (
 				<ProFormList
