@@ -149,7 +149,7 @@
     <!-- mybatis-plus版本 -->
     <mybatis-plus.version>3.5.17</mybatis-plus.version>
     <!-- nacos版本 -->
-    <nacos.version>3.2.3</nacos.version>
+    <nacos.version>3.2.4</nacos.version>
     <!-- micrometer-tracing版本 -->
     <micrometer-tracing.version>1.7.1</micrometer-tracing.version>
     <!-- netty版本 -->
@@ -187,7 +187,7 @@
     <!-- fesod版本 -->
     <fesod.version>2.0.2-incubating</fesod.version>
     <!-- s3版本 -->
-    <s3.version>2.54.6</s3.version>
+    <s3.version>2.54.7</s3.version>
     <!-- dynamic-datasource版本 -->
     <dynamic-datasource.version>4.5.0</dynamic-datasource.version>
     <!-- httpclient5版本 -->
