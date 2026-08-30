@@ -3,7 +3,7 @@ module github.com/KouShenhai/KCloud-Platform-IoT/KEdge-Gateway
 go 1.26.2
 
 require (
-	github.com/DeRuina/timberjack v1.4.6
+	github.com/DeRuina/timberjack v1.4.7
 	github.com/cloudwego/hertz v0.10.6
 	github.com/extism/go-sdk v1.7.1
 	github.com/golang-jwt/jwt/v5 v5.3.1
