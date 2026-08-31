@@ -128,47 +128,47 @@ public final class AuthA extends AggregateRoot implements ValidateName {
 	/**
 	 * 密码校验器.
 	 */
-	private final PasswordValidator passwordValidator;
+	private final transient PasswordValidator passwordValidator;
 
 	/**
 	 * 验证码校验器.
 	 */
-	private final CaptchaValidator captchaValidator;
+	private final transient CaptchaValidator captchaValidator;
 
 	/**
 	 * 授权码登录校验器.
 	 */
-	private final AuthParamValidator authorizationCodeAuthParamValidator;
+	private final transient AuthParamValidator authorizationCodeAuthParamValidator;
 
 	/**
 	 * 邮箱登录校验器.
 	 */
-	private final AuthParamValidator mailAuthParamValidator;
+	private final transient AuthParamValidator mailAuthParamValidator;
 
 	/**
 	 * 手机号登录校验器.
 	 */
-	private final AuthParamValidator mobileAuthParamValidator;
+	private final transient AuthParamValidator mobileAuthParamValidator;
 
 	/**
 	 * 测试登录校验器.
 	 */
-	private final AuthParamValidator testAuthParamValidator;
+	private final transient AuthParamValidator testAuthParamValidator;
 
 	/**
 	 * 用户名密码登录校验器.
 	 */
-	private final AuthParamValidator usernamePasswordAuthParamValidator;
+	private final transient AuthParamValidator usernamePasswordAuthParamValidator;
 
 	/**
 	 * 邮箱验证码校验器.
 	 */
-	private final CaptchaParamValidator mailCaptchaParamValidator;
+	private final transient CaptchaParamValidator mailCaptchaParamValidator;
 
 	/**
 	 * 手机验证码校验器.
 	 */
-	private final CaptchaParamValidator mobileCaptchaParamValidator;
+	private final transient CaptchaParamValidator mobileCaptchaParamValidator;
 
 	// @formatter:off
 	AuthA(

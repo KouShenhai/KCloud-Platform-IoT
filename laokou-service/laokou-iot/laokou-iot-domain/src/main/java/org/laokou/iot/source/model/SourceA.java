@@ -26,7 +26,7 @@ import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.iot.source.model.entity.SourceE;
 import org.laokou.iot.source.model.validator.SourceParamValidator;
-import org.laokou.iot.thingModel.model.enums.OperateType;
+import org.laokou.iot.thing.model.model.enums.OperateType;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.time.Instant;

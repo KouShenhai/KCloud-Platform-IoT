@@ -19,8 +19,8 @@ package org.laokou.admin.user.command.query;
 
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.ossLog.gatewayimpl.database.OssLogMapper;
-import org.laokou.admin.ossLog.gatewayimpl.database.dataobject.OssLogDO;
+import org.laokou.admin.log.oss.gatewayimpl.database.OssLogMapper;
+import org.laokou.admin.log.oss.gatewayimpl.database.dataobject.OssLogDO;
 import org.laokou.admin.user.convertor.UserConvertor;
 import org.laokou.admin.user.dto.UserGetQry;
 import org.laokou.admin.user.dto.clientobject.UserCO;

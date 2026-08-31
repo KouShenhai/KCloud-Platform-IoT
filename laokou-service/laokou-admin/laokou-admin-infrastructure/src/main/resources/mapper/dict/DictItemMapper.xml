@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/*
+ * Copyright (c) 2022-2026 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.laokou.admin.dict.item.gatewayimpl.database.DictItemMapper">
+
+	<sql id="selectColumns">
+		id,
+		"name",
+		"code",
+		"sort",
+		remark,
+		status,
+		create_time
+	</sql>
+
+	<sql id="selectConditions">
+		where del_flag = 0
+		<if test="pageQuery.dictId != null">
+			and dict_id = #{pageQuery.dictId}
+		</if>
+		<if test="pageQuery.name != null and pageQuery.name != ''">
+			and "name" like #{pageQuery.name}
+		</if>
+		<if test="pageQuery.code != null and pageQuery.code != ''">
+			and "code" like #{pageQuery.code}
+		</if>
+		<if test="pageQuery.status != null">
+			and status = #{pageQuery.status}
+		</if>
+		<if test="pageQuery.params != null and pageQuery.params.startTime != null and pageQuery.params.startTime != ''">
+			and create_time <![CDATA[ >= ]]> #{pageQuery.params.startTime}
+		</if>
+		<if test="pageQuery.params != null and pageQuery.params.endTime != null and pageQuery.params.endTime != ''">
+			and create_time <![CDATA[ <= ]]> #{pageQuery.params.endTime}
+		</if>
+		<if test="pageQuery.params != null and pageQuery.params.tenantId != null">
+			and tenant_id = #{pageQuery.params.tenantId}
+		</if>
+	</sql>
+
+	<sql id="selectObjectList">
+		SELECT <include refid="selectColumns"/>
+		from sys_dict_item
+		<include refid="selectConditions"/>
+		order by "sort" asc, create_time desc, id desc
+	</sql>
+
+	<select id="selectObjectPage"
+			resultType="org.laokou.admin.dict.item.gatewayimpl.database.dataobject.DictItemDO">
+		<include refid="selectObjectList"/>
+		limit #{pageQuery.pageSize} offset #{pageQuery.pageIndex}
+	</select>
+
+	<select id="selectObjectCount" resultType="long">
+		SELECT count(1)
+		from sys_dict_item
+		<include refid="selectConditions"/>
+	</select>
+
+	<select id="selectVersion" resultType="integer">
+		select version
+		from sys_dict_item
+		where id = #{id}
+	</select>
+
+	<select id="selectObjectList" resultType="org.laokou.admin.dict.item.gatewayimpl.database.dataobject.DictItemDO">
+		<include refid="selectObjectList"/>
+	</select>
+
+  <select id="selectObjList" resultType="org.laokou.admin.dict.item.gatewayimpl.database.dataobject.DictItemDO">
+    SELECT sdi.code, sdi.name
+    from sys_dict_item sdi
+    join sys_dict sd on sd.id = sdi.dict_id
+    where sdi.del_flag = 0 and sdi.tenant_id = 1
+    <if test="qry.dictCode != null and qry.dictCode != ''">
+      and sd.code = #{qry.dictCode}
+    </if>
+    order by sdi.sort asc
+  </select>
+
+</mapper>

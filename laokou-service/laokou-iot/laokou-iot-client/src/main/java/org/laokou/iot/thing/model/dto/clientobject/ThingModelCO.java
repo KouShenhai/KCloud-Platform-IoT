@@ -1,0 +1,62 @@
+/*
+ * Copyright (c) 2022-2026 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+package org.laokou.iot.thing.model.dto.clientobject;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+import org.laokou.common.i18n.common.constant.DateConstants;
+import org.laokou.common.i18n.dto.ClientObject;
+import java.time.Instant;
+
+/**
+ *
+ * 物模型客户端对象.
+ *
+ * @author laokou
+ */
+@Data
+@Schema(name = "物模型客户端对象", description = "物模型客户端对象")
+public class ThingModelCO extends ClientObject {
+
+	@Schema(name = "ID", description = "ID")
+	private Long id;
+
+	@Schema(name = "物模型名称", description = "物模型名称")
+	private String name;
+
+	@Schema(name = "物模型编码", description = "物模型编码")
+	private String code;
+
+	@Schema(name = "物模型数据类型 int long text enum boolean", description = "物模型数据类型 int long text enum boolean")
+	private String dataType;
+
+	@Schema(name = "物模型排序", description = "物模型排序")
+	private Integer sort;
+
+	@Schema(name = "物模型规格", description = "物模型规格")
+	private String spec;
+
+	@Schema(name = "物模型备注", description = "物模型备注")
+	private String remark;
+
+	@Schema(name = "创建时间", description = "创建时间")
+	@JsonFormat(pattern = DateConstants.YYYY_B_MM_B_DD_HH_R_MM_R_SS, timezone = DateConstants.DEFAULT_TIMEZONE)
+	private Instant createTime;
+
+}
