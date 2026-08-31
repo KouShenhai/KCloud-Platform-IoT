@@ -29,6 +29,7 @@ import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import java.io.Serial;
 import java.time.Instant;
 import java.util.List;
 
@@ -41,17 +42,20 @@ import java.util.List;
 @Getter
 public class RoleA extends AggregateRoot implements ValidateName {
 
+	@Serial
+	private static final long serialVersionUID = 1L;
+
 	private RoleE roleE;
 
 	private OperateType operateType;
 
-	private final IdGenerator idGenerator;
+	private final transient IdGenerator idGenerator;
 
-	private final RoleParamValidator saveRoleParamValidator;
+	private final transient RoleParamValidator saveRoleParamValidator;
 
-	private final RoleParamValidator modifyRoleParamValidator;
+	private final transient RoleParamValidator modifyRoleParamValidator;
 
-	private final RoleParamValidator modifyRoleAuthorityParamValidator;
+	private final transient RoleParamValidator modifyRoleAuthorityParamValidator;
 
 	public RoleA(IdGenerator idGenerator,
 			@Qualifier("saveRoleParamValidator") RoleParamValidator saveRoleParamValidator,

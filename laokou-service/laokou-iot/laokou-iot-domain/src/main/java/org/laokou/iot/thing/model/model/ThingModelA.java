@@ -29,6 +29,7 @@ import org.laokou.iot.thing.model.model.enums.OperateType;
 import org.laokou.iot.thing.model.model.validator.ThingModelParamValidator;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import java.io.Serial;
 import java.time.Instant;
 
 /**
@@ -40,6 +41,9 @@ import java.time.Instant;
 @Getter
 public class ThingModelA extends AggregateRoot implements ValidateName {
 
+	@Serial
+	private static final long serialVersionUID = 1L;
+
 	private ThingModelE thingModelE;
 
 	/**
@@ -47,11 +51,11 @@ public class ThingModelA extends AggregateRoot implements ValidateName {
 	 */
 	private OperateType operateType;
 
-	private final IdGenerator idGenerator;
+	private final transient IdGenerator idGenerator;
 
-	private final ThingModelParamValidator saveThingModelParamValidator;
+	private final transient ThingModelParamValidator saveThingModelParamValidator;
 
-	private final ThingModelParamValidator modifyThingModelParamValidator;
+	private final transient ThingModelParamValidator modifyThingModelParamValidator;
 
 	public ThingModelA(IdGenerator idGenerator,
 			@Qualifier("saveThingModelParamValidator") ThingModelParamValidator saveThingModelParamValidator,

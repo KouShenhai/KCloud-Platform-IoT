@@ -29,6 +29,7 @@ import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import java.io.Serial;
 import java.time.Instant;
 
 /**
@@ -40,6 +41,9 @@ import java.time.Instant;
 @Getter
 public class I18nMenuA extends AggregateRoot implements ValidateName {
 
+	@Serial
+	private static final long serialVersionUID = 1L;
+
 	private I18nMenuE i18nMenuE;
 
 	/**
@@ -47,11 +51,11 @@ public class I18nMenuA extends AggregateRoot implements ValidateName {
 	 */
 	private OperateType operateType;
 
-	private final IdGenerator idGenerator;
+	private final transient IdGenerator idGenerator;
 
-	private final I18nMenuParamValidator saveI18nMenuParamValidator;
+	private final transient I18nMenuParamValidator saveI18nMenuParamValidator;
 
-	private final I18nMenuParamValidator modifyI18nMenuParamValidator;
+	private final transient I18nMenuParamValidator modifyI18nMenuParamValidator;
 
 	public I18nMenuA(IdGenerator idGenerator,
 			@Qualifier("saveI18nMenuParamValidator") I18nMenuParamValidator saveI18nMenuParamValidator,

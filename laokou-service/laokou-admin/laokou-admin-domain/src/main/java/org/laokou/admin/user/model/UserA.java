@@ -33,6 +33,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.StringUtils;
 
+import java.io.Serial;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +47,9 @@ import java.util.List;
 @Getter
 public class UserA extends AggregateRoot implements ValidateName {
 
+	@Serial
+	private static final long serialVersionUID = 1L;
+
 	private UserE userE;
 
 	/**
@@ -53,19 +57,19 @@ public class UserA extends AggregateRoot implements ValidateName {
 	 */
 	private OperateType operateType;
 
-	private final IdGenerator idGenerator;
+	private final transient IdGenerator idGenerator;
 
-	private final UserParamValidator saveUserParamValidator;
+	private final transient UserParamValidator saveUserParamValidator;
 
-	private final UserParamValidator modifyUserParamValidator;
+	private final transient UserParamValidator modifyUserParamValidator;
 
-	private final UserParamValidator removeUserParamValidator;
+	private final transient UserParamValidator removeUserParamValidator;
 
-	private final UserParamValidator resetUserPwdParamValidator;
+	private final transient UserParamValidator resetUserPwdParamValidator;
 
-	private final UserParamValidator modifyUserAuthorityParamValidator;
+	private final transient UserParamValidator modifyUserAuthorityParamValidator;
 
-	private final PasswordEncoder passwordEncoder;
+	private final transient PasswordEncoder passwordEncoder;
 
 	public UserA(IdGenerator idGenerator,
 			@Qualifier("saveUserParamValidator") UserParamValidator saveUserParamValidator,

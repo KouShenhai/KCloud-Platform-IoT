@@ -29,6 +29,7 @@ import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import java.io.Serial;
 import java.time.Instant;
 
 /**
@@ -40,6 +41,9 @@ import java.time.Instant;
 @Getter
 public class DictItemA extends AggregateRoot implements ValidateName {
 
+	@Serial
+	private static final long serialVersionUID = 1L;
+
 	private DictItemE dictItemE;
 
 	/**
@@ -47,11 +51,11 @@ public class DictItemA extends AggregateRoot implements ValidateName {
 	 */
 	private OperateType operateType;
 
-	private final IdGenerator idGenerator;
+	private final transient IdGenerator idGenerator;
 
-	private final DictItemParamValidator saveDictItemParamValidator;
+	private final transient DictItemParamValidator saveDictItemParamValidator;
 
-	private final DictItemParamValidator modifyDictItemParamValidator;
+	private final transient DictItemParamValidator modifyDictItemParamValidator;
 
 	public DictItemA(IdGenerator idGenerator,
 			@Qualifier("saveDictItemParamValidator") DictItemParamValidator saveDictItemParamValidator,

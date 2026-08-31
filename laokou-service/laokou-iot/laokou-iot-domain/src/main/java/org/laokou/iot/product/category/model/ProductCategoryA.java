@@ -29,6 +29,7 @@ import org.laokou.iot.product.category.model.validator.ProductCategoryParamValid
 import org.laokou.iot.thing.model.model.enums.OperateType;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import java.io.Serial;
 import java.time.Instant;
 
 /**
@@ -41,6 +42,9 @@ import java.time.Instant;
 @Getter
 public class ProductCategoryA extends AggregateRoot implements ValidateName {
 
+	@Serial
+	private static final long serialVersionUID = 1L;
+
 	private ProductCategoryE productCategoryE;
 
 	/**
@@ -48,11 +52,11 @@ public class ProductCategoryA extends AggregateRoot implements ValidateName {
 	 */
 	private OperateType operateType;
 
-	private final ProductCategoryParamValidator saveProductCategoryParamValidator;
+	private final transient ProductCategoryParamValidator saveProductCategoryParamValidator;
 
-	private final ProductCategoryParamValidator modifyProductCategoryParamValidator;
+	private final transient ProductCategoryParamValidator modifyProductCategoryParamValidator;
 
-	private final IdGenerator idGenerator;
+	private final transient IdGenerator idGenerator;
 
 	public ProductCategoryA(IdGenerator idGenerator,
 			@Qualifier("saveProductCategoryParamValidator") ProductCategoryParamValidator saveProductCategoryParamValidator,

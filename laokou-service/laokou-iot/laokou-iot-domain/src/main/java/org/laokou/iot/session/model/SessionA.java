@@ -29,6 +29,7 @@ import org.laokou.iot.session.model.enums.OperateType;
 import org.laokou.iot.session.model.validator.SessionParamValidator;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import java.io.Serial;
 import java.time.Instant;
 
 /**
@@ -40,6 +41,9 @@ import java.time.Instant;
 @Getter
 public class SessionA extends AggregateRoot implements ValidateName {
 
+	@Serial
+	private static final long serialVersionUID = 1L;
+
 	private SessionE sessionE;
 
 	/**
@@ -47,11 +51,11 @@ public class SessionA extends AggregateRoot implements ValidateName {
 	 */
 	private OperateType operateType;
 
-	private final IdGenerator idGenerator;
+	private final transient IdGenerator idGenerator;
 
-	private final SessionParamValidator saveSessionParamValidator;
+	private final transient SessionParamValidator saveSessionParamValidator;
 
-	private final SessionParamValidator modifySessionParamValidator;
+	private final transient SessionParamValidator modifySessionParamValidator;
 
 	public SessionA(IdGenerator idGenerator,
 			@Qualifier("saveSessionParamValidator") SessionParamValidator saveSessionParamValidator,
