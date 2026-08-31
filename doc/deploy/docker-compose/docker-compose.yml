@@ -635,7 +635,7 @@ services:
    networks:
      - iot_network
   clickhouse:
-    image: clickhouse/clickhouse-server:26.7
+    image: clickhouse/clickhouse-server:26.8
     container_name: clickhouse
     # 保持容器在没有守护程序的情况下运行
     tty: true
