@@ -31,6 +31,7 @@ import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import java.io.Serial;
 import java.time.Instant;
 import java.util.List;
 
@@ -43,6 +44,9 @@ import java.util.List;
 @Getter
 public class MenuA extends AggregateRoot implements ValidateName {
 
+	@Serial
+	private static final long serialVersionUID = 1L;
+
 	private MenuE menuE;
 
 	/**
@@ -53,17 +57,17 @@ public class MenuA extends AggregateRoot implements ValidateName {
 	/*
 	 * ID生成器.
 	 */
-	private final IdGenerator idGenerator;
+	private final transient IdGenerator idGenerator;
 
 	/*
 	 * 新增参数校验器.
 	 */
-	private final MenuParamValidator saveMenuParamValidator;
+	private final transient MenuParamValidator saveMenuParamValidator;
 
 	/*
 	 * 修改参数校验器.
 	 */
-	private final MenuParamValidator modifyMenuParamValidator;
+	private final transient MenuParamValidator modifyMenuParamValidator;
 
 	public MenuA(IdGenerator idGenerator,
 			@Qualifier("saveMenuParamValidator") MenuParamValidator saveMenuParamValidator,

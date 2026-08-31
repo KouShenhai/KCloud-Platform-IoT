@@ -1,0 +1,64 @@
+/*
+ * Copyright (c) 2022-2026 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+package org.laokou.admin.log.operate.command.query;
+
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.admin.log.operate.convertor.OperateLogConvertor;
+import org.laokou.admin.log.operate.dto.OperateLogPageQry;
+import org.laokou.admin.log.operate.dto.clientobject.OperateLogCO;
+import org.laokou.common.i18n.dto.Page;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.log.mapper.OperateLogDO;
+import org.laokou.common.log.mapper.OperateLogMapper;
+import org.laokou.common.tenant.constant.DSConstants;
+import org.springframework.stereotype.Component;
+
+import java.util.Collections;
+import java.util.List;
+
+/**
+ * 分页查询操作日志请求执行器.
+ *
+ * @author laokou
+ */
+@Slf4j
+@Component
+@RequiredArgsConstructor
+public class OperateLogPageQryExe {
+
+	private final OperateLogMapper operateLogMapper;
+
+	public Result<Page<OperateLogCO>> execute(OperateLogPageQry qry) {
+		try {
+			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);
+			List<OperateLogDO> list = operateLogMapper.selectObjectPage(qry);
+			long total = operateLogMapper.selectObjectCount(qry);
+			return Result.ok(Page.create(OperateLogConvertor.toClientObjects(list), total));
+		}
+		catch (Exception e) {
+			log.error("查询操作日志列表失败，错误信息：{}", e.getMessage(), e);
+			return Result.ok(Page.create(Collections.emptyList(), 0));
+		}
+		finally {
+			DynamicDataSourceContextHolder.clear();
+		}
+	}
+
+}

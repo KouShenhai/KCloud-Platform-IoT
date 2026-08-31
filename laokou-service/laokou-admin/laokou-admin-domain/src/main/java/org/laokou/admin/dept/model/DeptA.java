@@ -29,6 +29,7 @@ import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import java.io.Serial;
 import java.time.Instant;
 
 /**
@@ -40,6 +41,9 @@ import java.time.Instant;
 @Getter
 public class DeptA extends AggregateRoot implements ValidateName {
 
+	@Serial
+	private static final long serialVersionUID = 1L;
+
 	private DeptE deptE;
 
 	/**
@@ -47,11 +51,11 @@ public class DeptA extends AggregateRoot implements ValidateName {
 	 */
 	private OperateType operateType;
 
-	private final IdGenerator idGenerator;
+	private final transient IdGenerator idGenerator;
 
-	private final DeptParamValidator saveDeptParamValidator;
+	private final transient DeptParamValidator saveDeptParamValidator;
 
-	private final DeptParamValidator modifyDeptParamValidator;
+	private final transient DeptParamValidator modifyDeptParamValidator;
 
 	public DeptA(IdGenerator idGenerator,
 			@Qualifier("modifyDeptParamValidator") DeptParamValidator saveDeptParamValidator,
