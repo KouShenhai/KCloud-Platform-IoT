@@ -17,6 +17,7 @@
 
 package org.laokou.admin.user.service.validator;
 
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.laokou.admin.user.gatewayimpl.database.UserMapper;
 import org.laokou.admin.user.gatewayimpl.database.dataobject.UserDO;
@@ -44,6 +45,18 @@ final class UserParamValidator {
 		Long id = userA.getId();
 		if (ObjectUtils.isNull(id)) {
 			return ParamValidator.invalidate("用户ID不能为空");
+		}
+		return ParamValidator.validate();
+	}
+
+	static ParamValidator.Validate validateUserIds(UserA userA, UserMapper userMapper) {
+		List<Long> userIds = userA.getUserE().getUserIds();
+		if (CollectionUtils.isEmpty(userIds)) {
+			return ParamValidator.invalidate("用户IDS不能为空");
+		}
+		if (userMapper.selectCount(
+				Wrappers.lambdaQuery(UserDO.class).in(UserDO::getId, userIds).eq(UserDO::getSuperAdmin, 1)) > 0) {
+			return ParamValidator.invalidate("不允许删除超级管理员");
 		}
 		return ParamValidator.validate();
 	}

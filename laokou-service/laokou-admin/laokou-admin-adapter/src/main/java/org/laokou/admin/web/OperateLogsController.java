@@ -119,7 +119,7 @@ public class OperateLogsController {
 	@GetMapping("/v1/operate-logs/{id}")
 	@PreAuthorize("hasAuthority('read') and hasAuthority('sys:operate-log:detail')")
 	@Operation(summary = "查看操作日志详情", description = "查看操作日志详情")
-	public Result<OperateLogCO> getOperateLogById(@PathVariable("id") Long id) {
+	public Result<OperateLogCO> getOperateLogById(@PathVariable Long id) {
 		return operateLogsServiceI.getOperateLogById(new OperateLogGetQry(id));
 	}
 

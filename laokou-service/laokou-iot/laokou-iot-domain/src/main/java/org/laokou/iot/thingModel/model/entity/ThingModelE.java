@@ -54,7 +54,7 @@ public class ThingModelE implements Serializable {
 	private String code;
 
 	/**
-	 * 物模型数据类型 int long text float double boolean.
+	 * 物模型数据类型 int long text enum boolean float double boolean.
 	 */
 	private String dataType;
 

@@ -26,6 +26,7 @@ interface ThingModelDrawerProps {
 	setRequestId: (requestId: string) => void;
 	dataTypeOptions: any[]
 	dataUnitOptions: any[]
+	dataStepOptions: any[]
 }
 
 type TableColumns = {
@@ -54,6 +55,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 	  setRequestId,
 	  dataTypeOptions,
 	  dataUnitOptions,
+	  dataStepOptions,
   }) => {
 	const intl = useIntl();
 	const t = (id: string, values?: Record<string, any>) =>
@@ -97,10 +99,12 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 				return {
 					min: value?.min,
 					max: value?.max,
+					step: value?.step,
 					unit: value?.unit
 				};
 			case 'enum': {
 				return {
+					length: value?.length,
 					list: value?.enumItems?.map((item: any) => ({
 						code: item?.code?.trim(),
 						desc: item?.desc?.trim(),
@@ -207,6 +211,23 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 			/>
 
 			{dataType === 'enum' && (
+				<ProFormDigit
+					disabled={loading || dataSource.id !== undefined}
+					readonly={readOnly}
+					name="length"
+					label={t('iot.thingModel.length')}
+					min={1}
+					max={10000}
+					rules={[
+						{
+							required: true,
+							message: t('iot.thingModel.required.length'),
+						}
+					]}
+				/>
+			)}
+
+			{dataType === 'enum' && (
 				<ProFormList
 					name="enumItems"
 					label={t('iot.thingModel.enumItems')}
@@ -285,7 +306,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 
 			{dataType === 'int' && (
 				<Row gutter={24}>
-					<Col span={8}>
+					<Col span={6}>
 						<ProFormNumber
 							disabled={loading || dataSource.id !== undefined}
 							readonly={readOnly}
@@ -294,7 +315,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 							type="int"
 							precision={0} />
 					</Col>
-					<Col span={8}>
+					<Col span={6}>
 						<ProFormNumber
 							disabled={loading || dataSource.id !== undefined}
 							readonly={readOnly}
@@ -303,7 +324,16 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 							type="int"
 							precision={0} />
 					</Col>
-					<Col span={8}>
+					<Col span={6}>
+						<ProFormSelect
+							disabled={loading || dataSource.id !== undefined}
+							readonly={readOnly}
+							name="step"
+							label="步长"
+							options={dataStepOptions}
+						/>
+					</Col>
+					<Col span={6}>
 						<ProFormSelect
 							disabled={loading || dataSource.id !== undefined}
 							readonly={readOnly}
@@ -317,7 +347,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 
 			{dataType === 'long' && (
 				<Row gutter={24}>
-					<Col span={8}>
+					<Col span={6}>
 						<ProFormNumber
 							disabled={loading || dataSource.id !== undefined}
 							readonly={readOnly}
@@ -326,7 +356,7 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 							type="long"
 							precision={0} />
 					</Col>
-					<Col span={8}>
+					<Col span={6}>
 						<ProFormNumber
 							disabled={loading || dataSource.id !== undefined}
 							readonly={readOnly}
@@ -335,7 +365,16 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 							type="long"
 							precision={0} />
 					</Col>
-					<Col span={8}>
+					<Col span={6}>
+						<ProFormSelect
+							disabled={loading || dataSource.id !== undefined}
+							readonly={readOnly}
+							name="step"
+							label="步长"
+							options={dataStepOptions}
+						/>
+					</Col>
+					<Col span={6}>
 						<ProFormSelect
 							disabled={loading || dataSource.id !== undefined}
 							readonly={readOnly}

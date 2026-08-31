@@ -18,7 +18,12 @@
 package org.laokou.common.grpc.server;
 
 import com.redis.testcontainers.RedisContainer;
+import io.grpc.CallOptions;
+import io.grpc.Channel;
+import io.grpc.ClientCall;
 import io.grpc.ClientInterceptor;
+import io.grpc.ForwardingClientCall;
+import io.grpc.MethodDescriptor;
 import io.grpc.StatusException;
 import lombok.RequiredArgsConstructor;
 import org.assertj.core.api.Assertions;
@@ -39,7 +44,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.grpc.client.BlockingV2StubFactory;
 import org.springframework.grpc.client.GlobalClientInterceptor;
 import org.springframework.grpc.client.ImportGrpcClients;
-import org.springframework.grpc.client.interceptor.security.BearerTokenAuthenticationInterceptor;
+import org.springframework.grpc.internal.GrpcHeaders;
 import org.springframework.security.oauth2.client.AuthorizedClientServiceOAuth2AuthorizedClientManager;
 import org.springframework.security.oauth2.client.OAuth2AuthorizeRequest;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
@@ -143,14 +148,27 @@ class GrpcServerTest {
 		@Bean
 		@GlobalClientInterceptor
 		ClientInterceptor clientInterceptor(OAuth2AuthorizedClientManager authorizedClientManager) {
-			return new BearerTokenAuthenticationInterceptor(() -> {
-				OAuth2AuthorizeRequest request = OAuth2AuthorizeRequest.withClientRegistrationId(Constants.GRPC)
-					.principal(Constants.GRPC)
-					.build();
-				OAuth2AuthorizedClient client = authorizedClientManager.authorize(request);
-				Assert.notNull(client, "authorized client is null");
-				return client.getAccessToken().getTokenValue();
-			});
+			return new ClientInterceptor() {
+				@Override
+				public <ReqT, RespT> ClientCall<ReqT, RespT> interceptCall(MethodDescriptor<ReqT, RespT> method,
+						CallOptions callOptions, Channel next) {
+					return new ForwardingClientCall.SimpleForwardingClientCall<>(next.newCall(method, callOptions)) {
+						public void start(ClientCall.Listener<RespT> responseListener, io.grpc.Metadata headers) {
+							headers.put(GrpcHeaders.AUTHORIZATION_KEY, getAccessToken(authorizedClientManager));
+							super.start(responseListener, headers);
+						}
+					};
+				}
+			};
+		}
+
+		private String getAccessToken(OAuth2AuthorizedClientManager authorizedClientManager) {
+			OAuth2AuthorizeRequest request = OAuth2AuthorizeRequest.withClientRegistrationId(Constants.GRPC)
+				.principal(Constants.GRPC)
+				.build();
+			OAuth2AuthorizedClient client = authorizedClientManager.authorize(request);
+			Assert.notNull(client, "authorized client is null");
+			return "Bearer " + client.getAccessToken().getTokenValue();
 		}
 
 	}

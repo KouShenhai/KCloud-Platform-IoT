@@ -120,6 +120,10 @@ public final class UserConvertor {
 		}).toList();
 	}
 
+	public static UserE toEntity(List<Long> userIds) {
+		return UserDomainFactory.createUserE().toBuilder().userIds(userIds).build();
+	}
+
 	public static UserE toEntity(UserCO userCO) {
 		return UserDomainFactory.createUserE()
 			.toBuilder()

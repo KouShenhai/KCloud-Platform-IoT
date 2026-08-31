@@ -62,10 +62,7 @@ public class LongType implements Serializable {
 		if (minValue != null && maxValue != null && minValue >= maxValue) {
 			return ParamValidator.invalidate("最大值必须大于最小值");
 		}
-		if (StringUtils.hasText(step)) {
-			return ParamValidator.invalidate("步长不能为空");
-		}
-		if (!Arrays.stream(Step.values()).map(Step::getCode).toList().contains(step)) {
+		if (StringUtils.hasText(step) && !Arrays.stream(Step.values()).map(Step::getCode).toList().contains(step)) {
 			return ParamValidator.invalidate("步长不存在");
 		}
 		return ParamValidator.validate();

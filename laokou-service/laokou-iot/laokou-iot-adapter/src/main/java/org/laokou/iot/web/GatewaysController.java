@@ -113,7 +113,7 @@ public class GatewaysController {
 	@GetMapping("/v1/gateways/{id}")
 	@PreAuthorize("hasAuthority('read') and hasAuthority('iot:gateway:detail')")
 	@Operation(summary = "查看网关详情", description = "查看网关详情")
-	public Result<GatewayCO> getGatewayById(@PathVariable("id") Long id) {
+	public Result<GatewayCO> getGatewayById(@PathVariable Long id) {
 		return gatewaysServiceI.getGatewayById(new GatewayGetQry(id));
 	}
 

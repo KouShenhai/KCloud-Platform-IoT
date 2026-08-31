@@ -15,42 +15,29 @@
  *
  */
 
-package org.laokou.admin.user.ability;
+package org.laokou.admin.user.service.validator;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.admin.user.gateway.UserGateway;
-import org.laokou.admin.user.gateway.UserRoleGateway;
+import org.laokou.admin.user.gatewayimpl.database.UserMapper;
 import org.laokou.admin.user.model.UserA;
+import org.laokou.admin.user.model.validator.UserParamValidator;
+import org.laokou.common.i18n.util.ParamValidator;
 import org.springframework.stereotype.Component;
 
 /**
- * 用户领域服务.
- *
  * @author laokou
  */
-@Component
+@Component("removeUserParamValidator")
 @RequiredArgsConstructor
-public class UserDomainService {
+public class RemoveUserParamValidator implements UserParamValidator {
 
-	private final UserGateway userGateway;
+	private final UserMapper userMapper;
 
-	private final UserRoleGateway userRoleGateway;
-
-	public void createUser(UserA userA) {
-		userGateway.createUser(userA);
-	}
-
-	public void updateUser(UserA userA) {
-		userGateway.updateUser(userA);
-	}
-
-	public void updateAuthorityUser(UserA userA) {
-		userRoleGateway.updateUserRole(userA);
-	}
-
-	public void deleteUser(Long[] ids) {
-		userGateway.deleteUser(ids);
-		userRoleGateway.deleteUserRole(ids);
+	@Override
+	public void validateUser(UserA userA) {
+		// 校验用户IDS
+		ParamValidator.validate(userA.getValidateName(),
+				org.laokou.admin.user.service.validator.UserParamValidator.validateUserIds(userA, userMapper));
 	}
 
 }

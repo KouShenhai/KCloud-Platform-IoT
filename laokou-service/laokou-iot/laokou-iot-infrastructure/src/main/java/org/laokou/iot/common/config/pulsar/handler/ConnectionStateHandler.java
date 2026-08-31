@@ -15,25 +15,22 @@
  *
  */
 
-package org.laokou.admin.role.gatewayimpl.database;
+package org.laokou.iot.common.config.pulsar.handler;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.laokou.admin.role.gatewayimpl.database.dataobject.RoleMenuDO;
-import org.laokou.common.mybatisplus.mapper.CrudMapper;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 /**
- * 角色菜单数据库映射.
- *
  * @author laokou
  */
-@Mapper
-@Repository
-public interface RoleMenuMapper extends CrudMapper<Long, Integer, RoleMenuDO> {
+@Slf4j
+@Component
+@RequiredArgsConstructor
+public final class ConnectionStateHandler {
 
-	List<String> selectMenuIdsByRoleId(@Param("roleId") Long roleId);
+	public void handle(State state) {
+
+	}
 
 }

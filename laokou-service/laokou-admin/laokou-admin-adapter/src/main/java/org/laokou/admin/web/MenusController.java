@@ -146,7 +146,7 @@ public class MenusController {
 	@DataCache(name = NameConstants.MENUS, key = "#id")
 	@PreAuthorize("hasAuthority('read') and hasAuthority('sys:menu:detail')")
 	@Operation(summary = "查看菜单详情", description = "查看菜单详情")
-	public Result<MenuCO> getMenuById(@PathVariable("id") Long id) {
+	public Result<MenuCO> getMenuById(@PathVariable Long id) {
 		return menusServiceI.getMenuById(new MenuGetQry(id));
 	}
 

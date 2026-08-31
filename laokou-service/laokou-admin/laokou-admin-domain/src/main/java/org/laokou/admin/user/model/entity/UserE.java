@@ -106,4 +106,9 @@ public class UserE implements Serializable {
 	 */
 	private Long deptId;
 
+	/**
+	 * 用户IDS.
+	 */
+	private List<Long> userIds;
+
 }

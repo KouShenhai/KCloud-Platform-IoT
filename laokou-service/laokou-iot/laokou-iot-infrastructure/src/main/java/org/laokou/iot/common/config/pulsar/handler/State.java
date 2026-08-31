@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.iot.common.config.mqtt;
+package org.laokou.iot.common.config.pulsar.handler;
 
 import lombok.Getter;
 

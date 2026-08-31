@@ -119,7 +119,7 @@ public class LoginLogsController {
 	@GetMapping("/v1/login-logs/{id}")
 	@PreAuthorize("hasAuthority('read') and hasAuthority('sys:login-log:detail')")
 	@Operation(summary = "查看登录日志详情", description = "查看登录日志详情")
-	public Result<LoginLogCO> getLoginLogById(@PathVariable("id") Long id) {
+	public Result<LoginLogCO> getLoginLogById(@PathVariable Long id) {
 		return loginLogsServiceI.getLoginLogById(new LoginLogGetQry(id));
 	}
 

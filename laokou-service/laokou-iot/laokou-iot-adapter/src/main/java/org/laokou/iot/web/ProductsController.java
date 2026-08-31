@@ -113,7 +113,7 @@ public class ProductsController {
 	@GetMapping("/v1/products/{id}")
 	@PreAuthorize("hasAuthority('read') and hasAuthority('iot:product:detail')")
 	@Operation(summary = "查看产品详情", description = "查看产品详情")
-	public Result<ProductCO> getProductById(@PathVariable("id") Long id) {
+	public Result<ProductCO> getProductById(@PathVariable Long id) {
 		return productsServiceI.getProductById(new ProductGetQry(id));
 	}
 

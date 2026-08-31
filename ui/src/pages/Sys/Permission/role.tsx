@@ -1,6 +1,6 @@
 import { RoleDrawer } from '@/pages/Sys/Permission/RoleDrawer';
 import { RoleModifyAuthorityDrawer } from '@/pages/Sys/Permission/RoleModifyAuthorityDrawer';
-import { listTreeDept } from '@/services/admin/dept';
+import { listSelectTreeDept } from '@/services/admin/dept';
 import { listSelectTreeMenu } from '@/services/admin/menu';
 import { getRoleById, pageRole, removeRole } from '@/services/admin/role';
 import { trim } from '@/utils/format';
@@ -69,7 +69,7 @@ export default () => {
 	};
 
 	const getDeptTreeList = async () => {
-		listTreeDept({}).then((res) => {
+		listSelectTreeDept({}).then((res) => {
 			setDeptTreeList(res?.data);
 		});
 	};

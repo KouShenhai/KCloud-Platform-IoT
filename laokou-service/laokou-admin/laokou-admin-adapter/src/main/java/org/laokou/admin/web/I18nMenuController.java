@@ -114,7 +114,7 @@ public class I18nMenuController {
 	@GetMapping("/v1/i18n-menus/{id}")
 	@PreAuthorize("hasAuthority('read') and hasAuthority('sys:i18n-menu:detail')")
 	@Operation(summary = "查看国际化菜单详情", description = "查看国际化菜单详情")
-	public Result<I18nMenuCO> getI18nMenuById(@PathVariable("id") Long id) {
+	public Result<I18nMenuCO> getI18nMenuById(@PathVariable Long id) {
 		return i18nMenusServiceI.getI18nMenuById(new I18nMenuGetQry(id));
 	}
 

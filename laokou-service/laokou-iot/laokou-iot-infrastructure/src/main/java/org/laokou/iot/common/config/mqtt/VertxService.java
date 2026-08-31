@@ -26,6 +26,4 @@ public interface VertxService {
 
 	void undeploy();
 
-	State state();
-
 }

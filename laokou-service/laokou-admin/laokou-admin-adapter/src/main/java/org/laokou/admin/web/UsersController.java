@@ -89,7 +89,7 @@ public class UsersController {
 	@PreAuthorize("hasAuthority('write') and hasAuthority('sys:user:remove')")
 	@OperateLog(module = "用户管理", operation = "删除用户")
 	@Operation(summary = "删除用户", description = "删除用户")
-	public void removeUser(@RequestBody Long[] ids) throws InterruptedException {
+	public void removeUser(@RequestBody Long[] ids) throws Exception {
 		usersServiceI.removeUser(new UserRemoveCmd(ids));
 	}
 
@@ -139,7 +139,7 @@ public class UsersController {
 	@GetMapping("/v1/users/{id}")
 	@PreAuthorize("hasAuthority('read') and hasAuthority('sys:user:detail')")
 	@Operation(summary = "查看用户详情", description = "查看用户详情")
-	public Result<UserCO> getUserById(@PathVariable("id") Long id) throws Exception {
+	public Result<UserCO> getUserById(@PathVariable Long id) throws Exception {
 		return usersServiceI.getUserById(new UserGetQry(id));
 	}
 

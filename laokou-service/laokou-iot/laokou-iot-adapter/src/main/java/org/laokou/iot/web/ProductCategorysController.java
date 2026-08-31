@@ -125,7 +125,7 @@ public class ProductCategorysController {
 	@GetMapping("/v1/product-categorys/{id}")
 	@PreAuthorize("hasAuthority('read') and hasAuthority('iot:product-category:detail')")
 	@Operation(summary = "查看产品类别详情", description = "查看产品类别详情")
-	public Result<ProductCategoryCO> getProductCategoryById(@PathVariable("id") Long id) {
+	public Result<ProductCategoryCO> getProductCategoryById(@PathVariable Long id) {
 		return productCategorysServiceI.getProductCategoryById(new ProductCategoryGetQry(id));
 	}
 

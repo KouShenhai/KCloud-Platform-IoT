@@ -35,6 +35,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.common.core.util.MapUtils;
+import org.laokou.iot.common.config.pulsar.handler.ConnectionStateHandler;
+import org.laokou.iot.common.config.pulsar.handler.State;
 import org.laokou.iot.common.util.VertxMqttUtils;
 import org.laokou.iot.session.dto.mqtt.MqttMessageType;
 
@@ -86,9 +88,10 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 
 	private final int maxInFlight;
 
-	private final AtomicReference<State> state;
+	private final ConnectionStateHandler connectionStateHandler;
 
-	public VertxMqttClient(Vertx vertx, Long snowflakeId, MqttClientConfig config, List<MessageHandler> messageHandlers,
+	public VertxMqttClient(Vertx vertx, Long snowflakeId, MqttClientConfig config,
+			ConnectionStateHandler connectionStateHandler, List<MessageHandler> messageHandlers,
 			SystemSettingsProperties systemSettingsProperties) {
 		super(vertx);
 		this.snowflakeId = snowflakeId;
@@ -100,12 +103,13 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 		this.mqttClient = createClient(buildOptions(config));
 		this.stopping = new AtomicBoolean(false);
 		this.disconnecting = new AtomicBoolean(false);
-		this.state = new AtomicReference<>(State.INIT);
+		this.connectionStateHandler = connectionStateHandler;
 		this.reconnectAttempt = new AtomicInteger(0);
 		this.reconnectTimerId = new AtomicLong(timerInactive);
 		this.connectionPromise = new AtomicReference<>(null);
 		this.inFlight = new AtomicInteger(0);
 		this.maxInFlight = 8192;
+		this.connectionStateHandler.handle(State.INIT);
 	}
 
 	@Override
@@ -130,7 +134,7 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 			Future.failedFuture("MQTT客户端正在关闭");
 			return;
 		}
-		state.set(State.CONNECTING);
+		this.connectionStateHandler.handle(State.CONNECTING);
 		connectAndSubscribe();
 	}
 
@@ -139,7 +143,7 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 		if (!stopping.compareAndSet(false, true)) {
 			return;
 		}
-		state.set(State.DISCONNECTING);
+		this.connectionStateHandler.handle(State.DISCONNECTING);
 		Promise<Void> connecting = connectionPromise.get();
 		Future<Void> waitForConnect = connecting == null ? Future.succeededFuture()
 				: connecting.future().recover(_ -> Future.succeededFuture());
@@ -158,7 +162,7 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 			return Future.succeededFuture();
 		}
 		return mqttClient.disconnect().onSuccess(_ -> {
-			state.set(State.DISCONNECTED);
+			this.connectionStateHandler.handle(State.DISCONNECTED);
 			log.debug("【Vertx-MQTT-Client】 => MQTT断开连接成功，客户端ID：{}", config.getClientId());
 		}).recover(ex -> {
 			log.warn("【Vertx-MQTT-Client】 => MQTT断开连接失败，客户端ID：{}，错误信息：{}", config.getClientId(), ex.getMessage(), ex);
@@ -341,7 +345,7 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 			return;
 		}
 
-		state.set(State.RECONNECTING);
+		this.connectionStateHandler.handle(State.RECONNECTING);
 
 		long delay = getDelay();
 		log.warn("【Vertx-MQTT-Client】 => MQTT将在{}ms后执行第{}次重连，客户端ID：{}", delay, reconnectAttempt.incrementAndGet(),
@@ -442,7 +446,7 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 		if (connAck.code() != MqttConnectReturnCode.CONNECTION_ACCEPTED) {
 			return Future.failedFuture("Broker拒绝连接，reasonCode = " + connAck.code());
 		}
-		state.set(State.CONNECTED);
+		this.connectionStateHandler.handle(State.CONNECTED);
 		log.info("【Vertx-MQTT-Client】 => MQTT连接成功，主机：{}，端口：{}，客户端ID：{}，存在会话：{}", config.getHost(), config.getPort(),
 				config.getClientId(), connAck.isSessionPresent());
 		return Future.succeededFuture();
@@ -517,11 +521,6 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 		clientOptions.setAutoAck(config.isAutoAck());
 		clientOptions.setAckTimeout(config.getAckTimeout());
 		return clientOptions;
-	}
-
-	@Override
-	public State state() {
-		return state.get();
 	}
 
 }

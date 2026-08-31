@@ -41,7 +41,7 @@ public class ThingModelPageQry extends PageQuery {
 	private String code;
 
 	/**
-	 * 物模型数据类型 int long text float double boolean.
+	 * 物模型数据类型 int long text enum boolean.
 	 */
 	private String dataType;
 

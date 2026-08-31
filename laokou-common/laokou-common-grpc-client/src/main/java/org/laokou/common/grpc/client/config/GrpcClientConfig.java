@@ -17,7 +17,12 @@
 
 package org.laokou.common.grpc.client.config;
 
+import io.grpc.CallOptions;
+import io.grpc.Channel;
+import io.grpc.ClientCall;
 import io.grpc.ClientInterceptor;
+import io.grpc.ForwardingClientCall;
+import io.grpc.MethodDescriptor;
 import io.grpc.netty.NettyChannelBuilder;
 import jakarta.servlet.http.HttpServletRequest;
 import org.jspecify.annotations.NonNull;
@@ -35,7 +40,7 @@ import org.springframework.grpc.client.GlobalClientInterceptor;
 import org.springframework.grpc.client.GrpcChannelBuilderCustomizer;
 import org.springframework.grpc.client.GrpcClientFactory;
 import org.springframework.grpc.client.ImportGrpcClients;
-import org.springframework.grpc.client.interceptor.security.BearerTokenAuthenticationInterceptor;
+import org.springframework.grpc.internal.GrpcHeaders;
 import org.springframework.http.HttpHeaders;
 import org.springframework.util.StringUtils;
 
@@ -76,16 +81,27 @@ final class GrpcClientConfig {
 	@Bean
 	@GlobalClientInterceptor
 	ClientInterceptor clientInterceptor(ObjectProvider<OAuth2AuthorizedToken> objectProvider) {
-		return new BearerTokenAuthenticationInterceptor(() -> getAccessToken(objectProvider));
+		return new ClientInterceptor() {
+			@Override
+			public <ReqT, RespT> ClientCall<ReqT, RespT> interceptCall(MethodDescriptor<ReqT, RespT> method,
+					CallOptions callOptions, Channel next) {
+				return new ForwardingClientCall.SimpleForwardingClientCall<>(next.newCall(method, callOptions)) {
+					public void start(ClientCall.Listener<RespT> responseListener, io.grpc.Metadata headers) {
+						headers.put(GrpcHeaders.AUTHORIZATION_KEY, getAccessToken(objectProvider));
+						super.start(responseListener, headers);
+					}
+				};
+			}
+		};
 	}
 
 	private String getAccessToken(ObjectProvider<OAuth2AuthorizedToken> objectProvider) {
 		HttpServletRequest request = RequestUtils.getHttpServletRequest();
 		String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
 		if (StringUtils.hasText(authorization) && authorization.startsWith(GrpcClientConstants.BEARER_PREFIX)) {
-			return authorization.substring(7);
+			return authorization;
 		}
-		return objectProvider.getObject().getAccessToken();
+		return GrpcClientConstants.BEARER_PREFIX + objectProvider.getObject().getAccessToken();
 	}
 
 }

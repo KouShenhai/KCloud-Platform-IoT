@@ -59,6 +59,8 @@ public class UserA extends AggregateRoot implements ValidateName {
 
 	private final UserParamValidator modifyUserParamValidator;
 
+	private final UserParamValidator removeUserParamValidator;
+
 	private final UserParamValidator resetUserPwdParamValidator;
 
 	private final UserParamValidator modifyUserAuthorityParamValidator;
@@ -68,12 +70,14 @@ public class UserA extends AggregateRoot implements ValidateName {
 	public UserA(IdGenerator idGenerator,
 			@Qualifier("saveUserParamValidator") UserParamValidator saveUserParamValidator,
 			@Qualifier("modifyUserParamValidator") UserParamValidator modifyUserParamValidator,
+			@Qualifier("removeUserParamValidator") UserParamValidator removeUserParamValidator,
 			@Qualifier("resetUserPwdParamValidator") UserParamValidator resetUserPwdParamValidator,
 			@Qualifier("modifyUserAuthorityParamValidator") UserParamValidator modifyUserAuthorityParamValidator,
 			PasswordEncoder passwordEncoder) {
 		this.idGenerator = idGenerator;
 		this.saveUserParamValidator = saveUserParamValidator;
 		this.modifyUserParamValidator = modifyUserParamValidator;
+		this.removeUserParamValidator = removeUserParamValidator;
 		this.resetUserPwdParamValidator = resetUserPwdParamValidator;
 		this.modifyUserAuthorityParamValidator = modifyUserAuthorityParamValidator;
 		this.passwordEncoder = passwordEncoder;
@@ -84,6 +88,7 @@ public class UserA extends AggregateRoot implements ValidateName {
 			case SAVE -> saveUserParamValidator.validateUser(this);
 			case MODIFY -> modifyUserParamValidator.validateUser(this);
 			case RESET_PWD -> resetUserPwdParamValidator.validateUser(this);
+			case REMOVE -> removeUserParamValidator.validateUser(this);
 			case MODIFY_AUTHORITY -> modifyUserAuthorityParamValidator.validateUser(this);
 			default -> throw new UnsupportedOperationException("Unsupported operation");
 		}

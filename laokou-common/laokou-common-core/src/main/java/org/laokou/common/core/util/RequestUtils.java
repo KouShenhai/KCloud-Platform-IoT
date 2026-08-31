@@ -27,7 +27,6 @@ import jakarta.servlet.ReadListener;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
-import org.springframework.util.Assert;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -79,8 +78,10 @@ public final class RequestUtils {
 	 */
 	public static HttpServletRequest getHttpServletRequest() {
 		RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-		Assert.notNull(requestAttributes, "requestAttributes not be null");
-		return ((ServletRequestAttributes) requestAttributes).getRequest();
+		if (requestAttributes instanceof ServletRequestAttributes servletRequestAttributes) {
+			return servletRequestAttributes.getRequest();
+		}
+		throw new IllegalArgumentException("ServletRequestAttributes is not a ServletRequestAttributes");
 	}
 
 	/**

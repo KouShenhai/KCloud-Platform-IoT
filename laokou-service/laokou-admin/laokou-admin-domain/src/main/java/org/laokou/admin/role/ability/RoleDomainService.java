@@ -24,11 +24,6 @@ import org.laokou.admin.role.gateway.RoleMenuGateway;
 import org.laokou.admin.role.model.RoleA;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-
 /**
  * 角色领域服务.
  *
@@ -44,8 +39,6 @@ public class RoleDomainService {
 
 	private final RoleDeptGateway roleDeptGateway;
 
-	private final ExecutorService virtualTaskExecutor;
-
 	public void createRole(RoleA roleA) {
 		roleGateway.createRole(roleA);
 	}
@@ -54,38 +47,16 @@ public class RoleDomainService {
 		roleGateway.updateRole(roleA);
 	}
 
-	public void updateAuthorityRole(RoleA roleA) throws InterruptedException {
-		List<Callable<Boolean>> futures = new ArrayList<>(3);
-		futures.add(() -> {
-			roleGateway.updateRole(roleA);
-			return true;
-		});
-		futures.add(() -> {
-			roleMenuGateway.updateRoleMenu(roleA);
-			return true;
-		});
-		futures.add(() -> {
-			roleDeptGateway.updateRoleDept(roleA);
-			return true;
-		});
-		virtualTaskExecutor.invokeAll(futures);
+	public void updateAuthorityRole(RoleA roleA) {
+		roleGateway.updateRole(roleA);
+		roleMenuGateway.updateRoleMenu(roleA);
+		roleDeptGateway.updateRoleDept(roleA);
 	}
 
-	public void deleteRole(Long[] ids) throws InterruptedException {
-		List<Callable<Boolean>> futures = new ArrayList<>(3);
-		futures.add(() -> {
-			roleGateway.deleteRole(ids);
-			return true;
-		});
-		futures.add(() -> {
-			roleMenuGateway.deleteRoleMenu(ids);
-			return true;
-		});
-		futures.add(() -> {
-			roleDeptGateway.deleteRoleDept(ids);
-			return true;
-		});
-		virtualTaskExecutor.invokeAll(futures);
+	public void deleteRole(Long[] ids) {
+		roleGateway.deleteRole(ids);
+		roleMenuGateway.deleteRoleMenu(ids);
+		roleDeptGateway.deleteRoleDept(ids);
 	}
 
 }
