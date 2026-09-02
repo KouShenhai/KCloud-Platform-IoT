@@ -112,15 +112,14 @@ public class MybatisPlusAutoConfig {
 	// @formatter:on
 	@Bean
 	@ConditionalOnMissingBean(MybatisPlusInterceptor.class)
-	public MybatisPlusInterceptor mybatisPlusInterceptor(MybatisPlusExtProperties mybatisPlusExtProperties,
-			SystemSettingsProperties systemSettingsProperties) {
+	public MybatisPlusInterceptor mybatisPlusInterceptor(MybatisPlusExtProperties mybatisPlusExtProperties) {
 		MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
 		// 数据权限插件
 		interceptor.addInnerInterceptor(new DataFilterInterceptor());
 		// 多租户插件
 		if (mybatisPlusExtProperties.getTenant().isEnabled()) {
 			interceptor.addInnerInterceptor(new TenantLineInnerInterceptor(new GlobalTenantLineHandler(
-					mybatisPlusExtProperties.getTenant().getIgnoreTables(), systemSettingsProperties)));
+					mybatisPlusExtProperties.getTenant().getIgnoreTables())));
 		}
 		// 动态表名插件
 		interceptor.addInnerInterceptor(new DynamicTableNameInnerInterceptor(new DynamicTableNameHandler()));

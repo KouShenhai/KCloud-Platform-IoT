@@ -138,7 +138,6 @@ logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml
 
 system-settings:
-  node-id: ${NODE_ID:1}
   app-mode: microservice
-  service-id: ${spring.application.name}
   tenant-code: laokouyun
+  client-id: ${CLIENT_ID:KPLFM-10000-10000}

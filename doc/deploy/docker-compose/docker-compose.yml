@@ -704,7 +704,11 @@ services:
     tty: true
     restart: always
     privileged: true
-    command: bin/pulsar standalone
+    command:
+      - bin/pulsar
+      - standalone
+      - --advertised-address
+      - localhost
     environment:
       - PULSAR_MEM=-Xms512m -Xmx512m
     ports:

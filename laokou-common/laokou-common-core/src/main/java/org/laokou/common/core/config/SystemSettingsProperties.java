@@ -37,21 +37,17 @@ public class SystemSettingsProperties implements Serializable {
 
 	private Long workId = 1L;
 
-	private Long nodeId = 1L;
-
-	private String serviceId;
-
 	private Duration captchaExpire = Duration.ofMinutes(5);
 
 	private Duration idempotentExpire = Duration.ofMinutes(5);
 
 	private Duration profileExpire = Duration.ofHours(1);
 
-	private Long defaultTenantValue = 1L;
-
 	private String tenantCode = "laokouyun";
 
 	private Mode appMode = Mode.MICROSERVICE;
+
+	private String clientId;
 
 	@Getter
 	enum Mode {
