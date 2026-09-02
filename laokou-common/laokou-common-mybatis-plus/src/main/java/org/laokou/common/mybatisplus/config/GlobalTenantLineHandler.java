@@ -22,7 +22,6 @@ import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.LongValue;
 import net.sf.jsqlparser.schema.Column;
 import org.laokou.common.context.util.UserUtils;
-import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.common.i18n.util.ObjectUtils;
 
 import java.util.List;
@@ -31,8 +30,7 @@ import java.util.Set;
 /**
  * @author laokou
  */
-public record GlobalTenantLineHandler(Set<String> ignoreTables,
-		SystemSettingsProperties systemSettingsProperties) implements TenantLineHandler {
+public record GlobalTenantLineHandler(Set<String> ignoreTables) implements TenantLineHandler {
 
 	@Override
 	public boolean ignoreTable(String tableName) {
@@ -42,8 +40,7 @@ public record GlobalTenantLineHandler(Set<String> ignoreTables,
 	@Override
 	public Expression getTenantId() {
 		Long tenantId = UserUtils.getTenantId();
-		return ObjectUtils.isNull(tenantId) ? new LongValue(systemSettingsProperties.getDefaultTenantValue())
-				: new LongValue(tenantId);
+		return ObjectUtils.isNull(tenantId) ? new LongValue(1L) : new LongValue(tenantId);
 	}
 
 	@Override

@@ -272,8 +272,6 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
 
 system-settings:
-  node-id: ${NODE_ID:1}
   data-id: ${DATA_ID:1}
   work-id: ${WORK_ID:1}
   app-mode: monolith
-  service-id: ${spring.application.name}

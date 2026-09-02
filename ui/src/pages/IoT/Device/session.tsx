@@ -74,6 +74,12 @@ export default () => {
 			width: 85,
 		},
 		{
+			title: t('iot.session.id'),
+			dataIndex: 'id',
+			valueType: 'text',
+			width: 100,
+		},
+		{
 			title: t('iot.session.name'),
 			dataIndex: 'name',
 			valueType: 'text',
@@ -133,13 +139,6 @@ export default () => {
 					},
 				],
 			},
-		},
-		{
-			title: t('iot.session.status'),
-			dataIndex: 'status',
-			valueType: 'text',
-			ellipsis: true,
-			hideInSearch: true,
 		},
 		{
 			title: t('common.createTime'),
