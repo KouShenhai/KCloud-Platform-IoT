@@ -145,7 +145,7 @@
     <!-- testcontainers版本 -->
     <testcontainers.version>2.0.5</testcontainers.version>
     <!-- vertx版本 -->
-    <vertx.version>5.1.6</vertx.version>
+    <vertx.version>5.1.7</vertx.version>
     <!-- mybatis-plus版本 -->
     <mybatis-plus.version>3.5.17</mybatis-plus.version>
     <!-- nacos版本 -->
@@ -165,7 +165,7 @@
     <!-- redisson版本 -->
     <redisson.version>4.7.0</redisson.version>
     <!-- lombok版本 -->
-    <lombok.version>1.18.46</lombok.version>
+    <lombok.version>1.18.48</lombok.version>
     <!-- postgresql版本 -->
     <postgresql.version>42.7.13</postgresql.version>
     <!-- spring-boot-admin版本 -->
@@ -179,15 +179,15 @@
     <!-- guava版本 -->
     <guava.version>33.7.1-jre</guava.version>
     <!-- oshi版本 -->
-    <oshi.version>7.6.0</oshi.version>
+    <oshi.version>7.6.1</oshi.version>
     <!-- elasticsearch版本 -->
-    <elasticsearch.version>9.5.2</elasticsearch.version>
+    <elasticsearch.version>9.5.3</elasticsearch.version>
     <!-- jakarta.servlet-api版本 -->
     <jakarta-servlet-api.version>6.1.0</jakarta-servlet-api.version>
     <!-- fesod版本 -->
     <fesod.version>2.0.2-incubating</fesod.version>
     <!-- s3版本 -->
-    <s3.version>2.54.9</s3.version>
+    <s3.version>2.54.11</s3.version>
     <!-- dynamic-datasource版本 -->
     <dynamic-datasource.version>4.5.0</dynamic-datasource.version>
     <!-- httpclient5版本 -->
