@@ -33,7 +33,6 @@ import io.vertx.mqtt.messages.MqttPublishMessage;
 import io.vertx.mqtt.messages.MqttSubAckMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
-import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.common.core.util.MapUtils;
 import org.laokou.iot.common.config.pulsar.handler.ConnectionStateHandler;
 import org.laokou.iot.common.config.pulsar.handler.State;
@@ -55,11 +54,7 @@ import java.util.concurrent.atomic.AtomicReference;
 @Slf4j
 public final class VertxMqttClient extends AbstractVertxService<Void> {
 
-	private final Long snowflakeId;
-
 	private final MqttClientConfig config;
-
-	private final SystemSettingsProperties systemSettingsProperties;
 
 	private final List<MessageHandler> messageHandlers;
 
@@ -90,16 +85,13 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 
 	private final ConnectionStateHandler connectionStateHandler;
 
-	public VertxMqttClient(Vertx vertx, Long snowflakeId, MqttClientConfig config,
-			ConnectionStateHandler connectionStateHandler, List<MessageHandler> messageHandlers,
-			SystemSettingsProperties systemSettingsProperties) {
+	public VertxMqttClient(Vertx vertx, MqttClientConfig config, ConnectionStateHandler connectionStateHandler,
+			List<MessageHandler> messageHandlers) {
 		super(vertx);
-		this.snowflakeId = snowflakeId;
 		this.config = config;
 		this.timerInactive = -1;
 		this.timerCreating = -2;
 		this.messageHandlers = messageHandlers;
-		this.systemSettingsProperties = systemSettingsProperties;
 		this.mqttClient = createClient(buildOptions(config));
 		this.stopping = new AtomicBoolean(false);
 		this.disconnecting = new AtomicBoolean(false);
@@ -280,7 +272,7 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 		for (MessageHandler handler : messageHandlers) {
 			try {
 				if (handler.supports(message.topicName())) {
-					return handler.handle(snowflakeId, message);
+					return handler.handle(config.getSnowflakeId(), message);
 				}
 			}
 			catch (Throwable ex) {
@@ -459,7 +451,7 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 	}
 
 	private Future<Void> subscribe() {
-		Map<String, Integer> topics = MqttMessageType.getTopics(systemSettingsProperties.getTenantCode());
+		Map<String, Integer> topics = MqttMessageType.getTopics(config.getTenantCode());
 		if (MapUtils.isEmpty(topics)) {
 			log.warn("【Vertx-MQTT-Client】 => 未配置订阅主题，客户端ID：{}", config.getClientId());
 			return Future.succeededFuture();

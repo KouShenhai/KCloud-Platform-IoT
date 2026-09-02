@@ -26,6 +26,8 @@ import lombok.Data;
 @Data
 public final class MqttClientConfig {
 
+	private Long snowflakeId;
+
 	private boolean auth = true;
 
 	private boolean ssl = false;
@@ -81,5 +83,7 @@ public final class MqttClientConfig {
 	private byte version = MqttVersion.MQTT_5.protocolLevel();
 
 	private int maxInflightQueue = 1024;
+
+	private String tenantCode;
 
 }

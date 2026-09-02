@@ -40,8 +40,7 @@ public record GlobalTenantLineHandler(Set<String> ignoreTables) implements Tenan
 	@Override
 	public Expression getTenantId() {
 		Long tenantId = UserUtils.getTenantId();
-		return ObjectUtils.isNull(tenantId) ? new LongValue(1L)
-				: new LongValue(tenantId);
+		return ObjectUtils.isNull(tenantId) ? new LongValue(1L) : new LongValue(tenantId);
 	}
 
 	@Override

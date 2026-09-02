@@ -19,6 +19,7 @@ package org.laokou.iot.common.config.pulsar.handler;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.pulsar.core.PulsarTemplate;
 import org.springframework.stereotype.Component;
 
 /**
@@ -28,6 +29,8 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public final class ConnectionStateHandler {
+
+	private final PulsarTemplate<Object> pulsarTemplate;
 
 	public void handle(State state) {
 
