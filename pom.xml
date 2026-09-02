@@ -165,7 +165,7 @@
     <!-- redisson版本 -->
     <redisson.version>4.7.0</redisson.version>
     <!-- lombok版本 -->
-    <lombok.version>1.18.46</lombok.version>
+    <lombok.version>1.18.48</lombok.version>
     <!-- postgresql版本 -->
     <postgresql.version>42.7.13</postgresql.version>
     <!-- spring-boot-admin版本 -->
@@ -179,7 +179,7 @@
     <!-- guava版本 -->
     <guava.version>33.7.1-jre</guava.version>
     <!-- oshi版本 -->
-    <oshi.version>7.6.0</oshi.version>
+    <oshi.version>7.6.1</oshi.version>
     <!-- elasticsearch版本 -->
     <elasticsearch.version>9.5.3</elasticsearch.version>
     <!-- jakarta.servlet-api版本 -->
