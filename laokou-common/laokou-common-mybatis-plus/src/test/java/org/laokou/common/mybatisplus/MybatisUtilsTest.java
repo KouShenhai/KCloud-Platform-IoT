@@ -23,7 +23,6 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.util.InstantUtils;
@@ -73,8 +72,7 @@ class MybatisUtilsTest {
 
 	@Test
 	void test_ignoreTable() {
-		GlobalTenantLineHandler globalTenantLineHandler = new GlobalTenantLineHandler(Set.of("test", "t_user"),
-				new SystemSettingsProperties());
+		GlobalTenantLineHandler globalTenantLineHandler = new GlobalTenantLineHandler(Set.of("test", "t_user"));
 		Assertions.assertThat(globalTenantLineHandler.ignoreTable("t_user")).isTrue();
 		Assertions.assertThat(globalTenantLineHandler.ignoreTable("t_test")).isFalse();
 		Assertions.assertThat(globalTenantLineHandler.ignoreTable("t_tes1")).isFalse();
