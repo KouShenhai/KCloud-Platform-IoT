@@ -65,7 +65,17 @@ CREATE TABLE "public"."sys_dept" (
   "dept_id" int8 NOT NULL DEFAULT 1,
   "pid" int8 NOT NULL,
   "name" varchar(100) NOT NULL,
-  "sort" int4 NOT NULL DEFAULT 1
+  "sort" int4 NOT NULL DEFAULT 1,
+  "level" int4 NOT NULL DEFAULT 1,
+  "level1" int8,
+  "level2" int8,
+  "level3" int8,
+  "level4" int8,
+  "level5" int8,
+  "level6" int8,
+  "level7" int8,
+  "level8" int8,
+  "level9" int8
 );
 COMMENT ON COLUMN "public"."sys_dept"."id" IS 'ID';
 COMMENT ON COLUMN "public"."sys_dept"."creator" IS '创建人';
@@ -75,24 +85,34 @@ COMMENT ON COLUMN "public"."sys_dept"."update_time" IS '修改时间';
 COMMENT ON COLUMN "public"."sys_dept"."del_flag" IS '删除标识 0未删除 1已删除';
 COMMENT ON COLUMN "public"."sys_dept"."version" IS '版本号';
 COMMENT ON COLUMN "public"."sys_dept"."tenant_id" IS '租户ID';
-COMMENT ON COLUMN "public"."sys_cluster"."dept_id" IS '部门ID';
+COMMENT ON COLUMN "public"."sys_dept"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."sys_dept"."pid" IS '部门父节点ID';
 COMMENT ON COLUMN "public"."sys_dept"."name" IS '部门名称';
 COMMENT ON COLUMN "public"."sys_dept"."sort" IS '部门排序';
+COMMENT ON COLUMN "public"."sys_dept"."level" IS '层级';
+COMMENT ON COLUMN "public"."sys_dept"."level1" IS '层级1';
+COMMENT ON COLUMN "public"."sys_dept"."level2" IS '层级2';
+COMMENT ON COLUMN "public"."sys_dept"."level3" IS '层级3';
+COMMENT ON COLUMN "public"."sys_dept"."level4" IS '层级4';
+COMMENT ON COLUMN "public"."sys_dept"."level5" IS '层级5';
+COMMENT ON COLUMN "public"."sys_dept"."level6" IS '层级6';
+COMMENT ON COLUMN "public"."sys_dept"."level7" IS '层级7';
+COMMENT ON COLUMN "public"."sys_dept"."level8" IS '层级8';
+COMMENT ON COLUMN "public"."sys_dept"."level9" IS '层级9';
 COMMENT ON TABLE "public"."sys_dept" IS '部门';
 
 ALTER TABLE "public"."sys_dept" ADD CONSTRAINT "sys_dept_pkey" PRIMARY KEY ("id");
 CREATE INDEX sys_dept_pid_idx ON sys_dept(pid);
-
-INSERT INTO "public"."sys_dept" VALUES (1535858679453085698, 1, 1, '2022-11-02 22:35:30', '2023-09-22 11:31:42', 0, 4, 1, 1, 1, '广州分公司', 2);
-INSERT INTO "public"."sys_dept" VALUES (1535881356595175426, 1, 1, '2022-11-02 22:35:30', '2023-09-22 11:31:42', 0, 18, 1, 1, 1, '长沙分公司', 3);
-INSERT INTO "public"."sys_dept" VALUES (1535887129341599746, 1, 1, '2022-11-02 22:35:30', '2023-09-22 11:31:42', 0, 8, 1, 1, 1, '深圳分公司', 1);
-INSERT INTO "public"."sys_dept" VALUES (1, 1, 1, '2022-11-16 12:12:55', '2023-09-22 11:31:42', 0, 38, 1, 1, 0, '老寇云集团', 1);
-INSERT INTO "public"."sys_dept" VALUES (1584488175088373761, 1, 1, '2022-11-02 22:35:30', '2023-09-22 11:31:42', 0, 43, 1, 1, 1535881356595175426, '研发部', 1);
-INSERT INTO "public"."sys_dept" VALUES (1584488411756171265, 1, 1, '2022-11-02 22:35:30', '2026-06-13 16:18:42.768011', 0, 10, 1, 1, 1535881356595175426, '市场部', 2);
-INSERT INTO "public"."sys_dept" VALUES (1584488411756171266, 1, 1, '2022-11-02 22:35:30', '2026-06-13 16:18:48.186013', 0, 20, 1, 1, 1584488175088373761, '开发组', 1);
-INSERT INTO "public"."sys_dept" VALUES (1584488411756171269, 1, 1, '2023-02-10 22:06:44', '2026-06-13 16:18:51.896852', 0, 9, 1, 1, 1584488175088373761, '测试组', 2);
-INSERT INTO "public"."sys_dept" VALUES (1584488411756171268, 1, 1, '2023-02-10 22:01:36', '2026-06-13 16:18:56.07049', 0, 10, 1, 1, 1584488175088373761, '运维组', 3);
+ALTER TABLE sys_dept ADD CONSTRAINT chk_sys_dept_level CHECK ("level" BETWEEN 1 AND 9);
+INSERT INTO "public"."sys_dept" VALUES (1, 1, 1, '2022-11-16 12:12:55', '2023-09-22 11:31:42', 0, 38, 1, 1, 0, '老寇云集团', 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO "public"."sys_dept" VALUES (1535887129341599746, 1, 1, '2022-11-02 22:35:30', '2023-09-22 11:31:42', 0, 8, 1, 1, 1, '深圳分公司', 1, 2, 1, 1535887129341599746, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO "public"."sys_dept" VALUES (1535858679453085698, 1, 1, '2022-11-02 22:35:30', '2023-09-22 11:31:42', 0, 4, 1, 1, 1, '广州分公司', 2, 2, 1, 1535858679453085698, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO "public"."sys_dept" VALUES (1535881356595175426, 1, 1, '2022-11-02 22:35:30', '2023-09-22 11:31:42', 0, 18, 1, 1, 1, '长沙分公司', 3, 2, 1, 1535881356595175426, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO "public"."sys_dept" VALUES (1584488175088373761, 1, 1, '2022-11-02 22:35:30', '2023-09-22 11:31:42', 0, 43, 1, 1, 1535881356595175426, '研发部', 1, 3, 1, 1535881356595175426, 1584488175088373761, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO "public"."sys_dept" VALUES (1584488411756171265, 1, 1, '2022-11-02 22:35:30', '2026-06-13 16:18:42.768011', 0, 10, 1, 1, 1535881356595175426, '市场部', 2, 3, 1, 1535881356595175426, 1584488411756171265, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO "public"."sys_dept" VALUES (1584488411756171268, 1, 1, '2023-02-10 22:01:36', '2026-06-13 16:18:56.07049', 0, 10, 1, 1, 1584488175088373761, '运维组', 3, 4, 1, 1535881356595175426, 1584488175088373761, 1584488411756171268, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO "public"."sys_dept" VALUES (1584488411756171269, 1, 1, '2023-02-10 22:06:44', '2026-06-13 16:18:51.896852', 0, 9, 1, 1, 1584488175088373761, '测试组', 2, 4, 1, 1535881356595175426, 1584488175088373761, 1584488411756171269, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO "public"."sys_dept" VALUES (1584488411756171266, 1, 1, '2022-11-02 22:35:30', '2026-06-13 16:18:48.186013', 0, 20, 1, 1, 1584488175088373761, '开发组', 1, 4, 1, 1535881356595175426, 1584488175088373761, 1584488411756171266, NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- -------------字典------------

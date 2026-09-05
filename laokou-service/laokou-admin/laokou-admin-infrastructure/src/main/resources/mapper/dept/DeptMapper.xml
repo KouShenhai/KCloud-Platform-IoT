@@ -25,6 +25,7 @@
     "name",
     pid,
     "sort",
+    "level",
     create_time
   </sql>
 

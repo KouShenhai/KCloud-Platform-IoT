@@ -408,6 +408,7 @@ export default {
 	// sys/dept
 	'sys.dept.pid': 'Parent Dept',
 	'sys.dept.name': 'Name',
+	'sys.dept.level': 'Level',
 	'sys.dept.sort': 'Sort',
 	'sys.dept.insert': 'Insert Dept',
 	'sys.dept.view': 'View Dept',

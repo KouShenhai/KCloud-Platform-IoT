@@ -64,4 +64,9 @@ public class DeptE implements Serializable {
 	 */
 	private Integer sort;
 
+	/**
+	 * 部门层级.
+	 */
+	private Integer level;
+
 }
