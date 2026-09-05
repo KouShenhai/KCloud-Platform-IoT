@@ -17,6 +17,8 @@
 
 package org.laokou.admin.dept.service.validator;
 
+import lombok.RequiredArgsConstructor;
+import org.laokou.admin.dept.gatewayimpl.database.DeptMapper;
 import org.laokou.admin.dept.model.DeptA;
 import org.laokou.admin.dept.model.validator.DeptParamValidator;
 import org.laokou.common.i18n.util.ParamValidator;
@@ -25,8 +27,11 @@ import org.springframework.stereotype.Component;
 /**
  * @author laokou
  */
+@RequiredArgsConstructor
 @Component("modifyDeptParamValidator")
 public class ModifyDeptParamValidator implements DeptParamValidator {
+
+	private final DeptMapper deptMapper;
 
 	@Override
 	public void validateDept(DeptA deptA) {
@@ -34,7 +39,7 @@ public class ModifyDeptParamValidator implements DeptParamValidator {
 				// 校验ID
 				org.laokou.admin.dept.service.validator.DeptParamValidator.validateId(deptA),
 				// 校验父级ID
-				org.laokou.admin.dept.service.validator.DeptParamValidator.validateParentId(deptA),
+				org.laokou.admin.dept.service.validator.DeptParamValidator.validateParentId(deptA, deptMapper),
 				// 校验名称
 				org.laokou.admin.dept.service.validator.DeptParamValidator.validateName(deptA),
 				// 校验排序

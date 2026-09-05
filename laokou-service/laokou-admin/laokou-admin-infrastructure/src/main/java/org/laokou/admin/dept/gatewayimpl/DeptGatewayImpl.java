@@ -50,7 +50,7 @@ public class DeptGatewayImpl implements DeptGateway {
 	@Override
 	public void createDept(DeptA deptA) {
 		DeptDO deptDO = DeptConvertor.toDataObject(deptA);
-		updateLevels(deptDO);
+		updateDeptLevels(deptDO);
 		deptMapper.insert(deptDO);
 	}
 
@@ -60,9 +60,9 @@ public class DeptGatewayImpl implements DeptGateway {
 		Long id = deptDO.getId();
 		Integer level = deptDO.getLevel();
 		deptDO.setVersion(deptMapper.selectVersion(deptA.getId()));
-		updateLevels(deptDO);
+		updateDeptLevels(deptDO);
 		updateDeptById(deptDO);
-		updateChildrenLevels(id, level, deptDO);
+		updateDeptChildrenLevels(id, level, deptDO);
 
 	}
 
@@ -71,7 +71,7 @@ public class DeptGatewayImpl implements DeptGateway {
 		deptMapper.deleteByIds(Arrays.asList(ids));
 	}
 
-	private void updateLevels(DeptDO deptDO) {
+	private void updateDeptLevels(DeptDO deptDO) {
 		DeptDO parentDept = deptMapper.selectById(deptDO.getPid());
 		rebuildLevel(deptDO, parentDept == null ? DeptConvertor.toDataObject() : parentDept);
 	}
@@ -96,8 +96,8 @@ public class DeptGatewayImpl implements DeptGateway {
 			.eq(DeptDO::getVersion, deptDO.getVersion()));
 	}
 
-	private void updateChildrenLevels(Long id, Integer level, DeptDO deptDO) {
-		List<DeptDO> list = getChildrenList(id, level);
+	private void updateDeptChildrenLevels(Long id, Integer level, DeptDO deptDO) {
+		List<DeptDO> list = getDeptChildrenList(id, level);
 		Map<Long, DeptDO> deptDOMap = new LinkedHashMap<>(Map.of(id, deptDO));
 		for (DeptDO dptDO : list) {
 			rebuildLevel(dptDO, deptDOMap.get(dptDO.getPid()));
@@ -125,7 +125,7 @@ public class DeptGatewayImpl implements DeptGateway {
 					.eq(DeptDO::getVersion, item.getVersion())));
 	}
 
-	private List<DeptDO> getChildrenList(Long id, Integer level) {
+	private List<DeptDO> getDeptChildrenList(Long id, Integer level) {
 		return deptMapper.selectList(Wrappers.lambdaUpdate(DeptDO.class)
 			.and(w -> w.eq(DeptDO::getLevel1, id)
 				.or()
@@ -207,6 +207,7 @@ public class DeptGatewayImpl implements DeptGateway {
 			case 7 -> deptDO.setLevel7(id);
 			case 8 -> deptDO.setLevel8(id);
 			case 9 -> deptDO.setLevel9(id);
+			default -> throw new IllegalArgumentException("非法参数");
 		}
 	}
 

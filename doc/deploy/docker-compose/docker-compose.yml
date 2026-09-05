@@ -266,10 +266,10 @@ services:
     restart: always
     privileged: true
     ports:
-      - "1883:1883"
-      - "8083:8083"
-      - "8883:8883"
-      - "18083:18083"
+      - "41883:1883"
+      - "2883:8083"
+      - "48883:8883"
+      - "3883:18083"
     environment:
       - TZ=Asia/Shanghai
     volumes:
@@ -714,8 +714,6 @@ services:
     ports:
       - "16650:6650"
       - "18080:8080"
-    volumes:
-      - ./pulsar/data:/pulsar/data
     networks:
       - iot_network
   # https://github.com/KouShenhai/Sentinel

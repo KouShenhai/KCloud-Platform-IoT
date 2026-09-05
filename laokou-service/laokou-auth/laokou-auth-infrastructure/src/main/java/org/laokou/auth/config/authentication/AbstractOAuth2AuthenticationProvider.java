@@ -90,8 +90,9 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 	 */
 	@Override
 	public Authentication authenticate(@NonNull Authentication authentication) {
-		AuthA authA = createAuth();
+		AuthA authA = null;
 		try {
+			authA = createAuth();
 			usernamePasswordAuthentication.authentication(authA, RequestUtils.getHttpServletRequest());
 			return toAuthentication(authA, authentication);
 		}
@@ -100,8 +101,10 @@ abstract class AbstractOAuth2AuthenticationProvider implements AuthenticationPro
 			throw OAuth2ExceptionHandler.getOAuth2AuthenticationException(gex.getCode(), gex.getMsg());
 		}
 		finally {
-			// 发布领域事件
-			authA.publishEvent(kafkaDomainEventPublisher);
+			if (authA != null) {
+				// 发布领域事件
+				authA.publishEvent(kafkaDomainEventPublisher);
+			}
 		}
 	}
 

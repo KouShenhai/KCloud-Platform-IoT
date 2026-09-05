@@ -28,6 +28,6 @@ public interface DataSource {
 
 	void create(Table table);
 
-	void verifyConnection();
+	void test();
 
 }

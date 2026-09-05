@@ -49,7 +49,7 @@ public class SessionRemoveCmdExe {
 			transactionalUtils.executeInTransaction(() -> sessionDomainService.deleteSession(cmd.getIds()));
 		}
 		catch (Exception ex) {
-			log.error("删除物模型失败，错误信息：{}", ex.getMessage(), ex);
+			log.error("删除会话失败，错误信息：{}", ex.getMessage(), ex);
 			throw ex;
 		}
 		finally {
