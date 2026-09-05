@@ -28,6 +28,7 @@ type TableColumns = {
 	name: string | undefined;
 	path: string | undefined;
 	sort: number | undefined;
+	level: number | undefined;
 	createTime: string | undefined;
 };
 
@@ -102,6 +103,13 @@ export const DeptDrawer: React.FC<DeptDrawerProps> = ({
 				disabled={loading}
 				name="id"
 				label="ID"
+				hidden={true}
+			/>
+
+			<ProFormText
+				disabled={loading}
+				name="level"
+				label={t('sys.dept.level')}
 				hidden={true}
 			/>
 

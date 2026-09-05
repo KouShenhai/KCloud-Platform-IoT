@@ -53,6 +53,11 @@ public class DeptCO extends ClientObject {
 	private Integer sort;
 
 	/**
+	 * 部门层级.
+	 */
+	private Integer level;
+
+	/**
 	 * 创建时间.
 	 */
 	@JsonFormat(pattern = DateConstants.YYYY_B_MM_B_DD_HH_R_MM_R_SS, timezone = DateConstants.DEFAULT_TIMEZONE)

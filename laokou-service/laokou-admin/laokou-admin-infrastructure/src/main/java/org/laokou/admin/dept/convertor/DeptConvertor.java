@@ -40,6 +40,7 @@ public class DeptConvertor {
 		deptDO.setPid(deptE.getPid());
 		deptDO.setName(deptE.getName());
 		deptDO.setSort(deptE.getSort());
+		deptDO.setLevel(deptE.getLevel());
 		deptDO.setCreateTime(deptA.getCreateTime());
 		return deptDO;
 	}
@@ -50,6 +51,7 @@ public class DeptConvertor {
 		deptCO.setPid(deptDO.getPid());
 		deptCO.setName(deptDO.getName());
 		deptCO.setSort(deptDO.getSort());
+		deptCO.setLevel(deptDO.getLevel());
 		deptCO.setCreateTime(deptDO.getCreateTime());
 		return deptCO;
 	}
@@ -58,19 +60,19 @@ public class DeptConvertor {
 		return list.stream().map(DeptConvertor::toClientObject).toList();
 	}
 
-	public static DeptTreeCO toClientObject0(DeptDO deptDO) {
+	public static DeptTreeCO toClientObj(DeptDO deptDO) {
 		DeptTreeCO co = new DeptTreeCO();
 		co.setId(deptDO.getId());
 		co.setName(deptDO.getName());
 		co.setPid(deptDO.getPid());
 		co.setSort(deptDO.getSort());
 		co.setCreateTime(deptDO.getCreateTime());
+		co.setLevel(deptDO.getLevel());
 		return co;
-
 	}
 
-	public static List<DeptTreeCO> toClientObjectList0(List<DeptDO> list) {
-		return list.stream().map(DeptConvertor::toClientObject0).toList();
+	public static List<DeptTreeCO> toClientObjList(List<DeptDO> list) {
+		return list.stream().map(DeptConvertor::toClientObj).toList();
 	}
 
 	public static DeptE toEntity(DeptCO deptCO) {
@@ -80,7 +82,23 @@ public class DeptConvertor {
 			.sort(deptCO.getSort())
 			.pid(deptCO.getPid())
 			.name(deptCO.getName())
+			.level(deptCO.getLevel())
 			.build();
+	}
+
+	public static DeptDO toDataObject() {
+		DeptDO deptDO = new DeptDO();
+		deptDO.setLevel(0);
+		deptDO.setLevel1(null);
+		deptDO.setLevel2(null);
+		deptDO.setLevel3(null);
+		deptDO.setLevel4(null);
+		deptDO.setLevel5(null);
+		deptDO.setLevel6(null);
+		deptDO.setLevel7(null);
+		deptDO.setLevel8(null);
+		deptDO.setLevel9(null);
+		return deptDO;
 	}
 
 }

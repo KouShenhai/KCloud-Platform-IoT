@@ -408,6 +408,7 @@ export default {
 	// sys/dept
 	'sys.dept.pid': '父级部门',
 	'sys.dept.name': '部门名称',
+	'sys.dept.level': '部门层级',
 	'sys.dept.sort': '部门排序',
 	'sys.dept.insert': '新增部门',
 	'sys.dept.view': '查看部门',

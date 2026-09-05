@@ -25,17 +25,17 @@
         <foreach collection="dataScopes" item="dataScope" separator=" union all ">
           <choose>
             <when test="dataScope != null and dataScope == 'below_dept'">
-              WITH recursive dept_tree as (
-                select
-                id, pid
-                from sys_dept
-                where id = #{user.deptId} and tenant_id = #{user.tenantId}
-                union all
-                select d.id, d.pid
-                from sys_dept d
-                join dept_tree dt on d.pid = dt.id
-              )
-              select id from dept_tree
+              select id from sys_dept where (
+              level1 = #{user.deptId} or
+              level2 = #{user.deptId} or
+              level3 = #{user.deptId} or
+              level4 = #{user.deptId} or
+              level5 = #{user.deptId} or
+              level6 = #{user.deptId} or
+              level7 = #{user.deptId} or
+              level8 = #{user.deptId} or
+              level9 = #{user.deptId}
+              )  and tenant_id = #{user.tenantId}
             </when>
             <when test="dataScope != null and dataScope == 'self_dept'">
               select #{user.deptId}

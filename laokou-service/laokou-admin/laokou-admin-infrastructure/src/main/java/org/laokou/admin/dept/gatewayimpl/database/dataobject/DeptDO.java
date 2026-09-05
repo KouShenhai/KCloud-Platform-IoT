@@ -46,4 +46,54 @@ public class DeptDO extends BaseDO {
 	 */
 	private Integer sort;
 
+	/**
+	 * 部门层级.
+	 */
+	private Integer level;
+
+	/**
+	 * 层级1.
+	 */
+	private Long level1;
+
+	/**
+	 * 层级2.
+	 */
+	private Long level2;
+
+	/**
+	 * 层级3.
+	 */
+	private Long level3;
+
+	/**
+	 * 层级4.
+	 */
+	private Long level4;
+
+	/**
+	 * 层级5.
+	 */
+	private Long level5;
+
+	/**
+	 * 层级6.
+	 */
+	private Long level6;
+
+	/**
+	 * 层级7.
+	 */
+	private Long level7;
+
+	/**
+	 * 层级8.
+	 */
+	private Long level8;
+
+	/**
+	 * 层级9.
+	 */
+	private Long level9;
+
 }

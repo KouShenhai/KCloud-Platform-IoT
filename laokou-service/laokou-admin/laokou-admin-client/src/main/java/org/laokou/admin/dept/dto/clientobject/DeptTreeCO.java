@@ -39,4 +39,7 @@ public class DeptTreeCO extends TreeUtils.TreeNode<DeptTreeCO> {
 	@Schema(name = "创建时间", description = "创建时间")
 	private Instant createTime;
 
+	@Schema(name = "部门层级", description = "部门层级")
+	private Integer level;
+
 }

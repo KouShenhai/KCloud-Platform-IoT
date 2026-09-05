@@ -77,7 +77,7 @@ export default () => {
 			title: t('common.number'),
 			dataIndex: 'index',
 			valueType: 'indexBorder',
-			width: 110,
+			width: 240,
 		},
 		{
 			title: t('sys.dept.name'),
@@ -86,6 +86,13 @@ export default () => {
 			fieldProps: {
 				placeholder: t('sys.dept.placeholder.name'),
 			},
+		},
+		{
+			title: t('sys.dept.level'),
+			dataIndex: 'level',
+			hideInSearch: true,
+			ellipsis: true,
+			width: 80,
 		},
 		{
 			title: t('sys.dept.sort'),
