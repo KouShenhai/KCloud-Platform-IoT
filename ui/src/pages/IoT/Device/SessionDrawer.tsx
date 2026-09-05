@@ -194,7 +194,7 @@ export const SessionDrawer: React.FC<ConnectionDrawerProps> = ({
 				]}
 			/>
 
-			<ProFormText
+			<ProFormText.Password
 				disabled={loading || dataSource.id !== undefined}
 				readonly={readOnly}
 				name="password"

@@ -77,7 +77,7 @@ export default () => {
 			title: t('iot.session.id'),
 			dataIndex: 'id',
 			valueType: 'text',
-			width: 100,
+			width: 150,
 		},
 		{
 			title: t('iot.session.name'),
@@ -100,24 +100,10 @@ export default () => {
 			dataIndex: 'port',
 			valueType: 'digit',
 			hideInSearch: true,
-			width: 90,
+			width: 120,
 			fieldProps: {
 				stringMode: true,
 			},
-		},
-		{
-			title: t('iot.session.username'),
-			dataIndex: 'username',
-			valueType: 'text',
-			ellipsis: true,
-			hideInSearch: true,
-		},
-		{
-			title: t('iot.session.password'),
-			dataIndex: 'password',
-			valueType: 'text',
-			ellipsis: true,
-			hideInSearch: true,
 		},
 		{
 			title: t('iot.session.state'),
@@ -138,6 +124,13 @@ export default () => {
 						label: '打开',
 					},
 				],
+			},
+			render: (_, record) => {
+				return record.state === 1 ? (
+					<span style={{ color: 'green' }}>打开</span>
+				) : (
+					<span style={{ color: 'red' }}>关闭</span>
+				);
 			},
 		},
 		{
