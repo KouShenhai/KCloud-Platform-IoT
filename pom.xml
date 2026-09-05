@@ -85,7 +85,7 @@
     <!-- maven-surefire-plugin版本 -->
     <maven-surefire-plugin.version>3.6.0</maven-surefire-plugin.version>
     <!-- maven-failsafe-plugin版本 -->
-    <maven-failsafe-plugin.version>3.5.6</maven-failsafe-plugin.version>
+    <maven-failsafe-plugin.version>3.6.0</maven-failsafe-plugin.version>
     <!-- maven-enforcer-plugin版本 -->
     <maven-enforcer-plugin.version>3.6.3</maven-enforcer-plugin.version>
     <!-- docker-maven-plugin版本 -->
@@ -213,7 +213,7 @@
     <!-- browscap-java版本 -->
     <browscap-java.version>1.5.1</browscap-java.version>
     <!-- flyway版本 -->
-    <flyway.version>13.4.0</flyway.version>
+    <flyway.version>13.5.0</flyway.version>
     <!-- snail-job版本 -->
     <snail-job.version>2.0.2</snail-job.version>
     <!-- archunit-junit5版本 -->
