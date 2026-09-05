@@ -17,6 +17,9 @@
 
 package org.laokou.admin.dept.service.validator;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import org.laokou.admin.dept.gatewayimpl.database.DeptMapper;
+import org.laokou.admin.dept.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.admin.dept.model.DeptA;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.ParamValidator;
@@ -30,10 +33,14 @@ final class DeptParamValidator {
 	private DeptParamValidator() {
 	}
 
-	static ParamValidator.Validate validateParentId(DeptA deptA) {
+	static ParamValidator.Validate validateParentId(DeptA deptA, DeptMapper deptMapper) {
 		Long pid = deptA.getDeptE().getPid();
 		if (ObjectUtils.isNull(pid)) {
 			return ParamValidator.invalidate("部门父级ID不能为空");
+		}
+		if (deptMapper
+			.selectCount(Wrappers.lambdaQuery(DeptDO.class).eq(DeptDO::getPid, pid).eq(DeptDO::getLevel, 9)) > 0) {
+			return ParamValidator.invalidate("部门层级不允许超过9层");
 		}
 		return ParamValidator.validate();
 	}
