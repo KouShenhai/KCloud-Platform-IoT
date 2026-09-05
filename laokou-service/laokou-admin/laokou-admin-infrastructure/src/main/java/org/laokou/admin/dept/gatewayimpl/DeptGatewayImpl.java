@@ -30,7 +30,6 @@ import org.laokou.admin.dept.model.DeptA;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -104,6 +103,10 @@ public class DeptGatewayImpl implements DeptGateway {
 			rebuildLevel(dptDO, deptDOMap.get(dptDO.getPid()));
 			deptDOMap.put(dptDO.getId(), dptDO);
 		}
+		updateDeptByIds(list);
+	}
+
+	private void updateDeptByIds(List<DeptDO> list) {
 		MybatisBatch.Method<DeptDO> mapperMethod = new MybatisBatch.Method<>(DeptMapper.class);
 		MybatisBatchUtils.execute(sqlSessionFactory, list,
 				mapperMethod.update(item -> Wrappers.lambdaUpdate(DeptDO.class)
@@ -123,41 +126,26 @@ public class DeptGatewayImpl implements DeptGateway {
 	}
 
 	private List<DeptDO> getChildrenList(Long id, Integer level) {
-		return switch (level) {
-			case 1 -> deptMapper.selectList(Wrappers.lambdaUpdate(DeptDO.class)
-				.eq(DeptDO::getLevel1, id)
-				.ne(DeptDO::getId, id)
-				.orderByAsc(DeptDO::getLevel));
-			case 2 -> deptMapper.selectList(Wrappers.lambdaUpdate(DeptDO.class)
+		return deptMapper.selectList(Wrappers.lambdaUpdate(DeptDO.class)
+			.and(w -> w.eq(DeptDO::getLevel1, id)
+				.or()
 				.eq(DeptDO::getLevel2, id)
-				.ne(DeptDO::getId, id)
-				.orderByAsc(DeptDO::getLevel));
-			case 3 -> deptMapper.selectList(Wrappers.lambdaUpdate(DeptDO.class)
+				.or()
 				.eq(DeptDO::getLevel3, id)
-				.ne(DeptDO::getId, id)
-				.orderByAsc(DeptDO::getLevel));
-			case 4 -> deptMapper.selectList(Wrappers.lambdaUpdate(DeptDO.class)
+				.or()
 				.eq(DeptDO::getLevel4, id)
-				.ne(DeptDO::getId, id)
-				.orderByAsc(DeptDO::getLevel));
-			case 5 -> deptMapper.selectList(Wrappers.lambdaUpdate(DeptDO.class)
+				.or()
 				.eq(DeptDO::getLevel5, id)
-				.ne(DeptDO::getId, id)
-				.orderByAsc(DeptDO::getLevel));
-			case 6 -> deptMapper.selectList(Wrappers.lambdaUpdate(DeptDO.class)
+				.or()
 				.eq(DeptDO::getLevel6, id)
-				.ne(DeptDO::getId, id)
-				.orderByAsc(DeptDO::getLevel));
-			case 7 -> deptMapper.selectList(Wrappers.lambdaUpdate(DeptDO.class)
+				.or()
 				.eq(DeptDO::getLevel7, id)
-				.ne(DeptDO::getId, id)
-				.orderByAsc(DeptDO::getLevel));
-			case 8 -> deptMapper.selectList(Wrappers.lambdaUpdate(DeptDO.class)
+				.or()
 				.eq(DeptDO::getLevel8, id)
-				.ne(DeptDO::getId, id)
-				.orderByAsc(DeptDO::getLevel));
-			default -> Collections.emptyList();
-		};
+				.or()
+				.eq(DeptDO::getLevel9, id))
+			.ne(DeptDO::getId, id)
+			.orderByAsc(DeptDO::getLevel));
 	}
 
 	private void rebuildLevel(DeptDO deptDO, DeptDO parentDeptDO) {
