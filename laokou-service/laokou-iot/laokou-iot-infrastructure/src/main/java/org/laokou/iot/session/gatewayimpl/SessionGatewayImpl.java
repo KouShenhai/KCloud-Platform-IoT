@@ -55,4 +55,8 @@ public class SessionGatewayImpl implements SessionGateway {
 		sessionMapper.deleteByIds(Arrays.asList(ids));
 	}
 
+	private void verifyConnection(SessionA sessionA) {
+
+	}
+
 }

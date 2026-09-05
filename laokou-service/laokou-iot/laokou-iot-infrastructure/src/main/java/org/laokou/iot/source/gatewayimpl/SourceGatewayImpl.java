@@ -64,7 +64,7 @@ public class SourceGatewayImpl implements SourceGateway {
 		SourceV sourceV = SourceConvertor.toValueObject(sourceA);
 		StoragePolicy storagePolicy = StoragePolicy.getByCode(sourceA.getSourceE().getType());
 		DataSource dataSource = storagePolicy.toDataSource(sourceV);
-		dataSource.verifyConnection();
+		dataSource.test();
 	}
 
 }

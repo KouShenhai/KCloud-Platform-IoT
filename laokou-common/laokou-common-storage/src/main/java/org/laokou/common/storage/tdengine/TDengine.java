@@ -67,7 +67,7 @@ public class TDengine extends AbstractDataSource {
 	}
 
 	@Override
-	public void verifyConnection() {
+	public void test() {
 		HikariDataSource hikariDataSource = getHikariDataSource();
 		DriverManager.setLoginTimeout(1);
 		try (Connection conn = DriverManager.getConnection(hikariDataSource.getJdbcUrl(),
@@ -75,10 +75,10 @@ public class TDengine extends AbstractDataSource {
 				PreparedStatement ps = conn.prepareStatement("SELECT 1")) {
 			ps.setQueryTimeout(1);
 			ps.executeQuery();
-			log.info("TDengine 数据源连接成功");
+			log.info("测试 TDengine 数据源连接成功");
 		}
 		catch (SQLException ex) {
-			log.error("连接 TDengine 数据源失败，错误信息：{}", ex.getMessage(), ex);
+			log.error("测试 TDengine 数据源连接失败，错误信息：{}", ex.getMessage(), ex);
 			throw new BizException("B_Datasource_TDengineConnectionFailed", "连接 TDengine 数据源失败，请检查数据源配置", ex);
 		}
 	}
