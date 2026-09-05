@@ -207,7 +207,7 @@ public class DeptGatewayImpl implements DeptGateway {
 			case 7 -> deptDO.setLevel7(id);
 			case 8 -> deptDO.setLevel8(id);
 			case 9 -> deptDO.setLevel9(id);
-			default -> throw new IllegalArgumentException("参数不存在");
+			default -> throw new IllegalArgumentException("非法参数");
 		}
 	}
 

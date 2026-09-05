@@ -18,7 +18,7 @@
 package org.laokou.common.crypto.util;
 
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.common.exception.SystemException;
+import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.util.ResourceExtUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
 
@@ -96,8 +96,8 @@ public final class RSAUtils {
 				return new String(decryptByRSAPrivateKey(str, privateKey), StandardCharsets.UTF_8);
 			}
 			catch (Exception ex) {
-				log.error("RSA解密失败【私钥】，错误信息：{}", ex.getMessage(), ex);
-				throw new SystemException("S_RSA_DecryptFailedByPrivateKey", "RSA解密失败，请检查私钥是否正确", ex);
+				log.error("RSA【私钥】解密失败，错误信息：{}", ex.getMessage(), ex);
+				throw new BizException("B_RSA_PrivateKeyDecryptFailed", "RSA私钥解密失败，请检查私钥配置", ex);
 			}
 		}
 		return str;
@@ -123,9 +123,9 @@ public final class RSAUtils {
 			try {
 				return encryptBase64(encryptByRSAPublicKey(str, publicKey));
 			}
-			catch (Exception e) {
-				log.error("RSA加密失败【公钥】，错误信息：{}", e.getMessage(), e);
-				throw new SystemException("S_RSA_EncryptFailedByPublicKey", "RSA加密失败，请检查公钥是否正确", e);
+			catch (Exception ex) {
+				log.error("RSA【公钥】加密失败，错误信息：{}", ex.getMessage(), ex);
+				throw new BizException("B_RSA_PublicKeyEncryptFaile", "RSA公钥加密失败，请检查公钥配置", ex);
 			}
 		}
 		return str;
