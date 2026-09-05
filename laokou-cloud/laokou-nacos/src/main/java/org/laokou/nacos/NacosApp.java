@@ -18,7 +18,6 @@ package org.laokou.nacos;
 
 import com.alibaba.nacos.NacosServerBasicApplication;
 import com.alibaba.nacos.NacosServerWebApplication;
-import com.alibaba.nacos.airegistry.NacosAiRegistry;
 import com.alibaba.nacos.common.packagescan.util.ResourceUtils;
 import com.alibaba.nacos.console.NacosConsole;
 import com.alibaba.nacos.core.listener.startup.NacosStartUp;
@@ -73,14 +72,6 @@ class NacosApp {
 			.contains(deploymentType)) {
 			NacosStartUpManager.start(NacosStartUp.WEB_START_UP_PHASE);
 			new SpringApplicationBuilder(NacosServerWebApplication.class).parent(coreContext)
-				.banner(new ResourceBanner(new ClassPathResource("banner.txt")))
-				.run(args);
-		}
-
-		// AI Registry【Nacos Server with AI Registry】
-		if (List.of(DeploymentType.MERGED, DeploymentType.SERVER_WITH_MCP).contains(deploymentType)) {
-			NacosStartUpManager.start(NacosStartUp.AI_REGISTRY_START_UP_PHASE);
-			new SpringApplicationBuilder(NacosAiRegistry.class).parent(coreContext)
 				.banner(new ResourceBanner(new ClassPathResource("banner.txt")))
 				.run(args);
 		}
