@@ -27,7 +27,11 @@ public enum OperateType {
 
 	SAVE("save", "保存会话"),
 
-	MODIFY("modify", "修改会话");
+	MODIFY("modify", "修改会话"),
+
+	OPEN("open", "开启会话"),
+
+	CLOSE("close", "关闭会话");
 
 	private final String code;
 

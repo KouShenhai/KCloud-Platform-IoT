@@ -48,6 +48,14 @@ public final class SessionConvertor {
 		return sessionDO;
 	}
 
+	public static SessionDO toDataObj(SessionA sessionA) {
+		SessionDO sessionDO = new SessionDO();
+		SessionE sessionE = sessionA.getSessionE();
+		sessionDO.setId(sessionA.getId());
+		sessionDO.setState(sessionE.getState());
+		return sessionDO;
+	}
+
 	public static List<SessionCO> toClientObjects(List<SessionDO> list) {
 		return list.stream().map(SessionConvertor::toClientObject).toList();
 	}
@@ -75,6 +83,14 @@ public final class SessionConvertor {
 			.username(SessionCO.getUsername())
 			.password(SessionCO.getPassword())
 			.state(SessionCO.getState())
+			.build();
+	}
+
+	public static SessionE toEntity(Long id, Integer state) {
+		return SessionDomainFactory.createSessionE()
+			.toBuilder()
+			.id(id)
+			.state(state)
 			.build();
 	}
 

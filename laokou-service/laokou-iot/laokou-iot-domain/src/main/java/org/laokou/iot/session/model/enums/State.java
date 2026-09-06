@@ -15,23 +15,27 @@
  *
  */
 
-package org.laokou.iot.session.gateway;
+package org.laokou.iot.session.model.enums;
 
-import org.laokou.iot.session.model.SessionA;
+import lombok.Getter;
 
 /**
- * Network connection gateway.
- *
  * @author laokou
  */
-public interface SessionGateway {
+@Getter
+public enum State {
 
-	void createSession(SessionA sessionA);
+	OPEN(1, "开启"),
 
-	void updateSession(SessionA sessionA);
+	CLOSE(0, "关闭");
 
-	void deleteSession(Long[] ids);
+	private final int code;
 
-	void updateSessionState(SessionA sessionA);
+	private final String desc;
+
+	State(int code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
 
 }

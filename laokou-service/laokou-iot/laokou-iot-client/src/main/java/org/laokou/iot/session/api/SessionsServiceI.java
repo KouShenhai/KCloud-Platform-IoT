@@ -19,8 +19,10 @@ package org.laokou.iot.session.api;
 
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.iot.session.dto.SessionCloseCmd;
 import org.laokou.iot.session.dto.SessionGetQry;
 import org.laokou.iot.session.dto.SessionModifyCmd;
+import org.laokou.iot.session.dto.SessionOpenCmd;
 import org.laokou.iot.session.dto.SessionPageQry;
 import org.laokou.iot.session.dto.SessionRemoveCmd;
 import org.laokou.iot.session.dto.SessionSaveCmd;
@@ -38,6 +40,10 @@ public interface SessionsServiceI {
 	void modifySession(SessionModifyCmd cmd);
 
 	void removeSession(SessionRemoveCmd cmd);
+
+	void openSession(SessionOpenCmd cmd);
+
+	void closeSession(SessionCloseCmd cmd);
 
 	Result<Page<SessionCO>> pageSession(SessionPageQry qry);
 

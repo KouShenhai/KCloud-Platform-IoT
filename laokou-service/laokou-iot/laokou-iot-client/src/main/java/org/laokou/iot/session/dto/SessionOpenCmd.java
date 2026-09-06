@@ -15,23 +15,23 @@
  *
  */
 
-package org.laokou.iot.session.gateway;
+package org.laokou.iot.session.dto;
 
-import org.laokou.iot.session.model.SessionA;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
- * Network connection gateway.
+ * 开启会话命令.
  *
  * @author laokou
  */
-public interface SessionGateway {
+@Getter
+@RequiredArgsConstructor
+public class SessionOpenCmd extends CommonCommand {
 
-	void createSession(SessionA sessionA);
+	private final Long id;
 
-	void updateSession(SessionA sessionA);
-
-	void deleteSession(Long[] ids);
-
-	void updateSessionState(SessionA sessionA);
+	private final Integer state;
 
 }

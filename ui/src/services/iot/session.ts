@@ -75,3 +75,17 @@ export async function pageSession(
 		...(options || {}),
 	});
 }
+
+/** 开启会话 PUT /api/v1/sessions/{id}/open */
+export async function openSession(id: number) {
+	return request<API.Result>(`/api-proxy/iot/api/v1/sessions/${id}/open`, {
+		method: 'PUT',
+	});
+}
+
+/** 关闭会话 PUT /api/v1/sessions/{id}/close */
+export async function closeSession(id: number) {
+	return request<API.Result>(`/api-proxy/iot/api/v1/sessions/${id}/close`, {
+		method: 'PUT',
+	});
+}

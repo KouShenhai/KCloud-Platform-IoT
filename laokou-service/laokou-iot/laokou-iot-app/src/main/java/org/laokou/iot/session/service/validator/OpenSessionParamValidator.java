@@ -15,38 +15,33 @@
  *
  */
 
-package org.laokou.iot.session.ability;
+package org.laokou.iot.session.service.validator;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.iot.session.gateway.SessionGateway;
+import org.laokou.common.i18n.util.ParamValidator;
+import org.laokou.iot.session.gatewayimpl.database.SessionMapper;
 import org.laokou.iot.session.model.SessionA;
+import org.laokou.iot.session.model.enums.State;
+import org.laokou.iot.session.model.validator.SessionParamValidator;
 import org.springframework.stereotype.Component;
 
 /**
- * 会话领域服务.
- *
  * @author laokou
  */
-@Component
+@Component("openSessionParamValidator")
 @RequiredArgsConstructor
-public class SessionDomainService {
+public class OpenSessionParamValidator implements SessionParamValidator {
 
-	private final SessionGateway sessionGateway;
+	private final SessionMapper sessionMapper;
 
-	public void createSession(SessionA sessionA) {
-		sessionGateway.createSession(sessionA);
-	}
-
-	public void updateSession(SessionA sessionA) {
-		sessionGateway.updateSession(sessionA);
-	}
-
-	public void updateSessionState(SessionA sessionA) {
-		sessionGateway.updateSessionState(sessionA);
-	}
-
-	public void deleteSession(Long[] ids) {
-		sessionGateway.deleteSession(ids);
+	@Override
+	public void validateSession(SessionA sessionA) {
+		ParamValidator.validate(sessionA.getValidateName(),
+			// 校验会话ID
+			org.laokou.iot.session.service.validator.SessionParamValidator.validateId(sessionA),
+			// 校验会话状态
+			org.laokou.iot.session.service.validator.SessionParamValidator.validateState(sessionA, sessionMapper, State.OPEN, "会话已开启")
+		);
 	}
 
 }
