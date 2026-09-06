@@ -50,13 +50,6 @@
       <optional>true</optional>
       <version>${project.version}</version>
     </dependency>
-    <dependency>
-      <groupId>net.java.dev.jna</groupId>
-      <artifactId>jna</artifactId>
-      <version>5.19.1</version>
-      <scope>test</scope>
-      <optional>true</optional>
-    </dependency>
   </dependencies>
 
   <build>

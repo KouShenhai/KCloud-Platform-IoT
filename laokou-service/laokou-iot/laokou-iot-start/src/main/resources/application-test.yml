@@ -32,6 +32,10 @@ spring:
       connection-timeout: 1m
       request-timeout: 5m
       read-timeout: 1m
+    listener:
+      observation-enabled: true
+    template:
+      observations-enabled: true
   datasource:
     dynamic:
       # 默认false,建议线上关闭

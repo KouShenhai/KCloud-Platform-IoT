@@ -20,15 +20,22 @@ package org.laokou.iot.session.command;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.config.SystemSettingsProperties;
+import org.laokou.common.fory.config.ForyFactory;
+import org.laokou.common.fory.constant.ForyConstants;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.laokou.common.tenant.constant.DSConstants;
+import org.laokou.iot.common.util.PulsarUtils;
 import org.laokou.iot.session.ability.SessionDomainService;
 import org.laokou.iot.session.convertor.SessionConvertor;
 import org.laokou.iot.session.dto.SessionOpenCmd;
+import org.laokou.iot.session.dto.event.OpenSessionEvent;
 import org.laokou.iot.session.factory.SessionDomainFactory;
 import org.laokou.iot.session.model.SessionA;
+import org.laokou.iot.session.model.enums.MqTopic;
 import org.laokou.iot.session.model.enums.OperateType;
 import org.laokou.iot.session.model.enums.State;
+import org.springframework.pulsar.core.PulsarTemplate;
 import org.springframework.stereotype.Component;
 
 /**
@@ -45,6 +52,14 @@ public class SessionOpenCmdExe {
 
 	private final TransactionalUtils transactionalUtils;
 
+	private final PulsarTemplate<Object> pulsarTemplate;
+
+	private final SystemSettingsProperties systemSettingsProperties;
+
+	static {
+		ForyFactory.INSTANCE.register(OpenSessionEvent.class, ForyConstants.C_249);
+	}
+
 	public void executeVoid(SessionOpenCmd cmd) {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.IOT);
@@ -52,6 +67,10 @@ public class SessionOpenCmdExe {
 				.create(SessionConvertor.toEntity(cmd.getId(), State.OPEN), OperateType.OPEN);
 			// 校验参数
 			sessionA.checkSessionParam();
+			pulsarTemplate.send(
+					PulsarUtils.getSessionTopic(systemSettingsProperties.getTenantCode(),
+							MqTopic.OPEN_SESSION_MESSAGE_TOPIC),
+					ForyFactory.INSTANCE.serialize(new OpenSessionEvent(cmd.getId())));
 			transactionalUtils.executeInTransaction(() -> sessionDomainService.updateSessionState(sessionA));
 		}
 		catch (Exception ex) {
