@@ -29,6 +29,7 @@ import org.springframework.boot.webflux.error.ErrorWebExceptionHandler;
 import org.springframework.cloud.gateway.support.NotFoundException;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ServerWebExchange;
@@ -48,46 +49,49 @@ public class ExceptionHandler implements ErrorWebExceptionHandler, Ordered {
 	/**
 	 * 处理异常并响应.
 	 * @param exchange 服务器网络交换机
-	 * @param e 异常
+	 * @param ex 异常
 	 * @return 响应结果
 	 */
 	@NonNull
 	@Override
-	public Mono<@NonNull Void> handle(@NonNull ServerWebExchange exchange, @NonNull Throwable e) {
+	public Mono<@NonNull Void> handle(@NonNull ServerWebExchange exchange, @NonNull Throwable ex) {
 		// 国际化
 		return Mono.deferContextual(context -> {
 			Locale locale = ReactiveI18nUtils.getLocale(context);
-			if (e instanceof NotFoundException) {
-				log.error("服务正在维护，请联系管理员，错误信息：{}", e.getMessage());
+			if (ex instanceof NotFoundException notFoundException) {
+				log.error("状态码：{}，服务正在维护，请联系管理员，错误信息：{}", notFoundException.getStatusCode(), ex.getMessage(), ex);
 				return ReactiveResponseUtils.responseOk(exchange, Result.fail(StatusCode.SERVICE_UNAVAILABLE,
 						MessageUtils.getMessage(StatusCode.SERVICE_UNAVAILABLE, locale)));
 			}
-			if (e instanceof ResponseStatusException responseStatusException) {
-				int statusCode = responseStatusException.getStatusCode().value();
-				if (statusCode == HttpStatus.NOT_FOUND.value()) {
-					log.error("状态码：{}，无法找到请求URL为{}的资源，错误信息：{}", statusCode,
-							exchange.getRequest().getPath().pathWithinApplication().value(), e.getMessage());
-					return ReactiveResponseUtils.responseOk(exchange,
-							Result.fail(StatusCode.NOT_FOUND, MessageUtils.getMessage(StatusCode.NOT_FOUND, locale)));
-				}
-				else if (statusCode == HttpStatus.BAD_REQUEST.value()) {
-					log.error("状态码：{}，错误请求，错误信息：{}", statusCode, e.getMessage());
-					return ReactiveResponseUtils.responseOk(exchange, Result.fail(StatusCode.BAD_REQUEST,
-							MessageUtils.getMessage(StatusCode.BAD_REQUEST, locale)));
-				}
-				else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
-					log.error("状态码：{}，服务器内部错误，无法完成请求，错误信息：{}", statusCode, e.getMessage());
-					return ReactiveResponseUtils.responseOk(exchange, Result.fail(StatusCode.INTERNAL_SERVER_ERROR,
-							MessageUtils.getMessage(StatusCode.INTERNAL_SERVER_ERROR, locale)));
+			if (ex instanceof ResponseStatusException responseStatusException) {
+				HttpStatusCode statusCode = responseStatusException.getStatusCode();
+				switch (statusCode) {
+					case HttpStatus.NOT_FOUND -> {
+						log.error("状态码：{}，无法找到请求URL为{}的资源，错误信息：{}", statusCode.value(),
+								exchange.getRequest().getPath().pathWithinApplication().value(), ex.getMessage(), ex);
+						return ReactiveResponseUtils.responseOk(exchange, Result.fail(StatusCode.NOT_FOUND,
+								MessageUtils.getMessage(StatusCode.NOT_FOUND, locale)));
+					}
+					case HttpStatus.BAD_REQUEST -> {
+						log.error("状态码：{}，错误请求，错误信息：{}", statusCode.value(), ex.getMessage(), ex);
+						return ReactiveResponseUtils.responseOk(exchange, Result.fail(StatusCode.BAD_REQUEST,
+								MessageUtils.getMessage(StatusCode.BAD_REQUEST, locale)));
+					}
+					case HttpStatus.INTERNAL_SERVER_ERROR -> {
+						log.error("状态码：{}，服务器内部错误，无法完成请求，错误信息：{}", statusCode.value(), ex.getMessage(), ex);
+						return ReactiveResponseUtils.responseOk(exchange, Result.fail(StatusCode.INTERNAL_SERVER_ERROR,
+								MessageUtils.getMessage(StatusCode.INTERNAL_SERVER_ERROR, locale)));
+					}
+					default -> throw new IllegalStateException("Unexpected value: " + statusCode.value());
 				}
 			}
-			if (BlockException.isBlockException(e)) {
+			if (BlockException.isBlockException(ex)) {
 				// 思路来源于SentinelGatewayBlockExceptionHandler
-				log.error("请求太频繁，错误信息：{}", e.getMessage());
+				log.error("请求太频繁，错误信息：{}", ex.getMessage(), ex);
 				return ReactiveResponseUtils.responseOk(exchange, Result.fail(StatusCode.TOO_MANY_REQUESTS,
 						MessageUtils.getMessage(StatusCode.TOO_MANY_REQUESTS, locale)));
 			}
-			log.error("错误网关，错误信息：{}", e.getMessage());
+			log.error("网关请求处理异常，错误信息：{}", ex.getMessage(), ex);
 			return ReactiveResponseUtils.responseOk(exchange,
 					Result.fail(StatusCode.BAD_GATEWAY, MessageUtils.getMessage(StatusCode.BAD_GATEWAY, locale)));
 		}).contextWrite(ReactiveI18nUtils.set(exchange));
