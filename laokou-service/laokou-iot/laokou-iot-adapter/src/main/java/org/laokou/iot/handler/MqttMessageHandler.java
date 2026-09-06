@@ -34,7 +34,7 @@ import java.util.List;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class MqttMessageHandler {
+public final class MqttMessageHandler {
 
 	@PulsarListeners(value = { @PulsarListener(
 			topics = "persistent://${system-settings.tenant-code}/gateway/iot-up-report-properties-gateway-message",

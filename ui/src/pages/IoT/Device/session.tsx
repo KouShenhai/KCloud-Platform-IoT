@@ -1,6 +1,8 @@
 import { SessionDrawer } from '@/pages/IoT/Device/SessionDrawer';
 import {
+	closeSession,
 	getSessionById,
+	openSession,
 	pageSession,
 	removeSession,
 } from '@/services/iot/session';
@@ -37,6 +39,22 @@ export default () => {
 	const [readOnly, setReadOnly] = useState(false);
 	const [ids, setIds] = useState<any>([]);
 	const [requestId, setRequestId] = useState('');
+	const [pendingIds, setPendingIds] = useState<number[]>([]);
+
+	const changeSessionState = async (record: TableColumns) => {
+		setPendingIds((ids) => [...ids, record.id]);
+		try {
+			const res = await (record.state === 0
+				? openSession(record.id)
+				: closeSession(record.id));
+			if (res.code === 'OK') {
+				message.success(record.state === 0 ? '开启成功' : '关闭成功');
+				actionRef.current?.reload();
+			}
+		} finally {
+			setPendingIds((ids) => ids.filter((id) => id !== record.id));
+		}
+	};
 
 	const getPageQueryParam = (params: any) => {
 		return {
@@ -121,13 +139,13 @@ export default () => {
 					},
 					{
 						value: 1,
-						label: '打开',
+						label: '开启',
 					},
 				],
 			},
 			render: (_, record) => {
 				return record.state === 1 ? (
-					<span style={{ color: 'green' }}>打开</span>
+					<span style={{ color: 'green' }}>开启</span>
 				) : (
 					<span style={{ color: 'red' }}>关闭</span>
 				);
@@ -167,6 +185,18 @@ export default () => {
 			valueType: 'option',
 			key: 'option',
 			render: (_, record) => [
+				access.canSessionModify &&
+					(record.state === 0 || record.state === 1) && (
+						<Button
+							key={record.state === 0 ? 'open' : 'close'}
+							type="link"
+							size="small"
+							loading={pendingIds.includes(record.id)}
+							onClick={() => changeSessionState(record)}
+						>
+							{record.state === 0 ? '开启' : '关闭'}
+						</Button>
+					),
 				access.canSessionGetDetail && (
 					<a
 						key="get"
@@ -210,7 +240,9 @@ export default () => {
 									removeSession([record?.id]).then((res) => {
 										if (res.code === 'OK') {
 											message
-												.success(t('toast.deleteSuccess'))
+												.success(
+													t('toast.deleteSuccess'),
+												)
 												.then();
 											// @ts-ignore
 											actionRef?.current?.reload();
@@ -247,13 +279,15 @@ export default () => {
 				actionRef={actionRef}
 				columns={columns}
 				request={async (params) => {
-					return pageSession(getPageQueryParam(params)).then((res) => {
-						return Promise.resolve({
-							data: res?.data?.records,
-							total: parseInt(res?.data?.total || 0),
-							success: true,
-						});
-					});
+					return pageSession(getPageQueryParam(params)).then(
+						(res) => {
+							return Promise.resolve({
+								data: res?.data?.records,
+								total: parseInt(res?.data?.total || 0),
+								success: true,
+							});
+						},
+					);
 				}}
 				rowKey="id"
 				pagination={{
@@ -299,7 +333,9 @@ export default () => {
 							icon={<DeleteOutlined />}
 							onClick={() => {
 								if (ids.length === 0) {
-									message.warning(t('toast.selectAtLeastOne')).then();
+									message
+										.warning(t('toast.selectAtLeastOne'))
+										.then();
 									return;
 								}
 								Modal.confirm({
@@ -311,7 +347,11 @@ export default () => {
 										removeSession(ids).then((res) => {
 											if (res.code === 'OK') {
 												message
-													.success(t('toast.deleteSuccess'))
+													.success(
+														t(
+															'toast.deleteSuccess',
+														),
+													)
 													.then();
 												// @ts-ignore
 												actionRef?.current?.reload();

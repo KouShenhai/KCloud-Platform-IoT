@@ -41,6 +41,10 @@ public class SessionDomainService {
 		sessionGateway.updateSession(sessionA);
 	}
 
+	public void updateSessionState(SessionA sessionA) {
+		sessionGateway.updateSessionState(sessionA);
+	}
+
 	public void deleteSession(Long[] ids) {
 		sessionGateway.deleteSession(ids);
 	}

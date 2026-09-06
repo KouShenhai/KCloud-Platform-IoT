@@ -32,4 +32,6 @@ public interface SessionGateway {
 
 	void deleteSession(Long[] ids);
 
+	void updateSessionState(SessionA sessionA);
+
 }

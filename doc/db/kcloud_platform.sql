@@ -460,6 +460,8 @@ INSERT INTO "public"."sys_menu" VALUES (126, 1, 1, '2026-07-04 11:37:38.934619',
 INSERT INTO "public"."sys_menu" VALUES (127, 1, 1, '2026-07-04 11:37:59.70739', '2026-07-04 11:37:59.724989', 0, 0, 1, 1, 23, 'iot:source:modify', 1, '修改数据源', NULL, NULL, 3, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (128, 1, 1, '2026-07-04 11:38:17.37193', '2026-07-04 11:38:17.412162', 0, 0, 1, 1, 23, 'iot:source:save', 1, '保存数据源', NULL, NULL, 4, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (129, 1, 1, '2026-07-04 11:38:38.21395', '2026-07-04 11:38:38.232894', 0, 0, 1, 1, 23, 'iot:source:page', 1, '分页查询数据源列表', NULL, NULL, 5, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (130, 1, 1, '2026-09-06 12:05:24.695481', '2026-09-06 12:05:24.744469', 0, 0, 1, 1, 108, 'iot:session:open', 1, '开启会话', NULL, NULL, 6, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (131, 1, 1, '2026-09-06 12:05:51.850279', '2026-09-06 12:05:51.865292', 0, 0, 1, 1, 108, 'iot:session:close', 1, '关闭会话', NULL, NULL, 7, 0, 0, NULL);
 
 -- ----------------------------
 -- -------------菜单套餐------------

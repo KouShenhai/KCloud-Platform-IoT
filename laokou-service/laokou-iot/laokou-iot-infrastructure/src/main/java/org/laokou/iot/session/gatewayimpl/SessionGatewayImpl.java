@@ -67,6 +67,13 @@ public class SessionGatewayImpl implements SessionGateway {
 		sessionMapper.deleteByIds(Arrays.asList(ids));
 	}
 
+	@Override
+	public void updateSessionState(SessionA sessionA) {
+		SessionDO sessionDO = SessionConvertor.toDataObj(sessionA);
+		sessionDO.setVersion(sessionMapper.selectVersion(sessionA.getId()));
+		sessionMapper.updateById(sessionDO);
+	}
+
 	private void verifyConnection(SessionA sessionA) {
 		SessionE sessionE = sessionA.getSessionE();
 		MqttClientOptions options = new MqttClientOptions();

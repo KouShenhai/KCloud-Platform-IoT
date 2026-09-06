@@ -57,19 +57,27 @@ public class SessionA extends AggregateRoot implements ValidateName {
 
 	private final transient SessionParamValidator modifySessionParamValidator;
 
+	private final transient SessionParamValidator openSessionParamValidator;
+
+	private final transient SessionParamValidator closeSessionParamValidator;
+
 	public SessionA(IdGenerator idGenerator,
 			@Qualifier("saveSessionParamValidator") SessionParamValidator saveSessionParamValidator,
-			@Qualifier("modifySessionParamValidator") SessionParamValidator modifySessionParamValidator) {
+			@Qualifier("modifySessionParamValidator") SessionParamValidator modifySessionParamValidator,
+			@Qualifier("openSessionParamValidator") SessionParamValidator openSessionParamValidator,
+			@Qualifier("closeSessionParamValidator") SessionParamValidator closeSessionParamValidator) {
 		this.idGenerator = idGenerator;
 		this.saveSessionParamValidator = saveSessionParamValidator;
 		this.modifySessionParamValidator = modifySessionParamValidator;
+		this.openSessionParamValidator = openSessionParamValidator;
+		this.closeSessionParamValidator = closeSessionParamValidator;
 	}
 
-	public SessionA create(SessionE sessionE) {
+	public SessionA create(SessionE sessionE, OperateType operateType) {
 		this.sessionE = sessionE;
 		Long primaryKey = this.sessionE.getId();
 		super.createTime = InstantUtils.now();
-		this.operateType = ObjectUtils.isNotNull(primaryKey) ? OperateType.MODIFY : OperateType.SAVE;
+		this.operateType = operateType;
 		super.id = ObjectUtils.isNotNull(primaryKey) ? primaryKey : idGenerator.getId();
 		return this;
 	}
@@ -78,6 +86,8 @@ public class SessionA extends AggregateRoot implements ValidateName {
 		switch (operateType) {
 			case SAVE -> saveSessionParamValidator.validateSession(this);
 			case MODIFY -> modifySessionParamValidator.validateSession(this);
+			case OPEN -> openSessionParamValidator.validateSession(this);
+			case CLOSE -> closeSessionParamValidator.validateSession(this);
 			default -> throw new UnsupportedOperationException("Unsupported operation type");
 		}
 	}

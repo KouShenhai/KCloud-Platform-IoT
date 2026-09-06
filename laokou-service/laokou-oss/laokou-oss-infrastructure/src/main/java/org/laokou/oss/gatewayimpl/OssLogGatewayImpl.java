@@ -44,7 +44,7 @@ public class OssLogGatewayImpl implements OssLogGateway {
 	private final OssLogMapper ossLogMapper;
 
 	@Override
-	@DataCache(name = NameConstants.OSS_LOG, key = "#md5", operateType = OperateType.GET)
+	@DataCache(name = NameConstants.OSS_LOGS, key = "#md5", operateType = OperateType.GET)
 	public OssUploadV getOssInfoByMd5(String md5) {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);

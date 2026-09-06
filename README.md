@@ -77,6 +77,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级单体架构和微�
 |  ![物模型页面](doc/image/project/9.png)   | ![产品类别页面](doc/image/project/10.png)  |
 | ![国际化菜单页面](doc/image/project/11.png) | ![API文档页面](doc/image/project/12.png) |
 | ![数据字典页面](doc/image/project/13.png)  |  ![数据源页面](doc/image/project/14.png)  |
+|  ![会话页面](doc/image/project/15.png)   |                                      |
 
 ### 🌿 服务器配置
 
@@ -135,6 +136,8 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级单体架构和微�
 
 🚀 数据源管理【查询/保存/修改/删除/查看】
 
+🚀 会话管理【查询/保存/修改/删除/查看/开启/关闭】
+
 ### 💡 系统架构
 
 <div style="text-align: center"><img src="doc/image/老寇IoT云平台架构图.png" alt="架构图"/></div>
@@ -153,23 +156,23 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级单体架构和微�
 |     Spring Data      |   2026.0.1   |
 |     Spring Cloud     |   2025.1.3   |
 | Spring Cloud Alibaba |  2025.1.0.0  |
-|  Spring Boot Admin   |    4.1.0     |
-|       Jackson        |    3.2.0     |
-|     Mybatis Plus     |    3.5.16    |
-|        Nacos         |    3.2.2     |
-|         gRPC         |    1.77.0    |
-|        Redis         |    8.0.1     |
+|  Spring Boot Admin   |    4.1.2     |
+|       Jackson        |    3.2.2     |
+|     Mybatis Plus     |    3.5.17    |
+|        Nacos         |    3.2.4     |
+|         gRPC         |    1.84.0    |
+|        Redis         |    8.10.1    |
 |    Elasticsearch     |    9.5.3     |
-|        Netty         | 4.2.15.Final |
-|        Kafka         |    4.0.4     |
-|        Pulsar        |    4.1.2     |
-|         EMQX         |    5.4.1     |
+|        Netty         | 4.2.17.Final |
+|        Kafka         |    4.3.1     |
+|        Pulsar        |    4.2.4     |
+|         EMQX         |    5.8.8     |
 |     TimescaleDB      |      17      |
-|       TDengine       |   3.3.5.0    |
-|        Flyway        |    12.9.0    |
+|       TDengine       |   3.3.6.13   |
+|        Flyway        |    13.5.0    |
 |      Snail Job       |    1.8.0     |
 |       Sentinel       |    1.8.9     |
-|         Fory         |    1.7.0     |
+|         Fory         |    1.7.1     |
 
 #### 🍺 相关技术
 

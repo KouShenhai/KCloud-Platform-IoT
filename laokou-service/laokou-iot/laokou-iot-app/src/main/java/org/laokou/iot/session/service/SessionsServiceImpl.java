@@ -21,13 +21,17 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.iot.session.api.SessionsServiceI;
+import org.laokou.iot.session.command.SessionCloseCmdExe;
 import org.laokou.iot.session.command.SessionModifyCmdExe;
+import org.laokou.iot.session.command.SessionOpenCmdExe;
 import org.laokou.iot.session.command.SessionRemoveCmdExe;
 import org.laokou.iot.session.command.SessionSaveCmdExe;
 import org.laokou.iot.session.command.query.SessionGetQryExe;
 import org.laokou.iot.session.command.query.SessionPageQryExe;
+import org.laokou.iot.session.dto.SessionCloseCmd;
 import org.laokou.iot.session.dto.SessionGetQry;
 import org.laokou.iot.session.dto.SessionModifyCmd;
+import org.laokou.iot.session.dto.SessionOpenCmd;
 import org.laokou.iot.session.dto.SessionPageQry;
 import org.laokou.iot.session.dto.SessionRemoveCmd;
 import org.laokou.iot.session.dto.SessionSaveCmd;
@@ -52,6 +56,20 @@ public class SessionsServiceImpl implements SessionsServiceI {
 	private final SessionPageQryExe sessionPageQryExe;
 
 	private final SessionGetQryExe sessionGetQryExe;
+
+	private final SessionOpenCmdExe sessionOpenCmdExe;
+
+	private final SessionCloseCmdExe sessionCloseCmdExe;
+
+	@Override
+	public void openSession(SessionOpenCmd cmd) {
+		sessionOpenCmdExe.executeVoid(cmd);
+	}
+
+	@Override
+	public void closeSession(SessionCloseCmd cmd) {
+		sessionCloseCmdExe.executeVoid(cmd);
+	}
 
 	@Override
 	public void saveSession(SessionSaveCmd cmd) {

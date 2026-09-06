@@ -90,7 +90,7 @@ COMMENT ON COLUMN "public"."iot_session"."host" IS '会话主机';
 COMMENT ON COLUMN "public"."iot_session"."port" IS '会话端口';
 COMMENT ON COLUMN "public"."iot_session"."username" IS '会话用户名';
 COMMENT ON COLUMN "public"."iot_session"."password" IS '会话密码';
-COMMENT ON COLUMN "public"."iot_session"."state" IS '会话状态，0关闭，1打开';
+COMMENT ON COLUMN "public"."iot_session"."state" IS '会话状态，0关闭，1开启';
 COMMENT ON TABLE "public"."iot_session" IS '会话';
 ALTER TABLE "public"."iot_session" ADD CONSTRAINT "iot_session_pkey" PRIMARY KEY ("id");
 
@@ -100,6 +100,8 @@ CREATE unique INDEX "iot_session_host_port_idx" ON "public"."iot_session" USING 
 	"tenant_id"
 ) where del_flag = 0;
 COMMENT ON INDEX "public"."iot_session_host_port_idx" IS '主机_端口_租户ID_唯一索引';
+
+INSERT INTO "public"."iot_session" VALUES (1, 1, 1, '2026-09-05 21:03:09.072226', '2026-09-06 15:21:51.864419', 0, 105, 1, 1, 'MQTT边缘网关会话', '127.0.0.1', 41883, 'root', 'laokou123', 0);
 
 DROP TABLE IF EXISTS "public"."iot_thing_model";
 CREATE TABLE "public"."iot_thing_model" (

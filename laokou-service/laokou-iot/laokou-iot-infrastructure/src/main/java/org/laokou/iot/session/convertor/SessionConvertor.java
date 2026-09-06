@@ -17,11 +17,14 @@
 
 package org.laokou.iot.session.convertor;
 
+import org.laokou.common.core.config.SystemSettingsProperties;
+import org.laokou.iot.common.config.mqtt.MqttClientConfig;
 import org.laokou.iot.session.dto.clientobject.SessionCO;
 import org.laokou.iot.session.factory.SessionDomainFactory;
 import org.laokou.iot.session.gatewayimpl.database.dataobject.SessionDO;
 import org.laokou.iot.session.model.SessionA;
 import org.laokou.iot.session.model.entity.SessionE;
+import org.laokou.iot.session.model.enums.State;
 
 import java.util.List;
 
@@ -35,6 +38,18 @@ public final class SessionConvertor {
 	private SessionConvertor() {
 	}
 
+	public static MqttClientConfig toConfig(SessionCO sessionCO, SystemSettingsProperties systemSettingsProperties) {
+		MqttClientConfig config = new MqttClientConfig();
+		config.setSnowflakeId(sessionCO.getId());
+		config.setHost(sessionCO.getHost());
+		config.setPort(sessionCO.getPort());
+		config.setUsername(sessionCO.getUsername());
+		config.setPassword(sessionCO.getPassword());
+		config.setClientId(systemSettingsProperties.getClientId());
+		config.setTenantCode(systemSettingsProperties.getTenantCode());
+		return config;
+	}
+
 	public static SessionDO toDataObject(SessionA sessionA) {
 		SessionDO sessionDO = new SessionDO();
 		SessionE sessionE = sessionA.getSessionE();
@@ -44,6 +59,14 @@ public final class SessionConvertor {
 		sessionDO.setPort(sessionE.getPort());
 		sessionDO.setUsername(sessionE.getUsername());
 		sessionDO.setPassword(sessionE.getPassword());
+		sessionDO.setState(sessionE.getState());
+		return sessionDO;
+	}
+
+	public static SessionDO toDataObj(SessionA sessionA) {
+		SessionDO sessionDO = new SessionDO();
+		SessionE sessionE = sessionA.getSessionE();
+		sessionDO.setId(sessionA.getId());
 		sessionDO.setState(sessionE.getState());
 		return sessionDO;
 	}
@@ -76,6 +99,10 @@ public final class SessionConvertor {
 			.password(SessionCO.getPassword())
 			.state(SessionCO.getState())
 			.build();
+	}
+
+	public static SessionE toEntity(Long id, State state) {
+		return SessionDomainFactory.createSessionE().toBuilder().id(id).state(state.getCode()).build();
 	}
 
 }

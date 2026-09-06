@@ -31,6 +31,7 @@ module.exports = {
 						text: '更新日志', link: '/pages/82bd54/', items: [
 							{text: '4.0.1版本更新日志【总览】', link: '/pages/82bd54/'},
 							{text: '4.0.2版本更新日志', link: '/pages/82bd56/'},
+							{text: '4.0.3版本更新日志', link: '/pages/e117e0/'},
 						]
 					},
 					{

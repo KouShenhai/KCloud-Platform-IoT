@@ -39,7 +39,7 @@ public class OssLogGatewayImpl implements OssLogGateway {
 	private final OssLogMapper ossLogMapper;
 
 	@Override
-	@DataCache(name = NameConstants.OSS_RESOURCE, key = "#id", operateType = OperateType.GET)
+	@DataCache(name = NameConstants.OSS_RESOURCES, key = "#id", operateType = OperateType.GET)
 	public String getOssUrl(Long id) {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.DOMAIN);

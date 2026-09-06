@@ -521,4 +521,8 @@ public final class ForyConstants {
 
 	public static final int C_248 = 248;
 
+	public static final int C_249 = 249;
+
+	public static final int C_250 = 250;
+
 }

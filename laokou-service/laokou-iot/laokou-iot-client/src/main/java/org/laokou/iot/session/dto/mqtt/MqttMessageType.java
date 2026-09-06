@@ -30,29 +30,6 @@ import java.util.Map;
 @Getter
 public enum MqttMessageType {
 
-	DOWN_VERTX_EVENT_GATEWAY_MESSAGE("down_vertx_event_gateway_message", "VERTX事件【下行】") {
-		@Override
-		public String getTopic() {
-			return "";
-		}
-
-		@Override
-		public String getMqTopic() {
-			return "iot-vertx-event-gateway-message";
-		}
-
-		@Override
-		MqttQos getMqttQos() {
-			return MqttQos.AT_LEAST_ONCE;
-		}
-
-		@Override
-		public int getNumPartitions() {
-			return 2;
-		}
-
-	},
-
 	UP_CLIENT_CONNECTED_GATEWAY_MESSAGE("up_client_connected_gateway_message", "MQTT客户端建立连接【上行】") {
 		@Override
 		public String getTopic() {

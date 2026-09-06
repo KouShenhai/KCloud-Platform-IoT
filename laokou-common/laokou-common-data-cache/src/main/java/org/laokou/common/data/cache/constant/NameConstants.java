@@ -73,17 +73,22 @@ public final class NameConstants {
 	/**
 	 * 用户菜单缓存配置.
 	 */
-	public static final String USER_MENU = "user_menu";
+	public static final String USER_MENUS = "user_menus";
 
 	/**
 	 * OSS日志缓存配置.
 	 */
-	public static final String OSS_LOG = "oss_log";
+	public static final String OSS_LOGS = "oss_logs";
 
 	/**
 	 * OSS资源缓存配置.
 	 */
-	public static final String OSS_RESOURCE = "oss_resource";
+	public static final String OSS_RESOURCES = "oss_resources";
+
+	/**
+	 * 会话缓存配置.
+	 */
+	public static final String SESSIONS = "sessions";
 
 	private NameConstants() {
 	}

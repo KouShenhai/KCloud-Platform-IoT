@@ -28,6 +28,7 @@ import org.laokou.iot.session.convertor.SessionConvertor;
 import org.laokou.iot.session.dto.SessionModifyCmd;
 import org.laokou.iot.session.factory.SessionDomainFactory;
 import org.laokou.iot.session.model.SessionA;
+import org.laokou.iot.session.model.enums.OperateType;
 import org.springframework.stereotype.Component;
 
 /**
@@ -48,7 +49,8 @@ public class SessionModifyCmdExe {
 	public void executeVoid(SessionModifyCmd cmd) {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.IOT);
-			SessionA sessionA = SessionDomainFactory.createSessionA().create(SessionConvertor.toEntity(cmd.getCo()));
+			SessionA sessionA = SessionDomainFactory.createSessionA()
+				.create(SessionConvertor.toEntity(cmd.getCo()), OperateType.MODIFY);
 			// 校验参数
 			sessionA.checkSessionParam();
 			transactionalUtils.executeInTransaction(() -> sessionDomainService.updateSession(sessionA));

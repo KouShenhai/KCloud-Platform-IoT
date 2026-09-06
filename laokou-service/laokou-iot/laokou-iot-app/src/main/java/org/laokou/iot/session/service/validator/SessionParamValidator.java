@@ -26,6 +26,7 @@ import org.laokou.iot.session.gatewayimpl.database.SessionMapper;
 import org.laokou.iot.session.gatewayimpl.database.dataobject.SessionDO;
 import org.laokou.iot.session.model.SessionA;
 import org.laokou.iot.session.model.entity.SessionE;
+import org.laokou.iot.session.model.enums.State;
 import org.springframework.util.StringUtils;
 
 /**
@@ -62,6 +63,16 @@ final class SessionParamValidator {
 	static ParamValidator.Validate validatePassword(SessionA sessionA) {
 		if (!StringUtils.hasText(sessionA.getSessionE().getPassword())) {
 			return ParamValidator.invalidate("会话密码不能为空");
+		}
+		return ParamValidator.validate();
+	}
+
+	static ParamValidator.Validate validateState(SessionA sessionA, SessionMapper sessionMapper, State s, String msg) {
+		Integer state = sessionA.getSessionE().getState();
+		if (ObjectUtils.equals(state, s.getCode()) && sessionMapper.selectCount(Wrappers.lambdaQuery(SessionDO.class)
+			.eq(SessionDO::getId, sessionA.getId())
+			.eq(SessionDO::getState, s.getCode())) > 0) {
+			return ParamValidator.invalidate(msg);
 		}
 		return ParamValidator.validate();
 	}
