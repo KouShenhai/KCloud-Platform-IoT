@@ -21,6 +21,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.laokou.admin.dept.gatewayimpl.database.DeptMapper;
 import org.laokou.admin.dept.gatewayimpl.database.dataobject.DeptDO;
 import org.laokou.admin.dept.model.DeptA;
+import org.laokou.admin.dept.model.entity.DeptE;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.ParamValidator;
 import org.laokou.common.i18n.util.StringExtUtils;
@@ -34,12 +35,16 @@ final class DeptParamValidator {
 	}
 
 	static ParamValidator.Validate validateParentId(DeptA deptA, DeptMapper deptMapper) {
-		Long pid = deptA.getDeptE().getPid();
+		DeptE deptE = deptA.getDeptE();
+		Long pid = deptE.getPid();
 		if (ObjectUtils.isNull(pid)) {
 			return ParamValidator.invalidate("部门父级ID不能为空");
 		}
+		if (ObjectUtils.equals(pid, deptE.getId())) {
+			return ParamValidator.invalidate("请重新选择部门父级ID");
+		}
 		if (deptMapper
-			.selectCount(Wrappers.lambdaQuery(DeptDO.class).eq(DeptDO::getPid, pid).eq(DeptDO::getLevel, 9)) > 0) {
+			.selectCount(Wrappers.lambdaQuery(DeptDO.class).eq(DeptDO::getId, pid).eq(DeptDO::getLevel, 9)) > 0) {
 			return ParamValidator.invalidate("部门层级不允许超过9层");
 		}
 		return ParamValidator.validate();

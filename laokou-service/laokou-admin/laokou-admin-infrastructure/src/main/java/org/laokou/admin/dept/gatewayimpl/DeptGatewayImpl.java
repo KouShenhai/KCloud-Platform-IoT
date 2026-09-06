@@ -149,50 +149,22 @@ public class DeptGatewayImpl implements DeptGateway {
 	}
 
 	private void rebuildLevel(DeptDO deptDO, DeptDO parentDeptDO) {
-		clearLevels(deptDO);
 		int level = parentDeptDO.getLevel() + 1;
 		deptDO.setLevel(level);
-		copyParentLevels(deptDO, parentDeptDO, level);
+		copyParentLevels(deptDO, parentDeptDO);
 		setCurrentLevel(deptDO, level);
 	}
 
-	private void clearLevels(DeptDO deptDO) {
-		deptDO.setLevel1(null);
-		deptDO.setLevel2(null);
-		deptDO.setLevel3(null);
-		deptDO.setLevel4(null);
-		deptDO.setLevel5(null);
-		deptDO.setLevel6(null);
-		deptDO.setLevel7(null);
-		deptDO.setLevel8(null);
-		deptDO.setLevel9(null);
-	}
-
-	private void copyParentLevels(DeptDO deptDO, DeptDO parentDeptDO, int level) {
-		if (level > 1) {
-			deptDO.setLevel1(parentDeptDO.getLevel1());
-		}
-		if (level > 2) {
-			deptDO.setLevel2(parentDeptDO.getLevel2());
-		}
-		if (level > 3) {
-			deptDO.setLevel3(parentDeptDO.getLevel3());
-		}
-		if (level > 4) {
-			deptDO.setLevel4(parentDeptDO.getLevel4());
-		}
-		if (level > 5) {
-			deptDO.setLevel5(parentDeptDO.getLevel5());
-		}
-		if (level > 6) {
-			deptDO.setLevel6(parentDeptDO.getLevel6());
-		}
-		if (level > 7) {
-			deptDO.setLevel7(parentDeptDO.getLevel7());
-		}
-		if (level > 8) {
-			deptDO.setLevel8(parentDeptDO.getLevel8());
-		}
+	private void copyParentLevels(DeptDO deptDO, DeptDO parentDeptDO) {
+		deptDO.setLevel1(parentDeptDO.getLevel1());
+		deptDO.setLevel2(parentDeptDO.getLevel2());
+		deptDO.setLevel3(parentDeptDO.getLevel3());
+		deptDO.setLevel4(parentDeptDO.getLevel4());
+		deptDO.setLevel5(parentDeptDO.getLevel5());
+		deptDO.setLevel6(parentDeptDO.getLevel6());
+		deptDO.setLevel7(parentDeptDO.getLevel7());
+		deptDO.setLevel8(parentDeptDO.getLevel8());
+		deptDO.setLevel9(parentDeptDO.getLevel9());
 	}
 
 	private void setCurrentLevel(DeptDO deptDO, int level) {
