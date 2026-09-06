@@ -87,11 +87,7 @@ public final class SessionConvertor {
 	}
 
 	public static SessionE toEntity(Long id, Integer state) {
-		return SessionDomainFactory.createSessionE()
-			.toBuilder()
-			.id(id)
-			.state(state)
-			.build();
+		return SessionDomainFactory.createSessionE().toBuilder().id(id).state(state).build();
 	}
 
 }

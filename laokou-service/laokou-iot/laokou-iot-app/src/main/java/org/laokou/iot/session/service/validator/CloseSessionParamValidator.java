@@ -37,10 +37,11 @@ public class CloseSessionParamValidator implements SessionParamValidator {
 	@Override
 	public void validateSession(SessionA sessionA) {
 		ParamValidator.validate(sessionA.getValidateName(),
-			// 校验会话ID
-			org.laokou.iot.session.service.validator.SessionParamValidator.validateId(sessionA),
-			// 校验会话状态
-			org.laokou.iot.session.service.validator.SessionParamValidator.validateState(sessionA, sessionMapper, State.CLOSE, "会话已关闭"));
+				// 校验会话ID
+				org.laokou.iot.session.service.validator.SessionParamValidator.validateId(sessionA),
+				// 校验会话状态
+				org.laokou.iot.session.service.validator.SessionParamValidator.validateState(sessionA, sessionMapper,
+						State.CLOSE, "会话已关闭"));
 	}
 
 }

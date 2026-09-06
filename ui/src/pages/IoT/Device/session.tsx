@@ -48,7 +48,7 @@ export default () => {
 				? openSession(record.id)
 				: closeSession(record.id));
 			if (res.code === 'OK') {
-				message.success(record.state === 0 ? '打开成功' : '关闭成功');
+				message.success(record.state === 0 ? '开启成功' : '关闭成功');
 				actionRef.current?.reload();
 			}
 		} finally {
@@ -139,13 +139,13 @@ export default () => {
 					},
 					{
 						value: 1,
-						label: '打开',
+						label: '开启',
 					},
 				],
 			},
 			render: (_, record) => {
 				return record.state === 1 ? (
-					<span style={{ color: 'green' }}>打开</span>
+					<span style={{ color: 'green' }}>开启</span>
 				) : (
 					<span style={{ color: 'red' }}>关闭</span>
 				);
@@ -194,7 +194,7 @@ export default () => {
 							loading={pendingIds.includes(record.id)}
 							onClick={() => changeSessionState(record)}
 						>
-							{record.state === 0 ? '打开' : '关闭'}
+							{record.state === 0 ? '开启' : '关闭'}
 						</Button>
 					),
 				access.canSessionGetDetail && (

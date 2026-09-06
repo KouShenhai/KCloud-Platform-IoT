@@ -69,7 +69,9 @@ final class SessionParamValidator {
 
 	static ParamValidator.Validate validateState(SessionA sessionA, SessionMapper sessionMapper, State s, String msg) {
 		Integer state = sessionA.getSessionE().getState();
-		if (ObjectUtils.equals(state, s.getCode()) && sessionMapper.selectCount(Wrappers.lambdaQuery(SessionDO.class).eq(SessionDO::getId, sessionA.getId()).eq(SessionDO::getState, s.getCode())) > 0) {
+		if (ObjectUtils.equals(state, s.getCode()) && sessionMapper.selectCount(Wrappers.lambdaQuery(SessionDO.class)
+			.eq(SessionDO::getId, sessionA.getId())
+			.eq(SessionDO::getState, s.getCode())) > 0) {
 			return ParamValidator.invalidate(msg);
 		}
 		return ParamValidator.validate();

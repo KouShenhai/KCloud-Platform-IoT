@@ -47,7 +47,8 @@ public class SessionCloseCmdExe {
 	public void executeVoid(SessionCloseCmd cmd) {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.IOT);
-			SessionA sessionA = SessionDomainFactory.createSessionA().create(SessionConvertor.toEntity(cmd.getId(), cmd.getState()), OperateType.CLOSE);
+			SessionA sessionA = SessionDomainFactory.createSessionA()
+				.create(SessionConvertor.toEntity(cmd.getId(), cmd.getState()), OperateType.CLOSE);
 			// 校验参数
 			sessionA.checkSessionParam();
 			transactionalUtils.executeInTransaction(() -> sessionDomainService.updateSessionState(sessionA));

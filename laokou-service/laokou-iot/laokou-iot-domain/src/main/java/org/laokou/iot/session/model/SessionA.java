@@ -62,10 +62,10 @@ public class SessionA extends AggregateRoot implements ValidateName {
 	private final transient SessionParamValidator closeSessionParamValidator;
 
 	public SessionA(IdGenerator idGenerator,
-	                @Qualifier("saveSessionParamValidator")   SessionParamValidator saveSessionParamValidator,
-	                @Qualifier("modifySessionParamValidator") SessionParamValidator modifySessionParamValidator,
-	                @Qualifier("openSessionParamValidator")   SessionParamValidator openSessionParamValidator,
-	                @Qualifier("closeSessionParamValidator")  SessionParamValidator closeSessionParamValidator) {
+			@Qualifier("saveSessionParamValidator") SessionParamValidator saveSessionParamValidator,
+			@Qualifier("modifySessionParamValidator") SessionParamValidator modifySessionParamValidator,
+			@Qualifier("openSessionParamValidator") SessionParamValidator openSessionParamValidator,
+			@Qualifier("closeSessionParamValidator") SessionParamValidator closeSessionParamValidator) {
 		this.idGenerator = idGenerator;
 		this.saveSessionParamValidator = saveSessionParamValidator;
 		this.modifySessionParamValidator = modifySessionParamValidator;

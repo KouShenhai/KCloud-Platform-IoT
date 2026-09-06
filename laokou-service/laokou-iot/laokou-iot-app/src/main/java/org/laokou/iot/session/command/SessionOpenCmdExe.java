@@ -47,7 +47,8 @@ public class SessionOpenCmdExe {
 	public void executeVoid(SessionOpenCmd cmd) {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.IOT);
-			SessionA sessionA = SessionDomainFactory.createSessionA().create(SessionConvertor.toEntity(cmd.getId(), cmd.getState()), OperateType.OPEN);
+			SessionA sessionA = SessionDomainFactory.createSessionA()
+				.create(SessionConvertor.toEntity(cmd.getId(), cmd.getState()), OperateType.OPEN);
 			// 校验参数
 			sessionA.checkSessionParam();
 			transactionalUtils.executeInTransaction(() -> sessionDomainService.updateSessionState(sessionA));
