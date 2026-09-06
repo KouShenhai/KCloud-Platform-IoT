@@ -145,7 +145,7 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 	private DeploymentOptions buildOptions() {
 		DeploymentOptions deploymentOptions = new DeploymentOptions();
 		deploymentOptions.setThreadingModel(ThreadingModel.VIRTUAL_THREAD);
-		deploymentOptions.setInstances(8);
+		deploymentOptions.setInstances(1);
 		return deploymentOptions;
 	}
 

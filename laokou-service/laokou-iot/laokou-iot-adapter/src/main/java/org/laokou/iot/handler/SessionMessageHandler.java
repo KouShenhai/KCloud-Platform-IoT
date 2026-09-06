@@ -17,15 +17,23 @@
 
 package org.laokou.iot.handler;
 
+import io.vertx.core.Vertx;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.pulsar.client.api.SubscriptionType;
 import org.apache.pulsar.common.schema.SchemaType;
+import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.common.fory.config.ForyFactory;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.iot.common.config.mqtt.MessageHandler;
+import org.laokou.iot.common.config.mqtt.VertxServiceManager;
+import org.laokou.iot.common.config.pulsar.handler.ConnectionStateHandler;
+import org.laokou.iot.session.api.SessionsServiceI;
+import org.laokou.iot.session.convertor.SessionConvertor;
+import org.laokou.iot.session.dto.SessionGetQry;
+import org.laokou.iot.session.dto.clientobject.SessionCO;
 import org.laokou.iot.session.dto.event.CloseSessionEvent;
 import org.laokou.iot.session.dto.event.OpenSessionEvent;
-import org.laokou.iot.session.gatewayimpl.database.SessionMapper;
-import org.laokou.iot.session.gatewayimpl.database.dataobject.SessionDO;
 import org.laokou.iot.session.model.enums.MqTopic;
 import org.springframework.pulsar.annotation.PulsarListener;
 import org.springframework.pulsar.annotation.PulsarListeners;
@@ -42,28 +50,41 @@ import java.util.List;
 @RequiredArgsConstructor
 public final class SessionMessageHandler {
 
-	private final SessionMapper sessionMapper;
+	private final Vertx vertx;
+
+	private final SessionsServiceI sessionsServiceI;
+
+	private final SystemSettingsProperties systemSettingsProperties;
+
+	private final ConnectionStateHandler connectionStateHandler;
+
+	private final List<MessageHandler> messageHandlers;
 
 	@PulsarListeners(value = { @PulsarListener(
 			topics = "persistent://${system-settings.tenant-code}/session/" + MqTopic.OPEN_SESSION_MESSAGE_TOPIC,
-			subscriptionName = "${system-settings.tenant-code}-${system-settings.client-id}", schemaType = SchemaType.BYTES,
-			batch = true, ackMode = AckMode.BATCH, subscriptionType = SubscriptionType.Exclusive) })
+			subscriptionName = "${system-settings.tenant-code}-${system-settings.client-id}",
+			schemaType = SchemaType.BYTES, batch = true, ackMode = AckMode.BATCH,
+			subscriptionType = SubscriptionType.Exclusive) })
 	public void handleOpenSessionMessage(List<byte[]> messages) {
 		for (byte[] message : messages) {
 			if (ForyFactory.INSTANCE.deserialize(message) instanceof OpenSessionEvent(Long id)) {
-				SessionDO sessionDO = sessionMapper.selectById(id);
+				Result<SessionCO> result = sessionsServiceI.getSessionById(new SessionGetQry(id));
+				VertxServiceManager.deployVertxMqttClientService(vertx,
+						SessionConvertor.toConfig(result.getData(), systemSettingsProperties), connectionStateHandler,
+						messageHandlers);
 			}
 		}
 	}
 
 	@PulsarListeners(value = { @PulsarListener(
 			topics = "persistent://${system-settings.tenant-code}/session/" + MqTopic.CLOSE_SESSION_MESSAGE_TOPIC,
-			subscriptionName = "${system-settings.tenant-code}-${system-settings.client-id}", schemaType = SchemaType.BYTES,
-			batch = true, ackMode = AckMode.BATCH, subscriptionType = SubscriptionType.Exclusive) })
+			subscriptionName = "${system-settings.tenant-code}-${system-settings.client-id}",
+			schemaType = SchemaType.BYTES, batch = true, ackMode = AckMode.BATCH,
+			subscriptionType = SubscriptionType.Exclusive) })
 	public void handleCloseSessionMessage(List<byte[]> messages) {
 		for (byte[] message : messages) {
 			if (ForyFactory.INSTANCE.deserialize(message) instanceof CloseSessionEvent(Long id)) {
-				SessionDO sessionDO = sessionMapper.selectById(id);
+				VertxServiceManager.unDeployVertxMqttClientService(id);
 			}
 		}
 	}

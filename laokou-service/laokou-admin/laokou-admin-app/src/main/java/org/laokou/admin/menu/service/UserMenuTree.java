@@ -42,7 +42,7 @@ public class UserMenuTree implements MenuTree {
 	private final MenuMapper menuMapper;
 
 	@Override
-	@DataCache(name = NameConstants.USER_MENU, key = "#userId", operateType = OperateType.GET)
+	@DataCache(name = NameConstants.USER_MENUS, key = "#userId", operateType = OperateType.GET)
 	public MenuTreeCO build(MenuTreeListQry qry, Long userId) {
 		List<MenuDO> list;
 		if (UserUtils.isSuperAdmin()) {

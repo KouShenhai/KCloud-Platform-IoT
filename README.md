@@ -77,6 +77,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级单体架构和微�
 |  ![物模型页面](doc/image/project/9.png)   | ![产品类别页面](doc/image/project/10.png)  |
 | ![国际化菜单页面](doc/image/project/11.png) | ![API文档页面](doc/image/project/12.png) |
 | ![数据字典页面](doc/image/project/13.png)  |  ![数据源页面](doc/image/project/14.png)  |
+|  ![会话页面](doc/image/project/15.png)   |                                      |
 
 ### 🌿 服务器配置
 
@@ -134,6 +135,8 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级单体架构和微�
 🚀 数据字典管理【查询/保存/修改/删除/查看】
 
 🚀 数据源管理【查询/保存/修改/删除/查看】
+
+🚀 会话管理【查询/保存/修改/删除/查看/开启/关闭】
 
 ### 💡 系统架构
 
