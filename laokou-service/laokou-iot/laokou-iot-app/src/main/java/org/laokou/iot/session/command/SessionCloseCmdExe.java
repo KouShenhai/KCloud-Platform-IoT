@@ -57,7 +57,7 @@ public class SessionCloseCmdExe {
 	private final SystemSettingsProperties systemSettingsProperties;
 
 	static {
-		ForyFactory.INSTANCE.register(CloseSessionEvent.class, ForyConstants.C_250);
+		ForyFactory.INSTANCE.register(org.laokou.iot.session.dto.event.CloseSessionEvent.class, ForyConstants.C_250);
 	}
 
 	public void executeVoid(SessionCloseCmd cmd) {
