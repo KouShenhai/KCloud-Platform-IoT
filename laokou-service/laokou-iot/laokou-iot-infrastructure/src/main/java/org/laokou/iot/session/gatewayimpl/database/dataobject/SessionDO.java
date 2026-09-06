@@ -20,6 +20,7 @@ package org.laokou.iot.session.gatewayimpl.database.dataobject;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
+import org.laokou.common.tenant.constant.DSConstants;
 
 /**
  * Session data object.
@@ -27,7 +28,7 @@ import org.laokou.common.mybatisplus.mapper.BaseDO;
  * @author laokou
  */
 @Data
-@TableName("iot_session")
+@TableName(DSConstants.IoT.SESSION_TABLE)
 public class SessionDO extends BaseDO {
 
 	private String name;
