@@ -34,7 +34,6 @@ import org.laokou.iot.session.dto.SessionPageQry;
 import org.laokou.iot.session.dto.SessionRemoveCmd;
 import org.laokou.iot.session.dto.SessionSaveCmd;
 import org.laokou.iot.session.dto.clientobject.SessionCO;
-import org.laokou.iot.session.model.enums.State;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -79,7 +78,7 @@ public class SessionsController {
 	@OperateLog(module = "会话管理", operation = "开启会话")
 	@Operation(summary = "开启会话", description = "开启会话")
 	public void openSession(@PathVariable Long id) {
-		sessionsServiceI.openSession(new SessionOpenCmd(id, State.OPEN.getCode()));
+		sessionsServiceI.openSession(new SessionOpenCmd(id));
 	}
 
 	@PutMapping("/v1/sessions/{id}/close")
@@ -87,7 +86,7 @@ public class SessionsController {
 	@OperateLog(module = "会话管理", operation = "关闭会话")
 	@Operation(summary = "关闭会话", description = "关闭会话")
 	public void closeSession(@PathVariable Long id) {
-		sessionsServiceI.closeSession(new SessionCloseCmd(id, State.CLOSE.getCode()));
+		sessionsServiceI.closeSession(new SessionCloseCmd(id));
 	}
 
 	@DeleteMapping("/v1/sessions")

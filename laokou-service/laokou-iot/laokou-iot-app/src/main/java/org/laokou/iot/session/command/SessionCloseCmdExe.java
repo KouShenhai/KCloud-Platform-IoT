@@ -28,6 +28,7 @@ import org.laokou.iot.session.dto.SessionCloseCmd;
 import org.laokou.iot.session.factory.SessionDomainFactory;
 import org.laokou.iot.session.model.SessionA;
 import org.laokou.iot.session.model.enums.OperateType;
+import org.laokou.iot.session.model.enums.State;
 import org.springframework.stereotype.Component;
 
 /**
@@ -48,7 +49,7 @@ public class SessionCloseCmdExe {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.IOT);
 			SessionA sessionA = SessionDomainFactory.createSessionA()
-				.create(SessionConvertor.toEntity(cmd.getId(), cmd.getState()), OperateType.CLOSE);
+				.create(SessionConvertor.toEntity(cmd.getId(), State.CLOSE), OperateType.CLOSE);
 			// 校验参数
 			sessionA.checkSessionParam();
 			transactionalUtils.executeInTransaction(() -> sessionDomainService.updateSessionState(sessionA));

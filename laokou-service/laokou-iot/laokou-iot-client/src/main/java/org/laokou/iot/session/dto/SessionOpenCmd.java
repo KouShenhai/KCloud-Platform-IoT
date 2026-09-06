@@ -32,6 +32,4 @@ public class SessionOpenCmd extends CommonCommand {
 
 	private final Long id;
 
-	private final Integer state;
-
 }

@@ -22,6 +22,7 @@ import org.laokou.iot.session.factory.SessionDomainFactory;
 import org.laokou.iot.session.gatewayimpl.database.dataobject.SessionDO;
 import org.laokou.iot.session.model.SessionA;
 import org.laokou.iot.session.model.entity.SessionE;
+import org.laokou.iot.session.model.enums.State;
 
 import java.util.List;
 
@@ -86,8 +87,8 @@ public final class SessionConvertor {
 			.build();
 	}
 
-	public static SessionE toEntity(Long id, Integer state) {
-		return SessionDomainFactory.createSessionE().toBuilder().id(id).state(state).build();
+	public static SessionE toEntity(Long id, State state) {
+		return SessionDomainFactory.createSessionE().toBuilder().id(id).state(state.getCode()).build();
 	}
 
 }
