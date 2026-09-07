@@ -65,6 +65,7 @@ module.exports = {
 							{text: 'Ubuntu22.04安装Mysql9.6.0', link: '/pages/a0baf10/'},
 							{text: 'ARM64疑难杂症', link: '/pages/d9a8f5/'},
 							{text: 'FRP内网穿透', link: '/pages/01381a/'},
+							{text: 'Docker安装RabbitMQ', link: '/pages/4ae44e/'},
 						]
 					},
 					{
