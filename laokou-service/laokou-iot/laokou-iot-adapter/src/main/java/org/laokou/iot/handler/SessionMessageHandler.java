@@ -62,9 +62,8 @@ public final class SessionMessageHandler {
 
 	@PulsarListeners(value = { @PulsarListener(
 			topics = "persistent://${system-settings.tenant-code}/session/" + MqTopic.OPEN_SESSION_MESSAGE_TOPIC,
-			subscriptionName = "${system-settings.tenant-code}-${system-settings.client-id}",
-			schemaType = SchemaType.BYTES, batch = true, ackMode = AckMode.BATCH,
-			subscriptionType = SubscriptionType.Exclusive) })
+			subscriptionName = "${system-settings.tenant-code}-${random.uuid}", schemaType = SchemaType.BYTES,
+			batch = true, ackMode = AckMode.BATCH, subscriptionType = SubscriptionType.Exclusive) })
 	public void handleOpenSessionMessage(List<byte[]> messages) {
 		for (byte[] message : messages) {
 			if (ForyFactory.INSTANCE.deserialize(message) instanceof OpenSessionEvent(Long id)) {
@@ -78,9 +77,8 @@ public final class SessionMessageHandler {
 
 	@PulsarListeners(value = { @PulsarListener(
 			topics = "persistent://${system-settings.tenant-code}/session/" + MqTopic.CLOSE_SESSION_MESSAGE_TOPIC,
-			subscriptionName = "${system-settings.tenant-code}-${system-settings.client-id}",
-			schemaType = SchemaType.BYTES, batch = true, ackMode = AckMode.BATCH,
-			subscriptionType = SubscriptionType.Exclusive) })
+			subscriptionName = "${system-settings.tenant-code}-${random.uuid}", schemaType = SchemaType.BYTES,
+			batch = true, ackMode = AckMode.BATCH, subscriptionType = SubscriptionType.Exclusive) })
 	public void handleCloseSessionMessage(List<byte[]> messages) {
 		for (byte[] message : messages) {
 			if (ForyFactory.INSTANCE.deserialize(message) instanceof CloseSessionEvent(Long id)) {

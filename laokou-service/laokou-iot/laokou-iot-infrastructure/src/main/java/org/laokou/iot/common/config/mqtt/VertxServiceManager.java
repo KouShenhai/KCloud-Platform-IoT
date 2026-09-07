@@ -34,7 +34,7 @@ public final class VertxServiceManager {
 			ConnectionStateHandler connectionStateHandler, List<MessageHandler> messageHandlers) {
 		VERTX_SERVICE_MAP
 			.computeIfAbsent(config.getSnowflakeId(),
-					_ -> new VertxMqttClient(vertx, config, connectionStateHandler, messageHandlers))
+					_ -> new VertxMqttClientService(vertx, config, connectionStateHandler, messageHandlers))
 			.deploy();
 	}
 

@@ -40,8 +40,6 @@ public final class MqttClientConfig {
 
 	private int port = 1883;
 
-	private String clientId;
-
 	private int receiveBufferSize = 50 * 1024 * 1024;
 
 	/**
@@ -74,11 +72,11 @@ public final class MqttClientConfig {
 
 	private int soLinger = 0;
 
-	private long sessionExpireInterval = 30;
+	private long sessionExpireInterval = 0;
 
 	private boolean tcpFastOpen = true;
 
-	private boolean cleanSession = false;
+	private boolean cleanSession = true;
 
 	private byte version = MqttVersion.MQTT_5.protocolLevel();
 

@@ -47,8 +47,6 @@ public class SystemSettingsProperties implements Serializable {
 
 	private Mode appMode = Mode.MICROSERVICE;
 
-	private String clientId;
-
 	@Getter
 	enum Mode {
 

@@ -45,7 +45,6 @@ public final class SessionConvertor {
 		config.setPort(sessionCO.getPort());
 		config.setUsername(sessionCO.getUsername());
 		config.setPassword(sessionCO.getPassword());
-		config.setClientId(systemSettingsProperties.getClientId());
 		config.setTenantCode(systemSettingsProperties.getTenantCode());
 		return config;
 	}

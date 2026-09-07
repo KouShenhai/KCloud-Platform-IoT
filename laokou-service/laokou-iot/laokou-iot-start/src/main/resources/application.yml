@@ -140,4 +140,3 @@ logging:
 system-settings:
   app-mode: microservice
   tenant-code: laokouyun
-  client-id: ${CLIENT_ID:KPLFM-10000-10000}
