@@ -17,21 +17,18 @@
 
 package org.laokou.iot.common.config.mqtt;
 
-import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
-import io.vertx.core.Vertx;
 
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author laokou
  */
-public abstract class AbstractVertxService<T> extends AbstractVerticle implements VertxService {
+public abstract class AbstractVertxService implements VertxService {
 
 	protected final AtomicReference<Future<String>> deploymentIdFuture;
 
-	protected AbstractVertxService(Vertx vertx) {
-		super.vertx = vertx;
+	protected AbstractVertxService() {
 		deploymentIdFuture = new AtomicReference<>();
 	}
 
@@ -47,24 +44,8 @@ public abstract class AbstractVertxService<T> extends AbstractVerticle implement
 		doUndeploy();
 	}
 
-	@Override
-	public void start() {
-		// 启动服务
-		doOpen();
-	}
-
-	@Override
-	public void stop() {
-		// 停止服务
-		doClose();
-	}
-
 	public abstract Future<String> doDeploy();
 
 	public abstract void doUndeploy();
-
-	public abstract void doOpen();
-
-	public abstract void doClose();
 
 }

@@ -18,11 +18,10 @@
 package org.laokou.iot.common.config.mqtt;
 
 import io.netty.handler.codec.mqtt.MqttConnectReturnCode;
+import io.vertx.core.AbstractVerticle;
 import io.vertx.core.AsyncResult;
-import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Future;
 import io.vertx.core.Promise;
-import io.vertx.core.ThreadingModel;
 import io.vertx.core.Vertx;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.mqtt.MqttClient;
@@ -34,6 +33,7 @@ import io.vertx.mqtt.messages.MqttSubAckMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.util.MapUtils;
+import org.laokou.common.core.util.UUIDGenerator;
 import org.laokou.iot.common.config.pulsar.handler.ConnectionStateHandler;
 import org.laokou.iot.common.config.pulsar.handler.State;
 import org.laokou.iot.common.util.VertxMqttUtils;
@@ -52,7 +52,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * @author laokou
  */
 @Slf4j
-public final class VertxMqttClient extends AbstractVertxService<Void> {
+final class VertxMqttClient extends AbstractVerticle {
 
 	private final MqttClientConfig config;
 
@@ -85,9 +85,11 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 
 	private final ConnectionStateHandler connectionStateHandler;
 
+	private final String clientId;
+
 	public VertxMqttClient(Vertx vertx, MqttClientConfig config, ConnectionStateHandler connectionStateHandler,
 			List<MessageHandler> messageHandlers) {
-		super(vertx);
+		this.vertx = vertx;
 		this.config = config;
 		this.timerInactive = -1;
 		this.timerCreating = -2;
@@ -102,26 +104,11 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 		this.inFlight = new AtomicInteger(0);
 		this.maxInFlight = 8192;
 		this.connectionStateHandler.handle(State.INIT);
+		this.clientId = UUIDGenerator.generateUUID();
 	}
 
 	@Override
-	public Future<String> doDeploy() {
-		return vertx.deployVerticle(this, buildOptions())
-			.onSuccess(deploymentId -> log.info("【Vertx-MQTT-Client】 => MQTT服务部署成功，deploymentId：{}，客户端ID：{}",
-					deploymentId, config.getClientId()))
-			.onFailure(ex -> log.error("【Vertx-MQTT-Client】 => MQTT服务部署失败，客户端ID：{}", config.getClientId(), ex));
-	}
-
-	@Override
-	public void doUndeploy() {
-		deploymentIdFuture.get()
-			.compose(vertx::undeploy)
-			.onSuccess(ignored -> log.info("【Vertx-MQTT-Client】 => MQTT服务卸载成功，客户端ID：{}", config.getClientId()))
-			.onFailure(ex -> log.error("【Vertx-MQTT-Client】 => MQTT服务卸载失败，客户端ID：{}", config.getClientId(), ex));
-	}
-
-	@Override
-	public void doOpen() {
+	public void start() {
 		if (stopping.get()) {
 			Future.failedFuture("MQTT客户端正在关闭");
 			return;
@@ -131,7 +118,7 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 	}
 
 	@Override
-	public void doClose() {
+	public void stop() {
 		if (!stopping.compareAndSet(false, true)) {
 			return;
 		}
@@ -142,22 +129,15 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 		waitForConnect.compose(_ -> disconnect());
 	}
 
-	private DeploymentOptions buildOptions() {
-		DeploymentOptions deploymentOptions = new DeploymentOptions();
-		deploymentOptions.setThreadingModel(ThreadingModel.VIRTUAL_THREAD);
-		deploymentOptions.setInstances(1);
-		return deploymentOptions;
-	}
-
 	private Future<Void> disconnect() {
 		if (!mqttClient.isConnected()) {
 			return Future.succeededFuture();
 		}
 		return mqttClient.disconnect().onSuccess(_ -> {
 			this.connectionStateHandler.handle(State.DISCONNECTED);
-			log.debug("【Vertx-MQTT-Client】 => MQTT断开连接成功，客户端ID：{}", config.getClientId());
+			log.info("【Vertx-MQTT-Client】 => MQTT断开连接成功，客户端ID：{}", clientId);
 		}).recover(ex -> {
-			log.warn("【Vertx-MQTT-Client】 => MQTT断开连接失败，客户端ID：{}，错误信息：{}", config.getClientId(), ex.getMessage(), ex);
+			log.warn("【Vertx-MQTT-Client】 => MQTT断开连接失败，客户端ID：{}，错误信息：{}", clientId, ex.getMessage(), ex);
 			return Future.succeededFuture();
 		});
 	}
@@ -227,7 +207,7 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 					"Broker拒绝订阅，packetId=" + message.messageId() + "，reasonCodes=" + grantedQos));
 			return;
 		}
-		log.info("【Vertx-MQTT-Client】 => MQTT订阅确认成功，packetId：{}，客户端ID：{}", message.messageId(), config.getClientId());
+		log.info("【Vertx-MQTT-Client】 => MQTT订阅确认成功，packetId：{}，客户端ID：{}", message.messageId(), clientId);
 	}
 
 	// -------------------------------------------------------------------------
@@ -250,7 +230,7 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 			Future<Void> handler = findHandler(message);
 			if (handler != null) {
 				handler.onFailure(ex -> log.error("【Vertx-MQTT-Client】 => MQTT消息处理失败，主题：{}，客户端ID：{}，错误信息：{}",
-						message.topicName(), config.getClientId(), ex.getMessage(), ex));
+						message.topicName(), clientId, ex.getMessage(), ex));
 			}
 		}
 		catch (Throwable ex) {
@@ -276,22 +256,22 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 				}
 			}
 			catch (Throwable ex) {
-				log.error("【Vertx-MQTT-Client】 => MQTT消息处理器异常，主题：{}，客户端ID：{}，错误信息：{}", message.topicName(),
-						config.getClientId(), ex.getMessage(), ex);
+				log.error("【Vertx-MQTT-Client】 => MQTT消息处理器异常，主题：{}，客户端ID：{}，错误信息：{}", message.topicName(), clientId,
+						ex.getMessage(), ex);
 				throw ex;
 			}
 		}
-		log.warn("【Vertx-MQTT-Client】 => MQTT消息没有匹配的处理器，主题：{}，客户端ID：{}", message.topicName(), config.getClientId());
+		log.warn("【Vertx-MQTT-Client】 => MQTT消息没有匹配的处理器，主题：{}，客户端ID：{}", message.topicName(), clientId);
 		return null;
 	}
 
 	private void requestReconnect(Throwable cause) {
 		if (stopping.get()) {
-			log.debug("【Vertx-MQTT-Client】 => MQTT客户端正在停止，不允许重连，客户端ID：{}", config.getClientId());
+			log.debug("【Vertx-MQTT-Client】 => MQTT客户端正在停止，不允许重连，客户端ID：{}", clientId);
 			return;
 		}
 
-		log.error("【Vertx-MQTT-Client】 => MQTT连接异常，准备重连，客户端ID：{}，错误信息：{}", config.getClientId(),
+		log.error("【Vertx-MQTT-Client】 => MQTT连接异常，准备重连，客户端ID：{}，错误信息：{}", clientId,
 				cause == null ? "未知异常" : cause.getMessage(), cause);
 
 		if (!mqttClient.isConnected()) {
@@ -300,17 +280,17 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 		}
 		// 已经有线程正在执行断开操作，等待该操作完成后统一安排重连。
 		if (!disconnecting.compareAndSet(false, true)) {
-			log.debug("【Vertx-MQTT-Client】 => MQTT客户端正在断开，忽略重复重连请求，客户端ID：{}", config.getClientId());
+			log.debug("【Vertx-MQTT-Client】 => MQTT客户端正在断开，忽略重复重连请求，客户端ID：{}", clientId);
 			return;
 		}
 		mqttClient.disconnect().onComplete(ar -> {
 			try {
 				if (stopping.get()) {
-					log.debug("【Vertx-MQTT-Client】 => MQTT客户端正在停止，不允许重连，客户端ID：{}", config.getClientId());
+					log.debug("【Vertx-MQTT-Client】 => MQTT客户端正在停止，不允许重连，客户端ID：{}", clientId);
 					return;
 				}
 				if (ar.failed()) {
-					log.warn("【Vertx-MQTT-Client】 => MQTT客户端断开失败，仍将安排重连，客户端ID：{}，错误信息：{}", config.getClientId(),
+					log.warn("【Vertx-MQTT-Client】 => MQTT客户端断开失败，仍将安排重连，客户端ID：{}，错误信息：{}", clientId,
 							ar.cause() == null ? "未知异常" : ar.cause().getMessage(), ar.cause());
 				}
 				scheduleReconnect();
@@ -341,7 +321,7 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 
 		long delay = getDelay();
 		log.warn("【Vertx-MQTT-Client】 => MQTT将在{}ms后执行第{}次重连，客户端ID：{}", delay, reconnectAttempt.incrementAndGet(),
-				config.getClientId());
+				clientId);
 
 		try {
 			long timerId = vertx.setTimer(delay, this::handleReconnectTimer);
@@ -349,8 +329,7 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 		}
 		catch (Throwable ex) {
 			reconnectTimerId.compareAndSet(timerCreating, timerInactive);
-			log.error("【Vertx-MQTT-Client】 => MQTT重连定时器创建失败，客户端ID：{}，错误信息：{}", config.getClientId(), ex.getMessage(),
-					ex);
+			log.error("【Vertx-MQTT-Client】 => MQTT重连定时器创建失败，客户端ID：{}，错误信息：{}", clientId, ex.getMessage(), ex);
 		}
 	}
 
@@ -365,11 +344,10 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 		if (!reconnectTimerId.compareAndSet(timerId, timerInactive)) {
 			return;
 		}
-		connectAndSubscribe()
-			.onSuccess(ignored -> log.info("【Vertx-MQTT-Client】 => MQTT重连成功，客户端ID：{}", config.getClientId()))
+		connectAndSubscribe().onSuccess(ignored -> log.info("【Vertx-MQTT-Client】 => MQTT重连成功，客户端ID：{}", clientId))
 			.onFailure(throwable -> {
-				log.error("【Vertx-MQTT-Client】 => MQTT第{}次重连失败，客户端ID：{}，错误信息：{}", reconnectAttempt.get(),
-						config.getClientId(), throwable.getMessage(), throwable);
+				log.error("【Vertx-MQTT-Client】 => MQTT第{}次重连失败，客户端ID：{}，错误信息：{}", reconnectAttempt.get(), clientId,
+						throwable.getMessage(), throwable);
 				scheduleReconnect();
 			});
 	}
@@ -421,15 +399,14 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 		if (result.succeeded() && !stopping.get()) {
 			reconnectAttempt.set(0);
 			promise.tryComplete();
-			log.info("【Vertx-MQTT-Client】 => MQTT连接并订阅成功，客户端ID：{}", config.getClientId());
+			log.info("【Vertx-MQTT-Client】 => MQTT连接并订阅成功，客户端ID：{}", clientId);
 			return;
 		}
 		Throwable cause = result.cause() == null ? new IllegalStateException("MQTT连接流程已经停止") : result.cause();
 
 		promise.tryFail(cause);
 		if (!stopping.get()) {
-			log.error("【Vertx-MQTT-Client】 => MQTT连接或订阅失败，客户端ID：{}，错误信息：{}", config.getClientId(), cause.getMessage(),
-					cause);
+			log.error("【Vertx-MQTT-Client】 => MQTT连接或订阅失败，客户端ID：{}，错误信息：{}", clientId, cause.getMessage(), cause);
 			scheduleReconnect();
 		}
 	}
@@ -440,7 +417,7 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 		}
 		this.connectionStateHandler.handle(State.CONNECTED);
 		log.info("【Vertx-MQTT-Client】 => MQTT连接成功，主机：{}，端口：{}，客户端ID：{}，存在会话：{}", config.getHost(), config.getPort(),
-				config.getClientId(), connAck.isSessionPresent());
+				clientId, connAck.isSessionPresent());
 		return Future.succeededFuture();
 	}
 
@@ -453,14 +430,14 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 	private Future<Void> subscribe() {
 		Map<String, Integer> topics = MqttMessageType.getTopics(config.getTenantCode());
 		if (MapUtils.isEmpty(topics)) {
-			log.warn("【Vertx-MQTT-Client】 => 未配置订阅主题，客户端ID：{}", config.getClientId());
+			log.warn("【Vertx-MQTT-Client】 => 未配置订阅主题，客户端ID：{}", clientId);
 			return Future.succeededFuture();
 		}
 		return mqttClient.subscribe(topics)
-			.onSuccess(ignored -> log.info("【Vertx-MQTT-Client】 => MQTT订阅确认成功，主题：{}，客户端ID：{}", topics.keySet(),
-					config.getClientId()))
+			.onSuccess(
+					ignored -> log.info("【Vertx-MQTT-Client】 => MQTT订阅确认成功，主题：{}，客户端ID：{}", topics.keySet(), clientId))
 			.onFailure(throwable -> log.error("【Vertx-MQTT-Client】 => MQTT订阅失败，主题：{}，客户端ID：{}，错误信息：{}", topics.keySet(),
-					config.getClientId(), throwable.getMessage(), throwable))
+					clientId, throwable.getMessage(), throwable))
 			.mapEmpty();
 	}
 
@@ -486,7 +463,7 @@ public final class VertxMqttClient extends AbstractVertxService<Void> {
 		clientOptions.setReceiveBufferSize(config.getReceiveBufferSize());
 
 		// MQTT 身份、心跳和会话相关配置。
-		clientOptions.setClientId(config.getClientId());
+		clientOptions.setClientId(clientId);
 		clientOptions.setAutoGeneratedClientId(config.isAutoGeneratedClientId());
 		clientOptions.setAutoKeepAlive(config.isAutoKeepAlive());
 		clientOptions.setKeepAliveInterval(config.getKeepAliveInterval());

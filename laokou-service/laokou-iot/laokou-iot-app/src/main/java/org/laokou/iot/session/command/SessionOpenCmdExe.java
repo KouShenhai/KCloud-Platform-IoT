@@ -57,7 +57,7 @@ public class SessionOpenCmdExe {
 	private final SystemSettingsProperties systemSettingsProperties;
 
 	static {
-		ForyFactory.INSTANCE.register(OpenSessionEvent.class, ForyConstants.C_249);
+		ForyFactory.INSTANCE.register(org.laokou.iot.session.dto.event.OpenSessionEvent.class, ForyConstants.C_249);
 	}
 
 	public void executeVoid(SessionOpenCmd cmd) {

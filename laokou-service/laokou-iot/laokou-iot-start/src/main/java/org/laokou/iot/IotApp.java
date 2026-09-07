@@ -19,16 +19,13 @@ package org.laokou.iot;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.annotation.EnableWarmUp;
-import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.common.i18n.util.SslUtils;
 import org.laokou.common.nacos.annotation.EnablePrintRouter;
 import org.laokou.common.security.annotation.EnableSecurity;
 import org.laokou.common.security.config.TransmittableThreadLocalSecurityContextHolderStrategy;
 import org.laokou.common.websocket.annotation.EnableWebSocketServer;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -39,7 +36,6 @@ import org.springframework.pulsar.annotation.EnablePulsar;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StopWatch;
-import org.springframework.util.StringUtils;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -62,9 +58,7 @@ import java.security.NoSuchAlgorithmException;
 @RequiredArgsConstructor
 @MapperScan(basePackages = "org.laokou.iot.**.gatewayimpl.database")
 @SpringBootApplication(scanBasePackages = "org.laokou")
-class IotApp implements CommandLineRunner {
-
-	private final SystemSettingsProperties systemSettingsProperties;
+class IotApp {
 
 	// @formatter:off
 	static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
@@ -85,16 +79,6 @@ class IotApp implements CommandLineRunner {
 		stopWatch.stop();
 		log.info("{}", stopWatch.prettyPrint());
 	}
-
-
-	@Override
-    public void run(String @NonNull... args)  {
-		String clientId = systemSettingsProperties.getClientId();
-		if (!StringUtils.hasText(clientId)) {
-			throw new IllegalArgumentException("clientId is null");
-		}
-    }
-
 	// @formatter:on
 
 }

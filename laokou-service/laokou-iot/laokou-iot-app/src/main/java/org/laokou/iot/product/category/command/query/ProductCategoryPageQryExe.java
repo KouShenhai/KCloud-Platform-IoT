@@ -43,7 +43,7 @@ public class ProductCategoryPageQryExe {
 	public Result<Page<ProductCategoryCO>> execute(ProductCategoryPageQry qry) {
 		List<ProductCategoryDO> list = productCategoryMapper.selectObjectPage(qry);
 		long total = productCategoryMapper.selectObjectCount(qry);
-		return Result.ok(Page.create(list.stream().map(ProductCategoryConvertor::toClientObject).toList(), total));
+		return Result.ok(Page.create(ProductCategoryConvertor.toClientObjects(list), total));
 	}
 
 }

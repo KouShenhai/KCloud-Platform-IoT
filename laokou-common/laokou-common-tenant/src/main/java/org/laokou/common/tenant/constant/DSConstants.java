@@ -36,6 +36,11 @@ public final class DSConstants {
 		}
 
 		/**
+		 * 会话表.
+		 */
+		public static final String SESSION_TABLE = "iot_session";
+
+		/**
 		 * 数据源表.
 		 */
 		public static final String SOURCE_TABLE = "iot_source";
@@ -48,7 +53,7 @@ public final class DSConstants {
 		/**
 		 * 产品类别表.
 		 */
-		public static final String PRODUCT_CATEGORY_TABLE = "product_category_source";
+		public static final String PRODUCT_CATEGORY_TABLE = "iot_product_category";
 
 	}
 
