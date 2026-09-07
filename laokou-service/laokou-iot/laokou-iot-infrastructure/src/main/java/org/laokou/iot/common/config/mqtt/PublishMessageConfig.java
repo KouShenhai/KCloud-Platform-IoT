@@ -17,15 +17,11 @@
 
 package org.laokou.iot.common.config.mqtt;
 
+import io.vertx.core.buffer.Buffer;
+
 /**
  * @author laokou
  */
-public interface VertxService {
-
-	void deploy();
-
-	void undeploy();
-
-	void publish(PublishMessageConfig config);
+public record PublishMessageConfig(String topic, int qos, Buffer payload, boolean isDup, boolean isRetain) {
 
 }
