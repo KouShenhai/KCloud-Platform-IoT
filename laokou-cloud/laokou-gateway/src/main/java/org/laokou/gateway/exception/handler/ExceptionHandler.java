@@ -82,7 +82,7 @@ public class ExceptionHandler implements ErrorWebExceptionHandler, Ordered {
 						return ReactiveResponseUtils.responseOk(exchange, Result.fail(StatusCode.INTERNAL_SERVER_ERROR,
 								MessageUtils.getMessage(StatusCode.INTERNAL_SERVER_ERROR, locale)));
 					}
-					default -> throw new IllegalStateException("Unexpected value: " + statusCode.value());
+					default -> log.error("状态码：{}，网关未知错误，请联系管理员，错误信息：{}", statusCode.value(), ex.getMessage(), ex);
 				}
 			}
 			if (BlockException.isBlockException(ex)) {
