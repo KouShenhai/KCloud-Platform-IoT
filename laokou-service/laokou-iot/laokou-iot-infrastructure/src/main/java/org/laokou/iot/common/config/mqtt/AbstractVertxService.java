@@ -29,7 +29,7 @@ public abstract class AbstractVertxService implements VertxService {
 	protected final AtomicReference<Future<String>> deploymentIdFuture;
 
 	protected AbstractVertxService() {
-		deploymentIdFuture = new AtomicReference<>();
+		deploymentIdFuture = new AtomicReference<>(null);
 	}
 
 	@Override

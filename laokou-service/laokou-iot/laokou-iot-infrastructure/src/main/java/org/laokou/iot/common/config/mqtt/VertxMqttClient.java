@@ -159,16 +159,17 @@ final class VertxMqttClient extends AbstractVerticle {
 	 * @param isDup if the message is a duplicate
 	 * @param isRetain if the message needs to be retained
 	 */
-	public Future<Integer> publish(@NonNull String topic, int qos, @NonNull Buffer payload, boolean isDup,
-			boolean isRetain) {
+	public void publish(@NonNull String topic, int qos, @NonNull Buffer payload, boolean isDup, boolean isRetain) {
 		if (stopping.get()) {
-			return Future.failedFuture("MQTT客户端正在关闭");
+			log.error("MQTT客户端正在关闭");
+			return;
 		}
-
 		if (!mqttClient.isConnected()) {
-			return Future.failedFuture("MQTT客户端未连接");
+			log.error("MQTT客户端未连接");
+			return;
 		}
-		return mqttClient.publish(topic, payload, VertxMqttUtils.convertQos(qos), isDup, isRetain);
+		mqttClient.publish(topic, payload, VertxMqttUtils.convertQos(qos), isDup, isRetain)
+			.onFailure(ex -> log.error("MQTT发布消息失败，错误信息：{}", ex.getMessage(), ex));
 	}
 
 	private MqttClient createClient(MqttClientOptions options) {
