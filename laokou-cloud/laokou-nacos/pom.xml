@@ -28,15 +28,15 @@
   <artifactId>laokou-nacos</artifactId>
 
   <properties>
-    <!--pig-nacos版本-->
-    <pig-nacos.version>3.2.4</pig-nacos.version>
+    <!--nacos-server版本-->
+    <nacos-server.version>3.2.4</nacos-server.version>
   </properties>
 
   <dependencies>
     <dependency>
       <groupId>io.github.pig-mesh.nacos</groupId>
       <artifactId>nacos-console</artifactId>
-      <version>${pig-nacos.version}</version>
+      <version>${nacos-server.version}</version>
       <exclusions>
         <exclusion>
           <groupId>com.google.errorprone</groupId>
@@ -51,7 +51,7 @@
     <dependency>
       <groupId>io.github.pig-mesh.nacos</groupId>
       <artifactId>nacos-server</artifactId>
-      <version>${pig-nacos.version}</version>
+      <version>${nacos-server.version}</version>
     </dependency>
     <dependency>
       <groupId>org.postgresql</groupId>

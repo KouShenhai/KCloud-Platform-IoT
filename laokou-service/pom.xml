@@ -33,7 +33,6 @@
     <module>laokou-admin</module>
     <module>laokou-logstash</module>
     <module>laokou-auth</module>
-    <module>laokou-generator</module>
     <module>laokou-snowflake-id</module>
     <module>laokou-report</module>
     <module>laokou-iot</module>
