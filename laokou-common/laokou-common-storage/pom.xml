@@ -6,11 +6,11 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-common</artifactId>
-    <version>${reversion}</version>
+    <version>${revision}</version>
   </parent>
 
   <artifactId>laokou-common-storage</artifactId>
-  <version>${reversion}</version>
+  <version>${revision}</version>
 
   <dependencies>
     <dependency>
@@ -20,7 +20,7 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-tdengine</artifactId>
-      <version>${reversion}</version>
+      <version>${revision}</version>
     </dependency>
     <dependency>
       <groupId>org.postgresql</groupId>
@@ -29,12 +29,12 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-influxdb</artifactId>
-      <version>${reversion}</version>
+      <version>${revision}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-elasticsearch</artifactId>
-      <version>${reversion}</version>
+      <version>${revision}</version>
     </dependency>
   </dependencies>
 

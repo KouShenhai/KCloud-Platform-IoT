@@ -4,27 +4,27 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-standalone-admin</artifactId>
-    <version>${reversion}</version>
+    <version>${revision}</version>
   </parent>
 
   <artifactId>laokou-standalone-admin-infrastructure</artifactId>
-  <version>${reversion}</version>
+  <version>${revision}</version>
 
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-standalone-admin-domain</artifactId>
-      <version>${reversion}</version>
+      <version>${revision}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-standalone-admin-client</artifactId>
-      <version>${reversion}</version>
+      <version>${revision}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-admin-adapter</artifactId>
-      <version>${reversion}</version>
+      <version>${revision}</version>
       <exclusions>
         <exclusion>
           <groupId>org.laokou</groupId>

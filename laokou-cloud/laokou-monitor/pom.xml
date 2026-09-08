@@ -22,17 +22,17 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-cloud</artifactId>
-    <version>${reversion}</version>
+    <version>${revision}</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>laokou-monitor</artifactId>
-  <version>${reversion}</version>
+  <version>${revision}</version>
 
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-prometheus</artifactId>
-      <version>${reversion}</version>
+      <version>${revision}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -77,17 +77,17 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-nacos</artifactId>
-      <version>${reversion}</version>
+      <version>${revision}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-log4j2</artifactId>
-      <version>${reversion}</version>
+      <version>${revision}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-i18n</artifactId>
-      <version>${reversion}</version>
+      <version>${revision}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>

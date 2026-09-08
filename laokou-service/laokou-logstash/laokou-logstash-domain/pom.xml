@@ -6,17 +6,17 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-logstash</artifactId>
-    <version>${reversion}</version>
+    <version>${revision}</version>
   </parent>
 
   <artifactId>laokou-logstash-domain</artifactId>
-  <version>${reversion}</version>
+  <version>${revision}</version>
 
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-logstash-client</artifactId>
-      <version>${reversion}</version>
+      <version>${revision}</version>
     </dependency>
   </dependencies>
 

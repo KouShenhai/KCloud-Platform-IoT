@@ -6,42 +6,42 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-cola</artifactId>
-    <version>${reversion}</version>
+    <version>${revision}</version>
   </parent>
 
   <artifactId>laokou-cola-infrastructure</artifactId>
-  <version>${reversion}</version>
+  <version>${revision}</version>
 
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-cola-domain</artifactId>
-      <version>${reversion}</version>
+      <version>${revision}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-security</artifactId>
-      <version>${reversion}</version>
+      <version>${revision}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-log</artifactId>
-      <version>${reversion}</version>
+      <version>${revision}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-nacos</artifactId>
-      <version>${reversion}</version>
+      <version>${revision}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-prometheus</artifactId>
-      <version>${reversion}</version>
+      <version>${revision}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-cola-client</artifactId>
-      <version>${reversion}</version>
+      <version>${revision}</version>
     </dependency>
   </dependencies>
 

@@ -6,11 +6,11 @@
   <parent>
     <artifactId>laokou-service</artifactId>
     <groupId>org.laokou</groupId>
-    <version>${reversion}</version>
+    <version>${revision}</version>
   </parent>
 
   <artifactId>laokou-cola</artifactId>
-  <version>${reversion}</version>
+  <version>${revision}</version>
   <packaging>pom</packaging>
 
   <modules>

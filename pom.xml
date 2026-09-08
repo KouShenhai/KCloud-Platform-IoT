@@ -22,7 +22,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.laokou</groupId>
   <artifactId>KCloud-Platform-IoT</artifactId>
-  <version>${reversion}</version>
+  <version>${revision}</version>
   <packaging>pom</packaging>
   <modules>
     <module>laokou-common</module>
@@ -67,7 +67,7 @@
   </licenses>
   <properties>
     <!-- 项目版本 -->
-    <reversion>4.0.4-SNAPSHOT</reversion>
+    <revision>4.0.4-SNAPSHOT</revision>
     <!-- JDK版本 -->
     <java.version>25</java.version>
     <!-- 项目编码 -->
@@ -1090,10 +1090,10 @@
           <images>
             <image>
               <!-- 推送仓库/命名空间/仓库名称:镜像版本号 -->
-              <name>${docker.registry}/${docker.namespace}/${project.artifactId}:${reversion}</name>
+              <name>${docker.registry}/${docker.namespace}/${project.artifactId}:${revision}</name>
               <build>
                 <tags>
-                  <tag>${reversion}</tag>
+                  <tag>${revision}</tag>
                 </tags>
                 <!-- 指定dockerfile文件的位置 -->
                 <dockerFile>${project.basedir}/Dockerfile</dockerFile>
@@ -1222,7 +1222,7 @@
 
                 <!-- 检查系统属性 -->
                 <requireProperty>
-                  <property>reversion</property>
+                  <property>revision</property>
                   <message>请检查项目版本</message>
                   <regex>.*\d+.\d+.\d+.*</regex>
                 </requireProperty>

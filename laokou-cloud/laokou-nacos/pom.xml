@@ -22,13 +22,13 @@
   <parent>
     <artifactId>laokou-cloud</artifactId>
     <groupId>org.laokou</groupId>
-    <version>${reversion}</version>
+    <version>${revision}</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>laokou-nacos</artifactId>
 
   <properties>
-    <!--nacos-server版本-->
+    <!-- nacos-server版本 -->
     <nacos-server.version>3.2.4</nacos-server.version>
   </properties>
 

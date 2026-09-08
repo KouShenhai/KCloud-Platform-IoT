@@ -4,17 +4,17 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-standalone-auth</artifactId>
-    <version>${reversion}</version>
+    <version>${revision}</version>
   </parent>
 
   <artifactId>laokou-standalone-auth-app</artifactId>
-  <version>${reversion}</version>
+  <version>${revision}</version>
 
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-standalone-auth-infrastructure</artifactId>
-      <version>${reversion}</version>
+      <version>${revision}</version>
       <exclusions>
         <exclusion>
           <groupId>org.laokou</groupId>

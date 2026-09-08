@@ -5,11 +5,11 @@
   <parent>
     <artifactId>laokou-common</artifactId>
     <groupId>org.laokou</groupId>
-    <version>${reversion}</version>
+    <version>${revision}</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>laokou-common-log4j2</artifactId>
-  <version>${reversion}</version>
+  <version>${revision}</version>
 
   <dependencies>
     <dependency>
@@ -45,7 +45,7 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-test</artifactId>
-      <version>${reversion}</version>
+      <version>${revision}</version>
       <scope>test</scope>
       <optional>true</optional>
     </dependency>

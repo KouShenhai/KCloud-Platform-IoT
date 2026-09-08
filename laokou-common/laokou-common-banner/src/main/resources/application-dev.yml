@@ -1,3 +1,0 @@
-laokou-version: ${reversion}
-spring-cloud-version: ${spring-cloud.version}
-spring-cloud-alibaba-version: ${spring-cloud-alibaba.version}

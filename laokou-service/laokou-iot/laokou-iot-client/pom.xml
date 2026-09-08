@@ -6,17 +6,17 @@
     <parent>
         <groupId>org.laokou</groupId>
         <artifactId>laokou-iot</artifactId>
-        <version>${reversion}</version>
+        <version>${revision}</version>
     </parent>
 
   <artifactId>laokou-iot-client</artifactId>
-  <version>${reversion}</version>
+  <version>${revision}</version>
 
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-core</artifactId>
-      <version>${reversion}</version>
+      <version>${revision}</version>
     </dependency>
     <dependency>
       <groupId>io.vertx</groupId>

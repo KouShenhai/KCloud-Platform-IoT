@@ -6,16 +6,16 @@
   <parent>
     <artifactId>laokou-common</artifactId>
     <groupId>org.laokou</groupId>
-    <version>${reversion}</version>
+    <version>${revision}</version>
   </parent>
   <artifactId>laokou-common-lock</artifactId>
-  <version>${reversion}</version>
+  <version>${revision}</version>
 
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-redis</artifactId>
-      <version>${reversion}</version>
+      <version>${revision}</version>
     </dependency>
     <dependency>
         <groupId>org.aspectj</groupId>
@@ -28,14 +28,14 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-test</artifactId>
-      <version>${reversion}</version>
+      <version>${revision}</version>
       <scope>test</scope>
       <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-testcontainers</artifactId>
-      <version>${reversion}</version>
+      <version>${revision}</version>
       <scope>test</scope>
       <optional>true</optional>
     </dependency>

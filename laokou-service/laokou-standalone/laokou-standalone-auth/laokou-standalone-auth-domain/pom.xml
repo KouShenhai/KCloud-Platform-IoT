@@ -4,10 +4,10 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-standalone-auth</artifactId>
-    <version>${reversion}</version>
+    <version>${revision}</version>
   </parent>
 
   <artifactId>laokou-standalone-auth-domain</artifactId>
-  <version>${reversion}</version>
+  <version>${revision}</version>
 
 </project>

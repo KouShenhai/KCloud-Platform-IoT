@@ -22,12 +22,12 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-common</artifactId>
-    <version>${reversion}</version>
+    <version>${revision}</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.laokou</groupId>
   <artifactId>laokou-common-core</artifactId>
-  <version>${reversion}</version>
+  <version>${revision}</version>
   <name>laokou-common-core</name>
   <description>一个企业级微服务架构的云服务多租户IoT平台【核心模块】</description>
   <url>https://koushenhai.github.io/KCloud-Platform-IoT</url>
@@ -112,7 +112,7 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-i18n</artifactId>
-      <version>${reversion}</version>
+      <version>${revision}</version>
     </dependency>
     <dependency>
       <groupId>com.google.guava</groupId>
@@ -145,7 +145,7 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-test</artifactId>
-      <version>${reversion}</version>
+      <version>${revision}</version>
       <optional>true</optional>
       <scope>test</scope>
     </dependency>
