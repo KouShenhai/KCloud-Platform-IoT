@@ -22,7 +22,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.laokou</groupId>
   <artifactId>KCloud-Platform-IoT</artifactId>
-  <version>4.0.4-SNAPSHOT</version>
+  <version>${reversion}</version>
   <packaging>pom</packaging>
   <modules>
     <module>laokou-common</module>
@@ -67,10 +67,10 @@
   </licenses>
   <properties>
     <!-- 项目版本 -->
-    <project.version>4.0.4-SNAPSHOT</project.version>
+    <reversion>4.0.4-SNAPSHOT</reversion>
     <!-- JDK版本 -->
     <java.version>25</java.version>
-    <!--项目编码-->
+    <!-- 项目编码 -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!-- maven-compiler-plugin来源 -->
     <maven.compiler.source>${java.version}</maven.compiler.source>
@@ -124,6 +124,8 @@
     <maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
     <!-- maven-gpg-plugin版本 -->
     <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
+    <!-- flatten-maven-plugin版本 -->
+    <flatten-maven-plugin.version>1.8.0</flatten-maven-plugin.version>
     <!-- spring-boot版本 -->
     <spring-boot.version>4.1.1</spring-boot.version>
     <!-- spring-cloud版本 -->
@@ -1088,10 +1090,10 @@
           <images>
             <image>
               <!-- 推送仓库/命名空间/仓库名称:镜像版本号 -->
-              <name>${docker.registry}/${docker.namespace}/${project.artifactId}:${project.version}</name>
+              <name>${docker.registry}/${docker.namespace}/${project.artifactId}:${reversion}</name>
               <build>
                 <tags>
-                  <tag>${project.version}</tag>
+                  <tag>${reversion}</tag>
                 </tags>
                 <!-- 指定dockerfile文件的位置 -->
                 <dockerFile>${project.basedir}/Dockerfile</dockerFile>
@@ -1220,7 +1222,7 @@
 
                 <!-- 检查系统属性 -->
                 <requireProperty>
-                  <property>project.version</property>
+                  <property>reversion</property>
                   <message>请检查项目版本</message>
                   <regex>.*\d+.\d+.\d+.*</regex>
                 </requireProperty>
@@ -1269,6 +1271,31 @@
           </dependency>
         </dependencies>
       </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>flatten-maven-plugin</artifactId>
+        <version>${flatten-maven-plugin.version}</version>
+        <configuration>
+          <updatePomFile>true</updatePomFile>
+          <flattenMode>resolveCiFriendliesOnly</flattenMode>
+        </configuration>
+        <executions>
+          <execution>
+            <id>flatten</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>flatten</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>flatten.clean</id>
+            <phase>clean</phase>
+            <goals>
+              <goal>clean</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
     <!-- profile对资源的操作 -->
     <resources>
@@ -1280,7 +1307,7 @@
           <exclude>*.properties</exclude>
           <exclude>log4j2*.xml</exclude>
           <exclude>*.json</exclude>
-          <exclude>*.banner</exclude>
+          <exclude>*.txt</exclude>
         </excludes>
       </resource>
       <!-- 添加需要包含的文件 -->

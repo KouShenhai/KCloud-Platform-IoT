@@ -3,62 +3,62 @@
   <parent>
     <artifactId>laokou-iot</artifactId>
     <groupId>org.laokou</groupId>
-    <version>4.0.4-SNAPSHOT</version>
+    <version>${reversion}</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>laokou-iot-infrastructure</artifactId>
-  <version>4.0.4-SNAPSHOT</version>
+  <version>${reversion}</version>
 
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-iot-domain</artifactId>
-      <version>${project.version}</version>
+      <version>${reversion}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-iot-client</artifactId>
-      <version>${project.version}</version>
+      <version>${reversion}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-data-cache</artifactId>
-      <version>${project.version}</version>
+      <version>${reversion}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-cors</artifactId>
-      <version>${project.version}</version>
+      <version>${reversion}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-idempotent</artifactId>
-      <version>${project.version}</version>
+      <version>${reversion}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-trace</artifactId>
-      <version>${project.version}</version>
+      <version>${reversion}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-mybatis-plus</artifactId>
-      <version>${project.version}</version>
+      <version>${reversion}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-log</artifactId>
-      <version>${project.version}</version>
+      <version>${reversion}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-nacos</artifactId>
-      <version>${project.version}</version>
+      <version>${reversion}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-domain</artifactId>
-      <version>${project.version}</version>
+      <version>${reversion}</version>
     </dependency>
     <dependency>
       <groupId>com.github.ulisesbocchio</groupId>
@@ -77,17 +77,17 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-openapi-doc</artifactId>
-      <version>${project.version}</version>
+      <version>${reversion}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-kafka</artifactId>
-      <version>${project.version}</version>
+      <version>${reversion}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-websocket</artifactId>
-      <version>${project.version}</version>
+      <version>${reversion}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -96,12 +96,12 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-pulsar</artifactId>
-      <version>${project.version}</version>
+      <version>${reversion}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-storage</artifactId>
-      <version>${project.version}</version>
+      <version>${reversion}</version>
     </dependency>
     <dependency>
       <groupId>io.vertx</groupId>

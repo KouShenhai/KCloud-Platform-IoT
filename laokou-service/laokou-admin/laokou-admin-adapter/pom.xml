@@ -5,17 +5,17 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-admin</artifactId>
-    <version>4.0.4-SNAPSHOT</version>
+    <version>${reversion}</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>laokou-admin-adapter</artifactId>
-  <version>4.0.4-SNAPSHOT</version>
+  <version>${reversion}</version>
 
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-admin-app</artifactId>
-      <version>${project.version}</version>
+      <version>${reversion}</version>
     </dependency>
   </dependencies>
 

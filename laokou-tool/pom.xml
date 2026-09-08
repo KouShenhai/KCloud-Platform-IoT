@@ -4,23 +4,23 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>KCloud-Platform-IoT</artifactId>
-    <version>4.0.4-SNAPSHOT</version>
+    <version>${reversion}</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
   <artifactId>laokou-tool</artifactId>
-  <version>4.0.4-SNAPSHOT</version>
+  <version>${reversion}</version>
 
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-core</artifactId>
-      <version>${project.version}</version>
+      <version>${reversion}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-log4j2</artifactId>
-      <version>${project.version}</version>
+      <version>${reversion}</version>
     </dependency>
   </dependencies>
 </project>

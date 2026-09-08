@@ -23,18 +23,18 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-cloud</artifactId>
-    <version>4.0.4-SNAPSHOT</version>
+    <version>${reversion}</version>
   </parent>
   <artifactId>laokou-gateway</artifactId>
   <description>API网关</description>
-  <version>4.0.4-SNAPSHOT</version>
+  <version>${reversion}</version>
   <packaging>jar</packaging>
 
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-redis</artifactId>
-      <version>${project.version}</version>
+      <version>${reversion}</version>
       <exclusions>
         <exclusion>
           <groupId>org.apache.tomcat.embed</groupId>
@@ -55,17 +55,17 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-prometheus</artifactId>
-      <version>${project.version}</version>
+      <version>${reversion}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-log4j2</artifactId>
-      <version>${project.version}</version>
+      <version>${reversion}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-i18n</artifactId>
-      <version>${project.version}</version>
+      <version>${reversion}</version>
     </dependency>
     <dependency>
       <groupId>com.github.ulisesbocchio</groupId>
@@ -74,7 +74,7 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-nacos</artifactId>
-      <version>${project.version}</version>
+      <version>${reversion}</version>
     </dependency>
     <!-- 监控依赖 -->
     <dependency>
@@ -108,7 +108,7 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-trace</artifactId>
-      <version>${project.version}</version>
+      <version>${reversion}</version>
     </dependency>
     <dependency>
       <groupId>com.github.ben-manes.caffeine</groupId>
@@ -121,7 +121,7 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-sentinel</artifactId>
-      <version>${project.version}</version>
+      <version>${reversion}</version>
     </dependency>
     <dependency>
       <groupId>com.alibaba.csp</groupId>
@@ -134,14 +134,14 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-testcontainers</artifactId>
-      <version>${project.version}</version>
+      <version>${reversion}</version>
       <scope>test</scope>
       <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-test</artifactId>
-      <version>${project.version}</version>
+      <version>${reversion}</version>
       <scope>test</scope>
       <optional>true</optional>
     </dependency>
@@ -158,7 +158,7 @@
           <!-- main方法的地址 只需要修改这个地址-->
           <mainClass>org.laokou.gateway.GatewayApp</mainClass>
           <!-- Docker镜像名称 -->
-          <imageName>${docker.registry}/${docker.namespace}/${project.artifactId}-native:${project.version}</imageName>
+          <imageName>${docker.registry}/${docker.namespace}/${project.artifactId}-native:${reversion}</imageName>
           <jvmArguments>
             --add-opens=java.base/java.lang=ALL-UNNAMED
             --add-opens=java.base/java.lang.reflect=ALL-UNNAMED

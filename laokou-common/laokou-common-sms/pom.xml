@@ -3,17 +3,17 @@
   <parent>
     <artifactId>laokou-common</artifactId>
     <groupId>org.laokou</groupId>
-    <version>4.0.4-SNAPSHOT</version>
+    <version>${reversion}</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>laokou-common-sms</artifactId>
-  <version>4.0.4-SNAPSHOT</version>
+  <version>${reversion}</version>
 
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-core</artifactId>
-      <version>${project.version}</version>
+      <version>${reversion}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -23,7 +23,7 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-sensitive</artifactId>
-      <version>${project.version}</version>
+      <version>${reversion}</version>
     </dependency>
   </dependencies>
 

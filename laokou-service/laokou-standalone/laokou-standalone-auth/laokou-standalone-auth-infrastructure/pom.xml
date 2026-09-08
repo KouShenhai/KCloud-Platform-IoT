@@ -4,27 +4,27 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-standalone-auth</artifactId>
-    <version>4.0.4-SNAPSHOT</version>
+    <version>${reversion}</version>
   </parent>
 
   <artifactId>laokou-standalone-auth-infrastructure</artifactId>
-  <version>4.0.4-SNAPSHOT</version>
+  <version>${reversion}</version>
 
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-standalone-auth-domain</artifactId>
-      <version>${project.version}</version>
+      <version>${reversion}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-standalone-auth-client</artifactId>
-      <version>${project.version}</version>
+      <version>${reversion}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-auth-adapter</artifactId>
-      <version>${project.version}</version>
+      <version>${reversion}</version>
       <exclusions>
         <exclusion>
           <groupId>org.apache.logging.log4j</groupId>
