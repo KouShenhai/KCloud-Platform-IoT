@@ -140,8 +140,8 @@
     <spring-security.version>7.1.1</spring-security.version>
     <!-- spring-ai版本 -->
     <spring-ai.version>2.0.1</spring-ai.version>
-    <!-- spring-ai-alibaba版本 -->
-    <spring-ai-alibaba.version>1.1.2.3</spring-ai-alibaba.version>
+    <!-- spring-ai-agentic版本 -->
+    <spring-ai-agentic.version>2.0.0.0</spring-ai-agentic.version>
     <!-- springdoc-openapi版本 -->
     <springdoc-openapi.version>3.1.1</springdoc-openapi.version>
     <!-- testcontainers版本 -->
@@ -333,15 +333,22 @@
       </dependency>
       <!-- =============================== 定义 Spring Ai 版本 =============================== -->
 
-      <!-- =============================== 定义 Spring Ai Alibaba 版本 =============================== -->
+      <!-- =============================== 定义 Spring Ai Agentic 版本 =============================== -->
       <dependency>
-        <groupId>com.alibaba.cloud.ai</groupId>
-        <artifactId>spring-ai-alibaba-bom</artifactId>
-        <version>${spring-ai-alibaba.version}</version>
+        <groupId>io.github.agentic-spring-ai</groupId>
+        <artifactId>agentic-spring-ai-bom</artifactId>
+        <version>${spring-ai-agentic.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-      <!-- =============================== 定义 Spring Ai Alibaba 版本 =============================== -->
+      <dependency>
+        <groupId>io.github.agentic-spring-ai</groupId>
+        <artifactId>agentic-spring-ai-extensions-bom</artifactId>
+        <version>${spring-ai-agentic.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- =============================== 定义 Spring Ai Agentic 版本 =============================== -->
 
       <!-- =============================== 定义 Springdoc Openapi 版本 =============================== -->
       <dependency>
