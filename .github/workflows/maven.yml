@@ -54,7 +54,7 @@ jobs:
       - name: Configure Elasticsearch
         run: sudo sysctl -w vm.max_map_count=1048576
       - name: Build with Maven Mvnd
-        run: mvnd -U clean install -T 1.5C -Pdev "-Drevision=4.0.4-SNAPSHOT"
+        run: mvnd -U clean install -T 1.5C -Pdev
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v7.0.0
         env:

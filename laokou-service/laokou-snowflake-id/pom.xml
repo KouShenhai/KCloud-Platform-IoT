@@ -3,7 +3,7 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-service</artifactId>
-    <version>${reversion}</version>
+    <version>${revision}</version>
   </parent>
   <artifactId>laokou-snowflake-id</artifactId>
   <packaging>pom</packaging>

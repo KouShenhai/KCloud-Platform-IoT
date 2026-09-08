@@ -4,22 +4,22 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-oss</artifactId>
-    <version>${reversion}</version>
+    <version>${revision}</version>
   </parent>
 
   <artifactId>laokou-oss-start</artifactId>
-  <version>${reversion}</version>
+  <version>${revision}</version>
 
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-oss-adapter</artifactId>
-      <version>${reversion}</version>
+      <version>${revision}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-test</artifactId>
-      <version>${reversion}</version>
+      <version>${revision}</version>
       <scope>test</scope>
       <optional>true</optional>
     </dependency>

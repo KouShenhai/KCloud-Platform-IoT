@@ -6,9 +6,10 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-service</artifactId>
-    <version>${reversion}</version>
+    <version>${revision}</version>
   </parent>
 
   <artifactId>laokou-ai</artifactId>
+  <version>${revision}</version>
 
 </project>

@@ -4,17 +4,17 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-standalone-admin</artifactId>
-    <version>${reversion}</version>
+    <version>${revision}</version>
   </parent>
 
   <artifactId>laokou-standalone-admin-app</artifactId>
-  <version>${reversion}</version>
+  <version>${revision}</version>
 
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-standalone-admin-infrastructure</artifactId>
-      <version>${reversion}</version>
+      <version>${revision}</version>
       <exclusions>
         <exclusion>
           <groupId>org.laokou</groupId>

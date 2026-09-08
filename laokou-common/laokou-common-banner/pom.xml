@@ -6,10 +6,10 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-common</artifactId>
-    <version>${reversion}</version>
+    <version>${revision}</version>
   </parent>
 
   <artifactId>laokou-common-banner</artifactId>
-  <version>${reversion}</version>
+  <version>${revision}</version>
 
 </project>

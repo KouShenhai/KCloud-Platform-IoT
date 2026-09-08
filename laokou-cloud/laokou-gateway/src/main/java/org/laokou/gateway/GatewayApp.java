@@ -57,7 +57,7 @@ class GatewayApp implements CommandLineRunner {
 
 	// @formatter:off
 	static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
-		// mvn -U clean install -pl :laokou-gateway -am "-Drevision=4.0.4-SNAPSHOT" -DskipTests
+		// mvn -U clean install -pl :laokou-gateway -am -DskipTests
 		StopWatch stopWatch = new StopWatch("Gateway应用程序");
 		stopWatch.start();
 		System.setProperty("ENDPOINT", String.format("%s:%s", InetAddress.getLocalHost().getHostAddress(), System.getProperty("server.port", "5555")));
