@@ -4,17 +4,17 @@
   <parent>
     <artifactId>laokou-common</artifactId>
     <groupId>org.laokou</groupId>
-    <version>4.0.4-SNAPSHOT</version>
+    <version>${reversion}</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>laokou-common-elasticsearch</artifactId>
-  <version>4.0.4-SNAPSHOT</version>
+  <version>${reversion}</version>
 
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-core</artifactId>
-      <version>${project.version}</version>
+      <version>${reversion}</version>
     </dependency>
     <dependency>
       <groupId>co.elastic.clients</groupId>
@@ -29,14 +29,14 @@
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-test</artifactId>
-      <version>${project.version}</version>
+      <version>${reversion}</version>
       <optional>true</optional>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-testcontainers</artifactId>
-      <version>${project.version}</version>
+      <version>${reversion}</version>
       <optional>true</optional>
       <scope>test</scope>
     </dependency>

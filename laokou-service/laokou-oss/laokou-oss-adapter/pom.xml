@@ -4,17 +4,17 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-oss</artifactId>
-    <version>4.0.4-SNAPSHOT</version>
+    <version>${reversion}</version>
   </parent>
 
   <artifactId>laokou-oss-adapter</artifactId>
-  <version>4.0.4-SNAPSHOT</version>
+  <version>${reversion}</version>
 
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-oss-app</artifactId>
-      <version>${project.version}</version>
+      <version>${reversion}</version>
     </dependency>
   </dependencies>
 

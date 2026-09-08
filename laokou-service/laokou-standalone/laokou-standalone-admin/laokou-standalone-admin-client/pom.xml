@@ -4,10 +4,10 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-standalone-admin</artifactId>
-    <version>4.0.4-SNAPSHOT</version>
+    <version>${reversion}</version>
   </parent>
 
   <artifactId>laokou-standalone-admin-client</artifactId>
-  <version>4.0.4-SNAPSHOT</version>
+  <version>${reversion}</version>
 
 </project>

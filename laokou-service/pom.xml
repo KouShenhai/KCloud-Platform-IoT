@@ -22,18 +22,17 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>KCloud-Platform-IoT</artifactId>
-    <version>4.0.4-SNAPSHOT</version>
+    <version>${reversion}</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>laokou-service</artifactId>
-  <version>4.0.4-SNAPSHOT</version>
+  <version>${reversion}</version>
   <packaging>pom</packaging>
   <modules>
     <module>laokou-admin</module>
     <module>laokou-logstash</module>
     <module>laokou-auth</module>
-    <module>laokou-generator</module>
     <module>laokou-snowflake-id</module>
     <module>laokou-report</module>
     <module>laokou-iot</module>

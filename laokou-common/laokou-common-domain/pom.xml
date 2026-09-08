@@ -6,16 +6,16 @@
   <parent>
     <groupId>org.laokou</groupId>
     <artifactId>laokou-common</artifactId>
-    <version>4.0.4-SNAPSHOT</version>
+    <version>${reversion}</version>
   </parent>
   <artifactId>laokou-common-domain</artifactId>
-  <version>4.0.4-SNAPSHOT</version>
+  <version>${reversion}</version>
 
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-kafka</artifactId>
-      <version>${project.version}</version>
+      <version>${reversion}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
