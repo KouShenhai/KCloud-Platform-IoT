@@ -34,6 +34,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.core.util.UUIDGenerator;
+import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.iot.common.config.pulsar.handler.ConnectionStateHandler;
 import org.laokou.iot.common.config.pulsar.handler.State;
 import org.laokou.iot.common.util.VertxMqttUtils;
@@ -161,15 +162,20 @@ final class VertxMqttClient extends AbstractVerticle {
 	 */
 	public void publish(@NonNull String topic, int qos, @NonNull Buffer payload, boolean isDup, boolean isRetain) {
 		if (stopping.get()) {
-			log.error("MQTT客户端正在关闭");
-			return;
+			throw new BizException("B_Mqtt_ClientShuttingDown", "MQTT客户端正在关闭");
 		}
 		if (!mqttClient.isConnected()) {
-			log.error("MQTT客户端未连接");
-			return;
+			throw new BizException("B_Mqtt_ClientNotConnected", "MQTT客户端未连接");
 		}
 		mqttClient.publish(topic, payload, VertxMqttUtils.convertQos(qos), isDup, isRetain)
-			.onFailure(ex -> log.error("MQTT发布消息失败，错误信息：{}", ex.getMessage(), ex));
+			.onSuccess(_ -> log.debug("MQTT发布消息成功"))
+			.recover(ex -> {
+				log.error("MQTT发布消息失败，错误信息：{}", ex.getMessage(), ex);
+				return Future.failedFuture(ex);
+			})
+			.toCompletionStage()
+			.toCompletableFuture()
+			.join();
 	}
 
 	private MqttClient createClient(MqttClientOptions options) {

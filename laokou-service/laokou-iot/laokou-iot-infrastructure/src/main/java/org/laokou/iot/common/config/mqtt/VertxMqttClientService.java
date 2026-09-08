@@ -22,6 +22,7 @@ import io.vertx.core.Future;
 import io.vertx.core.ThreadingModel;
 import io.vertx.core.Vertx;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.iot.common.config.pulsar.handler.ConnectionStateHandler;
 
 import java.util.ArrayList;
@@ -78,7 +79,7 @@ final class VertxMqttClientService extends AbstractVertxService {
 		try {
 			List<VertxMqttClient> clients = vertxMqttClients;
 			if (clients.isEmpty()) {
-				throw new IllegalStateException("MQTT客户端尚未初始化完成或部署失败");
+				throw new BizException("B_Mqtt_ClientNotInitializedOrDeployFailed", "MQTT客户端尚未初始化完成或部署失败");
 			}
 			int index = ThreadLocalRandom.current().nextInt(clients.size());
 			VertxMqttClient vertxMqttClient = clients.get(index);
@@ -86,6 +87,7 @@ final class VertxMqttClientService extends AbstractVertxService {
 		}
 		catch (Exception ex) {
 			log.error("MQTT发布调用异常，错误信息：{}", ex.getMessage(), ex);
+			throw ex;
 		}
 	}
 
