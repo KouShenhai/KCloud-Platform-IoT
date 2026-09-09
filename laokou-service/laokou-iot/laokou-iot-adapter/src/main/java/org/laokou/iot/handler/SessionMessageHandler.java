@@ -27,7 +27,6 @@ import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.iot.common.config.mqtt.MessageHandler;
 import org.laokou.iot.common.config.mqtt.VertxServiceManager;
-import org.laokou.iot.common.config.pulsar.handler.ConnectionStateHandler;
 import org.laokou.iot.session.api.SessionsServiceI;
 import org.laokou.iot.session.convertor.SessionConvertor;
 import org.laokou.iot.session.dto.SessionGetQry;
@@ -56,8 +55,6 @@ public final class SessionMessageHandler {
 
 	private final SystemSettingsProperties systemSettingsProperties;
 
-	private final ConnectionStateHandler connectionStateHandler;
-
 	private final List<MessageHandler> messageHandlers;
 
 	@PulsarListeners(value = { @PulsarListener(
@@ -69,8 +66,7 @@ public final class SessionMessageHandler {
 			if (ForyFactory.INSTANCE.deserialize(message) instanceof OpenSessionEvent(Long id)) {
 				Result<SessionCO> result = sessionsServiceI.getSessionById(new SessionGetQry(id));
 				VertxServiceManager.deployVertxMqttClientService(vertx,
-						SessionConvertor.toConfig(result.getData(), systemSettingsProperties), connectionStateHandler,
-						messageHandlers);
+						SessionConvertor.toConfig(result.getData(), systemSettingsProperties), messageHandlers);
 			}
 		}
 	}

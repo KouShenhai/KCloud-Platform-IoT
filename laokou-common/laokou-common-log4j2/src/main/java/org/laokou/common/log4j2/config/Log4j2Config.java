@@ -34,11 +34,7 @@ public class Log4j2Config {
 				new NewTopic(Mq.AUTH_TRACE_LOG_TOPIC, 3, (short) 1),
 				new NewTopic(Mq.ADMIN_TRACE_LOG_TOPIC, 3, (short) 1),
 				new NewTopic(Mq.IOT_TRACE_LOG_TOPIC, 3, (short) 1), new NewTopic(Mq.OSS_TRACE_LOG_TOPIC, 3, (short) 1),
-				new NewTopic(Mq.GENERATOR_TRACE_LOG_TOPIC, 3, (short) 1),
-				new NewTopic(Mq.MQTT_TRACE_LOG_TOPIC, 3, (short) 1), new NewTopic(Mq.UDP_TRACE_LOG_TOPIC, 3, (short) 1),
-				new NewTopic(Mq.HTTP_TRACE_LOG_TOPIC, 3, (short) 1), new NewTopic(Mq.TCP_TRACE_LOG_TOPIC, 3, (short) 1),
-				new NewTopic(Mq.REPORT_TRACE_LOG_TOPIC, 3, (short) 1),
-				new NewTopic(Mq.DISTRIBUTED_IDENTIFIER_TRACE_LOG_TOPIC, 3, (short) 1));
+				new NewTopic(Mq.REPORT_TRACE_LOG_TOPIC, 3, (short) 1));
 	}
 
 }

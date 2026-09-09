@@ -20,7 +20,7 @@ package org.laokou.iot.session.dto.mqtt;
 import lombok.Data;
 
 /**
- * 设备预警/报警事件消息【上行】.
+ * 设备报警事件消息【上行】.
  *
  * @author laokou
  */

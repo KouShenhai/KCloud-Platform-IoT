@@ -26,7 +26,7 @@ import org.laokou.iot.session.dto.mqtt.MqttMessageType;
 import org.springframework.stereotype.Component;
 
 /**
- * 设备预警/报警事件消息【上行】处理器.
+ * 设备报警事件消息【上行】处理器.
  *
  * @author laokou
  */
@@ -37,8 +37,7 @@ final class UpAlarmEventGatewayMessageHandler extends AbstractMessageHandler {
 
 	@Override
 	public Future<Void> handleMessage(Long snowflakeId, MqttPublishMessage publishMessage) {
-		log.debug("【Vertx-MQTT-Client】 => 设备预警/报警事件消息【上行】处理器，接收雪花ID【{}】，主题【{}】消息", snowflakeId,
-				publishMessage.topicName());
+		log.info("【Vertx-MQTT-Client】 => 设备报警事件消息【上行】处理器，接收雪花ID【{}】，主题【{}】消息", snowflakeId, publishMessage.topicName());
 		return Future.succeededFuture();
 	}
 

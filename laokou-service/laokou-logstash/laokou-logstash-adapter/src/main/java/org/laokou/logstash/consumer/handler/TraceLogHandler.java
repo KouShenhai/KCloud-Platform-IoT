@@ -41,9 +41,6 @@ public class TraceLogHandler {
 	private final TraceLogServiceI traceLogServiceI;
 
 	@KafkaListeners(value = {
-			@KafkaListener(topics = Mq.DISTRIBUTED_IDENTIFIER_TRACE_LOG_TOPIC,
-					groupId = "${spring.kafka.consumer.group-id}-"
-							+ Mq.DISTRIBUTED_IDENTIFIER_TRACE_LOG_CONSUMER_GROUP),
 			@KafkaListener(topics = Mq.GATEWAY_TRACE_LOG_TOPIC,
 					groupId = "${spring.kafka.consumer.group-id}-" + Mq.GATEWAY_TRACE_LOG_COSUMER_GROUP),
 			@KafkaListener(topics = Mq.AUTH_TRACE_LOG_TOPIC,
@@ -54,16 +51,6 @@ public class TraceLogHandler {
 					groupId = "${spring.kafka.consumer.group-id}-" + Mq.IOT_TRACE_LOG_CONSUMER_GROUP),
 			@KafkaListener(topics = Mq.OSS_TRACE_LOG_TOPIC,
 					groupId = "${spring.kafka.consumer.group-id}-" + Mq.OSS_TRACE_LOG_CONSUMER_GROUP),
-			@KafkaListener(topics = Mq.GENERATOR_TRACE_LOG_TOPIC,
-					groupId = "${spring.kafka.consumer.group-id}-" + Mq.GENERATOR_TRACE_LOG_CONSUMER_GROUP),
-			@KafkaListener(topics = Mq.MQTT_TRACE_LOG_TOPIC,
-					groupId = "${spring.kafka.consumer.group-id}-" + Mq.MQTT_TRACE_LOG_CONSUMER_GROUP),
-			@KafkaListener(topics = Mq.UDP_TRACE_LOG_TOPIC,
-					groupId = "${spring.kafka.consumer.group-id}-" + Mq.UDP_TRACE_LOG_CONSUMER_GROUP),
-			@KafkaListener(topics = Mq.HTTP_TRACE_LOG_TOPIC,
-					groupId = "${spring.kafka.consumer.group-id}-" + Mq.HTTP_TRACE_LOG_CONSUMER_GROUP),
-			@KafkaListener(topics = Mq.TCP_TRACE_LOG_TOPIC,
-					groupId = "${spring.kafka.consumer.group-id}-" + Mq.TCP_TRACE_LOG_CONSUMER_GROUP),
 			@KafkaListener(topics = Mq.REPORT_TRACE_LOG_TOPIC,
 					groupId = "${spring.kafka.consumer.group-id}-" + Mq.REPORT_TRACE_LOG_CONSUMER_GROUP) })
 	public void handleTraceLog(List<ConsumerRecord<String, Object>> messages, Acknowledgment acknowledgment) {
