@@ -35,8 +35,6 @@ import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.core.util.UUIDGenerator;
 import org.laokou.common.i18n.common.exception.BizException;
-import org.laokou.iot.common.config.pulsar.handler.ConnectionStateHandler;
-import org.laokou.iot.common.config.pulsar.handler.State;
 import org.laokou.iot.common.util.VertxMqttUtils;
 import org.laokou.iot.session.dto.mqtt.MqttMessageType;
 
@@ -84,12 +82,9 @@ final class VertxMqttClient extends AbstractVerticle {
 
 	private final int maxInFlight;
 
-	private final ConnectionStateHandler connectionStateHandler;
-
 	private final String clientId;
 
-	public VertxMqttClient(Vertx vertx, MqttClientConfig config, ConnectionStateHandler connectionStateHandler,
-			List<MessageHandler> messageHandlers) {
+	public VertxMqttClient(Vertx vertx, MqttClientConfig config, List<MessageHandler> messageHandlers) {
 		this.vertx = vertx;
 		this.config = config;
 		this.timerInactive = -1;
@@ -98,13 +93,11 @@ final class VertxMqttClient extends AbstractVerticle {
 		this.mqttClient = createClient(buildOptions(config));
 		this.stopping = new AtomicBoolean(false);
 		this.disconnecting = new AtomicBoolean(false);
-		this.connectionStateHandler = connectionStateHandler;
 		this.reconnectAttempt = new AtomicInteger(0);
 		this.reconnectTimerId = new AtomicLong(timerInactive);
 		this.connectionPromise = new AtomicReference<>(null);
 		this.inFlight = new AtomicInteger(0);
 		this.maxInFlight = 8192;
-		this.connectionStateHandler.handle(State.INIT);
 		this.clientId = UUIDGenerator.generateUUID();
 	}
 
@@ -114,7 +107,6 @@ final class VertxMqttClient extends AbstractVerticle {
 			Future.failedFuture("MQTT客户端正在关闭");
 			return;
 		}
-		this.connectionStateHandler.handle(State.CONNECTING);
 		connectAndSubscribe();
 	}
 
@@ -123,7 +115,6 @@ final class VertxMqttClient extends AbstractVerticle {
 		if (!stopping.compareAndSet(false, true)) {
 			return;
 		}
-		this.connectionStateHandler.handle(State.DISCONNECTING);
 		Promise<Void> connecting = connectionPromise.get();
 		Future<Void> waitForConnect = connecting == null ? Future.succeededFuture()
 				: connecting.future().recover(_ -> Future.succeededFuture());
@@ -134,13 +125,12 @@ final class VertxMqttClient extends AbstractVerticle {
 		if (!mqttClient.isConnected()) {
 			return Future.succeededFuture();
 		}
-		return mqttClient.disconnect().onSuccess(_ -> {
-			this.connectionStateHandler.handle(State.DISCONNECTED);
-			log.info("【Vertx-MQTT-Client】 => MQTT断开连接成功，客户端ID：{}", clientId);
-		}).recover(ex -> {
-			log.warn("【Vertx-MQTT-Client】 => MQTT断开连接失败，客户端ID：{}，错误信息：{}", clientId, ex.getMessage(), ex);
-			return Future.succeededFuture();
-		});
+		return mqttClient.disconnect()
+			.onSuccess(_ -> log.info("【Vertx-MQTT-Client】 => MQTT断开连接成功，客户端ID：{}", clientId))
+			.recover(ex -> {
+				log.warn("【Vertx-MQTT-Client】 => MQTT断开连接失败，客户端ID：{}，错误信息：{}", clientId, ex.getMessage(), ex);
+				return Future.succeededFuture();
+			});
 	}
 
 	// -------------------------------------------------------------------------
@@ -323,13 +313,9 @@ final class VertxMqttClient extends AbstractVerticle {
 		if (!reconnectTimerId.compareAndSet(timerInactive, timerCreating)) {
 			return;
 		}
-
-		this.connectionStateHandler.handle(State.RECONNECTING);
-
 		long delay = getDelay();
 		log.warn("【Vertx-MQTT-Client】 => MQTT将在{}ms后执行第{}次重连，客户端ID：{}", delay, reconnectAttempt.incrementAndGet(),
 				clientId);
-
 		try {
 			long timerId = vertx.setTimer(delay, this::handleReconnectTimer);
 			reconnectTimerId.compareAndSet(timerCreating, timerId);
@@ -422,7 +408,6 @@ final class VertxMqttClient extends AbstractVerticle {
 		if (connAck.code() != MqttConnectReturnCode.CONNECTION_ACCEPTED) {
 			return Future.failedFuture("Broker拒绝连接，reasonCode = " + connAck.code());
 		}
-		this.connectionStateHandler.handle(State.CONNECTED);
 		log.info("【Vertx-MQTT-Client】 => MQTT连接成功，主机：{}，端口：{}，客户端ID：{}，存在会话：{}", config.getHost(), config.getPort(),
 				clientId, connAck.isSessionPresent());
 		return Future.succeededFuture();

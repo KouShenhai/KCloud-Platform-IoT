@@ -24,7 +24,6 @@ import io.vertx.core.Vertx;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.CollectionExtUtils;
 import org.laokou.common.i18n.common.exception.BizException;
-import org.laokou.iot.common.config.pulsar.handler.ConnectionStateHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,17 +39,13 @@ final class VertxMqttClientService extends AbstractVertxService {
 
 	private final MqttClientConfig config;
 
-	private final ConnectionStateHandler connectionStateHandler;
-
 	private final List<MessageHandler> messageHandlers;
 
 	private volatile List<VertxMqttClient> vertxMqttClients;
 
-	public VertxMqttClientService(Vertx vertx, MqttClientConfig config, ConnectionStateHandler connectionStateHandler,
-			List<MessageHandler> messageHandlers) {
+	public VertxMqttClientService(Vertx vertx, MqttClientConfig config, List<MessageHandler> messageHandlers) {
 		this.vertx = vertx;
 		this.config = config;
-		this.connectionStateHandler = connectionStateHandler;
 		this.messageHandlers = messageHandlers;
 		this.vertxMqttClients = null;
 	}
@@ -59,8 +54,7 @@ final class VertxMqttClientService extends AbstractVertxService {
 	public Future<String> doDeploy() {
 		List<VertxMqttClient> clients = new ArrayList<>(4);
 		return vertx.deployVerticle(() -> {
-			VertxMqttClient vertxMqttClient = new VertxMqttClient(vertx, config, connectionStateHandler,
-					messageHandlers);
+			VertxMqttClient vertxMqttClient = new VertxMqttClient(vertx, config, messageHandlers);
 			clients.add(vertxMqttClient);
 			return vertxMqttClient;
 		}, buildOptions()).onSuccess(deploymentId -> {

@@ -37,7 +37,7 @@ final class UpUpgradeOtaProcessGatewayMessageHandler extends AbstractMessageHand
 
 	@Override
 	public Future<Void> handleMessage(Long snowflakeId, MqttPublishMessage publishMessage) {
-		log.debug("【Vertx-MQTT-Client】 => 升级网关固件进度消息【上行】处理器，接收雪花ID【{}】，主题【{}】消息", snowflakeId,
+		log.info("【Vertx-MQTT-Client】 => 升级网关固件进度消息【上行】处理器，接收雪花ID【{}】，主题【{}】消息", snowflakeId,
 				publishMessage.topicName());
 		return Future.succeededFuture();
 	}

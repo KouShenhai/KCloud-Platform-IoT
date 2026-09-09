@@ -37,8 +37,7 @@ final class UpReportPropertiesGatewayMessageHandler extends AbstractMessageHandl
 
 	@Override
 	public Future<Void> handleMessage(Long snowflakeId, MqttPublishMessage publishMessage) {
-		log.debug("【Vertx-MQTT-Client】 => 上报设备属性消息【上行】处理器，接收雪花ID【{}】，主题【{}】消息", snowflakeId,
-				publishMessage.topicName());
+		log.info("【Vertx-MQTT-Client】 => 上报设备属性消息【上行】处理器，接收雪花ID【{}】，主题【{}】消息", snowflakeId, publishMessage.topicName());
 		return Future.succeededFuture();
 	}
 

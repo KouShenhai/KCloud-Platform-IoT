@@ -17,10 +17,12 @@
 
 package org.laokou.iot.session.dto.mqtt;
 
-import com.google.common.collect.Maps;
 import lombok.Getter;
 
+import java.util.Arrays;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.stream.Collectors;
 
 /***
  * mqtt消息类型枚举.
@@ -29,51 +31,6 @@ import java.util.Map;
  */
 @Getter
 public enum MqttMessageType {
-
-	UP_CLIENT_CONNECTED_GATEWAY_MESSAGE("up_client_connected_gateway_message", "MQTT客户端建立连接【上行】") {
-		@Override
-		public String getTopic() {
-			return "$SYS/brokers/+/clients/+/connected";
-		}
-
-		@Override
-		public String getMqTopic() {
-			return "iot-up-client-connected-gateway-message";
-		}
-
-		@Override
-		MqttQos getMqttQos() {
-			return MqttQos.AT_LEAST_ONCE;
-		}
-
-		@Override
-		public int getNumPartitions() {
-			return 2;
-		}
-
-	},
-	UP_CLIENT_DISCONNECTED_GATEWAY_MESSAGE("up_client_disconnected_gateway_message", "MQTT客户端断开连接【上行】") {
-		@Override
-		public String getTopic() {
-			return "$SYS/brokers/+/clients/+/disconnected";
-		}
-
-		@Override
-		public String getMqTopic() {
-			return "iot-up-client-disconnected-gateway-message";
-		}
-
-		@Override
-		MqttQos getMqttQos() {
-			return MqttQos.AT_LEAST_ONCE;
-		}
-
-		@Override
-		public int getNumPartitions() {
-			return 2;
-		}
-
-	},
 
 	DOWN_COMMAND_GATEWAY_MESSAGE("down_command_gateway_message", "网关指令【下行】") {
 		@Override
@@ -262,7 +219,7 @@ public enum MqttMessageType {
 	UP_REPORT_PROPERTIES_GATEWAY_MESSAGE("up_report_properties_gateway_message", "上报设备属性【上行】") {
 		@Override
 		public String getTopic() {
-			return "up/+/+/properties/report";
+			return "up/+/+/+/properties/report";
 		}
 
 		@Override
@@ -282,11 +239,11 @@ public enum MqttMessageType {
 
 	},
 
-	UP_ALARM_EVENT_GATEWAY_MESSAGE("up_event_gateway_message", "设备预警/报警事件【上行】") {
+	UP_ALARM_EVENT_GATEWAY_MESSAGE("up_event_gateway_message", "设备报警事件【上行】") {
 
 		@Override
 		public String getTopic() {
-			return "up/+/+/event/alarm";
+			return "up/+/+/+/event/alarm";
 		}
 
 		@Override
@@ -324,20 +281,11 @@ public enum MqttMessageType {
 	public abstract int getNumPartitions();
 
 	public static Map<String, Integer> getTopics(String tenantCode) {
-		MqttMessageType[] values = values();
-		Map<String, Integer> topics = Maps.newHashMapWithExpectedSize(values.length);
-		for (MqttMessageType messageType : values) {
-			String topic = messageType.getTopic();
-			int plusIndex = topic.indexOf('+');
-			String replacedTopic = plusIndex > 0
-					? topic.substring(0, plusIndex) + tenantCode + topic.substring(plusIndex + 1) : topic;
-			topics.put(getShareTopicPrefix(tenantCode) + replacedTopic, messageType.getMqttQos().getCode());
-		}
-		return topics;
-	}
-
-	private static String getShareTopicPrefix(String tenantCode) {
-		return String.format("$share/kcloud-platform-iot-%s/", tenantCode);
+		return Arrays.stream(values())
+			.collect(Collectors.toMap(
+					k -> String.format("$share/iot/%s",
+							k.getTopic().replaceFirst("\\+", Matcher.quoteReplacement(tenantCode))),
+					v -> v.getMqttQos().getCode()));
 	}
 
 }

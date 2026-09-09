@@ -18,7 +18,7 @@
 package org.laokou.iot.common.config.mqtt;
 
 import io.vertx.core.Vertx;
-import org.laokou.iot.common.config.pulsar.handler.ConnectionStateHandler;
+
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -31,10 +31,9 @@ public final class VertxServiceManager {
 	private static final Map<Long, VertxService> VERTX_SERVICE_MAP = new ConcurrentHashMap<>(8192);
 
 	public static void deployVertxMqttClientService(Vertx vertx, MqttClientConfig config,
-			ConnectionStateHandler connectionStateHandler, List<MessageHandler> messageHandlers) {
+			List<MessageHandler> messageHandlers) {
 		VERTX_SERVICE_MAP
-			.computeIfAbsent(config.getSnowflakeId(),
-					_ -> new VertxMqttClientService(vertx, config, connectionStateHandler, messageHandlers))
+			.computeIfAbsent(config.getSnowflakeId(), _ -> new VertxMqttClientService(vertx, config, messageHandlers))
 			.deploy();
 	}
 
