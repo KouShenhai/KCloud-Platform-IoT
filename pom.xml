@@ -209,7 +209,7 @@
     <!-- mockito版本 -->
     <mockito.version>5.23.0</mockito.version>
     <!-- taos-jdbcdriver版本 -->
-    <taos-jdbcdriver.version>3.9.0</taos-jdbcdriver.version>
+    <taos-jdbcdriver.version>3.9.1</taos-jdbcdriver.version>
     <!-- fory版本 -->
     <fory.version>1.7.1</fory.version>
     <!-- browscap-java版本 -->
