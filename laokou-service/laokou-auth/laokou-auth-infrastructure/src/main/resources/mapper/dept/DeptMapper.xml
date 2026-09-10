@@ -43,7 +43,7 @@
               select dept_id from sys_role_dept
               where role_id in (
                 select role_id from sys_user_role where user_id = #{user.id} and del_flag = 0
-              )
+              ) and del_flag = 0
             </when>
           </choose>
         </foreach>
