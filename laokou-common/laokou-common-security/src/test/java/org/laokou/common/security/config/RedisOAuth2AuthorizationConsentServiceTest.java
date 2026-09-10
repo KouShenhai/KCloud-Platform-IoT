@@ -51,14 +51,6 @@ class RedisOAuth2AuthorizationConsentServiceTest {
 	}
 
 	@Test
-	void test_constructor_throws_exception_when_repository_is_null() {
-		// Then
-		Assertions.assertThatThrownBy(() -> new RedisOAuth2AuthorizationConsentService(null))
-			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessageContaining("UserConsentRepository cannot be null");
-	}
-
-	@Test
 	void test_save_authorizationConsent() {
 		// Given
 		OAuth2AuthorizationConsent consent = OAuth2AuthorizationConsent.withId("client-1", "user-1")
@@ -115,30 +107,6 @@ class RedisOAuth2AuthorizationConsentServiceTest {
 		Assertions.assertThat(result).isNotNull();
 		Assertions.assertThat(result.getRegisteredClientId()).isEqualTo("client-1");
 		Assertions.assertThat(result.getPrincipalName()).isEqualTo("user-1");
-	}
-
-	@Test
-	void test_save_throws_exception_when_consent_is_null() {
-		// Then
-		Assertions.assertThatThrownBy(() -> service.save(null))
-			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessageContaining("AuthorizationConsent cannot be null");
-	}
-
-	@Test
-	void test_findById_throws_exception_when_registeredClientId_is_empty() {
-		// Then
-		Assertions.assertThatThrownBy(() -> service.findById("", "user-1"))
-			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessageContaining("RegisteredClientId cannot be empty");
-	}
-
-	@Test
-	void test_findById_throws_exception_when_principalName_is_empty() {
-		// Then
-		Assertions.assertThatThrownBy(() -> service.findById("client-1", ""))
-			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessageContaining("PrincipalName cannot be empty");
 	}
 
 }

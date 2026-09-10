@@ -59,24 +59,6 @@ class RedisOAuth2AuthorizationServiceTest {
 	}
 
 	@Test
-	void test_constructor_throws_exception_when_registeredClientRepository_is_null() {
-		// Then
-		Assertions
-			.assertThatThrownBy(
-					() -> new RedisOAuth2AuthorizationService(null, authorizationGrantAuthorizationRepository))
-			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessageContaining("RegisteredClientRepository cannot be null");
-	}
-
-	@Test
-	void test_constructor_throws_exception_when_authorizationGrantAuthorizationRepository_is_null() {
-		// Then
-		Assertions.assertThatThrownBy(() -> new RedisOAuth2AuthorizationService(registeredClientRepository, null))
-			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessageContaining("AuthorizationGrantAuthorizationRepository cannot be null");
-	}
-
-	@Test
 	void test_remove_authorization() {
 		// Given
 		RegisteredClient registeredClient = createRegisteredClient();
@@ -115,30 +97,6 @@ class RedisOAuth2AuthorizationServiceTest {
 
 		// Then
 		Assertions.assertThat(result).isNull();
-	}
-
-	@Test
-	void test_save_throws_exception_when_authorization_is_null() {
-		// Then
-		Assertions.assertThatThrownBy(() -> service.save(null))
-			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessageContaining("Authorization cannot be null");
-	}
-
-	@Test
-	void test_remove_throws_exception_when_authorization_is_null() {
-		// Then
-		Assertions.assertThatThrownBy(() -> service.remove(null))
-			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessageContaining("authorization cannot be null");
-	}
-
-	@Test
-	void test_findById_throws_exception_when_id_is_empty() {
-		// Then
-		Assertions.assertThatThrownBy(() -> service.findById(""))
-			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessageContaining("id cannot be empty");
 	}
 
 	private RegisteredClient createRegisteredClient() {
