@@ -108,7 +108,6 @@ public final class UserConvertor {
 		UserDO userDO = new UserDO();
 		userDO.setId(userE.getId());
 		userDO.setDeptId(userE.getDeptId());
-		userDO.setTenantId(userE.getTenantId());
 		return userDO;
 	}
 

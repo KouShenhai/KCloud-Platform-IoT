@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.iot.session.dto.mqtt;
+package org.laokou.iot.session.dto.clientobject.mqtt;
 
 import lombok.Getter;
 
@@ -216,7 +216,7 @@ public enum MqttMessageType {
 
 	},
 
-	UP_REPORT_PROPERTIES_GATEWAY_MESSAGE("up_report_properties_gateway_message", "上报设备属性【上行】") {
+	UP_REPORT_PROPERTIES_DEVICE_MESSAGE("up_report_properties_device_message", "上报设备属性【上行】") {
 		@Override
 		public String getTopic() {
 			return "up/+/+/+/properties/report";
@@ -224,7 +224,7 @@ public enum MqttMessageType {
 
 		@Override
 		public String getMqTopic() {
-			return "iot-up-report-properties-gateway-message";
+			return "iot-up-report-properties-device-message";
 		}
 
 		@Override
@@ -239,7 +239,7 @@ public enum MqttMessageType {
 
 	},
 
-	UP_ALARM_EVENT_GATEWAY_MESSAGE("up_event_gateway_message", "设备报警事件【上行】") {
+	UP_ALARM_EVENT_DEVICE_MESSAGE("up_event_device_message", "设备报警事件【上行】") {
 
 		@Override
 		public String getTopic() {
@@ -248,7 +248,7 @@ public enum MqttMessageType {
 
 		@Override
 		public String getMqTopic() {
-			return "iot-up-alarm-event-gateway-message";
+			return "iot-up-alarm-event-device-message";
 		}
 
 		@Override

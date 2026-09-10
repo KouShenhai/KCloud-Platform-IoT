@@ -20,8 +20,6 @@ package org.laokou.iot.session.command.query;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.data.cache.annotation.DataCache;
-import org.laokou.common.data.cache.constant.NameConstants;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.tenant.constant.DSConstants;
 import org.laokou.iot.session.convertor.SessionConvertor;
@@ -40,7 +38,6 @@ public class SessionGetQryExe {
 
 	private final SessionMapper sessionMapper;
 
-	@DataCache(name = NameConstants.SESSIONS, key = "#qry.id")
 	public Result<SessionCO> execute(SessionGetQry qry) {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.IOT);

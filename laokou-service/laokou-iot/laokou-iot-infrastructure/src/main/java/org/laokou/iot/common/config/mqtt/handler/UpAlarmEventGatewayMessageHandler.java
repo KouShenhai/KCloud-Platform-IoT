@@ -22,7 +22,7 @@ import io.vertx.mqtt.messages.MqttPublishMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.iot.common.config.mqtt.AbstractMessageHandler;
-import org.laokou.iot.session.dto.mqtt.MqttMessageType;
+import org.laokou.iot.session.dto.clientobject.mqtt.MqttMessageType;
 import org.springframework.stereotype.Component;
 
 /**
@@ -43,7 +43,7 @@ final class UpAlarmEventGatewayMessageHandler extends AbstractMessageHandler {
 
 	@Override
 	protected MqttMessageType getMatchTopic() {
-		return MqttMessageType.UP_ALARM_EVENT_GATEWAY_MESSAGE;
+		return MqttMessageType.UP_ALARM_EVENT_DEVICE_MESSAGE;
 	}
 
 }

@@ -15,29 +15,21 @@
  *
  */
 
-package org.laokou.iot.session.dto.mqtt;
+package org.laokou.iot.session.dto.clientobject.mqtt;
 
-import lombok.Getter;
+import lombok.Data;
 
-/***
+/**
+ * 设备事件消息.
+ *
  * @author laokou
  */
-@Getter
-enum MqttQos {
+@Data
+public abstract class EventDeviceMessage extends DeviceMessage {
 
-	AT_MOST_ONCE(0, "最多一次"),
-
-	AT_LEAST_ONCE(1, "至少一次"),
-
-	EXACTLY_ONCE(2, "恰好一次");
-
-	private final int code;
-
-	private final String desc;
-
-	MqttQos(int code, String desc) {
-		this.code = code;
-		this.desc = desc;
-	}
+	/**
+	 * 事件类型.
+	 */
+	protected String type;
 
 }

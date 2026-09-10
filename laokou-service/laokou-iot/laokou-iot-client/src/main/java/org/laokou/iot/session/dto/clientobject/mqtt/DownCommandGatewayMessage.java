@@ -15,16 +15,18 @@
  *
  */
 
-package org.laokou.iot.session.dto.mqtt;
+package org.laokou.iot.session.dto.clientobject.mqtt;
 
 import lombok.Data;
 
 /**
- * 上报网关固件信息回复消息【下行】.
+ * 网关消息【下行】.
  *
  * @author laokou
  */
 @Data
-public class DownReportOtaReplyGatewayMessage extends GatewayMessage {
+public class DownCommandGatewayMessage extends GatewayMessage {
+
+	private String command;
 
 }

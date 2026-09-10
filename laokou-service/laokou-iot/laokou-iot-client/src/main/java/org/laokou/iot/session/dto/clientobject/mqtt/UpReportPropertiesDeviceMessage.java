@@ -15,26 +15,19 @@
  *
  */
 
-package org.laokou.iot.session.dto.mqtt;
+package org.laokou.iot.session.dto.clientobject.mqtt;
 
 import lombok.Data;
+import tools.jackson.databind.JsonNode;
 
 /**
- * 设备事件消息.
+ * 上报设备属性消息【上行】.
  *
  * @author laokou
  */
 @Data
-public abstract class EventDeviceMessage extends DeviceMessage {
+public class UpReportPropertiesDeviceMessage extends DeviceMessage {
 
-	/**
-	 * 事件ID.
-	 */
-	private Long eventId;
-
-	/**
-	 * 事件类型.
-	 */
-	protected String type;
+	private JsonNode properties;
 
 }

@@ -21,7 +21,7 @@ import io.netty.handler.codec.mqtt.MqttQoS;
 import io.vertx.core.Future;
 import io.vertx.mqtt.messages.MqttPublishMessage;
 import org.laokou.iot.common.util.VertxMqttUtils;
-import org.laokou.iot.session.dto.mqtt.MqttMessageType;
+import org.laokou.iot.session.dto.clientobject.mqtt.MqttMessageType;
 
 /**
  * @author laokou

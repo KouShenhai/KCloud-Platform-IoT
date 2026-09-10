@@ -25,22 +25,20 @@ import org.laokou.common.context.util.UserUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author laokou
  */
-public record GlobalTenantLineHandler(Set<String> ignoreTables) implements TenantLineHandler {
+public record GlobalTenantLineHandler() implements TenantLineHandler {
 
 	@Override
 	public boolean ignoreTable(String tableName) {
-		return ObjectUtils.equals(Boolean.TRUE, UserUtils.isSuperAdmin()) || ignoreTables.contains(tableName);
+		return ObjectUtils.equals(Boolean.TRUE, UserUtils.isSuperAdmin()) || UserUtils.getTenantId() == null;
 	}
 
 	@Override
 	public Expression getTenantId() {
-		Long tenantId = UserUtils.getTenantId();
-		return ObjectUtils.isNull(tenantId) ? new LongValue(1L) : new LongValue(tenantId);
+		return new LongValue(UserUtils.getTenantId());
 	}
 
 	@Override

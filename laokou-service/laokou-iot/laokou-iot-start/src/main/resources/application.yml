@@ -99,8 +99,6 @@ mybatis-plus:
   global-config:
     db-config:
       column-format: "\"%s\""
-  tenant:
-    enabled: true
   sql-monitor:
     enabled: true
     interval: 0

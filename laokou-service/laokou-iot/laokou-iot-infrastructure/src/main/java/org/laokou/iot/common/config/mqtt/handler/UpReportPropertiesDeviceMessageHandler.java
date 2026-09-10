@@ -22,7 +22,7 @@ import io.vertx.mqtt.messages.MqttPublishMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.iot.common.config.mqtt.AbstractMessageHandler;
-import org.laokou.iot.session.dto.mqtt.MqttMessageType;
+import org.laokou.iot.session.dto.clientobject.mqtt.MqttMessageType;
 import org.springframework.stereotype.Component;
 
 /**
@@ -33,7 +33,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-final class UpReportPropertiesGatewayMessageHandler extends AbstractMessageHandler {
+final class UpReportPropertiesDeviceMessageHandler extends AbstractMessageHandler {
 
 	@Override
 	public Future<Void> handleMessage(Long snowflakeId, MqttPublishMessage publishMessage) {
@@ -43,7 +43,7 @@ final class UpReportPropertiesGatewayMessageHandler extends AbstractMessageHandl
 
 	@Override
 	protected MqttMessageType getMatchTopic() {
-		return MqttMessageType.UP_REPORT_PROPERTIES_GATEWAY_MESSAGE;
+		return MqttMessageType.UP_REPORT_PROPERTIES_DEVICE_MESSAGE;
 	}
 
 }

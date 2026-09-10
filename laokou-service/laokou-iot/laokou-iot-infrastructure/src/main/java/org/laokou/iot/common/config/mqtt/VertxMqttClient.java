@@ -36,7 +36,7 @@ import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.core.util.UUIDGenerator;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.iot.common.util.VertxMqttUtils;
-import org.laokou.iot.session.dto.mqtt.MqttMessageType;
+import org.laokou.iot.session.dto.clientobject.mqtt.MqttMessageType;
 
 import java.util.ArrayList;
 import java.util.List;

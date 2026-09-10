@@ -50,36 +50,25 @@ import org.springframework.util.Assert;
  * @author spring-authorization-server
  * @author laokou
  */
-public record RedisOAuth2AuthorizationService(RegisteredClientRepository registeredClientRepository,
-		OAuth2AuthorizationGrantAuthorizationRepository authorizationGrantAuthorizationRepository)
+public record RedisOAuth2AuthorizationService(@NonNull RegisteredClientRepository registeredClientRepository,
+		@NonNull OAuth2AuthorizationGrantAuthorizationRepository authorizationGrantAuthorizationRepository)
 		implements
 			OAuth2AuthorizationService {
 
-	public RedisOAuth2AuthorizationService {
-		Assert.notNull(registeredClientRepository, "RegisteredClientRepository cannot be null");
-		Assert.notNull(authorizationGrantAuthorizationRepository,
-				"AuthorizationGrantAuthorizationRepository cannot be null");
-	}
-
 	@Override
 	public void save(@NonNull OAuth2Authorization authorization) {
-		Assert.notNull(authorization, "Authorization cannot be null");
-		OAuth2AuthorizationGrantAuthorization authorizationGrantAuthorization = OAuth2ModelMapper
-			.convertOAuth2AuthorizationGrantAuthorization(authorization);
-		Assert.notNull(authorizationGrantAuthorization, "AuthorizationGrantAuthorization cannot be null");
-		this.authorizationGrantAuthorizationRepository.save(authorizationGrantAuthorization);
+		this.authorizationGrantAuthorizationRepository
+			.save(OAuth2ModelMapper.convertOAuth2AuthorizationGrantAuthorization(authorization));
 	}
 
 	@Override
 	public void remove(@NonNull OAuth2Authorization authorization) {
-		Assert.notNull(authorization, "authorization cannot be null");
 		this.authorizationGrantAuthorizationRepository.deleteById(authorization.getId());
 	}
 
 	@Nullable
 	@Override
 	public OAuth2Authorization findById(@NonNull String id) {
-		Assert.hasText(id, "id cannot be empty");
 		return this.authorizationGrantAuthorizationRepository.findById(id)
 			.map(this::toOAuth2Authorization)
 			.orElse(null);

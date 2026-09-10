@@ -15,43 +15,16 @@
  *
  */
 
-package org.laokou.iot.session.dto.mqtt;
+package org.laokou.iot.session.dto.clientobject.mqtt;
 
 import lombok.Data;
 
-import java.util.Map;
-
 /**
- * 网关消息.
+ * 升级网关固件进度消息【上行】.
  *
  * @author laokou
  */
 @Data
-public abstract class GatewayMessage implements Message {
-
-	/**
-	 * 租户ID.
-	 */
-	protected Long tenantId;
-
-	/**
-	 * 网关ID.
-	 */
-	protected Long gatewayId;
-
-	/**
-	 * 时间戳.
-	 */
-	protected Long timestamp;
-
-	/**
-	 * 请求ID.
-	 */
-	protected Long requestId;
-
-	/**
-	 * 扩展元数据.
-	 */
-	protected Map<String, Object> metadata;
+public class UpUpgradeOtaProcessGatewayMessage extends GatewayMessage {
 
 }
