@@ -22,7 +22,7 @@ import io.vertx.mqtt.messages.MqttPublishMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.iot.common.config.mqtt.AbstractMessageHandler;
-import org.laokou.iot.session.dto.mqtt.MqttMessageType;
+import org.laokou.iot.session.dto.clientobject.mqtt.MqttMessageType;
 import org.springframework.stereotype.Component;
 
 /**

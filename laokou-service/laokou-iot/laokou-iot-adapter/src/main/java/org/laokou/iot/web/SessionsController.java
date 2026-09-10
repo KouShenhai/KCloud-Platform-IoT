@@ -20,6 +20,9 @@ package org.laokou.iot.web;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.data.cache.annotation.DataCache;
+import org.laokou.common.data.cache.aspectj.OperateType;
+import org.laokou.common.data.cache.constant.NameConstants;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
@@ -69,6 +72,7 @@ public class SessionsController {
 	@PreAuthorize("hasAuthority('write') and hasAuthority('iot:session:modify')")
 	@OperateLog(module = "会话管理", operation = "修改会话")
 	@Operation(summary = "修改会话", description = "修改会话")
+	@DataCache(name = NameConstants.SESSIONS, key = "#cmd.co.id", operateType = OperateType.DEL)
 	public void modifySession(@RequestBody SessionModifyCmd cmd) {
 		sessionsServiceI.modifySession(cmd);
 	}
@@ -109,6 +113,7 @@ public class SessionsController {
 	@GetMapping("/v1/sessions/{id}")
 	@PreAuthorize("hasAuthority('read') and hasAuthority('iot:session:detail')")
 	@Operation(summary = "查看会话详情", description = "查看会话详情")
+	@DataCache(name = NameConstants.SESSIONS, key = "#id")
 	public Result<SessionCO> getSessionById(@PathVariable Long id) {
 		return sessionsServiceI.getSessionById(new SessionGetQry(id));
 	}

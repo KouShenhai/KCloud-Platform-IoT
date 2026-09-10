@@ -20,8 +20,6 @@ mybatis-plus:
   global-config:
     db-config:
       column-format: "\"%s\""
-  tenant:
-    enabled: true
   mapper-locations: classpath*:/mapper/**/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl

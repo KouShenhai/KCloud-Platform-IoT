@@ -38,13 +38,13 @@ public final class SessionConvertor {
 	private SessionConvertor() {
 	}
 
-	public static MqttClientConfig toConfig(SessionCO sessionCO, SystemSettingsProperties systemSettingsProperties) {
+	public static MqttClientConfig toConfig(SessionDO sessionDO, SystemSettingsProperties systemSettingsProperties) {
 		MqttClientConfig config = new MqttClientConfig();
-		config.setSnowflakeId(sessionCO.getId());
-		config.setHost(sessionCO.getHost());
-		config.setPort(sessionCO.getPort());
-		config.setUsername(sessionCO.getUsername());
-		config.setPassword(sessionCO.getPassword());
+		config.setSnowflakeId(sessionDO.getId());
+		config.setHost(sessionDO.getHost());
+		config.setPort(sessionDO.getPort());
+		config.setUsername(sessionDO.getUsername());
+		config.setPassword(sessionDO.getPassword());
 		config.setTenantCode(systemSettingsProperties.getTenantCode());
 		return config;
 	}

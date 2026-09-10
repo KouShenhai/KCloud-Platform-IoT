@@ -15,16 +15,29 @@
  *
  */
 
-package org.laokou.iot.session.dto.mqtt;
+package org.laokou.iot.session.dto.clientobject.mqtt;
 
-import lombok.Data;
+import lombok.Getter;
 
-/**
- * 上报网关固件信息消息【上行】.
- *
+/***
  * @author laokou
  */
-@Data
-public class UpReportOtaGatewayMessage extends GatewayMessage {
+@Getter
+enum MqttQos {
+
+	AT_MOST_ONCE(0, "最多一次"),
+
+	AT_LEAST_ONCE(1, "至少一次"),
+
+	EXACTLY_ONCE(2, "恰好一次");
+
+	private final int code;
+
+	private final String desc;
+
+	MqttQos(int code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
 
 }

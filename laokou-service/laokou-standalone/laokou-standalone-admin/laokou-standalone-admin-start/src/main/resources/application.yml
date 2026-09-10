@@ -155,8 +155,6 @@ mybatis-plus:
   global-config:
     db-config:
       column-format: "\"%s\""
-  tenant:
-    enabled: false
   sql-monitor:
     enabled: true
     interval: 0

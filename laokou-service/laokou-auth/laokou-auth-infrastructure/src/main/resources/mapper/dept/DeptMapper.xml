@@ -25,8 +25,8 @@
         <foreach collection="dataScopes" item="dataScope" separator=" union all ">
           <choose>
             <when test="dataScope != null and dataScope == 'below_dept'">
-              select id from sys_dept where (
-              level1 = #{user.deptId} or
+              select id from sys_dept
+              where level1 = #{user.deptId} or
               level2 = #{user.deptId} or
               level3 = #{user.deptId} or
               level4 = #{user.deptId} or
@@ -35,15 +35,15 @@
               level7 = #{user.deptId} or
               level8 = #{user.deptId} or
               level9 = #{user.deptId}
-              )  and tenant_id = #{user.tenantId}
             </when>
             <when test="dataScope != null and dataScope == 'self_dept'">
               select #{user.deptId}
             </when>
             <when test="dataScope != null and dataScope == 'custom'">
-              select rd.dept_id from sys_role_dept rd
-              join sys_user_role ur on ur.role_id = rd.role_id
-              where ur.user_id = #{user.id} and rd.tenant_id = #{user.tenantId}
+              select dept_id from sys_role_dept
+              where role_id in (
+                select role_id from sys_user_role where user_id = #{user.id} and del_flag = 0
+              )
             </when>
           </choose>
         </foreach>

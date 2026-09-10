@@ -15,16 +15,15 @@
  *
  */
 
-package org.laokou.iot.session.dto.mqtt;
+package org.laokou.iot.session.dto.clientobject.mqtt;
 
-import lombok.Data;
+import java.io.Serializable;
 
 /**
- * 升级网关固件消息【上行】.
+ * 消息.
  *
  * @author laokou
  */
-@Data
-public class UpUpgradeOtaGatewayMessage extends GatewayMessage {
+interface Message extends Serializable {
 
 }

@@ -107,20 +107,16 @@ public class MybatisPlusAutoConfig {
 	 * 											- 分页，乐观锁
 	 * 											- sql性能规范，防止全表更新与删除
 	 * 总结：对 sql进行单次改造的优先放入,不对 sql 进行改造的最后放入.
-	 * @param mybatisPlusExtProperties mybatis配置
 	 */
 	// @formatter:on
 	@Bean
 	@ConditionalOnMissingBean(MybatisPlusInterceptor.class)
-	public MybatisPlusInterceptor mybatisPlusInterceptor(MybatisPlusExtProperties mybatisPlusExtProperties) {
+	public MybatisPlusInterceptor mybatisPlusInterceptor() {
 		MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
 		// 数据权限插件
 		interceptor.addInnerInterceptor(new DataFilterInterceptor());
 		// 多租户插件
-		if (mybatisPlusExtProperties.getTenant().isEnabled()) {
-			interceptor.addInnerInterceptor(new TenantLineInnerInterceptor(
-					new GlobalTenantLineHandler(mybatisPlusExtProperties.getTenant().getIgnoreTables())));
-		}
+		interceptor.addInnerInterceptor(new TenantLineInnerInterceptor(new GlobalTenantLineHandler()));
 		// 动态表名插件
 		interceptor.addInnerInterceptor(new DynamicTableNameInnerInterceptor(new DynamicTableNameHandler()));
 		// 分页插件

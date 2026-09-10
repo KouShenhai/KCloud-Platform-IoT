@@ -15,16 +15,26 @@
  *
  */
 
-package org.laokou.iot.session.dto.mqtt;
+package org.laokou.iot.session.dto.clientobject.mqtt;
 
 import lombok.Data;
 
 /**
- * 升级网关固件进度消息【上行】.
+ * 设备消息.
  *
  * @author laokou
  */
 @Data
-public class UpUpgradeOtaProcessGatewayMessage extends GatewayMessage {
+public abstract class DeviceMessage extends GatewayMessage {
+
+	/**
+	 * 设备SN.
+	 */
+	protected String deviceSn;
+
+	/**
+	 * 设备名称.
+	 */
+	protected String deviceName;
 
 }

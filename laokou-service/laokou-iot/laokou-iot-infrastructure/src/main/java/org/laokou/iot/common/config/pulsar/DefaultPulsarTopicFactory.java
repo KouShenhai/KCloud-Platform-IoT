@@ -26,7 +26,7 @@ import org.apache.pulsar.client.admin.Tenants;
 import org.apache.pulsar.client.admin.Topics;
 import org.apache.pulsar.common.policies.data.TenantInfoImpl;
 import org.laokou.common.core.config.SystemSettingsProperties;
-import org.laokou.iot.session.dto.mqtt.MqttMessageType;
+import org.laokou.iot.session.dto.clientobject.mqtt.MqttMessageType;
 import org.laokou.iot.session.model.enums.MqTopic;
 
 import java.util.HashSet;

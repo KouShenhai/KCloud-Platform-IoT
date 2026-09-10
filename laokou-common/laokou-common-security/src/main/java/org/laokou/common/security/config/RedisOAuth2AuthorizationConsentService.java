@@ -38,29 +38,22 @@ import org.laokou.common.security.config.entity.OAuth2UserConsent;
 import org.laokou.common.security.config.repository.OAuth2UserConsentRepository;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsent;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsentService;
-import org.springframework.util.Assert;
 
 /**
  * @author spring-authorization-server
  * @author laokou
  */
 public record RedisOAuth2AuthorizationConsentService(
-		OAuth2UserConsentRepository userConsentRepository) implements OAuth2AuthorizationConsentService {
-
-	public RedisOAuth2AuthorizationConsentService {
-		Assert.notNull(userConsentRepository, "UserConsentRepository cannot be null");
-	}
+		@NonNull OAuth2UserConsentRepository userConsentRepository) implements OAuth2AuthorizationConsentService {
 
 	@Override
 	public void save(@NonNull OAuth2AuthorizationConsent authorizationConsent) {
-		Assert.notNull(authorizationConsent, "AuthorizationConsent cannot be null");
 		OAuth2UserConsent oauth2UserConsent = OAuth2ModelMapper.convertOAuth2UserConsent(authorizationConsent);
 		this.userConsentRepository.save(oauth2UserConsent);
 	}
 
 	@Override
 	public void remove(@NonNull OAuth2AuthorizationConsent authorizationConsent) {
-		Assert.notNull(authorizationConsent, "AuthorizationConsent cannot be null");
 		this.userConsentRepository.deleteByRegisteredClientIdAndPrincipalName(
 				authorizationConsent.getRegisteredClientId(), authorizationConsent.getPrincipalName());
 	}
@@ -68,8 +61,6 @@ public record RedisOAuth2AuthorizationConsentService(
 	@Nullable
 	@Override
 	public OAuth2AuthorizationConsent findById(@NonNull String registeredClientId, @NonNull String principalName) {
-		Assert.hasText(registeredClientId, "RegisteredClientId cannot be empty");
-		Assert.hasText(principalName, "PrincipalName cannot be empty");
 		OAuth2UserConsent oauth2UserConsent = this.userConsentRepository
 			.findByRegisteredClientIdAndPrincipalName(registeredClientId, principalName);
 		return oauth2UserConsent != null ? OAuth2ModelMapper.convertOAuth2AuthorizationConsent(oauth2UserConsent)

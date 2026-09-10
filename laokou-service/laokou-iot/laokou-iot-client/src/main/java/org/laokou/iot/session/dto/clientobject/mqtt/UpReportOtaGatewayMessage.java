@@ -15,20 +15,16 @@
  *
  */
 
-package org.laokou.iot.session.dto.mqtt;
+package org.laokou.iot.session.dto.clientobject.mqtt;
 
 import lombok.Data;
 
-import java.util.Map;
-
 /**
- * 上报设备属性消息【上行】.
+ * 上报网关固件信息消息【上行】.
  *
  * @author laokou
  */
 @Data
-public class UpReportPropertiesGatewayMessage extends DeviceMessage {
-
-	private Map<String, String> properties;
+public class UpReportOtaGatewayMessage extends GatewayMessage {
 
 }

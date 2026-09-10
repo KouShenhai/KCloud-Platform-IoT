@@ -15,31 +15,42 @@
  *
  */
 
-package org.laokou.iot.session.dto.mqtt;
+package org.laokou.iot.session.dto.clientobject.mqtt;
 
 import lombok.Data;
+import tools.jackson.databind.JsonNode;
 
 /**
- * 设备消息.
+ * 网关消息.
  *
  * @author laokou
  */
 @Data
-public abstract class DeviceMessage extends GatewayMessage {
+public abstract class GatewayMessage implements Message {
 
 	/**
-	 * 产品ID.
+	 * 租户编码.
 	 */
-	protected Long productId;
+	protected String tenantCode;
 
 	/**
-	 * 设备ID.
+	 * 网关SN.
 	 */
-	protected Long deviceId;
+	protected String gatewaySn;
 
 	/**
-	 * 设备名称.
+	 * 时间戳.
 	 */
-	protected String deviceName;
+	protected Long timestamp;
+
+	/**
+	 * 请求ID.
+	 */
+	protected Long requestId;
+
+	/**
+	 * 扩展元数据.
+	 */
+	protected JsonNode metadata;
 
 }
