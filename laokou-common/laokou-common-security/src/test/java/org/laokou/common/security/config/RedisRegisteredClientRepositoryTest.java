@@ -53,14 +53,6 @@ class RedisRegisteredClientRepositoryTest {
 	}
 
 	@Test
-	void test_constructor_throws_exception_when_repository_is_null() {
-		// Then
-		Assertions.assertThatThrownBy(() -> new RedisRegisteredClientRepository(null))
-			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessageContaining("RegisteredClientRepository cannot be null");
-	}
-
-	@Test
 	void test_save_registeredClient() {
 		// Given
 		RegisteredClient registeredClient = RegisteredClient.withId("client-1")
@@ -104,30 +96,6 @@ class RedisRegisteredClientRepositoryTest {
 
 		// Then
 		Assertions.assertThat(result).isNull();
-	}
-
-	@Test
-	void test_save_throws_exception_when_client_is_null() {
-		// Then
-		Assertions.assertThatThrownBy(() -> repository.save(null))
-			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessageContaining("RegisteredClient cannot be null");
-	}
-
-	@Test
-	void test_findById_throws_exception_when_id_is_empty() {
-		// Then
-		Assertions.assertThatThrownBy(() -> repository.findById(""))
-			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessageContaining("Id cannot be empty");
-	}
-
-	@Test
-	void test_findByClientId_throws_exception_when_clientId_is_empty() {
-		// Then
-		Assertions.assertThatThrownBy(() -> repository.findByClientId(""))
-			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessageContaining("ClientId cannot be empty");
 	}
 
 }

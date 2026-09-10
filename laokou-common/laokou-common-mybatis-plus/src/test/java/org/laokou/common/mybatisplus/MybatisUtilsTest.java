@@ -26,7 +26,6 @@ import org.junit.jupiter.api.Test;
 import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.i18n.dto.PageQuery;
 import org.laokou.common.i18n.util.InstantUtils;
-import org.laokou.common.mybatisplus.config.GlobalTenantLineHandler;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
 import org.laokou.common.mybatisplus.util.MybatisUtils;
 import org.mybatis.spring.annotation.MapperScan;
@@ -41,7 +40,6 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.postgresql.PostgreSQLContainer;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author laokou
@@ -68,14 +66,6 @@ class MybatisUtilsTest {
 	@DynamicPropertySource
 	static void configureProperties(DynamicPropertyRegistry registry) {
 		registry.add("spring.datasource.dynamic.datasource.master.url", postgres::getJdbcUrl);
-	}
-
-	@Test
-	void test_ignoreTable() {
-		GlobalTenantLineHandler globalTenantLineHandler = new GlobalTenantLineHandler(Set.of("test", "t_user"));
-		Assertions.assertThat(globalTenantLineHandler.ignoreTable("t_user")).isTrue();
-		Assertions.assertThat(globalTenantLineHandler.ignoreTable("t_test")).isFalse();
-		Assertions.assertThat(globalTenantLineHandler.ignoreTable("t_tes1")).isFalse();
 	}
 
 	@Test

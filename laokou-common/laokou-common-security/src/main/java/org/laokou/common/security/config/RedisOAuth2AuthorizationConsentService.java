@@ -48,8 +48,7 @@ public record RedisOAuth2AuthorizationConsentService(
 
 	@Override
 	public void save(@NonNull OAuth2AuthorizationConsent authorizationConsent) {
-		OAuth2UserConsent oauth2UserConsent = OAuth2ModelMapper.convertOAuth2UserConsent(authorizationConsent);
-		this.userConsentRepository.save(oauth2UserConsent);
+		this.userConsentRepository.save(OAuth2ModelMapper.convertOAuth2UserConsent(authorizationConsent));
 	}
 
 	@Override
