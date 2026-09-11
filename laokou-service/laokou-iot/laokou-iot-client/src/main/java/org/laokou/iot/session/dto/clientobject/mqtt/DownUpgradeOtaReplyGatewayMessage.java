@@ -20,7 +20,7 @@ package org.laokou.iot.session.dto.clientobject.mqtt;
 import lombok.Data;
 
 /**
- * 升级网关固件回复消息【下行】.
+ * 升级网关固件回复消息【下发】.
  *
  * @author laokou
  */

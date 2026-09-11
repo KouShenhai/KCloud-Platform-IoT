@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.iot.session.dto.clientobject.mqtt;
+package org.laokou.iot.session.model.enums.mqtt;
 
 import lombok.Getter;
 

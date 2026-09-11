@@ -525,4 +525,6 @@ public final class ForyConstants {
 
 	public static final int C_250 = 250;
 
+	public static final int C_251 = 251;
+
 }

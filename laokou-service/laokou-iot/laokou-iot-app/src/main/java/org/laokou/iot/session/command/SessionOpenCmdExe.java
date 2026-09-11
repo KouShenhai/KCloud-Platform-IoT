@@ -67,10 +67,6 @@ public class SessionOpenCmdExe {
 				.create(SessionConvertor.toEntity(cmd.getId(), State.OPEN), OperateType.OPEN);
 			// 校验参数
 			sessionA.checkSessionParam();
-			pulsarTemplate.send(
-					PulsarUtils.getSessionTopic(systemSettingsProperties.getTenantCode(),
-							MqTopic.OPEN_SESSION_MESSAGE_TOPIC),
-					ForyFactory.INSTANCE.serialize(new OpenSessionEvent(cmd.getId())));
 			transactionalUtils.executeInTransaction(() -> sessionDomainService.updateSessionState(sessionA));
 		}
 		catch (Exception ex) {
@@ -79,6 +75,10 @@ public class SessionOpenCmdExe {
 		}
 		finally {
 			DynamicDataSourceContextHolder.poll();
+			pulsarTemplate.sendAsync(
+					PulsarUtils.getSessionTopic(systemSettingsProperties.getTenantCode(),
+							MqTopic.OPEN_SESSION_MESSAGE_TOPIC),
+					ForyFactory.INSTANCE.serialize(new OpenSessionEvent(cmd.getId())));
 		}
 	}
 

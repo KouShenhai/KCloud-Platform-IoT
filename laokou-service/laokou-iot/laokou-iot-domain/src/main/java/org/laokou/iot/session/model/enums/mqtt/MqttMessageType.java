@@ -15,10 +15,9 @@
  *
  */
 
-package org.laokou.iot.session.dto.clientobject.mqtt;
+package org.laokou.iot.session.model.enums.mqtt;
 
 import lombok.Getter;
-
 import java.util.Arrays;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -32,7 +31,7 @@ import java.util.stream.Collectors;
 @Getter
 public enum MqttMessageType {
 
-	DOWN_COMMAND_GATEWAY_MESSAGE("down_command_gateway_message", "网关指令【下行】") {
+	DOWN_COMMAND_GATEWAY_MESSAGE("down_command_gateway_message", "网关指令【下发】") {
 		@Override
 		public String getTopic() {
 			return "down/+/+/command";
@@ -101,7 +100,7 @@ public enum MqttMessageType {
 
 	},
 
-	DOWN_REPORT_OTA_REPLY_GATEWAY_MESSAGE("down_report_ota_reply_gateway_message", "上报网关固件信息回复【下行】") {
+	DOWN_REPORT_OTA_REPLY_GATEWAY_MESSAGE("down_report_ota_reply_gateway_message", "上报网关固件信息回复【下发】") {
 		@Override
 		public String getTopic() {
 			return "up/+/+/ota/report/reply";
@@ -147,7 +146,7 @@ public enum MqttMessageType {
 
 	},
 
-	DOWN_UPGRADE_OTA_REPLY_GATEWAY_MESSAGE("down_upgrade_ota_reply_gateway_message", "升级网关固件回复【下行】") {
+	DOWN_UPGRADE_OTA_REPLY_GATEWAY_MESSAGE("down_upgrade_ota_reply_gateway_message", "升级网关固件回复【下发】") {
 		@Override
 		public String getTopic() {
 			return "down/+/+/ota/upgrade/reply";
@@ -224,7 +223,7 @@ public enum MqttMessageType {
 
 		@Override
 		public String getMqTopic() {
-			return "iot-up-report-properties-device-message";
+			return UP_REPORT_PROPERTIES_DEVICE_MESSAGE_TOPIC;
 		}
 
 		@Override
@@ -287,5 +286,7 @@ public enum MqttMessageType {
 							k.getTopic().replaceFirst("\\+", Matcher.quoteReplacement(tenantCode))),
 					v -> v.getMqttQos().getCode()));
 	}
+
+	public static final String UP_REPORT_PROPERTIES_DEVICE_MESSAGE_TOPIC = "iot-up-report-properties-device-message";
 
 }

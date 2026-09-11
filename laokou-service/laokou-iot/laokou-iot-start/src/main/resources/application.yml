@@ -138,3 +138,8 @@ logging:
 system-settings:
   app-mode: microservice
   tenant-code: laokouyun
+  client-ids:
+    - KPFI10000
+    - KPFI10001
+    - KPFI10002
+    - KPFI10003

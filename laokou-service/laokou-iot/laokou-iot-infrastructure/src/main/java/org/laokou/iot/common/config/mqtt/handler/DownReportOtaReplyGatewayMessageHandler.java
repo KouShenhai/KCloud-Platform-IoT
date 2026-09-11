@@ -17,16 +17,18 @@
 
 package org.laokou.iot.common.config.mqtt.handler;
 
-import io.vertx.core.Future;
 import io.vertx.mqtt.messages.MqttPublishMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.pulsar.client.api.MessageId;
 import org.laokou.iot.common.config.mqtt.AbstractMessageHandler;
-import org.laokou.iot.session.dto.clientobject.mqtt.MqttMessageType;
+import org.laokou.iot.session.model.enums.mqtt.MqttMessageType;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.CompletableFuture;
+
 /**
- * 上报网关固件信息回复消息【下行】处理器.
+ * 上报网关固件信息回复消息【下发】处理器.
  *
  * @author laokou
  */
@@ -36,10 +38,10 @@ import org.springframework.stereotype.Component;
 final class DownReportOtaReplyGatewayMessageHandler extends AbstractMessageHandler {
 
 	@Override
-	public Future<Void> handleMessage(Long snowflakeId, MqttPublishMessage publishMessage) {
-		log.info("【Vertx-MQTT-Client】 => 上报网关固件信息回复消息【下行】处理器，接收雪花ID【{}】，主题【{}】消息", snowflakeId,
+	public CompletableFuture<MessageId> handleMessage(Long snowflakeId, MqttPublishMessage publishMessage) {
+		log.info("【Vertx-MQTT-Client】 => 上报网关固件信息回复消息【下发】处理器，接收雪花ID【{}】，主题【{}】消息", snowflakeId,
 				publishMessage.topicName());
-		return Future.succeededFuture();
+		return CompletableFuture.completedFuture(null);
 	}
 
 	@Override
