@@ -17,6 +17,7 @@
 
 package org.laokou.common.core.config;
 
+import com.google.common.collect.Sets;
 import lombok.Data;
 import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.time.Duration;
+import java.util.Set;
 
 /**
  * @author laokou
@@ -46,6 +48,8 @@ public class SystemSettingsProperties implements Serializable {
 	private String tenantCode = "laokouyun";
 
 	private Mode appMode = Mode.MICROSERVICE;
+
+	private Set<String> clientIds = Sets.newHashSet();
 
 	@Getter
 	enum Mode {

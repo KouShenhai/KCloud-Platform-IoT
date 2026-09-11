@@ -20,8 +20,11 @@ package org.laokou.iot.common.config.mqtt;
 import io.netty.handler.codec.mqtt.MqttQoS;
 import io.vertx.core.Future;
 import io.vertx.mqtt.messages.MqttPublishMessage;
+import org.apache.pulsar.client.api.MessageId;
 import org.laokou.iot.common.util.VertxMqttUtils;
-import org.laokou.iot.session.dto.clientobject.mqtt.MqttMessageType;
+import org.laokou.iot.session.model.enums.mqtt.MqttMessageType;
+
+import java.util.concurrent.CompletableFuture;
 
 /**
  * @author laokou
@@ -35,18 +38,18 @@ public abstract class AbstractMessageHandler implements MessageHandler {
 
 	@Override
 	public Future<Void> handle(Long snowflakeId, MqttPublishMessage publishMessage) {
-		return handleMessage(snowflakeId, publishMessage).compose(_ -> ack(publishMessage));
+		return Future
+			.fromCompletionStage(handleMessage(snowflakeId, publishMessage).thenAcceptAsync(_ -> ack(publishMessage)));
 	}
 
 	protected abstract MqttMessageType getMatchTopic();
 
-	protected abstract Future<Void> handleMessage(Long snowflakeId, MqttPublishMessage publishMessage);
+	protected abstract CompletableFuture<MessageId> handleMessage(Long snowflakeId, MqttPublishMessage publishMessage);
 
-	private Future<Void> ack(MqttPublishMessage publishMessage) {
+	private void ack(MqttPublishMessage publishMessage) {
 		if (publishMessage.qosLevel() != MqttQoS.AT_MOST_ONCE) {
 			publishMessage.ack();
 		}
-		return Future.succeededFuture();
 	}
 
 }

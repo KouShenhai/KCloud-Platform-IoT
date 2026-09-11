@@ -21,6 +21,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.pulsar.client.api.SubscriptionType;
 import org.apache.pulsar.common.schema.SchemaType;
+import org.laokou.common.i18n.util.JacksonUtils;
+import org.laokou.iot.session.dto.clientobject.mqtt.UpReportPropertiesDeviceMessage;
+import org.laokou.iot.session.model.enums.mqtt.MqttMessageType;
 import org.springframework.pulsar.annotation.PulsarListener;
 import org.springframework.pulsar.annotation.PulsarListeners;
 import org.springframework.pulsar.listener.AckMode;
@@ -37,11 +40,16 @@ import java.util.List;
 public final class MqttMessageHandler {
 
 	@PulsarListeners(value = { @PulsarListener(
-			topics = "persistent://${system-settings.tenant-code}/gateway/iot-up-report-properties-gateway-message",
+			topics = "persistent://${system-settings.tenant-code}/gateway/"
+					+ MqttMessageType.UP_REPORT_PROPERTIES_DEVICE_MESSAGE_TOPIC,
 			subscriptionName = "${system-settings.tenant-code}", schemaType = SchemaType.BYTES, batch = true,
 			ackMode = AckMode.BATCH, subscriptionType = SubscriptionType.Shared) })
 	public void handleIotUpReportPropertiesGatewayMessage(List<byte[]> messages) {
-		log.info("接收到消息：{}", messages);
+		for (byte[] message : messages) {
+			UpReportPropertiesDeviceMessage deviceMessage = JacksonUtils.toBean(message,
+					UpReportPropertiesDeviceMessage.class);
+			log.info("设备SN：{}", deviceMessage.getDeviceSn());
+		}
 	}
 
 }

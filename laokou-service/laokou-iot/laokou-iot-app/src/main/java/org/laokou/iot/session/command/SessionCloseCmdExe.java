@@ -67,10 +67,6 @@ public class SessionCloseCmdExe {
 				.create(SessionConvertor.toEntity(cmd.getId(), State.CLOSE), OperateType.CLOSE);
 			// 校验参数
 			sessionA.checkSessionParam();
-			pulsarTemplate.send(
-					PulsarUtils.getSessionTopic(systemSettingsProperties.getTenantCode(),
-							MqTopic.CLOSE_SESSION_MESSAGE_TOPIC),
-					ForyFactory.INSTANCE.serialize(new CloseSessionEvent(cmd.getId())));
 			transactionalUtils.executeInTransaction(() -> sessionDomainService.updateSessionState(sessionA));
 		}
 		catch (Exception ex) {
@@ -79,6 +75,10 @@ public class SessionCloseCmdExe {
 		}
 		finally {
 			DynamicDataSourceContextHolder.poll();
+			pulsarTemplate.sendAsync(
+					PulsarUtils.getSessionTopic(systemSettingsProperties.getTenantCode(),
+							MqTopic.CLOSE_SESSION_MESSAGE_TOPIC),
+					ForyFactory.INSTANCE.serialize(new CloseSessionEvent(cmd.getId())));
 		}
 	}
 

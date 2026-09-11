@@ -22,11 +22,14 @@ import io.vertx.core.Future;
 import io.vertx.core.ThreadingModel;
 import io.vertx.core.Vertx;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.common.core.util.CollectionExtUtils;
 import org.laokou.common.i18n.common.exception.BizException;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -43,18 +46,22 @@ final class VertxMqttClientService extends AbstractVertxService {
 
 	private volatile List<VertxMqttClient> vertxMqttClients;
 
-	public VertxMqttClientService(Vertx vertx, MqttClientConfig config, List<MessageHandler> messageHandlers) {
+	private final Queue<String> queue;
+
+	public VertxMqttClientService(Vertx vertx, SystemSettingsProperties systemSettingsProperties,
+			MqttClientConfig config, List<MessageHandler> messageHandlers) {
 		this.vertx = vertx;
 		this.config = config;
 		this.messageHandlers = messageHandlers;
 		this.vertxMqttClients = null;
+		this.queue = new ArrayDeque<>(systemSettingsProperties.getClientIds());
 	}
 
 	@Override
 	public Future<String> doDeploy() {
 		List<VertxMqttClient> clients = new ArrayList<>(4);
 		return vertx.deployVerticle(() -> {
-			VertxMqttClient vertxMqttClient = new VertxMqttClient(vertx, config, messageHandlers);
+			VertxMqttClient vertxMqttClient = new VertxMqttClient(vertx, queue.poll(), config, messageHandlers);
 			clients.add(vertxMqttClient);
 			return vertxMqttClient;
 		}, buildOptions()).onSuccess(deploymentId -> {
@@ -65,9 +72,9 @@ final class VertxMqttClientService extends AbstractVertxService {
 
 	@Override
 	public void doUndeploy() {
-		deploymentIdFuture.compose(vertx::undeploy).onSuccess(ignored -> {
-			log.info("【Vertx-MQTT-Client】 => MQTT服务卸载成功");
-		}).onFailure(ex -> log.error("【Vertx-MQTT-Client】 => MQTT服务卸载失败", ex));
+		deploymentIdFuture.compose(vertx::undeploy)
+			.onSuccess(ignored -> log.info("【Vertx-MQTT-Client】 => MQTT服务卸载成功"))
+			.onFailure(ex -> log.error("【Vertx-MQTT-Client】 => MQTT服务卸载失败", ex));
 	}
 
 	@Override
@@ -75,7 +82,7 @@ final class VertxMqttClientService extends AbstractVertxService {
 		try {
 			List<VertxMqttClient> clients = vertxMqttClients;
 			if (CollectionExtUtils.isEmpty(clients)) {
-				throw new BizException("B_Mqtt_ClientNotInitializedOrDeployFailed", "MQTT客户端尚未初始化完成或部署失败");
+				throw new BizException("B_Mqtt_ClientNotInitializedOrDeployFailed", "MQTT客户端部署失败");
 			}
 			int index = ThreadLocalRandom.current().nextInt(clients.size());
 			VertxMqttClient vertxMqttClient = clients.get(index);
@@ -83,7 +90,6 @@ final class VertxMqttClientService extends AbstractVertxService {
 		}
 		catch (Exception ex) {
 			log.error("MQTT发布调用异常，错误信息：{}", ex.getMessage(), ex);
-			throw ex;
 		}
 	}
 

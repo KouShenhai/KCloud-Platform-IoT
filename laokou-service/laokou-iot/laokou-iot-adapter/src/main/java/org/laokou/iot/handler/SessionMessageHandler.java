@@ -107,7 +107,7 @@ public final class SessionMessageHandler implements ApplicationListener<@NonNull
 	}
 
 	private void deployMqttClient(SessionDO sessionDO) {
-		VertxServiceManager.deployVertxMqttClientService(vertx,
+		VertxServiceManager.deployVertxMqttClientService(vertx, systemSettingsProperties,
 				SessionConvertor.toConfig(sessionDO, systemSettingsProperties), messageHandlers);
 	}
 
