@@ -5,17 +5,13 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.laokou</groupId>
-    <artifactId>laokou-service</artifactId>
+    <artifactId>laokou-ai</artifactId>
     <version>${revision}</version>
   </parent>
 
   <groupId>org.laokou</groupId>
-  <artifactId>laokou-ai</artifactId>
+  <artifactId>laokou-ai-mcp</artifactId>
   <version>${revision}</version>
   <packaging>pom</packaging>
-
-  <modules>
-    <module>laokou-ai-mcp</module>
-  </modules>
 
 </project>

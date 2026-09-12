@@ -97,7 +97,7 @@ public final class StringConstants {
 	/**
 	 * IN.
 	 */
-	public static final String IN_ = "in";
+	public static final String IN = "in";
 
 	/**
 	 * 等于.
@@ -133,6 +133,11 @@ public final class StringConstants {
 	 * 分割参数.
 	 */
 	public static final String WELL_NO = "#";
+
+	/**
+	 * 认证前缀.
+	 */
+	public static final String BEARER_PREFIX = "Bearer ";
 
 	private StringConstants() {
 	}

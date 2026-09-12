@@ -26,9 +26,10 @@ import io.grpc.MethodDescriptor;
 import io.grpc.netty.NettyChannelBuilder;
 import jakarta.servlet.http.HttpServletRequest;
 import org.jspecify.annotations.NonNull;
+import org.laokou.common.core.config.OAuth2AuthorizedToken;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.grpc.client.annotation.GrpcClientBeanPostProcessor;
-import org.laokou.common.grpc.client.constant.GrpcClientConstants;
+import org.laokou.common.i18n.common.constant.StringConstants;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.grpc.client.autoconfigure.GrpcClientProperties;
@@ -98,10 +99,10 @@ final class GrpcClientConfig {
 	private String getAccessToken(ObjectProvider<OAuth2AuthorizedToken> objectProvider) {
 		HttpServletRequest request = RequestUtils.getHttpServletRequest();
 		String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
-		if (StringUtils.hasText(authorization) && authorization.startsWith(GrpcClientConstants.BEARER_PREFIX)) {
+		if (StringUtils.hasText(authorization) && authorization.startsWith(StringConstants.BEARER_PREFIX)) {
 			return authorization;
 		}
-		return GrpcClientConstants.BEARER_PREFIX + objectProvider.getObject().getAccessToken();
+		return StringConstants.BEARER_PREFIX + objectProvider.getObject().getAccessToken();
 	}
 
 }

@@ -76,7 +76,7 @@ public class DataFilterAspectj {
 			.append(tableAlias)
 			.append(dataFilter.deptId())
 			.append(StringConstants.SPACE)
-			.append(StringConstants.IN_)
+			.append(StringConstants.IN)
 			.append(StringConstants.SPACE)
 			.append(StringConstants.LEFT)
 			.append(deptIds.stream().map(String::valueOf).collect(Collectors.joining(StringConstants.COMMA)))
