@@ -16,9 +16,11 @@
  */
 
 package org.laokou.iot.mcp.server;
+
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.util.SslUtils;
+import org.laokou.common.security.annotation.EnableSecurity;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -37,6 +39,7 @@ import java.security.NoSuchAlgorithmException;
  * @author laokou
  */
 @Slf4j
+@EnableSecurity
 @EnableEncryptableProperties
 @EnableConfigurationProperties
 @EnableAspectJAutoProxy
