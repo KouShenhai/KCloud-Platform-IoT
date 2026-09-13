@@ -14,4 +14,8 @@
   <version>${revision}</version>
   <packaging>pom</packaging>
 
+  <modules>
+    <module>laokou-ai-iot-mcp-server</module>
+  </modules>
+
 </project>
