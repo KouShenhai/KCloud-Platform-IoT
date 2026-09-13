@@ -10,5 +10,15 @@
   <groupId>org.laokou</groupId>
   <artifactId>laokou-ai-iot-mcp-server</artifactId>
   <version>${revision}</version>
+  <packaging>pom</packaging>
+
+  <modules>
+    <module>laokou-ai-iot-mcp-server-adapter</module>
+    <module>laokou-ai-iot-mcp-server-app</module>
+    <module>laokou-ai-iot-mcp-server-domain</module>
+    <module>laokou-ai-iot-mcp-server-client</module>
+    <module>laokou-ai-iot-mcp-server-start</module>
+    <module>laokou-ai-iot-mcp-server-infrastructure</module>
+  </modules>
 
 </project>
