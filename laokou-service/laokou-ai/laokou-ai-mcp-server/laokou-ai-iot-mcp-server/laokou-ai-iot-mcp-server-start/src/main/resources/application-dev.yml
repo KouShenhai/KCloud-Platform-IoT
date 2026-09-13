@@ -35,3 +35,14 @@ spring:
       type: single
       single:
         address: redis://${spring.data.redis.host}:${spring.data.redis.port}
+  ai:
+    alibaba:
+      mcp:
+        nacos:
+          server-addr: ${NACOS_DISCOVERY_ADDRESS:nacos:8848,nacos:8858,nacos:8868}
+          namespace: ${NACOS_NAMESPACE:0dac1a68-2f01-40df-bd26-bf0cb199057a}
+          username: ${NACOS_USERNAME:nacos}
+          password: ${NACOS_PASSWORD:nacos}
+          register:
+            service-name: ${spring.application.name}
+            service-group: ${NACOS_GROUP:IOT_MCP_GROUP}
