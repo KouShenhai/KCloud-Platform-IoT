@@ -10,8 +10,12 @@
   </parent>
 
   <groupId>org.laokou</groupId>
-  <artifactId>laokou-ai-mcp</artifactId>
+  <artifactId>laokou-ai-mcp-server</artifactId>
   <version>${revision}</version>
   <packaging>pom</packaging>
+
+  <modules>
+    <module>laokou-ai-iot-mcp-server</module>
+  </modules>
 
 </project>

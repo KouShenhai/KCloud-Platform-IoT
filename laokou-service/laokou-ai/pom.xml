@@ -15,7 +15,7 @@
   <packaging>pom</packaging>
 
   <modules>
-    <module>laokou-ai-mcp</module>
+    <module>laokou-ai-mcp-server</module>
   </modules>
 
 </project>

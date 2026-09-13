@@ -40,7 +40,7 @@
       %d 日期
       %t 线程
     -->
-    <property name="LOG_CONSOLE_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [${SERVICE_ID} - ${sys:address:-} - ${PROFILE}] - [%X{traceId}] - [%X{spanId}] - [ %style{%-5level}{red}] - [%t] - %logger : %msg%n"/>
+    <property name="LOG_CONSOLE_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} ---> [${SERVICE_ID} - ${sys:ENDPOINT:-} - ${PROFILE}] - [%X{traceId}] - [%X{spanId}] - [ %style{%-5level}{red}] - [%t] - %logger : %msg%n"/>
   </Properties>
   <Appenders>
     <!-- 控制台输出 -->
@@ -102,7 +102,7 @@
         <AppenderRef ref="failover_kafka"/>
       </Failovers>
     </Failover>
-    <Kafka name="kafka" topic="distributed-id-segment-trace-log" ignoreExceptions="false">
+    <Kafka name="kafka" topic="distributed-id-trace-log" ignoreExceptions="false">
      <!--
 
           https://logging.apache.org/log4j/2.x/manual/json-template-layout.html
