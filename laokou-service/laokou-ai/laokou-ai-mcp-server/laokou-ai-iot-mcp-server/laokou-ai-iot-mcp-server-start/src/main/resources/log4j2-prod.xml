@@ -25,11 +25,11 @@
   <!-- 变量配置 -->
   <Properties>
     <!-- 存放目录 -->
-    <property name="LOG_PATH" value="/opt/snowflake-id"/>
+    <property name="LOG_PATH" value="/opt/iot-mcp-server"/>
     <!-- 日志文件大小 -->
     <property name="LOG_ROLL_SIZE" value="500 M"/>
     <!-- 服务名称 -->
-    <property name="SERVICE_ID" value="laokou-snowflake-id"/>
+    <property name="SERVICE_ID" value="laokou-ai-iot-mcp-server"/>
     <!-- 日志保留30天 -->
     <property name="LOG_DAYS" value="30"/>
     <!-- 1天滚动一次 -->
@@ -102,7 +102,7 @@
         <AppenderRef ref="failover_kafka"/>
       </Failovers>
     </Failover>
-    <Kafka name="kafka" topic="distributed-id-trace-log" ignoreExceptions="false">
+    <Kafka name="kafka" topic="iot-mcp-server-trace-log" ignoreExceptions="false">
      <!--
 
           https://logging.apache.org/log4j/2.x/manual/json-template-layout.html
