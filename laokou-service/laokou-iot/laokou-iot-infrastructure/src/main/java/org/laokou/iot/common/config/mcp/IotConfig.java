@@ -15,15 +15,23 @@
  *
  */
 
-package org.laokou.iot.mcp.server.device.tool;
+package org.laokou.iot.common.config.mcp;
 
-import org.laokou.common.i18n.dto.Result;
+import org.laokou.iot.device.gatewayimpl.mcp.DeviceMcpMapper;
+import org.springframework.ai.tool.ToolCallbackProvider;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author laokou
  */
-public interface DeviceToolI {
+@Configuration(proxyBeanMethods = false)
+public class IotConfig {
 
-	Result<String> getDeviceInfo(String deviceSn);
+	@Bean
+	DeviceMcpMapper deviceMcpMapper(@Qualifier("distributedSyncToolCallback") ToolCallbackProvider tools){
+		return new DeviceMcpMapper(tools);
+	}
 
 }

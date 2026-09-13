@@ -46,3 +46,4 @@ spring:
           register:
             service-name: ${spring.application.name}
             service-group: ${NACOS_GROUP:IOT_MCP_GROUP}
+            enabled: true

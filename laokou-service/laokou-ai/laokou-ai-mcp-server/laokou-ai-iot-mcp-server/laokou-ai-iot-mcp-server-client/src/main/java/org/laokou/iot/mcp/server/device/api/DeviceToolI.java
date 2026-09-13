@@ -15,23 +15,13 @@
  *
  */
 
-package org.laokou.iot.mcp.server.device.service;
-
-import org.laokou.iot.mcp.server.device.api.DeviceToolI;
-import org.springframework.ai.tool.annotation.Tool;
-import org.springframework.ai.tool.annotation.ToolParam;
-import org.springframework.stereotype.Service;
+package org.laokou.iot.mcp.server.device.api;
 
 /**
  * @author laokou
  */
-@Service
-public class DeviceToolImpl implements DeviceToolI {
+public interface DeviceToolI {
 
-	@Override
-	@Tool(name = "getDeviceInfo", description = "根据设备SN获取设备信息")
-	public String getDeviceInfo(@ToolParam(description = "设备SN") String deviceSN) {
-		return deviceSN;
-	}
+	String getDeviceInfo(String deviceSn);
 
 }

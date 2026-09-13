@@ -88,7 +88,7 @@ spring:
         enabled: true
         type: sync
         request-timeout: 30s
-        name: ${spring.application.name}-ai-mcp-client
+        name: laokou-ai-iot-mcp-client
     alibaba:
       mcp:
         nacos:
@@ -96,7 +96,7 @@ spring:
             streamable:
               connections:
                 iot:
-                  service-name: ${spring.application.name}-ai-mcp-server
+                  service-name: laokou-ai-iot-mcp-server
                   version: ${MCP_VERSION:1.0.0}
             configs:
               iot:

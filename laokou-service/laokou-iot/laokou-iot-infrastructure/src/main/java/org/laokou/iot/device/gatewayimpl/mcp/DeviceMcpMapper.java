@@ -15,23 +15,29 @@
  *
  */
 
-package org.laokou.iot.mcp.server.device.service;
+package org.laokou.iot.device.gatewayimpl.mcp;
 
-import org.laokou.iot.mcp.server.device.api.DeviceToolI;
-import org.springframework.ai.tool.annotation.Tool;
-import org.springframework.ai.tool.annotation.ToolParam;
-import org.springframework.stereotype.Service;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.ai.tool.ToolCallback;
+import org.springframework.ai.tool.ToolCallbackProvider;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
  * @author laokou
  */
-@Service
-public class DeviceToolImpl implements DeviceToolI {
+@Slf4j
+public class DeviceMcpMapper {
 
-	@Override
-	@Tool(name = "getDeviceInfo", description = "根据设备SN获取设备信息")
-	public String getDeviceInfo(@ToolParam(description = "设备SN") String deviceSN) {
-		return deviceSN;
+	private final ToolCallbackProvider tools;
+
+	public DeviceMcpMapper(@Qualifier("distributedSyncToolCallback") ToolCallbackProvider tools) {
+		this.tools = tools;
+	}
+
+	public void getDeviceInfo() {
+		for (ToolCallback toolCallback : tools.getToolCallbacks()) {
+			log.info(">>>>>>>>>>>>>>>>>>> -> {}" , toolCallback.getClass().getSimpleName());
+		}
 	}
 
 }

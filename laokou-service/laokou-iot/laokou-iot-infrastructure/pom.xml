@@ -114,7 +114,7 @@
     </dependency>
     <dependency>
       <groupId>io.github.agentic-spring-ai</groupId>
-      <artifactId>agentic-spring-ai-mcp-distributed</artifactId>
+      <artifactId>agentic-spring-ai-starter-mcp-distributed</artifactId>
     </dependency>
   </dependencies>
 
