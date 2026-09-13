@@ -29,7 +29,7 @@
     </dependency>
     <dependency>
       <groupId>io.github.agentic-spring-ai</groupId>
-      <artifactId>agentic-spring-ai-mcp-registry</artifactId>
+      <artifactId>agentic-spring-ai-starter-mcp-registry</artifactId>
       <exclusions>
         <exclusion>
           <groupId>ch.qos.logback</groupId>
