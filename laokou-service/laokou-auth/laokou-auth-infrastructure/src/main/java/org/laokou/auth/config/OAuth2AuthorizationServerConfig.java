@@ -29,9 +29,9 @@ import org.laokou.auth.model.enums.MqTopic;
 import org.laokou.auth.model.function.HttpRequest;
 import org.laokou.auth.model.validator.CaptchaValidator;
 import org.laokou.auth.model.validator.PasswordValidator;
+import org.laokou.common.core.config.OAuth2AuthorizedToken;
 import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.fory.constant.ForyConstants;
-import org.laokou.common.grpc.client.config.OAuth2AuthorizedToken;
 import org.laokou.common.i18n.common.IdGenerator;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.SpringUtils;
@@ -40,7 +40,6 @@ import org.laokou.common.security.config.RedisOAuth2AuthorizationConsentService;
 import org.laokou.common.security.config.RedisRegisteredClientRepository;
 import org.laokou.common.security.config.repository.OAuth2RegisteredClientRepository;
 import org.laokou.common.security.config.repository.OAuth2UserConsentRepository;
-import org.laokou.common.security.constant.Constants;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -266,8 +265,8 @@ class OAuth2AuthorizationServerConfig {
 	@Bean
 	OAuth2AuthorizedToken oAuth2AuthorizedClientToken(OAuth2AuthorizedClientManager authorizedClientManager) {
 		return () -> {
-			OAuth2AuthorizeRequest request = OAuth2AuthorizeRequest.withClientRegistrationId(Constants.GRPC)
-				.principal(Constants.GRPC)
+			OAuth2AuthorizeRequest request = OAuth2AuthorizeRequest.withClientRegistrationId("default")
+				.principal("default")
 				.build();
 			OAuth2AuthorizedClient client = authorizedClientManager.authorize(request);
 			Assert.notNull(client, "authorized client is null");

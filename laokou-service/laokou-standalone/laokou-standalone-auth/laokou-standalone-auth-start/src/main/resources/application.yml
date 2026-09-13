@@ -80,7 +80,7 @@ spring:
     oauth2:
       client:
         registration:
-          grpc:
+          default:
             client-id: ${spring.security.oauth2.authorization-server.client.default.registration.client-id}
             client-secret: FpHwIfw4wY92dO
             client-name: OAuth2.1 M2M认证客户端

@@ -15,16 +15,13 @@
  *
  */
 
-package org.laokou.common.grpc.client.constant;
+package org.laokou.common.core.config;
 
 /**
  * @author laokou
  */
-public final class GrpcClientConstants {
+public interface OAuth2AuthorizedToken {
 
-	private GrpcClientConstants() {
-	}
-
-	public static final String BEARER_PREFIX = "Bearer ";
+	String getAccessToken();
 
 }

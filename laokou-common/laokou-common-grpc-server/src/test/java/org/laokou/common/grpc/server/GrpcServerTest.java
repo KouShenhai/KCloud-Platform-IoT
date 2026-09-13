@@ -32,7 +32,6 @@ import org.junit.jupiter.api.Test;
 import org.laokou.common.grpc.proto.HelloWorldProto;
 import org.laokou.common.grpc.proto.SimpleGrpc;
 import org.laokou.common.security.annotation.EnableSecurity;
-import org.laokou.common.security.constant.Constants;
 import org.laokou.common.testcontainers.container.OAuth2Container;
 import org.laokou.common.testcontainers.util.DockerImageNames;
 import org.springframework.beans.factory.annotation.Value;
@@ -98,7 +97,7 @@ class GrpcServerTest {
 
 	@BeforeEach
 	void registerClient() {
-		RegisteredClient registeredClient = RegisteredClient.withId(Constants.GRPC)
+		RegisteredClient registeredClient = RegisteredClient.withId("default")
 			.clientId("client-id")
 			.clientSecret("{noop}client-secret")
 			.clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
@@ -163,8 +162,8 @@ class GrpcServerTest {
 		}
 
 		private String getAccessToken(OAuth2AuthorizedClientManager authorizedClientManager) {
-			OAuth2AuthorizeRequest request = OAuth2AuthorizeRequest.withClientRegistrationId(Constants.GRPC)
-				.principal(Constants.GRPC)
+			OAuth2AuthorizeRequest request = OAuth2AuthorizeRequest.withClientRegistrationId("default")
+				.principal("default")
 				.build();
 			OAuth2AuthorizedClient client = authorizedClientManager.authorize(request);
 			Assert.notNull(client, "authorized client is null");

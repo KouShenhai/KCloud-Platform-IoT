@@ -114,6 +114,7 @@
     <module>laokou-common-storage</module>
     <module>laokou-common-grpc-server</module>
     <module>laokou-common-grpc-client</module>
+    <module>laokou-common-mcp</module>
   </modules>
 
 </project>

@@ -107,6 +107,15 @@
       <groupId>io.vertx</groupId>
       <artifactId>vertx-mqtt</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-mcp</artifactId>
+      <version>${revision}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.github.agentic-spring-ai</groupId>
+      <artifactId>agentic-spring-ai-mcp-distributed</artifactId>
+    </dependency>
   </dependencies>
 
 </project>
