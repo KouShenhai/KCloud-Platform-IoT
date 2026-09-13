@@ -146,7 +146,7 @@ spring:
         heart-beat-timeout: 60000
         # 元数据
         metadata:
-          version: ${APP_VERSION:v1}
+          version: ${GRPC_VERSION:v1}
           management.context-path: /api/actuator
       config:
         # 开启配置中心

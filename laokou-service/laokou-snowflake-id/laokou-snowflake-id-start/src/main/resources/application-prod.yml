@@ -62,7 +62,7 @@ spring:
         # 超过60秒，则标记为不健康
         heart-beat-timeout: 60000
         metadata:
-          version: ${APP_VERSION:v1}
+          version: ${GRPC_VERSION:v1}
       config:
         # 开启配置中心
         enabled: true
