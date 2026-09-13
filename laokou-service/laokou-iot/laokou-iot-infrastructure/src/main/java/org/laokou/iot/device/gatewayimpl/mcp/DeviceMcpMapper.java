@@ -36,7 +36,7 @@ public class DeviceMcpMapper {
 
 	public void getDeviceInfo() {
 		for (ToolCallback toolCallback : tools.getToolCallbacks()) {
-			log.info(">>>>>>>>>>>>>>>>>>> -> {}" , toolCallback.getClass().getSimpleName());
+			log.info(">>>>>>>>>>>>>>>>>>> -> {}", toolCallback.getClass().getSimpleName());
 		}
 	}
 

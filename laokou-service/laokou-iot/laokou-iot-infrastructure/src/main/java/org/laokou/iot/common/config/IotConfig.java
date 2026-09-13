@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.iot.common.config.mcp;
+package org.laokou.iot.common.config;
 
 import org.laokou.iot.device.gatewayimpl.mcp.DeviceMcpMapper;
 import org.springframework.ai.tool.ToolCallbackProvider;
@@ -30,7 +30,7 @@ import org.springframework.context.annotation.Configuration;
 public class IotConfig {
 
 	@Bean
-	DeviceMcpMapper deviceMcpMapper(@Qualifier("distributedSyncToolCallback") ToolCallbackProvider tools){
+	DeviceMcpMapper deviceMcpMapper(@Qualifier("distributedSyncToolCallback") ToolCallbackProvider tools) {
 		return new DeviceMcpMapper(tools);
 	}
 
