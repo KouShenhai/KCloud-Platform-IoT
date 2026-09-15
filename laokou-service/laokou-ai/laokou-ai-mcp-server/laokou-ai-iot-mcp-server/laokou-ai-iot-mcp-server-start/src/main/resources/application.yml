@@ -76,11 +76,6 @@ spring:
               - /actuator/**=${spring.application.name}
               - /scalar/**=${spring.application.name}
   ai:
-    alibaba:
-      mcp:
-        nacos:
-          register:
-            enabled: true
     mcp:
       server:
         enabled: true
