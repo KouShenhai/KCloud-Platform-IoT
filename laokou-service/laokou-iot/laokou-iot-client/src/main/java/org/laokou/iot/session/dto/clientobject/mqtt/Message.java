@@ -17,13 +17,11 @@
 
 package org.laokou.iot.session.dto.clientobject.mqtt;
 
-import java.io.Serializable;
-
 /**
  * 消息.
  *
  * @author laokou
  */
-interface Message extends Serializable {
+interface Message {
 
 }

@@ -34,9 +34,12 @@ public class DeviceMcpMapper {
 		this.tools = tools;
 	}
 
-	public void getDeviceInfo() {
-		for (ToolCallback toolCallback : tools.getToolCallbacks()) {
-			log.info(">>>>>>>>>>>>>>>>>>> -> {}", toolCallback.getClass().getSimpleName());
+	public void getDeviceInfo() throws InterruptedException {
+		while (true) {
+			for (ToolCallback toolCallback : tools.getToolCallbacks()) {
+				log.info(">>>>>>>>>>>>>>>>>>> -> {}", toolCallback.getClass().getSimpleName());
+			}
+			Thread.sleep(3000);
 		}
 	}
 

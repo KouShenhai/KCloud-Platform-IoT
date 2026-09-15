@@ -19,6 +19,7 @@ package org.laokou.iot;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.annotation.EnableWarmUp;
 import org.laokou.common.i18n.util.SslUtils;
 import org.laokou.common.nacos.annotation.EnablePrintRouter;
@@ -85,7 +86,7 @@ class IotApp implements CommandLineRunner {
 	}
 
 	@Override
-    public void run(String... args)  {
+    public void run(String @NonNull ... args)throws InterruptedException  {
 		deviceMcpMapper.getDeviceInfo();
     }
 	// @formatter:on
