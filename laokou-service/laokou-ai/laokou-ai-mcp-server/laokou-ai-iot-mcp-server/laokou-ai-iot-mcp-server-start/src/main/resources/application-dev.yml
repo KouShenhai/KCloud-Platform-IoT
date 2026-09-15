@@ -45,5 +45,5 @@ spring:
           password: ${NACOS_PASSWORD:nacos}
           register:
             service-name: ${spring.application.name}
-            service-group: ${NACOS_GROUP:IOT_GROUP}
+            service-group: mcp-server
             enabled: true

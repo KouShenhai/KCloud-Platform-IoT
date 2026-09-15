@@ -86,7 +86,7 @@ class IotApp implements CommandLineRunner {
 	}
 
 	@Override
-    public void run(String @NonNull ... args)throws InterruptedException  {
+    public void run(String @NonNull ... args)  {
 		deviceMcpMapper.getDeviceInfo();
     }
 	// @formatter:on

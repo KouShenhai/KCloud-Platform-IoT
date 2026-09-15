@@ -116,6 +116,10 @@
       <groupId>io.github.agentic-spring-ai</groupId>
       <artifactId>agentic-spring-ai-starter-mcp-distributed</artifactId>
     </dependency>
+    <dependency>
+      <groupId>io.github.agentic-spring-ai</groupId>
+      <artifactId>agentic-spring-ai-starter-dashscope</artifactId>
+    </dependency>
   </dependencies>
 
 </project>

@@ -86,6 +86,8 @@ spring:
         instructions: "物联网工具"
         streamable-http:
           mcp-endpoint: /mcp
+          keep-alive-interval: 30s
+          disallow-delete: false
 
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml

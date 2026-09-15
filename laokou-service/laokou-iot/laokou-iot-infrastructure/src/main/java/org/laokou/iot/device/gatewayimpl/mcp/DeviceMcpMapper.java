@@ -41,7 +41,7 @@ public class DeviceMcpMapper {
 	}
 
 	public void getDeviceInfo() {
-		System.out.println(getDeviceInfo("TEST"));
+		log.info(getDeviceInfo("TEST"));
 	}
 
 	public String getDeviceInfo(String deviceSN) {
