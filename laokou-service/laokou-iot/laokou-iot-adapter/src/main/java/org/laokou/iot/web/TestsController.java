@@ -25,13 +25,13 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author laokou
  */
-@RestController("/tests")
+@RestController()
 @RequiredArgsConstructor
 public class TestsController {
 
 	private final DeviceMcpMapper deviceMcpMapper;
 
-	@GetMapping
+	@GetMapping("/tests")
 	public String test(){
 		return deviceMcpMapper.getDeviceInfo("TEST");
 	}

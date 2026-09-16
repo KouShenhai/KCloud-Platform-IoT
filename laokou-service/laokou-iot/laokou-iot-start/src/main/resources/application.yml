@@ -62,6 +62,7 @@ spring:
               - /v3/api-docs/**=${spring.application.name}
               - /actuator/**=${spring.application.name}
               - /scalar/**=${spring.application.name}
+              - /tests/**=${spring.application.name}
   grpc:
     client:
       channel:
@@ -93,7 +94,7 @@ spring:
         streamable-http:
           connections:
             server1:
-              url: http://localhost:14000
+              url: http://127.0.0.1:14000
               endpoint: /api/mcp
 scalar:
   enabled: true

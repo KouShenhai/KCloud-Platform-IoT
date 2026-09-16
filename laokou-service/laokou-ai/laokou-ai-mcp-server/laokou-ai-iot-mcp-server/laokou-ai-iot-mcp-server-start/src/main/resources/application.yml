@@ -94,7 +94,7 @@ spring:
         enabled: true
         name: ${spring.application.name}
         version: 1.0.0
-        type: async
+        type: sync
         protocol: STATELESS
         instructions: "物联网工具"
         streamable-http:
