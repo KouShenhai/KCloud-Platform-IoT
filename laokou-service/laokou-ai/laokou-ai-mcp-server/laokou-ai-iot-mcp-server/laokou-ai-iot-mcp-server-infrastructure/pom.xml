@@ -25,29 +25,11 @@
     </dependency>
     <dependency>
       <groupId>org.springframework.ai</groupId>
-      <artifactId>spring-ai-starter-mcp-server-webmvc</artifactId>
+      <artifactId>spring-ai-starter-mcp-server-webflux</artifactId>
       <exclusions>
         <exclusion>
           <groupId>io.modelcontextprotocol.sdk</groupId>
           <artifactId>mcp-json-jackson2</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>io.github.agentic-spring-ai</groupId>
-      <artifactId>agentic-spring-ai-starter-mcp-registry</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>ch.qos.logback</groupId>
-          <artifactId>logback-classic</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>ch.qos.logback</groupId>
-          <artifactId>logback-core</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.apache.logging.log4j</groupId>
-          <artifactId>log4j-to-slf4j</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -88,6 +70,15 @@
     <dependency>
       <groupId>io.modelcontextprotocol.sdk</groupId>
       <artifactId>mcp-json-jackson3</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-nacos</artifactId>
+      <version>${revision}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-webmvc</artifactId>
     </dependency>
   </dependencies>
 

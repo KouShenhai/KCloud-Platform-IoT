@@ -15,22 +15,25 @@
  *
  */
 
-package org.laokou.iot.common.config;
+package org.laokou.iot.web;
 
+import lombok.RequiredArgsConstructor;
 import org.laokou.iot.device.gatewayimpl.mcp.DeviceMcpMapper;
-import org.springframework.ai.mcp.SyncMcpToolCallbackProvider;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author laokou
  */
-@Configuration(proxyBeanMethods = false)
-public class IotConfig {
+@RestController("/tests")
+@RequiredArgsConstructor
+public class TestsController {
 
-	@Bean
-	DeviceMcpMapper deviceMcpMapper(SyncMcpToolCallbackProvider syncMcpToolCallbackProvider) {
-		return new DeviceMcpMapper(syncMcpToolCallbackProvider);
+	private final DeviceMcpMapper deviceMcpMapper;
+
+	@GetMapping
+	public String test(){
+		return deviceMcpMapper.getDeviceInfo("TEST");
 	}
 
 }

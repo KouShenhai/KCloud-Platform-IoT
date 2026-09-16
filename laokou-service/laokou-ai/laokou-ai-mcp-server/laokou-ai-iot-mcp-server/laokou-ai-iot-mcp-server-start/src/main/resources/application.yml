@@ -65,6 +65,16 @@ spring:
   threads:
     virtual:
       enabled: true
+  cloud:
+    # Loadbalancer配置
+    loadbalancer:
+      nacos:
+        enabled: true
+    # network
+    inetutils:
+      ignored-interfaces:
+        - docker0
+        - veth.*
   security:
     oauth2:
       resource-server:
@@ -75,19 +85,21 @@ spring:
               - /v3/api-docs/**=${spring.application.name}
               - /actuator/**=${spring.application.name}
               - /scalar/**=${spring.application.name}
+              - /mcp/**=${spring.application.name}
+            POST:
+              - /mcp/**=${spring.application.name}
   ai:
     mcp:
       server:
         enabled: true
         name: ${spring.application.name}
         version: 1.0.0
-        type: SYNC
+        type: async
         protocol: STATELESS
         instructions: "物联网工具"
         streamable-http:
           mcp-endpoint: /mcp
           keep-alive-interval: 30s
-          disallow-delete: false
 
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml

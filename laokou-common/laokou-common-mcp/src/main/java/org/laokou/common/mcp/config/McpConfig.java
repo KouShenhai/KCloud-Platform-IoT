@@ -24,7 +24,6 @@ import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.springframework.ai.mcp.customizer.McpClientCustomizer;
 import org.springframework.beans.factory.ObjectProvider;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.util.StringUtils;
@@ -35,11 +34,10 @@ import org.springframework.util.StringUtils;
 @Configuration(proxyBeanMethods = false)
 public class McpConfig {
 
-	@Bean
+	// @Bean
 	public McpClientCustomizer<HttpClientStreamableHttpTransport.Builder> mcpAuthorizationCustomizer(
-			ObjectProvider<OAuth2AuthorizedToken> objectProvider) {
-		return (_, builder) -> builder.httpRequestCustomizer(
-				(b, _, _, _, _) -> b.setHeader(HttpHeaders.AUTHORIZATION, getAccessToken(objectProvider)));
+		ObjectProvider<OAuth2AuthorizedToken> objectProvider) {
+		return (_, builder) -> builder.httpRequestCustomizer((b, _, _, _, _) -> b.setHeader(HttpHeaders.AUTHORIZATION, getAccessToken(objectProvider)));
 	}
 
 	private String getAccessToken(ObjectProvider<OAuth2AuthorizedToken> objectProvider) {

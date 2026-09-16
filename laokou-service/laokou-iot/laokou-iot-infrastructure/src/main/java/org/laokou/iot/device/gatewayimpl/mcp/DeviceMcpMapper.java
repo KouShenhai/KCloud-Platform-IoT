@@ -17,44 +17,25 @@
 
 package org.laokou.iot.device.gatewayimpl.mcp;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.util.JacksonUtils;
-import org.springframework.ai.mcp.McpToolUtils;
+import org.springframework.ai.mcp.SyncMcpToolCallbackProvider;
 import org.springframework.ai.tool.ToolCallback;
-import org.springframework.ai.tool.ToolCallbackProvider;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.util.Assert;
-
-import java.util.Arrays;
-import java.util.Map;
 
 /**
  * @author laokou
  */
 @Slf4j
+@RequiredArgsConstructor
 public class DeviceMcpMapper {
 
-	private final ToolCallbackProvider tools;
-
-	public DeviceMcpMapper(@Qualifier("distributedSyncToolCallback") ToolCallbackProvider tools) {
-		this.tools = tools;
-	}
-
-	public void getDeviceInfo() {
-		log.info(getDeviceInfo("TEST"));
-	}
+	private final SyncMcpToolCallbackProvider syncMcpToolCallbackProvider;
 
 	public String getDeviceInfo(String deviceSN) {
-		Assert.hasText(deviceSN, "deviceSN must not be blank");
-		String toolName = McpToolUtils.prefixedToolName("laokou-ai-iot-mcp-server", "getDeviceInfo");
-		ToolCallback[] callbacks = tools.getToolCallbacks();
-		for (ToolCallback callback : callbacks) {
-			if (toolName.equals(callback.getToolDefinition().name())) {
-				return callback.call(JacksonUtils.toJsonStr(Map.of("deviceSN", deviceSN)));
-			}
+		for (ToolCallback toolCallback : syncMcpToolCallbackProvider.getToolCallbacks()) {
+			log.info(toolCallback.toString());
 		}
-		throw new IllegalStateException("MCP tool not found: " + toolName + ", available tools: "
-				+ Arrays.stream(callbacks).map(callback -> callback.getToolDefinition().name()).toList());
+		return deviceSN;
 	}
 
 }
