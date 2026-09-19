@@ -28,15 +28,6 @@ import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
-import org.springframework.security.oauth2.client.AuthorizedClientServiceOAuth2AuthorizedClientManager;
-import org.springframework.security.oauth2.client.OAuth2AuthorizeRequest;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClientProvider;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClientProviderBuilder;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
-import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
-import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 /**
@@ -52,41 +43,13 @@ public class McpConfig {
 				(b, _, _, _, _) -> b.setHeader(HttpHeaders.AUTHORIZATION, getAccessToken(objectProvider)));
 	}
 
-	@Bean
-	OAuth2AuthorizedClientManager authorizedClientManager(ClientRegistrationRepository registrations,
-	                                                      OAuth2AuthorizedClientService service) {
-		OAuth2AuthorizedClientProvider provider = OAuth2AuthorizedClientProviderBuilder.builder()
-			.clientCredentials()
-			.build();
-		AuthorizedClientServiceOAuth2AuthorizedClientManager manager = new AuthorizedClientServiceOAuth2AuthorizedClientManager(
-			registrations, service);
-		manager.setAuthorizedClientProvider(provider);
-		return manager;
-	}
-
-	@Bean
-	OAuth2AuthorizedToken oAuth2AuthorizedClientToken(OAuth2AuthorizedClientManager authorizedClientManager) {
-		return () -> {
-			OAuth2AuthorizeRequest request = OAuth2AuthorizeRequest.withClientRegistrationId("default")
-				.principal("default")
-				.build();
-			OAuth2AuthorizedClient client = authorizedClientManager.authorize(request);
-			Assert.notNull(client, "authorized client is null");
-			return client.getAccessToken().getTokenValue();
-		};
-	}
-
 	private String getAccessToken(ObjectProvider<OAuth2AuthorizedToken> objectProvider) {
-		try {
-			HttpServletRequest request = RequestUtils.getHttpServletRequest();
-			String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
-			if (StringUtils.hasText(authorization) && authorization.startsWith(StringConstants.BEARER_PREFIX)) {
-				return authorization;
-			}
-			return StringConstants.BEARER_PREFIX + objectProvider.getObject().getAccessToken();
-		} catch (Exception ex) {
-			return StringConstants.BEARER_PREFIX + objectProvider.getObject().getAccessToken();
+		HttpServletRequest request = RequestUtils.getHttpServletRequest();
+		String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
+		if (StringUtils.hasText(authorization) && authorization.startsWith(StringConstants.BEARER_PREFIX)) {
+			return authorization;
 		}
+		return StringConstants.BEARER_PREFIX + objectProvider.getObject().getAccessToken();
 	}
 
 }

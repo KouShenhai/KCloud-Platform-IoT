@@ -5,16 +5,17 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.laokou</groupId>
-    <artifactId>laokou-ai-iot-mcp-server</artifactId>
+    <artifactId>laokou-iot-mcp-server</artifactId>
     <version>${revision}</version>
   </parent>
 
-  <artifactId>laokou-ai-iot-mcp-server-client</artifactId>
+  <artifactId>laokou-iot-mcp-server-app</artifactId>
   <version>${revision}</version>
+
   <dependencies>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-i18n</artifactId>
+      <artifactId>laokou-iot-mcp-server-infrastructure</artifactId>
       <version>${revision}</version>
     </dependency>
   </dependencies>

@@ -3,22 +3,22 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.laokou</groupId>
-    <artifactId>laokou-ai-mcp-server</artifactId>
+    <artifactId>laokou-service</artifactId>
     <version>${revision}</version>
   </parent>
 
   <groupId>org.laokou</groupId>
-  <artifactId>laokou-ai-iot-mcp-server</artifactId>
+  <artifactId>laokou-iot-mcp-server</artifactId>
   <version>${revision}</version>
   <packaging>pom</packaging>
 
   <modules>
-    <module>laokou-ai-iot-mcp-server-adapter</module>
-    <module>laokou-ai-iot-mcp-server-app</module>
-    <module>laokou-ai-iot-mcp-server-domain</module>
-    <module>laokou-ai-iot-mcp-server-client</module>
-    <module>laokou-ai-iot-mcp-server-start</module>
-    <module>laokou-ai-iot-mcp-server-infrastructure</module>
+    <module>laokou-iot-mcp-server-adapter</module>
+    <module>laokou-iot-mcp-server-app</module>
+    <module>laokou-iot-mcp-server-domain</module>
+    <module>laokou-iot-mcp-server-client</module>
+    <module>laokou-iot-mcp-server-start</module>
+    <module>laokou-iot-mcp-server-infrastructure</module>
   </modules>
 
 </project>
