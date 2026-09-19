@@ -85,6 +85,7 @@ spring:
               - /v3/api-docs/**=${spring.application.name}
               - /actuator/**=${spring.application.name}
               - /scalar/**=${spring.application.name}
+              - /mcp=${spring.application.name}
   ai:
     mcp:
       server:
