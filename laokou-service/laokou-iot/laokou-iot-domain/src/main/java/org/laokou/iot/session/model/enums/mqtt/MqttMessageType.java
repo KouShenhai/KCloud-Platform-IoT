@@ -49,7 +49,7 @@ public enum MqttMessageType {
 
 		@Override
 		public int getNumPartitions() {
-			return 2;
+			return 1;
 		}
 
 	},
@@ -72,7 +72,7 @@ public enum MqttMessageType {
 
 		@Override
 		public int getNumPartitions() {
-			return 2;
+			return 1;
 		}
 
 	},
@@ -95,7 +95,7 @@ public enum MqttMessageType {
 
 		@Override
 		public int getNumPartitions() {
-			return 2;
+			return 1;
 		}
 
 	},
@@ -118,7 +118,7 @@ public enum MqttMessageType {
 
 		@Override
 		public int getNumPartitions() {
-			return 2;
+			return 1;
 		}
 
 	},
@@ -141,7 +141,7 @@ public enum MqttMessageType {
 
 		@Override
 		public int getNumPartitions() {
-			return 2;
+			return 1;
 		}
 
 	},
@@ -164,7 +164,7 @@ public enum MqttMessageType {
 
 		@Override
 		public int getNumPartitions() {
-			return 2;
+			return 1;
 		}
 
 	},
@@ -187,7 +187,7 @@ public enum MqttMessageType {
 
 		@Override
 		public int getNumPartitions() {
-			return 2;
+			return 1;
 		}
 
 	},
@@ -210,7 +210,7 @@ public enum MqttMessageType {
 
 		@Override
 		public int getNumPartitions() {
-			return 4;
+			return 2;
 		}
 
 	},
@@ -233,7 +233,7 @@ public enum MqttMessageType {
 
 		@Override
 		public int getNumPartitions() {
-			return 8;
+			return 4;
 		}
 
 	},
@@ -257,7 +257,7 @@ public enum MqttMessageType {
 
 		@Override
 		public int getNumPartitions() {
-			return 4;
+			return 2;
 		}
 
 	};

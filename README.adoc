@@ -173,7 +173,7 @@ image::doc/image/老寇IoT云平台业务架构图.png[架构图,align=center]
 |Nacos                       |3.2.4
 |gRPC                        |1.84.0
 |Redis                       |8.10.1
-|Elasticsearch               |9.5.3
+|Elasticsearch               |9.5.4
 |Netty                       |4.2.17.Final
 |Kafka                       |4.3.1
 |Pulsar                      |4.2.4

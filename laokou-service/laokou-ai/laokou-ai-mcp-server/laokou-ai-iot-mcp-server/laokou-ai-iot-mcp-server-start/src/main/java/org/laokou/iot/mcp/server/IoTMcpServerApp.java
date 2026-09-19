@@ -43,7 +43,7 @@ import java.security.NoSuchAlgorithmException;
 @EnableSecurity
 @EnableEncryptableProperties
 @EnableConfigurationProperties
-@EnableAspectJAutoProxy
+@EnableAspectJAutoProxy(proxyTargetClass = true, exposeProxy = true)
 @EnableDiscoveryClient
 @SpringBootApplication(scanBasePackages = "org.laokou")
 class IoTMcpServerApp {

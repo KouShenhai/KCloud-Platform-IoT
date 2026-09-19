@@ -17,7 +17,7 @@
     </dependency>
     <dependency>
       <groupId>org.springframework.ai</groupId>
-      <artifactId>spring-ai-starter-mcp-client-webflux</artifactId>
+      <artifactId>spring-ai-starter-mcp-client</artifactId>
       <exclusions>
         <exclusion>
           <groupId>io.modelcontextprotocol.sdk</groupId>
@@ -28,6 +28,10 @@
     <dependency>
       <groupId>io.modelcontextprotocol.sdk</groupId>
       <artifactId>mcp-json-jackson3</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-oauth2-client</artifactId>
     </dependency>
   </dependencies>
 

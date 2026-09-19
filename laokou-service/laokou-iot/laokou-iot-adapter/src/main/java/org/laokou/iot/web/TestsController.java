@@ -32,7 +32,7 @@ public class TestsController {
 	private final DeviceMcpMapper deviceMcpMapper;
 
 	@GetMapping("/tests")
-	public String test(){
+	public String test() {
 		return deviceMcpMapper.getDeviceInfo("TEST");
 	}
 
