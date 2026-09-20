@@ -29,11 +29,11 @@ import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.laokou.common.i18n.util.SpringContextUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
+import org.laokou.common.redis.util.ReactiveRedisUtils;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionRepository;
 import org.springframework.data.redis.core.ReactiveHashOperations;
-import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
@@ -68,14 +68,17 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 
 	private final ReactiveHashOperations<@NonNull String, @NonNull String, @NonNull RouteDefinition> reactiveHashOperations;
 
+	private final ReactiveRedisUtils reactiveRedisUtils;
+
 	public NacosRouteDefinitionRepository(@NonNull NacosConfigManager nacosConfigManager,
-			@NonNull ReactiveRedisTemplate<@NonNull String, @NonNull Object> reactiveRedisTemplate,
-			ExecutorService virtualThreadExecutor) {
+	                                      ReactiveRedisUtils reactiveRedisUtils,
+	                                      ExecutorService virtualThreadExecutor) {
 		this.dataId = "router.json";
 		this.groupName = nacosConfigManager.getNacosConfigProperties().getGroup();
 		this.configService = nacosConfigManager.getConfigService();
-		this.reactiveHashOperations = reactiveRedisTemplate.opsForHash();
+		this.reactiveHashOperations = reactiveRedisUtils.getOpsForHash();
 		this.virtualThreadExecutor = virtualThreadExecutor;
+		this.reactiveRedisUtils = reactiveRedisUtils;
 	}
 
 	@PostConstruct

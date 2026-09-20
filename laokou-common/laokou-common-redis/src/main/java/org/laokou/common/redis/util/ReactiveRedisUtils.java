@@ -20,6 +20,7 @@ package org.laokou.common.redis.util;
 import org.jspecify.annotations.NonNull;
 import org.redisson.api.RMapReactive;
 import org.redisson.api.RedissonReactiveClient;
+import org.springframework.data.redis.core.ReactiveHashOperations;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -51,6 +52,10 @@ public record ReactiveRedisUtils(ReactiveRedisTemplate<@NonNull String, @NonNull
 
 	public Mono<@NonNull Boolean> hasHashKey(String key, String field) {
 		return redissonReactiveClient.getMap(key).containsKey(field);
+	}
+
+	public <HK, HV> ReactiveHashOperations<String, HK, HV> getOpsForHash() {
+		return reactiveRedisTemplate.opsForHash();
 	}
 
 	public Mono<@NonNull Void> set(String key, Object obj, long expire) {
