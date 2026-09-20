@@ -54,7 +54,7 @@ public record ReactiveRedisUtils(ReactiveRedisTemplate<@NonNull String, @NonNull
 		return redissonReactiveClient.getMap(key).containsKey(field);
 	}
 
-	public <HK, HV> ReactiveHashOperations<String, HK, HV> getOpsForHash() {
+	public <HK, HV> ReactiveHashOperations<String, HK, HV> opsForHash() {
 		return reactiveRedisTemplate.opsForHash();
 	}
 
