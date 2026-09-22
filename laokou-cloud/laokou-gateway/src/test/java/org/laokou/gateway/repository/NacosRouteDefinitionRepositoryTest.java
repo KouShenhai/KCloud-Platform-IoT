@@ -93,8 +93,7 @@ class NacosRouteDefinitionRepositoryTest {
 		ReactiveRedisTemplate<@NonNull String, @NonNull Object> reactiveRedisTemplate = new ReactiveRedisTemplate<>(
 				lettuceConnectionFactory, serializationContext);
 		// 初始化NacosRouteDefinitionRepository
-		nacosRouteDefinitionRepository = new NacosRouteDefinitionRepository(nacosConfigManager,
-				null,
+		nacosRouteDefinitionRepository = new NacosRouteDefinitionRepository(nacosConfigManager, null,
 				ThreadUtils.newVirtualTaskExecutor());
 		// 设置ApplicationContext（syncRouter内部会调用SpringContextUtils.publishEvent）
 		Field applicationContextField = SpringContextUtils.class.getDeclaredField("applicationContext");

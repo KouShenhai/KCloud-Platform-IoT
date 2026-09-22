@@ -57,10 +57,17 @@ public enum Type {
 		}
 	},
 
-	FENCED_LOCK("fenced_lock", "强一致性锁(可以解决主从延迟)") {
+	FENCED_LOCK("fenced_lock", "强一致性锁(解决主从延迟)") {
 		@Override
 		public RLock getLock(RedisUtils redisUtils, String key) {
 			return redisUtils.getFencedLock(key);
+		}
+	},
+
+	SPIN_LOCK("spin_lock", "自旋锁(大量锁、极高频竞争)") {
+		@Override
+		public RLock getLock(RedisUtils redisUtils, String key) {
+			return redisUtils.getSpinLock(key);
 		}
 	};
 

@@ -1130,14 +1130,6 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (11, 'gatewa
     "intervalSec": 1,
     "burst": 500000,
     "controlBehavior": 0
-  },
-  {
-    "resource": "laokou-generator",
-    "grade": 1,
-    "count": 100000,
-    "intervalSec": 1,
-    "burst": 500000,
-    "controlBehavior": 0
   }
 ]', '5e013d830e3af21e5e321c0f4910fda0', '2024-05-25 18:12:47.358', '2024-11-11 20:51:44.543', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', '0dac1a68-2f01-40df-bd26-bf0cb199057a', 'gateway sentinel flow rule', '', '', 'json', '', '');
 INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (38, 'auth-flow.json', 'IOT_GROUP', '[
@@ -2595,14 +2587,6 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (13, 'gatewa
     "intervalSec": 1,
     "burst": 500000,
     "controlBehavior": 0
-  },
-  {
-    "resource": "laokou-generator",
-    "grade": 1,
-    "count": 100000,
-    "intervalSec": 1,
-    "burst": 500000,
-    "controlBehavior": 0
   }
 ]', '5e013d830e3af21e5e321c0f4910fda0', '2024-05-25 18:13:10.6', '2024-11-11 20:52:03.56', 'nacos', '0:0:0:0:0:0:0:1', 'laokou-gateway', '8140e92b-fb43-48f5-b63b-7506185206a5', 'gateway sentinel flow rule', '', '', 'json', '', '');
 
@@ -2625,14 +2609,6 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (51, 'gatewa
   },
   {
     "resource": "laokou-iot",
-    "grade": 1,
-    "count": 100000,
-    "intervalSec": 1,
-    "burst": 500000,
-    "controlBehavior": 0
-  },
-  {
-    "resource": "laokou-generator",
     "grade": 1,
     "count": 100000,
     "intervalSec": 1,
@@ -2740,76 +2716,6 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (31, 'router
         "name": "RewritePath",
         "args": {
           "_genkey_0": "/api-gateway/iot/(?<path>.*)",
-          "_genkey_1": "/$\\{path}"
-        }
-      }
-    ],
-    "order": 1
-  },
-  {
-    "id": "laokou-network",
-    "uri": "lb://laokou-network",
-    "predicates": [
-      {
-        "name": "Path",
-        "args": {
-          "pattern": "/api-gateway/network/**"
-        }
-      },
-      {
-        "name": "Weight",
-        "args": {
-          "_genkey_0": "network",
-          "_genkey_1": "100"
-        }
-      }
-    ],
-    "filters": [
-      {
-        "name": "StripPrefix",
-        "args": {
-          "parts": "2"
-        }
-      },
-      {
-        "name": "RewritePath",
-        "args": {
-          "_genkey_0": "/api-gateway/network/(?<path>.*)",
-          "_genkey_1": "/$\\{path}"
-        }
-      }
-    ],
-    "order": 1
-  },
-  {
-    "id": "laokou-generator",
-    "uri": "lb://laokou-generator",
-    "predicates": [
-      {
-        "name": "Path",
-        "args": {
-          "pattern": "/api-gateway/generator/**"
-        }
-      },
-      {
-        "name": "Weight",
-        "args": {
-          "_genkey_0": "generator",
-          "_genkey_1": "100"
-        }
-      }
-    ],
-    "filters": [
-      {
-        "name": "StripPrefix",
-        "args": {
-          "parts": "2"
-        }
-      },
-      {
-        "name": "RewritePath",
-        "args": {
-          "_genkey_0": "/api-gateway/generator/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
         }
       }
@@ -2960,76 +2866,6 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (26, 'router
     "order": 1
   },
   {
-    "id": "laokou-network",
-    "uri": "lb://laokou-network",
-    "predicates": [
-      {
-        "name": "Path",
-        "args": {
-          "pattern": "/api-gateway/network/**"
-        }
-      },
-      {
-        "name": "Weight",
-        "args": {
-          "_genkey_0": "network",
-          "_genkey_1": "100"
-        }
-      }
-    ],
-    "filters": [
-      {
-        "name": "StripPrefix",
-        "args": {
-          "parts": "2"
-        }
-      },
-      {
-        "name": "RewritePath",
-        "args": {
-          "_genkey_0": "/api-gateway/network/(?<path>.*)",
-          "_genkey_1": "/$\\{path}"
-        }
-      }
-    ],
-    "order": 1
-  },
-  {
-    "id": "laokou-generator",
-    "uri": "lb://laokou-generator",
-    "predicates": [
-      {
-        "name": "Path",
-        "args": {
-          "pattern": "/api-gateway/generator/**"
-        }
-      },
-      {
-        "name": "Weight",
-        "args": {
-          "_genkey_0": "generator",
-          "_genkey_1": "100"
-        }
-      }
-    ],
-    "filters": [
-      {
-        "name": "StripPrefix",
-        "args": {
-          "parts": "2"
-        }
-      },
-      {
-        "name": "RewritePath",
-        "args": {
-          "_genkey_0": "/api-gateway/generator/(?<path>.*)",
-          "_genkey_1": "/$\\{path}"
-        }
-      }
-    ],
-    "order": 1
-  },
-  {
     "id": "laokou-iot-websocket",
     "uri": "lb:ws://laokou-iot-websocket",
     "predicates": [
@@ -3166,76 +3002,6 @@ INSERT INTO "public"."config_info"  OVERRIDING SYSTEM VALUE VALUES  (30, 'router
         "name": "RewritePath",
         "args": {
           "_genkey_0": "/api-gateway/iot/(?<path>.*)",
-          "_genkey_1": "/$\\{path}"
-        }
-      }
-    ],
-    "order": 1
-  },
-  {
-    "id": "laokou-network",
-    "uri": "lb://laokou-network",
-    "predicates": [
-      {
-        "name": "Path",
-        "args": {
-          "pattern": "/api-gateway/network/**"
-        }
-      },
-      {
-        "name": "Weight",
-        "args": {
-          "_genkey_0": "network",
-          "_genkey_1": "100"
-        }
-      }
-    ],
-    "filters": [
-      {
-        "name": "StripPrefix",
-        "args": {
-          "parts": "2"
-        }
-      },
-      {
-        "name": "RewritePath",
-        "args": {
-          "_genkey_0": "/api-gateway/network/(?<path>.*)",
-          "_genkey_1": "/$\\{path}"
-        }
-      }
-    ],
-    "order": 1
-  },
-  {
-    "id": "laokou-generator",
-    "uri": "lb://laokou-generator",
-    "predicates": [
-      {
-        "name": "Path",
-        "args": {
-          "pattern": "/api-gateway/generator/**"
-        }
-      },
-      {
-        "name": "Weight",
-        "args": {
-          "_genkey_0": "generator",
-          "_genkey_1": "100"
-        }
-      }
-    ],
-    "filters": [
-      {
-        "name": "StripPrefix",
-        "args": {
-          "parts": "2"
-        }
-      },
-      {
-        "name": "RewritePath",
-        "args": {
-          "_genkey_0": "/api-gateway/generator/(?<path>.*)",
           "_genkey_1": "/$\\{path}"
         }
       }

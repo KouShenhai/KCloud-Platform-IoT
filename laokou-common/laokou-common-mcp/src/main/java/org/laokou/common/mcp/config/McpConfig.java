@@ -38,7 +38,8 @@ import org.springframework.util.StringUtils;
 public class McpConfig {
 
 	@Bean
-	public McpClientCustomizer<HttpClientStreamableHttpTransport.Builder> mcpAuthorizationCustomizer(ObjectProvider<OAuth2AuthorizedToken> objectProvider) {
+	public McpClientCustomizer<HttpClientStreamableHttpTransport.Builder> mcpAuthorizationCustomizer(
+			ObjectProvider<OAuth2AuthorizedToken> objectProvider) {
 		return (_, builder) -> builder.httpRequestCustomizer(
 				(b, _, _, _, _) -> b.setHeader(HttpHeaders.AUTHORIZATION, getAccessToken(objectProvider)));
 	}
