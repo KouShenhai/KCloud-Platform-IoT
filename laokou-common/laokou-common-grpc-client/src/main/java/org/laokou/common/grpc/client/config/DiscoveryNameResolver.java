@@ -73,8 +73,8 @@ final class DiscoveryNameResolver extends NameResolver {
 	}
 
 	@Override
-	public void start(Listener2 listener) {
-		this.listener = listener;
+	public void start(Listener2 listener2) {
+		this.listener = listener2;
 		resolve();
 	}
 
