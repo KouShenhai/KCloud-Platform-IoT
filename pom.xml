@@ -97,7 +97,7 @@
     <!-- native-maven-plugin版本 -->
     <native-maven-plugin.version>1.1.1</native-maven-plugin.version>
     <!-- versions-maven-plugin版本 -->
-    <native-maven-plugin.version>1.1.12</native-maven-plugin.version>
+    <native-maven-plugin.version>1.1.14</native-maven-plugin.version>
     <!--versions-maven-plugin版本-->
     <versions-maven-plugin.version>2.22.0</versions-maven-plugin.version>
     <!-- asciidoctor-maven-plugin版本 -->
@@ -115,7 +115,7 @@
     <!-- spring-asciidoctor-backends版本 -->
     <spring-asciidoctor-backends.version>0.0.7</spring-asciidoctor-backends.version>
     <!-- protobuf-maven-plugin版本 -->
-    <protobuf-maven-plugin.version>5.1.8</protobuf-maven-plugin.version>
+    <protobuf-maven-plugin.version>5.1.10</protobuf-maven-plugin.version>
     <!-- central-publishing-maven-plugin版本 -->
     <central-publishing-maven-plugin.version>0.11.0</central-publishing-maven-plugin.version>
     <!-- maven-source-plugin版本 -->
@@ -185,13 +185,13 @@
     <!-- oshi版本 -->
     <oshi.version>7.6.1</oshi.version>
     <!-- elasticsearch版本 -->
-    <elasticsearch.version>9.5.3</elasticsearch.version>
+    <elasticsearch.version>9.5.4</elasticsearch.version>
     <!-- jakarta.servlet-api版本 -->
     <jakarta-servlet-api.version>6.1.0</jakarta-servlet-api.version>
     <!-- fesod版本 -->
     <fesod.version>2.0.2-incubating</fesod.version>
     <!-- s3版本 -->
-    <s3.version>2.54.17</s3.version>
+    <s3.version>2.55.1</s3.version>
     <!-- dynamic-datasource版本 -->
     <dynamic-datasource.version>4.5.0</dynamic-datasource.version>
     <!-- httpclient5版本 -->
@@ -211,9 +211,9 @@
     <!-- mockito版本 -->
     <mockito.version>5.23.0</mockito.version>
     <!-- taos-jdbcdriver版本 -->
-    <taos-jdbcdriver.version>3.9.1</taos-jdbcdriver.version>
+    <taos-jdbcdriver.version>3.9.2</taos-jdbcdriver.version>
     <!-- fory版本 -->
-    <fory.version>1.7.2</fory.version>
+    <fory.version>1.7.4</fory.version>
     <!-- browscap-java版本 -->
     <browscap-java.version>1.5.1</browscap-java.version>
     <!-- flyway版本 -->
