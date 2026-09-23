@@ -56,7 +56,7 @@ server:
 
 spring:
   application:
-    name: ${SERVICE_ID:laokou-ai-iot-mcp-server}
+    name: ${SERVICE_ID:laokou-iot-mcp-server}
   profiles:
     active: @PROFILE-ACTIVE@
   lifecycle:
@@ -87,6 +87,11 @@ spring:
               - /scalar/**=${spring.application.name}
               - /mcp=${spring.application.name}
   ai:
+    alibaba:
+      mcp:
+        nacos:
+          register:
+            enabled: true
     mcp:
       server:
         enabled: true
