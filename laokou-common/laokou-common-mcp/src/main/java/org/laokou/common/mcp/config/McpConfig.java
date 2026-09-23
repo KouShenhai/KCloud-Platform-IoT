@@ -25,7 +25,6 @@ import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.springframework.ai.mcp.customizer.McpClientCustomizer;
 import org.springframework.beans.factory.ObjectProvider;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.util.StringUtils;
@@ -37,7 +36,7 @@ import org.springframework.util.StringUtils;
 @Configuration(proxyBeanMethods = false)
 public class McpConfig {
 
-	@Bean
+	// @Bean
 	public McpClientCustomizer<HttpClientStreamableHttpTransport.Builder> mcpAuthorizationCustomizer(
 			ObjectProvider<OAuth2AuthorizedToken> objectProvider) {
 		return (_, builder) -> builder.httpRequestCustomizer(
@@ -45,12 +44,16 @@ public class McpConfig {
 	}
 
 	private String getAccessToken(ObjectProvider<OAuth2AuthorizedToken> objectProvider) {
-		HttpServletRequest request = RequestUtils.getHttpServletRequest();
-		String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
-		if (StringUtils.hasText(authorization) && authorization.startsWith(StringConstants.BEARER_PREFIX)) {
-			return authorization;
+		try {
+			HttpServletRequest request = RequestUtils.getHttpServletRequest();
+			String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
+			if (StringUtils.hasText(authorization) && authorization.startsWith(StringConstants.BEARER_PREFIX)) {
+				return authorization;
+			}
+			return StringConstants.BEARER_PREFIX + objectProvider.getObject().getAccessToken();
+		} catch (Exception ex) {
+			return StringConstants.EMPTY;
 		}
-		return StringConstants.BEARER_PREFIX + objectProvider.getObject().getAccessToken();
 	}
 
 }

@@ -19,8 +19,10 @@ package org.laokou.iot.device.gatewayimpl.mcp;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.ai.mcp.SyncMcpToolCallbackProvider;
 import org.springframework.ai.tool.ToolCallback;
-import org.springframework.ai.tool.ToolCallbackProvider;
+
+import java.util.Arrays;
 
 /**
  * @author laokou
@@ -29,13 +31,15 @@ import org.springframework.ai.tool.ToolCallbackProvider;
 @RequiredArgsConstructor
 public class DeviceMcpMapper {
 
-	private final ToolCallbackProvider toolCallbackProvider;
+	private final SyncMcpToolCallbackProvider syncMcpToolCallbackProvider;
 
 	public String getDeviceInfo(String deviceSN) {
-		for (ToolCallback toolCallback : toolCallbackProvider.getToolCallbacks()) {
-			log.info(toolCallback.toString());
-		}
-		return deviceSN;
+		ToolCallback callback = Arrays.stream(syncMcpToolCallbackProvider.getToolCallbacks())
+			.filter(item -> "getDeviceInfo".equals(item.getToolDefinition().name()))
+			.findFirst()
+			.orElseThrow(() -> new IllegalStateException("MCP Tool不存在: getDeviceInfo"));
+
+		return callback.call("{\"deviceSN\":\"123456\"}");
 	}
 
 }

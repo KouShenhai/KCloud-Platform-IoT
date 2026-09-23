@@ -20,7 +20,6 @@ package org.laokou.iot.mcp.server.device.service;
 import org.laokou.iot.mcp.server.device.api.DeviceToolI;
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.ai.tool.annotation.ToolParam;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 /**
@@ -31,7 +30,7 @@ public class DeviceToolImpl implements DeviceToolI {
 
 	@Override
 	@Tool(name = "getDeviceInfo", description = "根据设备SN获取设备信息")
-	@PreAuthorize("hasAuthority('read1111')")
+	//@PreAuthorize("hasAuthority('read1111')")
 	public String getDeviceInfo(@ToolParam(description = "设备SN") String deviceSN) {
 		return deviceSN;
 	}

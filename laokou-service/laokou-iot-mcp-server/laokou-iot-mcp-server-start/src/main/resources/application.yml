@@ -87,11 +87,6 @@ spring:
               - /scalar/**=${spring.application.name}
               - /mcp=${spring.application.name}
   ai:
-    alibaba:
-      mcp:
-        nacos:
-          register:
-            enabled: true
     mcp:
       server:
         enabled: true
@@ -103,7 +98,7 @@ spring:
         streamable-http:
           mcp-endpoint: /mcp
           keep-alive-interval: 30s
-
+          disallow-delete: true
 logging:
   config: classpath:log4j2-@PROFILE-ACTIVE@.xml
 
