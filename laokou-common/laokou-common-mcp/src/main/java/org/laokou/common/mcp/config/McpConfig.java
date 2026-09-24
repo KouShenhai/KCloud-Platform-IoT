@@ -25,9 +25,11 @@ import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
 import org.springframework.ai.mcp.customizer.McpClientCustomizer;
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.util.StringUtils;
+import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * @author laokou
@@ -35,6 +37,11 @@ import org.springframework.util.StringUtils;
 @Slf4j
 @Configuration(proxyBeanMethods = false)
 public class McpConfig {
+
+	@Bean
+	public WebClient.Builder webClientBuilder() {
+		return WebClient.builder();
+	}
 
 	// @Bean
 	public McpClientCustomizer<HttpClientStreamableHttpTransport.Builder> mcpAuthorizationCustomizer(
