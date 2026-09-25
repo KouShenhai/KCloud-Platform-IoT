@@ -89,11 +89,6 @@ spring:
             POST:
               - /mcp=${spring.application.name}
   ai:
-    alibaba:
-      mcp:
-        nacos:
-          register:
-            enabled: true
     mcp:
       server:
         enabled: true

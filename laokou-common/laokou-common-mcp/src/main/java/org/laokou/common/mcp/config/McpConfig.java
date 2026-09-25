@@ -29,7 +29,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.util.StringUtils;
-import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * @author laokou
@@ -39,11 +38,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class McpConfig {
 
 	@Bean
-	public WebClient.Builder webClientBuilder() {
-		return WebClient.builder();
-	}
-
-	// @Bean
 	public McpClientCustomizer<HttpClientStreamableHttpTransport.Builder> mcpAuthorizationCustomizer(
 			ObjectProvider<OAuth2AuthorizedToken> objectProvider) {
 		return (_, builder) -> builder.httpRequestCustomizer(
@@ -58,7 +52,8 @@ public class McpConfig {
 				return authorization;
 			}
 			return StringConstants.BEARER_PREFIX + objectProvider.getObject().getAccessToken();
-		} catch (Exception ex) {
+		}
+		catch (Exception ex) {
 			return StringConstants.EMPTY;
 		}
 	}

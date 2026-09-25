@@ -31,15 +31,16 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class DeviceMcpMapper {
 
-	private final ToolCallbackProvider toolCallbackProvider;
+	private final ToolCallbackProvider syncMcpToolCallbackProvider;
 
 	public String getDeviceInfo(String deviceSN) {
-		ToolCallback callback = Arrays.stream(toolCallbackProvider.getToolCallbacks())
+		ToolCallback callback = Arrays.stream(syncMcpToolCallbackProvider.getToolCallbacks())
 			.filter(item -> "getDeviceInfo".equals(item.getToolDefinition().name()))
 			.findFirst()
 			.orElseThrow(() -> new IllegalStateException("MCP Tool不存在: getDeviceInfo"));
-
-		return callback.call("{\"deviceSN\":\"123456\"}");
+		String call = callback.call("{\"deviceSN\":\"123456\"}");
+		log.info("getDeviceInfo call:{}", call);
+		return call;
 	}
 
 }

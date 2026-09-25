@@ -1,0 +1,57 @@
+/*
+ * Copyright (c) 2022-2026 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+package org.laokou.common.mcp.exception.handler;
+
+import io.micrometer.common.util.StringUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.common.exception.StatusCode;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.i18n.util.MessageUtils;
+import org.springframework.ai.tool.definition.ToolDefinition;
+import org.springframework.ai.tool.execution.ToolExecutionException;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+/**
+ * @author laokou
+ */
+@Slf4j
+@Component
+@ResponseBody
+@RestControllerAdvice
+public class McpExceptionHandler {
+
+	/**
+	 * MCP工具执行异常.
+	 * @param ex MCP工具执行异常
+	 * @return 响应结果
+	 */
+	@ExceptionHandler(ToolExecutionException.class)
+	public Result<?> handle(ToolExecutionException ex) {
+		String message = ex.getMessage();
+		ToolDefinition toolDefinition = ex.getToolDefinition();
+		if (StringUtils.isNotBlank(message) && message.contains("Access Denied")) {
+			return Result.fail(StatusCode.FORBIDDEN,
+					String.format(toolDefinition.description() + "，%s", MessageUtils.getMessage(StatusCode.FORBIDDEN)));
+		}
+		return Result.fail(StatusCode.FORBIDDEN);
+	}
+
+}

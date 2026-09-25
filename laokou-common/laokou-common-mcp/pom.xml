@@ -17,7 +17,7 @@
     </dependency>
     <dependency>
       <groupId>org.springframework.ai</groupId>
-      <artifactId>spring-ai-starter-mcp-client-webflux</artifactId>
+      <artifactId>spring-ai-starter-mcp-client</artifactId>
       <exclusions>
         <exclusion>
           <groupId>io.modelcontextprotocol.sdk</groupId>
