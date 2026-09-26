@@ -31,7 +31,7 @@ public class DeviceToolImpl implements DeviceToolI {
 
 	@Override
 	@Tool(name = "getDeviceInfo", description = "根据设备SN获取设备信息")
-	@PreAuthorize("hasAuthority('read1111')")
+	@PreAuthorize("hasAuthority('read')")
 	public String getDeviceInfo(@ToolParam(description = "设备SN") String deviceSN) {
 		return deviceSN;
 	}

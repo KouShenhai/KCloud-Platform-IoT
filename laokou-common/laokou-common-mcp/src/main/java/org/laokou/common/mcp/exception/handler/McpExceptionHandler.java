@@ -19,10 +19,7 @@ package org.laokou.common.mcp.exception.handler;
 
 import io.micrometer.common.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.util.MessageUtils;
-import org.springframework.ai.tool.definition.ToolDefinition;
 import org.springframework.ai.tool.execution.ToolExecutionException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -46,12 +43,10 @@ public class McpExceptionHandler {
 	@ExceptionHandler(ToolExecutionException.class)
 	public Result<?> handle(ToolExecutionException ex) {
 		String message = ex.getMessage();
-		ToolDefinition toolDefinition = ex.getToolDefinition();
 		if (StringUtils.isNotBlank(message) && message.contains("Access Denied")) {
-			return Result.fail(StatusCode.FORBIDDEN,
-					String.format(toolDefinition.description() + "，%s", MessageUtils.getMessage(StatusCode.FORBIDDEN)));
+			return Result.fail("B_Mcp_Forbidden", "Mcp Access Denied");
 		}
-		return Result.fail(StatusCode.FORBIDDEN);
+		throw new IllegalArgumentException("ToolExecutionException");
 	}
 
 }
