@@ -19,7 +19,7 @@ package org.laokou.iot.common.config;
 
 import org.laokou.iot.device.gatewayimpl.mcp.DeviceMcpMapper;
 import org.springframework.ai.tool.ToolCallbackProvider;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -30,8 +30,17 @@ import org.springframework.context.annotation.Configuration;
 public class IotConfig {
 
 	@Bean
-	DeviceMcpMapper deviceMcpMapper(@Qualifier("distributedSyncToolCallback") ToolCallbackProvider tools) {
-		return new DeviceMcpMapper(tools);
+	@ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = "spring.ai.mcp.client",
+			name = "enabled")
+	DeviceMcpMapper deviceMcpMapper(ToolCallbackProvider syncMcpToolCallbackProvider) {
+		return new DeviceMcpMapper(syncMcpToolCallbackProvider);
+	}
+
+	@Bean
+	@ConditionalOnProperty(havingValue = "false", matchIfMissing = true, prefix = "spring.ai.mcp.client",
+			name = "enabled")
+	DeviceMcpMapper deviceMcpMapper0() {
+		return new DeviceMcpMapper(null);
 	}
 
 }

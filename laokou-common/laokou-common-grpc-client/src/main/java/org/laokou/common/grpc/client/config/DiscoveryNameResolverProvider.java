@@ -74,7 +74,7 @@ final class DiscoveryNameResolverProvider extends NameResolverProvider {
 	public void onHeartbeatEvent(HeartbeatEvent event) {
 		log.debug("Received HeartbeatEvent, refreshing DiscoveryNameResolvers, event: {}", event.getValue());
 		for (DiscoveryNameResolver discoveryNameResolver : discoveryNameResolvers) {
-			discoveryNameResolver.refreshFromExternal();
+			Thread.startVirtualThread(discoveryNameResolver::refreshFromExternal);
 		}
 	}
 

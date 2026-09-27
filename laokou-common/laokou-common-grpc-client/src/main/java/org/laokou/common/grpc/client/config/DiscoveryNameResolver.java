@@ -73,8 +73,8 @@ final class DiscoveryNameResolver extends NameResolver {
 	}
 
 	@Override
-	public void start(Listener2 listener) {
-		this.listener = listener;
+	public void start(Listener2 listener2) {
+		this.listener = listener2;
 		resolve();
 	}
 
@@ -84,19 +84,15 @@ final class DiscoveryNameResolver extends NameResolver {
 	}
 
 	public void refreshFromExternal() {
-		Thread.startVirtualThread(() -> {
-			if (ObjectUtils.isNotNull(listener)) {
-				resolve();
-			}
-		});
+		if (ObjectUtils.isNotNull(listener)) {
+			resolve();
+		}
 	}
 
 	private void resolve() {
 		if (this.resolving.compareAndSet(false, true)) {
-			Thread.startVirtualThread(() -> {
-				this.serviceInstances.addAll(resolveInternal());
-				this.resolving.set(false);
-			});
+			this.serviceInstances.addAll(resolveInternal());
+			this.resolving.set(false);
 		}
 	}
 

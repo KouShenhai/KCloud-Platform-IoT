@@ -76,6 +76,10 @@ public final class RedisKeyUtils {
 		return "route:definition";
 	}
 
+	public static String getRouteDefinitionLock() {
+		return getRouteDefinitionHashKey() + ":lock";
+	}
+
 	/**
 	 * 数据换成Key.
 	 */

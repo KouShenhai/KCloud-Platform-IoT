@@ -46,7 +46,7 @@
     </developer>
   </developers>
   <scm>
-    <tag>kcloud-platform-iot-4.0.3.RELEASE</tag>
+    <tag>kcloud-platform-iot-4.0.4.RELEASE</tag>
     <url>https://github.com/KouShenhai/KCloud-Platform-IoT</url>
     <connection>scm:git:https://github.com/KouShenhai/KCloud-Platform-IoT.git</connection>
     <developerConnection>scm:git:https://github.com/KouShenhai/KCloud-Platform-IoT.git</developerConnection>
@@ -67,7 +67,7 @@
   </licenses>
   <properties>
     <!-- 项目版本 -->
-    <revision>4.0.4-SNAPSHOT</revision>
+    <revision>4.0.4</revision>
     <!-- JDK版本 -->
     <java.version>25</java.version>
     <!-- 项目编码 -->
@@ -140,8 +140,6 @@
     <spring-security.version>7.1.1</spring-security.version>
     <!-- spring-ai版本 -->
     <spring-ai.version>2.0.1</spring-ai.version>
-    <!-- spring-ai-agentic版本 -->
-    <spring-ai-agentic.version>2.0.0.0</spring-ai-agentic.version>
     <!-- springdoc-openapi版本 -->
     <springdoc-openapi.version>3.1.1</springdoc-openapi.version>
     <!-- testcontainers版本 -->
@@ -335,24 +333,7 @@
       </dependency>
       <!-- =============================== 定义 Spring Ai 版本 =============================== -->
 
-      <!-- =============================== 定义 Spring Ai Agentic 版本 =============================== -->
-      <dependency>
-        <groupId>io.github.agentic-spring-ai</groupId>
-        <artifactId>agentic-spring-ai-bom</artifactId>
-        <version>${spring-ai-agentic.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>io.github.agentic-spring-ai</groupId>
-        <artifactId>agentic-spring-ai-extensions-bom</artifactId>
-        <version>${spring-ai-agentic.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <!-- =============================== 定义 Spring Ai Agentic 版本 =============================== -->
-
-      <!-- =============================== 定义 Springdoc Openapi 版本 =============================== -->
+      <!-- =============================== 定义 Springdoc OpenAPI 版本 =============================== -->
       <dependency>
         <groupId>org.springdoc</groupId>
         <artifactId>springdoc-openapi-bom</artifactId>
@@ -360,7 +341,7 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-      <!-- =============================== 定义 Springdoc Openapi 版本 =============================== -->
+      <!-- =============================== 定义 Springdoc OpenAPI 版本 =============================== -->
 
       <!-- =============================== 定义 Testcontainers 版本 =============================== -->
       <dependency>
@@ -976,8 +957,8 @@
         <configuration>
           <!--备份版本-->
           <generateBackupPoms>true</generateBackupPoms>
-          <newVersion>4.0.4</newVersion>
-          <oldVersion>4.0.4-SNAPSHOT</oldVersion>
+          <newVersion>4.0.5</newVersion>
+          <oldVersion>4.0.5-SNAPSHOT</oldVersion>
         </configuration>
       </plugin>
       <plugin>

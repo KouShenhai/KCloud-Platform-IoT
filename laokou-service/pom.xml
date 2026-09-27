@@ -39,6 +39,6 @@
     <module>laokou-oss</module>
     <module>laokou-cola</module>
     <module>laokou-standalone</module>
-    <module>laokou-ai</module>
+    <module>laokou-iot-mcp-server</module>
   </modules>
 </project>

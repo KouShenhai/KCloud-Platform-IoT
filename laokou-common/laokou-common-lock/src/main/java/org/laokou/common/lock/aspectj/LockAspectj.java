@@ -69,9 +69,9 @@ public class LockAspectj {
 			try {
 				return joinPoint.proceed();
 			}
-			catch (GlobalException e) {
+			catch (GlobalException gex) {
 				// 系统异常/业务异常/参数异常直接捕获并抛出
-				throw e;
+				throw gex;
 			}
 			catch (Throwable ex) {
 				log.error("执行 proceed 失败，错误信息：{}", ex.getMessage(), ex);

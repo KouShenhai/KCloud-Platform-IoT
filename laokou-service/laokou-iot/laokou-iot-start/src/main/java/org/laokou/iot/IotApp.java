@@ -25,9 +25,7 @@ import org.laokou.common.nacos.annotation.EnablePrintRouter;
 import org.laokou.common.security.annotation.EnableSecurity;
 import org.laokou.common.security.config.TransmittableThreadLocalSecurityContextHolderStrategy;
 import org.laokou.common.websocket.annotation.EnableWebSocketServer;
-import org.laokou.iot.device.gatewayimpl.mcp.DeviceMcpMapper;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -60,9 +58,7 @@ import java.security.NoSuchAlgorithmException;
 @RequiredArgsConstructor
 @MapperScan(basePackages = "org.laokou.iot.**.gatewayimpl.database")
 @SpringBootApplication(scanBasePackages = "org.laokou")
-class IotApp implements CommandLineRunner {
-
-	private final DeviceMcpMapper deviceMcpMapper;
+class IotApp {
 
 	// @formatter:off
 	static void main(String[] args) throws UnknownHostException, NoSuchAlgorithmException, KeyManagementException {
@@ -83,11 +79,6 @@ class IotApp implements CommandLineRunner {
 		stopWatch.stop();
 		log.info("{}", stopWatch.prettyPrint());
 	}
-
-	@Override
-    public void run(String... args)  {
-		deviceMcpMapper.getDeviceInfo();
-    }
 	// @formatter:on
 
 }

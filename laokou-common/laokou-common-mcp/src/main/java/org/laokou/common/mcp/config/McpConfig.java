@@ -19,6 +19,7 @@ package org.laokou.common.mcp.config;
 
 import io.modelcontextprotocol.client.transport.HttpClientStreamableHttpTransport;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.config.OAuth2AuthorizedToken;
 import org.laokou.common.core.util.RequestUtils;
 import org.laokou.common.i18n.common.constant.StringConstants;
@@ -32,6 +33,7 @@ import org.springframework.util.StringUtils;
 /**
  * @author laokou
  */
+@Slf4j
 @Configuration(proxyBeanMethods = false)
 public class McpConfig {
 
@@ -43,12 +45,17 @@ public class McpConfig {
 	}
 
 	private String getAccessToken(ObjectProvider<OAuth2AuthorizedToken> objectProvider) {
-		HttpServletRequest request = RequestUtils.getHttpServletRequest();
-		String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
-		if (StringUtils.hasText(authorization) && authorization.startsWith(StringConstants.BEARER_PREFIX)) {
-			return authorization;
+		try {
+			HttpServletRequest request = RequestUtils.getHttpServletRequest();
+			String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
+			if (StringUtils.hasText(authorization) && authorization.startsWith(StringConstants.BEARER_PREFIX)) {
+				return authorization;
+			}
+			return StringConstants.BEARER_PREFIX + objectProvider.getObject().getAccessToken();
 		}
-		return StringConstants.BEARER_PREFIX + objectProvider.getObject().getAccessToken();
+		catch (Exception ex) {
+			return StringConstants.EMPTY;
+		}
 	}
 
 }

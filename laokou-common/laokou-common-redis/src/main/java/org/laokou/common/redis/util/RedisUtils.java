@@ -96,6 +96,10 @@ public record RedisUtils(RedisTemplate<String, Object> redisTemplate, RedissonCl
 		return redissonClient.getReadWriteLock(key).writeLock();
 	}
 
+	public RLock getSpinLock(String key) {
+		return redissonClient.getSpinLock(key);
+	}
+
 	public boolean tryLock(RLock lock, long timeout) throws InterruptedException {
 		return lock.tryLock(timeout, TimeUnit.MILLISECONDS);
 	}

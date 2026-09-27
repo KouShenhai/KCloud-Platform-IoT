@@ -34,7 +34,6 @@ import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.fory.constant.ForyConstants;
 import org.laokou.common.i18n.common.IdGenerator;
 import org.laokou.common.i18n.util.ObjectUtils;
-import org.laokou.common.i18n.util.SpringUtils;
 import org.laokou.common.redis.util.RedisUtils;
 import org.laokou.common.security.config.RedisOAuth2AuthorizationConsentService;
 import org.laokou.common.security.config.RedisRegisteredClientRepository;
@@ -234,8 +233,8 @@ class OAuth2AuthorizationServerConfig {
 	@Bean(name = "idGenerator")
 	@ConditionalOnProperty(prefix = "system-settings", name = "app-mode", havingValue = "MICROSERVICE",
 			matchIfMissing = true)
-	IdGenerator idGeneratorMapper(SpringUtils springUtils) {
-		return new IdGeneratorMapper(springUtils);
+	IdGenerator idGeneratorMapper() {
+		return new IdGeneratorMapper();
 	}
 
 	private Boolean validateCaptcha(String key, String code) {

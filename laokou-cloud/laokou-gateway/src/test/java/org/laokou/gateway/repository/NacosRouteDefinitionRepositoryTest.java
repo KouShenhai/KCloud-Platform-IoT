@@ -32,8 +32,12 @@ import org.laokou.common.i18n.util.ResourceExtUtils;
 import org.laokou.common.i18n.util.SpringContextUtils;
 import org.laokou.common.i18n.util.StringExtUtils;
 import org.laokou.common.redis.config.JacksonCodec;
+import org.laokou.common.redis.util.ReactiveRedisUtils;
 import org.laokou.common.testcontainers.container.NacosContainer;
 import org.laokou.common.testcontainers.util.DockerImageNames;
+import org.redisson.Redisson;
+import org.redisson.api.RedissonClient;
+import org.redisson.config.Config;
 import org.springframework.boot.web.context.reactive.AnnotationConfigReactiveWebApplicationContext;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
@@ -93,7 +97,13 @@ class NacosRouteDefinitionRepositoryTest {
 		ReactiveRedisTemplate<@NonNull String, @NonNull Object> reactiveRedisTemplate = new ReactiveRedisTemplate<>(
 				lettuceConnectionFactory, serializationContext);
 		// 初始化NacosRouteDefinitionRepository
-		nacosRouteDefinitionRepository = new NacosRouteDefinitionRepository(nacosConfigManager, reactiveRedisTemplate,
+		Config config = new Config();
+		config.useSingleServer()
+			.setAddress(String.format("redis://%s:%s", redisContainer.getHost(), redisContainer.getRedisPort()));
+		RedissonClient redissonClient = Redisson.create(config);
+		ReactiveRedisUtils reactiveRedisUtils = new ReactiveRedisUtils(reactiveRedisTemplate,
+				redissonClient.reactive());
+		nacosRouteDefinitionRepository = new NacosRouteDefinitionRepository(nacosConfigManager, reactiveRedisUtils,
 				ThreadUtils.newVirtualTaskExecutor());
 		// 设置ApplicationContext（syncRouter内部会调用SpringContextUtils.publishEvent）
 		Field applicationContextField = SpringContextUtils.class.getDeclaredField("applicationContext");
@@ -121,7 +131,7 @@ class NacosRouteDefinitionRepositoryTest {
 		Thread.sleep(Duration.ofSeconds(5));
 		// 同步路由到Redis
 		Assertions.assertThatNoException()
-			.isThrownBy(() -> nacosRouteDefinitionRepository.syncRouter()
+			.isThrownBy(() -> nacosRouteDefinitionRepository.syncRouter(nacosRouteDefinitionRepository.getRoutes())
 				.take(Duration.ofSeconds(15))
 				.subscribeOn(Schedulers.boundedElastic())
 				.block(Duration.ofSeconds(20)));
@@ -159,7 +169,8 @@ class NacosRouteDefinitionRepositoryTest {
 		Assertions.assertThatNoException()
 			.isThrownBy(() -> configService.publishConfig("router.json", "DEFAULT_GROUP", routerJson));
 		Thread.sleep(Duration.ofSeconds(5));
-		List<@NonNull RouteDefinition> first = nacosRouteDefinitionRepository.syncRouter()
+		List<@NonNull RouteDefinition> first = nacosRouteDefinitionRepository
+			.syncRouter(nacosRouteDefinitionRepository.getRoutes())
 			.timeout(Duration.ofSeconds(15))
 			.thenMany(nacosRouteDefinitionRepository.getRouteDefinitions())
 			.collectList()
@@ -189,7 +200,7 @@ class NacosRouteDefinitionRepositoryTest {
 		Thread.sleep(Duration.ofSeconds(5));
 		// 重新同步
 		Assertions.assertThatNoException()
-			.isThrownBy(() -> nacosRouteDefinitionRepository.syncRouter()
+			.isThrownBy(() -> nacosRouteDefinitionRepository.syncRouter(nacosRouteDefinitionRepository.getRoutes())
 				.take(Duration.ofSeconds(15))
 				.subscribeOn(Schedulers.boundedElastic())
 				.block(Duration.ofSeconds(20)));

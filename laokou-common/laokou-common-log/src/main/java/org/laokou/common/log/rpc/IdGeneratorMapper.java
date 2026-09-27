@@ -18,13 +18,10 @@
 package org.laokou.common.log.rpc;
 
 import io.grpc.StatusException;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.grpc.client.annotation.GrpcClient;
-import org.laokou.common.grpc.client.exception.ServiceNotFoundException;
-import org.laokou.common.grpc.client.exception.handler.StatusExceptionHandler;
 import org.laokou.common.i18n.common.IdGenerator;
-import org.laokou.common.i18n.util.SpringUtils;
+import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.snowflake.id.proto.GenerateBatchIdsRequest;
 import org.laokou.snowflake.id.proto.GenerateBatchIdsResponse;
 import org.laokou.snowflake.id.proto.GenerateIdRequest;
@@ -37,10 +34,7 @@ import java.util.List;
  * @author laokou
  */
 @Slf4j
-@RequiredArgsConstructor
 public class IdGeneratorMapper implements IdGenerator {
-
-	private final SpringUtils springUtils;
 
 	@GrpcClient(serviceId = "laokou-snowflake-id")
 	private SnowflakeIdServiceIGrpc.SnowflakeIdServiceIBlockingV2Stub snowflakeIdServiceIBlockingV2Stub;
@@ -53,11 +47,7 @@ public class IdGeneratorMapper implements IdGenerator {
 			return generateIdResponse.getData();
 		}
 		catch (StatusException ex) {
-			log.error("生成雪花ID失败，错误信息：{}", ex.getMessage(), ex);
-			throw StatusExceptionHandler.handle(ex,
-					new ServiceNotFoundException("B_Service_GenerateSnowflakeIdNotFound",
-							String.format("【%s】调用生成雪花ID服务失败，请联系管理员", springUtils.getServiceId()), ex),
-					springUtils.getServiceId());
+			throw new BizException("B_gRPC_GenerateSnowflakeIdError", ex.getMessage());
 		}
 	}
 
@@ -69,11 +59,7 @@ public class IdGeneratorMapper implements IdGenerator {
 			return generateBatchIdsResponse.getDataList();
 		}
 		catch (StatusException ex) {
-			log.error("批量生成雪花IDS失败，错误信息：{}", ex.getMessage(), ex);
-			throw StatusExceptionHandler.handle(ex,
-					new ServiceNotFoundException("B_Service_GenerateSnowflakeIdsNotFound",
-							String.format("【%s】调用生成雪花IDS服务失败，请联系管理员", springUtils.getServiceId()), ex),
-					springUtils.getServiceId());
+			throw new BizException("B_gRPC_GenerateSnowflakeIdsError", ex.getMessage());
 		}
 	}
 

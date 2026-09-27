@@ -18,14 +18,17 @@
 package org.laokou.common.redis.util;
 
 import org.jspecify.annotations.NonNull;
+import org.redisson.api.RLockReactive;
 import org.redisson.api.RMapReactive;
 import org.redisson.api.RedissonReactiveClient;
+import org.springframework.data.redis.core.ReactiveHashOperations;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author laokou
@@ -51,6 +54,10 @@ public record ReactiveRedisUtils(ReactiveRedisTemplate<@NonNull String, @NonNull
 
 	public Mono<@NonNull Boolean> hasHashKey(String key, String field) {
 		return redissonReactiveClient.getMap(key).containsKey(field);
+	}
+
+	public <HK, HV> ReactiveHashOperations<String, HK, HV> opsForHash() {
+		return reactiveRedisTemplate.opsForHash();
 	}
 
 	public Mono<@NonNull Void> set(String key, Object obj, long expire) {
@@ -80,6 +87,24 @@ public record ReactiveRedisUtils(ReactiveRedisTemplate<@NonNull String, @NonNull
 
 	public Mono<@NonNull Object> putIfAbsent(String key, String field, Object value) {
 		return redissonReactiveClient.getMap(key).putIfAbsent(field, value);
+	}
+
+	public <T> Mono<T> tryLock(String key, long threadId, long waitTime, long leaseTime, Mono<T> action) {
+		RLockReactive lock = redissonReactiveClient.getLock(key);
+		return Mono.usingWhen(lock.tryLock(waitTime, leaseTime, TimeUnit.MILLISECONDS, threadId).flatMap(acquired -> {
+			if (!acquired) {
+				return Mono.error(new IllegalStateException(String.format("获取分布式锁失败：%s", key)));
+			}
+			return Mono.just(true);
+		}),
+
+				ignored -> action,
+
+				ignored -> lock.unlock(threadId),
+
+				(ignored, _) -> lock.unlock(threadId),
+
+				ignored -> lock.unlock(threadId));
 	}
 
 }
