@@ -46,7 +46,7 @@
     </developer>
   </developers>
   <scm>
-    <tag>kcloud-platform-iot-4.0.4.RELEASE</tag>
+    <tag>kcloud-platform-iot-4.0.5.RELEASE</tag>
     <url>https://github.com/KouShenhai/KCloud-Platform-IoT</url>
     <connection>scm:git:https://github.com/KouShenhai/KCloud-Platform-IoT.git</connection>
     <developerConnection>scm:git:https://github.com/KouShenhai/KCloud-Platform-IoT.git</developerConnection>
