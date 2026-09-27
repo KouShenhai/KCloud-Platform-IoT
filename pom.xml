@@ -157,7 +157,7 @@
     <!-- grpc版本 -->
     <grpc.version>1.84.0</grpc.version>
     <!-- jackson版本 -->
-    <jackson.version>3.2.2</jackson.version>
+    <jackson.version>3.2.3</jackson.version>
     <!-- okhttp版本 -->
     <okhttp.version>5.5.0</okhttp.version>
     <!-- protobuf版本 -->
