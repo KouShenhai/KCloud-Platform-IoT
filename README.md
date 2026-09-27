@@ -163,7 +163,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级单体架构和微�
 |         gRPC         |    1.84.0    |
 |        Redis         |    8.10.1    |
 |    Elasticsearch     |    9.5.4     |
-|        Netty         | 4.2.17.Final |
+|        Netty         | 4.2.18.Final |
 |        Kafka         |    4.3.1     |
 |        Pulsar        |    4.2.4     |
 |         EMQX         |    5.8.8     |
@@ -172,7 +172,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级单体架构和微�
 |        Flyway        |    13.5.0    |
 |      Snail Job       |    1.8.0     |
 |       Sentinel       |    1.8.9     |
-|         Fory         |    1.7.1     |
+|         Fory         |    1.7.4     |
 
 #### 🍺 相关技术
 
