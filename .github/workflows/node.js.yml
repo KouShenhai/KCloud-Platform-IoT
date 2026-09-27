@@ -20,14 +20,6 @@ jobs:
         with:
           node-version: 24.x
           registry-url: https://registry.npmjs.org/
-      - name: Install pnpm
-        run: npm install -g pnpm
-      - name: Install UI
-        run: pnpm install --dangerously-allow-all-builds
-        working-directory: ./ui
-      - name: Build UI
-        run: pnpm build
-        working-directory: ./ui
       - name: Use Node.js 24.x
         uses: actions/setup-node@v7.0.0
         with:
