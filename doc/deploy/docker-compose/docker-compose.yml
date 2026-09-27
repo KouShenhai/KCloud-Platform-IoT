@@ -259,7 +259,7 @@ services:
       - iot_network
   # docker部署 => sudo docker run -d --name emqx  --restart always --network bridge -v /home/ubuntu/emqx/data:/opt/emqx/data:rw -v /home/ubuntu/emqx/log:/opt/emqx/log:rw -p 1883:1883 -p 8083:8083 -p 8084:8084 -p 8883:8883 -p 18083:18083 emqx/emqx:5.8.6
   emqx:
-    image: emqx/emqx:5.8.8
+    image: emqx/emqx:5.10.5
     container_name: emqx
     # 保持容器在没有守护程序的情况下运行
     tty: true
@@ -280,7 +280,7 @@ services:
     networks:
       - iot_network
   emqx1:
-    image: emqx/emqx:5.8.8
+    image: emqx/emqx:5.10.5
     container_name: emqx1
     hostname: node1.emqx.local
     # 保持容器在没有守护程序的情况下运行
@@ -307,7 +307,7 @@ services:
     networks:
       - iot_network
   emqx2:
-    image: emqx/emqx:5.8.8
+    image: emqx/emqx:5.10.5
     container_name: emqx2
     hostname: node2.emqx.local
     # 保持容器在没有守护程序的情况下运行
@@ -334,7 +334,7 @@ services:
     networks:
       - iot_network
   emqx3:
-    image: emqx/emqx:5.8.8
+    image: emqx/emqx:5.10.5
     container_name: emqx3
     hostname: node3.emqx.local
     # 保持容器在没有守护程序的情况下运行
