@@ -19,10 +19,9 @@ jobs:
         uses: actions/setup-node@v7.0.0
         with:
           node-version: 24.x
+          registry-url: https://registry.npmjs.org/
       - name: Install pnpm
         run: npm install -g pnpm
-      - name: Config pnpm
-        run: pnpm config set registry https://registry.npmjs.org/
       - name: Install UI
         run: pnpm install --dangerously-allow-all-builds
         working-directory: ./ui
