@@ -138,5 +138,40 @@
       }
     ],
     "order": 1
+  },
+  {
+    "id": "laokou-iot-mcp-server",
+    "uri": "lb:ws://laokou-iot-mcp-server",
+    "predicates": [
+      {
+        "name": "Path",
+        "args": {
+          "pattern": "/api-gateway/iot-mcp-server/**"
+        }
+      },
+      {
+        "name": "Weight",
+        "args": {
+          "_genkey_0": "iot-mcp-server",
+          "_genkey_1": "100"
+        }
+      }
+    ],
+    "filters": [
+      {
+        "name": "StripPrefix",
+        "args": {
+          "parts": "2"
+        }
+      },
+      {
+        "name": "RewritePath",
+        "args": {
+          "_genkey_0": "/api-gateway/iot-mcp-server/(?<path>.*)",
+          "_genkey_1": "/$\\{path}"
+        }
+      }
+    ],
+    "order": 1
   }
 ]

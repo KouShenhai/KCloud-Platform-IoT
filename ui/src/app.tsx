@@ -110,9 +110,14 @@ const refreshTokenByAuthorizationCode = (refreshToken: string) => {
 				scheduleRefreshToken().catch(console.log);
 			}
 		})
+		.catch(err => {
+			console.log('自动刷新令牌失败【授权码登录】', err)
+			clearToken();
+			history.push('/login');
+		})
 		.finally(() => {
 			refreshTokenFlag = false;
-			// console.log('刷新令牌结束')
+			console.log('刷新令牌结束【授权码登录】')
 		});
 }
 
@@ -136,22 +141,30 @@ const refreshTokenByUsernamePassword = (refreshToken: string) => {
 				scheduleRefreshToken().catch(console.log);
 			}
 		})
+		.catch(err => {
+			console.log('自动刷新令牌失败【用户名密码登录】', err)
+			clearToken();
+			history.push('/login');
+		})
 		.finally(() => {
 			refreshTokenFlag = false;
-			// console.log('刷新令牌结束')
+			console.log('刷新令牌结束【用户名密码登录】')
 		});
 }
 
 const refreshToken = async (refreshToken: string | null) => {
 	if (refreshToken && !refreshTokenFlag) {
-		// console.log('开始刷新令牌')
+		console.log('开始刷新令牌')
 		refreshTokenFlag = true;
 		const grantType = getGrantType();
 		if (grantType === "authorization_code") {
+			console.log("开始刷新令牌【授权码登录】")
 			refreshTokenByAuthorizationCode(refreshToken)
 		} else {
+			console.log("开始刷新令牌【用户名密码登录】")
 			refreshTokenByUsernamePassword(refreshToken)
 		}
+		console.log('刷新令牌结束')
 	}
 };
 

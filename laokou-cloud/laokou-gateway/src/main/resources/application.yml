@@ -193,7 +193,9 @@ request-matcher:
       - /api/v1/username-password/captchas/{uuid}=${spring.application.name}
       - /api/v1/secrets=${spring.application.name}
       - /ws=${spring.application.name}
+      - /api/mcp=${spring.application.name}
     POST:
       - /api/v1/captchas/send-mail=${spring.application.name}
       - /api/v1/captchas/send-mobile=${spring.application.name}
       - /api/v1/oauth2/token=${spring.application.name}
+      - /api/mcp=${spring.application.name}
