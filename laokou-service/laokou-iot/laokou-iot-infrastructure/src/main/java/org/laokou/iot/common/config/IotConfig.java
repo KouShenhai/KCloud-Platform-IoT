@@ -30,13 +30,15 @@ import org.springframework.context.annotation.Configuration;
 public class IotConfig {
 
 	@Bean
-	@ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = "spring.ai.mcp.client", name = "enabled")
+	@ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = "spring.ai.mcp.client",
+			name = "enabled")
 	DeviceMcpMapper deviceMcpMapper(ToolCallbackProvider syncMcpToolCallbackProvider) {
 		return new DeviceMcpMapper(syncMcpToolCallbackProvider);
 	}
 
 	@Bean
-	@ConditionalOnProperty(havingValue = "false", matchIfMissing = true, prefix = "spring.ai.mcp.client", name = "enabled")
+	@ConditionalOnProperty(havingValue = "false", matchIfMissing = true, prefix = "spring.ai.mcp.client",
+			name = "enabled")
 	DeviceMcpMapper deviceMcpMapper0() {
 		return new DeviceMcpMapper(null);
 	}

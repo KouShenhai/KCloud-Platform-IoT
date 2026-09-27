@@ -152,7 +152,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	 */
 	@NonNull
 	@SuppressWarnings("DataFlowIssue")
-	private Mono<@NonNull Void> syncRouter(@NonNull Collection<RouteDefinition> routes) {
+	Mono<@NonNull Void> syncRouter(@NonNull Collection<RouteDefinition> routes) {
 		return reactiveHashOperations.delete(RedisKeyUtils.getRouteDefinitionHashKey())
 			.doOnError(throwable -> log.error("删除路由失败，错误信息：{}", throwable.getMessage(), throwable))
 			.thenMany(Flux.fromIterable(routes))
@@ -170,7 +170,7 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 	 * @return 拉取结果
 	 */
 	@NonNull
-	private Collection<RouteDefinition> getRoutes() {
+	public Collection<RouteDefinition> getRoutes() {
 		return getRoutes(StringConstants.EMPTY);
 	}
 

@@ -85,7 +85,7 @@ spring:
   ai:
     mcp:
       client:
-        enabled: true
+        enabled: false
         type: sync
         request-timeout: 30s
         name: ${spring.application.name}-mcp-client
@@ -93,8 +93,7 @@ spring:
         streamable-http:
           connections:
             default:
-              #url: http://127.0.0.1:88/api-gateway/iot-mcp-server
-              url: http://localhost:14000
+              url: http://localhost:102
               endpoint: /api/mcp
 scalar:
   enabled: true
