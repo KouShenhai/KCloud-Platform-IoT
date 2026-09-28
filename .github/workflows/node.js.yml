@@ -22,8 +22,6 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - name: Install pnpm
         run: npm install -g pnpm
-      - name: Add UI
-        run:  pnpm add @scalar/api-reference
         working-directory: ./ui
       - name: Install UI
         run: pnpm install --dangerously-allow-all-builds
