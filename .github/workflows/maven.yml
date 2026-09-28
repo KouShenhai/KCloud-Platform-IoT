@@ -56,7 +56,7 @@ jobs:
       - name: Build with Maven Mvnd
         run: mvnd -U clean install -T 1.5C -Pdev
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v7.0.0
+        uses: codecov/codecov-action@v7.1.1
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
