@@ -221,7 +221,7 @@
     <!-- archunit-junit5版本 -->
     <archunit-junit5.version>1.5.1</archunit-junit5.version>
     <!-- caffeine版本 -->
-    <caffeine.version>3.2.4</caffeine.version>
+    <caffeine.version>3.3.0</caffeine.version>
     <!-- objenesis版本 -->
     <objenesis.version>3.6</objenesis.version>
     <!-- influxdb-client-java版本 -->
