@@ -37,4 +37,8 @@ public final class ForyJsonUtils {
 		return JSON.fromJson(json, clazz);
 	}
 
+	public static <T> T toBean(byte[] bytes, Class<T> clazz) {
+		return JSON.fromJson(bytes, clazz);
+	}
+
 }

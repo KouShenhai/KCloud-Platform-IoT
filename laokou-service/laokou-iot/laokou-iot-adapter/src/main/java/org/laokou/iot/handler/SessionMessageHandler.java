@@ -41,6 +41,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.pulsar.annotation.PulsarListener;
 import org.springframework.pulsar.annotation.PulsarListeners;
 import org.springframework.pulsar.listener.AckMode;
+import org.springframework.pulsar.listener.Acknowledgement;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -61,13 +62,20 @@ public final class SessionMessageHandler implements ApplicationListener<@NonNull
 
 	private final SessionMapper sessionMapper;
 
-	@PulsarListeners(value = { @PulsarListener(
+	// @formatter:off
+	@PulsarListeners(value = {
+		@PulsarListener(
 			topics = "persistent://${system-settings.tenant-code}/session/" + MqTopic.OPEN_SESSION_MESSAGE_TOPIC,
-			subscriptionName = "${system-settings.tenant-code}-${random.uuid}", schemaType = SchemaType.BYTES,
-			batch = true, ackMode = AckMode.BATCH, subscriptionType = SubscriptionType.Exclusive) })
-	public void handleOpenSessionMessage(List<byte[]> messages) {
-		for (byte[] message : messages) {
-			if (ForyFactory.INSTANCE.deserialize(message) instanceof OpenSessionEvent(Long id)) {
+			subscriptionName = "${system-settings.tenant-code}-${random.uuid}",
+			schemaType = SchemaType.BYTES,
+			ackMode = AckMode.MANUAL,
+			subscriptionType = SubscriptionType.Exclusive
+		)
+	})
+	// @formatter:on
+	public void handleOpenSessionMessage(byte[] msg, Acknowledgement ack) {
+		try {
+			if (ForyFactory.INSTANCE.deserialize(msg) instanceof OpenSessionEvent(Long id)) {
 				try {
 					DynamicDataSourceContextHolder.push(DSConstants.IOT);
 					deployMqttClient(sessionMapper.selectById(id));
@@ -76,18 +84,35 @@ public final class SessionMessageHandler implements ApplicationListener<@NonNull
 					DynamicDataSourceContextHolder.clear();
 				}
 			}
+			ack.acknowledge();
+		}
+		catch (Exception ex) {
+			log.error("handleOpenSessionMessage error", ex);
+			ack.nack();
 		}
 	}
 
-	@PulsarListeners(value = { @PulsarListener(
+	// @formatter:off
+	@PulsarListeners(value = {
+		@PulsarListener(
 			topics = "persistent://${system-settings.tenant-code}/session/" + MqTopic.CLOSE_SESSION_MESSAGE_TOPIC,
-			subscriptionName = "${system-settings.tenant-code}-${random.uuid}", schemaType = SchemaType.BYTES,
-			batch = true, ackMode = AckMode.BATCH, subscriptionType = SubscriptionType.Exclusive) })
-	public void handleCloseSessionMessage(List<byte[]> messages) {
-		for (byte[] message : messages) {
-			if (ForyFactory.INSTANCE.deserialize(message) instanceof CloseSessionEvent(Long id)) {
+			subscriptionName = "${system-settings.tenant-code}-${random.uuid}",
+			schemaType = SchemaType.BYTES,
+			ackMode = AckMode.MANUAL,
+			subscriptionType = SubscriptionType.Exclusive
+		)
+	})
+	// @formatter:on
+	public void handleCloseSessionMessage(byte[] msg, Acknowledgement ack) {
+		try {
+			if (ForyFactory.INSTANCE.deserialize(msg) instanceof CloseSessionEvent(Long id)) {
 				VertxServiceManager.unDeployVertxMqttClientService(id);
 			}
+			ack.acknowledge();
+		}
+		catch (Exception ex) {
+			log.error("handleCloseSessionMessage error", ex);
+			ack.nack();
 		}
 	}
 

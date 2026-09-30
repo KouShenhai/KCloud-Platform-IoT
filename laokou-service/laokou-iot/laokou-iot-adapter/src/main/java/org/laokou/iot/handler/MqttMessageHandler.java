@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.pulsar.client.api.SubscriptionType;
 import org.apache.pulsar.common.schema.SchemaType;
-import org.laokou.common.i18n.util.JacksonUtils;
+import org.laokou.common.fory.util.ForyJsonUtils;
 import org.laokou.iot.session.dto.clientobject.mqtt.UpReportPropertiesDeviceMessage;
 import org.laokou.iot.session.model.enums.mqtt.MqttMessageType;
 import org.springframework.pulsar.annotation.PulsarListener;
@@ -39,17 +39,24 @@ import java.util.List;
 @RequiredArgsConstructor
 public final class MqttMessageHandler {
 
-	@PulsarListeners(value = { @PulsarListener(
-			topics = "persistent://${system-settings.tenant-code}/gateway/"
-					+ MqttMessageType.UP_REPORT_PROPERTIES_DEVICE_MESSAGE_TOPIC,
-			subscriptionName = "${system-settings.tenant-code}", schemaType = SchemaType.BYTES, batch = true,
-			ackMode = AckMode.BATCH, subscriptionType = SubscriptionType.Shared) })
+	// @formatter:off
+	@PulsarListeners(value = {
+		@PulsarListener(
+			topics = "persistent://${system-settings.tenant-code}/gateway/" + MqttMessageType.UP_REPORT_PROPERTIES_DEVICE_MESSAGE_TOPIC,
+			subscriptionName = "${system-settings.tenant-code}",
+			schemaType = SchemaType.BYTES,
+			batch = true,
+			ackMode = AckMode.BATCH,
+			subscriptionType = SubscriptionType.Shared,
+			consumerCustomizer = "mqttMessageConsumerCustomizer"
+		)
+	})
 	public void handleIotUpReportPropertiesGatewayMessage(List<byte[]> messages) {
 		for (byte[] message : messages) {
-			UpReportPropertiesDeviceMessage deviceMessage = JacksonUtils.toBean(message,
-					UpReportPropertiesDeviceMessage.class);
+			UpReportPropertiesDeviceMessage deviceMessage = ForyJsonUtils.toBean(message, UpReportPropertiesDeviceMessage.class);
 			log.info("设备SN：{}", deviceMessage.getDeviceSn());
 		}
 	}
+	// @formatter:on
 
 }
