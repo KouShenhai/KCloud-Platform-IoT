@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.pulsar.client.api.SubscriptionType;
 import org.apache.pulsar.common.schema.SchemaType;
-import org.laokou.common.fory.util.ForyJsonUtils;
+import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.iot.session.dto.clientobject.mqtt.UpReportPropertiesDeviceMessage;
 import org.laokou.iot.session.model.enums.mqtt.MqttMessageType;
 import org.springframework.pulsar.annotation.PulsarListener;
@@ -53,7 +53,7 @@ public final class MqttMessageHandler {
 	})
 	public void handleIotUpReportPropertiesGatewayMessage(List<byte[]> messages) {
 		for (byte[] message : messages) {
-			UpReportPropertiesDeviceMessage deviceMessage = ForyJsonUtils.toBean(message, UpReportPropertiesDeviceMessage.class);
+			UpReportPropertiesDeviceMessage deviceMessage = JacksonUtils.toBean(message, UpReportPropertiesDeviceMessage.class);
 			log.info("设备SN：{}", deviceMessage.getDeviceSn());
 		}
 	}

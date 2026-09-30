@@ -18,7 +18,7 @@
 package org.laokou.iot.session.dto.clientobject.mqtt;
 
 import lombok.Data;
-import org.apache.fory.json.JsonObject;
+import tools.jackson.databind.JsonNode;
 
 /**
  * 上报设备属性消息【上行】.
@@ -28,6 +28,6 @@ import org.apache.fory.json.JsonObject;
 @Data
 public class UpReportPropertiesDeviceMessage extends DeviceMessage {
 
-	private JsonObject properties;
+	private JsonNode properties;
 
 }
