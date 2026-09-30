@@ -64,7 +64,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级单体架构和微�
 - 适用于单体IoT项目【业务复杂】
 - 适用于中大型微服务IoT项目【业务复杂】
 
-<img src="doc/image/img_1.png" width=400 height=(免费用于毕设、二开、商用、二次开源)400 alt="COLA架构图"/>
+<img src="doc/image/img_1.png" width=400 height=400 alt="COLA架构图"/>
 <img src="doc/image/img.png" width=400 height=400 alt="COLA架构图"/>
 
 ### 📙 项目截图
