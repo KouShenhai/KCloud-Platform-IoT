@@ -211,11 +211,11 @@
     <!-- taos-jdbcdriver版本 -->
     <taos-jdbcdriver.version>3.9.2</taos-jdbcdriver.version>
     <!-- fory版本 -->
-    <fory.version>1.7.5</fory.version>
+    <fory.version>1.7.6</fory.version>
     <!-- browscap-java版本 -->
     <browscap-java.version>1.5.1</browscap-java.version>
     <!-- flyway版本 -->
-    <flyway.version>13.8.0</flyway.version>
+    <flyway.version>13.8.1</flyway.version>
     <!-- snail-job版本 -->
     <snail-job.version>2.0.2</snail-job.version>
     <!-- archunit-junit5版本 -->
@@ -549,6 +549,11 @@
       <dependency>
         <groupId>org.apache.fory</groupId>
         <artifactId>fory-extensions</artifactId>
+        <version>${fory.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.fory</groupId>
+        <artifactId>fory-json</artifactId>
         <version>${fory.version}</version>
       </dependency>
       <dependency>

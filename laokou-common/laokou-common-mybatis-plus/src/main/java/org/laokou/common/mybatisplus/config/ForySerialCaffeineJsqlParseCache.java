@@ -354,6 +354,24 @@ public class ForySerialCaffeineJsqlParseCache extends AbstractCaffeineJsqlParseC
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.select.First.Keyword.class, ForyConstants.C_237);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.expression.WindowElement.Type.class, ForyConstants.C_238);
 		ForyFactory.INSTANCE.register(net.sf.jsqlparser.expression.WindowOffset.Type.class, ForyConstants.C_239);
+		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.create.table.ColDataType.NationalCharacterType.class,
+				ForyConstants.C_251);
+		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.create.table.ColDataType.Signedness.class,
+				ForyConstants.C_252);
+		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.create.table.ColDataType.TypeModifier.class,
+				ForyConstants.C_253);
+		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.select.PlainSelect.EmitMode.class,
+				ForyConstants.C_254);
+		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.ReturningReferenceType.class, ForyConstants.C_255);
+		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.select.GroupByElement.SortDirection.class,
+				ForyConstants.C_256);
+		ForyFactory.INSTANCE.register(net.sf.jsqlparser.expression.WindowElement.Exclusion.class, ForyConstants.C_257);
+		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.create.table.Index.ColumnParams.NullOrdering.class,
+				ForyConstants.C_258);
+		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.create.table.Index.ColumnParams.SortOrder.class,
+				ForyConstants.C_259);
+		ForyFactory.INSTANCE.register(net.sf.jsqlparser.statement.insert.Insert.OverridingMode.class,
+				ForyConstants.C_260);
 	}
 
 	public ForySerialCaffeineJsqlParseCache(Cache<@NonNull String, byte[]> cache) {
