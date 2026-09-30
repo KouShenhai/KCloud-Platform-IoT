@@ -15,19 +15,26 @@
  *
  */
 
-package org.laokou.iot.session.dto.clientobject.mqtt;
+package org.laokou.common.fory.util;
 
-import lombok.Data;
-import org.apache.fory.json.JsonObject;
+import org.apache.fory.json.ForyJson;
 
 /**
- * 上报设备属性消息【上行】.
- *
  * @author laokou
  */
-@Data
-public class UpReportPropertiesDeviceMessage extends DeviceMessage {
+public final class ForyJsonUtils {
 
-	private JsonObject properties;
+	private static final ForyJson JSON = ForyJson.builder().build();
+
+	private ForyJsonUtils() {
+	}
+
+	public static String toJson(Object obj) {
+		return JSON.toJson(obj);
+	}
+
+	public static <T> T toBean(String json, Class<T> clazz) {
+		return JSON.fromJson(json, clazz);
+	}
 
 }
