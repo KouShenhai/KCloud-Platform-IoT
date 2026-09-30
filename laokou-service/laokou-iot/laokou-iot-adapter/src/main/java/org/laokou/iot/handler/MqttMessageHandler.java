@@ -39,17 +39,24 @@ import java.util.List;
 @RequiredArgsConstructor
 public final class MqttMessageHandler {
 
-	@PulsarListeners(value = { @PulsarListener(
-			topics = "persistent://${system-settings.tenant-code}/gateway/"
-					+ MqttMessageType.UP_REPORT_PROPERTIES_DEVICE_MESSAGE_TOPIC,
-			subscriptionName = "${system-settings.tenant-code}", schemaType = SchemaType.BYTES, batch = true,
-			ackMode = AckMode.BATCH, subscriptionType = SubscriptionType.Shared) })
+	// @formatter:off
+	@PulsarListeners(value = {
+		@PulsarListener(
+			topics = "persistent://${system-settings.tenant-code}/gateway/" + MqttMessageType.UP_REPORT_PROPERTIES_DEVICE_MESSAGE_TOPIC,
+			subscriptionName = "${system-settings.tenant-code}",
+			schemaType = SchemaType.BYTES,
+			batch = true,
+			ackMode = AckMode.BATCH,
+			subscriptionType = SubscriptionType.Shared,
+			consumerCustomizer = "mqttMessageConsumerCustomizer"
+		)
+	})
 	public void handleIotUpReportPropertiesGatewayMessage(List<byte[]> messages) {
 		for (byte[] message : messages) {
-			UpReportPropertiesDeviceMessage deviceMessage = JacksonUtils.toBean(message,
-					UpReportPropertiesDeviceMessage.class);
+			UpReportPropertiesDeviceMessage deviceMessage = JacksonUtils.toBean(message, UpReportPropertiesDeviceMessage.class);
 			log.info("设备SN：{}", deviceMessage.getDeviceSn());
 		}
 	}
+	// @formatter:on
 
 }

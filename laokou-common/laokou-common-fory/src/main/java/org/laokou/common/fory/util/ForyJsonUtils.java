@@ -15,11 +15,30 @@
  *
  */
 
-package org.laokou.common.storage.sql.builder;
+package org.laokou.common.fory.util;
+
+import org.apache.fory.json.ForyJson;
 
 /**
  * @author laokou
  */
-public final class DropBuilder {
+public final class ForyJsonUtils {
+
+	private static final ForyJson JSON = ForyJson.builder().build();
+
+	private ForyJsonUtils() {
+	}
+
+	public static String toJsonStr(Object obj) {
+		return JSON.toJson(obj);
+	}
+
+	public static <T> T toBean(String json, Class<T> clazz) {
+		return JSON.fromJson(json, clazz);
+	}
+
+	public static <T> T toBean(byte[] bytes, Class<T> clazz) {
+		return JSON.fromJson(bytes, clazz);
+	}
 
 }

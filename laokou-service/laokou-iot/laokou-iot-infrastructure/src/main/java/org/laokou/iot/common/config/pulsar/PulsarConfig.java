@@ -18,17 +18,23 @@
 package org.laokou.iot.common.config.pulsar;
 
 import org.apache.pulsar.client.admin.PulsarAdmin;
+import org.apache.pulsar.client.api.BatchReceivePolicy;
 import org.apache.pulsar.client.api.PulsarClientException;
+import org.apache.pulsar.client.api.SubscriptionType;
+import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.config.SystemSettingsProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.pulsar.annotation.PulsarListenerConsumerBuilderCustomizer;
 import org.springframework.pulsar.core.PulsarAdministration;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author laokou
  */
 @Configuration
-public class PulsarTopicConfig {
+public class PulsarConfig {
 
 	/**
 	 * 注册原生 PulsarAdmin.
@@ -44,6 +50,23 @@ public class PulsarTopicConfig {
 	public PulsarTopicFactory pulsarTopicFactory(PulsarAdmin pulsarAdmin,
 			SystemSettingsProperties systemSettingsProperties) {
 		return new DefaultPulsarTopicFactory(pulsarAdmin, systemSettingsProperties);
+	}
+
+	@Bean
+	public PulsarListenerConsumerBuilderCustomizer<@NonNull String> mqttMessageConsumerCustomizer() {
+		return consumer -> consumer
+			// 消费者接收队列
+			.receiverQueueSize(20000)
+			// 一次 batchReceive 最多 1 万条
+			.batchReceivePolicy(BatchReceivePolicy.builder()
+				.maxNumMessages(10000)
+				.maxNumBytes(64 * 1024 * 1024)
+				.timeout(1, TimeUnit.SECONDS)
+				.build())
+			// Shared 方便多个消费者实例水平扩展
+			.subscriptionType(SubscriptionType.Shared)
+			// ACK 超时时间
+			.ackTimeout(1, TimeUnit.MINUTES);
 	}
 
 }
