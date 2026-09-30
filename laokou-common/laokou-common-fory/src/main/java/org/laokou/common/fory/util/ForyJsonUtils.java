@@ -29,7 +29,7 @@ public final class ForyJsonUtils {
 	private ForyJsonUtils() {
 	}
 
-	public static String toJson(Object obj) {
+	public static String toJsonStr(Object obj) {
 		return JSON.toJson(obj);
 	}
 
