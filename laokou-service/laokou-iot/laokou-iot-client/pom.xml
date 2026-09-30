@@ -19,6 +19,11 @@
       <version>${revision}</version>
     </dependency>
     <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-core</artifactId>
+      <version>${revision}</version>
+    </dependency>
+    <dependency>
       <groupId>io.vertx</groupId>
       <artifactId>vertx-core</artifactId>
     </dependency>
