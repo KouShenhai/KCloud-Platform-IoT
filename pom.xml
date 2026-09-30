@@ -181,7 +181,7 @@
     <!-- guava版本 -->
     <guava.version>33.7.2-jre</guava.version>
     <!-- oshi版本 -->
-    <oshi.version>7.6.1</oshi.version>
+    <oshi.version>7.7.0</oshi.version>
     <!-- elasticsearch版本 -->
     <elasticsearch.version>9.5.4</elasticsearch.version>
     <!-- jakarta.servlet-api版本 -->
