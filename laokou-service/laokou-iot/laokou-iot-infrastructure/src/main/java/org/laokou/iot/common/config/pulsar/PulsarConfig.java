@@ -34,7 +34,7 @@ import java.util.concurrent.TimeUnit;
  * @author laokou
  */
 @Configuration
-public class PulsarTopicConfig {
+public class PulsarConfig {
 
 	/**
 	 * 注册原生 PulsarAdmin.
