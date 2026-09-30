@@ -552,6 +552,11 @@
         <version>${fory.version}</version>
       </dependency>
       <dependency>
+        <groupId>org.apache.fory</groupId>
+        <artifactId>fory-json</artifactId>
+        <version>${fory.version}</version>
+      </dependency>
+      <dependency>
         <groupId>com.taosdata.jdbc</groupId>
         <artifactId>taos-jdbcdriver</artifactId>
         <version>${taos-jdbcdriver.version}</version>
