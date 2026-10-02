@@ -61,7 +61,7 @@ public class PulsarConfig {
 			.batchReceivePolicy(BatchReceivePolicy.builder()
 				.maxNumMessages(10000)
 				.maxNumBytes(64 * 1024 * 1024)
-				.timeout(1, TimeUnit.SECONDS)
+				.timeout(5, TimeUnit.SECONDS)
 				.build())
 			// Shared 方便多个消费者实例水平扩展
 			.subscriptionType(SubscriptionType.Shared)
