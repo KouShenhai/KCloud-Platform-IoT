@@ -356,6 +356,7 @@ CREATE TABLE "public"."iot_gateway" (
 "dept_id" int8 NOT NULL DEFAULT 1,
 "sn" varchar(64)  NOT NULL,
 "name" varchar(50)  NOT NULL,
+session_id int8 NOT NULL,
 "remark" varchar(400)
 )
 ;
@@ -370,6 +371,7 @@ COMMENT ON COLUMN "public"."iot_gateway"."tenant_id" IS '租户ID';
 COMMENT ON COLUMN "public"."iot_gateway"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."iot_gateway"."sn" IS '网关序列号';
 COMMENT ON COLUMN "public"."iot_gateway"."name" IS '网关名称';
+COMMENT ON COLUMN "public"."iot_gateway"."session_id" IS '会话ID';
 COMMENT ON COLUMN "public"."iot_gateway"."remark" IS '网关备注';
 COMMENT ON TABLE "public"."iot_gateway" IS '网关';
 ALTER TABLE "public"."iot_gateway" ADD CONSTRAINT "iot_gateway_pkey" PRIMARY KEY ("id");

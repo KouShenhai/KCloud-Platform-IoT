@@ -17,7 +17,15 @@
 
 package org.laokou.iot.gateway.model;
 
-import lombok.Data;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.laokou.common.i18n.annotation.Entity;
+
+import java.io.Serializable;
 
 /**
  *
@@ -25,8 +33,13 @@ import lombok.Data;
  *
  * @author laokou
  */
-@Data
-public class GatewayE {
+@Entity
+@Getter
+@Builder(toBuilder = true)
+@EqualsAndHashCode(callSuper = false)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class GatewayE implements Serializable {
 
 	/**
 	 * ID.
@@ -34,39 +47,19 @@ public class GatewayE {
 	private Long id;
 
 	/**
-	 * 网关标识.
-	 */
-	private String gatewayKey;
-
-	/**
 	 * 网关名称.
 	 */
 	private String name;
 
 	/**
-	 * 网关状态 0在线 1离线.
+	 * 网关序列号.
 	 */
-	private Integer status;
+	private String sn;
 
 	/**
-	 * 产品ID.
+	 * 会话ID.
 	 */
-	private Long productId;
-
-	/**
-	 * 网关地址.
-	 */
-	private String address;
-
-	/**
-	 * 网关经度.
-	 */
-	private Double longitude;
-
-	/**
-	 * 网关纬度.
-	 */
-	private Double latitude;
+	private Long sessionId;
 
 	/**
 	 * 网关备注.

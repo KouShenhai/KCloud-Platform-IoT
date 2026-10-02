@@ -42,29 +42,4 @@ public interface GatewayGateway {
 	 */
 	void deleteGateway(Long[] ids);
 
-	/**
-	 * 网关标识是否已存在（修改时排除自身）.
-	 */
-	boolean existsGatewayKey(Long id, String gatewayKey);
-
-	/**
-	 * 网关是否存在.
-	 */
-	boolean existsGateway(Long id);
-
-	/**
-	 * 网关是否全部存在.
-	 */
-	boolean existsGateway(Long[] ids);
-
-	/**
-	 * 产品是否存在.
-	 */
-	boolean existsProduct(Long productId);
-
-	/**
-	 * 查询网关标识.
-	 */
-	String findGatewayKeyById(Long id);
-
 }
