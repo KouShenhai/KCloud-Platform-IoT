@@ -22,13 +22,9 @@
 
 	<sql id="selectColumns">
 		id,
-		gateway_key,
+		sn,
 		"name",
-		status,
-		product_id,
-		address,
-		longitude,
-		latitude,
+		session_id,
 		remark,
 		create_time
 	</sql>

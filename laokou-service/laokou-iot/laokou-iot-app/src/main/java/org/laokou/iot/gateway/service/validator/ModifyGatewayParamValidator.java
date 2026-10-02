@@ -15,35 +15,28 @@
  *
  */
 
-package org.laokou.iot.gateway.ability;
+package org.laokou.iot.gateway.service.validator;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.iot.gateway.gateway.GatewayGateway;
+import org.laokou.common.i18n.util.ParamValidator;
 import org.laokou.iot.gateway.model.GatewayA;
 import org.springframework.stereotype.Component;
+import org.laokou.iot.gateway.model.validator.GatewayParamValidator;
 
 /**
- *
- * 网关领域服务.
- *
  * @author laokou
  */
-@Component
+@Component("modifyGatewayParamValidator")
 @RequiredArgsConstructor
-public class GatewayDomainService {
+public class ModifyGatewayParamValidator implements GatewayParamValidator {
 
-	private final GatewayGateway gatewayGateway;
-
-	public void createGateway(GatewayA gatewayA) {
-		gatewayGateway.createGateway(gatewayA);
-	}
-
-	public void updateGateway(GatewayA gatewayA) {
-		gatewayGateway.updateGateway(gatewayA);
-	}
-
-	public void deleteGateway(Long[] ids) {
-		gatewayGateway.deleteGateway(ids);
+	@Override
+	public void validateGateway(GatewayA gatewayA) {
+		ParamValidator.validate(gatewayA.getValidateName(),
+				// 校验网关ID
+				org.laokou.iot.gateway.service.validator.GatewayParamValidator.validateId(gatewayA),
+				// 校验网关名称
+				org.laokou.iot.gateway.service.validator.GatewayParamValidator.validateName(gatewayA));
 	}
 
 }

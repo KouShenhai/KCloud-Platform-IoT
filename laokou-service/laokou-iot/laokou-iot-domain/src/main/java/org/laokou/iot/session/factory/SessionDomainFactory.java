@@ -21,6 +21,9 @@ import org.laokou.common.i18n.util.SpringContextUtils;
 import org.laokou.iot.session.model.SessionA;
 import org.laokou.iot.session.model.entity.SessionE;
 
+/**
+ * @author laokou
+ */
 public final class SessionDomainFactory {
 
 	private SessionDomainFactory() {

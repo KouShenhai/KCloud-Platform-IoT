@@ -15,35 +15,26 @@
  *
  */
 
-package org.laokou.iot.gateway.dto;
+package org.laokou.iot.gateway.factory;
 
-import lombok.Data;
-import org.laokou.common.i18n.dto.CommonCommand;
-
-import java.util.Map;
+import org.laokou.common.i18n.util.SpringContextUtils;
+import org.laokou.iot.gateway.model.GatewayA;
+import org.laokou.iot.gateway.model.entity.GatewayE;
 
 /**
- *
- * 写入设备属性命令.
- *
  * @author laokou
  */
-@Data
-public class GatewayWritePropertyCmd extends CommonCommand {
+public final class GatewayDomainFactory {
 
-	/**
-	 * 网关ID.
-	 */
-	private Long gatewayId;
+	private GatewayDomainFactory() {
+	}
 
-	/**
-	 * 设备标识.
-	 */
-	private String deviceKey;
+	public static GatewayE createGatewayE() {
+		return SpringContextUtils.getBeanProvider(GatewayE.class);
+	}
 
-	/**
-	 * 属性键值对.
-	 */
-	private Map<String, Object> properties;
+	public static GatewayA createGatewayA() {
+		return SpringContextUtils.getBeanProvider(GatewayA.class);
+	}
 
 }

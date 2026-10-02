@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.iot.gateway.model;
+package org.laokou.iot.gateway.model.entity;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

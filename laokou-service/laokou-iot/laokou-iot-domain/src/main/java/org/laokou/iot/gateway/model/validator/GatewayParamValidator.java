@@ -15,23 +15,15 @@
  *
  */
 
-package org.laokou.iot.gateway.dto;
+package org.laokou.iot.gateway.model.validator;
 
-import lombok.Data;
-import org.laokou.common.i18n.dto.CommonCommand;
+import org.laokou.iot.gateway.model.GatewayA;
 
 /**
- *
- * 重启网关命令.
- *
  * @author laokou
  */
-@Data
-public class GatewayRebootCmd extends CommonCommand {
+public interface GatewayParamValidator {
 
-	/**
-	 * 网关ID.
-	 */
-	private Long gatewayId;
+	void validateGateway(GatewayA gatewayA);
 
 }

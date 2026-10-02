@@ -17,9 +17,12 @@
 
 package org.laokou.iot.gateway.command.query;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.tenant.constant.DSConstants;
 import org.laokou.iot.gateway.convertor.GatewayConvertor;
 import org.laokou.iot.gateway.dto.GatewayPageQry;
 import org.laokou.iot.gateway.dto.clientobject.GatewayCO;
@@ -34,6 +37,7 @@ import java.util.List;
  *
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class GatewayPageQryExe {
@@ -41,9 +45,19 @@ public class GatewayPageQryExe {
 	private final GatewayMapper gatewayMapper;
 
 	public Result<Page<GatewayCO>> execute(GatewayPageQry qry) {
-		List<GatewayDO> list = gatewayMapper.selectObjectPage(qry);
-		long total = gatewayMapper.selectObjectCount(qry);
-		return Result.ok(Page.create(list.stream().map(GatewayConvertor::toClientObject).toList(), total));
+		try {
+			DynamicDataSourceContextHolder.push(DSConstants.IOT);
+			List<GatewayDO> list = gatewayMapper.selectObjectPage(qry);
+			long total = gatewayMapper.selectObjectCount(qry);
+			return Result.ok(Page.create(GatewayConvertor.toClientObjects(list), total));
+		}
+		catch (Exception ex) {
+			log.error("分页查询网关失败，错误信息：{}", ex.getMessage(), ex);
+			throw ex;
+		}
+		finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 }

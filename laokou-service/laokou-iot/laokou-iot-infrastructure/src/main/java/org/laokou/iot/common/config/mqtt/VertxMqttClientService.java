@@ -48,13 +48,16 @@ final class VertxMqttClientService extends AbstractVertxService {
 		this.vertx = vertx;
 		this.config = config;
 		this.messageHandlers = messageHandlers;
-		this.vertxMqttClients = null;}
+		this.vertxMqttClients = null;
+	}
 
 	@Override
 	public Future<String> doDeploy() {
 		List<VertxMqttClient> clients = new ArrayList<>(4);
 		return vertx.deployVerticle(() -> {
-			VertxMqttClient vertxMqttClient = new VertxMqttClient(vertx , String.format("%s-%s", config.getTenantCode(), UUIDGenerator.generateUUID()), config, messageHandlers);
+			VertxMqttClient vertxMqttClient = new VertxMqttClient(vertx,
+					String.format("%s-%s", config.getTenantCode(), UUIDGenerator.generateUUID()), config,
+					messageHandlers);
 			clients.add(vertxMqttClient);
 			return vertxMqttClient;
 		}, buildOptions()).onSuccess(deploymentId -> {

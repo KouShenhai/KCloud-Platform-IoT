@@ -292,6 +292,7 @@ INSERT INTO "public"."sys_i18n_menu" VALUES (29, 1, 1, '2026-03-07 12:06:37', '2
 INSERT INTO "public"."sys_i18n_menu" VALUES (27, 1, 1, '2026-03-07 12:06:37', '2026-03-07 12:06:37', 0, 0, 1, 1, 'menu.sys.cluster', '集群管理');
 INSERT INTO "public"."sys_i18n_menu" VALUES (30, 1, 1, '2026-05-07 12:06:37', '2026-05-07 12:06:37', 0, 0, 1, 1, 'menu.sys.config.apiDoc', 'API文档');
 INSERT INTO "public"."sys_i18n_menu" VALUES (32, 1, 1, '2026-06-05 00:00:00', '2026-06-05 00:00:00', 0, 0, 1, 1, 'menu.iot.device.session', '会话');
+INSERT INTO "public"."sys_i18n_menu" VALUES (33, 1, 1, '2026-10-02 11:04:22.078148', '2026-10-02 11:04:22.107554', 0, 0, 1, 1, 'menu.iot.device.gateway', '网关');
 
 -- ----------------------------
 -- -------------菜单------------

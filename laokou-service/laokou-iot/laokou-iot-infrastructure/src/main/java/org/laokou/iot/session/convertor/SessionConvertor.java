@@ -87,16 +87,16 @@ public final class SessionConvertor {
 		return sessionCO;
 	}
 
-	public static SessionE toEntity(SessionCO SessionCO) {
+	public static SessionE toEntity(SessionCO sessionCO) {
 		return SessionDomainFactory.createSessionE()
 			.toBuilder()
-			.id(SessionCO.getId())
-			.name(SessionCO.getName())
-			.host(SessionCO.getHost())
-			.port(SessionCO.getPort())
-			.username(SessionCO.getUsername())
-			.password(SessionCO.getPassword())
-			.state(SessionCO.getState())
+			.id(sessionCO.getId())
+			.name(sessionCO.getName())
+			.host(sessionCO.getHost())
+			.port(sessionCO.getPort())
+			.username(sessionCO.getUsername())
+			.password(sessionCO.getPassword())
+			.state(sessionCO.getState())
 			.build();
 	}
 

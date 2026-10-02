@@ -17,6 +17,14 @@
 
 package org.laokou.iot.gateway.convertor;
 
+import org.laokou.iot.gateway.dto.clientobject.GatewayCO;
+import org.laokou.iot.gateway.factory.GatewayDomainFactory;
+import org.laokou.iot.gateway.gatewayimpl.database.dataobject.GatewayDO;
+import org.laokou.iot.gateway.model.GatewayA;
+import org.laokou.iot.gateway.model.entity.GatewayE;
+
+import java.util.List;
+
 /**
  *
  * 网关转换器.
@@ -25,8 +33,44 @@ package org.laokou.iot.gateway.convertor;
  */
 public final class GatewayConvertor {
 
-	private GatewayConvertor() {}
+	private GatewayConvertor() {
+	}
 
+	public static GatewayDO toDataObject(GatewayA gatewayA) {
+		GatewayDO gatewayDO = new GatewayDO();
+		GatewayE gatewayE = gatewayA.getGatewayE();
+		gatewayDO.setId(gatewayA.getId());
+		gatewayDO.setName(gatewayE.getName());
+		gatewayDO.setSn(gatewayE.getSn());
+		gatewayDO.setSessionId(gatewayE.getSessionId());
+		gatewayDO.setRemark(gatewayE.getRemark());
+		return gatewayDO;
+	}
 
+	public static List<GatewayCO> toClientObjects(List<GatewayDO> list) {
+		return list.stream().map(GatewayConvertor::toClientObject).toList();
+	}
+
+	public static GatewayCO toClientObject(GatewayDO gatewayDO) {
+		GatewayCO gatewayCO = new GatewayCO();
+		gatewayCO.setId(gatewayDO.getId());
+		gatewayCO.setName(gatewayDO.getName());
+		gatewayCO.setSessionId(gatewayDO.getSessionId());
+		gatewayCO.setSn(gatewayDO.getSn());
+		gatewayCO.setRemark(gatewayDO.getRemark());
+		gatewayCO.setCreateTime(gatewayDO.getCreateTime());
+		return gatewayCO;
+	}
+
+	public static GatewayE toEntity(GatewayCO gatewayCO) {
+		return GatewayDomainFactory.createGatewayE()
+			.toBuilder()
+			.id(gatewayCO.getId())
+			.name(gatewayCO.getName())
+			.sn(gatewayCO.getSn())
+			.sessionId(gatewayCO.getSessionId())
+			.remark(gatewayCO.getRemark())
+			.build();
+	}
 
 }

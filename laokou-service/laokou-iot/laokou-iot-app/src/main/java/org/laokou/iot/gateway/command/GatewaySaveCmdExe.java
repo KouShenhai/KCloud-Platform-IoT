@@ -17,13 +17,18 @@
 
 package org.laokou.iot.gateway.command;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
-import org.laokou.iot.gateway.dto.GatewaySaveCmd;
-import org.springframework.stereotype.Component;
-import org.laokou.iot.gateway.convertor.GatewayConvertor;
+import org.laokou.common.tenant.constant.DSConstants;
 import org.laokou.iot.gateway.ability.GatewayDomainService;
+import org.laokou.iot.gateway.convertor.GatewayConvertor;
+import org.laokou.iot.gateway.dto.GatewaySaveCmd;
+import org.laokou.iot.gateway.factory.GatewayDomainFactory;
+import org.laokou.iot.gateway.model.GatewayA;
+import org.springframework.stereotype.Component;
 
 /**
  *
@@ -31,6 +36,7 @@ import org.laokou.iot.gateway.ability.GatewayDomainService;
  *
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class GatewaySaveCmdExe {
@@ -41,8 +47,20 @@ public class GatewaySaveCmdExe {
 
 	@CommandLog
 	public void executeVoid(GatewaySaveCmd cmd) {
-		transactionalUtils
-			.executeInTransaction(() -> gatewayDomainService.createGateway(GatewayConvertor.toEntity(cmd.getCo())));
+		try {
+			DynamicDataSourceContextHolder.push(DSConstants.IOT);
+			GatewayA gatewayA = GatewayDomainFactory.createGatewayA().create(GatewayConvertor.toEntity(cmd.getCo()));
+			// 校验参数
+			gatewayA.checkGatewayParam();
+			transactionalUtils.executeInTransaction(() -> gatewayDomainService.createGateway(gatewayA));
+		}
+		catch (Exception ex) {
+			log.error("保存网关失败，错误信息：{}", ex.getMessage(), ex);
+			throw ex;
+		}
+		finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 }

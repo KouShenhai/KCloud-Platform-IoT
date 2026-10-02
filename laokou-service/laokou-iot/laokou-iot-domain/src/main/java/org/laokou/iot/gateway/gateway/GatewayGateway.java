@@ -17,7 +17,7 @@
 
 package org.laokou.iot.gateway.gateway;
 
-import org.laokou.iot.gateway.model.GatewayE;
+import org.laokou.iot.gateway.model.GatewayA;
 
 /**
  *
@@ -30,12 +30,12 @@ public interface GatewayGateway {
 	/**
 	 * 新增网关.
 	 */
-	void createGateway(GatewayE gatewayE);
+	void createGateway(GatewayA gatewayA);
 
 	/**
 	 * 修改网关.
 	 */
-	void updateGateway(GatewayE gatewayE);
+	void updateGateway(GatewayA gatewayA);
 
 	/**
 	 * 删除网关.

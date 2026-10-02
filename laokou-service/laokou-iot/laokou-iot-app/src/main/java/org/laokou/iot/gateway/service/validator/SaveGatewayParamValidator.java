@@ -15,31 +15,26 @@
  *
  */
 
-package org.laokou.iot.gateway.gateway;
+package org.laokou.iot.gateway.service.validator;
 
-import org.laokou.iot.gateway.model.GatewayCommandE;
+import lombok.RequiredArgsConstructor;
+import org.laokou.common.i18n.util.ParamValidator;
+import org.laokou.iot.gateway.model.GatewayA;
+import org.laokou.iot.gateway.model.validator.GatewayParamValidator;
+import org.springframework.stereotype.Component;
 
 /**
- *
- * 网关指令网关【防腐】.
- *
  * @author laokou
  */
-public interface GatewayCommandGateway {
+@Component("saveGatewayParamValidator")
+@RequiredArgsConstructor
+public class SaveGatewayParamValidator implements GatewayParamValidator {
 
-	/**
-	 * 保存指令日志.
-	 */
-	void saveLog(GatewayCommandE gatewayCommandE);
-
-	/**
-	 * 下发指令到网关.
-	 */
-	void publish(GatewayCommandE gatewayCommandE);
-
-	/**
-	 * 更新指令日志状态.
-	 */
-	void updateLogStatus(Long commandId, Integer status, String result);
+	@Override
+	public void validateGateway(GatewayA gatewayA) {
+		ParamValidator.validate(gatewayA.getValidateName(),
+				// 校验会话名称
+				org.laokou.iot.gateway.service.validator.GatewayParamValidator.validateName(gatewayA));
+	}
 
 }

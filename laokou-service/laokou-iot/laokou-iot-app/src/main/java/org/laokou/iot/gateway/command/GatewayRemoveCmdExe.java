@@ -17,9 +17,12 @@
 
 package org.laokou.iot.gateway.command;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
+import org.laokou.common.tenant.constant.DSConstants;
 import org.laokou.iot.gateway.dto.GatewayRemoveCmd;
 import org.springframework.stereotype.Component;
 import org.laokou.iot.gateway.ability.GatewayDomainService;
@@ -30,6 +33,7 @@ import org.laokou.iot.gateway.ability.GatewayDomainService;
  *
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class GatewayRemoveCmdExe {
@@ -40,8 +44,18 @@ public class GatewayRemoveCmdExe {
 
 	@CommandLog
 	public void executeVoid(GatewayRemoveCmd cmd) {
-		// 校验参数
-		transactionalUtils.executeInTransaction(() -> gatewayDomainService.deleteGateway(cmd.getIds()));
+		try {
+			DynamicDataSourceContextHolder.push(DSConstants.IOT);
+			// 校验参数
+			transactionalUtils.executeInTransaction(() -> gatewayDomainService.deleteGateway(cmd.getIds()));
+		}
+		catch (Exception ex) {
+			log.error("删除网关失败，错误信息：{}", ex.getMessage(), ex);
+			throw ex;
+		}
+		finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 }

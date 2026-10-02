@@ -22,8 +22,9 @@ import org.laokou.iot.gateway.convertor.GatewayConvertor;
 import org.laokou.iot.gateway.gateway.GatewayGateway;
 import org.laokou.iot.gateway.gatewayimpl.database.GatewayMapper;
 import org.laokou.iot.gateway.gatewayimpl.database.dataobject.GatewayDO;
-import org.laokou.iot.gateway.model.GatewayE;
+import org.laokou.iot.gateway.model.GatewayA;
 import org.springframework.stereotype.Component;
+
 import java.util.Arrays;
 
 /**
@@ -39,14 +40,14 @@ public class GatewayGatewayImpl implements GatewayGateway {
 	private final GatewayMapper gatewayMapper;
 
 	@Override
-	public void createGateway(GatewayE gatewayE) {
-		gatewayMapper.insert(GatewayConvertor.toDataObject(1L, gatewayE, true));
+	public void createGateway(GatewayA gatewayA) {
+		gatewayMapper.insert(GatewayConvertor.toDataObject(gatewayA));
 	}
 
 	@Override
-	public void updateGateway(GatewayE gatewayE) {
-		GatewayDO gatewayDO = GatewayConvertor.toDataObject(null, gatewayE, false);
-		gatewayDO.setVersion(gatewayMapper.selectVersion(gatewayE.getId()));
+	public void updateGateway(GatewayA gatewayA) {
+		GatewayDO gatewayDO = GatewayConvertor.toDataObject(gatewayA);
+		gatewayDO.setVersion(gatewayMapper.selectVersion(gatewayA.getId()));
 		gatewayMapper.updateById(gatewayDO);
 	}
 

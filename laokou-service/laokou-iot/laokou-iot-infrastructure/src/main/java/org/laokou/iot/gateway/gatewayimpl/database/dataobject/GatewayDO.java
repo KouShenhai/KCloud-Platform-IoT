@@ -20,6 +20,7 @@ package org.laokou.iot.gateway.gatewayimpl.database.dataobject;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
+import org.laokou.common.tenant.constant.DSConstants;
 
 /**
  *
@@ -28,7 +29,7 @@ import org.laokou.common.mybatisplus.mapper.BaseDO;
  * @author laokou
  */
 @Data
-@TableName("iot_gateway")
+@TableName(DSConstants.IoT.GATEWAY_TABLE)
 public class GatewayDO extends BaseDO {
 
 	/**

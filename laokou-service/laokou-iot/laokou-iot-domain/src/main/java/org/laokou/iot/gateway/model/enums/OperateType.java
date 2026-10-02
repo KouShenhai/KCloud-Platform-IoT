@@ -15,27 +15,27 @@
  *
  */
 
-package org.laokou.iot.gateway.dto;
+package org.laokou.iot.gateway.model.enums;
 
 import lombok.Getter;
-import org.laokou.common.i18n.dto.PageQuery;
 
 /**
- *
- * 分页查询网关指令日志命令.
- *
  * @author laokou
  */
 @Getter
-public class GatewayCommandLogPageQry extends PageQuery {
+public enum OperateType {
 
-	/**
-	 * 网关ID.
-	 */
-	private Long gatewayId;
+	SAVE("save", "保存网关"),
 
-	public void setGatewayId(Long gatewayId) {
-		this.gatewayId = gatewayId;
+	MODIFY("modify", "修改网关");
+
+	private final String code;
+
+	private final String desc;
+
+	OperateType(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
 	}
 
 }
