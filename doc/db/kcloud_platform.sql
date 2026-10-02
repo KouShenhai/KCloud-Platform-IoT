@@ -462,6 +462,12 @@ INSERT INTO "public"."sys_menu" VALUES (128, 1, 1, '2026-07-04 11:38:17.37193', 
 INSERT INTO "public"."sys_menu" VALUES (129, 1, 1, '2026-07-04 11:38:38.21395', '2026-07-04 11:38:38.232894', 0, 0, 1, 1, 23, 'iot:source:page', 1, '分页查询数据源列表', NULL, NULL, 5, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (130, 1, 1, '2026-09-06 12:05:24.695481', '2026-09-06 12:05:24.744469', 0, 0, 1, 1, 108, 'iot:session:open', 1, '开启会话', NULL, NULL, 6, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (131, 1, 1, '2026-09-06 12:05:51.850279', '2026-09-06 12:05:51.865292', 0, 0, 1, 1, 108, 'iot:session:close', 1, '关闭会话', NULL, NULL, 7, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (132, 1, 1, '2026-10-02 10:49:28.604788', '2026-10-02 10:49:28.870943', 0, 0, 1, 1, 12, NULL, 0, '网关', '/iot/device/gateway', '', 5, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (133, 1, 1, '2026-10-02 10:51:13.449', '2026-10-02 10:51:13.465994', 0, 0, 1, 1, 132, 'iot:gateway:remove', 1, '删除网关', NULL, NULL, 2, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (134, 1, 1, '2026-10-02 10:51:39.526477', '2026-10-02 10:51:39.54408', 0, 0, 1, 1, 132, 'iot:gateway:modify', 1, '修改网关', NULL, NULL, 3, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (135, 1, 1, '2026-10-02 10:52:07.951442', '2026-10-02 10:52:07.9676', 0, 0, 1, 1, 132, 'iot:gateway:save', 1, '新增网关', NULL, NULL, 4, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (136, 1, 1, '2026-10-02 10:50:36.05255', '2026-10-02 10:52:23.116137', 0, 1, 1, 1, 132, 'iot:gateway:detail', 1, '查看网关', NULL, NULL, 1, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (137, 1, 1, '2026-10-02 10:52:58.626661', '2026-10-02 10:52:58.645484', 0, 0, 1, 1, 132, 'iot:gateway:page', 1, '分页查询网关列表', NULL, NULL, 5, 0, 0, NULL);
 
 -- ----------------------------
 -- -------------菜单套餐------------

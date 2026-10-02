@@ -1,5 +1,5 @@
-import { GatewayCommandModal } from '@/pages/IoT/Gateway/GatewayCommandModal';
-import { GatewayDrawer } from '@/pages/IoT/Gateway/GatewayDrawer';
+import { GatewayCommandModal } from '@/pages/IoT/Device/GatewayCommandModal';
+import { GatewayDrawer } from '@/pages/IoT/Device/GatewayDrawer';
 import {
 	getGatewayById,
 	pageGateway,
