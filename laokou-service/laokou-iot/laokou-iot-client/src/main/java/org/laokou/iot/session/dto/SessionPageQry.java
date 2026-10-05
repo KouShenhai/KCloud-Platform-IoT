@@ -29,6 +29,8 @@ import org.laokou.common.i18n.util.StringExtUtils;
 @Data
 public class SessionPageQry extends PageQuery {
 
+	private Long id;
+
 	private String name;
 
 	private Integer state;

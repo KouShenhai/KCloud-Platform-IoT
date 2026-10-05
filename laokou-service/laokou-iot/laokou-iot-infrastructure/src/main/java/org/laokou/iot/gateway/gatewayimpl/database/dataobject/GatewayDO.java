@@ -20,6 +20,7 @@ package org.laokou.iot.gateway.gatewayimpl.database.dataobject;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import org.laokou.common.mybatisplus.mapper.BaseDO;
+import org.laokou.common.tenant.constant.DSConstants;
 
 /**
  *
@@ -28,13 +29,8 @@ import org.laokou.common.mybatisplus.mapper.BaseDO;
  * @author laokou
  */
 @Data
-@TableName("iot_gateway")
+@TableName(DSConstants.IoT.GATEWAY_TABLE)
 public class GatewayDO extends BaseDO {
-
-	/**
-	 * 网关标识.
-	 */
-	private String gatewayKey;
 
 	/**
 	 * 网关名称.
@@ -42,29 +38,14 @@ public class GatewayDO extends BaseDO {
 	private String name;
 
 	/**
-	 * 网关状态 0在线 1离线.
+	 * 网关序列号.
 	 */
-	private Integer status;
+	private String sn;
 
 	/**
-	 * 产品ID.
+	 * 会话ID.
 	 */
-	private Long productId;
-
-	/**
-	 * 网关地址.
-	 */
-	private String address;
-
-	/**
-	 * 网关经度.
-	 */
-	private Double longitude;
-
-	/**
-	 * 网关纬度.
-	 */
-	private Double latitude;
+	private Long sessionId;
 
 	/**
 	 * 网关备注.

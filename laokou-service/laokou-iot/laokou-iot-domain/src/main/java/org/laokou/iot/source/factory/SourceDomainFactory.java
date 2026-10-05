@@ -21,6 +21,9 @@ import org.laokou.common.i18n.util.SpringContextUtils;
 import org.laokou.iot.source.model.SourceA;
 import org.laokou.iot.source.model.entity.SourceE;
 
+/**
+ * @author laokou
+ */
 public final class SourceDomainFactory {
 
 	private SourceDomainFactory() {

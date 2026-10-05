@@ -21,6 +21,9 @@ import org.laokou.common.i18n.util.SpringContextUtils;
 import org.laokou.iot.thing.model.model.ThingModelA;
 import org.laokou.iot.thing.model.model.entity.ThingModelE;
 
+/**
+ * @author laokou
+ */
 public final class ThingModelDomainFactory {
 
 	private ThingModelDomainFactory() {

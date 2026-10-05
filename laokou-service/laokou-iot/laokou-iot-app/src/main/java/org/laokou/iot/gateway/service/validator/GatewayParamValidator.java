@@ -15,35 +15,34 @@
  *
  */
 
-package org.laokou.iot.gateway.ability;
+package org.laokou.iot.gateway.service.validator;
 
-import lombok.RequiredArgsConstructor;
-import org.laokou.iot.gateway.gateway.GatewayGateway;
+import org.laokou.common.i18n.util.ParamValidator;
 import org.laokou.iot.gateway.model.GatewayA;
-import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 /**
- *
- * 网关领域服务.
- *
  * @author laokou
  */
-@Component
-@RequiredArgsConstructor
-public class GatewayDomainService {
+final class GatewayParamValidator {
 
-	private final GatewayGateway gatewayGateway;
+	private GatewayParamValidator() {
 
-	public void createGateway(GatewayA gatewayA) {
-		gatewayGateway.createGateway(gatewayA);
 	}
 
-	public void updateGateway(GatewayA gatewayA) {
-		gatewayGateway.updateGateway(gatewayA);
+	static ParamValidator.Validate validateId(GatewayA gatewayA) {
+		Long id = gatewayA.getId();
+		if (id == null) {
+			return ParamValidator.invalidate("网关ID不能为空");
+		}
+		return ParamValidator.validate();
 	}
 
-	public void deleteGateway(Long[] ids) {
-		gatewayGateway.deleteGateway(ids);
+	static ParamValidator.Validate validateName(GatewayA gatewayA) {
+		if (!StringUtils.hasText(gatewayA.getGatewayE().getName())) {
+			return ParamValidator.invalidate("网关名称不能为空");
+		}
+		return ParamValidator.validate();
 	}
 
 }

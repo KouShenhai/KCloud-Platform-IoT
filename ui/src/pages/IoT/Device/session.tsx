@@ -61,6 +61,7 @@ export default () => {
 			pageSize: params?.pageSize,
 			pageNum: params?.current,
 			pageIndex: params?.pageSize * (params?.current - 1),
+			id: params?.id,
 			name: trim(params?.name),
 			state: params?.state,
 			params: {

@@ -128,7 +128,7 @@ export async function pageRole(
 	});
 }
 
-/** 查询角色列表 分页查询角色列表 POST /api/v1/roles/list */
+/** 查询角色列表 查询角色列表 POST /api/v1/roles/list */
 export async function listRole(
 	body: API.RoleListQry,
 	options?: { [key: string]: any },

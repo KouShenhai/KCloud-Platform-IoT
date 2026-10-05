@@ -1,10 +1,7 @@
 import { modifyGateway, saveGateway } from '@/services/iot/gateway';
-import { pageProduct } from '@/services/iot/product';
 import { useIntl } from '@@/exports';
 import {
-	DrawerForm,
-	ProFormDigit,
-	ProFormSelect,
+	DrawerForm, ProFormSelect,
 	ProFormText,
 } from '@ant-design/pro-components';
 import { ProFormTextArea } from '@ant-design/pro-form';
@@ -20,18 +17,15 @@ interface GatewayDrawerProps {
 	dataSource: TableColumns;
 	onComponent: () => void;
 	requestId: string;
+	sessionOptions: any[]
 	setRequestId: (requestId: string) => void;
 }
 
 type TableColumns = {
 	id: number;
-	gatewayKey: string | undefined;
+	sn: string | undefined;
 	name: string | undefined;
-	status: number | undefined;
-	productId: number | undefined;
-	address: string | undefined;
-	longitude: number | undefined;
-	latitude: number | undefined;
+	sessionId: string | undefined;
 	remark: string | undefined;
 	createTime: string | undefined;
 };
@@ -45,6 +39,7 @@ export const GatewayDrawer: React.FC<GatewayDrawerProps> = ({
 	onComponent,
 	requestId,
 	setRequestId,
+	sessionOptions,
 }) => {
 	const intl = useIntl();
 	const t = (id: string, values?: Record<string, any>) =>
@@ -111,13 +106,13 @@ export const GatewayDrawer: React.FC<GatewayDrawerProps> = ({
 			<ProFormText
 				disabled={loading}
 				readonly={readOnly}
-				name="gatewayKey"
-				label={t('iot.gateway.gatewayKey')}
-				placeholder={t('iot.gateway.placeholder.gatewayKey')}
+				name="sn"
+				label={t('iot.gateway.sn')}
+				placeholder={t('iot.gateway.placeholder.sn')}
 				rules={[
 					{
 						required: true,
-						message: t('iot.gateway.required.gatewayKey'),
+						message: t('iot.gateway.required.sn'),
 					},
 				]}
 			/>
@@ -138,79 +133,16 @@ export const GatewayDrawer: React.FC<GatewayDrawerProps> = ({
 
 			<ProFormSelect
 				disabled={loading}
-				name="status"
-				label={t('iot.gateway.status')}
 				readonly={readOnly}
-				placeholder={t('iot.gateway.placeholder.status')}
+				name="sessionId"
+				label="绑定会话"
+				options={sessionOptions}
 				rules={[
 					{
 						required: true,
-						message: t('iot.gateway.required.status'),
-					},
+						message: "请选择会话",
+					}
 				]}
-				options={[
-					{
-						value: 0,
-						label: t('iot.gateway.status.online'),
-					},
-					{
-						value: 1,
-						label: t('iot.gateway.status.offline'),
-					},
-				]}
-			/>
-
-			<ProFormSelect
-				disabled={loading}
-				name="productId"
-				label={t('iot.gateway.productId')}
-				readonly={readOnly}
-				allowClear={true}
-				placeholder={t('iot.gateway.placeholder.productId')}
-				rules={[
-					{
-						required: true,
-						message: t('iot.gateway.required.productId'),
-					},
-				]}
-				request={async () => {
-					return pageProduct({
-						pageNum: 1,
-						pageSize: 1000,
-						pageIndex: 0,
-					}).then((res) => {
-						return (res?.data?.records || []).map((item: any) => ({
-							label: item?.name,
-							value: item?.id,
-						}));
-					});
-				}}
-			/>
-
-			<ProFormText
-				disabled={loading}
-				readonly={readOnly}
-				name="address"
-				label={t('iot.gateway.address')}
-				placeholder={t('iot.gateway.placeholder.address')}
-			/>
-
-			<ProFormDigit
-				disabled={loading}
-				readonly={readOnly}
-				name="longitude"
-				label={t('iot.gateway.longitude')}
-				placeholder={t('iot.gateway.placeholder.longitude')}
-				fieldProps={{ precision: 6 }}
-			/>
-
-			<ProFormDigit
-				disabled={loading}
-				readonly={readOnly}
-				name="latitude"
-				label={t('iot.gateway.latitude')}
-				placeholder={t('iot.gateway.placeholder.latitude')}
-				fieldProps={{ precision: 6 }}
 			/>
 
 			<ProFormTextArea

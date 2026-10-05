@@ -15,31 +15,15 @@
  *
  */
 
-package org.laokou.iot.gateway.gateway;
+package org.laokou.iot.gateway.model.validator;
 
-import org.laokou.iot.gateway.model.GatewayCommandE;
+import org.laokou.iot.gateway.model.GatewayA;
 
 /**
- *
- * 网关指令网关【防腐】.
- *
  * @author laokou
  */
-public interface GatewayCommandGateway {
+public interface GatewayParamValidator {
 
-	/**
-	 * 保存指令日志.
-	 */
-	void saveLog(GatewayCommandE gatewayCommandE);
-
-	/**
-	 * 下发指令到网关.
-	 */
-	void publish(GatewayCommandE gatewayCommandE);
-
-	/**
-	 * 更新指令日志状态.
-	 */
-	void updateLogStatus(Long commandId, Integer status, String result);
+	void validateGateway(GatewayA gatewayA);
 
 }

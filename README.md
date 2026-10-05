@@ -244,7 +244,6 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级单体架构和微�
         └── laokou-admin                           --- 后台管理模块
         └── laokou-report                          --- 报表统计模块
         └── laokou-logstash                        --- 日志收集模块
-        └── laokou-generator                       --- 模板生成模块
 ```
 
 ### 🔒 安全报告

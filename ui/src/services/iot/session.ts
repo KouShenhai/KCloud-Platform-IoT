@@ -89,3 +89,18 @@ export async function closeSession(id: number) {
 		method: 'PUT',
 	});
 }
+
+/** 查询会话列表 查询会话列表 POST /api/v1/sessions/list */
+export async function listSession(
+	body: API.SessionListQry,
+	options?: { [key: string]: any },
+) {
+	return request<API.Result>('/api-proxy/iot/api/v1/sessions/list', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		data: body,
+		...(options || {}),
+	});
+}

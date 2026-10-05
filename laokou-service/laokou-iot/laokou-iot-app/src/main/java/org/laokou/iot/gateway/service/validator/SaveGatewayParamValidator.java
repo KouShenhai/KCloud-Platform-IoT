@@ -15,35 +15,26 @@
  *
  */
 
-package org.laokou.iot.gateway.dto;
+package org.laokou.iot.gateway.service.validator;
 
-import lombok.Data;
-import org.laokou.common.i18n.dto.CommonCommand;
-
-import java.util.Map;
+import lombok.RequiredArgsConstructor;
+import org.laokou.common.i18n.util.ParamValidator;
+import org.laokou.iot.gateway.model.GatewayA;
+import org.laokou.iot.gateway.model.validator.GatewayParamValidator;
+import org.springframework.stereotype.Component;
 
 /**
- *
- * 写入设备属性命令.
- *
  * @author laokou
  */
-@Data
-public class GatewayWritePropertyCmd extends CommonCommand {
+@Component("saveGatewayParamValidator")
+@RequiredArgsConstructor
+public class SaveGatewayParamValidator implements GatewayParamValidator {
 
-	/**
-	 * 网关ID.
-	 */
-	private Long gatewayId;
-
-	/**
-	 * 设备标识.
-	 */
-	private String deviceKey;
-
-	/**
-	 * 属性键值对.
-	 */
-	private Map<String, Object> properties;
+	@Override
+	public void validateGateway(GatewayA gatewayA) {
+		ParamValidator.validate(gatewayA.getValidateName(),
+				// 校验会话名称
+				org.laokou.iot.gateway.service.validator.GatewayParamValidator.validateName(gatewayA));
+	}
 
 }

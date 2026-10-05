@@ -1,5 +1,4 @@
-import { GatewayCommandModal } from '@/pages/IoT/Gateway/GatewayCommandModal';
-import { GatewayDrawer } from '@/pages/IoT/Gateway/GatewayDrawer';
+import { GatewayDrawer } from '@/pages/IoT/Device/GatewayDrawer';
 import {
 	getGatewayById,
 	pageGateway,
@@ -12,18 +11,14 @@ import { ProColumns, ProTable } from '@ant-design/pro-components';
 import type { ActionType } from '@ant-design/pro-components';
 import { Button, message, Modal } from 'antd';
 import { TableRowSelection } from 'antd/es/table/interface';
-import { useRef, useState } from 'react';
+import {useEffect, useRef, useState} from 'react';
 import { v7 as uuidV7 } from 'uuid';
+import {listSession} from "@/services/iot/session";
 
 type TableColumns = {
 	id: number;
-	gatewayKey: string | undefined;
+	sn: string | undefined;
 	name: string | undefined;
-	status: number | undefined;
-	productId: number | undefined;
-	address: string | undefined;
-	longitude: number | undefined;
-	latitude: number | undefined;
 	remark: string | undefined;
 	createTime: string | undefined;
 };
@@ -40,27 +35,23 @@ export default () => {
 	const [readOnly, setReadOnly] = useState(false);
 	const [ids, setIds] = useState<any>([]);
 	const [requestId, setRequestId] = useState('');
-	const [commandVisit, setCommandVisit] = useState(false);
-	const [commandGateway, setCommandGateway] = useState<any>({});
+	const [sessionOptions, setSessionOptions] = useState([])
 
-	const statusOptions = [
-		{ value: 0, label: t('iot.gateway.status.online') },
-		{ value: 1, label: t('iot.gateway.status.offline') },
-	];
-
-	const statusMap = statusOptions.reduce<Record<number, string>>((map, item) => {
-		map[item.value] = item.label;
-		return map;
-	}, {});
+	const getSession = async () => {
+		const  res = await listSession({});
+		setSessionOptions(res?.data?.map((item: any) => ({
+			label: item.name,
+			value: item.id
+		})))
+	}
 
 	const getPageQueryParam = (params: any) => {
 		return {
 			pageSize: params?.pageSize,
 			pageNum: params?.current,
 			pageIndex: params?.pageSize * (params?.current - 1),
-			gatewayKey: trim(params?.gatewayKey),
+			sn: trim(params?.sn),
 			name: trim(params?.name),
-			status: params?.status,
 			params: {
 				startTime: params?.startDate
 					? `${params.startDate} 00:00:00`
@@ -82,6 +73,10 @@ export default () => {
 		},
 	};
 
+	useEffect(() => {
+		getSession().catch(console.log)
+	}, []);
+
 	const columns: ProColumns<TableColumns>[] = [
 		{
 			title: t('common.number'),
@@ -90,12 +85,12 @@ export default () => {
 			width: 85,
 		},
 		{
-			title: t('iot.gateway.gatewayKey'),
-			dataIndex: 'gatewayKey',
+			title: t('iot.gateway.sn'),
+			dataIndex: 'sn',
 			valueType: 'text',
 			ellipsis: true,
 			fieldProps: {
-				placeholder: t('iot.gateway.placeholder.gatewayKey'),
+				placeholder: t('iot.gateway.placeholder.sn'),
 			},
 		},
 		{
@@ -106,29 +101,6 @@ export default () => {
 			fieldProps: {
 				placeholder: t('iot.gateway.placeholder.name'),
 			},
-		},
-		{
-			title: t('iot.gateway.status'),
-			key: 'status',
-			dataIndex: 'status',
-			valueType: 'select',
-			width: 110,
-			fieldProps: {
-				placeholder: t('iot.gateway.placeholder.status'),
-				options: statusOptions,
-			},
-			render: (_, record) => {
-				return record?.status !== undefined
-					? statusMap[record.status] || record.status
-					: '-';
-			},
-		},
-		{
-			title: t('iot.gateway.address'),
-			dataIndex: 'address',
-			valueType: 'text',
-			ellipsis: true,
-			hideInSearch: true,
 		},
 		{
 			title: t('common.createTime'),
@@ -194,18 +166,6 @@ export default () => {
 						{t('common.modify')}
 					</a>
 				),
-				access.canGatewayCommand && (
-					<a
-						key="command"
-						onClick={() => {
-							setCommandGateway(record);
-							setRequestId(uuidV7());
-							setCommandVisit(true);
-						}}
-					>
-						{t('iot.gateway.command')}
-					</a>
-				),
 				access.canGatewayRemove && (
 					<a
 						key="remove"
@@ -250,14 +210,7 @@ export default () => {
 				}}
 				requestId={requestId}
 				setRequestId={setRequestId}
-			/>
-
-			<GatewayCommandModal
-				modalVisit={commandVisit}
-				setModalVisit={setCommandVisit}
-				gateway={commandGateway}
-				requestId={requestId}
-				setRequestId={setRequestId}
+				sessionOptions={sessionOptions}
 			/>
 
 			<ProTable<TableColumns>
@@ -346,8 +299,8 @@ export default () => {
 				]}
 				dateFormatter="string"
 				toolbar={{
-					title: t('menu.iot.gateway.gateway'),
-					tooltip: t('menu.iot.gateway.gateway'),
+					title: t('menu.iot.device.gateway'),
+					tooltip: t('menu.iot.device.gateway'),
 				}}
 			/>
 		</>

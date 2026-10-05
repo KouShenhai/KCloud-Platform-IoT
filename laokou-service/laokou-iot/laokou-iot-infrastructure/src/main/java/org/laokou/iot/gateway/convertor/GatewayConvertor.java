@@ -18,8 +18,12 @@
 package org.laokou.iot.gateway.convertor;
 
 import org.laokou.iot.gateway.dto.clientobject.GatewayCO;
+import org.laokou.iot.gateway.factory.GatewayDomainFactory;
 import org.laokou.iot.gateway.gatewayimpl.database.dataobject.GatewayDO;
-import org.laokou.iot.gateway.model.GatewayE;
+import org.laokou.iot.gateway.model.GatewayA;
+import org.laokou.iot.gateway.model.entity.GatewayE;
+
+import java.util.List;
 
 /**
  *
@@ -27,54 +31,46 @@ import org.laokou.iot.gateway.model.GatewayE;
  *
  * @author laokou
  */
-public class GatewayConvertor {
+public final class GatewayConvertor {
 
-	public static GatewayDO toDataObject(Long id, GatewayE gatewayE, boolean isInsert) {
+	private GatewayConvertor() {
+	}
+
+	public static GatewayDO toDataObject(GatewayA gatewayA) {
 		GatewayDO gatewayDO = new GatewayDO();
-		if (isInsert) {
-			gatewayDO.setId(id);
-		}
-		else {
-			gatewayDO.setId(gatewayE.getId());
-		}
-		gatewayDO.setGatewayKey(gatewayE.getGatewayKey());
+		GatewayE gatewayE = gatewayA.getGatewayE();
+		gatewayDO.setId(gatewayA.getId());
 		gatewayDO.setName(gatewayE.getName());
-		gatewayDO.setStatus(gatewayE.getStatus());
-		gatewayDO.setProductId(gatewayE.getProductId());
-		gatewayDO.setAddress(gatewayE.getAddress());
-		gatewayDO.setLongitude(gatewayE.getLongitude());
-		gatewayDO.setLatitude(gatewayE.getLatitude());
+		gatewayDO.setSn(gatewayE.getSn());
+		gatewayDO.setSessionId(gatewayE.getSessionId());
 		gatewayDO.setRemark(gatewayE.getRemark());
 		return gatewayDO;
+	}
+
+	public static List<GatewayCO> toClientObjects(List<GatewayDO> list) {
+		return list.stream().map(GatewayConvertor::toClientObject).toList();
 	}
 
 	public static GatewayCO toClientObject(GatewayDO gatewayDO) {
 		GatewayCO gatewayCO = new GatewayCO();
 		gatewayCO.setId(gatewayDO.getId());
-		gatewayCO.setGatewayKey(gatewayDO.getGatewayKey());
 		gatewayCO.setName(gatewayDO.getName());
-		gatewayCO.setStatus(gatewayDO.getStatus());
-		gatewayCO.setProductId(gatewayDO.getProductId());
-		gatewayCO.setAddress(gatewayDO.getAddress());
-		gatewayCO.setLongitude(gatewayDO.getLongitude());
-		gatewayCO.setLatitude(gatewayDO.getLatitude());
+		gatewayCO.setSessionId(gatewayDO.getSessionId());
+		gatewayCO.setSn(gatewayDO.getSn());
 		gatewayCO.setRemark(gatewayDO.getRemark());
 		gatewayCO.setCreateTime(gatewayDO.getCreateTime());
 		return gatewayCO;
 	}
 
 	public static GatewayE toEntity(GatewayCO gatewayCO) {
-		GatewayE gatewayE = new GatewayE();
-		gatewayE.setId(gatewayCO.getId());
-		gatewayE.setGatewayKey(gatewayCO.getGatewayKey());
-		gatewayE.setName(gatewayCO.getName());
-		gatewayE.setStatus(gatewayCO.getStatus());
-		gatewayE.setProductId(gatewayCO.getProductId());
-		gatewayE.setAddress(gatewayCO.getAddress());
-		gatewayE.setLongitude(gatewayCO.getLongitude());
-		gatewayE.setLatitude(gatewayCO.getLatitude());
-		gatewayE.setRemark(gatewayCO.getRemark());
-		return gatewayE;
+		return GatewayDomainFactory.createGatewayE()
+			.toBuilder()
+			.id(gatewayCO.getId())
+			.name(gatewayCO.getName())
+			.sn(gatewayCO.getSn())
+			.sessionId(gatewayCO.getSessionId())
+			.remark(gatewayCO.getRemark())
+			.build();
 	}
 
 }

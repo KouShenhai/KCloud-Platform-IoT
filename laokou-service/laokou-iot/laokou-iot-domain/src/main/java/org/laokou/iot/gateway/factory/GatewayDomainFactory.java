@@ -15,21 +15,26 @@
  *
  */
 
-package org.laokou.iot.gateway.gatewayimpl.database;
+package org.laokou.iot.gateway.factory;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.laokou.common.mybatisplus.mapper.CrudMapper;
-import org.laokou.iot.gateway.gatewayimpl.database.dataobject.GatewayCommandLogDO;
-import org.springframework.stereotype.Repository;
+import org.laokou.common.i18n.util.SpringContextUtils;
+import org.laokou.iot.gateway.model.GatewayA;
+import org.laokou.iot.gateway.model.entity.GatewayE;
 
 /**
- *
- * 网关指令日志数据库映射.
- *
  * @author laokou
  */
-@Mapper
-@Repository
-public interface GatewayCommandLogMapper extends CrudMapper<Long, Integer, GatewayCommandLogDO> {
+public final class GatewayDomainFactory {
+
+	private GatewayDomainFactory() {
+	}
+
+	public static GatewayE createGatewayE() {
+		return SpringContextUtils.getBeanProvider(GatewayE.class);
+	}
+
+	public static GatewayA createGatewayA() {
+		return SpringContextUtils.getBeanProvider(GatewayA.class);
+	}
 
 }

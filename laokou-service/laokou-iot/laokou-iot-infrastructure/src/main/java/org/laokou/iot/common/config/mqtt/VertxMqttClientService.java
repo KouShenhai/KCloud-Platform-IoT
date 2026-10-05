@@ -22,14 +22,12 @@ import io.vertx.core.Future;
 import io.vertx.core.ThreadingModel;
 import io.vertx.core.Vertx;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.common.core.util.CollectionExtUtils;
+import org.laokou.common.core.util.UUIDGenerator;
 import org.laokou.common.i18n.common.exception.BizException;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -46,22 +44,20 @@ final class VertxMqttClientService extends AbstractVertxService {
 
 	private volatile List<VertxMqttClient> vertxMqttClients;
 
-	private final Queue<String> queue;
-
-	public VertxMqttClientService(Vertx vertx, SystemSettingsProperties systemSettingsProperties,
-			MqttClientConfig config, List<MessageHandler> messageHandlers) {
+	public VertxMqttClientService(Vertx vertx, MqttClientConfig config, List<MessageHandler> messageHandlers) {
 		this.vertx = vertx;
 		this.config = config;
 		this.messageHandlers = messageHandlers;
 		this.vertxMqttClients = null;
-		this.queue = new ArrayDeque<>(systemSettingsProperties.getClientIds());
 	}
 
 	@Override
 	public Future<String> doDeploy() {
 		List<VertxMqttClient> clients = new ArrayList<>(4);
 		return vertx.deployVerticle(() -> {
-			VertxMqttClient vertxMqttClient = new VertxMqttClient(vertx, queue.poll(), config, messageHandlers);
+			VertxMqttClient vertxMqttClient = new VertxMqttClient(vertx,
+					String.format("%s-%s", config.getTenantCode(), UUIDGenerator.generateUUID()), config,
+					messageHandlers);
 			clients.add(vertxMqttClient);
 			return vertxMqttClient;
 		}, buildOptions()).onSuccess(deploymentId -> {

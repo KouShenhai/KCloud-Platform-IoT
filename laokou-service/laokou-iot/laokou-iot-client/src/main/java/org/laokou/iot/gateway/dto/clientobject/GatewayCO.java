@@ -35,26 +35,14 @@ public class GatewayCO extends ClientObject {
 	@Schema(name = "ID", description = "ID")
 	private Long id;
 
-	@Schema(name = "网关标识", description = "网关标识")
-	private String gatewayKey;
+	@Schema(name = "网关序列号", description = "网关序列号")
+	private String sn;
 
 	@Schema(name = "网关名称", description = "网关名称")
 	private String name;
 
-	@Schema(name = "网关状态 0在线 1离线", description = "网关状态 0在线 1离线")
-	private Integer status;
-
-	@Schema(name = "产品ID", description = "产品ID")
-	private Long productId;
-
-	@Schema(name = "网关地址", description = "网关地址")
-	private String address;
-
-	@Schema(name = "网关经度", description = "网关经度")
-	private Double longitude;
-
-	@Schema(name = "网关纬度", description = "网关纬度")
-	private Double latitude;
+	@Schema(name = "会话ID", description = "会话ID")
+	private Long sessionId;
 
 	@Schema(name = "网关备注", description = "网关备注")
 	private String remark;

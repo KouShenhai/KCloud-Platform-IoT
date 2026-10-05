@@ -17,19 +17,23 @@
 
 package org.laokou.iot.gateway.command.query;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.dto.Result;
+import org.laokou.common.tenant.constant.DSConstants;
+import org.laokou.iot.gateway.convertor.GatewayConvertor;
 import org.laokou.iot.gateway.dto.GatewayGetQry;
 import org.laokou.iot.gateway.dto.clientobject.GatewayCO;
 import org.laokou.iot.gateway.gatewayimpl.database.GatewayMapper;
-import org.laokou.common.i18n.dto.Result;
 import org.springframework.stereotype.Component;
-import org.laokou.iot.gateway.convertor.GatewayConvertor;
 
 /**
  * 查看网关请求执行器.
  *
  * @author laokou
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class GatewayGetQryExe {
@@ -37,7 +41,17 @@ public class GatewayGetQryExe {
 	private final GatewayMapper gatewayMapper;
 
 	public Result<GatewayCO> execute(GatewayGetQry qry) {
-		return Result.ok(GatewayConvertor.toClientObject(gatewayMapper.selectById(qry.getId())));
+		try {
+			DynamicDataSourceContextHolder.push(DSConstants.IOT);
+			return Result.ok(GatewayConvertor.toClientObject(gatewayMapper.selectById(qry.getId())));
+		}
+		catch (Exception ex) {
+			log.error("查看网关详情失败，错误信息：{}", ex.getMessage(), ex);
+			throw ex;
+		}
+		finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 }

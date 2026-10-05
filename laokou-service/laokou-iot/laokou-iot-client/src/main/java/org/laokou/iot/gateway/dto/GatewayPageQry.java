@@ -33,25 +33,15 @@ public class GatewayPageQry extends PageQuery {
 	/**
 	 * 网关标识.
 	 */
-	private String gatewayKey;
+	private String sn;
 
 	/**
 	 * 网关名称.
 	 */
 	private String name;
 
-	/**
-	 * 网关状态 0在线 1离线.
-	 */
-	private Integer status;
-
-	/**
-	 * 产品ID.
-	 */
-	private Long productId;
-
-	public void setGatewayKey(String gatewayKey) {
-		this.gatewayKey = StringExtUtils.like(StringExtUtils.trim(gatewayKey));
+	public void setSn(String sn) {
+		this.sn = StringExtUtils.like(StringExtUtils.trim(sn));
 	}
 
 	public void setName(String name) {

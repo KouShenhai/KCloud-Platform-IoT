@@ -33,6 +33,9 @@
 
   <sql id="selectConditions">
    <where>
+     <if test="pageQuery.id != null">
+       and "id" = #{pageQuery.id}
+     </if>
      <if test="pageQuery.name != null and pageQuery.name != ''">
        and "name" like #{pageQuery.name}
      </if>

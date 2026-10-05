@@ -282,6 +282,8 @@ declare namespace API {
 		co?: SessionCO;
 	};
 
+	type SessionListQry = {};
+
 	type SessionPageQry = {
 		pageNum?: number;
 		pageSize?: number;

@@ -149,12 +149,6 @@ export default [
 				path: '/sys/config',
 				routes: [
 					{
-						name: 'menu.sys.config.generator',
-						title: 'menu.sys.config.generator',
-						path: '/sys/config/generator',
-						component: './Sys/Config/generator',
-					},
-					{
 						name: 'menu.sys.config.apiDoc',
 						title: 'menu.sys.config.apiDoc',
 						path: '/sys/config/apiDoc',
@@ -200,6 +194,12 @@ export default [
 						component: './IoT/Device/session',
 					},
 					{
+						name: 'menu.iot.device.gateway',
+						title: 'menu.iot.device.gateway',
+						path: '/iot/device/gateway',
+						component: './IoT/Device/gateway',
+					},
+					{
 						name: 'menu.iot.device.product',
 						title: 'menu.iot.device.product',
 						path: '/iot/device/product',
@@ -210,19 +210,6 @@ export default [
 						title: 'menu.iot.device.device',
 						path: '/iot/device/device',
 						component: './IoT/Device/device',
-					},
-				],
-			},
-			{
-				name: 'menu.iot.gateway',
-				title: 'menu.iot.gateway',
-				path: '/iot/gateway',
-				routes: [
-					{
-						name: 'menu.iot.gateway.gateway',
-						title: 'menu.iot.gateway.gateway',
-						path: '/iot/gateway/gateway',
-						component: './IoT/Gateway/gateway',
 					},
 				],
 			}

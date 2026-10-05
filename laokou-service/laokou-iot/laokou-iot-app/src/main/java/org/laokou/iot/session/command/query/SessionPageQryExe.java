@@ -52,7 +52,7 @@ public class SessionPageQryExe {
 			return Result.ok(Page.create(SessionConvertor.toClientObjects(list), total));
 		}
 		catch (Exception ex) {
-			log.error("分页查询会话失败，错误信息：{}", ex.getMessage(), ex);
+			log.error("分页查询会话列表失败，错误信息：{}", ex.getMessage(), ex);
 			throw ex;
 		}
 		finally {

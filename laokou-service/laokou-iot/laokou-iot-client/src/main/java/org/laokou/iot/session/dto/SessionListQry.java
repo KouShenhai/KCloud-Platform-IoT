@@ -15,27 +15,17 @@
  *
  */
 
-package org.laokou.iot.gateway.dto;
+package org.laokou.iot.session.dto;
 
 import lombok.Getter;
-import org.laokou.common.i18n.dto.PageQuery;
+import lombok.RequiredArgsConstructor;
+import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
- *
- * 分页查询网关指令日志命令.
- *
  * @author laokou
  */
 @Getter
-public class GatewayCommandLogPageQry extends PageQuery {
-
-	/**
-	 * 网关ID.
-	 */
-	private Long gatewayId;
-
-	public void setGatewayId(Long gatewayId) {
-		this.gatewayId = gatewayId;
-	}
+@RequiredArgsConstructor
+public class SessionListQry extends CommonCommand {
 
 }

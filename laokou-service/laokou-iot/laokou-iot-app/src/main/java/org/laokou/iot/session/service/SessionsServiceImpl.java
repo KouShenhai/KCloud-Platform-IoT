@@ -27,9 +27,11 @@ import org.laokou.iot.session.command.SessionOpenCmdExe;
 import org.laokou.iot.session.command.SessionRemoveCmdExe;
 import org.laokou.iot.session.command.SessionSaveCmdExe;
 import org.laokou.iot.session.command.query.SessionGetQryExe;
+import org.laokou.iot.session.command.query.SessionListQryExe;
 import org.laokou.iot.session.command.query.SessionPageQryExe;
 import org.laokou.iot.session.dto.SessionCloseCmd;
 import org.laokou.iot.session.dto.SessionGetQry;
+import org.laokou.iot.session.dto.SessionListQry;
 import org.laokou.iot.session.dto.SessionModifyCmd;
 import org.laokou.iot.session.dto.SessionOpenCmd;
 import org.laokou.iot.session.dto.SessionPageQry;
@@ -37,6 +39,8 @@ import org.laokou.iot.session.dto.SessionRemoveCmd;
 import org.laokou.iot.session.dto.SessionSaveCmd;
 import org.laokou.iot.session.dto.clientobject.SessionCO;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 会话接口实现类.
@@ -60,6 +64,8 @@ public class SessionsServiceImpl implements SessionsServiceI {
 	private final SessionOpenCmdExe sessionOpenCmdExe;
 
 	private final SessionCloseCmdExe sessionCloseCmdExe;
+
+	private final SessionListQryExe sessionListQryExe;
 
 	@Override
 	public void openSession(SessionOpenCmd cmd) {
@@ -89,6 +95,11 @@ public class SessionsServiceImpl implements SessionsServiceI {
 	@Override
 	public Result<Page<SessionCO>> pageSession(SessionPageQry qry) {
 		return sessionPageQryExe.execute(qry);
+	}
+
+	@Override
+	public Result<List<SessionCO>> listSession(SessionListQry qry) {
+		return sessionListQryExe.execute(qry);
 	}
 
 	@Override

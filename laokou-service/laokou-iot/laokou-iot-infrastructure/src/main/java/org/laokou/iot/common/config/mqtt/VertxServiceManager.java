@@ -18,7 +18,6 @@
 package org.laokou.iot.common.config.mqtt;
 
 import io.vertx.core.Vertx;
-import org.laokou.common.core.config.SystemSettingsProperties;
 
 import java.util.List;
 import java.util.Map;
@@ -31,11 +30,10 @@ public final class VertxServiceManager {
 
 	private static final Map<Long, VertxService> VERTX_SERVICE_MAP = new ConcurrentHashMap<>(8192);
 
-	public static void deployVertxMqttClientService(Vertx vertx, SystemSettingsProperties systemSettingsProperties,
-			MqttClientConfig config, List<MessageHandler> messageHandlers) {
+	public static void deployVertxMqttClientService(Vertx vertx, MqttClientConfig config,
+			List<MessageHandler> messageHandlers) {
 		VERTX_SERVICE_MAP
-			.computeIfAbsent(config.getSnowflakeId(),
-					_ -> new VertxMqttClientService(vertx, systemSettingsProperties, config, messageHandlers))
+			.computeIfAbsent(config.getSnowflakeId(), _ -> new VertxMqttClientService(vertx, config, messageHandlers))
 			.deploy();
 	}
 

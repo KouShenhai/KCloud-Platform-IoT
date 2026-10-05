@@ -15,44 +15,44 @@
  *
  */
 
-package org.laokou.iot.gateway.command.query;
+package org.laokou.iot.session.command.query;
 
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.tenant.constant.DSConstants;
-import org.laokou.iot.gateway.convertor.GatewayConvertor;
-import org.laokou.iot.gateway.dto.GatewayPageQry;
-import org.laokou.iot.gateway.dto.clientobject.GatewayCO;
-import org.laokou.iot.gateway.gatewayimpl.database.GatewayMapper;
-import org.laokou.iot.gateway.gatewayimpl.database.dataobject.GatewayDO;
+import org.laokou.iot.session.convertor.SessionConvertor;
+import org.laokou.iot.session.dto.SessionListQry;
+import org.laokou.iot.session.dto.clientobject.SessionCO;
+import org.laokou.iot.session.gatewayimpl.database.SessionMapper;
+import org.laokou.iot.session.gatewayimpl.database.dataobject.SessionDO;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 /**
- * 分页查询网关请求执行器.
+ * 查询物模型请求执行器.
  *
  * @author laokou
  */
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class GatewayPageQryExe {
+public class SessionListQryExe {
 
-	private final GatewayMapper gatewayMapper;
+	private final SessionMapper sessionMapper;
 
-	public Result<Page<GatewayCO>> execute(GatewayPageQry qry) {
+	public Result<List<SessionCO>> execute(SessionListQry qry) {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.IOT);
-			List<GatewayDO> list = gatewayMapper.selectObjectPage(qry);
-			long total = gatewayMapper.selectObjectCount(qry);
-			return Result.ok(Page.create(GatewayConvertor.toClientObjects(list), total));
+			List<SessionDO> list = sessionMapper
+				.selectList(Wrappers.lambdaQuery(SessionDO.class).orderByDesc(SessionDO::getId));
+			return Result.ok(SessionConvertor.toClientObjects(list));
 		}
 		catch (Exception ex) {
-			log.error("分页查询网关失败，错误信息：{}", ex.getMessage(), ex);
+			log.error("查询会话列表失败，错误信息：{}", ex.getMessage(), ex);
 			throw ex;
 		}
 		finally {

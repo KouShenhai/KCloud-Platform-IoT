@@ -15,23 +15,27 @@
  *
  */
 
-package org.laokou.iot.gateway.dto;
+package org.laokou.iot.gateway.model.enums;
 
-import lombok.Data;
-import org.laokou.common.i18n.dto.CommonCommand;
+import lombok.Getter;
 
 /**
- *
- * 重启网关命令.
- *
  * @author laokou
  */
-@Data
-public class GatewayRebootCmd extends CommonCommand {
+@Getter
+public enum OperateType {
 
-	/**
-	 * 网关ID.
-	 */
-	private Long gatewayId;
+	SAVE("save", "保存网关"),
+
+	MODIFY("modify", "修改网关");
+
+	private final String code;
+
+	private final String desc;
+
+	OperateType(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
 
 }
