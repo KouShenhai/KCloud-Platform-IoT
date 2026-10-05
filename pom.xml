@@ -163,7 +163,7 @@
     <!-- protobuf版本 -->
     <protobuf.version>4.34.2</protobuf.version>
     <!-- redisson版本 -->
-    <redisson.version>4.7.0</redisson.version>
+    <redisson.version>4.8.0</redisson.version>
     <!-- mcp版本 -->
     <mcp.version>2.0.1</mcp.version>
     <!-- lombok版本 -->
