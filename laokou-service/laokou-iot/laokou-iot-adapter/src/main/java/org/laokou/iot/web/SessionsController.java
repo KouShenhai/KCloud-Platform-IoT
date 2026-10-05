@@ -31,6 +31,7 @@ import org.laokou.common.trace.annotation.TraceLog;
 import org.laokou.iot.session.api.SessionsServiceI;
 import org.laokou.iot.session.dto.SessionCloseCmd;
 import org.laokou.iot.session.dto.SessionGetQry;
+import org.laokou.iot.session.dto.SessionListQry;
 import org.laokou.iot.session.dto.SessionModifyCmd;
 import org.laokou.iot.session.dto.SessionOpenCmd;
 import org.laokou.iot.session.dto.SessionPageQry;
@@ -46,6 +47,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * 会话管理.
@@ -107,6 +110,13 @@ public class SessionsController {
 	@Operation(summary = "分页查询会话列表", description = "分页查询会话列表")
 	public Result<Page<SessionCO>> pageSession(@Validated @RequestBody SessionPageQry qry) {
 		return sessionsServiceI.pageSession(qry);
+	}
+
+	@TraceLog
+	@PostMapping("/v1/sessions/list")
+	@Operation(summary = "查询会话列表", description = "查询会话列表")
+	public Result<List<SessionCO>> pageSession(@Validated @RequestBody SessionListQry qry) {
+		return sessionsServiceI.listSession(qry);
 	}
 
 	@TraceLog

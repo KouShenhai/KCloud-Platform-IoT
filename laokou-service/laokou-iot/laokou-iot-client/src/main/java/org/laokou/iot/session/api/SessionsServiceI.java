@@ -21,12 +21,15 @@ import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.iot.session.dto.SessionCloseCmd;
 import org.laokou.iot.session.dto.SessionGetQry;
+import org.laokou.iot.session.dto.SessionListQry;
 import org.laokou.iot.session.dto.SessionModifyCmd;
 import org.laokou.iot.session.dto.SessionOpenCmd;
 import org.laokou.iot.session.dto.SessionPageQry;
 import org.laokou.iot.session.dto.SessionRemoveCmd;
 import org.laokou.iot.session.dto.SessionSaveCmd;
 import org.laokou.iot.session.dto.clientobject.SessionCO;
+
+import java.util.List;
 
 /**
  * 会话接口.
@@ -46,6 +49,8 @@ public interface SessionsServiceI {
 	void closeSession(SessionCloseCmd cmd);
 
 	Result<Page<SessionCO>> pageSession(SessionPageQry qry);
+
+	Result<List<SessionCO>> listSession(SessionListQry qry);
 
 	Result<SessionCO> getSessionById(SessionGetQry qry);
 

@@ -17,26 +17,15 @@
 
 package org.laokou.iot.session.dto;
 
-import lombok.Data;
-import org.laokou.common.i18n.dto.PageQuery;
-import org.laokou.common.i18n.util.StringExtUtils;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import org.laokou.common.i18n.dto.CommonCommand;
 
 /**
- * 分页查询会话请求.
- *
  * @author laokou
  */
-@Data
-public class SessionPageQry extends PageQuery {
-
-	private Long id;
-
-	private String name;
-
-	private Integer state;
-
-	public void setName(String name) {
-		this.name = StringExtUtils.like(StringExtUtils.trim(name));
-	}
+@Getter
+@RequiredArgsConstructor
+public class SessionListQry extends CommonCommand {
 
 }
