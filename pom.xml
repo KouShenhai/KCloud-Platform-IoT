@@ -115,7 +115,7 @@
     <!-- spring-asciidoctor-backends版本 -->
     <spring-asciidoctor-backends.version>0.0.7</spring-asciidoctor-backends.version>
     <!-- protobuf-maven-plugin版本 -->
-    <protobuf-maven-plugin.version>5.1.10</protobuf-maven-plugin.version>
+    <protobuf-maven-plugin.version>5.1.11</protobuf-maven-plugin.version>
     <!-- central-publishing-maven-plugin版本 -->
     <central-publishing-maven-plugin.version>0.11.0</central-publishing-maven-plugin.version>
     <!-- maven-source-plugin版本 -->
@@ -189,7 +189,7 @@
     <!-- fesod版本 -->
     <fesod.version>2.0.2-incubating</fesod.version>
     <!-- s3版本 -->
-    <s3.version>2.55.8</s3.version>
+    <s3.version>2.55.10</s3.version>
     <!-- dynamic-datasource版本 -->
     <dynamic-datasource.version>4.5.0</dynamic-datasource.version>
     <!-- httpclient5版本 -->
@@ -215,7 +215,7 @@
     <!-- browscap-java版本 -->
     <browscap-java.version>1.5.1</browscap-java.version>
     <!-- flyway版本 -->
-    <flyway.version>13.8.1</flyway.version>
+    <flyway.version>13.9.0</flyway.version>
     <!-- snail-job版本 -->
     <snail-job.version>2.0.2</snail-job.version>
     <!-- archunit-junit5版本 -->
