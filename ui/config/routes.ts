@@ -149,12 +149,6 @@ export default [
 				path: '/sys/config',
 				routes: [
 					{
-						name: 'menu.sys.config.generator',
-						title: 'menu.sys.config.generator',
-						path: '/sys/config/generator',
-						component: './Sys/Config/generator',
-					},
-					{
 						name: 'menu.sys.config.apiDoc',
 						title: 'menu.sys.config.apiDoc',
 						path: '/sys/config/apiDoc',

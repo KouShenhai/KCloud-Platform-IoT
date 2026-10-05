@@ -549,7 +549,6 @@ export default {
 	'menu.sys.oss.config': 'OSS Config',
 	'menu.sys.oss.log': 'OSS Logs',
 	'menu.sys.config': 'System Config',
-	'menu.sys.config.generator': 'Code Generator',
 	'menu.sys.config.apiDoc': 'API Doc',
 	'menu.iot': 'IoT',
 	'menu.iot.device': 'Devices',

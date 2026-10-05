@@ -549,7 +549,6 @@ export default {
 	'menu.sys.oss.config': '对象存储配置',
 	'menu.sys.oss.log': '对象存储日志',
 	'menu.sys.config': '系统配置',
-	'menu.sys.config.generator': '代码生成器',
 	'menu.sys.config.apiDoc': 'API文档',
 	'menu.iot': '物联管理',
 	'menu.iot.device': '设备管理',
