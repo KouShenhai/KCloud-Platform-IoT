@@ -376,3 +376,5 @@ COMMENT ON COLUMN "public"."iot_gateway"."remark" IS '网关备注';
 COMMENT ON TABLE "public"."iot_gateway" IS '网关';
 ALTER TABLE "public"."iot_gateway" ADD CONSTRAINT "iot_gateway_pkey" PRIMARY KEY ("id");
 
+INSERT INTO "public"."iot_gateway" VALUES (1, 1, 1, '2026-10-05 17:21:17.24349', '2026-10-05 18:02:44.282852', 0, 1, 1, 1, 'KEG10000', '边缘网关10000', 1, '');
+
