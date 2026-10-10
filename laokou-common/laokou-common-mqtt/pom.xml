@@ -12,4 +12,11 @@
   <artifactId>laokou-common-mqtt</artifactId>
   <version>${revision}</version>
 
+  <dependencies>
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-codec-mqtt</artifactId>
+    </dependency>
+  </dependencies>
+
 </project>
