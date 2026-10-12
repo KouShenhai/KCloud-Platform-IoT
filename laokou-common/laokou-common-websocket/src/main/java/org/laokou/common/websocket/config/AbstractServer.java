@@ -24,6 +24,8 @@ import io.netty.channel.EventLoopGroup;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.util.ObjectUtils;
 
+import java.io.IOException;
+import java.net.ServerSocket;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -32,7 +34,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @Slf4j
 public abstract class AbstractServer implements Server {
 
-	protected final String ip;
+	protected final String host;
 
 	protected final int port;
 
@@ -57,10 +59,10 @@ public abstract class AbstractServer implements Server {
 	 */
 	private final AtomicBoolean running = new AtomicBoolean(false);
 
-	protected AbstractServer(String ip, int port, ChannelHandler channelHandler, int bossCorePoolSize,
+	protected AbstractServer(String host, int port, ChannelHandler channelHandler, int bossCorePoolSize,
 			int workerCorePoolSize) {
-		this.ip = ip;
-		this.port = port;
+		this.host = host;
+		this.port = getAvailablePort(port);
 		this.channelHandler = channelHandler;
 		this.bossCorePoolSize = bossCorePoolSize;
 		this.workerCorePoolSize = workerCorePoolSize;
@@ -87,7 +89,7 @@ public abstract class AbstractServer implements Server {
 			// 服务器异步操作绑定
 			// sync -> 等待任务结束，如果任务产生异常或被中断则抛出异常，否则返回Future自身
 			// awaitUninterruptibly -> 等待任务结束，任务不可中断
-			ChannelFuture channelFuture = bind(serverBootstrap, port);
+			ChannelFuture channelFuture = bind(serverBootstrap);
 			// 监听端口关闭
 			channelFuture.channel().closeFuture().addListener(_ -> stop());
 		}
@@ -125,18 +127,29 @@ public abstract class AbstractServer implements Server {
 	/**
 	 * 绑定端口.
 	 * @param bootstrap 启动类
-	 * @param port 端口
 	 */
-	private ChannelFuture bind(final AbstractBootstrap<?, ?> bootstrap, final int port) {
-		return bootstrap.bind(port).awaitUninterruptibly().addListener(future -> {
+	private ChannelFuture bind(final AbstractBootstrap<?, ?> bootstrap) {
+		return bootstrap.bind(host, port).awaitUninterruptibly().addListener(future -> {
 			if (!future.isSuccess()) {
 				log.error("启动失败，端口{}被占用", port);
-				bind(bootstrap, port + 1);
 			}
 			else {
 				log.info("启动成功，端口{}已绑定，运行状态【true已启动，false已停止】：{}", port, running.getAndSet(true));
 			}
 		});
+	}
+
+	private int getAvailablePort(int port) {
+		int maxPort = Math.min(65535, port);
+		while (port <= maxPort) {
+			try (ServerSocket _ = new ServerSocket(port)) {
+				return port;
+			}
+			catch (IOException e) {
+				port++;
+			}
+		}
+		throw new IllegalStateException("端口不存在");
 	}
 
 }

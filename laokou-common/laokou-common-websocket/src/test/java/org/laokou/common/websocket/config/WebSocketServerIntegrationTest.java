@@ -147,7 +147,7 @@ class WebSocketServerIntegrationTest {
 
 		// Setup properties
 		SpringWebSocketServerProperties properties = new SpringWebSocketServerProperties();
-		properties.setBindIp("0.0.0.0");
+		properties.setHost("0.0.0.0");
 		properties.setPort(testPort);
 		properties.setWebsocketPath("/ws");
 		properties.setMaxContentLength(65536);

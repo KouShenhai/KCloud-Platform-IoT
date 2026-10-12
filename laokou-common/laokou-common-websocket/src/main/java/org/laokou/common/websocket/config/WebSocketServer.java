@@ -51,7 +51,7 @@ public final class WebSocketServer extends AbstractServer {
 
 	public WebSocketServer(ChannelHandler channelHandler, SpringWebSocketServerProperties properties,
 			ExecutorService virtualThreadExecutor) {
-		super(properties.getBindIp(), properties.getPort(), channelHandler, properties.getBossCorePoolSize(),
+		super(properties.getHost(), properties.getPort(), channelHandler, properties.getBossCorePoolSize(),
 				properties.getWorkerCorePoolSize());
 		this.properties = properties;
 		this.virtualThreadExecutor = virtualThreadExecutor;

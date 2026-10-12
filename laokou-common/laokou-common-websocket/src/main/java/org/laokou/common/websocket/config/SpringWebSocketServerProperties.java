@@ -32,14 +32,14 @@ import org.springframework.stereotype.Component;
 public class SpringWebSocketServerProperties {
 
 	/**
-	 * 绑定IP.
+	 * 主机.
 	 */
-	private String bindIp = "0.0.0.0";
+	private String host = "0.0.0.0";
 
 	/**
 	 * 端口.
 	 */
-	private int port;
+	private int port = 13000;
 
 	/**
 	 * 服务ID.

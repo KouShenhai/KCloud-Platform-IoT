@@ -38,7 +38,7 @@ class SpringWebSocketServerPropertiesTest {
 	@Test
 	void test_default_values() {
 		// Then - Verify default values
-		Assertions.assertThat(properties.getBindIp()).isEqualTo("0.0.0.0");
+		Assertions.assertThat(properties.getHost()).isEqualTo("0.0.0.0");
 		Assertions.assertThat(properties.getPort()).isZero();
 		Assertions.assertThat(properties.getMaxContentLength()).isEqualTo(65536);
 		Assertions.assertThat(properties.getWebsocketPath()).isEqualTo("/ws");
@@ -62,7 +62,7 @@ class SpringWebSocketServerPropertiesTest {
 	@Test
 	void test_setter_getter() {
 		// When
-		properties.setBindIp("192.168.1.0");
+		properties.setHost("192.168.1.0");
 		properties.setPort(9090);
 		properties.setServiceId("websocket-service");
 		properties.setMaxContentLength(131072);
@@ -84,7 +84,7 @@ class SpringWebSocketServerPropertiesTest {
 		properties.setUseIoUring(false);
 
 		// Then
-		Assertions.assertThat(properties.getBindIp()).isEqualTo("192.168.1.0");
+		Assertions.assertThat(properties.getHost()).isEqualTo("192.168.1.0");
 		Assertions.assertThat(properties.getPort()).isEqualTo(9090);
 		Assertions.assertThat(properties.getServiceId()).isEqualTo("websocket-service");
 		Assertions.assertThat(properties.getMaxContentLength()).isEqualTo(131072);
