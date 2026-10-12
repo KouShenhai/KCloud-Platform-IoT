@@ -1,7 +1,5 @@
 package org.laokou.mqtt.client;
 
-import io.netty.handler.codec.mqtt.MqttMessage;
-
 /**
  * 订阅消息监听器。
  * <p>

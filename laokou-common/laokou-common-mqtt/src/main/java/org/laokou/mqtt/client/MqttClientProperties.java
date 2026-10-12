@@ -23,7 +23,7 @@ import lombok.Data;
  * @author laokou
  */
 @Data
-public class MqttClientProperties {
+final class MqttClientProperties {
 
 	/**
 	 * 主机.
@@ -42,5 +42,10 @@ public class MqttClientProperties {
 	private String password = "laokou123";
 
 	private boolean cleanSession = true;
+
+	/**
+	 * 心跳包每隔30秒发一次.
+	 */
+	private int keepAliveTimeSeconds = 30;
 
 }
