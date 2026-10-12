@@ -8,7 +8,7 @@ package org.laokou.mqtt.client;
 public final class MqttClientManager implements AutoCloseable {
 
 	@Override
-	public void close() throws Exception {
+	public void close() {
 
 	}
 

@@ -86,9 +86,6 @@ public abstract class AbstractServer implements Server {
 		// -Dnetty.server.parentgroup.size=2 -Dnetty.server.childgroup.size=32
 		AbstractBootstrap<?, ?> serverBootstrap = init();
 		try {
-			// 服务器异步操作绑定
-			// sync -> 等待任务结束，如果任务产生异常或被中断则抛出异常，否则返回Future自身
-			// awaitUninterruptibly -> 等待任务结束，任务不可中断
 			ChannelFuture channelFuture = bind(serverBootstrap);
 			// 监听端口关闭
 			channelFuture.channel().closeFuture().addListener(_ -> stop());
@@ -129,7 +126,7 @@ public abstract class AbstractServer implements Server {
 	 * @param bootstrap 启动类
 	 */
 	private ChannelFuture bind(final AbstractBootstrap<?, ?> bootstrap) {
-		return bootstrap.bind(host, port).awaitUninterruptibly().addListener(future -> {
+		return bootstrap.bind(host, port).addListener(future -> {
 			if (!future.isSuccess()) {
 				log.error("启动失败，端口{}被占用", port);
 			}

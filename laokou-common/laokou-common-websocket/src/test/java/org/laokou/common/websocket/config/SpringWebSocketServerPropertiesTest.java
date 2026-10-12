@@ -56,7 +56,6 @@ class SpringWebSocketServerPropertiesTest {
 		Assertions.assertThat(properties.getKeyCertPrivateKeyPassword()).isEqualTo("laokou");
 		Assertions.assertThat(properties.getKeyCertChainPath()).isEqualTo("classpath:certificate.crt");
 		Assertions.assertThat(properties.getKeyCertPrivateKeyPath()).isEqualTo("classpath:private.key");
-		Assertions.assertThat(properties.isUseIoUring()).isTrue();
 	}
 
 	@Test
@@ -81,7 +80,6 @@ class SpringWebSocketServerPropertiesTest {
 		properties.setKeyCertPrivateKeyPassword("newpassword");
 		properties.setKeyCertChainPath("classpath:new-certificate.crt");
 		properties.setKeyCertPrivateKeyPath("classpath:new-private.key");
-		properties.setUseIoUring(false);
 
 		// Then
 		Assertions.assertThat(properties.getHost()).isEqualTo("192.168.1.0");
@@ -103,7 +101,6 @@ class SpringWebSocketServerPropertiesTest {
 		Assertions.assertThat(properties.getKeyCertPrivateKeyPassword()).isEqualTo("newpassword");
 		Assertions.assertThat(properties.getKeyCertChainPath()).isEqualTo("classpath:new-certificate.crt");
 		Assertions.assertThat(properties.getKeyCertPrivateKeyPath()).isEqualTo("classpath:new-private.key");
-		Assertions.assertThat(properties.isUseIoUring()).isFalse();
 	}
 
 }

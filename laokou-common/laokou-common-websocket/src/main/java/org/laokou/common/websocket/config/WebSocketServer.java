@@ -95,7 +95,7 @@ public final class WebSocketServer extends AbstractServer {
 	}
 
 	private IoHandlerFactory getIoHandlerFactory() {
-		if (properties.isUseIoUring() && isIoUringAvailable()) {
+		if (isIoUringAvailable()) {
 			log.info("Use IoUringIoHandler factory");
 			return IoUringIoHandler.newFactory();
 		}
@@ -104,7 +104,7 @@ public final class WebSocketServer extends AbstractServer {
 	}
 
 	public Class<? extends ServerChannel> getServerChannel() {
-		if (properties.isUseIoUring() && isIoUringAvailable()) {
+		if (isIoUringAvailable()) {
 			log.info("Use IoUringServerSocketChannel");
 			return IoUringServerSocketChannel.class;
 		}

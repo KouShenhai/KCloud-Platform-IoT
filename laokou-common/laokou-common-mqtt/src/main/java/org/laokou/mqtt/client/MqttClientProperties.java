@@ -35,8 +35,6 @@ final class MqttClientProperties {
 	 */
 	private int port = 1883;
 
-	private String clientId;
-
 	private String username = "root";
 
 	private String password = "laokou123";
@@ -47,5 +45,14 @@ final class MqttClientProperties {
 	 * 心跳包每隔30秒发一次.
 	 */
 	private int keepAliveTimeSeconds = 30;
+
+	private int connectTimeoutMs = 15000;
+
+	private int maxBytesInMessage = 64 * 1024 * 1024;
+
+	/**
+	 * 读写核心线程数.
+	 */
+	private int workerCorePoolSize = 8;
 
 }
