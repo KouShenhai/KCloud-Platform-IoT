@@ -45,6 +45,9 @@ final class DefaultPulsarTopicFactory implements PulsarTopicFactory {
 
 	@Override
 	public void createTopic() throws PulsarAdminException {
+		if (!checkHealth()) {
+			return;
+		}
 		Tenants tenants = pulsarAdmin.tenants();
 		Namespaces namespaces = pulsarAdmin.namespaces();
 		Topics topics = pulsarAdmin.topics();
@@ -90,6 +93,15 @@ final class DefaultPulsarTopicFactory implements PulsarTopicFactory {
 
 	private String getMqTopic(String namespace, String topic) {
 		return String.format("persistent://%s/%s", namespace, topic);
+	}
+
+	private boolean checkHealth() {
+		try {
+			pulsarAdmin.brokers().healthcheck();
+			return true;
+		} catch (Exception ex) {
+			return false;
+		}
 	}
 
 }

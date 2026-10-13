@@ -28,24 +28,24 @@ import org.springframework.stereotype.Component;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * 网关心跳消息【上行】处理器.
+ * 上报设备属性消息【上行】处理器.
  *
  * @author laokou
  */
 @Slf4j
 @Component
 @RequiredArgsConstructor
-final class UpHeartbeatGatewayMessageHandler extends AbstractMessageHandler {
+final class UpReportPropertiesGatewayMessageHandler extends AbstractMessageHandler {
 
 	@Override
 	public CompletableFuture<MessageId> handleMessage(Long snowflakeId, MqttPublishMessage publishMessage) {
-		log.info("【Vertx-MQTT-Client】 => 网关心跳消息【上行】处理器，接收雪花ID【{}】，主题【{}】消息", snowflakeId, publishMessage.topicName());
+		log.info("【Vertx-MQTT-Client】 => 上报设备属性消息【上行】处理器，接收雪花ID【{}】，主题【{}】消息", snowflakeId, publishMessage.topicName());
 		return CompletableFuture.completedFuture(null);
 	}
 
 	@Override
 	protected MqttMessageType getMatchTopic() {
-		return MqttMessageType.UP_HEARTBEAT_GATEWAY_MESSAGE;
+		return MqttMessageType.UP_REPORT_PROPERTIES_GATEWAY_MESSAGE;
 	}
 
 }

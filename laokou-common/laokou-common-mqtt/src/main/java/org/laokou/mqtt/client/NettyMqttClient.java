@@ -1,21 +1,40 @@
 package org.laokou.mqtt.client;
 
 import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.*;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelOption;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.IoHandlerFactory;
+import io.netty.channel.MultiThreadIoEventLoopGroup;
+import io.netty.channel.ServerChannel;
 import io.netty.channel.nio.NioIoHandler;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.uring.IoUring;
 import io.netty.channel.uring.IoUringIoHandler;
 import io.netty.channel.uring.IoUringServerSocketChannel;
-import io.netty.handler.codec.mqtt.*;
+import io.netty.handler.codec.mqtt.MqttConnectMessage;
+import io.netty.handler.codec.mqtt.MqttConnectPayload;
+import io.netty.handler.codec.mqtt.MqttConnectVariableHeader;
+import io.netty.handler.codec.mqtt.MqttDecoder;
+import io.netty.handler.codec.mqtt.MqttEncoder;
+import io.netty.handler.codec.mqtt.MqttFixedHeader;
+import io.netty.handler.codec.mqtt.MqttMessageType;
+import io.netty.handler.codec.mqtt.MqttProperties;
+import io.netty.handler.codec.mqtt.MqttQoS;
+import io.netty.handler.codec.mqtt.MqttVersion;
 import io.netty.handler.timeout.IdleStateHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.core.util.UUIDGenerator;
 import org.laokou.common.i18n.util.SystemUtils;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
@@ -29,9 +48,18 @@ final class NettyMqttClient implements MqttClient {
 
 	private final String clientId;
 
+	private final InflightStore inflightStore;
+
 	private final MqttClientProperties mqttClientProperties;
 
 	private final ExecutorService virtualThreadExecutor;
+
+	private final List<MqttEventListener> eventListeners = new CopyOnWriteArrayList<>();
+
+	/** SUBACK / UNSUBACK 等待表 */
+	private final Map<Integer, CompletableFuture<Integer>> pendingSubAcks = new ConcurrentHashMap<>();
+
+	private final Map<Integer, CompletableFuture<Void>> pendingUnsubAcks = new ConcurrentHashMap<>();
 
 	private volatile CompletableFuture<Void> connectFuture;
 
@@ -39,10 +67,11 @@ final class NettyMqttClient implements MqttClient {
 
 	private volatile EventLoopGroup worker;
 
-	NettyMqttClient(String tenantCode, MqttClientProperties mqttClientProperties,
-			ExecutorService virtualThreadExecutor) {
+	NettyMqttClient(String tenantCode, InflightStore inflightStore, MqttClientProperties mqttClientProperties,
+	                ExecutorService virtualThreadExecutor) {
 		this.tenantCode = tenantCode;
 		this.clientId = String.format("%s-%s", tenantCode, UUIDGenerator.generateUUID().substring(0, 16));
+		this.inflightStore = inflightStore;
 		this.mqttClientProperties = mqttClientProperties;
 		this.virtualThreadExecutor = virtualThreadExecutor;
 	}
@@ -125,6 +154,30 @@ final class NettyMqttClient implements MqttClient {
 			log.error("连接失败，进入重连流程，错误信息：{}", cause.getMessage());
 		}
 		// handleDisconnect(cause);
+	}
+
+
+	public void onPubAck(int packetId) {
+		OutboundMessage msg = inflightStore.remove(packetId);
+		if (msg != null) {
+			cancelTimeout(msg);
+			msg.future().complete(null);
+		}
+	}
+
+	public void onPubRec(int packetId) {
+		OutboundMessage msg = inflightStore.get(packetId);
+		if (msg != null && msg.state() == OutboundMessage.State.WAIT_PUBREC) {
+			msg.state = OutboundMessage.State.WAIT_PUBCOMP;
+		}
+	}
+
+	public void onPubComp(int packetId) {
+		OutboundMessage msg = inflightStore.remove(packetId);
+		if (msg != null) {
+			cancelTimeout(msg);
+			msg.future().complete(null);
+		}
 	}
 
 	private IoHandlerFactory getIoHandlerFactory() {

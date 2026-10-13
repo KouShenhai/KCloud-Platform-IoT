@@ -18,13 +18,23 @@
 package org.laokou.iot.session.dto.clientobject.mqtt;
 
 import lombok.Data;
+import org.laokou.common.i18n.dto.ClientObject;
 
 /**
- * 网关心跳消息【上行】.
- *
  * @author laokou
  */
 @Data
-public class UpHeartbeatGatewayMessage extends GatewayMessage {
-
+public class GatewayPropertiesCO extends ClientObject {
+	private String diskTotal;
+	private String diskUsed;
+	private String diskUsage;
+	private String cpuUsage;
+	private String memTotal;
+	private String memUsed;
+	private String memUsage;
+	private String uptime;
+	private long timestamp;
+	private String gatewaySn;
+	private int version;
+	private int interval;
 }

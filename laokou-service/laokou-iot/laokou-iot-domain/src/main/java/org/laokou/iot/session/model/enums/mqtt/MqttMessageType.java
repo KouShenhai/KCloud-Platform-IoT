@@ -192,15 +192,15 @@ public enum MqttMessageType {
 
 	},
 
-	UP_HEARTBEAT_GATEWAY_MESSAGE("up_heartbeat_gateway_message", "网关心跳【上行】") {
+	UP_REPORT_PROPERTIES_GATEWAY_MESSAGE("up_report_properties_gateway_message", "上报设备属性【上行】") {
 		@Override
 		public String getTopic() {
-			return "up/+/+/heartbeat";
+			return "up/+/+/properties/report";
 		}
 
 		@Override
 		public String getMqTopic() {
-			return "iot-up-heartbeat-gateway-message";
+			return "iot-up-report-properties-gateway-message";
 		}
 
 		@Override
