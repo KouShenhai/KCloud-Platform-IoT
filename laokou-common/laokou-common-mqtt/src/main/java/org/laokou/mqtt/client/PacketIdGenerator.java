@@ -7,10 +7,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 final class PacketIdGenerator {
 
-	private PacketIdGenerator() {}
-
-	public static final PacketIdGenerator INSTANCE = new PacketIdGenerator();
-
 	private final AtomicInteger next = new AtomicInteger(0);
 
 	public int nextId() {

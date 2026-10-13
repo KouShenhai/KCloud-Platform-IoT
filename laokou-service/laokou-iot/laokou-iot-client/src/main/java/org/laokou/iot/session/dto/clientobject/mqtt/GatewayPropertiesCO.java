@@ -25,16 +25,29 @@ import org.laokou.common.i18n.dto.ClientObject;
  */
 @Data
 public class GatewayPropertiesCO extends ClientObject {
+
 	private String diskTotal;
+
 	private String diskUsed;
+
 	private String diskUsage;
+
 	private String cpuUsage;
+
 	private String memTotal;
+
 	private String memUsed;
+
 	private String memUsage;
+
 	private String uptime;
+
 	private long timestamp;
+
 	private String gatewaySn;
+
 	private int version;
+
 	private int interval;
+
 }

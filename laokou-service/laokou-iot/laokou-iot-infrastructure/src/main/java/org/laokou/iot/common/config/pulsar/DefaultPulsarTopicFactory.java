@@ -99,7 +99,8 @@ final class DefaultPulsarTopicFactory implements PulsarTopicFactory {
 		try {
 			pulsarAdmin.brokers().healthcheck();
 			return true;
-		} catch (Exception ex) {
+		}
+		catch (Exception ex) {
 			return false;
 		}
 	}
