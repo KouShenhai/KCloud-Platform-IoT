@@ -17,11 +17,11 @@
 
 package org.laokou.common.websocket.config;
 
-import com.alibaba.cloud.nacos.ConditionalOnNacosDiscoveryEnabled;
 import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import com.alibaba.cloud.nacos.NacosServiceManager;
 import io.netty.channel.ChannelHandler;
 import org.laokou.common.security.config.OAuth2OpaqueTokenIntrospector;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.server.autoconfigure.ServerProperties;
 import org.springframework.context.annotation.Bean;
 
@@ -49,7 +49,8 @@ public class WebSocketServerConfig {
 	}
 
 	@Bean
-	@ConditionalOnNacosDiscoveryEnabled
+	@ConditionalOnProperty(prefix = "system-settings", name = "app-mode", havingValue = "MICROSERVICE",
+		matchIfMissing = true)
 	public WebSocketRegister webSocketRegister(NacosDiscoveryProperties nacosDiscoveryProperties, SpringWebSocketServerProperties springWebSocketServerProperties, NacosServiceManager nacosServiceManager) {
 		nacosServiceManager.setNacosDiscoveryProperties(nacosDiscoveryProperties);
 		return new WebSocketRegister(nacosDiscoveryProperties, springWebSocketServerProperties, nacosServiceManager.getNamingService());

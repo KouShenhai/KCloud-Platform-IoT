@@ -38,7 +38,7 @@ class SpringWebSocketServerPropertiesTest {
 	@Test
 	void test_default_values() {
 		// Then - Verify default values
-		Assertions.assertThat(properties.getBindIp()).isEqualTo("0.0.0.0");
+		Assertions.assertThat(properties.getHost()).isEqualTo("0.0.0.0");
 		Assertions.assertThat(properties.getPort()).isZero();
 		Assertions.assertThat(properties.getMaxContentLength()).isEqualTo(65536);
 		Assertions.assertThat(properties.getWebsocketPath()).isEqualTo("/ws");
@@ -56,13 +56,12 @@ class SpringWebSocketServerPropertiesTest {
 		Assertions.assertThat(properties.getKeyCertPrivateKeyPassword()).isEqualTo("laokou");
 		Assertions.assertThat(properties.getKeyCertChainPath()).isEqualTo("classpath:certificate.crt");
 		Assertions.assertThat(properties.getKeyCertPrivateKeyPath()).isEqualTo("classpath:private.key");
-		Assertions.assertThat(properties.isUseIoUring()).isTrue();
 	}
 
 	@Test
 	void test_setter_getter() {
 		// When
-		properties.setBindIp("192.168.1.0");
+		properties.setHost("192.168.1.0");
 		properties.setPort(9090);
 		properties.setServiceId("websocket-service");
 		properties.setMaxContentLength(131072);
@@ -81,10 +80,9 @@ class SpringWebSocketServerPropertiesTest {
 		properties.setKeyCertPrivateKeyPassword("newpassword");
 		properties.setKeyCertChainPath("classpath:new-certificate.crt");
 		properties.setKeyCertPrivateKeyPath("classpath:new-private.key");
-		properties.setUseIoUring(false);
 
 		// Then
-		Assertions.assertThat(properties.getBindIp()).isEqualTo("192.168.1.0");
+		Assertions.assertThat(properties.getHost()).isEqualTo("192.168.1.0");
 		Assertions.assertThat(properties.getPort()).isEqualTo(9090);
 		Assertions.assertThat(properties.getServiceId()).isEqualTo("websocket-service");
 		Assertions.assertThat(properties.getMaxContentLength()).isEqualTo(131072);
@@ -103,7 +101,6 @@ class SpringWebSocketServerPropertiesTest {
 		Assertions.assertThat(properties.getKeyCertPrivateKeyPassword()).isEqualTo("newpassword");
 		Assertions.assertThat(properties.getKeyCertChainPath()).isEqualTo("classpath:new-certificate.crt");
 		Assertions.assertThat(properties.getKeyCertPrivateKeyPath()).isEqualTo("classpath:new-private.key");
-		Assertions.assertThat(properties.isUseIoUring()).isFalse();
 	}
 
 }
