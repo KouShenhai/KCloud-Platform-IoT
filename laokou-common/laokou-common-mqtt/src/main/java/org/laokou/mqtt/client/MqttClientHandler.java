@@ -9,12 +9,14 @@ import io.netty.handler.codec.mqtt.MqttFixedHeader;
 import io.netty.handler.codec.mqtt.MqttMessage;
 import io.netty.handler.codec.mqtt.MqttMessageIdVariableHeader;
 import io.netty.handler.codec.mqtt.MqttMessageType;
+import io.netty.handler.codec.mqtt.MqttPubAckMessage;
 import io.netty.handler.codec.mqtt.MqttPublishMessage;
 import io.netty.handler.codec.mqtt.MqttQoS;
 import io.netty.handler.codec.mqtt.MqttSubAckMessage;
 import io.netty.handler.codec.mqtt.MqttSubscribeMessage;
 import io.netty.handler.codec.mqtt.MqttSubscribePayload;
 import io.netty.handler.codec.mqtt.MqttTopicSubscription;
+import io.netty.util.Timeout;
 import lombok.RequiredArgsConstructor;
 
 import java.nio.charset.StandardCharsets;
@@ -102,25 +104,55 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 			case PINGRESP -> System.out.println("接收 PINGRESP");
 			case SUBACK -> onSubAck((MqttSubAckMessage) msg);
 			case PUBLISH -> handlePublish(ctx, (MqttPublishMessage) msg);
+			case PUBACK -> onPubAck((MqttPubAckMessage) msg);
 			default -> throw new IllegalStateException("Unexpected MQTT message type: " + type);
+		}
+	}
+
+	private void onPubAck(MqttPubAckMessage msg) {
+		OutboundMessage message = client.inflightMap.remove(msg.variableHeader().messageId());
+		if (message != null) {
+			cancelTimeout(message);
+		}
+	}
+
+	private void cancelTimeout(OutboundMessage msg) {
+		Timeout task = msg.getTimeoutTask();
+		if (task != null) {
+			task.cancel();
 		}
 	}
 
 	private void handlePublish(ChannelHandlerContext ctx, MqttPublishMessage msg) {
 		int packetId = msg.variableHeader().packetId();
 		MqttQoS qos = msg.fixedHeader().qosLevel();
-
 		switch (qos) {
 			case AT_MOST_ONCE -> {
 				onInboundMessage(msg);
 			}
 			case AT_LEAST_ONCE -> {
-
+				// QoS1：先应答 PUBACK，再投递（投递失败由上层重试策略负责）
+				sendAck(ctx, MqttMessageType.PUBACK, MqttQoS.AT_MOST_ONCE, packetId);
 			}
 			case EXACTLY_ONCE -> {
-
+				// QoS2：首次收到才投递；重复 PUBLISH 只重答 PUBREC
+				sendAck(ctx, MqttMessageType.PUBREC, MqttQoS.AT_MOST_ONCE, packetId);
 			}
 		}
+	}
+
+	private void sendAck(ChannelHandlerContext ctx, MqttMessageType type, MqttQoS qos, int packetId) {
+		MqttFixedHeader header = new MqttFixedHeader(type, false, qos, false, 0);
+		MqttMessage ack = type == MqttMessageType.PUBACK
+			? new MqttPubAckMessage(header, MqttMessageIdVariableHeader.from(packetId))
+			: new MqttMessage(header, MqttMessageIdVariableHeader.from(packetId));
+		ctx.writeAndFlush(ack).addListener(f -> {
+			if (!f.isSuccess()) {
+				System.out.println(f.cause().toString());
+			} else {
+				System.out.println("写入成功");
+			}
+		});
 	}
 
 	void onInboundMessage(MqttPublishMessage msg) {

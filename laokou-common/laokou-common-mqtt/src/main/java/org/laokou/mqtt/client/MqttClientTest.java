@@ -80,8 +80,9 @@ public class MqttClientTest {
 			}
 		});
 		Thread.sleep(5000);
-		// publish("test/123", "1123".getBytes(StandardCharsets.UTF_8), MqttQoS.AT_MOST_ONCE, false);
-		publish("test/456", "3333".getBytes(StandardCharsets.UTF_8), MqttQoS.AT_LEAST_ONCE, false);
+		// publish("test/123", "2222".getBytes(StandardCharsets.UTF_8), MqttQoS.AT_MOST_ONCE, false);
+		// publish("test/456", "3333".getBytes(StandardCharsets.UTF_8), MqttQoS.AT_LEAST_ONCE, false);
+		publish("test/789", "4444".getBytes(StandardCharsets.UTF_8), MqttQoS.EXACTLY_ONCE, false);
 		Thread.sleep(5000);
 	}
 

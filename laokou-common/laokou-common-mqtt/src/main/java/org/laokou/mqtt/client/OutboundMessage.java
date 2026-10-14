@@ -1,6 +1,7 @@
 package org.laokou.mqtt.client;
 
 import io.netty.handler.codec.mqtt.MqttQoS;
+import io.netty.util.Timeout;
 import lombok.Data;
 
 @Data
@@ -12,6 +13,7 @@ public final class OutboundMessage {
 	private final MqttQoS qos;
 	private final boolean retained;
 	private volatile boolean isDup;
+	private volatile Timeout timeoutTask;
 
 	public OutboundMessage(int packetId, String topic, byte[] payload, MqttQoS qos, boolean retained) {
 		this.packetId = packetId;
