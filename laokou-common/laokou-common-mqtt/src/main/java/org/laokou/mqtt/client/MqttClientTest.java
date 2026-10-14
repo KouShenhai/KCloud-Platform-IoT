@@ -27,11 +27,17 @@ import io.netty.handler.timeout.IdleStateHandler;
 import org.laokou.common.core.util.ThreadUtils;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 public class MqttClientTest {
 
 	volatile Channel channel;
+
+	final PacketIdGenerator packetIdGenerator = new PacketIdGenerator();
+
+	final Map<Integer, OutboundMessage> inflightMap = new ConcurrentHashMap<>();
 
 	static void main() throws InterruptedException {
 		new MqttClientTest().run();
@@ -74,7 +80,8 @@ public class MqttClientTest {
 			}
 		});
 		Thread.sleep(5000);
-		publish("test/123", "1123".getBytes(StandardCharsets.UTF_8), MqttQoS.AT_MOST_ONCE, false);
+		// publish("test/123", "1123".getBytes(StandardCharsets.UTF_8), MqttQoS.AT_MOST_ONCE, false);
+		publish("test/456", "3333".getBytes(StandardCharsets.UTF_8), MqttQoS.AT_LEAST_ONCE, false);
 		Thread.sleep(5000);
 	}
 
@@ -89,23 +96,36 @@ public class MqttClientTest {
 		return new MqttConnectMessage(fixedHeader, variableHeader, payload);
 	}
 
-	private void publish(String topic, byte[] payload, MqttQoS qos, boolean retained) {
-		if (qos == MqttQoS.AT_MOST_ONCE) {
-			publishQos0(topic, payload, retained);
+	/**
+	 * 发布 MQTT 消息（完整控制版）
+	 *
+	 * @param topic     主题路径，如 "device/001/sensor"，不可含 +# 通配符
+	 * @param payload   消息体，最大 256MB
+	 * @param qos       服务质量 0/1/2，见 {@link MqttQoS}
+	 * @param isRetain  保留标志，true 则新订阅者立即可收到最后一条
+	 *
+	 */
+	private void publish(String topic, byte[] payload, MqttQoS qos, boolean isRetain) {
+		int packetId = 0;
+		if (qos != MqttQoS.AT_MOST_ONCE) {
+			packetId = packetIdGenerator.nextId();
+			inflightMap.putIfAbsent(packetId, new OutboundMessage(packetId, topic, payload, qos, isRetain));
 		}
-		// publishQos12(topic, payload, qos, retained);
+		// isDup 重发标志，QoS>0 时首次 false，重试 true
+		publish(packetId, topic, payload, qos, false, isRetain);
+		// 开启定时任务【ACK超时 => 接收端未 PUBACK，重新发送消息】
 	}
 
-	private void publishQos0(String topic, byte[] payload, boolean retained) {
+	private void publish(int packetId, String topic, byte[] payload, MqttQoS qos, boolean isDup, boolean isRetain) {
 		MqttPublishMessage msg = new MqttPublishMessage(
-				new MqttFixedHeader(MqttMessageType.PUBLISH, false, MqttQoS.AT_MOST_ONCE, retained, 0),
-				new MqttPublishVariableHeader(topic, 0), Unpooled.wrappedBuffer(payload));
+			new MqttFixedHeader(MqttMessageType.PUBLISH, isDup, qos, isRetain, 0),
+			new MqttPublishVariableHeader(topic, packetId), Unpooled.wrappedBuffer(payload));
 		this.channel.writeAndFlush(msg).addListener(f -> {
 			if (f.isSuccess()) {
-				System.out.println("发布Qos = 0 消息成功");
+				System.out.println("发布消息成功");
 			}
 			else {
-				System.out.println("发布Qos = 0 消息失败");
+				System.out.println("发布消息失败");
 			}
 		});
 	}

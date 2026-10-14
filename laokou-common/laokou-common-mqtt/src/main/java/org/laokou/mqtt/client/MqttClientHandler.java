@@ -19,13 +19,79 @@ import lombok.RequiredArgsConstructor;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-
+/**
+ * MQTT QoS 等级对比
+ *
+ * <pre>
+ * ┌────────┬──────────────────┬──────────────────────────────────────────────┐
+ * │  QoS   │      语义         │                   报文交互                     │
+ * ├────────┼──────────────────┼──────────────────────────────────────────────┤
+ * │   0    │ 最多一次 (Fire)   │ PUBLISH  → (无确认)                           │
+ * │   1    │ 至少一次          │ PUBLISH  → PUBACK                             │
+ * │   2    │ 恰好一次          │ PUBLISH → PUBREC → PUBREL → PUBCOMP (四次握手) │
+ * └────────┴──────────────────┴──────────────────────────────────────────────┘
+ * </pre>
+ *
+ * QoS 1 消息流程 - 至少一次投递保证
+ *
+ * <pre>
+ *  Publisher                           Broker                           Subscriber
+ *      |                                 |                                 |
+ *      | --- PUBLISH (msgId=1) --------> |                                 |
+ *      |                                 | --- PUBLISH (msgId=1) --------> |
+ *      |                                 |                                 |
+ *      |                                 | <-------- PUBACK (msgId=1) ---- |
+ *      | <-------- PUBACK (msgId=1) ---- |                                 |
+ *      |                                 |                                 |
+ *
+ *  说明:
+ *  1. Publisher 发送 PUBLISH 报文，携带消息标识符 msgId
+ *  2. Broker 收到后回复 PUBACK 确认，并转发给 Subscriber
+ *  3. Subscriber 收到消息后回复 PUBACK 确认
+ *  4. 若 Publisher 未收到 PUBACK，会重发 PUBLISH (DUP=1)
+ * </pre>
+ *
+ * QoS 2 消息流程 - 恰好一次投递保证（四次握手）
+ *
+ * <pre>
+ *  Publisher                           Broker                           Subscriber
+ *      |                                 |                                 |
+ *      | --- PUBLISH (msgId=2) --------> |                                 |
+ *      |                                 | --- PUBLISH (msgId=2) --------> |
+ *      |                                 |                                 |
+ *      | <-------- PUBREC (msgId=2) ---- |                                 |
+ *      |                                 | <-------- PUBREC (msgId=2) ---- |
+ *      |                                 |                                 |
+ *      | --- PUBREL (msgId=2) ---------> |                                 |
+ *      |                                 | --- PUBREL (msgId=2) ---------> |
+ *      |                                 |                                 |
+ *      | <-------- PUBCOMP (msgId=2) --- |                                 |
+ *      |                                 | <-------- PUBCOMP (msgId=2) --- |
+ *      |                                 |                                 |
+ *
+ *  阶段说明:
+ *  ┌─────────────┬─────────────────────────────────────────────────────────┐
+ *  │    阶段      │                      报文交互                            │
+ *  ├─────────────┼─────────────────────────────────────────────────────────┤
+ *  │ 1. 发布      │ Publisher → PUBLISH  → Broker                          │
+ *  │ 2. 接收确认   │ Publisher ← PUBREC   ← Broker  (Broker已存储, 可释放本地) │
+ *  │ 3. 发布释放   │ Publisher → PUBREL   → Broker  (确认不再重发)            │
+ *  │ 4. 完成      │ Publisher ← PUBCOMP  ← Broker  (消息正式完成投递)         │
+ *  └─────────────┴─────────────────────────────────────────────────────────┘
+ *
+ *  关键机制:
+ *  - PUBREC: 通知发送方"已收到"，发送方停止重传，但消息不删除
+ *  - PUBREL: 发送方承诺不再重发，Broker 可正式投递给 Subscriber
+ *  - PUBCOMP: 双方确认流程结束，释放 msgId 资源
+ *  - 任意阶段丢失报文都会触发重传，保证幂等性
+ * </pre>
+ *
+ * @author laokou
+ */
 @RequiredArgsConstructor
 final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 
 	private final MqttClientTest client;
-
-	private final PacketIdGenerator packetIdGenerator = new PacketIdGenerator();
 
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, MqttMessage msg) {
@@ -76,7 +142,7 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 	private void subscribe(Channel channel) {
 		MqttSubscribeMessage subscribeMsg = new MqttSubscribeMessage(
 				new MqttFixedHeader(MqttMessageType.SUBSCRIBE, false, MqttQoS.AT_LEAST_ONCE, false, 0),
-				MqttMessageIdVariableHeader.from(packetIdGenerator.nextId()),
+				MqttMessageIdVariableHeader.from(client.packetIdGenerator.nextId()),
 				new MqttSubscribePayload(
 						List.of(new MqttTopicSubscription("$share/laokou/test/123", MqttQoS.AT_MOST_ONCE),
 								new MqttTopicSubscription("$share/laokou/test/456", MqttQoS.AT_LEAST_ONCE),
