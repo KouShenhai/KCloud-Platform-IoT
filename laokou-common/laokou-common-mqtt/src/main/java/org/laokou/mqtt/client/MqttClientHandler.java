@@ -16,11 +16,13 @@ import io.netty.handler.codec.mqtt.MqttSubAckMessage;
 import io.netty.handler.codec.mqtt.MqttSubscribeMessage;
 import io.netty.handler.codec.mqtt.MqttSubscribePayload;
 import io.netty.handler.codec.mqtt.MqttTopicSubscription;
+import io.netty.util.ReferenceCountUtil;
 import io.netty.util.Timeout;
 import lombok.RequiredArgsConstructor;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+
 /**
  * MQTT QoS 等级对比
  *
@@ -110,7 +112,7 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 	}
 
 	private void onPubAck(MqttPubAckMessage msg) {
-		OutboundMessage message = client.inflightMap.remove(msg.variableHeader().messageId());
+		OutboundMessage message = client.slots.getAndSet(msg.variableHeader().messageId(), null);
 		if (message != null) {
 			cancelTimeout(message);
 		}
@@ -127,15 +129,15 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 		int packetId = msg.variableHeader().packetId();
 		MqttQoS qos = msg.fixedHeader().qosLevel();
 		switch (qos) {
-			case AT_MOST_ONCE -> {
-				onInboundMessage(msg);
-			}
+			case AT_MOST_ONCE -> onInboundMessage(msg);
 			case AT_LEAST_ONCE -> {
 				// QoS1：先应答 PUBACK，再投递（投递失败由上层重试策略负责）
+				onInboundMessage(msg);
 				sendAck(ctx, MqttMessageType.PUBACK, MqttQoS.AT_MOST_ONCE, packetId);
 			}
 			case EXACTLY_ONCE -> {
 				// QoS2：首次收到才投递；重复 PUBLISH 只重答 PUBREC
+				onInboundMessage(msg);
 				sendAck(ctx, MqttMessageType.PUBREC, MqttQoS.AT_MOST_ONCE, packetId);
 			}
 		}
@@ -144,20 +146,24 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 	private void sendAck(ChannelHandlerContext ctx, MqttMessageType type, MqttQoS qos, int packetId) {
 		MqttFixedHeader header = new MqttFixedHeader(type, false, qos, false, 0);
 		MqttMessage ack = type == MqttMessageType.PUBACK
-			? new MqttPubAckMessage(header, MqttMessageIdVariableHeader.from(packetId))
-			: new MqttMessage(header, MqttMessageIdVariableHeader.from(packetId));
+				? new MqttPubAckMessage(header, MqttMessageIdVariableHeader.from(packetId))
+				: new MqttMessage(header, MqttMessageIdVariableHeader.from(packetId));
 		ctx.writeAndFlush(ack).addListener(f -> {
 			if (!f.isSuccess()) {
 				System.out.println(f.cause().toString());
-			} else {
+			}
+			else {
 				System.out.println("写入成功");
 			}
 		});
 	}
 
-	void onInboundMessage(MqttPublishMessage msg) {
+	private void onInboundMessage(MqttPublishMessage msg) {
+		// 把这条消息的所有权分一份给别的线程，防止它被别人提前释放掉
+		ReferenceCountUtil.retain(msg);
 		byte[] payload = ByteBufUtil.getBytes(msg.payload());
 		System.out.println(new String(payload, StandardCharsets.UTF_8));
+		ReferenceCountUtil.release(msg);
 	}
 
 	private void onConnAck(Channel ch, MqttConnAckMessage msg) {
