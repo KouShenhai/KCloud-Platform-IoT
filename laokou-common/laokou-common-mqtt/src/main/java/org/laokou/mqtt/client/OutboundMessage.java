@@ -15,7 +15,6 @@ public final class OutboundMessage {
 		WAIT_PUBREC,
 		/** QoS2：已发 PUBREL，等待 PUBCOMP */
 		WAIT_PUBCOMP
-
 	}
 
 	private final int packetId;

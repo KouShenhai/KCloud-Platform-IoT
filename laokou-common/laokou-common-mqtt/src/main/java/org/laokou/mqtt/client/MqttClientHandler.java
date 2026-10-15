@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicIntegerArray;
 
 /**
  * MQTT QoS 等级对比
@@ -97,17 +98,60 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 
 	private final MqttClientTest client;
 
+	private final AtomicIntegerArray inboundQos2Pending = new AtomicIntegerArray(0xFFFF);
+
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, MqttMessage msg) {
 		MqttMessageType type = msg.fixedHeader().messageType();
 		System.out.println(type);
 		switch (type) {
 			case CONNACK -> onConnAck(ctx.channel(), (MqttConnAckMessage) msg);
-			case PINGRESP -> System.out.println("接收 PINGRESP");
 			case SUBACK -> onSubAck((MqttSubAckMessage) msg);
-			case PUBLISH -> handlePublish(ctx, (MqttPublishMessage) msg);
+			case PUBLISH -> onPublish(ctx, (MqttPublishMessage) msg);
 			case PUBACK -> onPubAck((MqttPubAckMessage) msg);
+			case PUBREC -> onPubRec(ctx, msg);
+			case PUBCOMP -> onPubComp(msg);
+			case PUBREL -> onPubRel(ctx, msg);
+			case PINGRESP -> System.out.println("接收 PINGRESP");
 			default -> throw new IllegalStateException("Unexpected MQTT message type: " + type);
+		}
+	}
+
+	private void onPubComp(MqttMessage msg) {
+		int packetId = ((MqttMessageIdVariableHeader) msg.variableHeader()).messageId();
+		OutboundMessage message = client.slots.getAndSet(packetId, null);
+		if (message != null) {
+			cancelTimeout(message);
+		}
+	}
+
+	/**
+	 * 收到 PUBREC：QoS2 出站第二步，回复 PUBREL.
+	 * @param ctx 上下文
+	 * @param msg 消息
+	 */
+	private void onPubRec(ChannelHandlerContext ctx, MqttMessage msg) {
+		int packetId = ((MqttMessageIdVariableHeader) msg.variableHeader()).messageId();
+		// PUBREL 固定头 QoS 必须为 1
+		sendAck(ctx, MqttMessageType.PUBREL, MqttQoS.AT_LEAST_ONCE, packetId);
+		onPubRec(packetId);
+	}
+
+	/**
+	 * 收到 PUBREL：QoS2 入站最后一步，回复 PUBCOMP 并允许该 packetId 复用.
+	 * @param ctx 上下文
+	 * @param msg 消息
+	 */
+	private void onPubRel(ChannelHandlerContext ctx, MqttMessage msg) {
+		int packetId = ((MqttMessageIdVariableHeader) msg.variableHeader()).messageId();
+		sendAck(ctx, MqttMessageType.PUBCOMP, MqttQoS.AT_MOST_ONCE, packetId);
+		inboundQos2Pending.getAndSet(packetId, 0);
+	}
+
+	private void onPubRec(int packetId) {
+		OutboundMessage msg = client.slots.get(packetId);
+		if (msg != null && msg.getState() == OutboundMessage.State.WAIT_PUBREC) {
+			msg.setState(OutboundMessage.State.WAIT_PUBCOMP);
 		}
 	}
 
@@ -125,7 +169,7 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 		}
 	}
 
-	private void handlePublish(ChannelHandlerContext ctx, MqttPublishMessage msg) {
+	private void onPublish(ChannelHandlerContext ctx, MqttPublishMessage msg) {
 		int packetId = msg.variableHeader().packetId();
 		MqttQoS qos = msg.fixedHeader().qosLevel();
 		switch (qos) {
@@ -137,7 +181,9 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 			}
 			case EXACTLY_ONCE -> {
 				// QoS2：首次收到才投递；重复 PUBLISH 只重答 PUBREC
-				onInboundMessage(msg);
+				if (inboundQos2Pending.compareAndSet(packetId, 0 , 1)) {
+					onInboundMessage(msg);
+				}
 				sendAck(ctx, MqttMessageType.PUBREC, MqttQoS.AT_MOST_ONCE, packetId);
 			}
 		}
@@ -204,6 +250,11 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 		else {
 			System.out.println("订阅主题成功");
 		}
+	}
+
+	@Override
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+		ctx.close();
 	}
 
 }

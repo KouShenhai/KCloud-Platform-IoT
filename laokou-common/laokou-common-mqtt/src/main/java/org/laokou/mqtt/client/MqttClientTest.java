@@ -17,6 +17,8 @@ import io.netty.handler.codec.mqtt.MqttConnectVariableHeader;
 import io.netty.handler.codec.mqtt.MqttDecoder;
 import io.netty.handler.codec.mqtt.MqttEncoder;
 import io.netty.handler.codec.mqtt.MqttFixedHeader;
+import io.netty.handler.codec.mqtt.MqttMessage;
+import io.netty.handler.codec.mqtt.MqttMessageIdVariableHeader;
 import io.netty.handler.codec.mqtt.MqttMessageType;
 import io.netty.handler.codec.mqtt.MqttProperties;
 import io.netty.handler.codec.mqtt.MqttPublishMessage;
@@ -95,8 +97,11 @@ public class MqttClientTest {
 		publish("test/456", "aaaa".getBytes(StandardCharsets.UTF_8), MqttQoS.AT_LEAST_ONCE);
 		publish("test/456", "bbbb".getBytes(StandardCharsets.UTF_8), MqttQoS.AT_LEAST_ONCE);
 		publish("test/456", "xxxx".getBytes(StandardCharsets.UTF_8), MqttQoS.AT_LEAST_ONCE);
-		// publish("test/789", "4444".getBytes(StandardCharsets.UTF_8),
-		// MqttQoS.EXACTLY_ONCE);
+		publish("test/789", "zzzz".getBytes(StandardCharsets.UTF_8), MqttQoS.EXACTLY_ONCE);
+		publish("test/789", "1111".getBytes(StandardCharsets.UTF_8), MqttQoS.EXACTLY_ONCE);
+		publish("test/789", "pppp".getBytes(StandardCharsets.UTF_8), MqttQoS.EXACTLY_ONCE);
+		publish("test/789", "wwww".getBytes(StandardCharsets.UTF_8), MqttQoS.EXACTLY_ONCE);
+		publish("test/789", "qqqq".getBytes(StandardCharsets.UTF_8), MqttQoS.EXACTLY_ONCE);
 		Thread.sleep(15000);
 	}
 
@@ -139,7 +144,7 @@ public class MqttClientTest {
 	}
 
 	private void scheduleAckTimeout(OutboundMessage msg) {
-		msg.setTimeoutTask(timer.newTimeout(_ -> onAckTimeout(msg), 5000, TimeUnit.MILLISECONDS));
+		msg.setTimeoutTask(timer.newTimeout(_ -> onAckTimeout(msg), 3000, TimeUnit.MILLISECONDS));
 	}
 
 	private void onAckTimeout(OutboundMessage msg) {
@@ -156,7 +161,7 @@ public class MqttClientTest {
 
 	private void retransmit(OutboundMessage msg) {
 		if (msg.getState() == OutboundMessage.State.WAIT_PUBCOMP) {
-			// writePubRel(msg.packetId());
+			writePubRel(msg.getPacketId());
 		}
 		else {
 			writePublish(msg.getTopic(), msg.getPayload(), msg.getQos(), msg.getPacketId());
@@ -177,6 +182,22 @@ public class MqttClientTest {
 			}
 			else {
 				System.out.println("发布消息失败");
+			}
+		});
+	}
+
+	private void writePubRel(int packetId) {
+		if (this.channel == null || !this.channel.isActive()) {
+			return;
+		}
+		this.channel.writeAndFlush(new MqttMessage(
+			new MqttFixedHeader(MqttMessageType.PUBREL, false, MqttQoS.AT_LEAST_ONCE, false, 0),
+			MqttMessageIdVariableHeader.from(packetId))).addListener(f -> {
+			if (f.isSuccess()) {
+				System.out.println("发布 PubRel 消息成功");
+			}
+			else {
+				System.out.println("发布 PubRel 消息失败");
 			}
 		});
 	}
