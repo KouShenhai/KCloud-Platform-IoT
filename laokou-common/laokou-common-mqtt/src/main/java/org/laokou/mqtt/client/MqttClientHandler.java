@@ -171,8 +171,7 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 
 	private void onPublish(ChannelHandlerContext ctx, MqttPublishMessage msg) {
 		int packetId = msg.variableHeader().packetId();
-		MqttQoS qos = msg.fixedHeader().qosLevel();
-		switch (qos) {
+		switch (msg.fixedHeader().qosLevel()) {
 			case AT_MOST_ONCE -> onInboundMessage(msg);
 			case AT_LEAST_ONCE -> {
 				// QoS1：先应答 PUBACK，再投递（投递失败由上层重试策略负责）
