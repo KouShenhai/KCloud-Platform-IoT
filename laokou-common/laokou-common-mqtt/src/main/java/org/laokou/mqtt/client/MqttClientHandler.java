@@ -212,13 +212,14 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 	}
 
 	private void onConnAck(Channel ch, MqttConnAckMessage msg) {
-		boolean sessionPresent = msg.variableHeader().isSessionPresent();
 		int returnCode = msg.variableHeader().connectReturnCode().byteValue();
-		System.out.println(sessionPresent + " , " + returnCode);
 		if (returnCode == 0) {
 			client.channel = ch;
 			System.out.println("MQTT 已连接");
+			client.reconnectAttempts.set(0);
+			client.state.set(ClientState.CONNECTED);
 			subscribe(ch);
+			client.retransmitInflight();
 		}
 	}
 
@@ -254,6 +255,20 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
 		ctx.close();
+	}
+
+
+	@Override
+	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+		onChannelInactive();
+		super.channelInactive(ctx);
+	}
+
+	public void onChannelInactive() {
+		if (client.state.get() == ClientState.CLOSED) {
+			return;
+		}
+		client.handleDisconnect();
 	}
 
 }

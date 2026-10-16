@@ -27,11 +27,14 @@ import io.netty.handler.codec.mqtt.MqttQoS;
 import io.netty.handler.codec.mqtt.MqttVersion;
 import io.netty.handler.timeout.IdleStateHandler;
 import io.netty.util.HashedWheelTimer;
+import io.netty.util.Timeout;
 import org.laokou.common.core.util.ThreadUtils;
 import org.laokou.common.core.util.VirtualThreadFactory;
 
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.atomic.AtomicReferenceArray;
 
 public class MqttClientTest {
@@ -44,13 +47,58 @@ public class MqttClientTest {
 
 	final HashedWheelTimer timer = new HashedWheelTimer(VirtualThreadFactory.INSTANCE, 100, TimeUnit.MILLISECONDS);
 
+	volatile Timeout reconnectTask;
+
+	final AtomicReference<ClientState> state = new AtomicReference<>(ClientState.DISCONNECTED);
+
+	final AtomicInteger reconnectAttempts = new AtomicInteger(0);
+
 	static void main() throws InterruptedException {
-		new MqttClientTest().run();
+		MqttClientTest mqttClientTest = new MqttClientTest();
+		Thread.startVirtualThread(() -> {
+			try {
+				mqttClientTest.connect();
+			} catch (InterruptedException e) {
+				throw new RuntimeException(e);
+			}
+		});
+		Thread.sleep(60000);
+		mqttClientTest.publish("test/123", "2222".getBytes(StandardCharsets.UTF_8), MqttQoS.AT_MOST_ONCE);
+		mqttClientTest.publish("test/456", "3333".getBytes(StandardCharsets.UTF_8), MqttQoS.AT_LEAST_ONCE);
+		mqttClientTest.publish("test/456", "4444".getBytes(StandardCharsets.UTF_8), MqttQoS.AT_LEAST_ONCE);
+		mqttClientTest.publish("test/456", "5555".getBytes(StandardCharsets.UTF_8), MqttQoS.AT_LEAST_ONCE);
+		mqttClientTest.publish("test/456", "6666".getBytes(StandardCharsets.UTF_8), MqttQoS.AT_LEAST_ONCE);
+		mqttClientTest.publish("test/456", "7777".getBytes(StandardCharsets.UTF_8), MqttQoS.AT_LEAST_ONCE);
+		mqttClientTest.publish("test/456", "8888".getBytes(StandardCharsets.UTF_8), MqttQoS.AT_LEAST_ONCE);
+		mqttClientTest.publish("test/456", "9999".getBytes(StandardCharsets.UTF_8), MqttQoS.AT_LEAST_ONCE);
+		mqttClientTest.publish("test/456", "0000".getBytes(StandardCharsets.UTF_8), MqttQoS.AT_LEAST_ONCE);
+		mqttClientTest.publish("test/456", "aaaa".getBytes(StandardCharsets.UTF_8), MqttQoS.AT_LEAST_ONCE);
+		mqttClientTest.publish("test/456", "bbbb".getBytes(StandardCharsets.UTF_8), MqttQoS.AT_LEAST_ONCE);
+		mqttClientTest.publish("test/456", "xxxx".getBytes(StandardCharsets.UTF_8), MqttQoS.AT_LEAST_ONCE);
+		mqttClientTest.publish("test/789", "zzzz".getBytes(StandardCharsets.UTF_8), MqttQoS.EXACTLY_ONCE);
+		mqttClientTest.publish("test/789", "1111".getBytes(StandardCharsets.UTF_8), MqttQoS.EXACTLY_ONCE);
+		mqttClientTest.publish("test/789", "pppp".getBytes(StandardCharsets.UTF_8), MqttQoS.EXACTLY_ONCE);
+		mqttClientTest.publish("test/789", "wwww".getBytes(StandardCharsets.UTF_8), MqttQoS.EXACTLY_ONCE);
+		mqttClientTest.publish("test/789", "qqqq".getBytes(StandardCharsets.UTF_8), MqttQoS.EXACTLY_ONCE);
+		Thread.sleep(10000);
 	}
 
-	private void run() throws InterruptedException {
+	private void connect() throws InterruptedException {
+		// 允许显式重连：主动 disconnect() 后（CLOSED）再次调用 connect() 视为手动重启
+		state.compareAndSet(ClientState.CLOSED, ClientState.DISCONNECTED);
+		ClientState s = state.get();
+		if (s == ClientState.CONNECTED || s == ClientState.CONNECTING) {
+			return;
+		}
+		if (state.compareAndSet(s, ClientState.CONNECTING)) {
+			doConnect();
+		}
+	}
+
+	private void doConnect() throws InterruptedException {
+		cancelReconnectTask();
 		EventLoopGroup workerGroup = new MultiThreadIoEventLoopGroup(16, ThreadUtils.newVirtualTaskExecutor(),
-				NioIoHandler.newFactory());
+			NioIoHandler.newFactory());
 		Bootstrap bootstrap = new Bootstrap().group(workerGroup)
 			.channel(NioSocketChannel.class)
 			.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 15000)
@@ -70,6 +118,7 @@ public class MqttClientTest {
 		bootstrap.connect("127.0.0.1", 41883).addListener(f -> {
 			if (!f.isSuccess()) {
 				System.out.println("TCP 连接失败，" + f.cause().getMessage());
+				handleDisconnect();
 				return;
 			}
 			if (f instanceof ChannelFuture future) {
@@ -77,6 +126,7 @@ public class MqttClientTest {
 				ch.writeAndFlush(buildConnectMessage()).addListener(w -> {
 					if (!w.isSuccess()) {
 						ch.close();
+						handleDisconnect();
 					}
 					else {
 						System.out.println("启动成功");
@@ -84,25 +134,54 @@ public class MqttClientTest {
 				});
 			}
 		});
-		Thread.sleep(5000);
-		publish("test/123", "2222".getBytes(StandardCharsets.UTF_8), MqttQoS.AT_MOST_ONCE);
-		publish("test/456", "3333".getBytes(StandardCharsets.UTF_8), MqttQoS.AT_LEAST_ONCE);
-		publish("test/456", "4444".getBytes(StandardCharsets.UTF_8), MqttQoS.AT_LEAST_ONCE);
-		publish("test/456", "5555".getBytes(StandardCharsets.UTF_8), MqttQoS.AT_LEAST_ONCE);
-		publish("test/456", "6666".getBytes(StandardCharsets.UTF_8), MqttQoS.AT_LEAST_ONCE);
-		publish("test/456", "7777".getBytes(StandardCharsets.UTF_8), MqttQoS.AT_LEAST_ONCE);
-		publish("test/456", "8888".getBytes(StandardCharsets.UTF_8), MqttQoS.AT_LEAST_ONCE);
-		publish("test/456", "9999".getBytes(StandardCharsets.UTF_8), MqttQoS.AT_LEAST_ONCE);
-		publish("test/456", "0000".getBytes(StandardCharsets.UTF_8), MqttQoS.AT_LEAST_ONCE);
-		publish("test/456", "aaaa".getBytes(StandardCharsets.UTF_8), MqttQoS.AT_LEAST_ONCE);
-		publish("test/456", "bbbb".getBytes(StandardCharsets.UTF_8), MqttQoS.AT_LEAST_ONCE);
-		publish("test/456", "xxxx".getBytes(StandardCharsets.UTF_8), MqttQoS.AT_LEAST_ONCE);
-		publish("test/789", "zzzz".getBytes(StandardCharsets.UTF_8), MqttQoS.EXACTLY_ONCE);
-		publish("test/789", "1111".getBytes(StandardCharsets.UTF_8), MqttQoS.EXACTLY_ONCE);
-		publish("test/789", "pppp".getBytes(StandardCharsets.UTF_8), MqttQoS.EXACTLY_ONCE);
-		publish("test/789", "wwww".getBytes(StandardCharsets.UTF_8), MqttQoS.EXACTLY_ONCE);
-		publish("test/789", "qqqq".getBytes(StandardCharsets.UTF_8), MqttQoS.EXACTLY_ONCE);
-		Thread.sleep(15000);
+	}
+
+	void handleDisconnect() {
+		if (state.get() == ClientState.CLOSED) {
+			return;
+		}
+		ClientState prev = state.getAndSet(ClientState.RECONNECTING);
+		if (prev == ClientState.RECONNECTING) {
+			return;
+		}
+		if (prev == ClientState.DISCONNECTED) {
+			// 已放弃重连（次数耗尽）后的迟到的 channelInactive，不再重新进入重连
+			state.set(ClientState.DISCONNECTED);
+			return;
+		}
+		scheduleReconnect();
+	}
+
+	private void scheduleReconnect() {
+		int attempt = reconnectAttempts.incrementAndGet();
+		int delayMs = Math.min(5000 * attempt, 60000);
+		this.reconnectTask = timer.newTimeout(_ -> {
+            if (state.get() == ClientState.RECONNECTING && state.compareAndSet(ClientState.RECONNECTING, ClientState.CONNECTING)) {
+				System.out.println(1111111111);
+				doConnect();
+            }
+        }, 1000, TimeUnit.MILLISECONDS);
+	}
+
+	void retransmitInflight() {
+		for (int i = 0; i < 0xFFFF; i++) {
+			OutboundMessage msg = slots.get(i);
+			if (msg != null) {
+				retransmit(msg);
+				Timeout old = msg.getTimeoutTask();
+				if (old != null) {
+					old.cancel();
+				}
+				scheduleAckTimeout(msg);
+			}
+		}
+	}
+
+	private void cancelReconnectTask() {
+		if (this.reconnectTask != null) {
+			this.reconnectTask.cancel();
+			reconnectTask = null;
+		}
 	}
 
 	private MqttConnectMessage buildConnectMessage() {
@@ -152,8 +231,12 @@ public class MqttClientTest {
 		if (current != msg) {
 			return;
 		}
+		if (msg.getRetries().get() >= 3) {
+			return;
+		}
 		// isDup = true，重试
 		msg.setDup(true);
+		msg.getRetries().incrementAndGet();
 		// 重新发布消息
 		retransmit(msg);
 		onAckTimeout(msg);
@@ -169,7 +252,7 @@ public class MqttClientTest {
 	}
 
 	private void writePublish(String topic, byte[] payload, MqttQoS qos, int packetId) {
-		if (this.channel == null || !this.channel.isActive()) {
+		if (state.get() != ClientState.CONNECTED || this.channel == null || !this.channel.isActive()) {
 			return;
 		}
 		// isDup 重发标志，QoS>0 时首次 false，重试 true
@@ -187,7 +270,7 @@ public class MqttClientTest {
 	}
 
 	private void writePubRel(int packetId) {
-		if (this.channel == null || !this.channel.isActive()) {
+		if (state.get() != ClientState.CONNECTED || this.channel == null || !this.channel.isActive()) {
 			return;
 		}
 		this.channel.writeAndFlush(new MqttMessage(

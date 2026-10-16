@@ -4,6 +4,8 @@ import io.netty.handler.codec.mqtt.MqttQoS;
 import io.netty.util.Timeout;
 import lombok.Data;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 @Data
 public final class OutboundMessage {
 
@@ -30,6 +32,8 @@ public final class OutboundMessage {
 	private volatile boolean isDup;
 
 	private volatile Timeout timeoutTask;
+
+	private volatile AtomicInteger retries;
 
 	private volatile State state;
 
