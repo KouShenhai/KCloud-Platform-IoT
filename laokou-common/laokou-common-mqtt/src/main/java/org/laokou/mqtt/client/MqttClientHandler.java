@@ -5,6 +5,7 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.mqtt.MqttConnAckMessage;
+import io.netty.handler.codec.mqtt.MqttConnectReturnCode;
 import io.netty.handler.codec.mqtt.MqttFixedHeader;
 import io.netty.handler.codec.mqtt.MqttMessage;
 import io.netty.handler.codec.mqtt.MqttMessageIdVariableHeader;
@@ -212,8 +213,10 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 	}
 
 	private void onConnAck(Channel ch, MqttConnAckMessage msg) {
-		int returnCode = msg.variableHeader().connectReturnCode().byteValue();
-		if (returnCode == 0) {
+		MqttConnectReturnCode code = msg.variableHeader().connectReturnCode();
+		System.out.println(code);
+		System.out.println(code == MqttConnectReturnCode.CONNECTION_REFUSED_BAD_USERNAME_OR_PASSWORD);
+		if (code == MqttConnectReturnCode.CONNECTION_ACCEPTED) {
 			client.channel = ch;
 			System.out.println("MQTT 已连接");
 			client.reconnectAttempts.set(0);
