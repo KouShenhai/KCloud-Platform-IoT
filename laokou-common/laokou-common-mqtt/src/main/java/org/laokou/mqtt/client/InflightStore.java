@@ -22,4 +22,10 @@ package org.laokou.mqtt.client;
  */
 interface InflightStore {
 
+	boolean putIfAbsent(OutboundMessage msg);
+
+	OutboundMessage get(int packetId);
+
+	OutboundMessage remove(int packetId);
+
 }

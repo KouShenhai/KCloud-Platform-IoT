@@ -4,20 +4,8 @@ import io.netty.handler.codec.mqtt.MqttQoS;
 import io.netty.util.Timeout;
 import lombok.Data;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 @Data
-public final class OutboundMessage {
-
-	public enum State {
-
-		/** QoS1：等待 PUBACK */
-		WAIT_PUBACK,
-		/** QoS2：已发 PUBLISH，等待 PUBREC */
-		WAIT_PUBREC,
-		/** QoS2：已发 PUBREL，等待 PUBCOMP */
-		WAIT_PUBCOMP
-	}
+final class OutboundMessage {
 
 	private final int packetId;
 
@@ -29,11 +17,7 @@ public final class OutboundMessage {
 
 	private final boolean isRetain;
 
-	private volatile boolean isDup;
-
 	private volatile Timeout timeoutTask;
-
-	private volatile AtomicInteger retries;
 
 	private volatile State state;
 

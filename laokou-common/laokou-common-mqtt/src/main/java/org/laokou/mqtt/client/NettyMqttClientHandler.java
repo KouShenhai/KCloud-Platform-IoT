@@ -1,19 +1,28 @@
 package org.laokou.mqtt.client;
 
+import io.netty.buffer.ByteBufUtil;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.mqtt.MqttConnAckMessage;
 import io.netty.handler.codec.mqtt.MqttConnectReturnCode;
+import io.netty.handler.codec.mqtt.MqttFixedHeader;
 import io.netty.handler.codec.mqtt.MqttMessage;
+import io.netty.handler.codec.mqtt.MqttMessageIdVariableHeader;
 import io.netty.handler.codec.mqtt.MqttMessageType;
 import io.netty.handler.codec.mqtt.MqttPubAckMessage;
 import io.netty.handler.codec.mqtt.MqttPublishMessage;
+import io.netty.handler.codec.mqtt.MqttQoS;
+import io.netty.handler.codec.mqtt.MqttReasonCodes;
 import io.netty.handler.codec.mqtt.MqttSubAckMessage;
-import lombok.RequiredArgsConstructor;
+import io.netty.handler.codec.mqtt.MqttSubscribeMessage;
+import io.netty.handler.codec.mqtt.MqttSubscribePayload;
+import io.netty.handler.codec.mqtt.MqttTopicSubscription;
+import io.netty.util.ReferenceCountUtil;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.concurrent.atomic.AtomicIntegerArray;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 /**
  * MQTT QoS 等级对比
@@ -89,11 +98,11 @@ final class NettyMqttClientHandler extends SimpleChannelInboundHandler<MqttMessa
 
 	private final NettyMqttClient client;
 
-	private final AtomicIntegerArray inboundQos2Pending;
+	private final InboundQos2[] inboundQos2Pending;
 
 	NettyMqttClientHandler(NettyMqttClient client) {
 		this.client = client;
-		this.inboundQos2Pending = new AtomicIntegerArray(0xFFFF);
+		this.inboundQos2Pending = new InboundQos2[0XFFFF];
 	}
 
 	@Override
@@ -126,20 +135,31 @@ final class NettyMqttClientHandler extends SimpleChannelInboundHandler<MqttMessa
 		if (returnCode == MqttConnectReturnCode.CONNECTION_ACCEPTED) {
 			log.info("【Netty-MQTT-Client】 => 连接 MQTT Broker 成功");
 			subscribe(ch);
-			client.channel = ch;
-			client.reconnectAttempts.set(0);
-			client.state.set(ClientState.CONNECTED);
-			client.retransmitInflight();
+			client.setChannel(ch);
+			client.getReconnectAttempts().set(0);
+			client.getState().set(ClientState.CONNECTED);
 		} else {
 			log.error("【Netty-MQTT-Client】 => 连接 MQTT Broker 失败，错误信息：{}", returnCode);
+			ch.close();
 		}
 	}
 
-	private void onPubComp(MqttMessage msg) {
-		int packetId = ((MqttMessageIdVariableHeader) msg.variableHeader()).messageId();
-		OutboundMessage message = client.slots.getAndSet(packetId, null);
-		if (message != null) {
-			cancelTimeout(message);
+	private void onSubAck(MqttSubAckMessage msg) {
+		int packetId = msg.variableHeader().messageId();
+		int granted = msg.payload().grantedQoSLevels().isEmpty() ? MqttReasonCodes.SubAck.UNSPECIFIED_ERROR.byteValue() : msg.payload().grantedQoSLevels().getFirst();
+		if (granted == MqttReasonCodes.SubAck.UNSPECIFIED_ERROR.byteValue()) {
+			log.info("【Netty-MQTT-Client】 => 订阅 MQTT Broker 主题失败, packetId：{}" , packetId);
+		}
+		else {
+			log.info("【Netty-MQTT-Client】 => 订阅 MQTT Broker 主题成功, packetId：{}" , packetId);
+		}
+	}
+
+	private void onPubAck(MqttPubAckMessage msg) {
+		int packetId = msg.variableHeader().messageId();
+		OutboundMessage message = client.getInflightStore().remove(packetId);
+		if (message != null && message.getState() == State.WAIT_PUBACK) {
+			client.cancelAckTimeout(message);
 		}
 	}
 
@@ -150,9 +170,35 @@ final class NettyMqttClientHandler extends SimpleChannelInboundHandler<MqttMessa
 	 */
 	private void onPubRec(ChannelHandlerContext ctx, MqttMessage msg) {
 		int packetId = ((MqttMessageIdVariableHeader) msg.variableHeader()).messageId();
-		// PUBREL 固定头 QoS 必须为 1
-		sendAck(ctx, MqttMessageType.PUBREL, MqttQoS.AT_LEAST_ONCE, packetId);
-		onPubRec(packetId);
+		onPubRec(packetId, ctx);
+	}
+
+	private void onPubRec(int packetId, ChannelHandlerContext ctx) {
+		OutboundMessage msg = client.getInflightStore().get(packetId);
+		if (msg == null || msg.getQos() != MqttQoS.EXACTLY_ONCE) {
+			return;
+		}
+		// 首次接收 PUBREC
+		if (msg.getState() == State.WAIT_PUBREC) {
+			client.cancelAckTimeout(msg);
+			msg.setState(State.WAIT_PUBCOMP);
+			// 首次接收 PUBREC，发送 PUBREL
+			sendPubRel(ctx.channel(), msg.getPacketId(), false);
+			// 发送端开启发送 MqttMessageType.PUBREL 消息的定时任务，防止Broker因网络问题未接收到
+			client.scheduleAckTimeout(msg);
+		} else if (msg.getState() == State.WAIT_PUBCOMP) {
+			// 重复接收到 PUBREC，重发 PUBREL
+			sendPubRel(ctx.channel(), msg.getPacketId(), true);
+		}
+	}
+
+	private void sendPubRel(Channel channel, int packetId, boolean isDup) {
+		MqttMessage pubRel = new MqttMessage(
+			new MqttFixedHeader(MqttMessageType.PUBREL, isDup, MqttQoS.AT_LEAST_ONCE, false, 0),
+			MqttMessageIdVariableHeader.from(packetId));
+		if (channel != null && channel.isActive()) {
+			client.writeAndFlush(channel, pubRel, _ -> channel.close());
+		}
 	}
 
 	/**
@@ -162,100 +208,73 @@ final class NettyMqttClientHandler extends SimpleChannelInboundHandler<MqttMessa
 	 */
 	private void onPubRel(ChannelHandlerContext ctx, MqttMessage msg) {
 		int packetId = ((MqttMessageIdVariableHeader) msg.variableHeader()).messageId();
-		sendAck(ctx, MqttMessageType.PUBCOMP, MqttQoS.AT_MOST_ONCE, packetId);
-		inboundQos2Pending.getAndSet(packetId, 0);
-	}
-
-	private void onPubRec(int packetId) {
-		OutboundMessage msg = client.slots.get(packetId);
-		if (msg != null && msg.getState() == OutboundMessage.State.WAIT_PUBREC) {
-			msg.setState(OutboundMessage.State.WAIT_PUBCOMP);
+		InboundQos2 inbound = inboundQos2Pending[packetId];
+		if (inbound != null) {
+			inboundQos2Pending[packetId] = null;
+			ReferenceCountUtil.retain(msg);
+			// 处理消息
+			onInboundMessage(inbound.topic(), MqttQoS.EXACTLY_ONCE, inbound.payload());
+			ReferenceCountUtil.release(msg);
 		}
+		sendAck(ctx, MqttMessageType.PUBCOMP, packetId);
 	}
 
-	private void onPubAck(MqttPubAckMessage msg) {
-		OutboundMessage message = client.slots.getAndSet(msg.variableHeader().messageId(), null);
-		if (message != null) {
-			cancelTimeout(message);
-		}
-	}
-
-	private void cancelTimeout(OutboundMessage msg) {
-		Timeout task = msg.getTimeoutTask();
-		if (task != null) {
-			task.cancel();
+	private void onPubComp(MqttMessage msg) {
+		int packetId = ((MqttMessageIdVariableHeader) msg.variableHeader()).messageId();
+		OutboundMessage message = client.getInflightStore().get(packetId);
+		if (message != null && message.getState() == State.WAIT_PUBACK && client.getInflightStore().putIfAbsent(message)) {
+			client.cancelAckTimeout(message);
 		}
 	}
 
 	private void onPublish(ChannelHandlerContext ctx, MqttPublishMessage msg) {
 		int packetId = msg.variableHeader().packetId();
 		switch (msg.fixedHeader().qosLevel()) {
-			case AT_MOST_ONCE -> onInboundMessage(msg);
+			case AT_MOST_ONCE -> {
+				// 把这条消息的所有权分一份给别的线程，防止它被别人提前释放掉
+				ReferenceCountUtil.retain(msg);
+				onInboundMessage(msg.variableHeader().topicName(), MqttQoS.AT_LEAST_ONCE, ByteBufUtil.getBytes(msg.payload()));
+				ReferenceCountUtil.release(msg);
+			}
 			case AT_LEAST_ONCE -> {
-				// QoS1：先应答 PUBACK，再投递（投递失败由上层重试策略负责）
-				onInboundMessage(msg);
-				sendAck(ctx, MqttMessageType.PUBACK, MqttQoS.AT_MOST_ONCE, packetId);
+				// 把这条消息的所有权分一份给别的线程，防止它被别人提前释放掉
+				ReferenceCountUtil.retain(msg);
+				onInboundMessage(msg.variableHeader().topicName(), MqttQoS.AT_LEAST_ONCE, ByteBufUtil.getBytes(msg.payload()));
+				sendAck(ctx, MqttMessageType.PUBACK, packetId);
+				ReferenceCountUtil.release(msg);
 			}
 			case EXACTLY_ONCE -> {
 				// QoS2：首次收到才投递；重复 PUBLISH 只重答 PUBREC
-				if (inboundQos2Pending.compareAndSet(packetId, 0 , 1)) {
-					onInboundMessage(msg);
+				if (inboundQos2Pending[packetId] == null) {
+					byte[] payload = ByteBufUtil.getBytes(msg.payload());
+					inboundQos2Pending[packetId] = new InboundQos2(msg.variableHeader().topicName(), payload);
 				}
-				sendAck(ctx, MqttMessageType.PUBREC, MqttQoS.AT_MOST_ONCE, packetId);
+				sendAck(ctx, MqttMessageType.PUBREC, packetId);
 			}
 		}
 	}
 
-	private void sendAck(ChannelHandlerContext ctx, MqttMessageType type, MqttQoS qos, int packetId) {
-		MqttFixedHeader header = new MqttFixedHeader(type, false, qos, false, 0);
+	private void sendAck(ChannelHandlerContext ctx, MqttMessageType type, int packetId) {
+		MqttFixedHeader header = new MqttFixedHeader(type, false, MqttQoS.AT_LEAST_ONCE, false, 0);
 		MqttMessage ack = type == MqttMessageType.PUBACK
 				? new MqttPubAckMessage(header, MqttMessageIdVariableHeader.from(packetId))
 				: new MqttMessage(header, MqttMessageIdVariableHeader.from(packetId));
-		ctx.writeAndFlush(ack).addListener(f -> {
-			if (!f.isSuccess()) {
-				System.out.println(f.cause().toString());
-			}
-			else {
-				System.out.println("写入成功");
-			}
-		});
+		client.writeAndFlush(ctx.channel(), ack, _ -> ctx.close());
 	}
 
-	private void onInboundMessage(MqttPublishMessage msg) {
-		// 把这条消息的所有权分一份给别的线程，防止它被别人提前释放掉
-		ReferenceCountUtil.retain(msg);
-		byte[] payload = ByteBufUtil.getBytes(msg.payload());
+	private void onInboundMessage(String topic, MqttQoS qoS, byte[] payload) {
 		System.out.println(new String(payload, StandardCharsets.UTF_8));
-		ReferenceCountUtil.release(msg);
 	}
 
 	private void subscribe(Channel channel) {
 		MqttSubscribeMessage subscribeMsg = new MqttSubscribeMessage(
 				new MqttFixedHeader(MqttMessageType.SUBSCRIBE, false, MqttQoS.AT_LEAST_ONCE, false, 0),
-				MqttMessageIdVariableHeader.from(client.packetIdGenerator.nextId()),
+				MqttMessageIdVariableHeader.from(client.getPacketIdGenerator().nextId()),
 				new MqttSubscribePayload(
 						List.of(new MqttTopicSubscription("$share/laokou/test/123", MqttQoS.AT_MOST_ONCE),
 								new MqttTopicSubscription("$share/laokou/test/456", MqttQoS.AT_LEAST_ONCE),
 								new MqttTopicSubscription("$share/laokou/test/789", MqttQoS.EXACTLY_ONCE))));
-		channel.writeAndFlush(subscribeMsg).addListener(future -> {
-			if (future.isSuccess()) {
-				System.out.println("订阅 写入成功");
-			}
-			else {
-				System.out.println("订阅 写入失败");
-			}
-		});
-	}
-
-	private void onSubAck(MqttSubAckMessage msg) {
-		int packetId = msg.variableHeader().messageId();
-		int granted = msg.payload().grantedQoSLevels().isEmpty() ? 0x80 : msg.payload().grantedQoSLevels().getFirst();
-		if (granted == 0x80) {
-			System.out.println("订阅被拒绝, packetId=" + packetId);
-		}
-		else {
-			System.out.println("订阅主题成功");
-		}
+		client.writeAndFlush(channel, subscribeMsg, _ -> channel.close());
 	}
 
 	@Override
@@ -271,7 +290,7 @@ final class NettyMqttClientHandler extends SimpleChannelInboundHandler<MqttMessa
 	}
 
 	public void onChannelInactive() {
-		if (client.state.get() == ClientState.CLOSED) {
+		if (client.getState().get() == ClientState.CLOSED) {
 			return;
 		}
 		client.handleDisconnect();

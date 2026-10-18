@@ -14,7 +14,7 @@ final class PacketIdGenerator {
 	}
 
 	public int nextId() {
-		return next.updateAndGet(v -> (v & 0xFFFF) + 1);
+		return next.updateAndGet(v -> v >= 0xFFFF ? 1 : v + 1);
 	}
 
 }

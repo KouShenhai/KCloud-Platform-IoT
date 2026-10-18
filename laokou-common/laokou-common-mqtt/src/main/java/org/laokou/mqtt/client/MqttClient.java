@@ -17,6 +17,8 @@
 
 package org.laokou.mqtt.client;
 
+import io.netty.handler.codec.mqtt.MqttQoS;
+
 /**
  * @author laokou
  */
@@ -25,5 +27,7 @@ interface MqttClient {
 	void connect();
 
 	void disconnect();
+
+	void publish(String topic, byte[] payload, MqttQoS qos);
 
 }

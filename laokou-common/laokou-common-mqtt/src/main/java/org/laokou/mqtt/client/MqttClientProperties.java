@@ -26,6 +26,8 @@ import lombok.Data;
 @Data
 final class MqttClientProperties {
 
+	private String tenantCode;
+
     /**
      * 主机.
      */
@@ -52,9 +54,9 @@ final class MqttClientProperties {
     private boolean cleanSession = true;
 
     /**
-     * 心跳包每隔30秒发一次.
+     * 心跳包每隔60秒发一次.
      */
-    private int keepAliveTimeSeconds = 30;
+    private int keepAliveTimeSeconds = 60;
 
 	/**
 	 * 连接超时。
@@ -69,7 +71,7 @@ final class MqttClientProperties {
     /**
      * 读写核心线程数.
      */
-    private int workerCorePoolSize = 16;
+	private int ioThreads = 32;
 
     /**
      * QoS1/2 单条消息 ACK 超时（毫秒）
