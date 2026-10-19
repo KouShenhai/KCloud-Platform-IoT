@@ -36,7 +36,7 @@ import java.util.concurrent.TimeUnit;
  * @author laokou
  */
 @Configuration(proxyBeanMethods = false)
-public class NettyMqttConfig {
+final class NettyMqttConfig {
 
 	/**
 	 * 注册原生 PulsarAdmin.
