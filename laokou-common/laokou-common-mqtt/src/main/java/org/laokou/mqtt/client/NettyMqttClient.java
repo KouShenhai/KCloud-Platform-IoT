@@ -124,7 +124,8 @@ final class NettyMqttClient implements MqttClient {
 				return;
 			}
 			writePublish(topic, payload, qos, 0, false, _ -> handleDisconnect());
-		} else {
+		}
+		else {
 			int packetId = packetIdGenerator.nextId();
 			OutboundMessage msg = new OutboundMessage(packetId, topic, payload, qos, false);
 			// 写入缓存
@@ -140,7 +141,8 @@ final class NettyMqttClient implements MqttClient {
 		if (this.state.get() != ClientState.CONNECTED) {
 			return;
 		}
-		msg.setTimeoutTask(timer.newTimeout(_ -> onAckTimeout(msg), properties.getAckTimeoutMs(), TimeUnit.MILLISECONDS));
+		msg.setTimeoutTask(
+				timer.newTimeout(_ -> onAckTimeout(msg), properties.getAckTimeoutMs(), TimeUnit.MILLISECONDS));
 	}
 
 	void handleDisconnect() {
@@ -174,7 +176,7 @@ final class NettyMqttClient implements MqttClient {
 		}
 		channel.writeAndFlush(message).addListener(f -> {
 			if (!f.isSuccess()) {
-				log.error("【Netty-MQTT-Client】 => 写入到 MQTT Broker 消息失败，错误信息：{}" , f.cause().getMessage(), f.cause());
+				log.error("【Netty-MQTT-Client】 => 写入到 MQTT Broker 消息失败，错误信息：{}", f.cause().getMessage(), f.cause());
 				onFailure.accept(f.cause());
 			}
 		});
@@ -193,14 +195,15 @@ final class NettyMqttClient implements MqttClient {
 					ch.pipeline()
 						.addLast("mqttEncoder", MqttEncoder.INSTANCE)
 						.addLast("mqttDecoder", new MqttDecoder(properties.getMaxBytesInMessage()))
-						.addLast("idleStateHandler", new IdleStateHandler(properties.getKeepAliveTimeSeconds(), 0, 0, TimeUnit.SECONDS))
+						.addLast("idleStateHandler",
+								new IdleStateHandler(properties.getKeepAliveTimeSeconds(), 0, 0, TimeUnit.SECONDS))
 						.addLast("nettyMqttHandler", new NettyMqttClientHandler(NettyMqttClient.this));
 				}
 			});
 		log.info("【Netty-MQTT-Client】 => 开始连接 MQTT Broker");
 		bootstrap.connect(properties.getHost(), properties.getPort()).addListener(f -> {
 			if (!f.isSuccess()) {
-				log.error("【Netty-MQTT-Client】 => 连接 MQTT Broker 失败，错误信息：{}" , f.cause().getMessage(), f.cause());
+				log.error("【Netty-MQTT-Client】 => 连接 MQTT Broker 失败，错误信息：{}", f.cause().getMessage(), f.cause());
 				handleDisconnect();
 				return;
 			}
@@ -208,7 +211,8 @@ final class NettyMqttClient implements MqttClient {
 				Channel ch = future.channel();
 				ch.writeAndFlush(buildConnectMessage()).addListener(w -> {
 					if (!w.isSuccess()) {
-						log.error("【Netty-MQTT-Client】 => 发送到 MQTT Broker 连接消息失败，错误信息：{}" , f.cause().getMessage(), f.cause());
+						log.error("【Netty-MQTT-Client】 => 发送到 MQTT Broker 连接消息失败，错误信息：{}", f.cause().getMessage(),
+								f.cause());
 						ch.close();
 						handleDisconnect();
 					}
@@ -251,8 +255,8 @@ final class NettyMqttClient implements MqttClient {
 			return;
 		}
 		MqttMessage pubRel = new MqttMessage(
-			new MqttFixedHeader(MqttMessageType.PUBREL, true, MqttQoS.AT_LEAST_ONCE, false, 0),
-			MqttMessageIdVariableHeader.from(packetId));
+				new MqttFixedHeader(MqttMessageType.PUBREL, true, MqttQoS.AT_LEAST_ONCE, false, 0),
+				MqttMessageIdVariableHeader.from(packetId));
 		writeAndFlush(this.channel, pubRel, _ -> handleDisconnect());
 	}
 
@@ -261,7 +265,8 @@ final class NettyMqttClient implements MqttClient {
 		int exponent = Math.min(attempt - 1, 6);
 		long delayMs = Math.min(1000L << exponent, 60000L);
 		this.reconnectTask = timer.newTimeout(_ -> {
-			if (state.get() == ClientState.RECONNECTING && state.compareAndSet(ClientState.RECONNECTING, ClientState.CONNECTING)) {
+			if (state.get() == ClientState.RECONNECTING
+					&& state.compareAndSet(ClientState.RECONNECTING, ClientState.CONNECTING)) {
 				log.info("【Netty-MQTT-Client】 => MQTT正在重连，请稍候~");
 				doConnect();
 			}
@@ -270,12 +275,13 @@ final class NettyMqttClient implements MqttClient {
 
 	private MqttConnectMessage buildConnectMessage() {
 		MqttFixedHeader fixedHeader = new MqttFixedHeader(MqttMessageType.CONNECT, false, MqttQoS.AT_MOST_ONCE, false,
-			0);
+				0);
 		MqttConnectVariableHeader variableHeader = new MqttConnectVariableHeader(MqttVersion.MQTT_5.protocolName(),
-			MqttVersion.MQTT_5.protocolLevel(), true, true, false, 0, false, true, properties.getKeepAliveTimeSeconds(),
-			MqttProperties.NO_PROPERTIES);
-		MqttConnectPayload payload = new MqttConnectPayload(String.format("%s-%d", properties.getTenantCode(), System.currentTimeMillis()), null, null, properties.getUsername(),
-			properties.getPassword().getBytes(StandardCharsets.UTF_8));
+				MqttVersion.MQTT_5.protocolLevel(), true, true, false, 0, false, true,
+				properties.getKeepAliveTimeSeconds(), MqttProperties.NO_PROPERTIES);
+		MqttConnectPayload payload = new MqttConnectPayload(
+				String.format("%s-%d", properties.getTenantCode(), System.currentTimeMillis()), null, null,
+				properties.getUsername(), properties.getPassword().getBytes(StandardCharsets.UTF_8));
 		return new MqttConnectMessage(fixedHeader, variableHeader, payload);
 	}
 
@@ -286,13 +292,14 @@ final class NettyMqttClient implements MqttClient {
 		}
 	}
 
-	private void writePublish(String topic, byte[] payload, MqttQoS qos, int packetId, boolean dup, Consumer<Throwable> onFailure) {
+	private void writePublish(String topic, byte[] payload, MqttQoS qos, int packetId, boolean dup,
+			Consumer<Throwable> onFailure) {
 		if (this.state.get() != ClientState.CONNECTED || this.channel == null || !this.channel.isActive()) {
 			return;
 		}
 		MqttPublishMessage msg = new MqttPublishMessage(
-			new MqttFixedHeader(MqttMessageType.PUBLISH, dup, qos, false, 0),
-			new MqttPublishVariableHeader(topic, packetId), Unpooled.wrappedBuffer(payload));
+				new MqttFixedHeader(MqttMessageType.PUBLISH, dup, qos, false, 0),
+				new MqttPublishVariableHeader(topic, packetId), Unpooled.wrappedBuffer(payload));
 		writeAndFlush(this.channel, msg, onFailure);
 	}
 

@@ -1,0 +1,62 @@
+/*
+ * Copyright (c) 2022-2026 KCloud-Platform-IoT Author or Authors. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+package org.laokou.mqtt.client.listener;
+
+import io.vertx.mqtt.messages.MqttPublishMessage;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.pulsar.client.api.MessageId;
+import org.laokou.common.core.config.SystemSettingsProperties;
+import org.laokou.iot.common.config.mqtt.MessageListener;
+import org.laokou.iot.common.util.PulsarUtils;
+import org.laokou.iot.session.model.enums.mqtt.MqttMessageType;
+import org.springframework.pulsar.core.PulsarTemplate;
+import org.springframework.stereotype.Component;
+
+import java.util.concurrent.CompletableFuture;
+
+/**
+ * 上报设备属性消息【上行】处理器.
+ *
+ * @author laokou
+ */
+@Slf4j
+@Component
+@RequiredArgsConstructor
+final class UpReportPropertiesDeviceMessageHandler extends MessageListener {
+
+	private final PulsarTemplate<Object> pulsarTemplate;
+
+	private final SystemSettingsProperties systemSettingsProperties;
+
+	@Override
+	public CompletableFuture<MessageId> handleMessage(Long snowflakeId, MqttPublishMessage publishMessage) {
+		log.debug("【Netty-MQTT-Client】 => 上报设备属性消息【上行】处理器，接收雪花ID【{}】，主题【{}】消息", snowflakeId,
+				publishMessage.topicName());
+		return pulsarTemplate.sendAsync(
+				PulsarUtils.getGatewayTopic(systemSettingsProperties.getTenantCode(),
+						MqttMessageType.UP_REPORT_PROPERTIES_DEVICE_MESSAGE_TOPIC),
+				publishMessage.payload().getBytes());
+	}
+
+	@Override
+	protected MqttMessageType getMatchTopic() {
+		return MqttMessageType.UP_REPORT_PROPERTIES_DEVICE_MESSAGE;
+	}
+
+}

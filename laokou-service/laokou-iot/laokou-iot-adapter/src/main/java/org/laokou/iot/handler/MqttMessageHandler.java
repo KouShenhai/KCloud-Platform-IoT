@@ -53,8 +53,8 @@ public final class MqttMessageHandler {
 	})
 	public void handleIotUpReportPropertiesGatewayMessage(List<byte[]> messages) {
 		for (byte[] message : messages) {
-			UpReportPropertiesDeviceMessage deviceMessage = JacksonUtils.toBean(message, UpReportPropertiesDeviceMessage.class);
-			log.info("设备SN：{}", deviceMessage.getDeviceSn());
+//			UpReportPropertiesDeviceMessage deviceMessage = JacksonUtils.toBean(message, UpReportPropertiesDeviceMessage.class);
+//			log.info("设备SN：{}", deviceMessage.getDeviceSn());
 		}
 	}
 	// @formatter:on

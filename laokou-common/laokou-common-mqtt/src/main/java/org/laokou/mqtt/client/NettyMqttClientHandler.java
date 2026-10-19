@@ -126,7 +126,8 @@ final class NettyMqttClientHandler extends SimpleChannelInboundHandler<MqttMessa
 			// 消息投递
 			case PUBLISH -> onPublish(ctx, (MqttPublishMessage) msg);
 			case PINGRESP -> log.debug("【Netty-MQTT-Client】 => 接收 PINGRESP");
-			default -> throw new IllegalStateException(String.format("【Netty-MQTT-Client】 => 不支持类型：%s" , mqttMessageType.name()));
+			default -> throw new IllegalStateException(
+					String.format("【Netty-MQTT-Client】 => 不支持类型：%s", mqttMessageType.name()));
 		}
 	}
 
@@ -138,7 +139,8 @@ final class NettyMqttClientHandler extends SimpleChannelInboundHandler<MqttMessa
 			client.setChannel(ch);
 			client.getReconnectAttempts().set(0);
 			client.getState().set(ClientState.CONNECTED);
-		} else {
+		}
+		else {
 			log.error("【Netty-MQTT-Client】 => 连接 MQTT Broker 失败，错误信息：{}", returnCode);
 			ch.close();
 		}
@@ -146,12 +148,13 @@ final class NettyMqttClientHandler extends SimpleChannelInboundHandler<MqttMessa
 
 	private void onSubAck(MqttSubAckMessage msg) {
 		int packetId = msg.variableHeader().messageId();
-		int granted = msg.payload().grantedQoSLevels().isEmpty() ? MqttReasonCodes.SubAck.UNSPECIFIED_ERROR.byteValue() : msg.payload().grantedQoSLevels().getFirst();
+		int granted = msg.payload().grantedQoSLevels().isEmpty() ? MqttReasonCodes.SubAck.UNSPECIFIED_ERROR.byteValue()
+				: msg.payload().grantedQoSLevels().getFirst();
 		if (granted == MqttReasonCodes.SubAck.UNSPECIFIED_ERROR.byteValue()) {
-			log.info("【Netty-MQTT-Client】 => 订阅 MQTT Broker 主题失败, packetId：{}" , packetId);
+			log.info("【Netty-MQTT-Client】 => 订阅 MQTT Broker 主题失败, packetId：{}", packetId);
 		}
 		else {
-			log.info("【Netty-MQTT-Client】 => 订阅 MQTT Broker 主题成功, packetId：{}" , packetId);
+			log.info("【Netty-MQTT-Client】 => 订阅 MQTT Broker 主题成功, packetId：{}", packetId);
 		}
 	}
 
@@ -186,7 +189,8 @@ final class NettyMqttClientHandler extends SimpleChannelInboundHandler<MqttMessa
 			sendPubRel(ctx.channel(), msg.getPacketId(), false);
 			// 发送端开启发送 MqttMessageType.PUBREL 消息的定时任务，防止Broker因网络问题未接收到
 			client.scheduleAckTimeout(msg);
-		} else if (msg.getState() == State.WAIT_PUBCOMP) {
+		}
+		else if (msg.getState() == State.WAIT_PUBCOMP) {
 			// 重复接收到 PUBREC，重发 PUBREL
 			sendPubRel(ctx.channel(), msg.getPacketId(), true);
 		}
@@ -194,8 +198,8 @@ final class NettyMqttClientHandler extends SimpleChannelInboundHandler<MqttMessa
 
 	private void sendPubRel(Channel channel, int packetId, boolean isDup) {
 		MqttMessage pubRel = new MqttMessage(
-			new MqttFixedHeader(MqttMessageType.PUBREL, isDup, MqttQoS.AT_LEAST_ONCE, false, 0),
-			MqttMessageIdVariableHeader.from(packetId));
+				new MqttFixedHeader(MqttMessageType.PUBREL, isDup, MqttQoS.AT_LEAST_ONCE, false, 0),
+				MqttMessageIdVariableHeader.from(packetId));
 		if (channel != null && channel.isActive()) {
 			client.writeAndFlush(channel, pubRel, _ -> channel.close());
 		}
@@ -213,7 +217,7 @@ final class NettyMqttClientHandler extends SimpleChannelInboundHandler<MqttMessa
 			inboundQos2Pending[packetId] = null;
 			ReferenceCountUtil.retain(msg);
 			// 处理消息
-			onInboundMessage(inbound.topic(), MqttQoS.EXACTLY_ONCE, inbound.payload());
+			onInboundMessage(inbound.topic(), inbound.payload(), MqttQoS.EXACTLY_ONCE);
 			ReferenceCountUtil.release(msg);
 		}
 		sendAck(ctx, MqttMessageType.PUBCOMP, packetId);
@@ -222,7 +226,8 @@ final class NettyMqttClientHandler extends SimpleChannelInboundHandler<MqttMessa
 	private void onPubComp(MqttMessage msg) {
 		int packetId = ((MqttMessageIdVariableHeader) msg.variableHeader()).messageId();
 		OutboundMessage message = client.getInflightStore().get(packetId);
-		if (message != null && message.getState() == State.WAIT_PUBACK && client.getInflightStore().putIfAbsent(message)) {
+		if (message != null && message.getState() == State.WAIT_PUBACK
+				&& client.getInflightStore().putIfAbsent(message)) {
 			client.cancelAckTimeout(message);
 		}
 	}
@@ -233,13 +238,15 @@ final class NettyMqttClientHandler extends SimpleChannelInboundHandler<MqttMessa
 			case AT_MOST_ONCE -> {
 				// 把这条消息的所有权分一份给别的线程，防止它被别人提前释放掉
 				ReferenceCountUtil.retain(msg);
-				onInboundMessage(msg.variableHeader().topicName(), MqttQoS.AT_LEAST_ONCE, ByteBufUtil.getBytes(msg.payload()));
+				onInboundMessage(msg.variableHeader().topicName(), ByteBufUtil.getBytes(msg.payload()),
+						MqttQoS.AT_LEAST_ONCE);
 				ReferenceCountUtil.release(msg);
 			}
 			case AT_LEAST_ONCE -> {
 				// 把这条消息的所有权分一份给别的线程，防止它被别人提前释放掉
 				ReferenceCountUtil.retain(msg);
-				onInboundMessage(msg.variableHeader().topicName(), MqttQoS.AT_LEAST_ONCE, ByteBufUtil.getBytes(msg.payload()));
+				onInboundMessage(msg.variableHeader().topicName(), ByteBufUtil.getBytes(msg.payload()),
+						MqttQoS.AT_LEAST_ONCE);
 				sendAck(ctx, MqttMessageType.PUBACK, packetId);
 				ReferenceCountUtil.release(msg);
 			}
@@ -262,7 +269,7 @@ final class NettyMqttClientHandler extends SimpleChannelInboundHandler<MqttMessa
 		client.writeAndFlush(ctx.channel(), ack, _ -> ctx.close());
 	}
 
-	private void onInboundMessage(String topic, MqttQoS qoS, byte[] payload) {
+	private void onInboundMessage(String topic, byte[] payload, MqttQoS qos) {
 		System.out.println(new String(payload, StandardCharsets.UTF_8));
 	}
 
@@ -281,7 +288,6 @@ final class NettyMqttClientHandler extends SimpleChannelInboundHandler<MqttMessa
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
 		ctx.close();
 	}
-
 
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {

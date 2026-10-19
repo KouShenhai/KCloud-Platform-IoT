@@ -95,17 +95,8 @@
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
-      <artifactId>laokou-common-pulsar</artifactId>
-      <version>${revision}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.laokou</groupId>
       <artifactId>laokou-common-storage</artifactId>
       <version>${revision}</version>
-    </dependency>
-    <dependency>
-      <groupId>io.vertx</groupId>
-      <artifactId>vertx-mqtt</artifactId>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>

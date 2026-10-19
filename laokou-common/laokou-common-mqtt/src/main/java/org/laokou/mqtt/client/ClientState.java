@@ -21,20 +21,21 @@ import lombok.Getter;
 
 /**
  * 客户端连接状态机.
+ *
  * @author laokou
  */
 @Getter
 enum ClientState {
 
-    DISCONNECTED(0, "初始/已断开（可发起连接）"),
+	DISCONNECTED(0, "初始/已断开（可发起连接）"),
 
-    CONNECTING(1, "正在建立TCP连接或等待CONNACK"),
+	CONNECTING(1, "正在建立TCP连接或等待CONNACK"),
 
-    CONNECTED(2, "已连接（收到 CONNACK）"),
+	CONNECTED(2, "已连接（收到 CONNACK）"),
 
-    RECONNECTING(3, "连接已丢失，等待重连"),
+	RECONNECTING(3, "连接已丢失，等待重连"),
 
-    CLOSED(4, "用户主动关闭，不再重连");
+	CLOSED(4, "用户主动关闭，不再重连");
 
 	private final int code;
 

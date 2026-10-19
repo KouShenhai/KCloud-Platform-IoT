@@ -21,6 +21,7 @@ import lombok.Data;
 
 /**
  * MQTT 客户端配置.
+ *
  * @author laokou
  */
 @Data
@@ -28,54 +29,54 @@ final class MqttClientProperties {
 
 	private String tenantCode;
 
-    /**
-     * 主机.
-     */
-    private String host = "127.0.0.1";
+	/**
+	 * 主机.
+	 */
+	private String host = "127.0.0.1";
 
-    /**
-     * 端口.
-     */
-    private int port = 1883;
+	/**
+	 * 端口.
+	 */
+	private int port = 1883;
 
 	/**
 	 * 用户名。
 	 */
-    private String username = "root";
+	private String username = "root";
 
 	/**
 	 * 密码。
 	 */
-    private String password = "laokou123";
+	private String password = "laokou123";
 
-    /**
-     * 清除会话.
-     */
-    private boolean cleanSession = true;
+	/**
+	 * 清除会话.
+	 */
+	private boolean cleanSession = true;
 
-    /**
-     * 心跳包每隔60秒发一次.
-     */
-    private int keepAliveTimeSeconds = 60;
+	/**
+	 * 心跳包每隔60秒发一次.
+	 */
+	private int keepAliveTimeSeconds = 60;
 
 	/**
 	 * 连接超时。
 	 */
-    private int connectTimeoutMs = 15000;
+	private int connectTimeoutMs = 15000;
 
 	/**
 	 * 最大消息字节数。
 	 */
-    private int maxBytesInMessage = 64 * 1024 * 1024;
+	private int maxBytesInMessage = 64 * 1024 * 1024;
 
-    /**
-     * 读写核心线程数.
-     */
+	/**
+	 * 读写核心线程数.
+	 */
 	private int ioThreads = 32;
 
-    /**
-     * QoS1/2 单条消息 ACK 超时（毫秒）
-     */
-    private long ackTimeoutMs = 5000;
+	/**
+	 * QoS1/2 单条消息 ACK 超时（毫秒）
+	 */
+	private long ackTimeoutMs = 5000;
 
 }

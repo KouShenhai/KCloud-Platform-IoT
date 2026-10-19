@@ -42,6 +42,11 @@
       <artifactId>netty-transport-native-io_uring</artifactId>
       <classifier>linux-aarch_64</classifier>
     </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-pulsar</artifactId>
+      <version>${revision}</version>
+    </dependency>
   </dependencies>
 
 </project>
