@@ -50,7 +50,7 @@ final class NettyMqttConfig {
 
 	@Bean(initMethod = "createTopic")
 	public PulsarTopicFactory pulsarTopicFactory(PulsarAdmin pulsarAdmin,
-                                                 SystemSettingsProperties systemSettingsProperties) {
+			SystemSettingsProperties systemSettingsProperties) {
 		return new DefaultPulsarTopicFactory(pulsarAdmin, systemSettingsProperties);
 	}
 

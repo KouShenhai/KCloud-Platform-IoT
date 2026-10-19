@@ -1,4 +1,11 @@
+apisix:
+  node_listen: [88, 90, 98, 100, 102, 9080]
+  enable_admin: false
 deployment:
   role: data_plane
   role_data_plane:
     config_provider: yaml
+nginx_config:
+  stream_proxy:
+    tcp:
+      - 1883

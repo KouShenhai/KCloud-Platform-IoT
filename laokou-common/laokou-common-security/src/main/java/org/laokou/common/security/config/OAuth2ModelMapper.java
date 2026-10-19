@@ -34,6 +34,7 @@
 package org.laokou.common.security.config;
 
 import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.laokou.common.core.util.CollectionExtUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.security.config.entity.OAuth2AuthorizationCodeGrantAuthorization;
@@ -254,80 +255,81 @@ public final class OAuth2ModelMapper {
 				authorization.getAttribute(Principal.class.getName()));
 	}
 
-	static OAuth2AuthorizationCodeGrantAuthorization.@NonNull AuthorizationCode extractAuthorizationCode(
+	static OAuth2AuthorizationCodeGrantAuthorization.@Nullable AuthorizationCode extractAuthorizationCode(
 			OAuth2Authorization authorization) {
 		OAuth2Authorization.Token<@NonNull OAuth2AuthorizationCode> oauth2AuthorizationCode = authorization
 			.getToken(OAuth2AuthorizationCode.class);
-		if (oauth2AuthorizationCode == null) {
-			throw new IllegalArgumentException("Authorization code not found");
+		if (oauth2AuthorizationCode != null) {
+			return new OAuth2AuthorizationCodeGrantAuthorization.AuthorizationCode(
+					oauth2AuthorizationCode.getToken().getTokenValue(),
+					oauth2AuthorizationCode.getToken().getIssuedAt(), oauth2AuthorizationCode.getToken().getExpiresAt(),
+					oauth2AuthorizationCode.isInvalidated());
 		}
-		return new OAuth2AuthorizationCodeGrantAuthorization.AuthorizationCode(
-				oauth2AuthorizationCode.getToken().getTokenValue(), oauth2AuthorizationCode.getToken().getIssuedAt(),
-				oauth2AuthorizationCode.getToken().getExpiresAt(), oauth2AuthorizationCode.isInvalidated());
+		return null;
 	}
 
 	static OAuth2AuthorizationGrantAuthorization.AccessToken extractAccessToken(OAuth2Authorization authorization) {
 		OAuth2Authorization.Token<@NonNull OAuth2AccessToken> oauth2AccessToken = authorization.getAccessToken();
-		if (oauth2AccessToken == null) {
-			throw new IllegalArgumentException("Authorization code not found");
+		if (oauth2AccessToken != null) {
+			OAuth2TokenFormat tokenFormat = null;
+			if (ObjectUtils.equals(OAuth2TokenFormat.SELF_CONTAINED.getValue(),
+					oauth2AccessToken.getMetadata(OAuth2TokenFormat.class.getName()))) {
+				tokenFormat = OAuth2TokenFormat.SELF_CONTAINED;
+			}
+			else if (ObjectUtils.equals(OAuth2TokenFormat.REFERENCE.getValue(),
+					oauth2AccessToken.getMetadata(OAuth2TokenFormat.class.getName()))) {
+				tokenFormat = OAuth2TokenFormat.REFERENCE;
+			}
+			return new OAuth2AuthorizationGrantAuthorization.AccessToken(oauth2AccessToken.getToken().getTokenValue(),
+					oauth2AccessToken.getToken().getIssuedAt(), oauth2AccessToken.getToken().getExpiresAt(),
+					oauth2AccessToken.isInvalidated(), oauth2AccessToken.getToken().getTokenType(),
+					oauth2AccessToken.getToken().getScopes(), tokenFormat,
+					new OAuth2AuthorizationGrantAuthorization.ClaimsHolder(oauth2AccessToken.getClaims()));
 		}
-		OAuth2TokenFormat tokenFormat = null;
-		if (ObjectUtils.equals(OAuth2TokenFormat.SELF_CONTAINED.getValue(),
-				oauth2AccessToken.getMetadata(OAuth2TokenFormat.class.getName()))) {
-			tokenFormat = OAuth2TokenFormat.SELF_CONTAINED;
-		}
-		else if (ObjectUtils.equals(OAuth2TokenFormat.REFERENCE.getValue(),
-				oauth2AccessToken.getMetadata(OAuth2TokenFormat.class.getName()))) {
-			tokenFormat = OAuth2TokenFormat.REFERENCE;
-		}
-		return new OAuth2AuthorizationGrantAuthorization.AccessToken(oauth2AccessToken.getToken().getTokenValue(),
-				oauth2AccessToken.getToken().getIssuedAt(), oauth2AccessToken.getToken().getExpiresAt(),
-				oauth2AccessToken.isInvalidated(), oauth2AccessToken.getToken().getTokenType(),
-				oauth2AccessToken.getToken().getScopes(), tokenFormat,
-				new OAuth2AuthorizationGrantAuthorization.ClaimsHolder(oauth2AccessToken.getClaims()));
+		return null;
 	}
 
 	static OAuth2AuthorizationGrantAuthorization.RefreshToken extractRefreshToken(OAuth2Authorization authorization) {
 		OAuth2Authorization.Token<@NonNull OAuth2RefreshToken> oauth2RefreshToken = authorization.getRefreshToken();
-		if (oauth2RefreshToken == null) {
-			throw new IllegalArgumentException("Authorization code not found");
+		if (oauth2RefreshToken != null) {
+			return new OAuth2AuthorizationGrantAuthorization.RefreshToken(oauth2RefreshToken.getToken().getTokenValue(),
+					oauth2RefreshToken.getToken().getIssuedAt(), oauth2RefreshToken.getToken().getExpiresAt(),
+					oauth2RefreshToken.isInvalidated());
 		}
-		return new OAuth2AuthorizationGrantAuthorization.RefreshToken(oauth2RefreshToken.getToken().getTokenValue(),
-				oauth2RefreshToken.getToken().getIssuedAt(), oauth2RefreshToken.getToken().getExpiresAt(),
-				oauth2RefreshToken.isInvalidated());
+		return null;
 	}
 
 	static OidcAuthorizationCodeGrantAuthorization.IdToken extractIdToken(OAuth2Authorization authorization) {
 		OAuth2Authorization.Token<@NonNull OidcIdToken> oidcIdToken = authorization.getToken(OidcIdToken.class);
-		if (oidcIdToken == null) {
-			throw new IllegalArgumentException("Authorization code not found");
+		if (oidcIdToken != null) {
+			return new OidcAuthorizationCodeGrantAuthorization.IdToken(oidcIdToken.getToken().getTokenValue(),
+					oidcIdToken.getToken().getIssuedAt(), oidcIdToken.getToken().getExpiresAt(),
+					oidcIdToken.isInvalidated(),
+					new OAuth2AuthorizationGrantAuthorization.ClaimsHolder(oidcIdToken.getClaims()));
 		}
-		return new OidcAuthorizationCodeGrantAuthorization.IdToken(oidcIdToken.getToken().getTokenValue(),
-				oidcIdToken.getToken().getIssuedAt(), oidcIdToken.getToken().getExpiresAt(),
-				oidcIdToken.isInvalidated(),
-				new OAuth2AuthorizationGrantAuthorization.ClaimsHolder(oidcIdToken.getClaims()));
+		return null;
 	}
 
 	static OAuth2DeviceCodeGrantAuthorization.DeviceCode extractDeviceCode(OAuth2Authorization authorization) {
 		OAuth2Authorization.Token<@NonNull OAuth2DeviceCode> oauth2DeviceCode = authorization
 			.getToken(OAuth2DeviceCode.class);
-		if (oauth2DeviceCode == null) {
-			throw new IllegalArgumentException("Authorization code not found");
+		if (oauth2DeviceCode != null) {
+			return new OAuth2DeviceCodeGrantAuthorization.DeviceCode(oauth2DeviceCode.getToken().getTokenValue(),
+					oauth2DeviceCode.getToken().getIssuedAt(), oauth2DeviceCode.getToken().getExpiresAt(),
+					oauth2DeviceCode.isInvalidated());
 		}
-		return new OAuth2DeviceCodeGrantAuthorization.DeviceCode(oauth2DeviceCode.getToken().getTokenValue(),
-				oauth2DeviceCode.getToken().getIssuedAt(), oauth2DeviceCode.getToken().getExpiresAt(),
-				oauth2DeviceCode.isInvalidated());
+		return null;
 	}
 
 	static OAuth2DeviceCodeGrantAuthorization.UserCode extractUserCode(OAuth2Authorization authorization) {
 		OAuth2Authorization.Token<@NonNull OAuth2UserCode> oauth2UserCode = authorization
 			.getToken(OAuth2UserCode.class);
-		if (oauth2UserCode == null) {
-			throw new IllegalArgumentException("Authorization code not found");
+		if (oauth2UserCode != null) {
+			return new OAuth2DeviceCodeGrantAuthorization.UserCode(oauth2UserCode.getToken().getTokenValue(),
+					oauth2UserCode.getToken().getIssuedAt(), oauth2UserCode.getToken().getExpiresAt(),
+					oauth2UserCode.isInvalidated());
 		}
-		return new OAuth2DeviceCodeGrantAuthorization.UserCode(oauth2UserCode.getToken().getTokenValue(),
-				oauth2UserCode.getToken().getIssuedAt(), oauth2UserCode.getToken().getExpiresAt(),
-				oauth2UserCode.isInvalidated());
+		return null;
 	}
 
 	static RegisteredClient convertRegisteredClient(OAuth2RegisteredClient oauth2RegisteredClient) {
@@ -558,32 +560,39 @@ public final class OAuth2ModelMapper {
 	}
 
 	static void mapAuthorizationCode(
-			OAuth2AuthorizationCodeGrantAuthorization.@NonNull AuthorizationCode authorizationCode,
+			OAuth2AuthorizationCodeGrantAuthorization.@Nullable AuthorizationCode authorizationCode,
 			OAuth2Authorization.Builder builder) {
-		OAuth2AuthorizationCode oauth2AuthorizationCode = new OAuth2AuthorizationCode(authorizationCode.getTokenValue(),
-				authorizationCode.getIssuedAt(), authorizationCode.getExpiresAt());
-		builder.token(oauth2AuthorizationCode, (metadata) -> metadata
-			.put(OAuth2Authorization.Token.INVALIDATED_METADATA_NAME, authorizationCode.isInvalidated()));
+		if (authorizationCode != null) {
+			OAuth2AuthorizationCode oauth2AuthorizationCode = new OAuth2AuthorizationCode(
+					authorizationCode.getTokenValue(), authorizationCode.getIssuedAt(),
+					authorizationCode.getExpiresAt());
+			builder.token(oauth2AuthorizationCode, (metadata) -> metadata
+				.put(OAuth2Authorization.Token.INVALIDATED_METADATA_NAME, authorizationCode.isInvalidated()));
+		}
 	}
 
-	static void mapAccessToken(OAuth2AuthorizationGrantAuthorization.@NonNull AccessToken accessToken,
+	static void mapAccessToken(OAuth2AuthorizationGrantAuthorization.@Nullable AccessToken accessToken,
 			OAuth2Authorization.Builder builder) {
-		OAuth2AccessToken oauth2AccessToken = new OAuth2AccessToken(accessToken.getTokenType(),
-				accessToken.getTokenValue(), accessToken.getIssuedAt(), accessToken.getExpiresAt(),
-				accessToken.getScopes());
-		builder.token(oauth2AccessToken, (metadata) -> {
-			metadata.put(OAuth2Authorization.Token.INVALIDATED_METADATA_NAME, accessToken.isInvalidated());
-			metadata.put(OAuth2Authorization.Token.CLAIMS_METADATA_NAME, accessToken.getClaims().claims());
-			metadata.put(OAuth2TokenFormat.class.getName(), accessToken.getTokenFormat().getValue());
-		});
+		if (accessToken != null) {
+			OAuth2AccessToken oauth2AccessToken = new OAuth2AccessToken(accessToken.getTokenType(),
+					accessToken.getTokenValue(), accessToken.getIssuedAt(), accessToken.getExpiresAt(),
+					accessToken.getScopes());
+			builder.token(oauth2AccessToken, (metadata) -> {
+				metadata.put(OAuth2Authorization.Token.INVALIDATED_METADATA_NAME, accessToken.isInvalidated());
+				metadata.put(OAuth2Authorization.Token.CLAIMS_METADATA_NAME, accessToken.getClaims().claims());
+				metadata.put(OAuth2TokenFormat.class.getName(), accessToken.getTokenFormat().getValue());
+			});
+		}
 	}
 
-	static void mapRefreshToken(OAuth2AuthorizationGrantAuthorization.@NonNull RefreshToken refreshToken,
+	static void mapRefreshToken(OAuth2AuthorizationGrantAuthorization.@Nullable RefreshToken refreshToken,
 			OAuth2Authorization.Builder builder) {
-		OAuth2RefreshToken oauth2RefreshToken = new OAuth2RefreshToken(refreshToken.getTokenValue(),
-				refreshToken.getIssuedAt(), refreshToken.getExpiresAt());
-		builder.token(oauth2RefreshToken, (metadata) -> metadata
-			.put(OAuth2Authorization.Token.INVALIDATED_METADATA_NAME, refreshToken.isInvalidated()));
+		if (refreshToken != null) {
+			OAuth2RefreshToken oauth2RefreshToken = new OAuth2RefreshToken(refreshToken.getTokenValue(),
+					refreshToken.getIssuedAt(), refreshToken.getExpiresAt());
+			builder.token(oauth2RefreshToken, (metadata) -> metadata
+				.put(OAuth2Authorization.Token.INVALIDATED_METADATA_NAME, refreshToken.isInvalidated()));
+		}
 	}
 
 	static void mapIdToken(OidcAuthorizationCodeGrantAuthorization.@NonNull IdToken idToken,
