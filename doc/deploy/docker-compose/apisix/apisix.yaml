@@ -5,16 +5,17 @@ ssls: []
 consumers: []
 plugin_configs: []
 routes:
-  - id: gateway-api
-    name: gateway-api
+  - id: gateway-api-microservice
+    name: gateway-api-microservice
     uri: /api-gateway*
     priority: 10
     upstream:
       type: roundrobin
-      nodes:
-        - host: &upstream_host 192.168.31.226
-          port: 5555
-          weight: 1
+      discovery_type: nacos
+      service_name: laokou-gateway
+      discovery_args:
+        namespace_id: 0dac1a68-2f01-40df-bd26-bf0cb199057a
+        group_name: IOT_GROUP
       timeout: { connect: 10, send: 60, read: 60 }
     plugins:
       proxy-rewrite:
@@ -29,10 +30,11 @@ routes:
     vars: [[ "server_port", "==", "90" ]]
     upstream:
       type: roundrobin
-      nodes:
-        - host: *upstream_host
-          port: 1111
-          weight: 1
+      discovery_type: nacos
+      service_name: laokou-auth
+      discovery_args:
+        namespace_id: 0dac1a68-2f01-40df-bd26-bf0cb199057a
+        group_name: IOT_GROUP
       timeout: { connect: 10, send: 60, read: 60 }
     plugins:
       proxy-rewrite:
@@ -48,7 +50,7 @@ routes:
     upstream:
       type: roundrobin
       nodes:
-        - host: *upstream_host
+        - host: &upstream_host 192.168.31.226
           port: 1111
           weight: 1
     plugins: { proxy-rewrite: { regex_uri: ["^/auth/(.*)", "/$1"] } }
@@ -80,15 +82,16 @@ routes:
             X-Forwarded-Host: "$http_host"
             X-Forwarded-Port: "$server_port"
       cors: { allow_origins: "*", allow_methods: "*", allow_headers: "*", allow_credential: false }
-  - id: iot-mcp-api
+  - id: iot-mcp-api-microservice
     uri: /api*
     vars: [[ "server_port", "==", "102" ]]
     upstream:
       type: roundrobin
-      nodes:
-        - host: *upstream_host
-          port: 10005
-          weight: 1
+      discovery_type: nacos
+      service_name: laokou-iot-mcp-server
+      discovery_args:
+        namespace_id: 0dac1a68-2f01-40df-bd26-bf0cb199057a
+        group_name: IOT_GROUP
       timeout: { connect: 10, send: 60, read: 60 }
     plugins:
       proxy-rewrite:
