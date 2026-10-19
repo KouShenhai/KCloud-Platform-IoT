@@ -7,7 +7,7 @@ plugin_configs: []
 routes:
   - id: gateway-api-microservice
     name: gateway-api-microservice
-    uri: /api-gateway*
+    uri: /api-proxy/api-gateway/*
     priority: 10
     upstream:
       type: roundrobin
@@ -26,8 +26,8 @@ routes:
             X-Forwarded-Port: "$server_port"
       cors: { allow_origins: "*", allow_methods: "*", allow_headers: "*", allow_credential: false }
   - id: auth-api-microservice
+    name: auth-api-microservice
     uri: /api*
-    vars: [[ "server_port", "==", "90" ]]
     upstream:
       type: roundrobin
       discovery_type: nacos
@@ -83,8 +83,8 @@ routes:
             X-Forwarded-Port: "$server_port"
       cors: { allow_origins: "*", allow_methods: "*", allow_headers: "*", allow_credential: false }
   - id: iot-mcp-api-microservice
+    name: iot-mcp-api-microservice
     uri: /api*
-    vars: [[ "server_port", "==", "102" ]]
     upstream:
       type: roundrobin
       discovery_type: nacos
