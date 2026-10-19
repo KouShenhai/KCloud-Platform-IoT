@@ -1,0 +1,7 @@
+routes:
+  - id: apisix-route-to-httpbin
+    uri: /test
+    upstream:
+      nodes:
+        httpbin.org: 1
+      type: roundrobin

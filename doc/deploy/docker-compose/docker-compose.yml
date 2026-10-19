@@ -14,6 +14,21 @@
 #  * limitations under the License.
 #  */
 services:
+  apisix:
+    image: apache/apisix:3.19.0-ubuntu
+    container_name: apisix
+    restart: always
+    environment:
+      APISIX_STAND_ALONE: "true"
+    volumes:
+      - ./apisix/apisix.yaml:/usr/local/apisix/conf/apisix.yaml
+      - ./apisix/config.yaml:/usr/local/apisix/conf/config.yaml
+    ports:
+      - "9088:9080"   # HTTP
+      - "9443:9443"   # HTTPS
+      - "9180:9180"   # Admin API
+    networks:
+      - iot_network
   mongodb:
     image: mongo:9.0.2
     container_name: mongodb

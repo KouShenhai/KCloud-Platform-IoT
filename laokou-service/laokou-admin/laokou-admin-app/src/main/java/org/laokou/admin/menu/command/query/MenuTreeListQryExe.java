@@ -22,8 +22,6 @@ import org.laokou.admin.menu.dto.clientobject.MenuTreeCO;
 import org.laokou.admin.menu.model.enums.MenuTreeType;
 import org.laokou.admin.menu.service.MenuTree;
 import org.laokou.common.context.util.UserUtils;
-import org.laokou.common.fory.config.ForyFactory;
-import org.laokou.common.fory.constant.ForyConstants;
 import org.laokou.common.i18n.dto.Result;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -38,10 +36,6 @@ import java.util.List;
  */
 @Component
 public class MenuTreeListQryExe {
-
-	static {
-		ForyFactory.INSTANCE.register(org.laokou.admin.menu.dto.clientobject.MenuTreeCO.class, ForyConstants.C_246);
-	}
 
 	private final MenuTree userMenuTree;
 
