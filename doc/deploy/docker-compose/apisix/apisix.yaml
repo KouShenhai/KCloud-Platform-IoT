@@ -28,6 +28,8 @@ routes:
   - id: auth-api-microservice
     name: auth-api-microservice
     uri: /api*
+    vars: [[ "server_port", "==", "90" ]]
+    priority: 20
     upstream:
       type: roundrobin
       discovery_type: nacos
@@ -85,6 +87,8 @@ routes:
   - id: iot-mcp-api-microservice
     name: iot-mcp-api-microservice
     uri: /api*
+    vars: [ [ "server_port", "==", "102" ] ]
+    priority: 20
     upstream:
       type: roundrobin
       discovery_type: nacos
