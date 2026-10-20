@@ -7,7 +7,7 @@ plugin_configs: []
 routes:
   - id: gateway-api-microservice
     name: gateway-api-microservice
-    uri: /api-proxy/api-gateway/*
+    uri: /api-gateway/*
     priority: 10
     upstream:
       type: roundrobin

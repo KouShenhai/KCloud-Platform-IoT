@@ -23,11 +23,12 @@ services:
     volumes:
       - ./apisix/apisix.yaml:/usr/local/apisix/conf/apisix.yaml
       - ./apisix/config.yaml:/usr/local/apisix/conf/config.yaml
+      - ./apisix/nacos-client.lua:/usr/local/apisix/apisix/discovery/nacos/client.lua:ro
     ports:
       - "98:98"
       - "100:100"
       - "1883:1883"   # MQTT TCP
-      - "88:9080"   # HTTP
+      - "88:9080"     # HTTP
       - "9443:9443"   # HTTPS
     networks:
       - iot_network
