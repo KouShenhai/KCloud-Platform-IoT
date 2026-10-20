@@ -1,5 +1,5 @@
 apisix:
-  node_listen: [98, 100, 9080]
+  node_listen: [98, 100, 5555]
   enable_admin: false
 discovery:
   nacos:

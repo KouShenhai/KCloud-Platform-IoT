@@ -28,7 +28,7 @@ services:
       - "98:98"
       - "100:100"
       - "1883:1883"   # MQTT TCP
-      - "88:9080"     # HTTP
+      - "88:5555"     # HTTP
       - "9443:9443"   # HTTPS
     networks:
       - iot_network
