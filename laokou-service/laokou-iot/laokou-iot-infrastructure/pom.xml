@@ -103,6 +103,11 @@
       <artifactId>laokou-common-mcp</artifactId>
       <version>${revision}</version>
     </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-mqtt</artifactId>
+      <version>${revision}</version>
+    </dependency>
   </dependencies>
 
 </project>

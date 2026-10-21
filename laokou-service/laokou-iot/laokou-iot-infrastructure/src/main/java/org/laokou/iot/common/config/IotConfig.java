@@ -17,11 +17,21 @@
 
 package org.laokou.iot.common.config;
 
+import org.apache.pulsar.client.admin.PulsarAdmin;
+import org.apache.pulsar.client.api.BatchReceivePolicy;
+import org.apache.pulsar.client.api.PulsarClientException;
+import org.apache.pulsar.client.api.SubscriptionType;
+import org.jspecify.annotations.NonNull;
+import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.iot.device.gatewayimpl.mcp.DeviceMcpMapper;
 import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.pulsar.annotation.PulsarListenerConsumerBuilderCustomizer;
+import org.springframework.pulsar.core.PulsarAdministration;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author laokou
@@ -41,6 +51,38 @@ public class IotConfig {
 			name = "enabled")
 	DeviceMcpMapper deviceMcpMapper0() {
 		return new DeviceMcpMapper(null);
+	}
+
+	/**
+	 * 注册原生 PulsarAdmin.
+	 * <p>
+	 * destroyMethod = "close"： Spring 容器关闭时自动释放 HTTP 连接、线程等资源。
+	 */
+	@Bean(destroyMethod = "close")
+	PulsarAdmin pulsarAdmin(PulsarAdministration pulsarAdministration) throws PulsarClientException {
+		return pulsarAdministration.createAdminClient();
+	}
+
+	@Bean(initMethod = "createTopic")
+	PulsarTopicFactory pulsarTopicFactory(PulsarAdmin pulsarAdmin, SystemSettingsProperties systemSettingsProperties) {
+		return new DefaultPulsarTopicFactory(pulsarAdmin, systemSettingsProperties);
+	}
+
+	@Bean
+	PulsarListenerConsumerBuilderCustomizer<@NonNull String> mqttMessageConsumerCustomizer() {
+		return consumer -> consumer
+			// 消费者接收队列
+			.receiverQueueSize(20000)
+			// 一次 batchReceive 最多 1 万条
+			.batchReceivePolicy(BatchReceivePolicy.builder()
+				.maxNumMessages(10000)
+				.maxNumBytes(64 * 1024 * 1024)
+				.timeout(5, TimeUnit.SECONDS)
+				.build())
+			// Shared 方便多个消费者实例水平扩展
+			.subscriptionType(SubscriptionType.Shared)
+			// ACK 超时时间
+			.ackTimeout(30, TimeUnit.SECONDS);
 	}
 
 }
