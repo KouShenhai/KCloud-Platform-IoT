@@ -39,7 +39,7 @@ class SpringWebSocketServerPropertiesTest {
 	void test_default_values() {
 		// Then - Verify default values
 		Assertions.assertThat(properties.getHost()).isEqualTo("0.0.0.0");
-		Assertions.assertThat(properties.getPort()).isZero();
+		Assertions.assertThat(properties.getPort()).isEqualTo(13000);
 		Assertions.assertThat(properties.getMaxContentLength()).isEqualTo(65536);
 		Assertions.assertThat(properties.getWebsocketPath()).isEqualTo("/ws");
 		Assertions.assertThat(properties.getExplicitFlushAfterFlushes()).isEqualTo(10);

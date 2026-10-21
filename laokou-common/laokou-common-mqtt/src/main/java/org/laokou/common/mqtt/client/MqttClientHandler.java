@@ -254,7 +254,8 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 
 	private void onPublish(ChannelHandlerContext ctx, MqttPublishMessage msg) {
 		int packetId = msg.variableHeader().packetId();
-		switch (msg.fixedHeader().qosLevel()) {
+		MqttQoS mqttQoS = msg.fixedHeader().qosLevel();
+		switch (mqttQoS) {
 			case AT_MOST_ONCE -> {
 				// 把这条消息的所有权分一份给别的线程，防止它被别人提前释放掉
 				ReferenceCountUtil.retain(msg);
@@ -282,6 +283,8 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 				}
 				sendAck(ctx, MqttMessageType.PUBREC, packetId);
 			}
+			default ->
+				throw new IllegalStateException(String.format("【Netty-MQTT-Client】 => QOS %s 不支持", mqttQoS.name()));
 		}
 	}
 
