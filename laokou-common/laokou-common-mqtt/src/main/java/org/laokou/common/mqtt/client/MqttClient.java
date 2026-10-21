@@ -18,11 +18,14 @@
 package org.laokou.common.mqtt.client;
 
 import io.netty.handler.codec.mqtt.MqttQoS;
+import org.eclipse.paho.mqttv5.common.MqttException;
 
 /**
  * @author laokou
  */
 interface MqttClient {
+
+	void test() throws MqttException;
 
 	void connect();
 

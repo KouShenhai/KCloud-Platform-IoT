@@ -47,6 +47,10 @@
       <artifactId>laokou-common-pulsar</artifactId>
       <version>${revision}</version>
     </dependency>
+    <dependency>
+      <groupId>org.eclipse.paho</groupId>
+      <artifactId>org.eclipse.paho.mqttv5.client</artifactId>
+    </dependency>
   </dependencies>
 
 </project>

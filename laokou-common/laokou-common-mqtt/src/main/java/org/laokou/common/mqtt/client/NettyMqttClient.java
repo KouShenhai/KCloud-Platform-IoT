@@ -47,6 +47,9 @@ import io.netty.util.ReferenceCountUtil;
 import io.netty.util.Timeout;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.eclipse.paho.mqttv5.client.MqttConnectionOptions;
+import org.eclipse.paho.mqttv5.common.MqttException;
+import org.laokou.common.core.util.UUIDGenerator;
 import org.laokou.common.core.util.VirtualThreadFactory;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.util.SystemUtils;
@@ -95,6 +98,11 @@ final class NettyMqttClient implements MqttClient {
 		this.properties = properties;
 		this.mqttEventLoop = mqttEventLoop;
 		this.listeners = listeners;
+	}
+
+	@Override
+	public void test() throws MqttException {
+		doTest();
 	}
 
 	@Override
@@ -185,6 +193,18 @@ final class NettyMqttClient implements MqttClient {
 				onFailure.accept(f.cause());
 			}
 		});
+	}
+
+	private void doTest() throws MqttException {
+		MqttConnectionOptions options = new MqttConnectionOptions();
+		options.setCleanStart(true);
+		options.setConnectionTimeout(10);
+		options.setUserName(properties.getUsername());
+		options.setPassword(properties.getPassword().getBytes(StandardCharsets.UTF_8));
+		org.eclipse.paho.mqttv5.client.MqttClient client = new org.eclipse.paho.mqttv5.client.MqttClient(
+				String.format("tcp://%s:%d", properties.getHost(), properties.getPort()), UUIDGenerator.generateUUID());
+		client.connect(options);
+		client.disconnect();
 	}
 
 	private void doConnect() {
