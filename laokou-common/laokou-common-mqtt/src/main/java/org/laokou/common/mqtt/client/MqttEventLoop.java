@@ -41,9 +41,9 @@ public final class MqttEventLoop implements AutoCloseable {
 
 	private final EventLoopGroup workerGroup;
 
-	MqttEventLoop(MqttClientProperties properties) {
+	public MqttEventLoop(int ioThreads) {
 		this.executor = ThreadUtils.newVirtualTaskExecutor();
-		this.workerGroup = new MultiThreadIoEventLoopGroup(properties.getIoThreads(), executor, getIoHandlerFactory());
+		this.workerGroup = new MultiThreadIoEventLoopGroup(ioThreads, executor, getIoHandlerFactory());
 	}
 
 	@Override

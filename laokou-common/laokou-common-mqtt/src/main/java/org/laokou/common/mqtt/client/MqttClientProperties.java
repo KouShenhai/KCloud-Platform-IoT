@@ -70,11 +70,6 @@ public final class MqttClientProperties {
 	private int maxBytesInMessage = 64 * 1024 * 1024;
 
 	/**
-	 * 读写核心线程数.
-	 */
-	private int ioThreads = 32;
-
-	/**
 	 * QoS1/2 单条消息 ACK 超时（毫秒）
 	 */
 	private long ackTimeoutMs = 5000;

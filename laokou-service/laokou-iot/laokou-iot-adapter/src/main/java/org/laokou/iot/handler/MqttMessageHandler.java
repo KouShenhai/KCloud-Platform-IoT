@@ -27,6 +27,7 @@ import org.springframework.pulsar.annotation.PulsarListeners;
 import org.springframework.pulsar.listener.AckMode;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -51,8 +52,7 @@ public final class MqttMessageHandler {
 	})
 	public void handleIotUpReportPropertiesGatewayMessage(List<byte[]> messages) {
 		for (byte[] message : messages) {
-//			UpReportPropertiesDeviceMessage deviceMessage = JacksonUtils.toBean(message, UpReportPropertiesDeviceMessage.class);
-//			log.info("设备SN：{}", deviceMessage.getDeviceSn());
+			log.info("接收消息：{}", new String(message, StandardCharsets.UTF_8));
 		}
 	}
 	// @formatter:on

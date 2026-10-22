@@ -17,6 +17,8 @@
 
 package org.laokou.iot.session.convertor;
 
+import org.laokou.common.core.config.SystemSettingsProperties;
+import org.laokou.common.mqtt.client.MqttClientProperties;
 import org.laokou.iot.session.dto.clientobject.SessionCO;
 import org.laokou.iot.session.factory.SessionDomainFactory;
 import org.laokou.iot.session.gatewayimpl.database.dataobject.SessionDO;
@@ -36,17 +38,16 @@ public final class SessionConvertor {
 	private SessionConvertor() {
 	}
 
-	// public static MqttClientConfig toConfig(SessionDO sessionDO,
-	// SystemSettingsProperties systemSettingsProperties) {
-	// MqttClientConfig config = new MqttClientConfig();
-	// config.setSnowflakeId(sessionDO.getId());
-	// config.setHost(sessionDO.getHost());
-	// config.setPort(sessionDO.getPort());
-	// config.setUsername(sessionDO.getUsername());
-	// config.setPassword(sessionDO.getPassword());
-	// config.setTenantCode(systemSettingsProperties.getTenantCode());
-	// return config;
-	// }
+	public static MqttClientProperties toProperties(SessionDO sessionDO,
+			SystemSettingsProperties systemSettingsProperties) {
+		MqttClientProperties properties = new MqttClientProperties();
+		properties.setHost(sessionDO.getHost());
+		properties.setPort(sessionDO.getPort());
+		properties.setUsername(sessionDO.getUsername());
+		properties.setPassword(sessionDO.getPassword());
+		properties.setTenantCode(systemSettingsProperties.getTenantCode());
+		return properties;
+	}
 
 	public static SessionDO toDataObject(SessionA sessionA) {
 		SessionDO sessionDO = new SessionDO();
