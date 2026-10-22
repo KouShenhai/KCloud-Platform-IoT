@@ -511,16 +511,6 @@ public final class ForyConstants {
 
 	public static final int C_243 = 243;
 
-	public static final int C_244 = 244;
-
-	public static final int C_245 = 245;
-
-	public static final int C_246 = 246;
-
-	public static final int C_247 = 247;
-
-	public static final int C_248 = 248;
-
 	public static final int C_249 = 249;
 
 	public static final int C_250 = 250;
@@ -544,5 +534,15 @@ public final class ForyConstants {
 	public static final int C_259 = 259;
 
 	public static final int C_260 = 260;
+
+	public static final int C_244 = 244;
+
+	public static final int C_245 = 245;
+
+	public static final int C_246 = 246;
+
+	public static final int C_247 = 247;
+
+	public static final int C_248 = 248;
 
 }

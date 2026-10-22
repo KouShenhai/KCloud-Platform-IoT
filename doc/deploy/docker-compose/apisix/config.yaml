@@ -1,0 +1,21 @@
+apisix:
+  node_listen: [90, 98, 100, 102, 5555]
+  enable_admin: false
+discovery:
+  nacos:
+    host:
+      - "http://nacos:nacos@192.168.31.226:8848"
+      - "http://nacos:nacos@192.168.31.226:8858"
+      - "http://nacos:nacos@192.168.31.226:8868"
+    prefix: "/"
+    namespace_id: 0dac1a68-2f01-40df-bd26-bf0cb199057a
+    group_name: IOT_GROUP
+    heartbeat_interval: 5
+deployment:
+  role: data_plane
+  role_data_plane:
+    config_provider: yaml
+nginx_config:
+  stream_proxy:
+    tcp:
+      - 1883

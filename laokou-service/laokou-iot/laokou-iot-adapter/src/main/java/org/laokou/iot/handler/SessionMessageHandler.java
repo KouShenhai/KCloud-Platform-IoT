@@ -19,7 +19,6 @@ package org.laokou.iot.handler;
 
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import io.vertx.core.Vertx;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.pulsar.client.api.SubscriptionType;
@@ -27,9 +26,11 @@ import org.apache.pulsar.common.schema.SchemaType;
 import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.common.fory.config.ForyFactory;
+import org.laokou.common.mqtt.client.MqttClientManager;
+import org.laokou.common.mqtt.client.MqttClientProperties;
+import org.laokou.common.mqtt.client.MqttEventLoop;
+import org.laokou.common.mqtt.client.listener.MessageListener;
 import org.laokou.common.tenant.constant.DSConstants;
-import org.laokou.iot.common.config.mqtt.MessageHandler;
-import org.laokou.iot.common.config.mqtt.VertxServiceManager;
 import org.laokou.iot.session.convertor.SessionConvertor;
 import org.laokou.iot.session.dto.event.CloseSessionEvent;
 import org.laokou.iot.session.dto.event.OpenSessionEvent;
@@ -54,13 +55,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public final class SessionMessageHandler implements ApplicationListener<@NonNull ApplicationReadyEvent> {
 
-	private final Vertx vertx;
-
 	private final SystemSettingsProperties systemSettingsProperties;
 
-	private final List<MessageHandler> messageHandlers;
-
 	private final SessionMapper sessionMapper;
+
+	private final MqttClientManager mqttClientManager;
+
+	private final List<MessageListener> listeners;
+
+	private final MqttEventLoop mqttEventLoop;
 
 	// @formatter:off
 	@PulsarListeners(value = {
@@ -78,7 +81,7 @@ public final class SessionMessageHandler implements ApplicationListener<@NonNull
 			if (ForyFactory.INSTANCE.deserialize(msg) instanceof OpenSessionEvent(Long id)) {
 				try {
 					DynamicDataSourceContextHolder.push(DSConstants.IOT);
-					deployMqttClient(sessionMapper.selectById(id));
+					open(sessionMapper.selectById(id));
 				}
 				finally {
 					DynamicDataSourceContextHolder.clear();
@@ -106,7 +109,7 @@ public final class SessionMessageHandler implements ApplicationListener<@NonNull
 	public void handleCloseSessionMessage(byte[] msg, Acknowledgement ack) {
 		try {
 			if (ForyFactory.INSTANCE.deserialize(msg) instanceof CloseSessionEvent(Long id)) {
-				VertxServiceManager.unDeployVertxMqttClientService(id);
+				close(id);
 			}
 			ack.acknowledge();
 		}
@@ -123,7 +126,7 @@ public final class SessionMessageHandler implements ApplicationListener<@NonNull
 			List<SessionDO> list = sessionMapper
 				.selectList(Wrappers.lambdaQuery(SessionDO.class).eq(SessionDO::getState, 1));
 			for (SessionDO sessionDO : list) {
-				deployMqttClient(sessionDO);
+				open(sessionDO);
 			}
 		}
 		finally {
@@ -131,9 +134,13 @@ public final class SessionMessageHandler implements ApplicationListener<@NonNull
 		}
 	}
 
-	private void deployMqttClient(SessionDO sessionDO) {
-		VertxServiceManager.deployVertxMqttClientService(vertx,
-				SessionConvertor.toConfig(sessionDO, systemSettingsProperties), messageHandlers);
+	private void open(SessionDO sessionDO) {
+		MqttClientProperties properties = SessionConvertor.toProperties(sessionDO, systemSettingsProperties);
+		mqttClientManager.open(sessionDO.getId(), properties, mqttEventLoop, listeners);
+	}
+
+	private void close(Long id) {
+		mqttClientManager.close(id);
 	}
 
 }

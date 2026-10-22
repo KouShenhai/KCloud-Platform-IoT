@@ -28,7 +28,7 @@ import java.util.concurrent.ThreadFactory;
  * @author laokou
  */
 @Slf4j
-final class VirtualThreadFactory implements ThreadFactory {
+public final class VirtualThreadFactory implements ThreadFactory {
 
 	public static final VirtualThreadFactory INSTANCE = new VirtualThreadFactory();
 

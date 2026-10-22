@@ -1,0 +1,124 @@
+# APISIX standalone declarative configuration.
+# Configure these listeners in conf/config.yaml and ensure the upstream addresses are reachable.
+# Change the anchored host below once to switch all HTTP and MQTT upstreams.
+ssls: []
+consumers: []
+plugin_configs: []
+routes:
+  - id: gateway-api-microservice
+    name: gateway-api-microservice
+    uri: /api-gateway/*
+    priority: 10
+    upstream:
+      type: roundrobin
+      discovery_type: nacos
+      service_name: laokou-gateway
+      discovery_args:
+        namespace_id: 0dac1a68-2f01-40df-bd26-bf0cb199057a
+        group_name: IOT_GROUP
+      timeout: { connect: 10, send: 60, read: 60 }
+    plugins:
+      proxy-rewrite:
+        headers:
+          set:
+            X-Forwarded-Proto: "$scheme"
+            X-Forwarded-Host: "$http_host"
+            X-Forwarded-Port: "$server_port"
+      cors: { allow_origins: "*", allow_methods: "*", allow_headers: "*", allow_credential: false }
+  - id: auth-api-microservice
+    name: auth-api-microservice
+    uri: /api*
+    vars: [[ "server_port", "==", "90" ]]
+    priority: 20
+    upstream:
+      type: roundrobin
+      discovery_type: nacos
+      service_name: laokou-auth
+      discovery_args:
+        namespace_id: 0dac1a68-2f01-40df-bd26-bf0cb199057a
+        group_name: IOT_GROUP
+      timeout: { connect: 10, send: 60, read: 60 }
+    plugins:
+      proxy-rewrite:
+        headers:
+          set:
+            X-Forwarded-Proto: "$scheme"
+            X-Forwarded-Host: "$http_host"
+            X-Forwarded-Port: "$server_port"
+      cors: { allow_origins: "*", allow_methods: "*", allow_headers: "*", allow_credential: false }
+  - id: auth-prefix
+    uri: /auth/*
+    vars: [[ "server_port", "==", "98" ]]
+    upstream:
+      type: roundrobin
+      nodes:
+        - host: &upstream_host 192.168.31.226
+          port: 1111
+          weight: 1
+    plugins: { proxy-rewrite: { regex_uri: ["^/auth/(.*)", "/$1"] } }
+  - id: admin-prefix
+    uri: /admin/*
+    vars: [[ "server_port", "==", "98" ]]
+    upstream:
+      type: roundrobin
+      nodes:
+        - host: *upstream_host
+          port: 9990
+          weight: 1
+    plugins: { proxy-rewrite: { regex_uri: ["^/admin/(.*)", "/$1"] } }
+  - id: auth-api-monolith
+    uri: /api*
+    vars: [[ "server_port", "==", "100" ]]
+    upstream:
+      type: roundrobin
+      nodes:
+        - host: *upstream_host
+          port: 1111
+          weight: 1
+      timeout: { connect: 10, send: 60, read: 60 }
+    plugins:
+      proxy-rewrite:
+        headers:
+          set:
+            X-Forwarded-Proto: "$scheme"
+            X-Forwarded-Host: "$http_host"
+            X-Forwarded-Port: "$server_port"
+      cors: { allow_origins: "*", allow_methods: "*", allow_headers: "*", allow_credential: false }
+  - id: iot-mcp-api-microservice
+    name: iot-mcp-api-microservice
+    uri: /api*
+    vars: [ [ "server_port", "==", "102" ] ]
+    priority: 20
+    upstream:
+      type: roundrobin
+      discovery_type: nacos
+      service_name: laokou-iot-mcp-server
+      discovery_args:
+        namespace_id: 0dac1a68-2f01-40df-bd26-bf0cb199057a
+        group_name: IOT_GROUP
+      timeout: { connect: 10, send: 60, read: 60 }
+    plugins:
+      proxy-rewrite:
+        headers:
+          set:
+            X-Forwarded-Proto: "$scheme"
+            X-Forwarded-Host: "$http_host"
+            X-Forwarded-Port: "$server_port"
+      cors: { allow_origins: "*", allow_methods: "*", allow_headers: "*", allow_credential: false }
+stream_routes:
+  - id: mqtt-tcp
+    server_port: 1883
+    upstream:
+      type: roundrobin
+      timeout: { connect: 5, send: 3600, read: 3600 }
+      nodes:
+        - host: *upstream_host
+          port: 11883
+          weight: 1
+        - host: *upstream_host
+          port: 21883
+          weight: 1
+        - host: *upstream_host
+          port: 31883
+          weight: 1
+#END

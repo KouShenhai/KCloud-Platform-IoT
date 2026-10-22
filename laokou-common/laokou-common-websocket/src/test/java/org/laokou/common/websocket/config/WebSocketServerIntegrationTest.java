@@ -147,15 +147,13 @@ class WebSocketServerIntegrationTest {
 
 		// Setup properties
 		SpringWebSocketServerProperties properties = new SpringWebSocketServerProperties();
-		properties.setBindIp("0.0.0.0");
+		properties.setHost("0.0.0.0");
 		properties.setPort(testPort);
 		properties.setWebsocketPath("/ws");
 		properties.setMaxContentLength(65536);
 		properties.setReaderIdleTime(60);
 		properties.setBossCorePoolSize(1);
 		properties.setWorkerCorePoolSize(2);
-		// Disable io_uring for consistent test behavior across environments
-		properties.setUseIoUring(false);
 
 		// Create handler
 		WebSocketServerHandler handler = new WebSocketServerHandler(properties, introspector);

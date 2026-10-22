@@ -144,8 +144,6 @@
     <springdoc-openapi.version>3.1.1</springdoc-openapi.version>
     <!-- testcontainers版本 -->
     <testcontainers.version>2.0.5</testcontainers.version>
-    <!-- vertx版本 -->
-    <vertx.version>5.2.0</vertx.version>
     <!-- mybatis-plus版本 -->
     <mybatis-plus.version>3.5.17</mybatis-plus.version>
     <!-- nacos版本 -->
@@ -246,6 +244,8 @@
     <commons-logging.version>1.4.0</commons-logging.version>
     <!-- jctools版本 -->
     <jctools.version>4.0.7</jctools.version>
+    <!-- paho版本 -->
+    <paho.version>1.2.5</paho.version>
     <!-- spotbugs版本 -->
     <spotbugs.version>4.10.4</spotbugs.version>
     <!-- docker主机 -->
@@ -352,16 +352,6 @@
         <scope>import</scope>
       </dependency>
       <!-- =============================== 定义 Testcontainers 版本 =============================== -->
-
-      <!-- =============================== 定义 Vert.x 版本 =============================== -->
-      <dependency>
-        <groupId>io.vertx</groupId>
-        <artifactId>vertx-dependencies</artifactId>
-        <version>${vertx.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <!-- =============================== 定义 Vert.x 版本 =============================== -->
 
       <!-- =============================== 定义 Mybatis Plus 版本 =============================== -->
       <dependency>
@@ -691,6 +681,12 @@
         <groupId>org.jctools</groupId>
         <artifactId>jctools-core</artifactId>
         <version>${jctools.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.eclipse.paho</groupId>
+        <artifactId>org.eclipse.paho.mqttv5.client</artifactId>
+        <version>${paho.version}</version>
       </dependency>
 
     </dependencies>

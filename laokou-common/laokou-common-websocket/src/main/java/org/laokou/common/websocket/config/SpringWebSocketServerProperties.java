@@ -32,14 +32,14 @@ import org.springframework.stereotype.Component;
 public class SpringWebSocketServerProperties {
 
 	/**
-	 * 绑定IP.
+	 * 主机.
 	 */
-	private String bindIp = "0.0.0.0";
+	private String host = "0.0.0.0";
 
 	/**
 	 * 端口.
 	 */
-	private int port;
+	private int port = 13000;
 
 	/**
 	 * 服务ID.
@@ -84,12 +84,12 @@ public class SpringWebSocketServerProperties {
 	/**
 	 * 监听核心线程数.
 	 */
-	private Integer bossCorePoolSize = 2;
+	private int bossCorePoolSize = 2;
 
 	/**
 	 * 读写核心线程数.
 	 */
-	private Integer workerCorePoolSize = 40;
+	private int workerCorePoolSize = 40;
 
 	/**
 	 * 延迟发送 => true实时，false延迟.
@@ -125,10 +125,5 @@ public class SpringWebSocketServerProperties {
 	 * 私钥路径.
 	 */
 	private String keyCertPrivateKeyPath = "classpath:private.key";
-
-	/**
-	 * 是否启用io_uring(仅Linux生效).
-	 */
-	private boolean useIoUring = true;
 
 }

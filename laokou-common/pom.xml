@@ -115,6 +115,7 @@
     <module>laokou-common-grpc-server</module>
     <module>laokou-common-grpc-client</module>
     <module>laokou-common-mcp</module>
+    <module>laokou-common-mqtt</module>
   </modules>
 
 </project>
