@@ -18,6 +18,7 @@
 package org.laokou.common.mqtt.client;
 
 import lombok.Data;
+import org.laokou.common.core.util.UUIDGenerator;
 
 /**
  * MQTT 客户端配置.
@@ -73,5 +74,9 @@ public final class MqttClientProperties {
 	 * QoS1/2 单条消息 ACK 超时（毫秒）
 	 */
 	private long ackTimeoutMs = 5000;
+
+	public String getClientId() {
+		return String.format("%s-%s", this.tenantCode, UUIDGenerator.generateUUID().substring(0, 16));
+	}
 
 }
