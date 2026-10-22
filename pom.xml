@@ -247,7 +247,7 @@
     <!-- paho版本 -->
     <paho.version>1.2.5</paho.version>
     <!-- spotbugs版本 -->
-    <spotbugs.version>4.10.4</spotbugs.version>
+    <spotbugs.version>4.10.5</spotbugs.version>
     <!-- docker主机 -->
     <docker.host>tcp://127.0.0.1:2375</docker.host>
     <!-- docker仓库 -->
