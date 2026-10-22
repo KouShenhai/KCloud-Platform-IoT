@@ -75,8 +75,10 @@ public final class MqttClientProperties {
 	 */
 	private long ackTimeoutMs = 5000;
 
+	private String identifier = UUIDGenerator.generateUUID().substring(0, 16);
+
 	public String getClientId() {
-		return String.format("%s-%s", this.tenantCode, UUIDGenerator.generateUUID().substring(0, 16));
+		return String.format("%s-%s", this.tenantCode, this.identifier);
 	}
 
 }
