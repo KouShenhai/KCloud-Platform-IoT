@@ -25,7 +25,7 @@ import lombok.Data;
  * @author laokou
  */
 @Data
-final class MqttClientProperties {
+public final class MqttClientProperties {
 
 	private String tenantCode;
 

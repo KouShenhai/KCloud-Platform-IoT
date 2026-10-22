@@ -23,6 +23,7 @@ import org.apache.pulsar.client.api.PulsarClientException;
 import org.apache.pulsar.client.api.SubscriptionType;
 import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.config.SystemSettingsProperties;
+import org.laokou.common.mqtt.client.MqttClientManager;
 import org.laokou.iot.device.gatewayimpl.mcp.DeviceMcpMapper;
 import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -51,6 +52,11 @@ public class IotConfig {
 			name = "enabled")
 	DeviceMcpMapper deviceMcpMapper0() {
 		return new DeviceMcpMapper(null);
+	}
+
+	@Bean(destroyMethod = "close")
+	public MqttClientManager mqttClientManager() {
+		return new MqttClientManager();
 	}
 
 	/**

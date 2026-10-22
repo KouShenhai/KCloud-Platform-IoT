@@ -35,7 +35,7 @@ import java.util.concurrent.ExecutorService;
  */
 @Slf4j
 @Getter
-final class MqttEventLoop implements AutoCloseable {
+public final class MqttEventLoop implements AutoCloseable {
 
 	private final ExecutorService executor;
 
