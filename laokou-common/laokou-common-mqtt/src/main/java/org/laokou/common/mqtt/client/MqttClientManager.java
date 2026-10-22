@@ -44,7 +44,7 @@ public class MqttClientManager implements AutoCloseable {
 			List<MessageListener> listeners) {
 		return clients.computeIfAbsent(id, _ -> {
 			List<MqttClient> clients = new ArrayList<>(2);
-			for (int i = 0; i < listeners.size(); ++i) {
+			for (int i = 0; i < 2; i++) {
 				clients.add(new NettyMqttClient(properties, mqttEventLoop, listeners));
 			}
 			return clients;
