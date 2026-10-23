@@ -54,9 +54,9 @@ public class SpringElasticsearchProperties {
 
 	private String proxy;
 
-	private String version = "9.5.4";
+	private String version = "9.5.5";
 
-	private String clientVersion = "9.5.4";
+	private String clientVersion = "9.5.5";
 
 	private final RestClient restClient = new RestClient();
 
