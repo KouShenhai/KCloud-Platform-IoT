@@ -120,7 +120,7 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 
 	MqttClientHandler(NettyMqttClient client) {
 		this.client = client;
-		this.inboundQos2Pending = new InboundQos2[0XFFFF];
+		this.inboundQos2Pending = new InboundQos2[0XFFFF + 1];
 	}
 
 	@Override
@@ -152,14 +152,15 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 	private void onConnAck(Channel ch, MqttConnAckMessage msg) {
 		MqttConnectReturnCode returnCode = msg.variableHeader().connectReturnCode();
 		if (returnCode == MqttConnectReturnCode.CONNECTION_ACCEPTED) {
-			log.info("【Netty-MQTT-Client】 => 连接 MQTT Broker 成功");
+			log.info("【Netty-MQTT-Client】 => 客户端ID：{}，连接 MQTT Broker 成功", client.getProperties().getClientId());
 			subscribe(ch);
 			client.setChannel(ch);
 			client.getReconnectAttempts().set(0);
 			client.getState().set(ClientState.CONNECTED);
 		}
 		else {
-			log.error("【Netty-MQTT-Client】 => 连接 MQTT Broker 失败，错误信息：{}", returnCode);
+			log.error("【Netty-MQTT-Client】 => 客户端ID：{}，连接 MQTT Broker 失败，错误信息：{}", client.getProperties().getClientId(),
+					returnCode);
 			ch.close();
 		}
 	}

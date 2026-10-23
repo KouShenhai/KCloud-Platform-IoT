@@ -24,7 +24,7 @@ import java.util.concurrent.atomic.AtomicReferenceArray;
  */
 class InMemoryInflightStore implements InflightStore {
 
-	private final AtomicReferenceArray<OutboundMessage> slots = new AtomicReferenceArray<>(0xFFFF);
+	private final AtomicReferenceArray<OutboundMessage> slots = new AtomicReferenceArray<>(0XFFFF + 1);
 
 	@Override
 	public boolean putIfAbsent(OutboundMessage msg) {

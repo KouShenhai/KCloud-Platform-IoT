@@ -731,8 +731,6 @@ services:
       - localhost
     environment:
       - PULSAR_MEM=-Xms512m -Xmx512m
-    volumes:
-      - ./pulsar/data:/pulsar/data
     ports:
       - "16650:6650"
       - "18080:8080"

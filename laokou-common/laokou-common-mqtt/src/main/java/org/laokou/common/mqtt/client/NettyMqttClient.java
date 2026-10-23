@@ -108,7 +108,7 @@ final class NettyMqttClient implements MqttClient {
 	@Override
 	public void connect() {
 		ClientState s = state.get();
-		if (s == ClientState.CLOSED || s == ClientState.CONNECTED || s == ClientState.CONNECTING) {
+		if (s == ClientState.CONNECTED || s == ClientState.CONNECTING) {
 			return;
 		}
 		if (state.compareAndSet(s, ClientState.CONNECTING)) {
@@ -176,8 +176,7 @@ final class NettyMqttClient implements MqttClient {
 	}
 
 	void cancelAckTimeout(OutboundMessage msg) {
-		Timeout timeout = msg.getTimeoutTask();
-		if (timeout != null) {
+		if (msg != null && msg.getTimeoutTask() instanceof Timeout timeout) {
 			timeout.cancel();
 		}
 	}
@@ -304,8 +303,7 @@ final class NettyMqttClient implements MqttClient {
 		MqttConnectVariableHeader variableHeader = new MqttConnectVariableHeader(MqttVersion.MQTT_5.protocolName(),
 				MqttVersion.MQTT_5.protocolLevel(), true, true, false, 0, false, true,
 				properties.getKeepAliveTimeSeconds(), MqttProperties.NO_PROPERTIES);
-		MqttConnectPayload payload = new MqttConnectPayload(
-				String.format("%s-%d", properties.getTenantCode(), System.currentTimeMillis()), null, null,
+		MqttConnectPayload payload = new MqttConnectPayload(properties.getClientId(), null, null,
 				properties.getUsername(), properties.getPassword().getBytes(StandardCharsets.UTF_8));
 		return new MqttConnectMessage(fixedHeader, variableHeader, payload);
 	}
