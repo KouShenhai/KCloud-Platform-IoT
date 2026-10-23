@@ -19,7 +19,6 @@ package org.laokou.common.mqtt.client;
 
 import org.laokou.common.mqtt.client.listener.MessageListener;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -29,29 +28,23 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class MqttClientManager implements AutoCloseable {
 
-	private final Map<Long, List<MqttClient>> clients = new ConcurrentHashMap<>();
+	private final Map<Long, MqttClient> clients = new ConcurrentHashMap<>();
 
 	public void open(Long id, MqttClientProperties properties, MqttEventLoop mqttEventLoop,
 			List<MessageListener> listeners) {
-		create(id, properties, mqttEventLoop, listeners).forEach(MqttClient::connect);
+		create(id, properties, mqttEventLoop, listeners).connect();
 	}
 
 	public void close(Long id) {
-		get(id).forEach(MqttClient::disconnect);
+		get(id).disconnect();
 	}
 
-	private List<MqttClient> create(Long id, MqttClientProperties properties, MqttEventLoop mqttEventLoop,
+	private MqttClient create(Long id, MqttClientProperties properties, MqttEventLoop mqttEventLoop,
 			List<MessageListener> listeners) {
-		return clients.computeIfAbsent(id, _ -> {
-			List<MqttClient> clients = new ArrayList<>(2);
-			for (int i = 0; i < 2; i++) {
-				clients.add(new NettyMqttClient(properties, mqttEventLoop, listeners));
-			}
-			return clients;
-		});
+		return clients.computeIfAbsent(id, _ -> new NettyMqttClient(properties, mqttEventLoop, listeners));
 	}
 
-	private List<MqttClient> get(Long id) {
+	private MqttClient get(Long id) {
 		return clients.get(id);
 	}
 
