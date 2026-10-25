@@ -149,7 +149,7 @@
     <!-- nacos版本 -->
     <nacos.version>3.2.4</nacos.version>
     <!-- micrometer-tracing版本 -->
-    <micrometer-tracing.version>1.7.1</micrometer-tracing.version>
+    <micrometer-tracing.version>1.7.2</micrometer-tracing.version>
     <!-- netty版本 -->
     <netty.version>4.2.19.Final</netty.version>
     <!-- grpc版本 -->
