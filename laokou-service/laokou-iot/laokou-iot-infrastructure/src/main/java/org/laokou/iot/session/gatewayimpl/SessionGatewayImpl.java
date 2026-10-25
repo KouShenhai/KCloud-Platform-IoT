@@ -19,6 +19,7 @@ package org.laokou.iot.session.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.mqtt.client.MqttClientManager;
 import org.laokou.iot.session.convertor.SessionConvertor;
 import org.laokou.iot.session.gateway.SessionGateway;
 import org.laokou.iot.session.gatewayimpl.database.SessionMapper;
@@ -41,6 +42,8 @@ public class SessionGatewayImpl implements SessionGateway {
 
 	private final SessionMapper sessionMapper;
 
+	private final MqttClientManager mqttClientManager;
+
 	@Override
 	public void createSession(SessionA sessionA) {
 		verifyConnection(sessionA);
@@ -57,6 +60,7 @@ public class SessionGatewayImpl implements SessionGateway {
 
 	@Override
 	public void deleteSession(Long[] ids) {
+		mqttClientManager
 		sessionMapper.deleteByIds(Arrays.asList(ids));
 	}
 
