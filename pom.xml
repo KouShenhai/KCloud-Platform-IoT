@@ -139,7 +139,7 @@
     <!-- spring-security版本 -->
     <spring-security.version>7.1.2</spring-security.version>
     <!-- spring-ai版本 -->
-    <spring-ai.version>2.0.2</spring-ai.version>
+    <spring-ai.version2.0.2</spring-ai.version>
     <!-- springdoc-openapi版本 -->
     <springdoc-openapi.version>3.1.1</springdoc-openapi.version>
     <!-- testcontainers版本 -->
