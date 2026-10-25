@@ -139,7 +139,7 @@
     <!-- spring-security版本 -->
     <spring-security.version>7.1.2</spring-security.version>
     <!-- spring-ai版本 -->
-    <spring-ai.version>2.0.1</spring-ai.version>
+    <spring-ai.version>2.0.2</spring-ai.version>
     <!-- springdoc-openapi版本 -->
     <springdoc-openapi.version>3.1.1</springdoc-openapi.version>
     <!-- testcontainers版本 -->
@@ -185,7 +185,7 @@
     <!-- jakarta.servlet-api版本 -->
     <jakarta-servlet-api.version>6.1.0</jakarta-servlet-api.version>
     <!-- fesod版本 -->
-    <fesod.version>2.0.2-incubating</fesod.version>
+    <fesod.version>2.1.0-incubating</fesod.version>
     <!-- s3版本 -->
     <s3.version>2.55.13</s3.version>
     <!-- dynamic-datasource版本 -->
