@@ -35,7 +35,7 @@ services:
     networks:
       - iot_network
   mongodb:
-    image: mongo:9.0.2
+    image: mongo:9.0.4
     container_name: mongodb
     # 保持容器在没有守护程序的情况下运行
     tty: true
