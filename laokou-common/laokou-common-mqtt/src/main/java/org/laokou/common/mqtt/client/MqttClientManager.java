@@ -32,21 +32,12 @@ public class MqttClientManager implements AutoCloseable {
 
 	public void open(Long id, MqttClientProperties properties, MqttEventLoop mqttEventLoop,
 			List<MessageListener> listeners) {
-		create(id, properties, mqttEventLoop, listeners).connect();
+		clients.computeIfAbsent(id, _ -> new NettyMqttClient(properties, mqttEventLoop, listeners)).connect();
 	}
 
 	public void close(Long id) {
-		get(id).disconnect();
-	}
-
-	private MqttClient create(Long id, MqttClientProperties properties, MqttEventLoop mqttEventLoop,
-			List<MessageListener> listeners) {
-		return clients.computeIfAbsent(id, _ -> new NettyMqttClient(properties, mqttEventLoop, listeners));
-	}
-
-	private MqttClient get(Long id) {
-		return clients.get(id);
-	}
+		clients.remove(id).disconnect();
+	4}
 
 	@Override
 	public void close() {
