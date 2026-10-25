@@ -26,9 +26,9 @@ import org.laokou.iot.session.model.SessionA;
  */
 public interface SessionGateway {
 
-	void createSession(SessionA sessionA);
+	void createSession(SessionA sessionA) throws Exception;
 
-	void updateSession(SessionA sessionA);
+	void updateSession(SessionA sessionA) throws Exception;
 
 	void deleteSession(Long[] ids);
 

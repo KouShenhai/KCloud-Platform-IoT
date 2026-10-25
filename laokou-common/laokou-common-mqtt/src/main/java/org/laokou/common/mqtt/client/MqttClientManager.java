@@ -37,7 +37,7 @@ public class MqttClientManager implements AutoCloseable {
 
 	public void close(Long id) {
 		clients.remove(id).disconnect();
-	4}
+	}
 
 	@Override
 	public void close() {
