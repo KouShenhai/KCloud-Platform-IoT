@@ -67,7 +67,7 @@ import java.util.function.Consumer;
  */
 @Slf4j
 @Data
-final class NettyMqttClient implements MqttClient {
+public final class NettyMqttClient implements MqttClient {
 
 	private volatile Channel channel;
 
@@ -89,7 +89,8 @@ final class NettyMqttClient implements MqttClient {
 
 	private final List<MessageListener> listeners;
 
-	NettyMqttClient(MqttClientProperties properties, MqttEventLoop mqttEventLoop, List<MessageListener> listeners) {
+	public NettyMqttClient(MqttClientProperties properties, MqttEventLoop mqttEventLoop,
+			List<MessageListener> listeners) {
 		this.state = new AtomicReference<>(ClientState.DISCONNECTED);
 		this.reconnectAttempts = new AtomicInteger(0);
 		this.inflightStore = new InMemoryInflightStore();

@@ -33,11 +33,11 @@ public class SessionDomainService {
 
 	private final SessionGateway sessionGateway;
 
-	public void createSession(SessionA sessionA) {
+	public void createSession(SessionA sessionA) throws Exception {
 		sessionGateway.createSession(sessionA);
 	}
 
-	public void updateSession(SessionA sessionA) {
+	public void updateSession(SessionA sessionA) throws Exception {
 		sessionGateway.updateSession(sessionA);
 	}
 

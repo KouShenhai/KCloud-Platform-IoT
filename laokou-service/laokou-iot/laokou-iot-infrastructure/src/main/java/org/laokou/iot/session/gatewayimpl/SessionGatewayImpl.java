@@ -19,16 +19,20 @@ package org.laokou.iot.session.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.mqtt.client.MqttClientManager;
+import org.eclipse.paho.mqttv5.common.MqttException;
+import org.laokou.common.core.config.SystemSettingsProperties;
+import org.laokou.common.mqtt.client.MqttClient;
+import org.laokou.common.mqtt.client.MqttEventLoop;
+import org.laokou.common.mqtt.client.NettyMqttClient;
 import org.laokou.iot.session.convertor.SessionConvertor;
 import org.laokou.iot.session.gateway.SessionGateway;
 import org.laokou.iot.session.gatewayimpl.database.SessionMapper;
 import org.laokou.iot.session.gatewayimpl.database.dataobject.SessionDO;
 import org.laokou.iot.session.model.SessionA;
-import org.laokou.iot.session.model.entity.SessionE;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * 会话网关实现.
@@ -42,25 +46,27 @@ public class SessionGatewayImpl implements SessionGateway {
 
 	private final SessionMapper sessionMapper;
 
-	private final MqttClientManager mqttClientManager;
+	private final MqttEventLoop mqttEventLoop;
+
+	private final SystemSettingsProperties systemSettingsProperties;
 
 	@Override
-	public void createSession(SessionA sessionA) {
-		verifyConnection(sessionA);
-		sessionMapper.insert(SessionConvertor.toDataObject(sessionA));
+	public void createSession(SessionA sessionA) throws MqttException {
+		SessionDO sessionDO = SessionConvertor.toDataObject(sessionA);
+		verifyConnect(sessionDO);
+		sessionMapper.insert(sessionDO);
 	}
 
 	@Override
-	public void updateSession(SessionA sessionA) {
-		verifyConnection(sessionA);
+	public void updateSession(SessionA sessionA) throws MqttException {
 		SessionDO sessionDO = SessionConvertor.toDataObject(sessionA);
+		verifyConnect(sessionDO);
 		sessionDO.setVersion(sessionMapper.selectVersion(sessionA.getId()));
 		sessionMapper.updateById(sessionDO);
 	}
 
 	@Override
 	public void deleteSession(Long[] ids) {
-		mqttClientManager
 		sessionMapper.deleteByIds(Arrays.asList(ids));
 	}
 
@@ -71,23 +77,10 @@ public class SessionGatewayImpl implements SessionGateway {
 		sessionMapper.updateById(sessionDO);
 	}
 
-	private void verifyConnection(SessionA sessionA) {
-		SessionE sessionE = sessionA.getSessionE();
-		// MqttClientOptions options = new MqttClientOptions();
-		// options.setCleanSession(true);
-		// options.setCleanSession(true);
-		// options.setVersion(MqttVersion.MQTT_5.protocolLevel());
-		// options.setUsername(sessionE.getUsername());
-		// options.setPassword(sessionE.getPassword());
-		// options.setConnectTimeout(1000);
-		// MqttClient client = MqttClient.create(vertx, options);
-		// client.connect(sessionE.getPort(), sessionE.getHost()).compose(_ -> {
-		// log.info("MQTT Broker连接成功");
-		// return client.disconnect();
-		// }).onSuccess(_ -> log.info("MQTT Broker连接关闭")).recover(ex -> {
-		// log.error("MQTT Broker连接失败，错误信息：{}", ex.getMessage(), ex);
-		// return Future.failedFuture(ex);
-		// }).toCompletionStage().toCompletableFuture().join();
+	private void verifyConnect(SessionDO sessionDO) throws MqttException {
+		MqttClient mqttClient = new NettyMqttClient(SessionConvertor.toProperties(sessionDO, systemSettingsProperties),
+				mqttEventLoop, Collections.emptyList());
+		mqttClient.test();
 	}
 
 }

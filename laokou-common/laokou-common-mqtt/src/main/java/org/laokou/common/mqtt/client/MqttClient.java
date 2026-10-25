@@ -23,7 +23,7 @@ import org.eclipse.paho.mqttv5.common.MqttException;
 /**
  * @author laokou
  */
-interface MqttClient {
+public interface MqttClient {
 
 	void test() throws MqttException;
 
