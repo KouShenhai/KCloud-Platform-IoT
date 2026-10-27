@@ -21,13 +21,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.pulsar.client.api.SubscriptionType;
 import org.apache.pulsar.common.schema.SchemaType;
+import org.laokou.common.mqtt.client.MqttForyFactory;
 import org.laokou.common.mqtt.client.message.MqttMessageType;
 import org.springframework.pulsar.annotation.PulsarListener;
 import org.springframework.pulsar.annotation.PulsarListeners;
 import org.springframework.pulsar.listener.AckMode;
 import org.springframework.stereotype.Component;
 
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -52,7 +52,7 @@ public final class MqttMessageHandler {
 	})
 	public void handleIotUpReportPropertiesGatewayMessage(List<byte[]> messages) {
 		for (byte[] message : messages) {
-			log.info("接收消息：{}", new String(message, StandardCharsets.UTF_8));
+			log.info("接收消息：{}", MqttForyFactory.INSTANCE.deserialize(message));
 		}
 	}
 	// @formatter:on

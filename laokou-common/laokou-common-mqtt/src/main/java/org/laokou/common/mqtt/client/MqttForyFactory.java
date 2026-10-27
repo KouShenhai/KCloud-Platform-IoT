@@ -15,16 +15,36 @@
  *
  */
 
-package org.laokou.common.mqtt.client.message;
+package org.laokou.common.mqtt.client;
 
-import lombok.Data;
+import org.apache.fory.ThreadSafeFory;
+import org.apache.fory.config.ForyBuilder;
+
+import java.util.Arrays;
 
 /**
- * 设备报警事件消息【上行】.
- *
  * @author laokou
  */
-@Data
-public class UpAlarmEventGatewayMessage extends EventDeviceMessage {
+public final class MqttForyFactory {
+
+	public static final MqttForyFactory INSTANCE = new MqttForyFactory();
+
+	private final ThreadSafeFory fory;
+
+	public MqttForyFactory() {
+		fory = new ForyBuilder()
+			// 开启多语言序列化
+			.withXlang(true)
+			// 关闭循环引用跟踪
+			.withRefTracking(false)
+			.buildThreadSafeFory();
+	}
+
+	public Object deserialize(byte[] bytes) {
+		if (bytes == null || Arrays.equals(bytes, new byte[0])) {
+			return null;
+		}
+		return fory.deserialize(bytes);
+	}
 
 }
