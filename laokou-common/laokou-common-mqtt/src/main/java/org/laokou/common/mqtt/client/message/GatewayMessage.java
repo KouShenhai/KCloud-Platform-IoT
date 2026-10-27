@@ -18,7 +18,8 @@
 package org.laokou.common.mqtt.client.message;
 
 import lombok.Data;
-import tools.jackson.databind.JsonNode;
+
+import java.util.Map;
 
 /**
  * 网关消息.
@@ -51,6 +52,6 @@ public abstract class GatewayMessage implements Message {
 	/**
 	 * 扩展元数据.
 	 */
-	protected JsonNode metadata;
+	protected Map<String, Object> metadata;
 
 }

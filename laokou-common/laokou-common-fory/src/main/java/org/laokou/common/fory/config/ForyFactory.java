@@ -25,6 +25,7 @@ import org.apache.fory.config.Language;
 import org.apache.fory.serializer.Serializer;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 /**
  * @author laokou
@@ -86,7 +87,7 @@ public final class ForyFactory {
 	}
 
 	public Object deserialize(byte[] bytes) {
-		if (bytes == null || bytes.length == 0) {
+		if (bytes == null || Arrays.equals(bytes, new byte[0])) {
 			return null;
 		}
 		return fory.deserialize(bytes);
