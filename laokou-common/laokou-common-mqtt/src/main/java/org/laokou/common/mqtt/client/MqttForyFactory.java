@@ -22,6 +22,9 @@ import org.apache.fory.config.ForyBuilder;
 
 import java.util.Arrays;
 
+/**
+ * @author laokou
+ */
 public final class MqttForyFactory {
 
 	public static final MqttForyFactory INSTANCE = new MqttForyFactory();
