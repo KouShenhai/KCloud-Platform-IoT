@@ -68,6 +68,7 @@ module.exports = {
 							{text: 'ARM64疑难杂症', link: '/pages/d9a8f5/'},
 							{text: 'FRP内网穿透', link: '/pages/01381a/'},
 							{text: 'Docker安装RabbitMQ', link: '/pages/4ae44e/'},
+							{text: 'Docker安装Oracle', link: '/pages/c7b692/'},
 						]
 					},
 					{
