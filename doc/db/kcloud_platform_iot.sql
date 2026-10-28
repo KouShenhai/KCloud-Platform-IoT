@@ -101,7 +101,7 @@ CREATE unique INDEX "iot_session_host_port_idx" ON "public"."iot_session" USING 
 ) where del_flag = 0;
 COMMENT ON INDEX "public"."iot_session_host_port_idx" IS '主机_端口_租户ID_唯一索引';
 
-INSERT INTO "public"."iot_session" VALUES (1, 1, 1, '2026-09-05 21:03:09.072226', '2026-09-06 15:21:51.864419', 0, 105, 1, 1, 'MQTT边缘网关会话', '127.0.0.1', 41883, 'root', 'laokou123', 0);
+INSERT INTO "public"."iot_session" VALUES (1, 1, 1, '2026-09-05 21:03:09.072226', '2026-09-06 15:21:51.864419', 0, 105, 1, 1, 'MQTT边缘网关会话', '0.0.0.0', 41883, 'root', 'laokou123', 0);
 
 DROP TABLE IF EXISTS "public"."iot_thing_model";
 CREATE TABLE "public"."iot_thing_model" (
@@ -341,7 +341,7 @@ COMMENT ON TABLE "public"."iot_source" IS '数据源';
 
 ALTER TABLE "public"."iot_source" ADD CONSTRAINT "iot_source_pkey" PRIMARY KEY ("id");
 
-INSERT INTO "public"."iot_source" VALUES (1, 1, 1, '2026-07-13 22:37:37.171034', '2026-07-13 23:16:46.219868', 0, 2, 1, 1, 'TDengine默认数据源', 'tdengine', '127.0.0.1:6041', 'root', 'taosdata', 'kcloud_platform_iot');
+INSERT INTO "public"."iot_source" VALUES (1, 1, 1, '2026-07-13 22:37:37.171034', '2026-07-13 23:16:46.219868', 0, 2, 1, 1, 'TDengine默认数据源', 'tdengine', '0.0.0.0:6041', 'root', 'taosdata', 'kcloud_platform_iot');
 
 DROP TABLE IF EXISTS "public"."iot_gateway";
 CREATE TABLE "public"."iot_gateway" (
