@@ -34,6 +34,8 @@ import io.netty.handler.codec.mqtt.MqttReasonCodes;
 import io.netty.handler.codec.mqtt.MqttSubAckMessage;
 import io.netty.handler.codec.mqtt.MqttSubscribeMessage;
 import io.netty.handler.codec.mqtt.MqttSubscribePayload;
+import io.netty.handler.timeout.IdleState;
+import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.util.ReferenceCountUtil;
 import io.netty.util.concurrent.EventExecutor;
 import lombok.extern.slf4j.Slf4j;
@@ -154,7 +156,7 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 		if (returnCode == MqttConnectReturnCode.CONNECTION_ACCEPTED) {
 			log.info("【Netty-MQTT-Client】 => 客户端ID：{}，连接 MQTT Broker 成功", client.getProperties().getClientId());
 			subscribe(ch);
-			client.setChannel(ch);
+			client.setCh(ch);
 			client.getReconnectAttempts().set(0);
 			client.getState().set(ClientState.CONNECTED);
 		}
@@ -322,18 +324,22 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-		onChannelInactive();
+		if (client.getCh() == null || client.getCh() == ctx.channel() || !client.getCh().isActive()) {
+			client.handleDisconnect();
+		}
 		super.channelInactive(ctx);
 	}
 
-	public void onChannelInactive() {
-		if (client.getState().get() == ClientState.CLOSED) {
-			return;
+	@Override
+	public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
+		if (evt instanceof IdleStateEvent e && e.state() == IdleState.READER_IDLE) {
+			Channel channel = ctx.channel();
+			client.writeAndFlush(channel, new MqttMessage(new MqttFixedHeader(MqttMessageType.PINGREQ, false, MqttQoS.AT_MOST_ONCE, false, 0)), _ -> channel.close());
 		}
-		client.handleDisconnect();
+		super.userEventTriggered(ctx, evt);
 	}
 
-	public MessageListener getMessageListener(String topic) {
+	private MessageListener getMessageListener(String topic) {
 		for (MessageListener listener : client.getListeners()) {
 			if (listener.supports(topic)) {
 				return listener;
