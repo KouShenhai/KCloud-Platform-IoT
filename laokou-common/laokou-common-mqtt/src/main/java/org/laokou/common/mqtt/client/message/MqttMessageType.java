@@ -202,7 +202,7 @@ public enum MqttMessageType {
 
 		@Override
 		public String getMqTopic() {
-			return "iot-up-report-properties-gateway-message";
+			return UP_REPORT_PROPERTIES_GATEWAY_MESSAGE_TOPIC;
 		}
 
 		@Override
@@ -291,5 +291,7 @@ public enum MqttMessageType {
 	}
 
 	public static final String UP_REPORT_PROPERTIES_DEVICE_MESSAGE_TOPIC = "iot-up-report-properties-device-message";
+
+	public static final String UP_REPORT_PROPERTIES_GATEWAY_MESSAGE_TOPIC = "iot-up-report-properties-gateway-message";
 
 }

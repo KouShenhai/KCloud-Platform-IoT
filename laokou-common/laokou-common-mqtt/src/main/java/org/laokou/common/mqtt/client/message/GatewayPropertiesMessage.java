@@ -41,11 +41,11 @@ public class GatewayPropertiesMessage {
 
 	private String uptime;
 
-	private long timestamp;
-
 	private String gatewaySn;
 
-	private int version;
+	private String version;
+
+	private long timestamp;
 
 	private int interval;
 
