@@ -20,6 +20,8 @@ package org.laokou.common.mqtt.client;
 import lombok.Data;
 import org.laokou.common.core.util.UUIDGenerator;
 
+import java.util.Locale;
+
 /**
  * MQTT 客户端配置.
  *
@@ -28,7 +30,7 @@ import org.laokou.common.core.util.UUIDGenerator;
 @Data
 public final class MqttClientProperties {
 
-	private String tenantCode;
+	private String tenantCode = "laokouyun";
 
 	/**
 	 * 主机.
@@ -78,7 +80,7 @@ public final class MqttClientProperties {
 	private String identifier = UUIDGenerator.generateUUID().substring(0, 16);
 
 	public String getClientId() {
-		return String.format("%s-%s", this.tenantCode, this.identifier);
+		return String.format("%s-%s", this.tenantCode, this.identifier).toUpperCase(Locale.ROOT);
 	}
 
 }

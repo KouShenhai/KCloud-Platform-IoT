@@ -101,7 +101,7 @@ CREATE unique INDEX "iot_session_host_port_idx" ON "public"."iot_session" USING 
 ) where del_flag = 0;
 COMMENT ON INDEX "public"."iot_session_host_port_idx" IS '主机_端口_租户ID_唯一索引';
 
-INSERT INTO "public"."iot_session" VALUES (1, 1, 1, '2026-09-05 21:03:09.072226', '2026-09-06 15:21:51.864419', 0, 105, 1, 1, 'MQTT边缘网关会话', '127.0.0.1', 41883, 'root', 'laokou123', 0);
+INSERT INTO "public"."iot_session" VALUES (1, 1, 1, '2026-09-05 21:03:09.072226', '2026-09-06 15:21:51.864419', 0, 105, 1, 1, 'MQTT边缘网关会话', '0.0.0.0', 41883, 'root', 'laokou123', 0);
 
 DROP TABLE IF EXISTS "public"."iot_thing_model";
 CREATE TABLE "public"."iot_thing_model" (
@@ -171,7 +171,7 @@ INSERT INTO "public"."iot_thing_model" VALUES (21, 1, 1, '2026-07-01 22:25:24.72
 INSERT INTO "public"."iot_thing_model" VALUES (22, 1, 1, '2026-07-01 22:26:10.159051', '2026-07-01 22:26:10.159051', 0, 0, 1, 1, '已使用内存', 'memoryUsed', 'int', 21, '{"min":"0","max":"1000000", "step": "","unit":""}', '已使用内存');
 INSERT INTO "public"."iot_thing_model" VALUES (23, 1, 1, '2026-07-01 22:27:19.026649', '2026-07-01 22:27:19.026649', 0, 0, 1, 1, '可使用内存', 'memoryAvailable', 'int', 22, '{"min":"0","max":"1000000", "step": "","unit":""}', '可使用内存');
 INSERT INTO "public"."iot_thing_model" VALUES (24, 1, 1, '2026-07-01 22:34:55.945584', '2026-07-01 22:34:55.945584', 0, 0, 1, 1, '主轴设定转速', 'spindleSetSpeed', 'int', 23, '{"min":"0","max":"10000", "step": "0.01","unit":"rpm"}', '主轴设定转速');
-INSERT INTO "public"."iot_thing_model" VALUES (25, 1, 1, '2026-07-01 22:35:21.413422', '2026-07-01 22:35:21.413422', 0, 0, 1, 1, '主轴实际转速', 'spindleSpeed', 'int', 24, '{"min":"0","max":"10000", "step": "0.01","unit":"rpm"}', '主轴实际转速');
+INSERT INTO "public"."iot_thing_model" VALUES (25, 1, 1, '2026-07-01 22:35:21.413422', '2026-07-01 22:35:21.413422', 0, 0, 1, 1, '主轴实际转速', 'spindleActualSpeed', 'int', 24, '{"min":"0","max":"10000", "step": "0.01","unit":"rpm"}', '主轴实际转速');
 INSERT INTO "public"."iot_thing_model" VALUES (26, 1, 1, '2026-07-01 22:37:48.978759', '2026-07-01 22:37:48.978759', 0, 0, 1, 1, '主轴温度', 'spindleTemperature', 'int', 25, '{"min":"0","max":"10000", "step": "0.01","unit":""}', '主轴温度');
 INSERT INTO "public"."iot_thing_model" VALUES (27, 1, 1, '2026-07-01 22:54:51.502675', '2026-07-01 22:54:51.502675', 0, 0, 1, 1, '机械坐标Y', 'machinePositionY', 'int', 41, '{"min":"0","max":"10000", "step": "0.01","unit":""}', '机械坐标Y');
 INSERT INTO "public"."iot_thing_model" VALUES (28, 1, 1, '2026-07-01 22:38:30.511338', '2026-07-01 22:38:30.511338', 0, 0, 1, 1, '主轴电流', 'spindleCurrent', 'int', 26, '{"min":"0","max":"10000", "step": "0.01","unit":""}', '主轴电流');
@@ -341,7 +341,7 @@ COMMENT ON TABLE "public"."iot_source" IS '数据源';
 
 ALTER TABLE "public"."iot_source" ADD CONSTRAINT "iot_source_pkey" PRIMARY KEY ("id");
 
-INSERT INTO "public"."iot_source" VALUES (1, 1, 1, '2026-07-13 22:37:37.171034', '2026-07-13 23:16:46.219868', 0, 2, 1, 1, 'TDengine默认数据源', 'tdengine', '127.0.0.1:6041', 'root', 'taosdata', 'kcloud_platform_iot');
+INSERT INTO "public"."iot_source" VALUES (1, 1, 1, '2026-07-13 22:37:37.171034', '2026-07-13 23:16:46.219868', 0, 2, 1, 1, 'TDengine默认数据源', 'tdengine', '0.0.0.0:6041', 'root', 'taosdata', 'kcloud_platform_iot');
 
 DROP TABLE IF EXISTS "public"."iot_gateway";
 CREATE TABLE "public"."iot_gateway" (

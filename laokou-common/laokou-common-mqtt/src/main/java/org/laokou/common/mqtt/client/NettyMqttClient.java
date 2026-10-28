@@ -69,7 +69,7 @@ import java.util.function.Consumer;
 @Data
 public final class NettyMqttClient implements MqttClient {
 
-	private volatile Channel channel;
+	private volatile Channel ch;
 
 	private volatile Timeout reconnectTask;
 
@@ -122,15 +122,15 @@ public final class NettyMqttClient implements MqttClient {
 		this.state.set(ClientState.CLOSED);
 		cancelReconnectTask();
 		clearInflight();
-		if (this.channel != null) {
-			this.channel.close();
+		if (this.ch != null) {
+			this.ch.close();
 		}
 		this.timer.stop();
 	}
 
 	@Override
 	public void publish(String topic, byte[] payload, MqttQoS qos) {
-		if (state.get() != ClientState.CONNECTED || this.channel == null || !this.channel.isActive()) {
+		if (state.get() != ClientState.CONNECTED || this.ch == null || !this.ch.isActive()) {
 			throw new BizException("MQTT client is not connected");
 		}
 		if (qos == MqttQoS.AT_MOST_ONCE) {
@@ -220,8 +220,10 @@ public final class NettyMqttClient implements MqttClient {
 					ch.pipeline()
 						.addLast("mqttEncoder", MqttEncoder.INSTANCE)
 						.addLast("mqttDecoder", new MqttDecoder(properties.getMaxBytesInMessage()))
+						// 写空闲 keepAlive * 0.5 发心跳，读空闲 keepAlive * 1.5 还没收到任何报文 → 判定死亡
 						.addLast("idleStateHandler",
-								new IdleStateHandler(properties.getKeepAliveTimeSeconds(), 0, 0, TimeUnit.SECONDS))
+								new IdleStateHandler((long) (1.5 * properties.getKeepAliveTimeSeconds()),
+										(long) (0.5 * properties.getKeepAliveTimeSeconds()), 0, TimeUnit.SECONDS))
 						.addLast("nettyMqttHandler", new MqttClientHandler(NettyMqttClient.this));
 				}
 			});
@@ -233,12 +235,12 @@ public final class NettyMqttClient implements MqttClient {
 				return;
 			}
 			if (f instanceof ChannelFuture future) {
-				Channel ch = future.channel();
-				ch.writeAndFlush(buildConnectMessage()).addListener(w -> {
-					if (!w.isSuccess()) {
+				Channel channel = future.channel();
+				channel.writeAndFlush(buildConnectMessage()).addListener(fu -> {
+					if (!fu.isSuccess()) {
 						log.error("【Netty-MQTT-Client】 => 发送到 MQTT Broker 连接消息失败，错误信息：{}", f.cause().getMessage(),
 								f.cause());
-						ch.close();
+						channel.close();
 						handleDisconnect();
 					}
 				});
@@ -254,7 +256,7 @@ public final class NettyMqttClient implements MqttClient {
 	}
 
 	private void onAckTimeout(OutboundMessage msg) {
-		if (this.state.get() != ClientState.CONNECTED || this.channel == null || !this.channel.isActive()) {
+		if (this.state.get() != ClientState.CONNECTED || this.ch == null || !this.ch.isActive()) {
 			return;
 		}
 		retransmit(msg);
@@ -265,7 +267,7 @@ public final class NettyMqttClient implements MqttClient {
 	 * QoS 1/2 消息等待确认超时后，按当前 QoS 阶段重发报文.
 	 */
 	private void retransmit(OutboundMessage msg) {
-		if (this.state.get() != ClientState.CONNECTED || this.channel == null || !this.channel.isActive()) {
+		if (this.state.get() != ClientState.CONNECTED || this.ch == null || !this.ch.isActive()) {
 			return;
 		}
 		if (msg.getState() == State.WAIT_PUBCOMP) {
@@ -276,19 +278,17 @@ public final class NettyMqttClient implements MqttClient {
 	}
 
 	private void writePubRel(int packetId) {
-		if (this.state.get() != ClientState.CONNECTED || this.channel == null || !this.channel.isActive()) {
+		if (this.state.get() != ClientState.CONNECTED || this.ch == null || !this.ch.isActive()) {
 			return;
 		}
 		MqttMessage pubRel = new MqttMessage(
 				new MqttFixedHeader(MqttMessageType.PUBREL, true, MqttQoS.AT_LEAST_ONCE, false, 0),
 				MqttMessageIdVariableHeader.from(packetId));
-		writeAndFlush(this.channel, pubRel, _ -> handleDisconnect());
+		writeAndFlush(this.ch, pubRel, _ -> handleDisconnect());
 	}
 
 	private void scheduleReconnect() {
-		int attempt = this.reconnectAttempts.incrementAndGet();
-		int exponent = Math.min(attempt - 1, 6);
-		long delayMs = Math.min(1000L << exponent, 60000L);
+		long delayMs = reconnectAttempts.get() >= 20 ? 100000L : 5000L * reconnectAttempts.incrementAndGet();
 		this.reconnectTask = timer.newTimeout(_ -> {
 			if (state.get() == ClientState.RECONNECTING
 					&& state.compareAndSet(ClientState.RECONNECTING, ClientState.CONNECTING)) {
@@ -318,13 +318,13 @@ public final class NettyMqttClient implements MqttClient {
 
 	private void writePublish(String topic, byte[] payload, MqttQoS qos, int packetId, boolean dup,
 			Consumer<Throwable> onFailure) {
-		if (this.state.get() != ClientState.CONNECTED || this.channel == null || !this.channel.isActive()) {
+		if (this.state.get() != ClientState.CONNECTED || this.ch == null || !this.ch.isActive()) {
 			return;
 		}
 		MqttPublishMessage msg = new MqttPublishMessage(
 				new MqttFixedHeader(MqttMessageType.PUBLISH, dup, qos, false, 0),
 				new MqttPublishVariableHeader(topic, packetId), Unpooled.wrappedBuffer(payload));
-		writeAndFlush(this.channel, msg, onFailure);
+		writeAndFlush(this.ch, msg, onFailure);
 	}
 
 	private Class<? extends SocketChannel> getChannel() {

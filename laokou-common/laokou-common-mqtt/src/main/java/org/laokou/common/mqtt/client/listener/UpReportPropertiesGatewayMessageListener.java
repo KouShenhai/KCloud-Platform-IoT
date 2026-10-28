@@ -20,7 +20,10 @@ package org.laokou.common.mqtt.client.listener;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.pulsar.client.api.MessageId;
+import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.common.mqtt.client.message.MqttMessageType;
+import org.laokou.common.mqtt.client.util.PulsarUtils;
+import org.springframework.pulsar.core.PulsarTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CompletableFuture;
@@ -35,10 +38,15 @@ import java.util.concurrent.CompletableFuture;
 @RequiredArgsConstructor
 final class UpReportPropertiesGatewayMessageListener implements MessageListener {
 
+	private final PulsarTemplate<Object> pulsarTemplate;
+
+	private final SystemSettingsProperties systemSettingsProperties;
+
 	@Override
 	public CompletableFuture<MessageId> onMessage(MqttMessage message) {
-		log.info("【Netty-MQTT-Client】 => 上报设备属性消息【上行】处理器，接收主题【{}】消息", message.topic());
-		return CompletableFuture.completedFuture(null);
+		log.debug("【Netty-MQTT-Client】 => 上报网关属性消息【上行】处理器，接收主题【{}】消息", message.topic());
+		return pulsarTemplate.sendAsync(PulsarUtils.getGatewayTopic(systemSettingsProperties.getTenantCode(),
+				MqttMessageType.UP_REPORT_PROPERTIES_GATEWAY_MESSAGE_TOPIC), message.payload());
 	}
 
 	@Override

@@ -50,6 +50,25 @@ public final class MqttMessageHandler {
 			consumerCustomizer = "mqttMessageConsumerCustomizer"
 		)
 	})
+	public void handleIotUpReportPropertiesDeviceMessage(List<byte[]> messages) {
+		for (byte[] message : messages) {
+			log.info("接收消息：{}", MqttForyFactory.INSTANCE.deserialize(message));
+		}
+	}
+	// @formatter:on
+
+	// @formatter:off
+	@PulsarListeners(value = {
+		@PulsarListener(
+			topics = "persistent://${system-settings.tenant-code}/gateway/" + MqttMessageType.UP_REPORT_PROPERTIES_GATEWAY_MESSAGE_TOPIC,
+			subscriptionName = "${system-settings.tenant-code}",
+			schemaType = SchemaType.BYTES,
+			batch = true,
+			ackMode = AckMode.BATCH,
+			subscriptionType = SubscriptionType.Shared,
+			consumerCustomizer = "mqttMessageConsumerCustomizer"
+		)
+	})
 	public void handleIotUpReportPropertiesGatewayMessage(List<byte[]> messages) {
 		for (byte[] message : messages) {
 			log.info("接收消息：{}", MqttForyFactory.INSTANCE.deserialize(message));

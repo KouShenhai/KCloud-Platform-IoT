@@ -34,8 +34,9 @@ import io.netty.handler.codec.mqtt.MqttReasonCodes;
 import io.netty.handler.codec.mqtt.MqttSubAckMessage;
 import io.netty.handler.codec.mqtt.MqttSubscribeMessage;
 import io.netty.handler.codec.mqtt.MqttSubscribePayload;
+import io.netty.handler.timeout.IdleState;
+import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.util.ReferenceCountUtil;
-import io.netty.util.concurrent.EventExecutor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.pulsar.client.api.MessageId;
 import org.laokou.common.mqtt.client.listener.MessageListener;
@@ -143,7 +144,9 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 			case PUBCOMP -> onPubComp(msg);
 			// 消息投递
 			case PUBLISH -> onPublish(ctx, (MqttPublishMessage) msg);
+			// 接收心跳响应
 			case PINGRESP -> log.debug("【Netty-MQTT-Client】 => 接收 PINGRESP");
+			// 未知类型
 			default -> throw new IllegalStateException(
 					String.format("【Netty-MQTT-Client】 => 不支持类型：%s", mqttMessageType.name()));
 		}
@@ -154,7 +157,7 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 		if (returnCode == MqttConnectReturnCode.CONNECTION_ACCEPTED) {
 			log.info("【Netty-MQTT-Client】 => 客户端ID：{}，连接 MQTT Broker 成功", client.getProperties().getClientId());
 			subscribe(ch);
-			client.setChannel(ch);
+			client.setCh(ch);
 			client.getReconnectAttempts().set(0);
 			client.getState().set(ClientState.CONNECTED);
 		}
@@ -235,11 +238,8 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 		if (inbound != null) {
 			inboundQos2Pending[packetId] = null;
 			ReferenceCountUtil.retain(msg);
-			onInboundMessage(inbound.topic(), inbound.payload(), MqttQoS.EXACTLY_ONCE).thenRun(() -> {
-				try (EventExecutor executor = ctx.executor()) {
-					executor.execute(() -> sendAck(ctx, MqttMessageType.PUBCOMP, packetId));
-				}
-			});
+			onInboundMessage(inbound.topic(), inbound.payload(), MqttQoS.EXACTLY_ONCE)
+				.thenRun(() -> ctx.executor().execute(() -> sendAck(ctx, MqttMessageType.PUBCOMP, packetId)));
 			ReferenceCountUtil.release(msg);
 		}
 	}
@@ -269,11 +269,7 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 				ReferenceCountUtil.retain(msg);
 				onInboundMessage(msg.variableHeader().topicName(), ByteBufUtil.getBytes(msg.payload()),
 						MqttQoS.AT_LEAST_ONCE)
-					.thenRun(() -> {
-						try (EventExecutor executor = ctx.executor()) {
-							executor.execute(() -> sendAck(ctx, MqttMessageType.PUBACK, packetId));
-						}
-					});
+					.thenRun(() -> ctx.executor().execute(() -> sendAck(ctx, MqttMessageType.PUBACK, packetId)));
 				ReferenceCountUtil.release(msg);
 			}
 			case EXACTLY_ONCE -> {
@@ -298,12 +294,18 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 	}
 
 	private CompletableFuture<MessageId> onInboundMessage(String topic, byte[] payload, MqttQoS qos) {
-		MessageListener messageListener = getMessageListener(topic);
-		if (messageListener != null) {
-			return messageListener
-				.onMessage(new org.laokou.common.mqtt.client.listener.MqttMessage(topic, payload, qos));
+		try {
+			MessageListener messageListener = getMessageListener(topic);
+			if (messageListener != null) {
+				return messageListener
+					.onMessage(new org.laokou.common.mqtt.client.listener.MqttMessage(topic, payload, qos));
+			}
+			return CompletableFuture.completedFuture(null);
 		}
-		return CompletableFuture.completedFuture(null);
+		catch (Exception ex) {
+			log.error("【Netty-MQTT-Client】 => 处理 MQTT 消息失败, topic: {}, 错误信息: {}", topic, ex.getMessage(), ex);
+			return CompletableFuture.failedFuture(ex);
+		}
 	}
 
 	private void subscribe(Channel channel) {
@@ -322,18 +324,30 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-		onChannelInactive();
+		if (client.getCh() == null || client.getCh() == ctx.channel() || !client.getCh().isActive()) {
+			client.handleDisconnect();
+		}
 		super.channelInactive(ctx);
 	}
 
-	public void onChannelInactive() {
-		if (client.getState().get() == ClientState.CLOSED) {
+	@Override
+	public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
+		if (evt instanceof IdleStateEvent e && e.state() == IdleState.WRITER_IDLE) {
+			Channel channel = ctx.channel();
+			MqttMessage msg = new MqttMessage(
+					new MqttFixedHeader(MqttMessageType.PINGREQ, false, MqttQoS.AT_MOST_ONCE, false, 0));
+			client.writeAndFlush(channel, msg, _ -> channel.close());
+			log.debug("【Netty-MQTT-Client】 => 发送 PINGREQ 心跳");
 			return;
 		}
-		client.handleDisconnect();
+		if (evt instanceof IdleStateEvent e && e.state() == IdleState.READER_IDLE) {
+			log.info("【Netty-MQTT-Client】 => 心跳无响应，主动断开重连");
+			ctx.close();
+		}
+		super.userEventTriggered(ctx, evt);
 	}
 
-	public MessageListener getMessageListener(String topic) {
+	private MessageListener getMessageListener(String topic) {
 		for (MessageListener listener : client.getListeners()) {
 			if (listener.supports(topic)) {
 				return listener;
