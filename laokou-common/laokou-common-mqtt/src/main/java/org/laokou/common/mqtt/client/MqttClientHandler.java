@@ -145,7 +145,9 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 			case PUBCOMP -> onPubComp(msg);
 			// 消息投递
 			case PUBLISH -> onPublish(ctx, (MqttPublishMessage) msg);
+			// 接收心跳响应
 			case PINGRESP -> log.debug("【Netty-MQTT-Client】 => 接收 PINGRESP");
+			// 未知类型
 			default -> throw new IllegalStateException(
 					String.format("【Netty-MQTT-Client】 => 不支持类型：%s", mqttMessageType.name()));
 		}
@@ -332,9 +334,17 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 
 	@Override
 	public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
-		if (evt instanceof IdleStateEvent e && e.state() == IdleState.READER_IDLE) {
+		if (evt instanceof IdleStateEvent e && e.state() == IdleState.WRITER_IDLE) {
 			Channel channel = ctx.channel();
-			client.writeAndFlush(channel, new MqttMessage(new MqttFixedHeader(MqttMessageType.PINGREQ, false, MqttQoS.AT_MOST_ONCE, false, 0)), _ -> channel.close());
+			MqttMessage msg = new MqttMessage(
+					new MqttFixedHeader(MqttMessageType.PINGREQ, false, MqttQoS.AT_MOST_ONCE, false, 0));
+			client.writeAndFlush(channel, msg, _ -> channel.close());
+			log.debug("【Netty-MQTT-Client】 => 发送 PINGREQ 心跳");
+			return;
+		}
+		if (evt instanceof IdleStateEvent e && e.state() == IdleState.READER_IDLE) {
+			log.info("【Netty-MQTT-Client】 => 心跳无响应，主动断开重连");
+			ctx.close();
 		}
 		super.userEventTriggered(ctx, evt);
 	}
