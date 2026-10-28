@@ -37,7 +37,6 @@ import io.netty.handler.codec.mqtt.MqttSubscribePayload;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.util.ReferenceCountUtil;
-import io.netty.util.concurrent.EventExecutor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.pulsar.client.api.MessageId;
 import org.laokou.common.mqtt.client.listener.MessageListener;
@@ -239,11 +238,8 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 		if (inbound != null) {
 			inboundQos2Pending[packetId] = null;
 			ReferenceCountUtil.retain(msg);
-			onInboundMessage(inbound.topic(), inbound.payload(), MqttQoS.EXACTLY_ONCE).thenRun(() -> {
-				try (EventExecutor executor = ctx.executor()) {
-					executor.execute(() -> sendAck(ctx, MqttMessageType.PUBCOMP, packetId));
-				}
-			});
+			onInboundMessage(inbound.topic(), inbound.payload(), MqttQoS.EXACTLY_ONCE)
+				.thenRun(() -> ctx.executor().execute(() -> sendAck(ctx, MqttMessageType.PUBCOMP, packetId)));
 			ReferenceCountUtil.release(msg);
 		}
 	}
@@ -273,11 +269,7 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 				ReferenceCountUtil.retain(msg);
 				onInboundMessage(msg.variableHeader().topicName(), ByteBufUtil.getBytes(msg.payload()),
 						MqttQoS.AT_LEAST_ONCE)
-					.thenRun(() -> {
-						try (EventExecutor executor = ctx.executor()) {
-							executor.execute(() -> sendAck(ctx, MqttMessageType.PUBACK, packetId));
-						}
-					});
+					.thenRun(() -> ctx.executor().execute(() -> sendAck(ctx, MqttMessageType.PUBACK, packetId)));
 				ReferenceCountUtil.release(msg);
 			}
 			case EXACTLY_ONCE -> {
@@ -302,12 +294,18 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 	}
 
 	private CompletableFuture<MessageId> onInboundMessage(String topic, byte[] payload, MqttQoS qos) {
-		MessageListener messageListener = getMessageListener(topic);
-		if (messageListener != null) {
-			return messageListener
-				.onMessage(new org.laokou.common.mqtt.client.listener.MqttMessage(topic, payload, qos));
+		try {
+			MessageListener messageListener = getMessageListener(topic);
+			if (messageListener != null) {
+				return messageListener
+					.onMessage(new org.laokou.common.mqtt.client.listener.MqttMessage(topic, payload, qos));
+			}
+			return CompletableFuture.completedFuture(null);
 		}
-		return CompletableFuture.completedFuture(null);
+		catch (Exception ex) {
+			log.error("【Netty-MQTT-Client】 => 处理 MQTT 消息失败, topic: {}, 错误信息: {}", topic, ex.getMessage(), ex);
+			return CompletableFuture.failedFuture(ex);
+		}
 	}
 
 	private void subscribe(Channel channel) {
