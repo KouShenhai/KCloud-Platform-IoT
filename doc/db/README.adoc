@@ -5,4 +5,3 @@
 - kcloud_platform_iot.sql 【物联管理】
 - kcloud_platform_nacos.sql 【Nacos】
 - emqx.sql【EMQX】
-- snail_job【Snail Job】

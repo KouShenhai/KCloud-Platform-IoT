@@ -181,7 +181,6 @@ image::doc/image/老寇IoT云平台业务架构图.png[架构图,align=center]
 |TimescaleDB                 |17
 |TDengine                    |3.3.6.13
 |Flyway                      |13.5.0
-|Snail Job                   |1.8.0
 |Sentinel                    |1.8.9
 |Fory                        |1.7.6
 |===
@@ -200,7 +199,6 @@ image::doc/image/老寇IoT云平台业务架构图.png[架构图,align=center]
 - 服务监控：Spring Boot Admin & Prometheus
 - 高亮搜索：Elasticsearch
 - 链路跟踪：Jaeger
-- 任务调度：Snail Job
 - 日志分析：EFK & Loki
 - 缓存&分布式锁：Redis & Redisson
 - 统计报表：MongoDB
