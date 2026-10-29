@@ -25,7 +25,7 @@ import lombok.Data;
  * @author laokou
  */
 @Data
-public class UpCommandReplyGatewayMessage extends GatewayMessage {
+public class UpCommandReplyGatewayMessage {
 
 	private String command;
 

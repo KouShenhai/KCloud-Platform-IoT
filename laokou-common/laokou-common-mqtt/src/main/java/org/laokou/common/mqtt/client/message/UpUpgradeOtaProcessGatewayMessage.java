@@ -25,6 +25,6 @@ import lombok.Data;
  * @author laokou
  */
 @Data
-public class UpUpgradeOtaProcessGatewayMessage extends GatewayMessage {
+public class UpUpgradeOtaProcessGatewayMessage {
 
 }

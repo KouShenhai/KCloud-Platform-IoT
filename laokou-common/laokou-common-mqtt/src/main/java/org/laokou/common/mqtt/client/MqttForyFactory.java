@@ -40,6 +40,10 @@ public final class MqttForyFactory {
 			.buildThreadSafeFory();
 	}
 
+	public <T> void register(Class<T> clazz, int num) {
+		fory.register(clazz, num);
+	}
+
 	public Object deserialize(byte[] bytes) {
 		if (bytes == null || Arrays.equals(bytes, new byte[0])) {
 			return null;

@@ -25,7 +25,7 @@ import lombok.Data;
  * @author laokou
  */
 @Data
-public class DownCommandGatewayMessage extends GatewayMessage {
+public class DownCommandGatewayMessage {
 
 	private String command;
 

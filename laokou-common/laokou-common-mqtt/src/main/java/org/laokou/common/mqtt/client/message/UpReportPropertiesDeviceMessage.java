@@ -18,7 +18,10 @@
 package org.laokou.common.mqtt.client.message;
 
 import lombok.Data;
+import org.laokou.common.fory.constant.ForyConstants;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Map;
 
 /**
@@ -27,8 +30,49 @@ import java.util.Map;
  * @author laokou
  */
 @Data
-public class UpReportPropertiesDeviceMessage extends DeviceMessage {
+public class UpReportPropertiesDeviceMessage implements Serializable {
 
+	@Serial
+	private static final long serialVersionUID = ForyConstants.C_245;
+
+	/**
+	 * 租户编码.
+	 */
+	private String tenantCode;
+
+	/**
+	 * 网关SN.
+	 */
+	private String gatewaySn;
+
+	/**
+	 * 时间戳.
+	 */
+	private Long timestamp;
+
+	/**
+	 * 请求ID.
+	 */
+	private Long requestId;
+
+	/**
+	 * 扩展元数据.
+	 */
+	private Map<String, Object> metadata;
+
+	/**
+	 * 设备SN.
+	 */
+	private String deviceSn;
+
+	/**
+	 * 设备名称.
+	 */
+	private String deviceName;
+
+	/**
+	 * 设备属性.
+	 */
 	private Map<String, Object> properties;
 
 }
