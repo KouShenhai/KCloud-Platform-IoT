@@ -25,7 +25,7 @@ import lombok.Data;
  * @author laokou
  */
 @Data
-public abstract class EventDeviceMessage extends DeviceMessage {
+public abstract class EventDeviceMessage {
 
 	/**
 	 * 事件类型.

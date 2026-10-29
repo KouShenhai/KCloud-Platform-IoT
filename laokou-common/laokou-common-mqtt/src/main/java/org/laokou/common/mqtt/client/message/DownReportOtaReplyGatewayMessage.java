@@ -25,6 +25,6 @@ import lombok.Data;
  * @author laokou
  */
 @Data
-public class DownReportOtaReplyGatewayMessage extends GatewayMessage {
+public class DownReportOtaReplyGatewayMessage {
 
 }

@@ -76,6 +76,9 @@ public final class RedisKeyUtils {
 		return "route:definition";
 	}
 
+	/**
+	 * 路由Lock Key.
+	 */
 	public static String getRouteDefinitionLock() {
 		return getRouteDefinitionHashKey() + ":lock";
 	}
@@ -85,6 +88,20 @@ public final class RedisKeyUtils {
 	 */
 	public static String getDataCacheKey(String name, String key) {
 		return "data-cache:" + name + ":" + key;
+	}
+
+	/**
+	 * 设备属性Key.
+	 */
+	public static String getDevicePropertiesKey(String tenantCode, String deviceSn) {
+		return "device:properties:" + tenantCode + ":" + deviceSn;
+	}
+
+	/**
+	 * 网关属性Key.
+	 */
+	public static String getGatewayPropertiesKey(String tenantCode, String gatewaySn) {
+		return "gateway:properties:" + tenantCode + ":" + gatewaySn;
 	}
 
 }

@@ -23,8 +23,10 @@ import org.apache.pulsar.client.api.PulsarClientException;
 import org.apache.pulsar.client.api.SubscriptionType;
 import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.config.SystemSettingsProperties;
+import org.laokou.common.fory.constant.ForyConstants;
 import org.laokou.common.mqtt.client.MqttClientManager;
 import org.laokou.common.mqtt.client.MqttEventLoop;
+import org.laokou.common.mqtt.client.MqttForyFactory;
 import org.laokou.iot.device.gatewayimpl.mcp.DeviceMcpMapper;
 import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -40,6 +42,13 @@ import java.util.concurrent.TimeUnit;
  */
 @Configuration(proxyBeanMethods = false)
 public class IotConfig {
+
+	static {
+		MqttForyFactory.INSTANCE.register(org.laokou.common.mqtt.client.message.UpReportPropertiesGatewayMessage.class,
+				ForyConstants.C_244);
+		MqttForyFactory.INSTANCE.register(org.laokou.common.mqtt.client.message.UpReportPropertiesDeviceMessage.class,
+				ForyConstants.C_245);
+	}
 
 	@Bean
 	@ConditionalOnProperty(havingValue = "true", matchIfMissing = true, prefix = "spring.ai.mcp.client",
@@ -84,17 +93,17 @@ public class IotConfig {
 	PulsarListenerConsumerBuilderCustomizer<@NonNull String> mqttMessageConsumerCustomizer() {
 		return consumer -> consumer
 			// 消费者接收队列
-			.receiverQueueSize(20000)
-			// 一次 batchReceive 最多 1 万条
+			.receiverQueueSize(2000)
+			// 一次 batchReceive 最多 1 千条
 			.batchReceivePolicy(BatchReceivePolicy.builder()
-				.maxNumMessages(10000)
-				.maxNumBytes(64 * 1024 * 1024)
-				.timeout(5, TimeUnit.SECONDS)
+				.maxNumMessages(1000)
+				.maxNumBytes(10 * 1024 * 1024)
+				.timeout(3, TimeUnit.SECONDS)
 				.build())
 			// Shared 方便多个消费者实例水平扩展
 			.subscriptionType(SubscriptionType.Shared)
 			// ACK 超时时间
-			.ackTimeout(30, TimeUnit.SECONDS);
+			.ackTimeout(10, TimeUnit.SECONDS);
 	}
 
 }
