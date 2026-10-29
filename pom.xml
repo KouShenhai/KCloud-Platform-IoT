@@ -1292,7 +1292,7 @@
           <exclude>log4j2*.xml</exclude>
           <exclude>*.json</exclude>
           <exclude>*.txt</exclude>
-          <exclude>*.lua</exclude>
+          <exclude>lua/*.lua</exclude>
         </excludes>
       </resource>
       <!-- 添加需要包含的文件 -->
@@ -1314,7 +1314,7 @@
           <include>log4j2-${PROFILE-ACTIVE}.xml</include>
           <include>log4j2.component.properties</include>
           <include>banner.txt</include>
-          <include>set_properties.lua</include>
+          <include>lua/set_properties.lua</include>
         </includes>
       </resource>
     </resources>
