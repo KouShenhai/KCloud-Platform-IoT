@@ -83,9 +83,9 @@
     <!-- spring-boot-maven-plugin版本 -->
     <spring-boot-maven-plugin.version>${spring-boot.version}</spring-boot-maven-plugin.version>
     <!-- maven-surefire-plugin版本 -->
-    <maven-surefire-plugin.version>3.6.0</maven-surefire-plugin.version>
+    <maven-surefire-plugin.version>3.6.1</maven-surefire-plugin.version>
     <!-- maven-failsafe-plugin版本 -->
-    <maven-failsafe-plugin.version>3.6.0</maven-failsafe-plugin.version>
+    <maven-failsafe-plugin.version>3.6.1</maven-failsafe-plugin.version>
     <!-- maven-enforcer-plugin版本 -->
     <maven-enforcer-plugin.version>3.6.3</maven-enforcer-plugin.version>
     <!-- docker-maven-plugin版本 -->
@@ -97,7 +97,7 @@
     <!-- native-maven-plugin版本 -->
     <native-maven-plugin.version>1.1.1</native-maven-plugin.version>
     <!-- versions-maven-plugin版本 -->
-    <native-maven-plugin.version>1.1.17</native-maven-plugin.version>
+    <native-maven-plugin.version>1.1.18</native-maven-plugin.version>
     <!--versions-maven-plugin版本-->
     <versions-maven-plugin.version>2.22.0</versions-maven-plugin.version>
     <!-- asciidoctor-maven-plugin版本 -->
@@ -107,7 +107,7 @@
     <!-- maven-archetype-plugin版本 -->
     <maven-archetype-plugin.version>3.4.1</maven-archetype-plugin.version>
     <!-- jacoco-maven-plugin版本 -->
-    <jacoco-maven-plugin.version>0.8.15</jacoco-maven-plugin.version>
+    <jacoco-maven-plugin.version>0.8.16</jacoco-maven-plugin.version>
     <!-- checkstyle版本 -->
     <checkstyle.version>14.3.0</checkstyle.version>
     <!-- spring-javaformat-checkstyle版本 -->
@@ -145,7 +145,7 @@
     <!-- testcontainers版本 -->
     <testcontainers.version>2.0.5</testcontainers.version>
     <!-- mybatis-plus版本 -->
-    <mybatis-plus.version>3.5.17</mybatis-plus.version>
+    <mybatis-plus.version>3.5.18.1</mybatis-plus.version>
     <!-- nacos版本 -->
     <nacos.version>3.2.4</nacos.version>
     <!-- micrometer-tracing版本 -->
@@ -187,7 +187,7 @@
     <!-- fesod版本 -->
     <fesod.version>2.1.0-incubating</fesod.version>
     <!-- s3版本 -->
-    <s3.version>2.55.13</s3.version>
+    <s3.version>2.57.3</s3.version>
     <!-- dynamic-datasource版本 -->
     <dynamic-datasource.version>4.5.0</dynamic-datasource.version>
     <!-- httpclient5版本 -->
@@ -213,7 +213,7 @@
     <!-- browscap-java版本 -->
     <browscap-java.version>1.5.1</browscap-java.version>
     <!-- flyway版本 -->
-    <flyway.version>13.10.0</flyway.version>
+    <flyway.version>13.11.1</flyway.version>
     <!-- archunit-junit5版本 -->
     <archunit-junit5.version>1.5.1</archunit-junit5.version>
     <!-- caffeine版本 -->
