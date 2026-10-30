@@ -158,7 +158,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级单体架构和微�
 | Spring Cloud Alibaba |  2025.1.0.0  |
 |  Spring Boot Admin   |    4.1.4     |
 |       Jackson        |    3.2.3     |
-|     Mybatis Plus     |    3.5.17    |
+|     Mybatis Plus     |   3.5.18.1   |
 |        Nacos         |    3.2.4     |
 |         gRPC         |    1.84.0    |
 |        Redis         |    8.10.1    |
@@ -169,7 +169,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级单体架构和微�
 |         EMQX         |    5.8.8     |
 |     TimescaleDB      |      17      |
 |       TDengine       |   3.3.6.13   |
-|        Flyway        |    13.5.0    |
+|        Flyway        |   13.11.1    |
 |       Sentinel       |    1.8.9     |
 |         Fory         |    1.7.6     |
 
