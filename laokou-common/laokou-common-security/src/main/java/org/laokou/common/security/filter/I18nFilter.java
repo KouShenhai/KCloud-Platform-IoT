@@ -18,22 +18,22 @@
 package org.laokou.common.security.filter;
 
 import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NonNull;
+import org.laokou.common.i18n.common.exception.SystemException;
 import org.laokou.common.i18n.util.I18nUtils;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.filter.OncePerRequestFilter;
-
-import java.io.IOException;
 
 /**
  * I18n过滤器.
  *
  * @author laokou
  */
+@Slf4j
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public final class I18nFilter extends OncePerRequestFilter {
 
@@ -44,8 +44,9 @@ public final class I18nFilter extends OncePerRequestFilter {
 			try {
 				chain.doFilter(request, response);
 			}
-			catch (IOException | ServletException e) {
-				throw new RuntimeException(e);
+			catch (Exception ex) {
+				log.error("未知错误，请求失败，错误信息：{}", ex.getMessage(), ex);
+				throw new SystemException("S_UnKnow_Error", ex.getMessage(), ex);
 			}
 		});
 	}

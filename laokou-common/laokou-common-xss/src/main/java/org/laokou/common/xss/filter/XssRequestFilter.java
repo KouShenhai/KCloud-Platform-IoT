@@ -56,9 +56,9 @@ public final class XssRequestFilter extends OncePerRequestFilter {
 				chain.doFilter(request, response);
 			}
 		}
-		catch (Exception e) {
-			log.error("XssRequestFilter -> 过滤器异常：{}", e.getMessage(), e);
-			throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
+		catch (Exception ex) {
+			log.error("XssRequestFilter -> 过滤器异常：{}", ex.getMessage(), ex);
+			throw new SystemException("S_UnKnow_Error", ex.getMessage(), ex);
 		}
 	}
 

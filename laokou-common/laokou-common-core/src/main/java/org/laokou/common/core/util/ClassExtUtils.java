@@ -47,10 +47,10 @@ public final class ClassExtUtils extends ClassUtils {
 			try {
 				return Class.forName(beanDefinition.getBeanClassName());
 			}
-			catch (ClassNotFoundException e) {
-				log.error("类扫描失败，错误信息：{}", e.getMessage(), e);
+			catch (ClassNotFoundException ex) {
+				log.error("类扫描失败，错误信息：{}", ex.getMessage(), ex);
 				throw new SystemException("S_UnKnow_Error", String.format("类%s扫描失败", beanDefinition.getBeanClassName()),
-						e);
+						ex);
 			}
 		}).collect(Collectors.toSet());
 	}

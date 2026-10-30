@@ -101,10 +101,10 @@ public class MybatisUtils {
 					throw new SystemException("S_DS_TransactionRolledBack", "事务已回滚");
 				}
 			}
-			catch (InterruptedException e) {
+			catch (InterruptedException ex) {
 				Thread.currentThread().interrupt();
-				log.error("SQL执行失败，错误信息：{}", e.getMessage(), e);
-				throw new SystemException("S_DS_UnKnowError", e.getMessage(), e);
+				log.error("SQL执行失败，错误信息：{}", ex.getMessage(), ex);
+				throw new SystemException("S_DS_UnKnowError", ex.getMessage(), ex);
 			}
 		}
 	}
