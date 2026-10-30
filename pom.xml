@@ -145,7 +145,7 @@
     <!-- testcontainers版本 -->
     <testcontainers.version>2.0.5</testcontainers.version>
     <!-- mybatis-plus版本 -->
-    <mybatis-plus.version>3.5.17</mybatis-plus.version>
+    <mybatis-plus.version>3.5.18.1</mybatis-plus.version>
     <!-- nacos版本 -->
     <nacos.version>3.2.4</nacos.version>
     <!-- micrometer-tracing版本 -->
