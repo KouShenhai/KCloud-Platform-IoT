@@ -213,7 +213,7 @@
     <!-- browscap-java版本 -->
     <browscap-java.version>1.5.1</browscap-java.version>
     <!-- flyway版本 -->
-    <flyway.version>13.10.0</flyway.version>
+    <flyway.version>13.11.1</flyway.version>
     <!-- archunit-junit5版本 -->
     <archunit-junit5.version>1.5.1</archunit-junit5.version>
     <!-- caffeine版本 -->
