@@ -36,7 +36,6 @@ import io.netty.handler.codec.mqtt.MqttSubscribeMessage;
 import io.netty.handler.codec.mqtt.MqttSubscribePayload;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
-import io.netty.util.ReferenceCountUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.pulsar.client.api.MessageId;
 import org.laokou.common.mqtt.client.listener.MessageListener;
@@ -237,10 +236,14 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 		InboundQos2 inbound = inboundQos2Pending[packetId];
 		if (inbound != null) {
 			inboundQos2Pending[packetId] = null;
-			ReferenceCountUtil.retain(msg);
 			onInboundMessage(inbound.topic(), inbound.payload(), MqttQoS.EXACTLY_ONCE)
-				.thenRun(() -> ctx.executor().execute(() -> sendAck(ctx, MqttMessageType.PUBCOMP, packetId)));
-			ReferenceCountUtil.release(msg);
+				.thenRunAsync(() -> sendAck(ctx, MqttMessageType.PUBCOMP, packetId), ctx.executor())
+				.whenComplete((_, ex) -> {
+					if (ex != null) {
+						log.error("【Netty-MQTT-Client】 => 处理 MQTT 消息失败 或 执行 PUBCOMP 失败，topic: {}, packetId: {}，错误信息：{}",
+								inbound.topic(), packetId, ex.getMessage(), ex);
+					}
+				});
 		}
 	}
 
@@ -257,21 +260,23 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 		int packetId = msg.variableHeader().packetId();
 		MqttQoS mqttQoS = msg.fixedHeader().qosLevel();
 		switch (mqttQoS) {
-			case AT_MOST_ONCE -> {
-				// 把这条消息的所有权分一份给别的线程，防止它被别人提前释放掉
-				ReferenceCountUtil.retain(msg);
-				onInboundMessage(msg.variableHeader().topicName(), ByteBufUtil.getBytes(msg.payload()),
-						MqttQoS.AT_LEAST_ONCE);
-				ReferenceCountUtil.release(msg);
-			}
-			case AT_LEAST_ONCE -> {
-				// 把这条消息的所有权分一份给别的线程，防止它被别人提前释放掉
-				ReferenceCountUtil.retain(msg);
-				onInboundMessage(msg.variableHeader().topicName(), ByteBufUtil.getBytes(msg.payload()),
-						MqttQoS.AT_LEAST_ONCE)
-					.thenRun(() -> ctx.executor().execute(() -> sendAck(ctx, MqttMessageType.PUBACK, packetId)));
-				ReferenceCountUtil.release(msg);
-			}
+			case AT_MOST_ONCE -> onInboundMessage(msg.variableHeader().topicName(), ByteBufUtil.getBytes(msg.payload()),
+					MqttQoS.AT_LEAST_ONCE)
+				.whenComplete((_, ex) -> {
+					if (ex != null) {
+						log.error("【Netty-MQTT-Client】 => 处理 MQTT 消息失败，topic: {}, packetId: {}，错误信息：{}",
+								msg.variableHeader().topicName(), packetId, ex.getMessage(), ex);
+					}
+				});
+			case AT_LEAST_ONCE -> onInboundMessage(msg.variableHeader().topicName(),
+					ByteBufUtil.getBytes(msg.payload()), MqttQoS.AT_LEAST_ONCE)
+				.thenRunAsync(() -> sendAck(ctx, MqttMessageType.PUBACK, packetId), ctx.executor())
+				.whenComplete((_, ex) -> {
+					if (ex != null) {
+						log.error("【Netty-MQTT-Client】 => 处理 MQTT 消息失败 或 执行 PUBACK 失败，topic: {}, packetId: {}，错误信息：{}",
+								msg.variableHeader().topicName(), packetId, ex.getMessage(), ex);
+					}
+				});
 			case EXACTLY_ONCE -> {
 				// QoS2：首次收到才投递；重复 PUBLISH 只重答 PUBREC
 				if (inboundQos2Pending[packetId] == null) {
@@ -303,7 +308,6 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 			return CompletableFuture.completedFuture(null);
 		}
 		catch (Exception ex) {
-			log.error("【Netty-MQTT-Client】 => 处理 MQTT 消息失败, topic: {}, 错误信息: {}", topic, ex.getMessage(), ex);
 			return CompletableFuture.failedFuture(ex);
 		}
 	}
