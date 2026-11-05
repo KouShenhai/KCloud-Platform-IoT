@@ -372,4 +372,4 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级单体架构和微�
 
 [QQ：2413176044](http://wpa.qq.com/msgrd?v=3&uin=2413176044&Site=gitee&Menu=yes)
 
-![GitHub Star 趋势](https://starchart.cc/KouShenhai/KCloud-Platform-IoT.svg)
+[![GitHub Star 趋势](https://api.star-history.com/chart?repos=koushenhai/kcloud-platform-iot&type=date&legend=bottom-right)]

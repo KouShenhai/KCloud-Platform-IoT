@@ -390,4 +390,4 @@ https://mail.qq.com[邮箱：2413176044@qq.com]
 
 http://wpa.qq.com/msgrd?v=3&uin=2413176044&Site=gitee&Menu=yes[QQ：2413176044]
 
-image::https://starchart.cc/KouShenhai/KCloud-Platform-IoT.svg[GitHub Star 趋势]
+image::https://api.star-history.com/chart?repos=koushenhai/kcloud-platform-iot&type=date&legend=bottom-right[https://starchart.cc/KouShenhai/KCloud-Platform-IoT.svg][GitHub Star 趋势]
