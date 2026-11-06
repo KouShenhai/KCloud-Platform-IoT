@@ -70,6 +70,8 @@ module.exports = {
 							{text: 'Docker安装RabbitMQ', link: '/pages/4ae44e/'},
 							{text: 'Docker安装Oracle', link: '/pages/c7b692/'},
 							{text: 'Docker安装TDengine', link: '/pages/7b83ee/'},
+							{text: 'Codex+IDA反编译', link: '/pages/a9ef6a/'},
+							{text: 'Docker安装Mysql9.6.0', link: '/pages/d8380c/'},
 						]
 					},
 					{
