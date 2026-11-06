@@ -69,6 +69,7 @@ module.exports = {
 							{text: 'FRP内网穿透', link: '/pages/01381a/'},
 							{text: 'Docker安装RabbitMQ', link: '/pages/4ae44e/'},
 							{text: 'Docker安装Oracle', link: '/pages/c7b692/'},
+							{text: 'Docker安装TDengine', link: '/pages/7b83ee/'},
 						]
 					},
 					{
