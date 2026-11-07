@@ -115,9 +115,9 @@
     <!-- spring-asciidoctor-backends版本 -->
     <spring-asciidoctor-backends.version>0.0.7</spring-asciidoctor-backends.version>
     <!-- protobuf-maven-plugin版本 -->
-    <protobuf-maven-plugin.version>5.1.11</protobuf-maven-plugin.version>
+    <protobuf-maven-plugin.version>5.1.12</protobuf-maven-plugin.version>
     <!-- central-publishing-maven-plugin版本 -->
-    <central-publishing-maven-plugin.version>0.11.0</central-publishing-maven-plugin.version>
+    <central-publishing-maven-plugin.version>0.12.0</central-publishing-maven-plugin.version>
     <!-- maven-source-plugin版本 -->
     <maven-source-plugin.version>3.4.0</maven-source-plugin.version>
     <!-- maven-javadoc-plugin版本 -->
@@ -141,7 +141,7 @@
     <!-- spring-ai版本 -->
     <spring-ai.version>2.0.2</spring-ai.version>
     <!-- springdoc-openapi版本 -->
-    <springdoc-openapi.version>3.1.1</springdoc-openapi.version>
+    <springdoc-openapi.version>3.2.0</springdoc-openapi.version>
     <!-- testcontainers版本 -->
     <testcontainers.version>2.0.5</testcontainers.version>
     <!-- mybatis-plus版本 -->
@@ -179,7 +179,7 @@
     <!-- guava版本 -->
     <guava.version>33.7.2-jre</guava.version>
     <!-- oshi版本 -->
-    <oshi.version>7.7.2</oshi.version>
+    <oshi.version>7.7.3</oshi.version>
     <!-- elasticsearch版本 -->
     <elasticsearch.version>9.5.6</elasticsearch.version>
     <!-- jakarta.servlet-api版本 -->
@@ -207,7 +207,7 @@
     <!-- mockito版本 -->
     <mockito.version>5.24.0</mockito.version>
     <!-- taos-jdbcdriver版本 -->
-    <taos-jdbcdriver.version>3.9.2</taos-jdbcdriver.version>
+    <taos-jdbcdriver.version>3.10.0</taos-jdbcdriver.version>
     <!-- fory版本 -->
     <fory.version>1.7.7</fory.version>
     <!-- browscap-java版本 -->
