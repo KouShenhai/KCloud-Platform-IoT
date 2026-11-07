@@ -63,7 +63,7 @@ export default () => {
 			pageIndex: params?.pageSize * (params?.current - 1),
 			id: params?.id,
 			name: trim(params?.name),
-			state: params?.state,
+			state: params?.stateValue,
 			params: {
 				startTime: params?.startDate
 					? `${params.startDate} 00:00:00`
@@ -126,9 +126,10 @@ export default () => {
 		},
 		{
 			title: t('iot.session.state'),
-			dataIndex: 'state',
-			ellipsis: true,
+			key: 'stateValue',
+			dataIndex: 'stateValue',
 			valueType: 'select',
+			hideInTable: true,
 			fieldProps: {
 				valueType: 'select',
 				mode: 'single',
@@ -143,13 +144,16 @@ export default () => {
 						label: '开启',
 					},
 				],
-			},
-			render: (_, record) => {
-				return record.state === 1 ? (
-					<span style={{ color: 'green' }}>开启</span>
-				) : (
-					<span style={{ color: 'red' }}>关闭</span>
-				);
+			}
+		},
+		{
+			title: t('iot.session.state'),
+			dataIndex: 'state',
+			hideInSearch: true,
+			ellipsis: true,
+			valueEnum: {
+				'0': { text: '关闭', status: 'Error' },
+				'1': { text: '开启', status: 'Success' },
 			},
 		},
 		{

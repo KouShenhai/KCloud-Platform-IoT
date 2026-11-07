@@ -191,7 +191,7 @@ export default {
 	'sys.commonLog.exportAll': '导出全部',
 
 	// home
-	'home.productCount': '产品数量',
+	'home.gatewayCount': '网关数量',
 	'home.deviceCount': '设备数量',
 	'home.online': '在线',
 	'home.offline': '离线',

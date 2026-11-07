@@ -191,7 +191,7 @@ export default {
 	'sys.commonLog.exportAll': 'Export All',
 
 	// home
-	'home.productCount': 'Product Count',
+	'home.gatewayCount': 'Gateway Count',
 	'home.deviceCount': 'Device Count',
 	'home.online': 'Online',
 	'home.offline': 'Offline',

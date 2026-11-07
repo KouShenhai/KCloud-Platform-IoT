@@ -23,7 +23,7 @@ const HomePage: React.FC = () => {
 					>
 						<div className={'pro-card-1-header'}>
 							<div className={'pro-card-1-title'}>
-								<Space>{t('home.productCount')}</Space>
+								<Space>{t('home.gatewayCount')}</Space>
 							</div>
 							<div className={'pro-card-1-content'}>
 								<Space>10</Space>
@@ -33,13 +33,13 @@ const HomePage: React.FC = () => {
 							<Row gutter={24}>
 								<Col span={7}>
 									<Space>
-										<Badge status="success" /> {t('common.enable')}
+										<Badge status="success" /> {t('home.online')}
 									</Space>
 								</Col>
 								<Col span={5}>8</Col>
 								<Col span={7}>
 									<Space>
-										<Badge status="error" /> {t('common.disable')}
+										<Badge status="error" /> {t('home.offline')}
 									</Space>
 								</Col>
 								<Col span={5}>2</Col>

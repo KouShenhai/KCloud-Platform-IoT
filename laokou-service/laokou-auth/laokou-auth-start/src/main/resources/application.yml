@@ -102,7 +102,7 @@ spring:
             provider: local
         provider:
           local:
-            token-uri: http://localhost:${server.port}${server.servlet.context-path}${spring.security.oauth2.authorization-server.endpoint.token-uri}
+            token-uri: http://0.0.0.0:${server.port}${server.servlet.context-path}${spring.security.oauth2.authorization-server.endpoint.token-uri}
       authorization-server:
         enabled: true
         # 多租户
