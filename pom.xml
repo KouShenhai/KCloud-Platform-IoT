@@ -125,7 +125,7 @@
     <!-- maven-gpg-plugin版本 -->
     <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
     <!-- flatten-maven-plugin版本 -->
-    <flatten-maven-plugin.version>1.8.0</flatten-maven-plugin.version>
+    <flatten-maven-plugin.version>1.9.0</flatten-maven-plugin.version>
     <!-- spring-boot版本 -->
     <spring-boot.version>4.1.2</spring-boot.version>
     <!-- spring-cloud版本 -->
