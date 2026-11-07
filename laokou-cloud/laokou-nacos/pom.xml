@@ -29,7 +29,7 @@
 
   <properties>
     <!-- nacos-server版本 -->
-    <nacos-server.version>3.2.4</nacos-server.version>
+    <nacos-server.version>3.3.0</nacos-server.version>
   </properties>
 
   <dependencies>
