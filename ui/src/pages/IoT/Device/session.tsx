@@ -48,7 +48,13 @@ export default () => {
 				? openSession(record.id)
 				: closeSession(record.id));
 			if (res.code === 'OK') {
-				message.success(record.state === 0 ? '开启成功' : '关闭成功');
+				message.success(
+					t(
+						record.state === 0
+							? 'iot.session.openSuccess'
+							: 'iot.session.closeSuccess',
+					),
+				);
 				actionRef.current?.reload();
 			}
 		} finally {
@@ -137,11 +143,11 @@ export default () => {
 				options: [
 					{
 						value: 0,
-						label: '关闭',
+						label: t('iot.session.close'),
 					},
 					{
 						value: 1,
-						label: '开启',
+						label: t('iot.session.open'),
 					},
 				],
 			}
@@ -152,8 +158,8 @@ export default () => {
 			hideInSearch: true,
 			ellipsis: true,
 			valueEnum: {
-				'0': { text: '关闭', status: 'Error' },
-				'1': { text: '开启', status: 'Success' },
+				'0': { text: t('iot.session.close'), status: 'Error' },
+				'1': { text: t('iot.session.open'), status: 'Success' },
 			},
 		},
 		{
@@ -199,7 +205,9 @@ export default () => {
 							loading={pendingIds.includes(record.id)}
 							onClick={() => changeSessionState(record)}
 						>
-							{record.state === 0 ? '开启' : '关闭'}
+							{record.state === 0
+								? t('iot.session.open')
+								: t('iot.session.close')}
 						</Button>
 					),
 				access.canSessionGetDetail && (
