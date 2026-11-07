@@ -56,9 +56,9 @@ public class ApiSecretRequestFilter extends OncePerRequestFilter {
 				chain.doFilter(request, response);
 			}
 		}
-		catch (Exception e) {
-			log.error("ApiSecretRequestFilter error", e);
-			throw new SystemException("S_UnKnow_Error", e.getMessage(), e);
+		catch (Exception ex) {
+			log.error("ApiSecretRequestFilter error", ex);
+			throw new SystemException("S_UnKnow_Error", ex.getMessage(), ex);
 		}
 	}
 
