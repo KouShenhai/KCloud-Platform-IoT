@@ -191,7 +191,7 @@ export default {
 	'sys.commonLog.exportAll': '导出全部',
 
 	// home
-	'home.productCount': '产品数量',
+	'home.gatewayCount': '网关数量',
 	'home.deviceCount': '设备数量',
 	'home.online': '在线',
 	'home.offline': '离线',
@@ -249,6 +249,10 @@ export default {
 	'iot.session.username': '会话用户名',
 	'iot.session.password': '会话密码',
 	'iot.session.state': '会话状态',
+	'iot.session.open': '开启',
+	'iot.session.close': '关闭',
+	'iot.session.openSuccess': '开启成功',
+	'iot.session.closeSuccess': '关闭成功',
 	'iot.session.insert': '新增会话',
 	'iot.session.view': '查看会话',
 	'iot.session.modify': '修改会话',

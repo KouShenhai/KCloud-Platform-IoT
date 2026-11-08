@@ -34,6 +34,7 @@ module.exports = {
 							{text: '4.0.3版本更新日志', link: '/pages/e117e0/'},
 							{text: '4.0.4版本更新日志', link: '/pages/82bd59/'},
 							{text: '4.0.5版本更新日志', link: '/pages/82bd60/'},
+							{text: '4.0.6版本更新日志', link: '/pages/82bd63/'},
 						]
 					},
 					{

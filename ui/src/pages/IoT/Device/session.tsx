@@ -48,7 +48,13 @@ export default () => {
 				? openSession(record.id)
 				: closeSession(record.id));
 			if (res.code === 'OK') {
-				message.success(record.state === 0 ? '开启成功' : '关闭成功');
+				message.success(
+					t(
+						record.state === 0
+							? 'iot.session.openSuccess'
+							: 'iot.session.closeSuccess',
+					),
+				);
 				actionRef.current?.reload();
 			}
 		} finally {
@@ -63,7 +69,7 @@ export default () => {
 			pageIndex: params?.pageSize * (params?.current - 1),
 			id: params?.id,
 			name: trim(params?.name),
-			state: params?.state,
+			state: params?.stateValue,
 			params: {
 				startTime: params?.startDate
 					? `${params.startDate} 00:00:00`
@@ -126,9 +132,10 @@ export default () => {
 		},
 		{
 			title: t('iot.session.state'),
-			dataIndex: 'state',
-			ellipsis: true,
+			key: 'stateValue',
+			dataIndex: 'stateValue',
 			valueType: 'select',
+			hideInTable: true,
 			fieldProps: {
 				valueType: 'select',
 				mode: 'single',
@@ -136,20 +143,23 @@ export default () => {
 				options: [
 					{
 						value: 0,
-						label: '关闭',
+						label: t('iot.session.close'),
 					},
 					{
 						value: 1,
-						label: '开启',
+						label: t('iot.session.open'),
 					},
 				],
-			},
-			render: (_, record) => {
-				return record.state === 1 ? (
-					<span style={{ color: 'green' }}>开启</span>
-				) : (
-					<span style={{ color: 'red' }}>关闭</span>
-				);
+			}
+		},
+		{
+			title: t('iot.session.state'),
+			dataIndex: 'state',
+			hideInSearch: true,
+			ellipsis: true,
+			valueEnum: {
+				'0': { text: t('iot.session.close'), status: 'Error' },
+				'1': { text: t('iot.session.open'), status: 'Success' },
 			},
 		},
 		{
@@ -195,7 +205,9 @@ export default () => {
 							loading={pendingIds.includes(record.id)}
 							onClick={() => changeSessionState(record)}
 						>
-							{record.state === 0 ? '开启' : '关闭'}
+							{record.state === 0
+								? t('iot.session.open')
+								: t('iot.session.close')}
 						</Button>
 					),
 				access.canSessionGetDetail && (
