@@ -163,7 +163,7 @@
     <!-- redisson版本 -->
     <redisson.version>4.8.0</redisson.version>
     <!-- mcp版本 -->
-    <mcp.version>2.0.1</mcp.version>
+    <mcp.version>2.1.0</mcp.version>
     <!-- lombok版本 -->
     <lombok.version>1.18.48</lombok.version>
     <!-- postgresql版本 -->
