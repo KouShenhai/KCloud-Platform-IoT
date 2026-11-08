@@ -163,15 +163,15 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级单体架构和微�
 |         gRPC         |    1.84.0    |
 |        Redis         |    8.10.1    |
 |    Elasticsearch     |    9.5.6     |
-|        Netty         | 4.2.19.Final |
+|        Netty         | 4.2.20.Final |
 |        Kafka         |    4.3.1     |
 |        Pulsar        |    4.2.4     |
 |         EMQX         |    5.8.8     |
 |     TimescaleDB      |      17      |
 |       TDengine       |   3.3.6.13   |
-|        Flyway        |   13.11.1    |
+|        Flyway        |   13.12.1    |
 |       Sentinel       |    1.8.9     |
-|         Fory         |    1.7.6     |
+|         Fory         |    1.7.7     |
 
 #### 🍺 相关技术
 
