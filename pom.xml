@@ -147,15 +147,15 @@
     <!-- mybatis-plus版本 -->
     <mybatis-plus.version>3.5.18.1</mybatis-plus.version>
     <!-- nacos版本 -->
-    <nacos.version>3.2.4</nacos.version>
+    <nacos.version>3.3.0</nacos.version>
     <!-- micrometer-tracing版本 -->
     <micrometer-tracing.version>1.7.2</micrometer-tracing.version>
     <!-- netty版本 -->
     <netty.version>4.2.20.Final</netty.version>
     <!-- grpc版本 -->
-    <grpc.version>1.84.0</grpc.version>
+    <grpc.version>1.85.1</grpc.version>
     <!-- jackson版本 -->
-    <jackson.version>3.2.4</jackson.version>
+    <jackson.version>3.3.0</jackson.version>
     <!-- okhttp版本 -->
     <okhttp.version>5.5.1</okhttp.version>
     <!-- protobuf版本 -->
@@ -163,7 +163,7 @@
     <!-- redisson版本 -->
     <redisson.version>4.8.0</redisson.version>
     <!-- mcp版本 -->
-    <mcp.version>2.0.1</mcp.version>
+    <mcp.version>2.1.0</mcp.version>
     <!-- lombok版本 -->
     <lombok.version>1.18.48</lombok.version>
     <!-- postgresql版本 -->
@@ -171,13 +171,13 @@
     <!-- spring-boot-admin版本 -->
     <spring-boot-admin.version>4.1.5</spring-boot-admin.version>
     <!-- jsoup版本 -->
-    <jsoup.version>1.23.2</jsoup.version>
+    <jsoup.version>1.24.1</jsoup.version>
     <!-- jasypt版本 -->
     <jasypt.version>4.0.4</jasypt.version>
     <!-- easy-captcha版本 -->
     <easy-captcha.version>1.6.2</easy-captcha.version>
     <!-- guava版本 -->
-    <guava.version>33.7.2-jre</guava.version>
+    <guava.version>33.8.0-jre</guava.version>
     <!-- oshi版本 -->
     <oshi.version>7.7.3</oshi.version>
     <!-- elasticsearch版本 -->
@@ -189,7 +189,7 @@
     <!-- s3版本 -->
     <s3.version>2.57.11</s3.version>
     <!-- dynamic-datasource版本 -->
-    <dynamic-datasource.version>4.5.0</dynamic-datasource.version>
+    <dynamic-datasource.version>4.6.0</dynamic-datasource.version>
     <!-- httpclient5版本 -->
     <httpclient5.version>5.6.5</httpclient5.version>
     <!-- httpcore5版本 -->
@@ -213,7 +213,7 @@
     <!-- browscap-java版本 -->
     <browscap-java.version>1.5.1</browscap-java.version>
     <!-- flyway版本 -->
-    <flyway.version>13.11.1</flyway.version>
+    <flyway.version>13.12.1</flyway.version>
     <!-- archunit-junit5版本 -->
     <archunit-junit5.version>1.5.1</archunit-junit5.version>
     <!-- caffeine版本 -->
