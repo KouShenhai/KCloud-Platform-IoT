@@ -131,7 +131,7 @@ public final class NettyMqttClient implements MqttClient {
 	@Override
 	public void publish(String topic, byte[] payload, MqttQoS qos) {
 		if (state.get() != ClientState.CONNECTED || this.ch == null || !this.ch.isActive()) {
-			throw new BizException("MQTT client is not connected");
+			throw new BizException("B_MQTT_ClientNotConnected", "MQTT client is not connected");
 		}
 		if (qos == MqttQoS.AT_MOST_ONCE) {
 			if (this.state.get() != ClientState.CONNECTED) {
@@ -145,7 +145,7 @@ public final class NettyMqttClient implements MqttClient {
 			// 写入缓存
 			boolean ok = inflightStore.putIfAbsent(msg);
 			if (!ok) {
-				throw new BizException("Message is in inflight state");
+				throw new BizException("B_MQTT_MessageInflightState", "Message is in inflight state");
 			}
 			writePublish(topic, msg.getPayload(), qos, packetId, false, _ -> handleDisconnect());
 		}
