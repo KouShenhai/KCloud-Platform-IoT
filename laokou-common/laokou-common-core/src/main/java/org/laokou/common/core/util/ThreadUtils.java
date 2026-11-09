@@ -18,7 +18,6 @@
 package org.laokou.common.core.util;
 
 import com.alibaba.ttl.threadpool.TtlExecutors;
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.i18n.util.ObjectUtils;
 
@@ -74,8 +73,7 @@ public final class ThreadUtils {
 	}
 
 	public static ScheduledExecutorService newScheduledThreadPool(int coreSize) {
-		return Executors.newScheduledThreadPool(coreSize,
-				new ThreadFactoryBuilder().setNameFormat("iot-scheduled-").build());
+		return Executors.newScheduledThreadPool(coreSize, VirtualThreadFactory.INSTANCE);
 	}
 
 }
