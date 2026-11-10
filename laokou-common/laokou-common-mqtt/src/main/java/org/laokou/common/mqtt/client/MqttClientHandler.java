@@ -41,6 +41,8 @@ import org.apache.pulsar.client.api.MessageId;
 import org.laokou.common.mqtt.client.listener.MessageListener;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 /**
  * MQTT QoS 等级对比
@@ -113,6 +115,8 @@ import java.util.concurrent.CompletableFuture;
  */
 @Slf4j
 final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
+
+	private volatile ScheduledFuture<?> pingFuture;
 
 	private final NettyMqttClient client;
 
@@ -327,28 +331,43 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 	}
 
 	@Override
-	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-		if (client.getCh() == null || client.getCh() == ctx.channel() || !client.getCh().isActive()) {
-			client.handleDisconnect();
+	public void channelActive(ChannelHandlerContext ctx) throws Exception {
+		try {
+			startHeartbeat(ctx);
 		}
-		super.channelInactive(ctx);
+		finally {
+			super.channelActive(ctx);
+		}
+	}
+
+	@Override
+	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+		try {
+			stopHeartbeat();
+			if (client.getCh() == null || client.getCh() == ctx.channel() || !client.getCh().isActive()) {
+				client.handleDisconnect();
+			}
+		}
+		finally {
+			super.channelInactive(ctx);
+		}
 	}
 
 	@Override
 	public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
-		if (evt instanceof IdleStateEvent e && e.state() == IdleState.WRITER_IDLE) {
-			Channel channel = ctx.channel();
-			MqttMessage msg = new MqttMessage(
-					new MqttFixedHeader(MqttMessageType.PINGREQ, false, MqttQoS.AT_MOST_ONCE, false, 0));
-			client.writeAndFlush(channel, msg, _ -> channel.close());
-			log.debug("【Netty-MQTT-Client】 => 发送 PINGREQ 心跳");
-			return;
+		try {
+			if (evt instanceof IdleStateEvent e && e.state() == IdleState.WRITER_IDLE) {
+				sendPingReq(ctx.channel());
+				return;
+			}
+			if (evt instanceof IdleStateEvent e && e.state() == IdleState.READER_IDLE) {
+				log.info("【Netty-MQTT-Client】 => 心跳无响应，主动断开重连");
+				ctx.close();
+			}
 		}
-		if (evt instanceof IdleStateEvent e && e.state() == IdleState.READER_IDLE) {
-			log.info("【Netty-MQTT-Client】 => 心跳无响应，主动断开重连");
-			ctx.close();
+		finally {
+			super.userEventTriggered(ctx, evt);
 		}
-		super.userEventTriggered(ctx, evt);
 	}
 
 	private MessageListener getMessageListener(String topic) {
@@ -358,6 +377,27 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 			}
 		}
 		return null;
+	}
+
+	private void startHeartbeat(ChannelHandlerContext ctx) {
+		stopHeartbeat();
+		int interval = client.getProperties().getKeepAliveTimeSeconds();
+		pingFuture = ctx.executor()
+			.scheduleWithFixedDelay(() -> sendPingReq(ctx.channel()), interval, interval, TimeUnit.SECONDS);
+	}
+
+	private void stopHeartbeat() {
+		if (pingFuture != null) {
+			pingFuture.cancel(false);
+			pingFuture = null;
+		}
+	}
+
+	private void sendPingReq(Channel channel) {
+		MqttMessage msg = new MqttMessage(
+				new MqttFixedHeader(MqttMessageType.PINGREQ, false, MqttQoS.AT_MOST_ONCE, false, 0));
+		client.writeAndFlush(channel, msg, _ -> channel.close());
+		log.debug("【Netty-MQTT-Client】 => 发送 PINGREQ 心跳");
 	}
 
 }
