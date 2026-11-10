@@ -122,9 +122,7 @@ public final class NettyMqttClient implements MqttClient {
 		this.state.set(ClientState.CLOSED);
 		cancelReconnectTask();
 		clearInflight();
-		if (this.ch != null) {
-			this.ch.close();
-		}
+		closeChannel();
 		this.timer.stop();
 	}
 
@@ -341,6 +339,13 @@ public final class NettyMqttClient implements MqttClient {
 			return IoUring.isAvailable();
 		}
 		return false;
+	}
+
+	private void closeChannel() {
+		if (this.ch != null) {
+			this.ch.close();
+			this.ch = null;
+		}
 	}
 
 }
