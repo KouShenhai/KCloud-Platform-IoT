@@ -159,10 +159,10 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 		MqttConnectReturnCode returnCode = msg.variableHeader().connectReturnCode();
 		if (returnCode == MqttConnectReturnCode.CONNECTION_ACCEPTED) {
 			log.info("【Netty-MQTT-Client】 => 客户端ID：{}，连接 MQTT Broker 成功", client.getProperties().getClientId());
-			subscribe(ch);
 			client.setCh(ch);
 			client.getReconnectAttempts().set(0);
 			client.getState().set(ClientState.CONNECTED);
+			subscribe(ch);
 		}
 		else {
 			log.error("【Netty-MQTT-Client】 => 客户端ID：{}，连接 MQTT Broker 失败，错误信息：{}", client.getProperties().getClientId(),

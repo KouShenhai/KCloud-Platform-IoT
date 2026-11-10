@@ -220,7 +220,7 @@ public final class NettyMqttClient implements MqttClient {
 					ch.pipeline()
 						.addLast("mqttEncoder", MqttEncoder.INSTANCE)
 						.addLast("mqttDecoder", new MqttDecoder(properties.getMaxBytesInMessage()))
-						// 写空闲 keepAlive * 0.5 发心跳，读空闲 keepAlive * 1.5 还没收到任何报文 → 判定死亡
+						// 读空闲 keepAlive * 1.5 还没收到任何报文 → 判定死亡
 						.addLast("idleStateHandler",
 								new IdleStateHandler((long) (1.5 * properties.getKeepAliveTimeSeconds()), 0, 0,
 										TimeUnit.SECONDS))
