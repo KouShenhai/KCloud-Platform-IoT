@@ -27,6 +27,7 @@ import org.laokou.common.fory.constant.ForyConstants;
 import org.laokou.common.mqtt.client.MqttClientManager;
 import org.laokou.common.mqtt.client.MqttEventLoop;
 import org.laokou.common.mqtt.client.MqttForyFactory;
+import org.laokou.common.mqtt.client.SpringMqttClientProperties;
 import org.laokou.iot.device.gatewayimpl.mcp.DeviceMcpMapper;
 import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -70,8 +71,8 @@ public class IotConfig {
 	}
 
 	@Bean(destroyMethod = "close")
-	MqttEventLoop mqttEventLoop() {
-		return new MqttEventLoop();
+	MqttEventLoop mqttEventLoop(SpringMqttClientProperties springMqttClientProperties) {
+		return new MqttEventLoop(springMqttClientProperties);
 	}
 
 	/**

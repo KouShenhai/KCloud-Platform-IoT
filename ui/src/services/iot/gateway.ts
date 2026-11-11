@@ -1,6 +1,44 @@
 /* eslint-disable */
 import { request } from '@umijs/max';
 
+type GatewayId = string | number;
+
+export type GatewayProperties = {
+	timestamp?: string | number | null;
+	properties: Record<string, unknown>;
+};
+
+type GatewayResponse<T> = {
+	code: string;
+	msg?: string;
+	data?: T;
+};
+
+export function getGatewayProperties(
+	id: GatewayId,
+	signal?: AbortSignal,
+): Promise<GatewayResponse<GatewayProperties>> {
+	return request<GatewayResponse<GatewayProperties>>(
+		`/api-proxy/iot/api/v1/gateways/${id}/properties`,
+		{ method: 'GET', signal },
+	);
+}
+
+export function sendGatewayCommand(
+	id: GatewayId,
+	command: string,
+	requestId: string,
+): Promise<GatewayResponse<null>> {
+	return request<GatewayResponse<null>>(
+		`/api-proxy/iot/api/v1/gateways/${id}/commands`,
+		{
+			method: 'POST',
+			headers: { 'request-id': requestId },
+			data: { command },
+		},
+	);
+}
+
 /** 修改网关 修改网关 PUT /api/v1/gateways */
 export async function modifyGateway(
 	body: API.GatewayModifyCmd,

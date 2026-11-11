@@ -38,8 +38,9 @@ public final class MqttEventLoop implements AutoCloseable {
 
 	private final EventLoopGroup workerGroup;
 
-	public MqttEventLoop() {
-		this.workerGroup = new MultiThreadIoEventLoopGroup(16, getIoHandlerFactory());
+	public MqttEventLoop(SpringMqttClientProperties springMqttClientProperties) {
+		this.workerGroup = new MultiThreadIoEventLoopGroup(springMqttClientProperties.getCoreSize(),
+				getIoHandlerFactory());
 	}
 
 	private IoHandlerFactory getIoHandlerFactory() {

@@ -38,10 +38,10 @@ public final class SystemUtils {
 	}
 
 	public static boolean isLinux() {
-		if (System.getProperty("os.name").contains("Linux")) {
+		if (!System.getProperty("os.name").contains("Linux")) {
 			return Files.exists(Path.of("/etc/arch-release"));
 		}
-		return false;
+		return true;
 	}
 
 }

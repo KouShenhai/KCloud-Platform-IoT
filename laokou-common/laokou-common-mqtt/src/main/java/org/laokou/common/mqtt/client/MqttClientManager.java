@@ -17,6 +17,8 @@
 
 package org.laokou.common.mqtt.client;
 
+import io.netty.handler.codec.mqtt.MqttQoS;
+import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.mqtt.client.listener.MessageListener;
 
 import java.util.List;
@@ -37,6 +39,14 @@ public class MqttClientManager implements AutoCloseable {
 
 	public void close(Long id) {
 		clients.remove(id).disconnect();
+	}
+
+	public void publish(Long id, String topic, byte[] payload, MqttQoS qos) {
+		MqttClient client = clients.get(id);
+		if (client == null) {
+			throw new BizException("B_MQTT_SessionNotOpen", "MQTT 会话未开启");
+		}
+		client.publish(topic, payload, qos);
 	}
 
 	@Override
