@@ -29,6 +29,7 @@ import reactor.core.publisher.Mono;
 import java.time.Duration;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 
 /**
  * @author laokou
@@ -89,22 +90,13 @@ public record ReactiveRedisUtils(ReactiveRedisTemplate<@NonNull String, @NonNull
 		return redissonReactiveClient.getMap(key).putIfAbsent(field, value);
 	}
 
-	public <T> Mono<T> tryLock(String key, long threadId, long waitTime, long leaseTime, Mono<T> action) {
+	public <T> Mono<T> lock(String key, long threadId, long waitTime, long leaseTime, Supplier<Mono<T>> action) {
 		RLockReactive lock = redissonReactiveClient.getLock(key);
-		return Mono.usingWhen(lock.tryLock(waitTime, leaseTime, TimeUnit.MILLISECONDS, threadId).flatMap(acquired -> {
-			if (!acquired) {
-				return Mono.error(new IllegalStateException(String.format("获取分布式锁失败：%s", key)));
-			}
-			return Mono.just(true);
-		}),
-
-				ignored -> action,
-
-				ignored -> lock.unlock(threadId),
-
-				(ignored, _) -> lock.unlock(threadId),
-
-				ignored -> lock.unlock(threadId));
+		Mono<RLockReactive> acquiredLock = lock.tryLock(waitTime, leaseTime, TimeUnit.MILLISECONDS, threadId)
+			.filter(Boolean::booleanValue)
+			.map(_ -> lock);
+		return Mono.usingWhen(acquiredLock, _ -> Mono.defer(action), heldLock -> heldLock.unlock(threadId),
+				(heldLock, _) -> heldLock.unlock(threadId), heldLock -> heldLock.unlock(threadId));
 	}
 
 }
