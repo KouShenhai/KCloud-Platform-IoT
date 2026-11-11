@@ -122,8 +122,8 @@ export const ThingModelDrawer: React.FC<ThingModelDrawerProps> = ({
 			title={title}
 			drawerProps={{
 				destroyOnClose: true,
-				closable: true,
-				maskClosable: true,
+				closable: false,
+				maskClosable: false,
 			}}
 			initialValues={initialValues}
 			onOpenChange={setModalVisit}

@@ -273,11 +273,9 @@ export const GatewayPreviewDrawer = ({
 		<Drawer
 			open
 			title={t('iot.gateway.preview.title')}
-			width="min(720px, 100vw)"
 			closable={false}
-			maskClosable={false}
 			keyboard={false}
-			extra={<Button onClick={onClose}>{t('common.close')}</Button>}
+			footer={<Button onClick={onClose}>{t('common.close')}</Button>}
 		>
 			<Descriptions
 				size="small"

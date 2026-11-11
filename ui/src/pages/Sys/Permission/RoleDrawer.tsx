@@ -58,8 +58,8 @@ export const RoleDrawer: React.FC<RoleDrawerProps> = ({
 			title={title}
 			drawerProps={{
 				destroyOnClose: true,
-				closable: true,
-				maskClosable: true,
+				closable: false,
+				maskClosable: false,
 			}}
 			initialValues={dataSource}
 			onOpenChange={setModalVisit}

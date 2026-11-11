@@ -43,8 +43,8 @@ export const I18nMenuDrawer: React.FC<I18nMenuDrawerProps> = ({
 			title={title}
 			drawerProps={{
 				destroyOnClose: true,
-				closable: true,
-				maskClosable: true,
+				closable: false,
+				maskClosable: false,
 			}}
 			initialValues={dataSource}
 			onOpenChange={setModalVisit}

@@ -62,8 +62,8 @@ export const MenuDrawer: React.FC<MenuDrawerProps> = ({
 			title={title}
 			drawerProps={{
 				destroyOnClose: true,
-				closable: true,
-				maskClosable: true,
+				closable: false,
+				maskClosable: false,
 			}}
 			initialValues={dataSource}
 			onOpenChange={setModalVisit}

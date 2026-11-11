@@ -52,8 +52,8 @@ export const GatewayDrawer: React.FC<GatewayDrawerProps> = ({
 			title={title}
 			drawerProps={{
 				destroyOnClose: true,
-				closable: true,
-				maskClosable: true,
+				closable: false,
+				maskClosable: false,
 			}}
 			initialValues={dataSource}
 			onOpenChange={setModalVisit}
