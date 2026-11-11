@@ -281,7 +281,7 @@ export const GatewayPreviewDrawer = ({
 		>
 			<Descriptions
 				size="small"
-				column={{ xs: 1, sm: 2 }}
+				column={{ xs: 1, sm: 3 }}
 				items={[
 					{
 						key: 'sn',
@@ -295,11 +295,6 @@ export const GatewayPreviewDrawer = ({
 					},
 					{
 						key: 'name1',
-						label: t('iot.gateway.name'),
-						children: gateway.name || '—',
-					},
-					{
-						key: 'name12',
 						label: t('iot.gateway.name'),
 						children: gateway.name || '—',
 					},
