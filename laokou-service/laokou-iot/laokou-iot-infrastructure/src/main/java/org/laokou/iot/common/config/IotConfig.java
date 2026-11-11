@@ -71,7 +71,7 @@ public class IotConfig {
 
 	@Bean(destroyMethod = "close")
 	MqttEventLoop mqttEventLoop() {
-		return new MqttEventLoop(32);
+		return new MqttEventLoop();
 	}
 
 	/**

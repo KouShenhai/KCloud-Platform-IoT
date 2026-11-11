@@ -89,7 +89,7 @@ public class SpringWebSocketServerProperties {
 	/**
 	 * 读写核心线程数.
 	 */
-	private int workerCorePoolSize = 40;
+	private int workerCorePoolSize = 16;
 
 	/**
 	 * 延迟发送 => true实时，false延迟.

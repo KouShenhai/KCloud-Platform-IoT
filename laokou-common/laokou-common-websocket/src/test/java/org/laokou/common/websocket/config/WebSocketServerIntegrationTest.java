@@ -59,7 +59,6 @@ import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -163,7 +162,7 @@ class WebSocketServerIntegrationTest {
 				handler);
 
 		// Create and start server
-		server = new WebSocketServer(initializer, properties, Executors.newVirtualThreadPerTaskExecutor());
+		server = new WebSocketServer(initializer, properties);
 		Thread.ofVirtual().start(() -> server.start());
 
 		// Wait for server to be ready with polling (max 10 seconds)

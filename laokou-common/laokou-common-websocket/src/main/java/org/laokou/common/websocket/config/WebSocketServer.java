@@ -25,17 +25,18 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.IoHandlerFactory;
 import io.netty.channel.MultiThreadIoEventLoopGroup;
 import io.netty.channel.ServerChannel;
+import io.netty.channel.epoll.Epoll;
+import io.netty.channel.epoll.EpollIoHandler;
+import io.netty.channel.epoll.EpollServerSocketChannel;
 import io.netty.channel.nio.NioIoHandler;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.uring.IoUring;
 import io.netty.channel.uring.IoUringIoHandler;
 import io.netty.channel.uring.IoUringServerSocketChannel;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.SystemUtils;
 
 import java.util.Set;
-import java.util.concurrent.ExecutorService;
 
 /**
  * WebSocket服务器配置.
@@ -47,14 +48,10 @@ public final class WebSocketServer extends AbstractServer {
 
 	private final SpringWebSocketServerProperties properties;
 
-	private final ExecutorService virtualThreadExecutor;
-
-	public WebSocketServer(ChannelHandler channelHandler, SpringWebSocketServerProperties properties,
-			ExecutorService virtualThreadExecutor) {
+	public WebSocketServer(ChannelHandler channelHandler, SpringWebSocketServerProperties properties) {
 		super(properties.getHost(), properties.getPort(), channelHandler, properties.getBossCorePoolSize(),
 				properties.getWorkerCorePoolSize());
 		this.properties = properties;
-		this.virtualThreadExecutor = virtualThreadExecutor;
 	}
 
 	/**
@@ -65,9 +62,9 @@ public final class WebSocketServer extends AbstractServer {
 	protected AbstractBootstrap<ServerBootstrap, ServerChannel> init() {
 		IoHandlerFactory ioHandlerFactory = getIoHandlerFactory();
 		// boss负责监听端口
-		boss = new MultiThreadIoEventLoopGroup(bossCorePoolSize, virtualThreadExecutor, ioHandlerFactory);
+		boss = new MultiThreadIoEventLoopGroup(bossCorePoolSize, ioHandlerFactory);
 		// work负责线程读写
-		worker = new MultiThreadIoEventLoopGroup(workerCorePoolSize, virtualThreadExecutor, ioHandlerFactory);
+		worker = new MultiThreadIoEventLoopGroup(workerCorePoolSize, ioHandlerFactory);
 		// 配置引导
 		ServerBootstrap serverBootstrap = new ServerBootstrap();
 		// 绑定线程组
@@ -88,35 +85,36 @@ public final class WebSocketServer extends AbstractServer {
 	public void send(Long clientId, Object payload) {
 		Set<Channel> channels = WebSocketSessionManager.get(clientId);
 		for (Channel channel : channels) {
-			if (ObjectUtils.isNotNull(channel) && channel.isActive() && channel.isWritable()) {
-				virtualThreadExecutor.execute(() -> channel.writeAndFlush(payload));
+			if (channel != null && channel.isActive() && channel.isWritable()) {
+				channel.writeAndFlush(payload).addListener(_ -> log.debug("write and flush successful"));
 			}
 		}
 	}
 
 	private IoHandlerFactory getIoHandlerFactory() {
-		if (isIoUringAvailable()) {
+		if (SystemUtils.isLinux() && IoUring.isAvailable()) {
 			log.info("Use IoUringIoHandler factory");
 			return IoUringIoHandler.newFactory();
+		}
+		if (SystemUtils.isLinux() && Epoll.isAvailable()) {
+			log.info("Use EpollIoHandler factory");
+			return EpollIoHandler.newFactory();
 		}
 		log.info("Use NioIoHandler factory");
 		return NioIoHandler.newFactory();
 	}
 
 	public Class<? extends ServerChannel> getServerChannel() {
-		if (isIoUringAvailable()) {
+		if (SystemUtils.isLinux() && IoUring.isAvailable()) {
 			log.info("Use IoUringServerSocketChannel");
 			return IoUringServerSocketChannel.class;
 		}
+		if (SystemUtils.isLinux() && Epoll.isAvailable()) {
+			log.info("Use EpollServerSocketChannel");
+			return EpollServerSocketChannel.class;
+		}
 		log.info("Use NioServerSocketChannel");
 		return NioServerSocketChannel.class;
-	}
-
-	private boolean isIoUringAvailable() {
-		if (SystemUtils.isLinux()) {
-			return IoUring.isAvailable();
-		}
-		return false;
 	}
 
 }
