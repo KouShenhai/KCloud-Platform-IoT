@@ -4,8 +4,9 @@ import {
 	type GatewayProperties,
 } from '@/services/iot/gateway';
 import { useIntl } from '@@/exports';
-import { Button, Descriptions, Drawer, Table, Typography } from 'antd';
+import {Button, Descriptions, Drawer, Table, Tag, Typography} from 'antd';
 import { useEffect, useState } from 'react';
+import {formatTimestamp} from "@/utils/format";
 
 type GatewayPreviewProps = {
 	id: GatewayId;
@@ -26,12 +27,16 @@ export const GatewayPreviewDrawer = ({ id, onClose }: GatewayPreviewProps) => {
 					const newData = {
 						...data,
 						properties: {
-							timestamp: data?.timestamp,
+							timestamp: formatTimestamp(data?.timestamp),
 							...data?.properties,
 						}
 					};
+					// @ts-ignore
+					newData.state = Number(data.timestamp) + 1000 * Number(data?.properties['interval']) >= Date.now() ? 1 : 0
 					setSnapshot(newData);
 				} else {
+					// @ts-ignore
+					data.state = 0
 					setSnapshot(data ?? null);
 				}
 			}).catch(err => {
@@ -76,7 +81,11 @@ export const GatewayPreviewDrawer = ({ id, onClose }: GatewayPreviewProps) => {
 							{
 								key: 'state',
 								label: t('iot.gateway.state'),
-								children: snapshot.name || '—',
+								children: (
+									<Tag color={snapshot.state === 1 ? 'green' : 'red'}>
+										3333
+									</Tag>
+								),
 							},
 						]}
 					/>
