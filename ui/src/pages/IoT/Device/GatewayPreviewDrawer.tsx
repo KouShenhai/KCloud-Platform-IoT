@@ -4,7 +4,7 @@ import {
 	type GatewayProperties,
 } from '@/services/iot/gateway';
 import { useIntl } from '@@/exports';
-import { Alert, Button, Descriptions, Drawer, Table, Typography } from 'antd';
+import { Button, Descriptions, Drawer, Table, Typography } from 'antd';
 import { useEffect, useState } from 'react';
 
 type GatewayPreviewProps = {
@@ -26,14 +26,13 @@ export const GatewayPreviewDrawer = ({ id, onClose }: GatewayPreviewProps) => {
 					const newData = {
 						...data,
 						properties: {
-							...data?.properties,
 							timestamp: data?.timestamp,
+							...data?.properties,
 						}
 					};
 					setSnapshot(newData);
 				} else {
-					// @ts-ignore
-					setSnapshot(data);
+					setSnapshot(data ?? null);
 				}
 			}).catch(err => {
 				console.error(err);
