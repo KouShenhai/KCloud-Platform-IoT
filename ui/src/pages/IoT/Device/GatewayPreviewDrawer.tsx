@@ -4,7 +4,7 @@ import {
 	type GatewayProperties,
 } from '@/services/iot/gateway';
 import { useIntl } from '@@/exports';
-import {Button, Descriptions, Drawer, Table, Tag, Typography} from 'antd';
+import { Button, Descriptions, Drawer, Table, Tabs, Tag, Typography } from 'antd';
 import { useEffect, useState } from 'react';
 import {formatTimestamp} from "@/utils/format";
 
@@ -94,29 +94,40 @@ export const GatewayPreviewDrawer = ({ id, onClose }: GatewayPreviewProps) => {
 							},
 						]}
 					/>
-					<Typography.Title level={5}>
-						{t('iot.gateway.preview.properties')}
-					</Typography.Title>
-					<Table
-						size="small"
-						rowKey="name"
-						dataSource={rows}
-						loading={loading}
-						pagination={false}
-						locale={{ emptyText: t('iot.gateway.preview.empty') }}
-						columns={[
+					<Tabs
+						items={[
 							{
-								title: t('iot.gateway.preview.propertyName'),
-								dataIndex: 'name',
-								width: '35%',
-							},
-							{
-								title: t('iot.gateway.preview.propertyValue'),
-								dataIndex: 'value',
-								render: (value: unknown) => (
-									<Typography.Text style={{ overflowWrap: 'anywhere' }}>
-										{typeof value === 'string' ? value : JSON.stringify(value)}
-									</Typography.Text>
+								key: 'properties',
+								label: t('iot.gateway.preview.properties'),
+								children: (
+									<Table
+										size="small"
+										rowKey="name"
+										dataSource={rows}
+										loading={loading}
+										pagination={false}
+										locale={{ emptyText: t('iot.gateway.preview.empty') }}
+										columns={[
+											{
+												title: t('iot.gateway.preview.propertyName'),
+												dataIndex: 'name',
+												width: '35%',
+											},
+											{
+												title: t('iot.gateway.preview.propertyValue'),
+												dataIndex: 'value',
+												render: (value: unknown) => (
+													<Typography.Text
+														style={{ overflowWrap: 'anywhere' }}
+													>
+														{typeof value === 'string'
+															? value
+															: JSON.stringify(value)}
+													</Typography.Text>
+												),
+											},
+										]}
+									/>
 								),
 							},
 						]}
