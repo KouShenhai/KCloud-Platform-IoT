@@ -127,8 +127,8 @@ public class GatewaysController {
 	@GetMapping("/v1/gateways/{id}/properties")
 	@PreAuthorize("hasAuthority('read') and hasAuthority('iot:gateway:preview')")
 	@Operation(summary = "查看网关属性", description = "查看网关属性")
-	public Result<GatewayPropertiesCO> getGatewayProperties(@PathVariable Long id) {
-		return gatewaysServiceI.getGatewayProperties(new GatewayPropertiesGetQry(id));
+	public Result<GatewayPropertiesCO> getGatewayPropertiesById(@PathVariable Long id) {
+		return gatewaysServiceI.getGatewayPropertiesById(new GatewayPropertiesGetQry(id));
 	}
 
 	@Idempotent

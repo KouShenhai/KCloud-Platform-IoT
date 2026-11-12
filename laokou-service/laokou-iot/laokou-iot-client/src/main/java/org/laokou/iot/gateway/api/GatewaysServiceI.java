@@ -84,6 +84,6 @@ public interface GatewaysServiceI {
 	 * 查看网关属性.
 	 * @param qry 预览请求
 	 */
-	Result<GatewayPropertiesCO> getGatewayProperties(GatewayPropertiesGetQry qry);
+	Result<GatewayPropertiesCO> getGatewayPropertiesById(GatewayPropertiesGetQry qry);
 
 }

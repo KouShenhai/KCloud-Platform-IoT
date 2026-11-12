@@ -297,7 +297,7 @@ export default {
 	'iot.gateway.preview.title': '网关预览',
 	'iot.gateway.preview.properties': '网关属性',
 	'iot.gateway.preview.reportedAt': '上报时间 {time}',
-	'iot.gateway.preview.loadError': '加载网关属性失败，稍后自动重试。',
+	'iot.gateway.preview.loadError': '加载网关属性失败。',
 	'iot.gateway.preview.empty': '暂无上报属性',
 	'iot.gateway.preview.propertyName': '属性',
 	'iot.gateway.preview.propertyValue': '值',

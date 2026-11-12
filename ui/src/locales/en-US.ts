@@ -297,7 +297,7 @@ export default {
 	'iot.gateway.preview.title': 'Gateway Preview',
 	'iot.gateway.preview.properties': 'Gateway Properties',
 	'iot.gateway.preview.reportedAt': 'Reported at {time}',
-	'iot.gateway.preview.loadError': 'Could not load gateway properties. Retrying automatically.',
+	'iot.gateway.preview.loadError': 'Could not load gateway properties.',
 	'iot.gateway.preview.empty': 'No properties reported yet',
 	'iot.gateway.preview.propertyName': 'Property',
 	'iot.gateway.preview.propertyValue': 'Value',

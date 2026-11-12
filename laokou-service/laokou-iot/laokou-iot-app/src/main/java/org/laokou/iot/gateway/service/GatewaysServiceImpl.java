@@ -103,7 +103,7 @@ public class GatewaysServiceImpl implements GatewaysServiceI {
 	}
 
 	@Override
-	public Result<GatewayPropertiesCO> getGatewayProperties(GatewayPropertiesGetQry qry) {
+	public Result<GatewayPropertiesCO> getGatewayPropertiesById(GatewayPropertiesGetQry qry) {
 		return gatewayPropertiesGetQryExe.execute(qry);
 	}
 

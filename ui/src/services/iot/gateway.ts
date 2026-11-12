@@ -1,17 +1,19 @@
 /* eslint-disable */
 import { request } from '@umijs/max';
 
-type GatewayId = string | number;
+export type GatewayId = string | number;
 
 export type GatewayProperties = {
+	sn?: string | null;
+	name?: string | null;
 	timestamp?: string | number | null;
-	properties: Record<string, unknown>;
+	properties?: Record<string, unknown> | null;
 };
 
 type GatewayResponse<T> = {
 	code: string;
 	msg?: string;
-	data?: T;
+	data?: T | null;
 };
 
 /** 修改网关 修改网关 PUT /api/v1/gateways */
@@ -75,16 +77,17 @@ export async function getGatewayById(
 	});
 }
 
-export async function getGatewayProperties(
-	params: API.getByIdParams,
+export async function getGatewayPropertiesById(
+	{ id }: { id: GatewayId },
 	options?: { [key: string]: any },
 ) {
-	const { id: param0, ...queryParams } = params;
-	return request<API.Result>(`/api-proxy/iot/api/v1/gateways/${param0}/properties`, {
-		method: 'GET',
-		params: { ...queryParams },
-		...(options || {}),
-	});
+	return request<GatewayResponse<GatewayProperties>>(
+		`/api-proxy/iot/api/v1/gateways/${id}/properties`,
+		{
+			method: 'GET',
+			...options,
+		},
+	);
 }
 
 /** 导出网关 导出网关 POST /api/v1/gateways/export */
