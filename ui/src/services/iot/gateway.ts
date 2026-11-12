@@ -14,31 +14,6 @@ type GatewayResponse<T> = {
 	data?: T;
 };
 
-export function getGatewayProperties(
-	id: GatewayId,
-	signal?: AbortSignal,
-): Promise<GatewayResponse<GatewayProperties>> {
-	return request<GatewayResponse<GatewayProperties>>(
-		`/api-proxy/iot/api/v1/gateways/${id}/properties`,
-		{ method: 'GET', signal },
-	);
-}
-
-export function sendGatewayCommand(
-	id: GatewayId,
-	command: string,
-	requestId: string,
-): Promise<GatewayResponse<null>> {
-	return request<GatewayResponse<null>>(
-		`/api-proxy/iot/api/v1/gateways/${id}/commands`,
-		{
-			method: 'POST',
-			headers: { 'request-id': requestId },
-			data: { command },
-		},
-	);
-}
-
 /** 修改网关 修改网关 PUT /api/v1/gateways */
 export async function modifyGateway(
 	body: API.GatewayModifyCmd,
@@ -94,6 +69,18 @@ export async function getGatewayById(
 ) {
 	const { id: param0, ...queryParams } = params;
 	return request<API.Result>(`/api-proxy/iot/api/v1/gateways/${param0}`, {
+		method: 'GET',
+		params: { ...queryParams },
+		...(options || {}),
+	});
+}
+
+export async function getGatewayProperties(
+	params: API.getByIdParams,
+	options?: { [key: string]: any },
+) {
+	const { id: param0, ...queryParams } = params;
+	return request<API.Result>(`/api-proxy/iot/api/v1/gateways/${param0}/properties`, {
 		method: 'GET',
 		params: { ...queryParams },
 		...(options || {}),
