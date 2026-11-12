@@ -17,6 +17,7 @@
 
 package org.laokou.iot.gateway.convertor;
 
+import org.laokou.common.fory.util.ForyJsonUtils;
 import org.laokou.iot.gateway.dto.clientobject.GatewayCO;
 import org.laokou.iot.gateway.dto.clientobject.GatewayPropertiesCO;
 import org.laokou.iot.gateway.factory.GatewayDomainFactory;
@@ -53,11 +54,11 @@ public final class GatewayConvertor {
 		GatewayPropertiesCO gatewayPropertiesCO = new GatewayPropertiesCO();
 		gatewayPropertiesCO.setSn(gatewayDO.getSn());
 		gatewayPropertiesCO.setName(gatewayDO.getName());
-		if (obj1 != null) {
-			gatewayPropertiesCO.setTimestamp((Long) obj1);
+		if (obj1 instanceof String str) {
+			gatewayPropertiesCO.setTimestamp(Long.parseLong(str));
 		}
-		if (obj2 != null) {
-			gatewayPropertiesCO.setProperties((Map<String, Object>) obj2);
+		if (obj2 instanceof String str) {
+			gatewayPropertiesCO.setProperties(ForyJsonUtils.toBean(str, Map.class));
 		}
 		return gatewayPropertiesCO;
 	}

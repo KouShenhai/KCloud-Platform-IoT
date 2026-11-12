@@ -30,7 +30,10 @@ import org.laokou.iot.gateway.dto.GatewayPropertiesGetQry;
 import org.laokou.iot.gateway.dto.clientobject.GatewayPropertiesCO;
 import org.laokou.iot.gateway.gatewayimpl.database.GatewayMapper;
 import org.laokou.iot.gateway.gatewayimpl.database.dataobject.GatewayDO;
+import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @author laokou
@@ -52,8 +55,9 @@ public class GatewayPropertiesGetQryExe {
 			GatewayDO gatewayDO = gatewayMapper.selectById(qry.getId());
 			String gatewayPropertiesKey = RedisKeyUtils
 				.getGatewayPropertiesKey(systemSettingsProperties.getTenantCode(), gatewayDO.getSn());
-			return Result.ok(GatewayConvertor.toClientObject(gatewayDO,
-					redisUtils.hGet(gatewayPropertiesKey, "timestamp"), redisUtils.hGet(gatewayDO.getSn(), "data")));
+			DefaultRedisScript<List> script = new DefaultRedisScript<>("return redis.call('HMGET', KEYS[1], 'timestamp', 'data')", List.class);
+			List<?> values = redisUtils.redisTemplate().execute(script, List.of(gatewayPropertiesKey));
+			return Result.ok(GatewayConvertor.toClientObject(gatewayDO, values.getFirst(), values.get(1)));
 		}
 		catch (Exception ex) {
 			log.error("查看网关属性失败，错误信息：{}", ex.getMessage(), ex);

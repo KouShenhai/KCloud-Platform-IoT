@@ -16,19 +16,32 @@ export const GatewayPreviewDrawer = ({ id, onClose }: GatewayPreviewProps) => {
 	const intl = useIntl();
 	const t = (id: string) => intl.formatMessage({ id });
 	const [snapshot, setSnapshot] = useState<GatewayProperties | null>(null);
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
+		setLoading(true);
 		getGatewayPropertiesById({ id })
-			.then(({ code, data }) => {
-				setSnapshot(code === 'OK' ? data ?? null : null);
-			})
-			.catch(() => {
-
+			.then(({ data }) => {
+				if (data?.timestamp) {
+					const newData = {
+						...data,
+						properties: {
+							...data?.properties,
+							timestamp: data?.timestamp,
+						}
+					};
+					setSnapshot(newData);
+				} else {
+					// @ts-ignore
+					setSnapshot(data);
+				}
+			}).catch(err => {
+				console.error(err);
+			}).finally(() => {
+				setLoading(false);
 			});
 	}, [id]);
 
-	const timestamp = snapshot?.timestamp;
-	const reportedAt = timestamp == null ? null : new Date(Number(timestamp));
 	const rows = Object.entries(snapshot?.properties ?? {}).map(
 		([name, value]) => ({ name, value }),
 	);
@@ -45,18 +58,11 @@ export const GatewayPreviewDrawer = ({ id, onClose }: GatewayPreviewProps) => {
 			styles={{ footer: { textAlign: 'right' } }}
 			footer={<Button onClick={onClose}>{t('common.close')}</Button>}
 		>
-			{snapshot === null && (
-				<Alert
-					type="error"
-					showIcon
-					title={t('iot.gateway.preview.loadError')}
-				/>
-			)}
 			{snapshot && (
 				<>
 					<Descriptions
 						size="small"
-						column={{ xs: 1, sm: 2 }}
+						column={{ xs: 1, sm: 3 }}
 						items={[
 							{
 								key: 'sn',
@@ -68,23 +74,21 @@ export const GatewayPreviewDrawer = ({ id, onClose }: GatewayPreviewProps) => {
 								label: t('iot.gateway.name'),
 								children: snapshot.name || '—',
 							},
+							{
+								key: 'state',
+								label: t('iot.gateway.state'),
+								children: snapshot.name || '—',
+							},
 						]}
 					/>
 					<Typography.Title level={5}>
 						{t('iot.gateway.preview.properties')}
 					</Typography.Title>
-					{reportedAt && !Number.isNaN(reportedAt.getTime()) && (
-						<Typography.Paragraph type="secondary">
-							{intl.formatMessage(
-								{ id: 'iot.gateway.preview.reportedAt' },
-								{ time: reportedAt.toLocaleString(intl.locale) },
-							)}
-						</Typography.Paragraph>
-					)}
 					<Table
 						size="small"
 						rowKey="name"
 						dataSource={rows}
+						loading={loading}
 						pagination={false}
 						locale={{ emptyText: t('iot.gateway.preview.empty') }}
 						columns={[

@@ -6,6 +6,7 @@ export type GatewayId = string | number;
 export type GatewayProperties = {
 	sn?: string | null;
 	name?: string | null;
+	state?: string | null;
 	timestamp?: string | number | null;
 	properties?: Record<string, unknown> | null;
 };

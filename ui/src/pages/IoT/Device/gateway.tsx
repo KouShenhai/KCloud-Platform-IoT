@@ -139,12 +139,12 @@ export default () => {
 			key: 'option',
 			render: (_, record) => [
 				access.canGatewayPreview && (
-					<Button
+					<a
 						key="preview"
 						onClick={() => setPreviewGateway(record)}
 					>
 						{t('iot.gateway.preview.button')}
-					</Button>
+					</a>
 				),
 				access.canGatewayGetDetail && (
 					<a
