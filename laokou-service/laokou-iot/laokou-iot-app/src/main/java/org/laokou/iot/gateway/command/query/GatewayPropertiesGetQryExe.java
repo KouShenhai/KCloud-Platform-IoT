@@ -55,7 +55,8 @@ public class GatewayPropertiesGetQryExe {
 			GatewayDO gatewayDO = gatewayMapper.selectById(qry.getId());
 			String gatewayPropertiesKey = RedisKeyUtils
 				.getGatewayPropertiesKey(systemSettingsProperties.getTenantCode(), gatewayDO.getSn());
-			DefaultRedisScript<List> script = new DefaultRedisScript<>("return redis.call('HMGET', KEYS[1], 'timestamp', 'data')", List.class);
+			DefaultRedisScript<List> script = new DefaultRedisScript<>(
+					"return redis.call('HMGET', KEYS[1], 'timestamp', 'data')", List.class);
 			List<?> values = redisUtils.redisTemplate().execute(script, List.of(gatewayPropertiesKey));
 			return Result.ok(GatewayConvertor.toClientObject(gatewayDO, values.getFirst(), values.get(1)));
 		}
