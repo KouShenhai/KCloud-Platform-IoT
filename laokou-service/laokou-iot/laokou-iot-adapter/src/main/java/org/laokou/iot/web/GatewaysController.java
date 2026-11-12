@@ -26,7 +26,6 @@ import org.laokou.common.idempotent.annotation.Idempotent;
 import org.laokou.common.log.annotation.OperateLog;
 import org.laokou.common.trace.annotation.TraceLog;
 import org.laokou.iot.gateway.api.GatewaysServiceI;
-import org.laokou.iot.gateway.dto.GatewayCommandCmd;
 import org.laokou.iot.gateway.dto.GatewayExportCmd;
 import org.laokou.iot.gateway.dto.GatewayGetQry;
 import org.laokou.iot.gateway.dto.GatewayImportCmd;
@@ -37,7 +36,6 @@ import org.laokou.iot.gateway.dto.GatewayRemoveCmd;
 import org.laokou.iot.gateway.dto.GatewaySaveCmd;
 import org.laokou.iot.gateway.dto.clientobject.GatewayCO;
 import org.laokou.iot.gateway.dto.clientobject.GatewayPropertiesCO;
-import org.laokou.iot.gateway.service.GatewayPreviewService;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -63,8 +61,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class GatewaysController {
 
 	private final GatewaysServiceI gatewaysServiceI;
-
-	private final GatewayPreviewService gatewayPreviewService;
 
 	@Idempotent
 	@PostMapping("/v1/gateways")
@@ -136,9 +132,8 @@ public class GatewaysController {
 	@PreAuthorize("hasAuthority('write') and hasAuthority('iot:gateway:command')")
 	@OperateLog(module = "网关管理", operation = "下发网关指令")
 	@Operation(summary = "提交网关指令至 MQTT 会话")
-	public Result<Void> sendGatewayCommand(@PathVariable Long id, @Validated @RequestBody GatewayCommandCmd cmd) {
-		gatewayPreviewService.sendCommand(id, cmd);
-		return Result.ok(null);
+	public Result<Void> sendGatewayCommand(@PathVariable Long id) {
+		return null;
 	}
 
 }
