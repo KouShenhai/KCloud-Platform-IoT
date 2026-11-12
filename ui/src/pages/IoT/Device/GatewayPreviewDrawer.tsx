@@ -49,6 +49,7 @@ export const GatewayPreviewDrawer = ({ id, onClose }: GatewayPreviewProps) => {
 	const rows = Object.entries(snapshot?.properties ?? {}).map(
 		([name, value]) => ({ name, value }),
 	);
+	const isOnline = snapshot?.state === 1;
 
 	return (
 		<Drawer
@@ -82,8 +83,12 @@ export const GatewayPreviewDrawer = ({ id, onClose }: GatewayPreviewProps) => {
 								key: 'state',
 								label: t('iot.gateway.state'),
 								children: (
-									<Tag color={snapshot.state === 1 ? 'green' : 'red'}>
-										3333
+									<Tag color={isOnline ? 'green' : 'red'}>
+										{t(
+											isOnline
+												? 'iot.gateway.state.online'
+												: 'iot.gateway.state.offline',
+										)}
 									</Tag>
 								),
 							},
