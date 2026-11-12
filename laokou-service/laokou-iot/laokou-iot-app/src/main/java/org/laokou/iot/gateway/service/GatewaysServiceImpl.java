@@ -28,14 +28,17 @@ import org.laokou.iot.gateway.command.GatewayRemoveCmdExe;
 import org.laokou.iot.gateway.command.GatewaySaveCmdExe;
 import org.laokou.iot.gateway.command.query.GatewayGetQryExe;
 import org.laokou.iot.gateway.command.query.GatewayPageQryExe;
+import org.laokou.iot.gateway.command.query.GatewayPropertiesGetQryExe;
 import org.laokou.iot.gateway.dto.GatewayExportCmd;
 import org.laokou.iot.gateway.dto.GatewayGetQry;
 import org.laokou.iot.gateway.dto.GatewayImportCmd;
 import org.laokou.iot.gateway.dto.GatewayModifyCmd;
 import org.laokou.iot.gateway.dto.GatewayPageQry;
+import org.laokou.iot.gateway.dto.GatewayPropertiesGetQry;
 import org.laokou.iot.gateway.dto.GatewayRemoveCmd;
 import org.laokou.iot.gateway.dto.GatewaySaveCmd;
 import org.laokou.iot.gateway.dto.clientobject.GatewayCO;
+import org.laokou.iot.gateway.dto.clientobject.GatewayPropertiesCO;
 import org.springframework.stereotype.Service;
 
 /**
@@ -61,6 +64,8 @@ public class GatewaysServiceImpl implements GatewaysServiceI {
 	private final GatewayPageQryExe gatewayPageQryExe;
 
 	private final GatewayGetQryExe gatewayGetQryExe;
+
+	private final GatewayPropertiesGetQryExe gatewayPropertiesGetQryExe;
 
 	@Override
 	public void saveGateway(GatewaySaveCmd cmd) {
@@ -95,6 +100,11 @@ public class GatewaysServiceImpl implements GatewaysServiceI {
 	@Override
 	public Result<GatewayCO> getGatewayById(GatewayGetQry qry) {
 		return gatewayGetQryExe.execute(qry);
+	}
+
+	@Override
+	public Result<GatewayPropertiesCO> getGatewayProperties(GatewayPropertiesGetQry qry) {
+		return gatewayPropertiesGetQryExe.execute(qry);
 	}
 
 }

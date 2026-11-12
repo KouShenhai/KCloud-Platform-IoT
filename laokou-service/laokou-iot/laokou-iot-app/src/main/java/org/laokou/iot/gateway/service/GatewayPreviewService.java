@@ -23,22 +23,15 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.common.i18n.common.exception.BizException;
 import org.laokou.common.i18n.util.JacksonUtils;
-import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.laokou.common.mqtt.client.MqttClientManager;
 import org.laokou.common.mqtt.client.message.DownCommandGatewayMessage;
-import org.laokou.common.redis.config.JacksonCodec;
 import org.laokou.common.tenant.constant.DSConstants;
 import org.laokou.iot.gateway.dto.GatewayCommandCmd;
 import org.laokou.iot.gateway.dto.clientobject.GatewayPropertiesCO;
 import org.laokou.iot.gateway.gatewayimpl.database.GatewayMapper;
 import org.laokou.iot.gateway.gatewayimpl.database.dataobject.GatewayDO;
-import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * 查询网关属性及下发网关指令.
@@ -58,22 +51,29 @@ public class GatewayPreviewService {
 	private final MqttClientManager mqttClientManager;
 
 	public GatewayPropertiesCO getProperties(Long id) {
-		GatewayDO gateway = getGateway(id);
-		String key = RedisKeyUtils.getGatewayPropertiesKey(systemSettingsProperties.getTenantCode(), gateway.getSn());
-		byte[] rawKey = JacksonCodec.STRING_REDIS_SERIALIZER.serialize(key);
-		// Lua 写入的字段名是原始字符串，哈希键和字段值使用 RedisTemplate 序列化。
-		RedisSerializer<String> fields = RedisSerializer.string();
-		List<byte[]> values = redisTemplate
-			.execute((RedisCallback<List<byte[]>>) connection -> connection.hashCommands()
-				.hMGet(rawKey, fields.serialize("timestamp"), fields.serialize("data")));
-		if (values == null || values.get(1) == null) {
-			return new GatewayPropertiesCO(null, Map.of());
-		}
-		Object timestamp = JacksonCodec.OBJECT_REDIS_SERIALIZER.deserialize(values.get(0));
-		String data = (String) JacksonCodec.OBJECT_REDIS_SERIALIZER.deserialize(values.get(1));
-		Map<String, Object> properties = JacksonUtils.toMap(data, String.class, Object.class);
-		return new GatewayPropertiesCO(timestamp == null ? null : Long.valueOf(timestamp.toString()),
-				properties == null ? Map.of() : properties);
+		// GatewayDO gateway = getGateway(id);
+		// String key =
+		// RedisKeyUtils.getGatewayPropertiesKey(systemSettingsProperties.getTenantCode(),
+		// gateway.getSn());
+		// byte[] rawKey = JacksonCodec.STRING_REDIS_SERIALIZER.serialize(key);
+		// // Lua 写入的字段名是原始字符串，哈希键和字段值使用 RedisTemplate 序列化。
+		// RedisSerializer<String> fields = RedisSerializer.string();
+		// List<byte[]> values = redisTemplate
+		// .execute((RedisCallback<List<byte[]>>) connection -> connection.hashCommands()
+		// .hMGet(rawKey, fields.serialize("timestamp"), fields.serialize("data")));
+		// if (values == null || values.get(1) == null) {
+		// return new GatewayPropertiesCO(null, Map.of());
+		// }
+		// Object timestamp =
+		// JacksonCodec.OBJECT_REDIS_SERIALIZER.deserialize(values.get(0));
+		// String data = (String)
+		// JacksonCodec.OBJECT_REDIS_SERIALIZER.deserialize(values.get(1));
+		// Map<String, Object> properties = JacksonUtils.toMap(data, String.class,
+		// Object.class);
+		// return new GatewayPropertiesCO(timestamp == null ? null :
+		// Long.valueOf(timestamp.toString()),
+		// properties == null ? Map.of() : properties);
+		return null;
 	}
 
 	public void sendCommand(Long id, GatewayCommandCmd cmd) {

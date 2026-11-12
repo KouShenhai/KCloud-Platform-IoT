@@ -1,5 +1,4 @@
 import { GatewayDrawer } from '@/pages/IoT/Device/GatewayDrawer';
-import { GatewayPreviewDrawer } from '@/pages/IoT/Device/GatewayPreviewDrawer';
 import {
 	getGatewayById,
 	pageGateway,
@@ -138,12 +137,12 @@ export default () => {
 			valueType: 'option',
 			key: 'option',
 			render: (_, record) => [
-				(access.canGatewayGetDetail || access.canGatewayCommand) && (
+				access.canGatewayGetDetail && (
 					<Button
 						key="preview"
-						type="link"
-						size="small"
-						onClick={() => setPreviewGateway(record)}
+						onClick={() => {
+
+						}}
 					>
 						{t('iot.gateway.preview.button')}
 					</Button>
@@ -210,15 +209,6 @@ export default () => {
 
 	return (
 		<>
-			{previewGateway && (
-				<GatewayPreviewDrawer
-					key={previewGateway.id}
-					gateway={previewGateway}
-					canReadProperties={access.canGatewayGetDetail ?? false}
-					canSendCommand={access.canGatewayCommand ?? false}
-					onClose={() => setPreviewGateway(undefined)}
-				/>
-			)}
 			<GatewayDrawer
 				modalVisit={modalVisit}
 				setModalVisit={setModalVisit}

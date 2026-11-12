@@ -24,9 +24,11 @@ import org.laokou.iot.gateway.dto.GatewayGetQry;
 import org.laokou.iot.gateway.dto.GatewayImportCmd;
 import org.laokou.iot.gateway.dto.GatewayModifyCmd;
 import org.laokou.iot.gateway.dto.GatewayPageQry;
+import org.laokou.iot.gateway.dto.GatewayPropertiesGetQry;
 import org.laokou.iot.gateway.dto.GatewayRemoveCmd;
 import org.laokou.iot.gateway.dto.GatewaySaveCmd;
 import org.laokou.iot.gateway.dto.clientobject.GatewayCO;
+import org.laokou.iot.gateway.dto.clientobject.GatewayPropertiesCO;
 
 /**
  *
@@ -77,5 +79,11 @@ public interface GatewaysServiceI {
 	 * @param qry 查看请求
 	 */
 	Result<GatewayCO> getGatewayById(GatewayGetQry qry);
+
+	/**
+	 * 查看网关属性.
+	 * @param qry 预览请求
+	 */
+	Result<GatewayPropertiesCO> getGatewayProperties(GatewayPropertiesGetQry qry);
 
 }

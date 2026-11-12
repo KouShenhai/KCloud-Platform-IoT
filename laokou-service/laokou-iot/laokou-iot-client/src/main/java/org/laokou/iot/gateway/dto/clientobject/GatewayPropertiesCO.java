@@ -18,16 +18,30 @@
 package org.laokou.iot.gateway.dto.clientobject;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+import org.laokou.common.i18n.dto.ClientObject;
 
 import java.util.Map;
 
 /**
- * 网关最新上报属性.
+ * 网关属性客户端对象.
  *
  * @author laokou
- * @param timestamp 网关上报时间戳
- * @param properties 最新上报的属性
  */
-public record GatewayPropertiesCO(@Schema(description = "网关上报时间戳") Long timestamp,
-		@Schema(description = "最新上报的属性") Map<String, Object> properties) {
+@Data
+@Schema(name = "网关属性客户端对象", description = "网关属性客户端对象")
+public class GatewayPropertiesCO extends ClientObject {
+
+	@Schema(name = "网关序列号", description = "网关序列号")
+	private String sn;
+
+	@Schema(name = "网关名称", description = "网关名称")
+	private String name;
+
+	@Schema(name = "时间戳", description = "时间戳")
+	private Long timestamp;
+
+	@Schema(name = "网关属性", description = "网关属性")
+	private Map<String, Object> properties;
+
 }

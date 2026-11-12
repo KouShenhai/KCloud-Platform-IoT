@@ -32,6 +32,7 @@ import org.laokou.iot.gateway.dto.GatewayGetQry;
 import org.laokou.iot.gateway.dto.GatewayImportCmd;
 import org.laokou.iot.gateway.dto.GatewayModifyCmd;
 import org.laokou.iot.gateway.dto.GatewayPageQry;
+import org.laokou.iot.gateway.dto.GatewayPropertiesGetQry;
 import org.laokou.iot.gateway.dto.GatewayRemoveCmd;
 import org.laokou.iot.gateway.dto.GatewaySaveCmd;
 import org.laokou.iot.gateway.dto.clientobject.GatewayCO;
@@ -124,10 +125,10 @@ public class GatewaysController {
 
 	@TraceLog
 	@GetMapping("/v1/gateways/{id}/properties")
-	@PreAuthorize("hasAuthority('read') and hasAuthority('iot:gateway:detail')")
-	@Operation(summary = "查询网关最新上报属性")
+	@PreAuthorize("hasAuthority('read') and hasAuthority('iot:gateway:preview')")
+	@Operation(summary = "查看网关属性", description = "查看网关属性")
 	public Result<GatewayPropertiesCO> getGatewayProperties(@PathVariable Long id) {
-		return Result.ok(gatewayPreviewService.getProperties(id));
+		return gatewaysServiceI.getGatewayProperties(new GatewayPropertiesGetQry(id));
 	}
 
 	@Idempotent

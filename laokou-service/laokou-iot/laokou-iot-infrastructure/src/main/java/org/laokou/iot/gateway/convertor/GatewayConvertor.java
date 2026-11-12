@@ -18,12 +18,14 @@
 package org.laokou.iot.gateway.convertor;
 
 import org.laokou.iot.gateway.dto.clientobject.GatewayCO;
+import org.laokou.iot.gateway.dto.clientobject.GatewayPropertiesCO;
 import org.laokou.iot.gateway.factory.GatewayDomainFactory;
 import org.laokou.iot.gateway.gatewayimpl.database.dataobject.GatewayDO;
 import org.laokou.iot.gateway.model.GatewayA;
 import org.laokou.iot.gateway.model.entity.GatewayE;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -45,6 +47,19 @@ public final class GatewayConvertor {
 		gatewayDO.setSessionId(gatewayE.getSessionId());
 		gatewayDO.setRemark(gatewayE.getRemark());
 		return gatewayDO;
+	}
+
+	public static GatewayPropertiesCO toClientObject(GatewayDO gatewayDO, Object obj1, Object obj2) {
+		GatewayPropertiesCO gatewayPropertiesCO = new GatewayPropertiesCO();
+		gatewayPropertiesCO.setSn(gatewayDO.getSn());
+		gatewayPropertiesCO.setName(gatewayDO.getName());
+		if (obj1 != null) {
+			gatewayPropertiesCO.setTimestamp((Long) obj1);
+		}
+		if (obj2 != null) {
+			gatewayPropertiesCO.setProperties((Map<String, Object>) obj2);
+		}
+		return gatewayPropertiesCO;
 	}
 
 	public static List<GatewayCO> toClientObjects(List<GatewayDO> list) {
