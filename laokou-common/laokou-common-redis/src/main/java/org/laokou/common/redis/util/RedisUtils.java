@@ -311,7 +311,7 @@ public record RedisUtils(RedisTemplate<String, Object> redisTemplate, RedissonCl
 		hSet(key, field, value, NOT_EXPIRE);
 	}
 
-	public Object hGet(String key, Object field) {
+	public Object hGet(String key, String field) {
 		return redissonClient.getMap(key).get(field);
 	}
 
