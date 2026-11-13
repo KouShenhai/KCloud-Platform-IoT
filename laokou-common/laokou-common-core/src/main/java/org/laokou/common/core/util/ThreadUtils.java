@@ -73,7 +73,7 @@ public final class ThreadUtils {
 	}
 
 	public static ScheduledExecutorService newScheduledThreadPool(int coreSize) {
-		return Executors.newScheduledThreadPool(coreSize, VirtualThreadFactory.INSTANCE);
+		return Executors.newScheduledThreadPool(coreSize);
 	}
 
 }
