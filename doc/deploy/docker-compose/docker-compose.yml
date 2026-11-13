@@ -15,7 +15,7 @@
 #  */
 services:
   apisix:
-    image: apache/apisix:3.19.0-ubuntu
+    image: apache/apisix:3.20.0-ubuntu
     container_name: apisix
     restart: always
     environment:
