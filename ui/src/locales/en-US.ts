@@ -293,6 +293,11 @@ export default {
 	'iot.device.required.productId': 'Please select product',
 
 	// iot/gateway
+	'iot.gateway.reboot.button': 'Reboot',
+	'iot.gateway.reboot.title': 'Reboot Gateway',
+	'iot.gateway.reboot.confirm': 'Reboot gateway "{name}"? The connection will be temporarily interrupted',
+	'iot.gateway.reboot.success': 'Reboot command dispatched',
+	'iot.gateway.reboot.failed': 'Failed to dispatch reboot command. Please try again later',
 	'iot.gateway.preview.button': 'Preview',
 	'iot.gateway.preview.title': 'Gateway Preview',
 	'iot.gateway.preview.properties': 'Gateway Properties',

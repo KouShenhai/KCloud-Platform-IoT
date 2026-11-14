@@ -49,6 +49,7 @@ public class GatewayPropertiesGetQryExe {
 
 	private final RedisUtils redisUtils;
 
+	@SuppressWarnings({ "rawtypes" })
 	public Result<GatewayPropertiesCO> execute(GatewayPropertiesGetQry qry) {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.IOT);

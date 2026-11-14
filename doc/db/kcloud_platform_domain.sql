@@ -265,14 +265,16 @@ CREATE TABLE "public"."iot_gateway_command_log" (
 	"version" int4 NOT NULL DEFAULT 0,
 	"tenant_id" int8 NOT NULL DEFAULT 1,
 	"dept_id" int8 NOT NULL DEFAULT 1,
-	"command_id" int8 NOT NULL,
 	"gateway_id" int8 NOT NULL,
-	"gateway_key" varchar(64)  NOT NULL,
-	"type" int2 NOT NULL,
-	"device_key" varchar(64),
-	"payload" text,
+	"gateway_sn" varchar(64)  NOT NULL,
+	"command" varchar(30) NOT NULL,
+	"topic" varchar(200) NOT NULL,
+	"device_sn" varchar(64),
+	"param" json,
+	"error_message" varchar(200),
 	"state" int2 NOT NULL DEFAULT 0,
-	"result" text
+	"reply_payload" json,
+	"reply_state" int2
 )
 ;
 COMMENT ON COLUMN "public"."iot_gateway_command_log"."id" IS 'ID';
@@ -284,13 +286,15 @@ COMMENT ON COLUMN "public"."iot_gateway_command_log"."del_flag" IS '删除标识
 COMMENT ON COLUMN "public"."iot_gateway_command_log"."version" IS '版本号';
 COMMENT ON COLUMN "public"."iot_gateway_command_log"."tenant_id" IS '租户ID';
 COMMENT ON COLUMN "public"."iot_gateway_command_log"."dept_id" IS '部门ID';
-COMMENT ON COLUMN "public"."iot_gateway_command_log"."command_id" IS '指令ID';
 COMMENT ON COLUMN "public"."iot_gateway_command_log"."gateway_id" IS '网关ID';
-COMMENT ON COLUMN "public"."iot_gateway_command_log"."gateway_key" IS '网关标识';
-COMMENT ON COLUMN "public"."iot_gateway_command_log"."type" IS '指令类型 1重启网关 2读取设备属性 3写入设备属性';
-COMMENT ON COLUMN "public"."iot_gateway_command_log"."device_key" IS '设备标识';
-COMMENT ON COLUMN "public"."iot_gateway_command_log"."payload" IS '指令内容';
-COMMENT ON COLUMN "public"."iot_gateway_command_log"."state" IS '指令状态 0待处理 1成功 2失败';
-COMMENT ON COLUMN "public"."iot_gateway_command_log"."result" IS '指令回执';
+COMMENT ON COLUMN "public"."iot_gateway_command_log"."gateway_sn" IS '网关序列号';
+COMMENT ON COLUMN "public"."iot_gateway_command_log"."topic" IS '主题';
+COMMENT ON COLUMN "public"."iot_gateway_command_log"."command" IS '指令 reboot网关重启指令 read设备读取属性指令 write设备写入属性指令';
+COMMENT ON COLUMN "public"."iot_gateway_command_log"."device_sn" IS '设备序列号';
+COMMENT ON COLUMN "public"."iot_gateway_command_log"."param" IS '指令参数';
+COMMENT ON COLUMN "public"."iot_gateway_command_log"."error_message" IS '错误信息';
+COMMENT ON COLUMN "public"."iot_gateway_command_log"."status" IS '指令状态 0失败 1成功';
+COMMENT ON COLUMN "public"."iot_gateway_command_log"."reply_payload" IS '指令回复内容';
+COMMENT ON COLUMN "public"."iot_gateway_command_log"."reply_status" IS '指令回复状态 0失败 1成功';
 COMMENT ON TABLE "public"."iot_gateway_command_log" IS '网关指令日志';
 ALTER TABLE "public"."iot_gateway_command_log" ADD CONSTRAINT "iot_gateway_command_log_pkey" PRIMARY KEY ("id");

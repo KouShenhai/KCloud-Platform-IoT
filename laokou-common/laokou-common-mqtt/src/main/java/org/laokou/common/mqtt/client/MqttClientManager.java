@@ -44,7 +44,7 @@ public class MqttClientManager implements AutoCloseable {
 	public void publish(Long id, String topic, byte[] payload, MqttQoS qos) {
 		MqttClient client = clients.get(id);
 		if (client == null) {
-			throw new BizException("B_MQTT_SessionNotOpen", "MQTT 会话未开启");
+			throw new BizException("B_MQTT_SessionNotOpen", "MQTT会话未开启");
 		}
 		client.publish(topic, payload, qos);
 	}

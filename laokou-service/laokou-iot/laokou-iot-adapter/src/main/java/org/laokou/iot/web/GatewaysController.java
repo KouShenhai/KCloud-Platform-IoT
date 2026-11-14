@@ -29,6 +29,7 @@ import org.laokou.iot.gateway.api.GatewaysServiceI;
 import org.laokou.iot.gateway.dto.GatewayExportCmd;
 import org.laokou.iot.gateway.dto.GatewayGetQry;
 import org.laokou.iot.gateway.dto.GatewayImportCmd;
+import org.laokou.iot.gateway.dto.GatewayDispatchRebootCommandCmd;
 import org.laokou.iot.gateway.dto.GatewayModifyCmd;
 import org.laokou.iot.gateway.dto.GatewayPageQry;
 import org.laokou.iot.gateway.dto.GatewayPropertiesGetQry;
@@ -128,12 +129,12 @@ public class GatewaysController {
 	}
 
 	@Idempotent
-	@PostMapping("/v1/gateways/{id}/commands")
-	@PreAuthorize("hasAuthority('write') and hasAuthority('iot:gateway:command')")
-	@OperateLog(module = "网关管理", operation = "下发网关指令")
-	@Operation(summary = "提交网关指令至 MQTT 会话")
-	public Result<Void> sendGatewayCommand(@PathVariable Long id) {
-		return null;
+	@PostMapping("/v1/gateways/{id}/reboot-command")
+	@PreAuthorize("hasAuthority('write') and hasAuthority('iot:gateway:reboot-command')")
+	@OperateLog(module = "网关管理", operation = "下发网关重启指令")
+	@Operation(summary = "下发网关重启指令", description = "下发网关重启指令")
+	public void dispatchGatewayRebootCommand(@PathVariable Long id) {
+		gatewaysServiceI.dispatchGatewayRebootCommand(new GatewayDispatchRebootCommandCmd(id));
 	}
 
 }

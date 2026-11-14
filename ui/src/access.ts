@@ -243,6 +243,10 @@ export default (initialState: any) => {
 			permissions?.includes('iot:gateway:preview') &&
 			scopes?.includes('read'),
 
+		// canGatewayCommand:
+		// 	permissions?.includes('iot:gateway:command:reboot') &&
+		// 	scopes?.includes('write'),
+
 		canGatewayPage:
 			permissions?.includes('iot:gateway:page') &&
 			scopes?.includes('read'),

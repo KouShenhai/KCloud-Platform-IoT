@@ -18,6 +18,11 @@
 package org.laokou.common.mqtt.client.message;
 
 import lombok.Data;
+import org.laokou.common.fory.constant.ForyConstants;
+
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.Map;
 
 /**
  * 网关消息【下发】.
@@ -25,8 +30,49 @@ import lombok.Data;
  * @author laokou
  */
 @Data
-public class DownCommandGatewayMessage {
+public class DownCommandGatewayMessage implements Serializable {
 
+	@Serial
+	private static final long serialVersionUID = ForyConstants.C_246;
+
+	/**
+	 * 租户编码.
+	 */
+	private String tenantCode;
+
+	/**
+	 * 网关SN.
+	 */
+	private String gatewaySn;
+
+	/**
+	 * 时间戳.
+	 */
+	private Long timestamp;
+
+	/**
+	 * 请求ID.
+	 */
+	private Long requestId;
+
+	/**
+	 * 扩展元数据.
+	 */
+	private Map<String, Object> metadata;
+
+	/**
+	 * 设备SN.
+	 */
+	private String deviceSn;
+
+	/**
+	 * 设备名称.
+	 */
+	private String deviceName;
+
+	/**
+	 * 指令.
+	 */
 	private String command;
 
 }

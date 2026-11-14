@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.iot.gateway.api.GatewaysServiceI;
+import org.laokou.iot.gateway.command.GatewayDispatchRebootCommandCmdExe;
 import org.laokou.iot.gateway.command.GatewayExportCmdExe;
 import org.laokou.iot.gateway.command.GatewayImportCmdExe;
 import org.laokou.iot.gateway.command.GatewayModifyCmdExe;
@@ -32,6 +33,7 @@ import org.laokou.iot.gateway.command.query.GatewayPropertiesGetQryExe;
 import org.laokou.iot.gateway.dto.GatewayExportCmd;
 import org.laokou.iot.gateway.dto.GatewayGetQry;
 import org.laokou.iot.gateway.dto.GatewayImportCmd;
+import org.laokou.iot.gateway.dto.GatewayDispatchRebootCommandCmd;
 import org.laokou.iot.gateway.dto.GatewayModifyCmd;
 import org.laokou.iot.gateway.dto.GatewayPageQry;
 import org.laokou.iot.gateway.dto.GatewayPropertiesGetQry;
@@ -66,6 +68,8 @@ public class GatewaysServiceImpl implements GatewaysServiceI {
 	private final GatewayGetQryExe gatewayGetQryExe;
 
 	private final GatewayPropertiesGetQryExe gatewayPropertiesGetQryExe;
+
+	private final GatewayDispatchRebootCommandCmdExe gatewayDispatchRebootCommandCmdExe;
 
 	@Override
 	public void saveGateway(GatewaySaveCmd cmd) {
@@ -105,6 +109,11 @@ public class GatewaysServiceImpl implements GatewaysServiceI {
 	@Override
 	public Result<GatewayPropertiesCO> getGatewayPropertiesById(GatewayPropertiesGetQry qry) {
 		return gatewayPropertiesGetQryExe.execute(qry);
+	}
+
+	@Override
+	public void dispatchGatewayRebootCommand(GatewayDispatchRebootCommandCmd cmd) {
+		gatewayDispatchRebootCommandCmdExe.execute(cmd);
 	}
 
 }

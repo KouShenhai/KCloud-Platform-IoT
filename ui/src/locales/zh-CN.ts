@@ -293,6 +293,11 @@ export default {
 	'iot.device.required.productId': '请选择所属产品',
 
 	// iot/gateway
+	'iot.gateway.reboot.button': '重启',
+	'iot.gateway.reboot.title': '重启网关',
+	'iot.gateway.reboot.confirm': '确定重启网关“{name}”吗？重启期间连接将暂时中断',
+	'iot.gateway.reboot.success': '重启指令已下发',
+	'iot.gateway.reboot.failed': '重启指令下发失败，请稍候重试',
 	'iot.gateway.preview.button': '预览',
 	'iot.gateway.preview.title': '网关预览',
 	'iot.gateway.preview.properties': '网关属性',

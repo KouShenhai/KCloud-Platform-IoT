@@ -3,6 +3,7 @@ import { GatewayPreviewDrawer } from '@/pages/IoT/Device/GatewayPreviewDrawer';
 import {
 	getGatewayById,
 	pageGateway,
+	rebootGateway,
 	removeGateway,
 } from '@/services/iot/gateway';
 import { trim } from '@/utils/format';
@@ -38,6 +39,42 @@ export default () => {
 	const [ids, setIds] = useState<any>([]);
 	const [requestId, setRequestId] = useState('');
 	const [sessionOptions, setSessionOptions] = useState([])
+	const rebootModalOpen = useRef(false);
+
+	const confirmReboot = (record: TableColumns) => {
+		if (rebootModalOpen.current) return;
+		rebootModalOpen.current = true;
+		const rebootRequestId = uuidV7();
+		Modal.confirm({
+			title: t('iot.gateway.reboot.title'),
+			content: t('iot.gateway.reboot.confirm', {
+				name: record.name || record.sn || String(record.id),
+			}),
+			okText: t('common.ok'),
+			cancelText: t('common.cancel'),
+			okButtonProps: { danger: true },
+			afterClose: () => {
+				rebootModalOpen.current = false;
+			},
+			onOk: async () => {
+				let res;
+				try {
+					res = await rebootGateway(record.id, rebootRequestId);
+				} catch (error) {
+					void message.error(t('iot.gateway.reboot.failed'));
+					throw error;
+				}
+				// 空响应可能被全局拦截器包装为 OK，不能视为指令提交成功。
+				if (!res || res.code !== 'OK' || res.data === '') {
+					if (!res || res.code === 'OK') {
+						void message.error(t('iot.gateway.reboot.failed'));
+					}
+					throw new Error(res?.msg || t('iot.gateway.reboot.failed'));
+				}
+				void message.success(t('iot.gateway.reboot.success'));
+			},
+		});
+	};
 
 	const getSession = async () => {
 		const  res = await listSession({});
@@ -144,6 +181,11 @@ export default () => {
 						onClick={() => setPreviewGateway(record)}
 					>
 						{t('iot.gateway.preview.button')}
+					</a>
+				),
+				 (
+					<a key="reboot" onClick={() => confirmReboot(record)}>
+						{t('iot.gateway.reboot.button')}
 					</a>
 				),
 				access.canGatewayGetDetail && (
