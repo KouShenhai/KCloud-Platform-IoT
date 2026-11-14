@@ -728,6 +728,8 @@ services:
       - standalone
       - --advertised-address
       - localhost
+    volumes:
+      - ./pulsar/data:/pulsar/data
     environment:
       - PULSAR_MEM=-Xms512m -Xmx512m
     ports:

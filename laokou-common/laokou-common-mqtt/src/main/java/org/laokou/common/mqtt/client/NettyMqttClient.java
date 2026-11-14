@@ -61,6 +61,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
@@ -91,6 +92,8 @@ public final class NettyMqttClient implements MqttClient {
 
 	private final List<MessageListener> listeners;
 
+	private final AtomicLong receivedDeviceMsgCount;
+
 	public NettyMqttClient(MqttClientProperties properties, MqttEventLoop mqttEventLoop,
 			List<MessageListener> listeners) {
 		this.state = new AtomicReference<>(ClientState.DISCONNECTED);
@@ -101,6 +104,7 @@ public final class NettyMqttClient implements MqttClient {
 		this.properties = properties;
 		this.mqttEventLoop = mqttEventLoop;
 		this.listeners = listeners;
+		this.receivedDeviceMsgCount = new AtomicLong(0);
 	}
 
 	@Override

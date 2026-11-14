@@ -261,6 +261,8 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 	}
 
 	private void onPublish(ChannelHandlerContext ctx, MqttPublishMessage msg) {
+		// 设备消息数量计数
+		client.getReceivedDeviceMsgCount().incrementAndGet();
 		int packetId = msg.variableHeader().packetId();
 		MqttQoS mqttQoS = msg.fixedHeader().qosLevel();
 		switch (mqttQoS) {
