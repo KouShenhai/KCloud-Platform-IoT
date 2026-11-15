@@ -536,12 +536,12 @@ class DomainServiceTest {
 	}
 
 	private UserV createUserVByUsernamePassword() throws Exception {
-		return new UserV(AESUtils.encrypt(this.username), this.password, "", null, StringConstants.EMPTY,
+		return new UserV(AESUtils.encrypt(this.username), this.password, this.tenantCode, null, StringConstants.EMPTY,
 				StringConstants.EMPTY, null, null);
 	}
 
 	private UserV createUserVByUsernamePasswordWithUsernameNotFound() throws Exception {
-		return new UserV(AESUtils.encrypt("test"), this.password, "", null, StringConstants.EMPTY, StringConstants.EMPTY,
+		return new UserV(AESUtils.encrypt("test"), this.password, this.tenantCode, null, StringConstants.EMPTY, StringConstants.EMPTY,
 				null, null);
 	}
 
@@ -556,12 +556,12 @@ class DomainServiceTest {
 	}
 
 	private UserV createUserVByTest() throws Exception {
-		return new UserV(AESUtils.encrypt(this.username), this.password, "", null, StringConstants.EMPTY,
+		return new UserV(AESUtils.encrypt(this.username), this.password, this.tenantCode, null, StringConstants.EMPTY,
 				StringConstants.EMPTY, null, null);
 	}
 
 	private UserV createUserVByAuthorizationCode() throws Exception {
-		return new UserV(AESUtils.encrypt(this.username), this.password, "", null, StringConstants.EMPTY,
+		return new UserV(AESUtils.encrypt(this.username), this.password, this.tenantCode, null, StringConstants.EMPTY,
 				StringConstants.EMPTY, null, null);
 	}
 
