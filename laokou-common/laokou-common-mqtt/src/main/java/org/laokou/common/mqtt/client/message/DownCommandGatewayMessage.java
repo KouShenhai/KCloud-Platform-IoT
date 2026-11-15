@@ -75,4 +75,9 @@ public class DownCommandGatewayMessage implements Serializable {
 	 */
 	private String command;
 
+	/**
+	 * 参数值.
+	 */
+	private Map<String, Object> param;
+
 }

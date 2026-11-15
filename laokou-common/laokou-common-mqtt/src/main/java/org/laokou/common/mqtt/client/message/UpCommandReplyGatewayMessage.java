@@ -19,14 +19,65 @@ package org.laokou.common.mqtt.client.message;
 
 import lombok.Data;
 
+import java.io.Serializable;
+import java.util.Map;
+
 /**
  * 网关指令回复消息【上行】.
  *
  * @author laokou
  */
 @Data
-public class UpCommandReplyGatewayMessage {
+public class UpCommandReplyGatewayMessage implements Serializable {
 
+	/**
+	 * 租户编码.
+	 */
+	private String tenantCode;
+
+	/**
+	 * 网关SN.
+	 */
+	private String gatewaySn;
+
+	/**
+	 * 时间戳.
+	 */
+	private Long timestamp;
+
+	/**
+	 * 请求ID.
+	 */
+	private Long requestId;
+
+	/**
+	 * 扩展元数据.
+	 */
+	private Map<String, Object> metadata;
+
+	/**
+	 * 设备SN.
+	 */
+	private String deviceSn;
+
+	/**
+	 * 设备名称.
+	 */
+	private String deviceName;
+
+	/**
+	 * 指令.
+	 */
 	private String command;
+
+	/**
+	 * 内容.
+	 */
+	private Map<String, Object> payload;
+
+	/**
+	 * 错误信息.
+	 */
+	private String errorMessage;
 
 }
