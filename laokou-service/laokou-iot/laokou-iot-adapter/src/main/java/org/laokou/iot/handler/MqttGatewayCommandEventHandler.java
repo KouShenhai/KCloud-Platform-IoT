@@ -17,15 +17,26 @@
 
 package org.laokou.iot.handler;
 
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import io.netty.handler.codec.mqtt.MqttQoS;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.mqtt.client.GatewayCommandEvent;
 import org.laokou.common.mqtt.client.GatewayCommandEventHandler;
 import org.laokou.common.mqtt.client.MqttClientManager;
 import org.laokou.common.mqtt.client.MqttForyFactory;
+import org.laokou.common.mybatisplus.util.TransactionalUtils;
+import org.laokou.common.tenant.constant.DSConstants;
 import org.laokou.iot.gateway.convertor.GatewayConvertor;
+import org.laokou.iot.gateway.gatewayimpl.database.GatewayCommandMapper;
+import org.laokou.iot.gateway.gatewayimpl.database.dataobject.GatewayCommandDO;
+import org.laokou.iot.gateway.model.enums.Status;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author laokou
@@ -33,14 +44,44 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class MqttGatewayCommandEventHandler implements GatewayCommandEventHandler {
+public final class MqttGatewayCommandEventHandler implements GatewayCommandEventHandler {
 
 	private final MqttClientManager mqttClientManager;
 
+	private final GatewayCommandMapper gatewayCommandMapper;
+
+	private final TransactionalUtils transactionalUtils;
+
 	@Override
 	public void onEvent(GatewayCommandEvent event, long sequence, boolean endOfBatch) {
-		mqttClientManager.publish(event.getSessionId(), event.getTopic(),
-				MqttForyFactory.INSTANCE.serialize(GatewayConvertor.toMessage(event)), MqttQoS.AT_LEAST_ONCE);
+		AtomicReference<String> errorMsg = new AtomicReference<>("");
+		try {
+			mqttClientManager.publish(event.getSessionId(), event.getTopic(),
+					MqttForyFactory.INSTANCE.serialize(GatewayConvertor.toMessage(event)), MqttQoS.AT_LEAST_ONCE);
+		}
+		catch (Exception ex) {
+			log.error("发布MQTT消息失败，错误信息：{}", ex.getMessage(), ex);
+			errorMsg.set(ex.getMessage());
+		}
+		finally {
+			try {
+				DynamicDataSourceContextHolder.push(DSConstants.IOT);
+				transactionalUtils
+					.executeInTransaction(() -> updateGatewayCommand(errorMsg.get(), event.getCommandId()));
+			}
+			finally {
+				DynamicDataSourceContextHolder.clear();
+			}
+		}
+	}
+
+	private void updateGatewayCommand(String errorMsg, Long commandId) {
+		gatewayCommandMapper.update(Wrappers.lambdaUpdate(GatewayCommandDO.class)
+			.set(GatewayCommandDO::getErrorMessage, errorMsg)
+			.set(GatewayCommandDO::getDispatchTime, InstantUtils.now())
+			.set(GatewayCommandDO::getStatus,
+					StringUtils.hasText(errorMsg) ? Status.FAILURE.getCode() : Status.SUCCESS.getCode())
+			.eq(GatewayCommandDO::getId, commandId));
 	}
 
 }
