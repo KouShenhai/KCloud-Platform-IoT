@@ -179,7 +179,7 @@ class DomainServiceTest {
 
 	@Test
 	@DisplayName("Test username password auth validate empty value")
-	void test_auth_usernamePassword_validateEmptyValue() throws Exception {
+	void test_auth_usernamePassword_validateEmptyValue() {
 		createUsernamePasswordAuthInfo(createUsernamePasswordEmptyAuthParam());
 		AuthA usernamePasswordAuth = createAuth().createUsernamePasswordAuth();
 		Assertions.assertThat(usernamePasswordAuth).isNotNull();
@@ -211,7 +211,7 @@ class DomainServiceTest {
 
 	@Test
 	@DisplayName("Test mail auth validate empty value")
-	void test_auth_mail_validateEmptyValue() throws Exception {
+	void test_auth_mail_validateEmptyValue() {
 		createMailAuthInfo(createMailEmptyAuthParam());
 		AuthA mailAuth = createAuth().createMailAuth();
 		Assertions.assertThat(mailAuth).isNotNull();
@@ -242,7 +242,7 @@ class DomainServiceTest {
 
 	@Test
 	@DisplayName("Test mobile auth validate empty value")
-	void test_auth_mobile_validateEmptyValue() throws Exception {
+	void test_auth_mobile_validateEmptyValue() {
 		createMobileAuthInfo(createMobileEmptyAuthParam());
 		AuthA mobileAuth = createAuth().createMobileAuth();
 		Assertions.assertThat(mobileAuth).isNotNull();
@@ -252,7 +252,7 @@ class DomainServiceTest {
 
 	@Test
 	@DisplayName("Test test auth validate empty value")
-	void test_auth_test_validateEmptyValue() throws Exception {
+	void test_auth_test_validateEmptyValue() {
 		createTestAuthInfo(createTestEmptyAuthParam());
 		AuthA testAuth = createAuth().createTestAuth();
 		Assertions.assertThat(testAuth).isNotNull();
@@ -304,7 +304,7 @@ class DomainServiceTest {
 
 	@Test
 	@DisplayName("Test authorization code auth validate empty value")
-	void test_auth_authorizationCode_validateEmptyValue() throws Exception {
+	void test_auth_authorizationCode_validateEmptyValue() {
 		createAuthorizationCodeAuthInfo(createAuthorizationCodeEmptyAuthParam());
 		AuthA authorizationCodeAuth = createAuth().createAuthorizationCodeAuth();
 		Assertions.assertThat(authorizationCodeAuth).isNotNull();
@@ -317,7 +317,6 @@ class DomainServiceTest {
 		Mockito.when(idGenerator.getId()).thenReturn(1L);
 		Mockito.doAnswer(invocation -> {
 			AuthA authA = invocation.getArgument(0);
-			UserV userV = authA.getUserV();
 			CaptchaV captchaV = authA.getCaptchaV();
 			if (StringExtUtils.isEmpty(captchaV.captcha())) {
 				throw new IllegalArgumentException("captcha must not be empty");
@@ -347,7 +346,6 @@ class DomainServiceTest {
 		Mockito.when(idGenerator.getId()).thenReturn(1L);
 		Mockito.doAnswer(invocation -> {
 			AuthA authA = invocation.getArgument(0);
-			UserV userV = authA.getUserV();
 			CaptchaV captchaV = authA.getCaptchaV();
 			if (StringExtUtils.isEmpty(captchaV.captcha())) {
 				throw new IllegalArgumentException("captcha must not be empty");

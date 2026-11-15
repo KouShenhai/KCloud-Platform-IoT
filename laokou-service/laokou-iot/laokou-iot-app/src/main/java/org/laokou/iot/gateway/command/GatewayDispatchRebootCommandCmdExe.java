@@ -20,12 +20,16 @@ package org.laokou.iot.gateway.command;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.common.domain.annotation.CommandLog;
-import org.laokou.common.mqtt.client.MqttClientManager;
+import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.laokou.common.tenant.constant.DSConstants;
+import org.laokou.iot.gateway.ability.GatewayDomainService;
+import org.laokou.iot.gateway.convertor.GatewayConvertor;
 import org.laokou.iot.gateway.dto.GatewayDispatchRebootCommandCmd;
+import org.laokou.iot.gateway.factory.GatewayDomainFactory;
 import org.laokou.iot.gateway.gatewayimpl.database.GatewayMapper;
-import org.laokou.iot.gateway.gatewayimpl.database.dataobject.GatewayDO;
+import org.laokou.iot.gateway.model.GatewayCommandA;
 import org.springframework.stereotype.Component;
 
 /**
@@ -38,13 +42,19 @@ public class GatewayDispatchRebootCommandCmdExe {
 
 	private final GatewayMapper gatewayMapper;
 
-	private final MqttClientManager mqttClientManager;
+	private final SystemSettingsProperties systemSettingsProperties;
+
+	private final TransactionalUtils transactionalUtils;
+
+	private final GatewayDomainService gatewayDomainService;
 
 	@CommandLog
 	public void execute(GatewayDispatchRebootCommandCmd cmd) {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.IOT);
-			GatewayDO gatewayDO = gatewayMapper.selectById(cmd.getId());
+			GatewayCommandA gatewayCommandA = GatewayDomainFactory.createGatewayCommandA()
+				.create(GatewayConvertor.toEntity(gatewayMapper.selectById(cmd.getId()), systemSettingsProperties));
+			transactionalUtils.executeInTransaction(() -> gatewayDomainService.createGatewayCommand(gatewayCommandA));
 		}
 		catch (Exception ex) {
 			log.error("下发网关重启指令失败，错误信息：{}", ex.getMessage(), ex);

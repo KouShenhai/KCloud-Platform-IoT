@@ -17,13 +17,19 @@
 
 package org.laokou.iot.gateway.convertor;
 
+import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.common.fory.util.ForyJsonUtils;
 import org.laokou.iot.gateway.dto.clientobject.GatewayCO;
 import org.laokou.iot.gateway.dto.clientobject.GatewayPropertiesCO;
 import org.laokou.iot.gateway.factory.GatewayDomainFactory;
+import org.laokou.iot.gateway.gatewayimpl.database.dataobject.GatewayCommandDO;
 import org.laokou.iot.gateway.gatewayimpl.database.dataobject.GatewayDO;
 import org.laokou.iot.gateway.model.GatewayA;
+import org.laokou.iot.gateway.model.GatewayCommandA;
+import org.laokou.iot.gateway.model.entity.GatewayCommandE;
 import org.laokou.iot.gateway.model.entity.GatewayE;
+import org.laokou.iot.gateway.model.enums.Command;
+import org.laokou.iot.gateway.model.enums.Status;
 
 import java.util.List;
 import java.util.Map;
@@ -48,6 +54,31 @@ public final class GatewayConvertor {
 		gatewayDO.setSessionId(gatewayE.getSessionId());
 		gatewayDO.setRemark(gatewayE.getRemark());
 		return gatewayDO;
+	}
+
+	public static GatewayCommandE toEntity(GatewayDO gatewayDO, SystemSettingsProperties systemSettingsProperties) {
+		return GatewayDomainFactory.createGatewayCommandE()
+			.toBuilder()
+			.gatewaySn(gatewayDO.getSn())
+			.gatewayId(gatewayDO.getId())
+			.command(Command.REBOOT.getCode())
+			.topic(String.format("up/%s/%s/command", systemSettingsProperties.getTenantCode(), gatewayDO.getSn()))
+			.status(Status.PENDING.getCode())
+			.build();
+	}
+
+	public static GatewayCommandDO toDataObject(GatewayCommandA gatewayCommandA) {
+		GatewayCommandDO gatewayCommandDO = new GatewayCommandDO();
+		GatewayCommandE gatewayCommandE = gatewayCommandA.getGatewayCommandE();
+		gatewayCommandDO.setId(gatewayCommandA.getId());
+		gatewayCommandDO.setGatewaySn(gatewayCommandE.getGatewaySn());
+		gatewayCommandDO.setCommand(gatewayCommandE.getCommand());
+		gatewayCommandDO.setTopic(gatewayCommandE.getTopic());
+		gatewayCommandDO.setStatus(gatewayCommandE.getStatus());
+		gatewayCommandDO.setParam(gatewayCommandE.getParam());
+		gatewayCommandDO.setCommand(gatewayCommandE.getCommand());
+		gatewayCommandDO.setCreateTime(gatewayCommandA.getCreateTime());
+		return gatewayCommandDO;
 	}
 
 	public static GatewayPropertiesCO toClientObject(GatewayDO gatewayDO, Object obj1, Object obj2) {

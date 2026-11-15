@@ -20,9 +20,11 @@ package org.laokou.iot.gateway.gatewayimpl;
 import lombok.RequiredArgsConstructor;
 import org.laokou.iot.gateway.convertor.GatewayConvertor;
 import org.laokou.iot.gateway.gateway.GatewayGateway;
+import org.laokou.iot.gateway.gatewayimpl.database.GatewayCommandMapper;
 import org.laokou.iot.gateway.gatewayimpl.database.GatewayMapper;
 import org.laokou.iot.gateway.gatewayimpl.database.dataobject.GatewayDO;
 import org.laokou.iot.gateway.model.GatewayA;
+import org.laokou.iot.gateway.model.GatewayCommandA;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -39,6 +41,8 @@ public class GatewayGatewayImpl implements GatewayGateway {
 
 	private final GatewayMapper gatewayMapper;
 
+	private final GatewayCommandMapper gatewayCommandMapper;
+
 	@Override
 	public void createGateway(GatewayA gatewayA) {
 		gatewayMapper.insert(GatewayConvertor.toDataObject(gatewayA));
@@ -54,6 +58,11 @@ public class GatewayGatewayImpl implements GatewayGateway {
 	@Override
 	public void deleteGateway(Long[] ids) {
 		gatewayMapper.deleteByIds(Arrays.asList(ids));
+	}
+
+	@Override
+	public void createGatewayCommand(GatewayCommandA gatewayCommandA) {
+		gatewayCommandMapper.insert(GatewayConvertor.toDataObject(gatewayCommandA));
 	}
 
 }

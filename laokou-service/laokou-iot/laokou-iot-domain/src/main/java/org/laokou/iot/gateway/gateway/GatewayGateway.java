@@ -18,6 +18,7 @@
 package org.laokou.iot.gateway.gateway;
 
 import org.laokou.iot.gateway.model.GatewayA;
+import org.laokou.iot.gateway.model.GatewayCommandA;
 
 /**
  *
@@ -41,5 +42,10 @@ public interface GatewayGateway {
 	 * 删除网关.
 	 */
 	void deleteGateway(Long[] ids);
+
+	/**
+	 * 新增网关指令.
+	 */
+	void createGatewayCommand(GatewayCommandA gatewayCommandA);
 
 }
