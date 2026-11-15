@@ -142,7 +142,6 @@ public class GatewaysController {
 	@TraceLog
 	@PostMapping("/v1/gateways/{id}/commands/page")
 	@PreAuthorize("hasAuthority('read') and hasAuthority('iot:gateway:preview')")
-	@OperateLog(module = "网关管理", operation = "分页查询网关指令列表")
 	@Operation(summary = "分页查询网关指令列表", description = "分页查询网关指令列表")
 	public Result<Page<GatewayCommandCO>> pageGatewayCommand(@PathVariable Long id,
 			@Validated @RequestBody GatewayCommandPageQry qry) {
