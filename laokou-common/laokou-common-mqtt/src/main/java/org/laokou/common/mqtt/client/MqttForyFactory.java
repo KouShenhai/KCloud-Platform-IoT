@@ -51,4 +51,11 @@ public final class MqttForyFactory {
 		return fory.deserialize(bytes);
 	}
 
+	public byte[] serialize(Object obj) {
+		if (obj == null) {
+			return new byte[0];
+		}
+		return fory.serialize(obj);
+	}
+
 }

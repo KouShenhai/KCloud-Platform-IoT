@@ -48,6 +48,11 @@ public class GatewayCommandE implements Serializable {
 	private Long id;
 
 	/**
+	 * 会话ID.
+	 */
+	private Long sessionId;
+
+	/**
 	 * 网关ID.
 	 */
 	private Long gatewayId;

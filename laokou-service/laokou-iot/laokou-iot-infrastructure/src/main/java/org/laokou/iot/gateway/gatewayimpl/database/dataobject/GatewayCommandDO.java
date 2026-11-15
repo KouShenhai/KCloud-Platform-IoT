@@ -34,6 +34,11 @@ import java.time.Instant;
 public class GatewayCommandDO extends BaseDO {
 
 	/**
+	 * 会话ID.
+	 */
+	private Long sessionId;
+
+	/**
 	 * 网关ID.
 	 */
 	private Long gatewayId;

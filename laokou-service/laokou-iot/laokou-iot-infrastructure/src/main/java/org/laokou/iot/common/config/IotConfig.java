@@ -51,6 +51,8 @@ public class IotConfig {
 				ForyConstants.C_244);
 		MqttForyFactory.INSTANCE.register(org.laokou.common.mqtt.client.message.UpReportPropertiesDeviceMessage.class,
 				ForyConstants.C_245);
+		MqttForyFactory.INSTANCE.register(org.laokou.common.mqtt.client.message.DownCommandGatewayMessage.class,
+				ForyConstants.C_246);
 	}
 
 	@Bean

@@ -33,29 +33,6 @@ import java.util.regex.Matcher;
 @Getter
 public enum MqttMessageType {
 
-	DOWN_COMMAND_GATEWAY_MESSAGE("down_command_gateway_message", "网关指令【下发】") {
-		@Override
-		public String getTopic() {
-			return "down/+/+/command";
-		}
-
-		@Override
-		public String getMqTopic() {
-			return "iot-down-command-gateway-message";
-		}
-
-		@Override
-		MqttQoS getMqttQos() {
-			return MqttQoS.AT_LEAST_ONCE;
-		}
-
-		@Override
-		public int getNumPartitions() {
-			return 1;
-		}
-
-	},
-
 	UP_COMMAND_REPLY_GATEWAY_MESSAGE("up_command_reply_gateway_message", "网关指令回复【上行】") {
 		@Override
 		public String getTopic() {

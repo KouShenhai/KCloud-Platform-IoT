@@ -389,6 +389,7 @@ CREATE TABLE "public"."iot_gateway_command" (
 	"version" int4 NOT NULL DEFAULT 0,
 	"tenant_id" int8 NOT NULL DEFAULT 1,
 	"dept_id" int8 NOT NULL DEFAULT 1,
+	"session_id" int8 NOT NULL,
 	"gateway_id" int8 NOT NULL,
 	"gateway_sn" varchar(64)  NOT NULL,
 	"command" varchar(30) NOT NULL,
@@ -415,6 +416,7 @@ COMMENT ON COLUMN "public"."iot_gateway_command"."del_flag" IS '删除标识 0�
 COMMENT ON COLUMN "public"."iot_gateway_command"."version" IS '版本号';
 COMMENT ON COLUMN "public"."iot_gateway_command"."tenant_id" IS '租户ID';
 COMMENT ON COLUMN "public"."iot_gateway_command"."dept_id" IS '部门ID';
+COMMENT ON COLUMN "public"."iot_gateway_command"."session_id" IS '会话ID';
 COMMENT ON COLUMN "public"."iot_gateway_command"."gateway_id" IS '网关ID';
 COMMENT ON COLUMN "public"."iot_gateway_command"."gateway_sn" IS '网关序列号';
 COMMENT ON COLUMN "public"."iot_gateway_command"."topic" IS '主题';

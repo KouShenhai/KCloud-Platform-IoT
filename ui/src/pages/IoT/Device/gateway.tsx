@@ -57,8 +57,10 @@ export default () => {
 				rebootModalOpen.current = false;
 			},
 			onOk: async () => {
-				rebootGateway(record.id, rebootRequestId).then(() => {
-					message.success(t('iot.gateway.reboot.success'));
+				rebootGateway(record.id, rebootRequestId).then(res => {
+					if (res.code === 'OK') {
+						message.success(t('iot.gateway.reboot.success'));
+					}
 				})
 			},
 		});

@@ -27,6 +27,8 @@ import java.util.Map;
 @Data
 public final class GatewayCommandEvent {
 
+	private Long sessionId;
+
 	private Long commandId;
 
 	private String tenantCode;

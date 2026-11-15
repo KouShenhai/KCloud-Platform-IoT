@@ -18,6 +18,7 @@
 package org.laokou.common.mqtt.client.message;
 
 import lombok.Data;
+import org.apache.fory.annotation.Nullable;
 import org.laokou.common.fory.constant.ForyConstants;
 
 import java.io.Serial;
@@ -38,46 +39,55 @@ public class DownCommandGatewayMessage implements Serializable {
 	/**
 	 * 租户编码.
 	 */
+	@Nullable
 	private String tenantCode;
 
 	/**
 	 * 网关SN.
 	 */
+	@Nullable
 	private String gatewaySn;
 
 	/**
 	 * 时间戳.
 	 */
+	@Nullable
 	private Long timestamp;
 
 	/**
 	 * 请求ID.
 	 */
+	@Nullable
 	private Long requestId;
 
 	/**
 	 * 扩展元数据.
 	 */
+	@Nullable
 	private Map<String, Object> metadata;
 
 	/**
 	 * 设备SN.
 	 */
+	@Nullable
 	private String deviceSn;
 
 	/**
 	 * 设备名称.
 	 */
+	@Nullable
 	private String deviceName;
 
 	/**
 	 * 指令.
 	 */
+	@Nullable
 	private String command;
 
 	/**
 	 * 参数值.
 	 */
+	@Nullable
 	private Map<String, Object> param;
 
 }
