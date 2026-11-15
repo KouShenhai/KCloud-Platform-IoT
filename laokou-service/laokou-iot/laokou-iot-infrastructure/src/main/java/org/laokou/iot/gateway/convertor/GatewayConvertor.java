@@ -59,13 +59,15 @@ public final class GatewayConvertor {
 		return gatewayDO;
 	}
 
-	public static GatewayCommandEvent toEvent(GatewayCommandDO gatewayCommandDO, SystemSettingsProperties systemSettingsProperties) {
+	public static GatewayCommandEvent toEvent(GatewayCommandDO gatewayCommandDO,
+			SystemSettingsProperties systemSettingsProperties) {
 		GatewayCommandEvent gatewayCommandEvent = new GatewayCommandEvent();
 		gatewayCommandEvent.setCommandId(gatewayCommandDO.getId());
 		gatewayCommandEvent.setGatewaySn(gatewayCommandDO.getGatewaySn());
 		gatewayCommandEvent.setDeviceName(gatewayCommandDO.getDeviceName());
 		gatewayCommandEvent.setDeviceSn(gatewayCommandDO.getDeviceSn());
-		gatewayCommandEvent.setParam(StringUtils.hasText(gatewayCommandDO.getParam()) ? ForyJsonUtils.toBean(gatewayCommandDO.getParam(), Map.class) : Collections.EMPTY_MAP);
+		gatewayCommandEvent.setParam(StringUtils.hasText(gatewayCommandDO.getParam())
+				? ForyJsonUtils.toBean(gatewayCommandDO.getParam(), Map.class) : Collections.EMPTY_MAP);
 		gatewayCommandEvent.setCommand(gatewayCommandDO.getCommand());
 		gatewayCommandEvent.setTopic(gatewayCommandDO.getTopic());
 		gatewayCommandEvent.setTenantCode(systemSettingsProperties.getTenantCode());

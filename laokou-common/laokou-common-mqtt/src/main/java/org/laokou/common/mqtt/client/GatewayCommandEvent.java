@@ -26,12 +26,21 @@ import java.util.Map;
  */
 @Data
 public final class GatewayCommandEvent {
+
 	private Long commandId;
+
 	private String tenantCode;
+
 	private String gatewaySn;
+
 	private String topic;
+
 	private String deviceSn;
+
 	private String deviceName;
+
 	private String command;
+
 	private Map<String, Object> param;
+
 }

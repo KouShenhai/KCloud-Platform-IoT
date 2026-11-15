@@ -31,7 +31,7 @@ public class MqttGatewayCommandEventHandler implements GatewayCommandEventHandle
 
 	@Override
 	public void onEvent(GatewayCommandEvent event, long sequence, boolean endOfBatch) {
-		System.out.println(event);
+
 	}
 
 }

@@ -32,12 +32,8 @@ public final class MqttDisruptor implements AutoCloseable {
 	private final Disruptor<GatewayCommandEvent> disruptor;
 
 	public MqttDisruptor(GatewayCommandEventHandler gatewayCommandEventHandler) {
-		this.disruptor =  new Disruptor<>(
-			GatewayCommandEvent::new,
-			1024,
-			VirtualThreadFactory.INSTANCE,
-			ProducerType.MULTI,
-			new BlockingWaitStrategy());
+		this.disruptor = new Disruptor<>(GatewayCommandEvent::new, 1024, VirtualThreadFactory.INSTANCE,
+				ProducerType.MULTI, new BlockingWaitStrategy());
 		this.disruptor.handleEventsWith(gatewayCommandEventHandler);
 	}
 

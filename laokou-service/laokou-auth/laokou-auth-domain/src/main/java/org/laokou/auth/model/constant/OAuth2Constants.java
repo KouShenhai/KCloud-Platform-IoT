@@ -35,7 +35,7 @@ public final class OAuth2Constants {
 	/**
 	 * 租户不存在.
 	 */
-	public static final String TENANT_NOT_FOUND  = "B_OAuth2_TenantNotFound";
+	public static final String TENANT_NOT_FOUND = "B_OAuth2_TenantNotFound";
 
 	/**
 	 * 令牌生成器无法生成刷新令牌.
