@@ -25,6 +25,8 @@ import org.laokou.iot.gateway.dto.GatewayImportCmd;
 import org.laokou.iot.gateway.dto.GatewayDispatchRebootCommandCmd;
 import org.laokou.iot.gateway.dto.GatewayModifyCmd;
 import org.laokou.iot.gateway.dto.GatewayPageQry;
+import org.laokou.iot.gateway.dto.GatewayCommandPageQry;
+import org.laokou.iot.gateway.dto.clientobject.GatewayCommandCO;
 import org.laokou.iot.gateway.dto.GatewayPropertiesGetQry;
 import org.laokou.iot.gateway.dto.GatewayRemoveCmd;
 import org.laokou.iot.gateway.dto.GatewaySaveCmd;
@@ -91,5 +93,10 @@ public interface GatewaysServiceI {
 	 * 下发重启网关指令.
 	 */
 	void dispatchRebootGatewayCommand(GatewayDispatchRebootCommandCmd cmd);
+
+	/**
+	 * 分页查询网关指令.
+	 */
+	Result<Page<GatewayCommandCO>> pageGatewayCommand(GatewayCommandPageQry qry);
 
 }

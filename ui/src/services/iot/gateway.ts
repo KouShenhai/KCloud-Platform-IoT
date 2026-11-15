@@ -20,7 +20,7 @@ type GatewayResponse<T> = {
 /** 下发重启网关指令。 */
 export async function rebootGateway(id: GatewayId, requestId: string) {
 	return request<GatewayResponse<void | ''>>(
-		`/api-proxy/iot/api/v1/gateways/${id}/reboot-command`,
+		`/api-proxy/iot/api/v1/gateways/${id}/commands/reboot-command`,
 		{
 			method: 'POST',
 			headers: {
@@ -169,5 +169,34 @@ export async function pageGateway(
 		},
 		data: body,
 		...(options || {}),
+	});
+}
+
+export type GatewayCommand = {
+	id: GatewayId;
+	command?: string;
+	deviceSn?: string | null;
+	deviceName?: string | null;
+	topic?: string | null;
+	param?: string | null;
+	status?: number | null;
+	errorMessage?: string | null;
+	replyPayload?: string | null;
+	replyStatus?: number | null;
+	replyMessage?: string | null;
+	createTime?: string | number | null;
+	dispatchTime?: string | number | null;
+	replyTime?: string | number | null;
+};
+
+export async function pageGatewayCommand(
+	id: GatewayId,
+	body: { pageNum: number; pageSize: number },
+) {
+	return request<
+		GatewayResponse<{ records: GatewayCommand[]; total: number }>
+	>(`/api-proxy/iot/api/v1/gateways/${id}/commands/page`, {
+		method: 'POST',
+		data: body,
 	});
 }

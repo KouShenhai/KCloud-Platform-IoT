@@ -22,6 +22,7 @@ import org.laokou.common.fory.util.ForyJsonUtils;
 import org.laokou.common.mqtt.client.GatewayCommandEvent;
 import org.laokou.common.mqtt.client.message.DownCommandGatewayMessage;
 import org.laokou.iot.gateway.dto.clientobject.GatewayCO;
+import org.laokou.iot.gateway.dto.clientobject.GatewayCommandCO;
 import org.laokou.iot.gateway.dto.clientobject.GatewayPropertiesCO;
 import org.laokou.iot.gateway.factory.GatewayDomainFactory;
 import org.laokou.iot.gateway.gatewayimpl.database.dataobject.GatewayCommandDO;
@@ -135,6 +136,33 @@ public final class GatewayConvertor {
 			.sessionId(gatewayCO.getSessionId())
 			.remark(gatewayCO.getRemark())
 			.build();
+	}
+
+	public static List<GatewayCommandCO> toClientObjectList(List<GatewayCommandDO> list) {
+		return list.stream().map(GatewayConvertor::toClientObject).toList();
+	}
+
+	public static GatewayCommandCO toClientObject(GatewayCommandDO gatewayCommandDO) {
+		GatewayCommandCO gatewayCommandCO = new GatewayCommandCO();
+		gatewayCommandCO.setId(gatewayCommandDO.getId());
+		gatewayCommandCO.setCreateTime(gatewayCommandDO.getCreateTime());
+		gatewayCommandCO.setSessionId(gatewayCommandDO.getSessionId());
+		gatewayCommandCO.setGatewayId(gatewayCommandDO.getGatewayId());
+		gatewayCommandCO.setGatewaySn(gatewayCommandDO.getGatewaySn());
+		gatewayCommandCO.setCommand(gatewayCommandDO.getCommand());
+		gatewayCommandCO.setTopic(gatewayCommandDO.getTopic());
+		gatewayCommandCO.setDeviceId(gatewayCommandDO.getDeviceId());
+		gatewayCommandCO.setDeviceSn(gatewayCommandDO.getDeviceSn());
+		gatewayCommandCO.setDeviceName(gatewayCommandDO.getDeviceName());
+		gatewayCommandCO.setParam(gatewayCommandDO.getParam());
+		gatewayCommandCO.setErrorMessage(gatewayCommandDO.getErrorMessage());
+		gatewayCommandCO.setStatus(gatewayCommandDO.getStatus());
+		gatewayCommandCO.setReplyPayload(gatewayCommandDO.getReplyPayload());
+		gatewayCommandCO.setReplyStatus(gatewayCommandDO.getReplyStatus());
+		gatewayCommandCO.setDispatchTime(gatewayCommandDO.getDispatchTime());
+		gatewayCommandCO.setReplyTime(gatewayCommandDO.getReplyTime());
+		gatewayCommandCO.setReplyMessage(gatewayCommandDO.getReplyMessage());
+		return gatewayCommandCO;
 	}
 
 }

@@ -1,3 +1,4 @@
+import { GatewayCommandTable } from './GatewayCommandTable';
 import {
 	getGatewayPropertiesById,
 	type GatewayId,
@@ -129,6 +130,11 @@ export const GatewayPreviewDrawer = ({ id, onClose }: GatewayPreviewProps) => {
 										]}
 									/>
 								),
+							},
+							{
+								key: 'commands',
+								label: t('iot.gateway.command.title'),
+								children: <GatewayCommandTable key={id} id={id} />,
 							},
 						]}
 					/>

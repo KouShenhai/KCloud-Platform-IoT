@@ -32,6 +32,8 @@ import org.laokou.iot.gateway.dto.GatewayImportCmd;
 import org.laokou.iot.gateway.dto.GatewayDispatchRebootCommandCmd;
 import org.laokou.iot.gateway.dto.GatewayModifyCmd;
 import org.laokou.iot.gateway.dto.GatewayPageQry;
+import org.laokou.iot.gateway.dto.GatewayCommandPageQry;
+import org.laokou.iot.gateway.dto.clientobject.GatewayCommandCO;
 import org.laokou.iot.gateway.dto.GatewayPropertiesGetQry;
 import org.laokou.iot.gateway.dto.GatewayRemoveCmd;
 import org.laokou.iot.gateway.dto.GatewaySaveCmd;
@@ -129,12 +131,22 @@ public class GatewaysController {
 	}
 
 	@Idempotent
-	@PostMapping("/v1/gateways/{id}/reboot-command")
+	@PostMapping("/v1/gateways/{id}/commands/reboot-command")
 	@PreAuthorize("hasAuthority('write') and hasAuthority('iot:gateway:reboot-command')")
 	@OperateLog(module = "网关管理", operation = "下发重启网关指令")
 	@Operation(summary = "下发重启网关指令", description = "下发重启网关指令")
 	public void dispatchRebootGatewayCommand(@PathVariable Long id) {
 		gatewaysServiceI.dispatchRebootGatewayCommand(new GatewayDispatchRebootCommandCmd(id));
+	}
+
+	@TraceLog
+	@PostMapping("/v1/gateways/{id}/commands/page")
+	@PreAuthorize("hasAuthority('read') and hasAuthority('iot:gateway:preview')")
+	@OperateLog(module = "网关管理", operation = "分页查询网关指令列表")
+	@Operation(summary = "分页查询网关指令列表", description = "分页查询网关指令列表")
+	public Result<Page<GatewayCommandCO>> pageGatewayCommand(@PathVariable Long id, @Validated @RequestBody GatewayCommandPageQry qry) {
+		qry.setGatewayId(id);
+		return gatewaysServiceI.pageGatewayCommand(qry);
 	}
 
 }

@@ -29,6 +29,7 @@ import org.laokou.iot.gateway.command.GatewayRemoveCmdExe;
 import org.laokou.iot.gateway.command.GatewaySaveCmdExe;
 import org.laokou.iot.gateway.command.query.GatewayGetQryExe;
 import org.laokou.iot.gateway.command.query.GatewayPageQryExe;
+import org.laokou.iot.gateway.command.query.GatewayCommandPageQryExe;
 import org.laokou.iot.gateway.command.query.GatewayPropertiesGetQryExe;
 import org.laokou.iot.gateway.dto.GatewayExportCmd;
 import org.laokou.iot.gateway.dto.GatewayGetQry;
@@ -36,6 +37,8 @@ import org.laokou.iot.gateway.dto.GatewayImportCmd;
 import org.laokou.iot.gateway.dto.GatewayDispatchRebootCommandCmd;
 import org.laokou.iot.gateway.dto.GatewayModifyCmd;
 import org.laokou.iot.gateway.dto.GatewayPageQry;
+import org.laokou.iot.gateway.dto.GatewayCommandPageQry;
+import org.laokou.iot.gateway.dto.clientobject.GatewayCommandCO;
 import org.laokou.iot.gateway.dto.GatewayPropertiesGetQry;
 import org.laokou.iot.gateway.dto.GatewayRemoveCmd;
 import org.laokou.iot.gateway.dto.GatewaySaveCmd;
@@ -64,6 +67,8 @@ public class GatewaysServiceImpl implements GatewaysServiceI {
 	private final GatewayExportCmdExe gatewayExportCmdExe;
 
 	private final GatewayPageQryExe gatewayPageQryExe;
+
+	private final GatewayCommandPageQryExe gatewayCommandPageQryExe;
 
 	private final GatewayGetQryExe gatewayGetQryExe;
 
@@ -114,6 +119,11 @@ public class GatewaysServiceImpl implements GatewaysServiceI {
 	@Override
 	public void dispatchRebootGatewayCommand(GatewayDispatchRebootCommandCmd cmd) {
 		gatewayDispatchRebootCommandCmdExe.execute(cmd);
+	}
+
+	@Override
+	public Result<Page<GatewayCommandCO>> pageGatewayCommand(GatewayCommandPageQry qry) {
+		return gatewayCommandPageQryExe.execute(qry);
 	}
 
 }
