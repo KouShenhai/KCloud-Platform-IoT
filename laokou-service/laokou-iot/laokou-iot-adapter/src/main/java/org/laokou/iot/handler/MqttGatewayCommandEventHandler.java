@@ -24,7 +24,7 @@ import org.laokou.common.mqtt.client.GatewayCommandEvent;
 import org.laokou.common.mqtt.client.GatewayCommandEventHandler;
 import org.laokou.common.mqtt.client.MqttClientManager;
 import org.laokou.common.mqtt.client.MqttForyFactory;
-import org.laokou.common.mqtt.client.message.DownCommandGatewayMessage;
+import org.laokou.iot.gateway.convertor.GatewayConvertor;
 import org.springframework.stereotype.Component;
 
 /**
@@ -40,20 +40,7 @@ public class MqttGatewayCommandEventHandler implements GatewayCommandEventHandle
 	@Override
 	public void onEvent(GatewayCommandEvent event, long sequence, boolean endOfBatch) {
 		mqttClientManager.publish(event.getSessionId(), event.getTopic(),
-				MqttForyFactory.INSTANCE.serialize(buildMessage(event)), MqttQoS.AT_LEAST_ONCE);
-	}
-
-	private DownCommandGatewayMessage buildMessage(GatewayCommandEvent event) {
-		DownCommandGatewayMessage downCommandGatewayMessage = new DownCommandGatewayMessage();
-		downCommandGatewayMessage.setCommand(event.getCommand());
-		downCommandGatewayMessage.setParam(event.getParam());
-		downCommandGatewayMessage.setDeviceName(event.getDeviceName());
-		downCommandGatewayMessage.setGatewaySn(event.getGatewaySn());
-		downCommandGatewayMessage.setDeviceSn(event.getDeviceSn());
-		downCommandGatewayMessage.setTimestamp(System.currentTimeMillis());
-		downCommandGatewayMessage.setRequestId(event.getCommandId());
-		downCommandGatewayMessage.setTenantCode(event.getTenantCode());
-		return downCommandGatewayMessage;
+				MqttForyFactory.INSTANCE.serialize(GatewayConvertor.toMessage(event)), MqttQoS.AT_LEAST_ONCE);
 	}
 
 }

@@ -19,6 +19,8 @@ package org.laokou.iot.gateway.convertor;
 
 import org.laokou.common.context.util.UserUtils;
 import org.laokou.common.fory.util.ForyJsonUtils;
+import org.laokou.common.mqtt.client.GatewayCommandEvent;
+import org.laokou.common.mqtt.client.message.DownCommandGatewayMessage;
 import org.laokou.iot.gateway.dto.clientobject.GatewayCO;
 import org.laokou.iot.gateway.dto.clientobject.GatewayPropertiesCO;
 import org.laokou.iot.gateway.factory.GatewayDomainFactory;
@@ -66,6 +68,19 @@ public final class GatewayConvertor {
 			.status(Status.PENDING.getCode())
 			.sessionId(gatewayDO.getSessionId())
 			.build();
+	}
+
+	public static DownCommandGatewayMessage toMessage(GatewayCommandEvent event) {
+		DownCommandGatewayMessage downCommandGatewayMessage = new DownCommandGatewayMessage();
+		downCommandGatewayMessage.setCommand(event.getCommand());
+		downCommandGatewayMessage.setParam(event.getParam());
+		downCommandGatewayMessage.setDeviceName(event.getDeviceName());
+		downCommandGatewayMessage.setGatewaySn(event.getGatewaySn());
+		downCommandGatewayMessage.setDeviceSn(event.getDeviceSn());
+		downCommandGatewayMessage.setTimestamp(System.currentTimeMillis());
+		downCommandGatewayMessage.setRequestId(event.getCommandId());
+		downCommandGatewayMessage.setTenantCode(event.getTenantCode());
+		return downCommandGatewayMessage;
 	}
 
 	public static GatewayCommandDO toDataObject(GatewayCommandA gatewayCommandA) {

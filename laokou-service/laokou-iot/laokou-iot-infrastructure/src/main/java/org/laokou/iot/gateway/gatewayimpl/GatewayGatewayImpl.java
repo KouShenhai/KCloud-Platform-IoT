@@ -73,7 +73,7 @@ public class GatewayGatewayImpl implements GatewayGateway {
 	public void createGatewayCommand(GatewayCommandA gatewayCommandA) {
 		GatewayCommandDO gatewayCommandDO = GatewayConvertor.toDataObject(gatewayCommandA);
 		gatewayCommandMapper.insert(gatewayCommandDO);
-		mqttDisruptor.getDisruptor().getRingBuffer().publishEvent((event, sequence) -> {
+		mqttDisruptor.getDisruptor().getRingBuffer().publishEvent((event, _) -> {
 			event.setCommandId(gatewayCommandDO.getId());
 			event.setGatewaySn(gatewayCommandDO.getGatewaySn());
 			event.setDeviceName(gatewayCommandDO.getDeviceName());

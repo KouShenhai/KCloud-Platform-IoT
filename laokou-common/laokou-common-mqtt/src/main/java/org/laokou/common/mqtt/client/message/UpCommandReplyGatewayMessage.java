@@ -18,7 +18,9 @@
 package org.laokou.common.mqtt.client.message;
 
 import lombok.Data;
+import org.laokou.common.fory.constant.ForyConstants;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Map;
 
@@ -29,6 +31,9 @@ import java.util.Map;
  */
 @Data
 public class UpCommandReplyGatewayMessage implements Serializable {
+
+	@Serial
+	private static final long serialVersionUID = ForyConstants.C_247;
 
 	/**
 	 * 租户编码.
@@ -76,8 +81,8 @@ public class UpCommandReplyGatewayMessage implements Serializable {
 	private Map<String, Object> payload;
 
 	/**
-	 * 错误信息.
+	 * 信息.
 	 */
-	private String errorMessage;
+	private String message;
 
 }
