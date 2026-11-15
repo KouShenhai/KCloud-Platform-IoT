@@ -48,7 +48,7 @@ public final class UserConvertor {
 			String mobile = AESUtils.decrypt(userE.getMobile());
 			return new OAuth2Authentication(userE.getId(), username, userE.getPassword(), userV.avatar(),
 					userE.isSuperAdministrator(), userE.getStatus(), mail, mobile, userE.getTenantId(),
-					userE.getDeptId(), userV.permissions(), dataFilterV.deptIds(), dataFilterV.creator());
+					userE.getDeptId(), userV.permissions(), dataFilterV.deptIds(), dataFilterV.creator(), userV.tenantCode());
 		}
 		catch (GlobalException gex) {
 			throw gex;
@@ -69,7 +69,7 @@ public final class UserConvertor {
 			String mobile = AESUtils.decrypt(userE.getMobile());
 			return new UserExtDetails(userE.getId(), username, userE.getPassword(), userV.avatar(),
 					userE.isSuperAdministrator(), userE.getStatus(), mail, mobile, userE.getTenantId(),
-					userE.getDeptId(), userV.permissions(), dataFilterV.deptIds(), dataFilterV.creator());
+					userE.getDeptId(), userV.permissions(), dataFilterV.deptIds(), dataFilterV.creator(), userV.tenantCode());
 		}
 		catch (GlobalException gex) {
 			throw gex;

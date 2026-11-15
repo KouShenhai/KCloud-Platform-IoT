@@ -25,11 +25,11 @@ import lombok.Getter;
 @Getter
 public enum Command {
 
-	REBOOT("reboot", "网关重启指令"),
+	REBOOT("reboot", "重启网关指令"),
 
-	READ("read", "设备读取属性指令"),
+	READ("read", "读取设备属性指令"),
 
-	WRITE("write", "设备写入属性指令");
+	WRITE("write", "写入设备属性指令");
 
 	private final String code;
 

@@ -468,6 +468,7 @@ INSERT INTO "public"."sys_menu" VALUES (135, 1, 1, '2026-10-02 10:52:07.951442',
 INSERT INTO "public"."sys_menu" VALUES (136, 1, 1, '2026-10-02 10:50:36.05255', '2026-10-02 10:52:23.116137', 0, 1, 1, 1, 132, 'iot:gateway:detail', 1, '查看网关', NULL, NULL, 1, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (137, 1, 1, '2026-10-02 10:52:58.626661', '2026-10-02 10:52:58.645484', 0, 0, 1, 1, 132, 'iot:gateway:page', 1, '分页查询网关列表', NULL, NULL, 5, 0, 0, NULL);
 INSERT INTO "public"."sys_menu" VALUES (138, 1, 1, '2026-11-12 12:38:10.58567', '2026-11-12 12:38:10.700165', 0, 0, 1, 1, 132, 'iot:gateway:preview', 1, '预览网关', NULL, NULL, 6, 0, 0, NULL);
+INSERT INTO "public"."sys_menu" VALUES (139, 1, 1, '2026-11-15 21:10:04.255424', '2026-11-15 21:10:04.363278', 0, 0, 1, 1, 132, 'iot:gateway:reboot-command', 1, '下发重启网关指令', NULL, NULL, 7, 0, 0, NULL);
 
 -- ----------------------------
 -- -------------菜单套餐------------

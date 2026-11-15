@@ -17,7 +17,7 @@
 
 package org.laokou.iot.gateway.convertor;
 
-import org.laokou.common.core.config.SystemSettingsProperties;
+import org.laokou.common.context.util.UserUtils;
 import org.laokou.common.fory.util.ForyJsonUtils;
 import org.laokou.common.mqtt.client.GatewayCommandEvent;
 import org.laokou.iot.gateway.dto.clientobject.GatewayCO;
@@ -59,8 +59,7 @@ public final class GatewayConvertor {
 		return gatewayDO;
 	}
 
-	public static GatewayCommandEvent toEvent(GatewayCommandDO gatewayCommandDO,
-			SystemSettingsProperties systemSettingsProperties) {
+	public static GatewayCommandEvent toEvent(GatewayCommandDO gatewayCommandDO) {
 		GatewayCommandEvent gatewayCommandEvent = new GatewayCommandEvent();
 		gatewayCommandEvent.setCommandId(gatewayCommandDO.getId());
 		gatewayCommandEvent.setGatewaySn(gatewayCommandDO.getGatewaySn());
@@ -70,17 +69,17 @@ public final class GatewayConvertor {
 				? ForyJsonUtils.toBean(gatewayCommandDO.getParam(), Map.class) : Collections.EMPTY_MAP);
 		gatewayCommandEvent.setCommand(gatewayCommandDO.getCommand());
 		gatewayCommandEvent.setTopic(gatewayCommandDO.getTopic());
-		gatewayCommandEvent.setTenantCode(systemSettingsProperties.getTenantCode());
+		gatewayCommandEvent.setTenantCode(UserUtils.getTenantCode());
 		return gatewayCommandEvent;
 	}
 
-	public static GatewayCommandE toEntity(GatewayDO gatewayDO, SystemSettingsProperties systemSettingsProperties) {
+	public static GatewayCommandE toEntity(GatewayDO gatewayDO) {
 		return GatewayDomainFactory.createGatewayCommandE()
 			.toBuilder()
 			.gatewaySn(gatewayDO.getSn())
 			.gatewayId(gatewayDO.getId())
 			.command(Command.REBOOT.getCode())
-			.topic(String.format("up/%s/%s/command", systemSettingsProperties.getTenantCode(), gatewayDO.getSn()))
+			.topic(String.format("up/%s/%s/command", UserUtils.getTenantCode(), gatewayDO.getSn()))
 			.status(Status.PENDING.getCode())
 			.build();
 	}
@@ -90,7 +89,7 @@ public final class GatewayConvertor {
 		GatewayCommandE gatewayCommandE = gatewayCommandA.getGatewayCommandE();
 		gatewayCommandDO.setId(gatewayCommandA.getId());
 		gatewayCommandDO.setGatewaySn(gatewayCommandE.getGatewaySn());
-		gatewayCommandDO.setCommand(gatewayCommandE.getCommand());
+		gatewayCommandDO.setGatewayId(gatewayCommandE.getGatewayId());
 		gatewayCommandDO.setTopic(gatewayCommandE.getTopic());
 		gatewayCommandDO.setStatus(gatewayCommandE.getStatus());
 		gatewayCommandDO.setParam(gatewayCommandE.getParam());

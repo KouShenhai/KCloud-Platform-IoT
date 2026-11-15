@@ -57,21 +57,9 @@ export default () => {
 				rebootModalOpen.current = false;
 			},
 			onOk: async () => {
-				let res;
-				try {
-					res = await rebootGateway(record.id, rebootRequestId);
-				} catch (error) {
-					void message.error(t('iot.gateway.reboot.failed'));
-					throw error;
-				}
-				// 空响应可能被全局拦截器包装为 OK，不能视为指令提交成功。
-				if (!res || res.code !== 'OK' || res.data === '') {
-					if (!res || res.code === 'OK') {
-						void message.error(t('iot.gateway.reboot.failed'));
-					}
-					throw new Error(res?.msg || t('iot.gateway.reboot.failed'));
-				}
-				void message.success(t('iot.gateway.reboot.success'));
+				rebootGateway(record.id, rebootRequestId).then(() => {
+					message.success(t('iot.gateway.reboot.success'));
+				})
 			},
 		});
 	};
@@ -183,7 +171,7 @@ export default () => {
 						{t('iot.gateway.preview.button')}
 					</a>
 				),
-				 (
+				access.canGatewayRebootCommand &&  (
 					<a key="reboot" onClick={() => confirmReboot(record)}>
 						{t('iot.gateway.reboot.button')}
 					</a>

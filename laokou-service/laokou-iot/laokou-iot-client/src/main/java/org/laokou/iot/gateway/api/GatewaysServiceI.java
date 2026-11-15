@@ -88,8 +88,8 @@ public interface GatewaysServiceI {
 	Result<GatewayPropertiesCO> getGatewayPropertiesById(GatewayPropertiesGetQry qry);
 
 	/**
-	 * 下发网关重启指令.
+	 * 下发重启网关指令.
 	 */
-	void dispatchGatewayRebootCommand(GatewayDispatchRebootCommandCmd cmd);
+	void dispatchRebootGatewayCommand(GatewayDispatchRebootCommandCmd cmd);
 
 }

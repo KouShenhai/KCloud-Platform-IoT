@@ -112,7 +112,7 @@ public class GatewaysServiceImpl implements GatewaysServiceI {
 	}
 
 	@Override
-	public void dispatchGatewayRebootCommand(GatewayDispatchRebootCommandCmd cmd) {
+	public void dispatchRebootGatewayCommand(GatewayDispatchRebootCommandCmd cmd) {
 		gatewayDispatchRebootCommandCmdExe.execute(cmd);
 	}
 

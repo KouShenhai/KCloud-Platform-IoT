@@ -73,7 +73,7 @@ public class GatewayGatewayImpl implements GatewayGateway {
 		gatewayCommandMapper.insert(gatewayCommandDO);
 		mqttDisruptor.getDisruptor()
 			.getRingBuffer()
-			.publishEvent(GatewayConvertor.toEvent(gatewayCommandDO, systemSettingsProperties));
+			.publishEvent(GatewayConvertor.toEvent(gatewayCommandDO));
 	}
 
 }

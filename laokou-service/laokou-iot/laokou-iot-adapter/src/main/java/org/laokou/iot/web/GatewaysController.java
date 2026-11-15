@@ -131,10 +131,10 @@ public class GatewaysController {
 	@Idempotent
 	@PostMapping("/v1/gateways/{id}/reboot-command")
 	@PreAuthorize("hasAuthority('write') and hasAuthority('iot:gateway:reboot-command')")
-	@OperateLog(module = "网关管理", operation = "下发网关重启指令")
-	@Operation(summary = "下发网关重启指令", description = "下发网关重启指令")
-	public void dispatchGatewayRebootCommand(@PathVariable Long id) {
-		gatewaysServiceI.dispatchGatewayRebootCommand(new GatewayDispatchRebootCommandCmd(id));
+	@OperateLog(module = "网关管理", operation = "下发重启网关指令")
+	@Operation(summary = "下发重启网关指令", description = "下发重启网关指令")
+	public void dispatchRebootGatewayCommand(@PathVariable Long id) {
+		gatewaysServiceI.dispatchRebootGatewayCommand(new GatewayDispatchRebootCommandCmd(id));
 	}
 
 }

@@ -20,7 +20,6 @@ package org.laokou.iot.gateway.command;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.laokou.common.tenant.constant.DSConstants;
@@ -42,8 +41,6 @@ public class GatewayDispatchRebootCommandCmdExe {
 
 	private final GatewayMapper gatewayMapper;
 
-	private final SystemSettingsProperties systemSettingsProperties;
-
 	private final TransactionalUtils transactionalUtils;
 
 	private final GatewayDomainService gatewayDomainService;
@@ -53,11 +50,11 @@ public class GatewayDispatchRebootCommandCmdExe {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.IOT);
 			GatewayCommandA gatewayCommandA = GatewayDomainFactory.createGatewayCommandA()
-				.create(GatewayConvertor.toEntity(gatewayMapper.selectById(cmd.getId()), systemSettingsProperties));
+				.create(GatewayConvertor.toEntity(gatewayMapper.selectById(cmd.getId())));
 			transactionalUtils.executeInTransaction(() -> gatewayDomainService.createGatewayCommand(gatewayCommandA));
 		}
 		catch (Exception ex) {
-			log.error("下发网关重启指令失败，错误信息：{}", ex.getMessage(), ex);
+			log.error("下发重启网关指令失败，错误信息：{}", ex.getMessage(), ex);
 			throw ex;
 		}
 		finally {

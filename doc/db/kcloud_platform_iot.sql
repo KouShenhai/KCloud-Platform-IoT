@@ -418,7 +418,7 @@ COMMENT ON COLUMN "public"."iot_gateway_command"."dept_id" IS '部门ID';
 COMMENT ON COLUMN "public"."iot_gateway_command"."gateway_id" IS '网关ID';
 COMMENT ON COLUMN "public"."iot_gateway_command"."gateway_sn" IS '网关序列号';
 COMMENT ON COLUMN "public"."iot_gateway_command"."topic" IS '主题';
-COMMENT ON COLUMN "public"."iot_gateway_command"."command" IS '指令 reboot网关重启指令 read设备读取属性指令 write设备写入属性指令';
+COMMENT ON COLUMN "public"."iot_gateway_command"."command" IS '指令 reboot重启网关指令 read读取设备属性指令 write写入设备属性指令';
 COMMENT ON COLUMN "public"."iot_gateway_command"."device_id" IS '设备ID';
 COMMENT ON COLUMN "public"."iot_gateway_command"."device_sn" IS '设备序列号';
 COMMENT ON COLUMN "public"."iot_gateway_command"."device_name" IS '设备名称';

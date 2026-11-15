@@ -17,7 +17,7 @@ type GatewayResponse<T> = {
 	data?: T | null;
 };
 
-/** 提交网关重启指令。 */
+/** 下发重启网关指令。 */
 export async function rebootGateway(id: GatewayId, requestId: string) {
 	return request<GatewayResponse<void | ''>>(
 		`/api-proxy/iot/api/v1/gateways/${id}/reboot-command`,

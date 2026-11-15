@@ -44,7 +44,7 @@ public class GatewayCommandDO extends BaseDO {
 	private String gatewaySn;
 
 	/**
-	 * 指令 reboot网关重启指令 read设备读取属性指令 write设备写入属性指令.
+	 * 指令 reboot重启网关指令 read读取设备属性指令 write写入设备属性指令.
 	 */
 	private String command;
 
