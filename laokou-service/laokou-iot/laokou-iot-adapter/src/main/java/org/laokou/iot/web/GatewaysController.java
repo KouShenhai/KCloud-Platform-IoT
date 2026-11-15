@@ -144,7 +144,8 @@ public class GatewaysController {
 	@PreAuthorize("hasAuthority('read') and hasAuthority('iot:gateway:preview')")
 	@OperateLog(module = "网关管理", operation = "分页查询网关指令列表")
 	@Operation(summary = "分页查询网关指令列表", description = "分页查询网关指令列表")
-	public Result<Page<GatewayCommandCO>> pageGatewayCommand(@PathVariable Long id, @Validated @RequestBody GatewayCommandPageQry qry) {
+	public Result<Page<GatewayCommandCO>> pageGatewayCommand(@PathVariable Long id,
+			@Validated @RequestBody GatewayCommandPageQry qry) {
 		qry.setGatewayId(id);
 		return gatewaysServiceI.pageGatewayCommand(qry);
 	}

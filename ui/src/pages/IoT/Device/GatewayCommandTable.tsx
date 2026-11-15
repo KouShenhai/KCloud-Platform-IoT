@@ -3,7 +3,6 @@ import {
 	type GatewayCommand,
 	type GatewayId,
 } from '@/services/iot/gateway';
-import { formatTimestamp } from '@/utils/format';
 import { useIntl } from '@@/exports';
 import { Alert, Button, Descriptions, Space, Table, Tag } from 'antd';
 import { useEffect, useState } from 'react';

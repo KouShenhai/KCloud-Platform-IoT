@@ -66,8 +66,8 @@ public final class MqttGatewayCommandEventHandler implements GatewayCommandEvent
 		finally {
 			try {
 				DynamicDataSourceContextHolder.push(DSConstants.IOT);
-				transactionalUtils
-					.executeInTransaction(() -> updateGatewayCommand(errorMsg.get(), event.getCommandId()));
+				transactionalUtils.executeInTransaction(() -> updateGatewayCommand(errorMsg.get(), event.getCommandId(),
+						gatewayCommandMapper.selectVersion(event.getSessionId())));
 			}
 			finally {
 				DynamicDataSourceContextHolder.clear();
@@ -75,13 +75,15 @@ public final class MqttGatewayCommandEventHandler implements GatewayCommandEvent
 		}
 	}
 
-	private void updateGatewayCommand(String errorMsg, Long commandId) {
+	private void updateGatewayCommand(String errorMsg, Long commandId, Integer version) {
 		gatewayCommandMapper.update(Wrappers.lambdaUpdate(GatewayCommandDO.class)
 			.set(GatewayCommandDO::getErrorMessage, errorMsg)
 			.set(GatewayCommandDO::getDispatchTime, InstantUtils.now())
 			.set(GatewayCommandDO::getStatus,
 					StringUtils.hasText(errorMsg) ? Status.FAILURE.getCode() : Status.SUCCESS.getCode())
-			.eq(GatewayCommandDO::getId, commandId));
+			.set(GatewayCommandDO::getVersion, version + 1)
+			.eq(GatewayCommandDO::getId, commandId)
+			.eq(GatewayCommandDO::getVersion, version));
 	}
 
 }

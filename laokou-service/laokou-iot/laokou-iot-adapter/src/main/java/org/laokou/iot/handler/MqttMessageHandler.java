@@ -94,7 +94,8 @@ public final class MqttMessageHandler {
 			DynamicDataSourceContextHolder.push(DSConstants.IOT);
 			if (MqttForyFactory.INSTANCE
 				.deserialize(msg) instanceof UpCommandReplyGatewayMessage upCommandReplyGatewayMessage) {
-				transactionalUtils.executeInTransaction(() -> updateGatewayCommand(upCommandReplyGatewayMessage));
+				transactionalUtils.executeInTransaction(() -> updateGatewayCommand(upCommandReplyGatewayMessage,
+						gatewayCommandMapper.selectVersion(upCommandReplyGatewayMessage.getRequestId())));
 			}
 			ack.acknowledge();
 		}
@@ -162,7 +163,7 @@ public final class MqttMessageHandler {
 		log.info("set properties cache changed:{}", changed);
 	}
 
-	private void updateGatewayCommand(UpCommandReplyGatewayMessage upCommandReplyGatewayMessage) {
+	private void updateGatewayCommand(UpCommandReplyGatewayMessage upCommandReplyGatewayMessage, Integer version) {
 		gatewayCommandMapper.update(Wrappers.lambdaUpdate(GatewayCommandDO.class)
 			.set(MapUtils.isNotEmpty(upCommandReplyGatewayMessage.getPayload()), GatewayCommandDO::getReplyPayload,
 					ForyJsonUtils.toJsonStr(upCommandReplyGatewayMessage.getPayload()))
@@ -171,7 +172,9 @@ public final class MqttMessageHandler {
 					ObjectUtils.equals(upCommandReplyGatewayMessage.getMessage(), StatusCode.OK)
 							? ReplyStatus.SUCCESS.getCode() : ReplyStatus.FAILURE.getCode())
 			.set(GatewayCommandDO::getReplyMessage, upCommandReplyGatewayMessage.getMessage())
-			.eq(GatewayCommandDO::getId, upCommandReplyGatewayMessage.getRequestId()));
+			.set(GatewayCommandDO::getVersion, version + 1)
+			.eq(GatewayCommandDO::getId, upCommandReplyGatewayMessage.getRequestId())
+			.eq(GatewayCommandDO::getVersion, version));
 	}
 
 }
