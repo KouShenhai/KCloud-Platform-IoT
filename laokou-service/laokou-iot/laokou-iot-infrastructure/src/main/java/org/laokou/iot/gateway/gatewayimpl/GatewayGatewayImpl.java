@@ -18,10 +18,13 @@
 package org.laokou.iot.gateway.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.core.config.SystemSettingsProperties;
+import org.laokou.common.mqtt.client.MqttDisruptor;
 import org.laokou.iot.gateway.convertor.GatewayConvertor;
 import org.laokou.iot.gateway.gateway.GatewayGateway;
 import org.laokou.iot.gateway.gatewayimpl.database.GatewayCommandMapper;
 import org.laokou.iot.gateway.gatewayimpl.database.GatewayMapper;
+import org.laokou.iot.gateway.gatewayimpl.database.dataobject.GatewayCommandDO;
 import org.laokou.iot.gateway.gatewayimpl.database.dataobject.GatewayDO;
 import org.laokou.iot.gateway.model.GatewayA;
 import org.laokou.iot.gateway.model.GatewayCommandA;
@@ -43,6 +46,10 @@ public class GatewayGatewayImpl implements GatewayGateway {
 
 	private final GatewayCommandMapper gatewayCommandMapper;
 
+	private final SystemSettingsProperties systemSettingsProperties;
+
+	private final MqttDisruptor mqttDisruptor;
+
 	@Override
 	public void createGateway(GatewayA gatewayA) {
 		gatewayMapper.insert(GatewayConvertor.toDataObject(gatewayA));
@@ -62,7 +69,9 @@ public class GatewayGatewayImpl implements GatewayGateway {
 
 	@Override
 	public void createGatewayCommand(GatewayCommandA gatewayCommandA) {
-		gatewayCommandMapper.insert(GatewayConvertor.toDataObject(gatewayCommandA));
+		GatewayCommandDO gatewayCommandDO = GatewayConvertor.toDataObject(gatewayCommandA);
+		gatewayCommandMapper.insert(gatewayCommandDO);
+		mqttDisruptor.getDisruptor().getRingBuffer().publishEvent(GatewayConvertor.toEvent(gatewayCommandDO, systemSettingsProperties));
 	}
 
 }

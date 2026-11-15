@@ -105,6 +105,11 @@ public final class OAuth2AuthenticatedExtPrincipal implements OAuth2Authenticate
 	private Set<Long> deptIds;
 
 	/**
+	 * 租户编码.
+	 */
+	private String tenantCode;
+
+	/**
 	 * 创建者.
 	 */
 	private Long creator;

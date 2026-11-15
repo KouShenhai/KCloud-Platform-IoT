@@ -19,6 +19,7 @@ package org.laokou.iot.gateway.convertor;
 
 import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.common.fory.util.ForyJsonUtils;
+import org.laokou.common.mqtt.client.GatewayCommandEvent;
 import org.laokou.iot.gateway.dto.clientobject.GatewayCO;
 import org.laokou.iot.gateway.dto.clientobject.GatewayPropertiesCO;
 import org.laokou.iot.gateway.factory.GatewayDomainFactory;
@@ -30,7 +31,9 @@ import org.laokou.iot.gateway.model.entity.GatewayCommandE;
 import org.laokou.iot.gateway.model.entity.GatewayE;
 import org.laokou.iot.gateway.model.enums.Command;
 import org.laokou.iot.gateway.model.enums.Status;
+import org.springframework.util.StringUtils;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -54,6 +57,19 @@ public final class GatewayConvertor {
 		gatewayDO.setSessionId(gatewayE.getSessionId());
 		gatewayDO.setRemark(gatewayE.getRemark());
 		return gatewayDO;
+	}
+
+	public static GatewayCommandEvent toEvent(GatewayCommandDO gatewayCommandDO, SystemSettingsProperties systemSettingsProperties) {
+		GatewayCommandEvent gatewayCommandEvent = new GatewayCommandEvent();
+		gatewayCommandEvent.setCommandId(gatewayCommandDO.getId());
+		gatewayCommandEvent.setGatewaySn(gatewayCommandDO.getGatewaySn());
+		gatewayCommandEvent.setDeviceName(gatewayCommandDO.getDeviceName());
+		gatewayCommandEvent.setDeviceSn(gatewayCommandDO.getDeviceSn());
+		gatewayCommandEvent.setParam(StringUtils.hasText(gatewayCommandDO.getParam()) ? ForyJsonUtils.toBean(gatewayCommandDO.getParam(), Map.class) : Collections.EMPTY_MAP);
+		gatewayCommandEvent.setCommand(gatewayCommandDO.getCommand());
+		gatewayCommandEvent.setTopic(gatewayCommandDO.getTopic());
+		gatewayCommandEvent.setTenantCode(systemSettingsProperties.getTenantCode());
+		return gatewayCommandEvent;
 	}
 
 	public static GatewayCommandE toEntity(GatewayDO gatewayDO, SystemSettingsProperties systemSettingsProperties) {

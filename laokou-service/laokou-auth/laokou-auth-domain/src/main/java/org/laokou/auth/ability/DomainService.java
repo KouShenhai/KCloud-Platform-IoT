@@ -23,6 +23,7 @@ import org.laokou.auth.gateway.DeptGateway;
 import org.laokou.auth.gateway.MenuGateway;
 import org.laokou.auth.gateway.OssLogGateway;
 import org.laokou.auth.gateway.RoleGateway;
+import org.laokou.auth.gateway.TenantGateway;
 import org.laokou.auth.gateway.UserGateway;
 import org.laokou.auth.model.AuthA;
 import org.springframework.stereotype.Component;
@@ -46,6 +47,8 @@ public class DomainService {
 
 	private final RoleGateway roleGateway;
 
+	private final TenantGateway tenantGateway;
+
 	public void createCaptcha(AuthA authA) {
 		// 校验验证码参数
 		authA.checkCaptchaParam();
@@ -66,6 +69,10 @@ public class DomainService {
 		authA.checkUsername();
 		// 校验密码
 		authA.checkPassword();
+		// 获取租户编码
+		authA.getTenantCode(tenantGateway.getTenantCode(authA.getUserE()));
+		// 校验租户编码
+		authA.checkTenantCode();
 		// 校验用户状态
 		authA.checkUserStatus();
 		// 校验部门ID

@@ -32,6 +32,7 @@ import org.laokou.auth.model.exception.CaptchaErrorException;
 import org.laokou.auth.model.exception.CaptchaExpiredException;
 import org.laokou.auth.model.exception.DeptNotFoundException;
 import org.laokou.auth.model.exception.PasswordErrorException;
+import org.laokou.auth.model.exception.TenantNotFoundException;
 import org.laokou.auth.model.exception.UserDisabledException;
 import org.laokou.auth.model.exception.UserForbiddenException;
 import org.laokou.auth.model.function.HttpRequest;
@@ -57,6 +58,7 @@ import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.io.Serial;
 import java.util.Collections;
@@ -262,6 +264,10 @@ public final class AuthA extends AggregateRoot implements ValidateName {
 		this.userE = userE;
 	}
 
+	public void getTenantCode(String tenantCode) {
+		this.userV = this.userV.toBuilder().tenantCode(tenantCode).build();
+	}
+
 	public void getMenuPermissions(Set<String> permissions) {
 		this.userV = this.userV.toBuilder().permissions(permissions).build();
 	}
@@ -347,6 +353,12 @@ public final class AuthA extends AggregateRoot implements ValidateName {
 	public void checkUserStatus() {
 		if (ObjectUtils.equals(UserStatus.DISABLE.getCode(), this.userE.getStatus())) {
 			throw new UserDisabledException(OAuth2Constants.USER_DISABLED);
+		}
+	}
+
+	public void checkTenantCode() {
+		if (!StringUtils.hasText(this.userV.tenantCode())) {
+			throw new TenantNotFoundException(OAuth2Constants.TENANT_NOT_FOUND);
 		}
 	}
 

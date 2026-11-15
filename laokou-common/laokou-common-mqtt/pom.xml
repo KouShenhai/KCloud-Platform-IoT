@@ -61,6 +61,10 @@
       <groupId>org.eclipse.paho</groupId>
       <artifactId>org.eclipse.paho.mqttv5.client</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.lmax</groupId>
+      <artifactId>disruptor</artifactId>
+    </dependency>
   </dependencies>
 
 </project>

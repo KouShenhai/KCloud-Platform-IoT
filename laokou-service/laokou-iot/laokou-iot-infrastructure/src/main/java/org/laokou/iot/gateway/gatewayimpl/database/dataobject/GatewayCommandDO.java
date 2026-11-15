@@ -64,6 +64,11 @@ public class GatewayCommandDO extends BaseDO {
 	private String deviceSn;
 
 	/**
+	 * 设备名称.
+	 */
+	private String deviceName;
+
+	/**
 	 * 指令参数，JSON格式.
 	 */
 	private String param;

@@ -395,6 +395,7 @@ CREATE TABLE "public"."iot_gateway_command" (
 	"topic" varchar(200) NOT NULL,
 	"device_id" int8,
 	"device_sn" varchar(64),
+	"device_name" varchar(100),
 	"param" json,
 	"error_message" varchar(200),
 	"status" int2 NOT NULL DEFAULT 0,
@@ -420,6 +421,7 @@ COMMENT ON COLUMN "public"."iot_gateway_command"."topic" IS '主题';
 COMMENT ON COLUMN "public"."iot_gateway_command"."command" IS '指令 reboot网关重启指令 read设备读取属性指令 write设备写入属性指令';
 COMMENT ON COLUMN "public"."iot_gateway_command"."device_id" IS '设备ID';
 COMMENT ON COLUMN "public"."iot_gateway_command"."device_sn" IS '设备序列号';
+COMMENT ON COLUMN "public"."iot_gateway_command"."device_name" IS '设备名称';
 COMMENT ON COLUMN "public"."iot_gateway_command"."param" IS '指令参数';
 COMMENT ON COLUMN "public"."iot_gateway_command"."dispatch_time" IS '指令下发时间';
 COMMENT ON COLUMN "public"."iot_gateway_command"."error_message" IS '错误信息';

@@ -28,6 +28,7 @@ import org.laokou.auth.gateway.DeptGateway;
 import org.laokou.auth.gateway.MenuGateway;
 import org.laokou.auth.gateway.OssLogGateway;
 import org.laokou.auth.gateway.RoleGateway;
+import org.laokou.auth.gateway.TenantGateway;
 import org.laokou.auth.gateway.UserGateway;
 import org.laokou.auth.model.constant.Constants;
 import org.laokou.auth.model.entity.UserE;
@@ -105,6 +106,9 @@ class DomainServiceTest {
 	@MockitoBean
 	private DeptGateway deptGateway;
 
+	@MockitoBean
+	private TenantGateway tenantGateway;
+
 	@MockitoBean("authorizationCodeAuthParamValidator")
 	private AuthParamValidator authorizationCodeAuthParamValidator;
 
@@ -134,6 +138,8 @@ class DomainServiceTest {
 
 	private final String password = "admin123";
 
+	private final String tenantCode = "laokouyun";
+
 	private final String mail = "2413176044@qq.com";
 
 	private final String mobile = "18888888888";
@@ -154,6 +160,7 @@ class DomainServiceTest {
 		Mockito.verify(authOssLogGateway, Mockito.times(1)).getOssUrl(1L);
 		Mockito.verify(roleGateway, Mockito.times(1)).getDataScopes(createUserE());
 		Mockito.verify(deptGateway, Mockito.times(1)).getDeptIds(createUserE(), Set.of("self", "custom"));
+		Mockito.verify(tenantGateway, Mockito.times(1)).getTenantCode(createUserE());
 		Assertions.assertThat(usernamePasswordAuth.getDataFilterV().deptIds()).isEqualTo(Set.of(1L));
 		Assertions.assertThat(usernamePasswordAuth.getUserV().avatar()).isEqualTo("https://1.png");
 		Assertions.assertThat(usernamePasswordAuth.getUserE().getDeptId()).isEqualTo(1L);
@@ -234,6 +241,7 @@ class DomainServiceTest {
 		Mockito.verify(authOssLogGateway, Mockito.times(1)).getOssUrl(1L);
 		Mockito.verify(roleGateway, Mockito.times(1)).getDataScopes(createUserE());
 		Mockito.verify(deptGateway, Mockito.times(1)).getDeptIds(createUserE(), Set.of("self", "custom"));
+		Mockito.verify(tenantGateway, Mockito.times(1)).getTenantCode(createUserE());
 		Assertions.assertThat(mobileAuth.getDataFilterV().deptIds()).isEqualTo(Set.of(1L));
 		Assertions.assertThat(mobileAuth.getUserV().avatar()).isEqualTo("https://1.png");
 		Assertions.assertThat(mobileAuth.getUserE().getDeptId()).isEqualTo(1L);
@@ -364,6 +372,7 @@ class DomainServiceTest {
 		Mockito.when(userGateway.getUserProfile(Mockito.any())).thenReturn(createUserE());
 		Mockito.when(menuGateway.getMenuPermissions(Mockito.any())).thenReturn(Set.of("sys:user:save"));
 		Mockito.when(authOssLogGateway.getOssUrl(Mockito.anyLong())).thenReturn("https://1.png");
+		Mockito.when(tenantGateway.getTenantCode(Mockito.any())).thenReturn(tenantCode);
 		Map<String, String[]> params = new HashMap<>(4);
 		params.put(Constants.MOBILE, new String[] { mobileAuthParam.mobile() });
 		params.put(Constants.CODE, new String[] { mobileAuthParam.code() });
@@ -472,6 +481,7 @@ class DomainServiceTest {
 		params.put(Constants.CAPTCHA, new String[] { usernamePasswordAuthParam.captcha() });
 		params.put(Constants.GRANT_TYPE, new String[] { usernamePasswordAuthParam.grantType() });
 		Mockito.when(httpRequest.getParameterMap()).thenReturn(params);
+		Mockito.when(tenantGateway.getTenantCode(Mockito.any())).thenReturn(this.tenantCode);
 	}
 
 	private UsernamePasswordAuthParam createUsernamePasswordAuthParam() {
@@ -526,32 +536,32 @@ class DomainServiceTest {
 	}
 
 	private UserV createUserVByUsernamePassword() throws Exception {
-		return new UserV(AESUtils.encrypt(this.username), this.password, null, StringConstants.EMPTY,
+		return new UserV(AESUtils.encrypt(this.username), this.password, "", null, StringConstants.EMPTY,
 				StringConstants.EMPTY, null, null);
 	}
 
 	private UserV createUserVByUsernamePasswordWithUsernameNotFound() throws Exception {
-		return new UserV(AESUtils.encrypt("test"), this.password, null, StringConstants.EMPTY, StringConstants.EMPTY,
+		return new UserV(AESUtils.encrypt("test"), this.password, "", null, StringConstants.EMPTY, StringConstants.EMPTY,
 				null, null);
 	}
 
 	private UserV createUserVByMail() throws Exception {
-		return new UserV(StringConstants.EMPTY, null, null, AESUtils.encrypt(this.mail), StringConstants.EMPTY, null,
+		return new UserV(StringConstants.EMPTY, null, "", null, AESUtils.encrypt(this.mail), StringConstants.EMPTY, null,
 				null);
 	}
 
 	private UserV createUserVByMobile() throws Exception {
-		return new UserV(StringConstants.EMPTY, null, null, StringConstants.EMPTY, AESUtils.encrypt(this.mobile), null,
+		return new UserV(StringConstants.EMPTY, null, "", null, StringConstants.EMPTY, AESUtils.encrypt(this.mobile), null,
 				null);
 	}
 
 	private UserV createUserVByTest() throws Exception {
-		return new UserV(AESUtils.encrypt(this.username), this.password, null, StringConstants.EMPTY,
+		return new UserV(AESUtils.encrypt(this.username), this.password, "", null, StringConstants.EMPTY,
 				StringConstants.EMPTY, null, null);
 	}
 
 	private UserV createUserVByAuthorizationCode() throws Exception {
-		return new UserV(AESUtils.encrypt(this.username), this.password, null, StringConstants.EMPTY,
+		return new UserV(AESUtils.encrypt(this.username), this.password, "", null, StringConstants.EMPTY,
 				StringConstants.EMPTY, null, null);
 	}
 
