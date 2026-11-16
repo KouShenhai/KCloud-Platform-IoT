@@ -36,4 +36,6 @@ public class GatewayCommandPageQry extends PageQuery {
 
 	private Integer status;
 
+	private Integer replyStatus;
+
 }

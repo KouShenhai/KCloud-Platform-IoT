@@ -31,6 +31,9 @@
     <if test="pageQuery.status != null">
       and status = #{pageQuery.status}
     </if>
+    <if test="pageQuery.replyStatus != null">
+      and reply_status = #{pageQuery.replyStatus}
+    </if>
     <if test="pageQuery.command != null and pageQuery.command != ''">
       and command = #{pageQuery.command}
     </if>
@@ -56,7 +59,7 @@
 		       status,
 		       reply_payload,
 		       reply_status,
-		       dispatch_time,
+		       down_time,
 		       reply_time,
 		       reply_message
 		from iot_gateway_command

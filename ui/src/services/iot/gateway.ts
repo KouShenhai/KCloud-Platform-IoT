@@ -192,14 +192,33 @@ export type GatewayCommand = {
 	replyTime?: string | number | null;
 };
 
+export type GatewayCommandPageQry = {
+	gatewayId: GatewayId;
+	pageNum: number;
+	pageSize: number;
+	pageIndex: number;
+	command?: string;
+	status?: number;
+	replyStatus?: number;
+	params?: {
+		startTime?: string;
+		endTime?: string;
+	};
+};
+
+/** 分页查询网关指令列表 POST /api/v1/gateways/commands/page */
 export async function pageGatewayCommand(
-	id: GatewayId,
-	body: { pageNum: number; pageSize: number },
+	body: GatewayCommandPageQry,
+	options?: { [key: string]: any },
 ) {
 	return request<
-		GatewayResponse<{ records: GatewayCommand[]; total: number }>
-	>(`/api-proxy/iot/api/v1/gateways/${id}/commands/page`, {
+		GatewayResponse<{ records: GatewayCommand[]; total: number | string }>
+	>('/api-proxy/iot/api/v1/gateways/commands/page', {
 		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
 		data: body,
+		...(options || {}),
 	});
 }

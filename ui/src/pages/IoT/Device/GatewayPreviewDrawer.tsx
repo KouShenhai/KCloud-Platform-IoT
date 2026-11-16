@@ -56,7 +56,7 @@ export const GatewayPreviewDrawer = ({ id, onClose }: GatewayPreviewProps) => {
 		<Drawer
 			open
 			title={t('iot.gateway.preview.title')}
-			size={800}
+			size={1200}
 			loading={snapshot === undefined}
 			closable={false}
 			keyboard={false}
