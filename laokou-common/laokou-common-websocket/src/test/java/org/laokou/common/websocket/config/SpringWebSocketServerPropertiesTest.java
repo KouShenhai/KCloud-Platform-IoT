@@ -48,7 +48,7 @@ class SpringWebSocketServerPropertiesTest {
 		Assertions.assertThat(properties.getWriterIdleTime()).isZero();
 		Assertions.assertThat(properties.getAllIdleTime()).isZero();
 		Assertions.assertThat(properties.getBossCorePoolSize()).isEqualTo(2);
-		Assertions.assertThat(properties.getWorkerCorePoolSize()).isEqualTo(40);
+		Assertions.assertThat(properties.getWorkerCorePoolSize()).isEqualTo(16);
 		Assertions.assertThat(properties.isTcpNodelay()).isFalse();
 		Assertions.assertThat(properties.getBacklogLength()).isEqualTo(1024);
 		Assertions.assertThat(properties.isKeepAlive()).isTrue();

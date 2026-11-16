@@ -178,7 +178,7 @@ image::doc/image/老寇IoT云平台业务架构图.png[架构图,align=center]
 |Elasticsearch               |9.5.6
 |Netty                       |4.2.20.Final
 |Kafka                       |4.3.1
-|Pulsar                      |4.2.4
+|Pulsar                      |5.0.1
 |EMQX                        |5.8.8
 |TimescaleDB                 |17
 |TDengine                    |3.3.6.13
