@@ -30,4 +30,10 @@ public class GatewayCommandPageQry extends PageQuery {
 
 	private Long gatewayId;
 
+	private Long deviceId;
+
+	private String command;
+
+	private Integer status;
+
 }

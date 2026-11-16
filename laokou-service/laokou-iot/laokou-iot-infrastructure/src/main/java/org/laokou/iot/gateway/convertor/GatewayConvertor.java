@@ -18,9 +18,11 @@
 package org.laokou.iot.gateway.convertor;
 
 import org.laokou.common.context.util.UserUtils;
+import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.fory.util.ForyJsonUtils;
 import org.laokou.common.mqtt.client.GatewayCommandEvent;
 import org.laokou.common.mqtt.client.message.DownCommandGatewayMessage;
+import org.laokou.iot.device.gatewayimpl.database.dataobject.DeviceDO;
 import org.laokou.iot.gateway.dto.clientobject.GatewayCO;
 import org.laokou.iot.gateway.dto.clientobject.GatewayCommandCO;
 import org.laokou.iot.gateway.dto.clientobject.GatewayPropertiesCO;
@@ -31,7 +33,6 @@ import org.laokou.iot.gateway.model.GatewayA;
 import org.laokou.iot.gateway.model.GatewayCommandA;
 import org.laokou.iot.gateway.model.entity.GatewayCommandE;
 import org.laokou.iot.gateway.model.entity.GatewayE;
-import org.laokou.iot.gateway.model.enums.Command;
 import org.laokou.iot.gateway.model.enums.Status;
 
 import java.util.List;
@@ -59,12 +60,17 @@ public final class GatewayConvertor {
 		return gatewayDO;
 	}
 
-	public static GatewayCommandE toEntity(GatewayDO gatewayDO) {
+	public static GatewayCommandE toEntity(GatewayDO gatewayDO, DeviceDO deviceDO, String command,
+			Map<String, Object> param) {
 		return GatewayDomainFactory.createGatewayCommandE()
 			.toBuilder()
 			.gatewaySn(gatewayDO.getSn())
 			.gatewayId(gatewayDO.getId())
-			.command(Command.REBOOT.getCode())
+			.command(command)
+			.param(MapUtils.isEmpty(param) ? null : ForyJsonUtils.toJsonStr(param))
+			.deviceId(deviceDO != null ? deviceDO.getId() : null)
+			.deviceName(deviceDO != null ? deviceDO.getName() : null)
+			.deviceSn(deviceDO != null ? deviceDO.getSn() : null)
 			.topic(String.format("down/%s/%s/command", UserUtils.getTenantCode(), gatewayDO.getSn()))
 			.status(Status.PENDING.getCode())
 			.sessionId(gatewayDO.getSessionId())
@@ -90,6 +96,9 @@ public final class GatewayConvertor {
 		gatewayCommandDO.setId(gatewayCommandA.getId());
 		gatewayCommandDO.setGatewaySn(gatewayCommandE.getGatewaySn());
 		gatewayCommandDO.setGatewayId(gatewayCommandE.getGatewayId());
+		gatewayCommandDO.setDeviceId(gatewayCommandE.getDeviceId());
+		gatewayCommandDO.setDeviceName(gatewayCommandE.getDeviceName());
+		gatewayCommandDO.setDeviceSn(gatewayCommandE.getDeviceSn());
 		gatewayCommandDO.setTopic(gatewayCommandE.getTopic());
 		gatewayCommandDO.setStatus(gatewayCommandE.getStatus());
 		gatewayCommandDO.setParam(gatewayCommandE.getParam());

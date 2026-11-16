@@ -56,7 +56,8 @@ public class GatewayCommandCO extends ClientObject {
 	private String gatewaySn;
 
 	/**
-	 * 指令 reboot重启网关指令 read读取设备属性指令 write写入设备属性指令.
+	 * 指令 reboot_gateway重启网关指令 read_device_properties读取设备属性指令
+	 * write_device_properties写入设备属性指令.
 	 */
 	private String command;
 

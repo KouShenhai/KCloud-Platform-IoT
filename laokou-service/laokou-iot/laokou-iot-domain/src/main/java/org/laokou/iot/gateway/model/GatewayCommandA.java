@@ -23,8 +23,10 @@ import org.laokou.common.i18n.common.IdGenerator;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.iot.gateway.model.entity.GatewayCommandE;
+import org.laokou.iot.gateway.model.enums.Command;
 
 import java.io.Serial;
+import java.util.Arrays;
 
 /**
  * 网关指令聚合根.
@@ -51,6 +53,12 @@ public class GatewayCommandA extends AggregateRoot {
 		super.createTime = InstantUtils.now();
 		super.id = idGenerator.getId();
 		return this;
+	}
+
+	public void checkCommand() {
+		if (!Arrays.stream(Command.values()).map(Command::getCode).toList().contains(gatewayCommandE.getCommand())) {
+			throw new IllegalStateException("Command not exist");
+		}
 	}
 
 }

@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.iot.gateway.model.entity;
+package org.laokou.iot.gateway.model.enums;
 
 import lombok.Getter;
 
@@ -27,9 +27,9 @@ import lombok.Getter;
 @Getter
 public enum ReplyStatus {
 
-	SUCCESS(1, "成功"),
+	SUCCESS(0, "成功"),
 
-	FAILURE(0, "失败");
+	FAILURE(1, "失败");
 
 	private final int code;
 

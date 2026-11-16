@@ -392,7 +392,7 @@ CREATE TABLE "public"."iot_gateway_command" (
 	"session_id" int8 NOT NULL,
 	"gateway_id" int8 NOT NULL,
 	"gateway_sn" varchar(64)  NOT NULL,
-	"command" varchar(30) NOT NULL,
+	"command" varchar(50) NOT NULL,
 	"topic" varchar(200) NOT NULL,
 	"device_id" int8,
 	"device_sn" varchar(64),
@@ -420,7 +420,7 @@ COMMENT ON COLUMN "public"."iot_gateway_command"."session_id" IS '会话ID';
 COMMENT ON COLUMN "public"."iot_gateway_command"."gateway_id" IS '网关ID';
 COMMENT ON COLUMN "public"."iot_gateway_command"."gateway_sn" IS '网关序列号';
 COMMENT ON COLUMN "public"."iot_gateway_command"."topic" IS '主题';
-COMMENT ON COLUMN "public"."iot_gateway_command"."command" IS '指令 reboot重启网关指令 read读取设备属性指令 write写入设备属性指令';
+COMMENT ON COLUMN "public"."iot_gateway_command"."command" IS '指令 reboot_gateway重启网关指令 read_device_properties读取设备属性指令 write_device_properties写入设备属性指令';
 COMMENT ON COLUMN "public"."iot_gateway_command"."device_id" IS '设备ID';
 COMMENT ON COLUMN "public"."iot_gateway_command"."device_sn" IS '设备序列号';
 COMMENT ON COLUMN "public"."iot_gateway_command"."device_name" IS '设备名称';

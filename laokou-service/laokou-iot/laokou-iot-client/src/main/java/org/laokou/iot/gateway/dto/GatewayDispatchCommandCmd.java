@@ -17,17 +17,23 @@
 
 package org.laokou.iot.gateway.dto;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.Data;
 import org.laokou.common.i18n.dto.CommonCommand;
+
+import java.util.Map;
 
 /**
  * @author laokou
  */
-@Getter
-@RequiredArgsConstructor
-public class GatewayDispatchRebootCommandCmd extends CommonCommand {
+@Data
+public class GatewayDispatchCommandCmd extends CommonCommand {
 
-	private final Long id;
+	private Long gatewayId;
+
+	private Long deviceId;
+
+	private String command;
+
+	private Map<String, Object> param;
 
 }

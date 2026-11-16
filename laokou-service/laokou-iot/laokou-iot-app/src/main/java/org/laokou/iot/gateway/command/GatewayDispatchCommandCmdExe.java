@@ -21,13 +21,17 @@ import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.domain.annotation.CommandLog;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.laokou.common.tenant.constant.DSConstants;
+import org.laokou.iot.device.gatewayimpl.database.DeviceMapper;
+import org.laokou.iot.device.gatewayimpl.database.dataobject.DeviceDO;
 import org.laokou.iot.gateway.ability.GatewayDomainService;
 import org.laokou.iot.gateway.convertor.GatewayConvertor;
-import org.laokou.iot.gateway.dto.GatewayDispatchRebootCommandCmd;
+import org.laokou.iot.gateway.dto.GatewayDispatchCommandCmd;
 import org.laokou.iot.gateway.factory.GatewayDomainFactory;
 import org.laokou.iot.gateway.gatewayimpl.database.GatewayMapper;
+import org.laokou.iot.gateway.gatewayimpl.database.dataobject.GatewayDO;
 import org.laokou.iot.gateway.model.GatewayCommandA;
 import org.springframework.stereotype.Component;
 
@@ -37,20 +41,25 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class GatewayDispatchRebootCommandCmdExe {
+public class GatewayDispatchCommandCmdExe {
 
 	private final GatewayMapper gatewayMapper;
+
+	private final DeviceMapper deviceMapper;
 
 	private final TransactionalUtils transactionalUtils;
 
 	private final GatewayDomainService gatewayDomainService;
 
 	@CommandLog
-	public void execute(GatewayDispatchRebootCommandCmd cmd) {
+	public void execute(GatewayDispatchCommandCmd cmd) {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.IOT);
+			GatewayDO gatewayDO = gatewayMapper.selectById(cmd.getGatewayId());
+			DeviceDO deviceDO = ObjectUtils.isNotNull(cmd.getDeviceId()) ? deviceMapper.selectById(cmd.getDeviceId())
+					: null;
 			GatewayCommandA gatewayCommandA = GatewayDomainFactory.createGatewayCommandA()
-				.create(GatewayConvertor.toEntity(gatewayMapper.selectById(cmd.getId())));
+				.create(GatewayConvertor.toEntity(gatewayDO, deviceDO, cmd.getCommand(), cmd.getParam()));
 			transactionalUtils.executeInTransaction(() -> gatewayDomainService.createGatewayCommand(gatewayCommandA));
 		}
 		catch (Exception ex) {

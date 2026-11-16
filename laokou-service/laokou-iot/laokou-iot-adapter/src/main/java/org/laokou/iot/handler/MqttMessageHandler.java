@@ -40,7 +40,7 @@ import org.laokou.common.redis.util.RedisUtils;
 import org.laokou.common.tenant.constant.DSConstants;
 import org.laokou.iot.gateway.gatewayimpl.database.GatewayCommandMapper;
 import org.laokou.iot.gateway.gatewayimpl.database.dataobject.GatewayCommandDO;
-import org.laokou.iot.gateway.model.entity.ReplyStatus;
+import org.laokou.iot.gateway.model.enums.ReplyStatus;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.pulsar.annotation.PulsarListener;
 import org.springframework.pulsar.annotation.PulsarListeners;

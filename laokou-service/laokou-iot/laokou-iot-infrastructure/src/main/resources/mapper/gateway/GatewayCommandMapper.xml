@@ -21,14 +21,44 @@
 <mapper namespace="org.laokou.iot.gateway.gatewayimpl.database.GatewayCommandMapper">
 
 	<sql id="selectConditions">
-		where del_flag = 0 and gateway_id = #{pageQuery.gatewayId}
+    where del_flag = 0
+    <if test="pageQuery.gatewayId != null">
+      and gateway_id = #{pageQuery.gatewayId}
+    </if>
+    <if test="pageQuery.deviceId != null">
+      and device_id = #{pageQuery.deviceId}
+    </if>
+    <if test="pageQuery.status != null">
+      and status = #{pageQuery.status}
+    </if>
+    <if test="pageQuery.command != null and pageQuery.command != ''">
+      and command = #{pageQuery.command}
+    </if>
+    <if test="pageQuery.params.startTime != null and pageQuery.params.startTime != ''">
+      and create_time <![CDATA[ >= ]]> #{pageQuery.params.startTime}
+    </if>
+    <if test="pageQuery.params.endTime != null and pageQuery.params.endTime != ''">
+      and create_time <![CDATA[ <= ]]> #{pageQuery.params.endTime}
+    </if>
 	</sql>
 
 	<select id="selectObjectPage"
 			resultType="org.laokou.iot.gateway.gatewayimpl.database.dataobject.GatewayCommandDO">
-		select id, create_time, session_id, gateway_id, gateway_sn, command, topic,
-			device_id, device_sn, device_name, param, error_message, status,
-			reply_payload, reply_status, dispatch_time, reply_time, reply_message
+		select id,
+		       create_time,
+		       gateway_sn,
+		       command,
+		       topic,
+		       device_sn,
+		       device_name,
+		       param,
+		       error_message,
+		       status,
+		       reply_payload,
+		       reply_status,
+		       dispatch_time,
+		       reply_time,
+		       reply_message
 		from iot_gateway_command
 		<include refid="selectConditions"/>
 		order by id desc
