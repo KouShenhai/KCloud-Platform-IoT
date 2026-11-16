@@ -38,7 +38,7 @@ import java.util.Map;
  * @author laokou
  */
 @Slf4j
-public record RouterHandler(SpringUtils springUtils) implements ApplicationListener<ApplicationReadyEvent> {
+public record RouterHandler(SpringUtils springUtils) implements ApplicationListener<@NonNull ApplicationReadyEvent> {
 
 	@Override
 	public void onApplicationEvent(@NonNull ApplicationReadyEvent event) {

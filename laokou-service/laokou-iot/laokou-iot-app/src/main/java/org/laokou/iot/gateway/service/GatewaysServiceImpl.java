@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.iot.gateway.api.GatewaysServiceI;
+import org.laokou.iot.gateway.command.GatewayDownCommandCmdExe;
 import org.laokou.iot.gateway.command.GatewayExportCmdExe;
 import org.laokou.iot.gateway.command.GatewayImportCmdExe;
 import org.laokou.iot.gateway.command.GatewayModifyCmdExe;
@@ -28,14 +29,21 @@ import org.laokou.iot.gateway.command.GatewayRemoveCmdExe;
 import org.laokou.iot.gateway.command.GatewaySaveCmdExe;
 import org.laokou.iot.gateway.command.query.GatewayGetQryExe;
 import org.laokou.iot.gateway.command.query.GatewayPageQryExe;
+import org.laokou.iot.gateway.command.query.GatewayCommandPageQryExe;
+import org.laokou.iot.gateway.command.query.GatewayPropertiesGetQryExe;
 import org.laokou.iot.gateway.dto.GatewayExportCmd;
 import org.laokou.iot.gateway.dto.GatewayGetQry;
 import org.laokou.iot.gateway.dto.GatewayImportCmd;
+import org.laokou.iot.gateway.dto.GatewayDownCommandCmd;
 import org.laokou.iot.gateway.dto.GatewayModifyCmd;
 import org.laokou.iot.gateway.dto.GatewayPageQry;
+import org.laokou.iot.gateway.dto.GatewayCommandPageQry;
+import org.laokou.iot.gateway.dto.clientobject.GatewayCommandCO;
+import org.laokou.iot.gateway.dto.GatewayPropertiesGetQry;
 import org.laokou.iot.gateway.dto.GatewayRemoveCmd;
 import org.laokou.iot.gateway.dto.GatewaySaveCmd;
 import org.laokou.iot.gateway.dto.clientobject.GatewayCO;
+import org.laokou.iot.gateway.dto.clientobject.GatewayPropertiesCO;
 import org.springframework.stereotype.Service;
 
 /**
@@ -60,7 +68,13 @@ public class GatewaysServiceImpl implements GatewaysServiceI {
 
 	private final GatewayPageQryExe gatewayPageQryExe;
 
+	private final GatewayCommandPageQryExe gatewayCommandPageQryExe;
+
 	private final GatewayGetQryExe gatewayGetQryExe;
+
+	private final GatewayPropertiesGetQryExe gatewayPropertiesGetQryExe;
+
+	private final GatewayDownCommandCmdExe gatewayDownCommandCmdExe;
 
 	@Override
 	public void saveGateway(GatewaySaveCmd cmd) {
@@ -95,6 +109,21 @@ public class GatewaysServiceImpl implements GatewaysServiceI {
 	@Override
 	public Result<GatewayCO> getGatewayById(GatewayGetQry qry) {
 		return gatewayGetQryExe.execute(qry);
+	}
+
+	@Override
+	public Result<GatewayPropertiesCO> getGatewayPropertiesById(GatewayPropertiesGetQry qry) {
+		return gatewayPropertiesGetQryExe.execute(qry);
+	}
+
+	@Override
+	public void downGatewayCommand(GatewayDownCommandCmd cmd) {
+		gatewayDownCommandCmdExe.execute(cmd);
+	}
+
+	@Override
+	public Result<Page<GatewayCommandCO>> pageGatewayCommand(GatewayCommandPageQry qry) {
+		return gatewayCommandPageQryExe.execute(qry);
 	}
 
 }

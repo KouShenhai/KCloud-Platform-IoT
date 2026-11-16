@@ -25,8 +25,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.server.autoconfigure.ServerProperties;
 import org.springframework.context.annotation.Bean;
 
-import java.util.concurrent.ExecutorService;
-
 // @formatter:off
 /**
  * @author laokou
@@ -34,8 +32,8 @@ import java.util.concurrent.ExecutorService;
 public class WebSocketServerConfig {
 
     @Bean(name = "webSocketServer", initMethod = "start", destroyMethod = "stop")
-	public Server webSocketServer(ChannelHandler webSocketServerChannelInitializer, SpringWebSocketServerProperties springWebSocketServerProperties , ExecutorService virtualThreadExecutor) {
-		return new WebSocketServer(webSocketServerChannelInitializer, springWebSocketServerProperties, virtualThreadExecutor);
+	public Server webSocketServer(ChannelHandler webSocketServerChannelInitializer, SpringWebSocketServerProperties springWebSocketServerProperties) {
+		return new WebSocketServer(webSocketServerChannelInitializer, springWebSocketServerProperties);
     }
 
 	@Bean("webSocketServerChannelInitializer")

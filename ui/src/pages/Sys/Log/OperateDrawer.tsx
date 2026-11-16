@@ -49,8 +49,8 @@ export const OperateLogDrawer: React.FC<OperateLogDrawerProps> = ({
 			title={t('sys.operateLog.drawer.title')}
 			drawerProps={{
 				destroyOnClose: true,
-				closable: true,
-				maskClosable: true,
+				closable: false,
+				maskClosable: false,
 			}}
 			width={1200}
 			initialValues={dataSource}

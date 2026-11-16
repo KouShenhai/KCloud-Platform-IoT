@@ -33,7 +33,7 @@ public class DeviceMcpMapper {
 
 	private final ToolCallbackProvider syncMcpToolCallbackProvider;
 
-	public String getDeviceInfo(String deviceSN) {
+	public String getDeviceInfo() {
 		ToolCallback callback = Arrays.stream(syncMcpToolCallbackProvider.getToolCallbacks())
 			.filter(item -> "getDeviceInfo".equals(item.getToolDefinition().name()))
 			.findFirst()

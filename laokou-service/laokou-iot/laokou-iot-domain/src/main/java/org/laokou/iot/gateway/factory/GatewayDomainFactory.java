@@ -19,6 +19,8 @@ package org.laokou.iot.gateway.factory;
 
 import org.laokou.common.i18n.util.SpringContextUtils;
 import org.laokou.iot.gateway.model.GatewayA;
+import org.laokou.iot.gateway.model.GatewayCommandA;
+import org.laokou.iot.gateway.model.entity.GatewayCommandE;
 import org.laokou.iot.gateway.model.entity.GatewayE;
 
 /**
@@ -35,6 +37,14 @@ public final class GatewayDomainFactory {
 
 	public static GatewayA createGatewayA() {
 		return SpringContextUtils.getBeanProvider(GatewayA.class);
+	}
+
+	public static GatewayCommandE createGatewayCommandE() {
+		return SpringContextUtils.getBeanProvider(GatewayCommandE.class);
+	}
+
+	public static GatewayCommandA createGatewayCommandA() {
+		return SpringContextUtils.getBeanProvider(GatewayCommandA.class);
 	}
 
 }

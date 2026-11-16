@@ -51,8 +51,8 @@ export const RoleModifyAuthorityDrawer: React.FC<RoleAuthorityProps> = ({
 			title={title}
 			drawerProps={{
 				destroyOnClose: true,
-				closable: true,
-				maskClosable: true,
+				closable: false,
+				maskClosable: false,
 			}}
 			initialValues={dataSource}
 			onOpenChange={setModalModifyAuthorityVisit}

@@ -41,6 +41,11 @@ public final class DSConstants {
 		public static final String GATEWAY_TABLE = "iot_gateway";
 
 		/**
+		 * 网关指令表.
+		 */
+		public static final String GATEWAY_COMMAND_TABLE = "iot_gateway_command";
+
+		/**
 		 * 会话表.
 		 */
 		public static final String SESSION_TABLE = "iot_session";

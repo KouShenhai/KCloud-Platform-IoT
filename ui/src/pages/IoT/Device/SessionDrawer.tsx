@@ -80,8 +80,8 @@ export const SessionDrawer: React.FC<ConnectionDrawerProps> = ({
 			title={title}
 			drawerProps={{
 				destroyOnClose: true,
-				closable: true,
-				maskClosable: true,
+				closable: false,
+				maskClosable: false,
 			}}
 			initialValues={toFormValues(dataSource)}
 			onOpenChange={setModalVisit}

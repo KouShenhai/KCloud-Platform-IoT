@@ -1,6 +1,40 @@
 /* eslint-disable */
 import { request } from '@umijs/max';
 
+export type GatewayId = string | number;
+
+export type GatewayProperties = {
+	sn?: string | null;
+	name?: string | null;
+	state?: number | null;
+	timestamp?: string | number | null;
+	properties?: Record<string, unknown> | null;
+};
+
+type GatewayResponse<T> = {
+	code: string;
+	msg?: string;
+	data?: T | null;
+};
+
+/** 下发重启网关指令。 */
+export async function rebootGatewayCommand(body: API.DownGatewayCommandCmd,
+                                    requestId: string,
+                                    options?: { [key: string]: any }) {
+	return request<GatewayResponse<void | ''>>(
+		`/api-proxy/iot/api/v1/gateways/commands/reboot-gateway-command`,
+		{
+			method: 'POST',
+			headers: {
+				'request-id': requestId,
+				'Content-Type': 'application/json',
+			},
+			data: body,
+			...(options || {}),
+		},
+	);
+}
+
 /** 修改网关 修改网关 PUT /api/v1/gateways */
 export async function modifyGateway(
 	body: API.GatewayModifyCmd,
@@ -62,6 +96,19 @@ export async function getGatewayById(
 	});
 }
 
+export async function getGatewayPropertiesById(
+	{ id }: { id: GatewayId },
+	options?: { [key: string]: any },
+) {
+	return request<GatewayResponse<GatewayProperties>>(
+		`/api-proxy/iot/api/v1/gateways/${id}/properties`,
+		{
+			method: 'GET',
+			...options,
+		},
+	);
+}
+
 /** 导出网关 导出网关 POST /api/v1/gateways/export */
 export async function exportGateway(
 	body: API.GatewayExportCmd,
@@ -119,6 +166,54 @@ export async function pageGateway(
 	options?: { [key: string]: any },
 ) {
 	return request<API.Result>('/api-proxy/iot/api/v1/gateways/page', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		data: body,
+		...(options || {}),
+	});
+}
+
+export type GatewayCommand = {
+	id: GatewayId;
+	command?: string;
+	deviceSn?: string | null;
+	deviceName?: string | null;
+	topic?: string | null;
+	param?: string | null;
+	status?: number | null;
+	errorMessage?: string | null;
+	replyPayload?: string | null;
+	replyStatus?: number | null;
+	replyMessage?: string | null;
+	createTime?: string | number | null;
+	downTime?: string | number | null;
+	replyTime?: string | number | null;
+};
+
+export type GatewayCommandPageQry = {
+	gatewayId: GatewayId;
+	pageNum: number;
+	pageSize: number;
+	pageIndex: number;
+	command?: string;
+	status?: number;
+	replyStatus?: number;
+	params?: {
+		startTime?: string;
+		endTime?: string;
+	};
+};
+
+/** 分页查询网关指令列表 POST /api/v1/gateways/commands/page */
+export async function pageGatewayCommand(
+	body: GatewayCommandPageQry,
+	options?: { [key: string]: any },
+) {
+	return request<
+		GatewayResponse<{ records: GatewayCommand[]; total: number | string }>
+	>('/api-proxy/iot/api/v1/gateways/commands/page', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

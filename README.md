@@ -77,7 +77,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级单体架构和微�
 |  ![物模型页面](doc/image/project/9.png)   | ![产品类别页面](doc/image/project/10.png)  |
 | ![国际化菜单页面](doc/image/project/11.png) | ![API文档页面](doc/image/project/12.png) |
 | ![数据字典页面](doc/image/project/13.png)  |  ![数据源页面](doc/image/project/14.png)  |
-|  ![会话页面](doc/image/project/15.png)   |                                      |
+|  ![会话页面](doc/image/project/15.png)   |  ![网关页面](doc/image/project/16.png)   |
 
 ### 🌿 服务器配置
 
@@ -138,6 +138,8 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级单体架构和微�
 
 🚀 会话管理【查询/保存/修改/删除/查看/开启/关闭】
 
+🚀 网关管理【查询/保存/修改/删除/查看/预览/重启】
+
 ### 💡 系统架构
 
 <div style="text-align: center"><img src="doc/image/老寇IoT云平台架构图.png" alt="架构图"/></div>
@@ -165,7 +167,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级单体架构和微�
 |    Elasticsearch     |    9.5.6     |
 |        Netty         | 4.2.20.Final |
 |        Kafka         |    4.3.1     |
-|        Pulsar        |    4.2.4     |
+|        Pulsar        |    5.0.1     |
 |         EMQX         |    5.8.8     |
 |     TimescaleDB      |      17      |
 |       TDengine       |   3.3.6.13   |

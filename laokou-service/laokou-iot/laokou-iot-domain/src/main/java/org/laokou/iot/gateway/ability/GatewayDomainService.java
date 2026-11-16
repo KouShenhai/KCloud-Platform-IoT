@@ -20,6 +20,7 @@ package org.laokou.iot.gateway.ability;
 import lombok.RequiredArgsConstructor;
 import org.laokou.iot.gateway.gateway.GatewayGateway;
 import org.laokou.iot.gateway.model.GatewayA;
+import org.laokou.iot.gateway.model.GatewayCommandA;
 import org.springframework.stereotype.Component;
 
 /**
@@ -44,6 +45,12 @@ public class GatewayDomainService {
 
 	public void deleteGateway(Long[] ids) {
 		gatewayGateway.deleteGateway(ids);
+	}
+
+	public void createGatewayCommand(GatewayCommandA gatewayCommandA) {
+		// 校验类型
+		gatewayCommandA.checkCommand();
+		gatewayGateway.createGatewayCommand(gatewayCommandA);
 	}
 
 }

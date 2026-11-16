@@ -26,8 +26,8 @@ export const UserResetPwdDrawer: React.FC<UserResetPwdDrawerProps> = ({
 			title={t('sys.user.resetPwd.title')}
 			drawerProps={{
 				destroyOnClose: true,
-				closable: true,
-				maskClosable: true,
+				closable: false,
+				maskClosable: false,
 			}}
 			submitter={{
 				submitButtonProps: {

@@ -43,6 +43,7 @@ public final class UserConvertor {
 			.deptId(authentication.deptId())
 			.deptIds(authentication.deptIds())
 			.creator(authentication.creator())
+			.tenantCode(authentication.tenantCode())
 			.build();
 	}
 
@@ -62,6 +63,7 @@ public final class UserConvertor {
 			.deptId(userExtDetails.deptId())
 			.deptIds(userExtDetails.deptIds())
 			.creator(userExtDetails.creator())
+			.tenantCode(userExtDetails.tenantCode())
 			.build();
 	}
 

@@ -41,11 +41,12 @@ import java.util.Set;
  * @param permissions 菜单权限标识集合.
  * @param deptIds 部门IDS.
  * @param creator 创建者.
+ * @param tenantCode 租户编码.
  * @author laokou
  */
 public record OAuth2Authentication(Long id, String username, String password, String avatar, Boolean superAdmin,
 		Integer status, String mail, String mobile, Long tenantId, Long deptId, Set<String> permissions,
-		Set<Long> deptIds, Long creator) implements Authentication {
+		Set<Long> deptIds, Long creator, String tenantCode) implements Authentication {
 
 	@Serial
 	private static final long serialVersionUID = 3319752558160144611L;

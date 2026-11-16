@@ -1,7 +1,9 @@
 import { GatewayDrawer } from '@/pages/IoT/Device/GatewayDrawer';
+import { GatewayPreviewDrawer } from '@/pages/IoT/Device/GatewayPreviewDrawer';
 import {
 	getGatewayById,
 	pageGateway,
+	rebootGatewayCommand,
 	removeGateway,
 } from '@/services/iot/gateway';
 import { trim } from '@/utils/format';
@@ -30,12 +32,42 @@ export default () => {
 		intl.formatMessage({ id }, values);
 	const actionRef = useRef<ActionType | null>(null);
 	const [modalVisit, setModalVisit] = useState(false);
+	const [previewGateway, setPreviewGateway] = useState<TableColumns>();
 	const [dataSource, setDataSource] = useState<any>({});
 	const [title, setTitle] = useState('');
 	const [readOnly, setReadOnly] = useState(false);
 	const [ids, setIds] = useState<any>([]);
 	const [requestId, setRequestId] = useState('');
 	const [sessionOptions, setSessionOptions] = useState([])
+	const rebootModalOpen = useRef(false);
+
+	const confirmReboot = (record: TableColumns) => {
+		if (rebootModalOpen.current) return;
+		rebootModalOpen.current = true;
+		const rebootRequestId = uuidV7();
+		Modal.confirm({
+			title: t('iot.gateway.reboot.title'),
+			content: t('iot.gateway.reboot.confirm', {
+				name: record.name || record.sn || String(record.id),
+			}),
+			okText: t('common.ok'),
+			cancelText: t('common.cancel'),
+			okButtonProps: { danger: true },
+			afterClose: () => {
+				rebootModalOpen.current = false;
+			},
+			onOk: async () => {
+				rebootGatewayCommand({
+					gatewayId: record?.id,
+					command: 'reboot_gateway',
+				}, rebootRequestId).then(res => {
+					if (res.code === 'OK') {
+						message.success(t('iot.gateway.reboot.success'));
+					}
+				})
+			},
+		});
+	};
 
 	const getSession = async () => {
 		const  res = await listSession({});
@@ -136,6 +168,19 @@ export default () => {
 			valueType: 'option',
 			key: 'option',
 			render: (_, record) => [
+				access.canGatewayPreview && (
+					<a
+						key="preview"
+						onClick={() => setPreviewGateway(record)}
+					>
+						{t('iot.gateway.preview.button')}
+					</a>
+				),
+				access.canDownRebootGatewayCommand &&  (
+					<a key="reboot" onClick={() => confirmReboot(record)}>
+						{t('iot.gateway.reboot.button')}
+					</a>
+				),
 				access.canGatewayGetDetail && (
 					<a
 						key="get"
@@ -198,6 +243,13 @@ export default () => {
 
 	return (
 		<>
+			{access.canGatewayPreview && previewGateway && (
+				<GatewayPreviewDrawer
+					key={previewGateway.id}
+					id={previewGateway.id}
+					onClose={() => setPreviewGateway(undefined)}
+				/>
+			)}
 			<GatewayDrawer
 				modalVisit={modalVisit}
 				setModalVisit={setModalVisit}

@@ -35,8 +35,8 @@ export const NoticeLogDrawer: React.FC<NoticeLogDrawerProps> = ({
 			title={t('sys.noticeLog.drawer.title')}
 			drawerProps={{
 				destroyOnClose: true,
-				closable: true,
-				maskClosable: true,
+				closable: false,
+				maskClosable: false,
 			}}
 			initialValues={dataSource}
 			onOpenChange={setModalVisit}

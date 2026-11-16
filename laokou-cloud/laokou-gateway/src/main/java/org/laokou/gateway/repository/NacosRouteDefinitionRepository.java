@@ -45,6 +45,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
 
 // @formatter:off
 /**
@@ -91,12 +92,12 @@ public class NacosRouteDefinitionRepository implements RouteDefinitionRepository
 
 			@Override
 			public void receiveConfigInfo(String routes) {
-				log.info("监听路由配置信息，开始同步路由配置：{}", routes);
 				String routeDefinitionLock = RedisKeyUtils.getRouteDefinitionLock();
 				long threadId = Thread.currentThread().threadId();
-				reactiveRedisUtils.tryLock(routeDefinitionLock, threadId, 3, 30, syncRouter(getRoutes(routes)))
-					.timeout(Duration.ofSeconds(15))
-					.block(Duration.ofSeconds(20));
+				reactiveRedisUtils.lock(routeDefinitionLock, threadId, 3, TimeUnit.SECONDS.toMillis(30), () -> {
+					log.info("监听路由配置信息，开始同步路由配置：{}", routes);
+					return syncRouter(getRoutes(routes));
+				}).timeout(Duration.ofSeconds(15)).block(Duration.ofSeconds(20));
 			}
 		});
 	}

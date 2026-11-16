@@ -97,6 +97,13 @@ public final class UserUtils {
 	}
 
 	/**
+	 * 租户编码
+	 */
+	public static String getTenantCode() {
+		return principal().getTenantCode();
+	}
+
+	/**
 	 * 认证上下文.
 	 * @return Authentication
 	 */

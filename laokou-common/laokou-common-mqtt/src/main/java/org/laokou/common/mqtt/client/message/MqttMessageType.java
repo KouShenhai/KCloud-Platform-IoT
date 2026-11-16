@@ -33,29 +33,6 @@ import java.util.regex.Matcher;
 @Getter
 public enum MqttMessageType {
 
-	DOWN_COMMAND_GATEWAY_MESSAGE("down_command_gateway_message", "网关指令【下发】") {
-		@Override
-		public String getTopic() {
-			return "down/+/+/command";
-		}
-
-		@Override
-		public String getMqTopic() {
-			return "iot-down-command-gateway-message";
-		}
-
-		@Override
-		MqttQoS getMqttQos() {
-			return MqttQoS.AT_LEAST_ONCE;
-		}
-
-		@Override
-		public int getNumPartitions() {
-			return 1;
-		}
-
-	},
-
 	UP_COMMAND_REPLY_GATEWAY_MESSAGE("up_command_reply_gateway_message", "网关指令回复【上行】") {
 		@Override
 		public String getTopic() {
@@ -64,7 +41,7 @@ public enum MqttMessageType {
 
 		@Override
 		public String getMqTopic() {
-			return "iot-up-command-reply-gateway-message";
+			return UP_COMMAND_REPLY_GATEWAY_MESSAGE_TOPIC;
 		}
 
 		@Override
@@ -74,7 +51,7 @@ public enum MqttMessageType {
 
 		@Override
 		public int getNumPartitions() {
-			return 1;
+			return 2;
 		}
 
 	},
@@ -194,7 +171,7 @@ public enum MqttMessageType {
 
 	},
 
-	UP_REPORT_PROPERTIES_GATEWAY_MESSAGE("up_report_properties_gateway_message", "上报设备属性【上行】") {
+	UP_REPORT_PROPERTIES_GATEWAY_MESSAGE("up_report_properties_gateway_message", "上报网关属性【上行】") {
 		@Override
 		public String getTopic() {
 			return "up/+/+/properties/report";
@@ -293,5 +270,7 @@ public enum MqttMessageType {
 	public static final String UP_REPORT_PROPERTIES_DEVICE_MESSAGE_TOPIC = "iot-up-report-properties-device-message";
 
 	public static final String UP_REPORT_PROPERTIES_GATEWAY_MESSAGE_TOPIC = "iot-up-report-properties-gateway-message";
+
+	public static final String UP_COMMAND_REPLY_GATEWAY_MESSAGE_TOPIC = "iot-up-command-reply-gateway-message";
 
 }

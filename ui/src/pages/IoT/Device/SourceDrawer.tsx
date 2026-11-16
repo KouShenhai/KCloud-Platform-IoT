@@ -47,6 +47,7 @@ export const SourceDrawer = (props: SourceDrawerProps) => {
 			autoFocusFirstInput
 			drawerProps={{
 				destroyOnClose: true,
+				closable: false,
 				maskClosable: false,
 			}}
 			onFinish={async (values) => {

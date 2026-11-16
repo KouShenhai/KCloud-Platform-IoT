@@ -49,7 +49,7 @@ import java.util.Set;
 		isGetterVisibility = JsonAutoDetect.Visibility.NONE, creatorVisibility = JsonAutoDetect.Visibility.NONE)
 public record UserExtDetails(Long id, String username, String password, String avatar, Boolean superAdmin,
 		Integer status, String mail, String mobile, Long tenantId, Long deptId, Set<String> permissions,
-		Set<Long> deptIds, Long creator) implements Serializable {
+		Set<Long> deptIds, Long creator, String tenantCode) implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 3319752558160144611L;

@@ -15,35 +15,33 @@
  *
  */
 
-package org.laokou.common.mqtt.client.listener;
+package org.laokou.auth.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.pulsar.client.api.MessageId;
-import org.laokou.common.mqtt.client.message.MqttMessageType;
+import org.laokou.auth.gateway.TenantGateway;
+import org.laokou.auth.model.entity.UserE;
+import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.tenant.mapper.TenantDO;
+import org.laokou.common.tenant.mapper.TenantMapper;
 import org.springframework.stereotype.Component;
 
-import java.util.concurrent.CompletableFuture;
-
 /**
- * 网关消息【下发】处理器.
+ * 租户.
  *
  * @author laokou
  */
 @Slf4j
 @Component
 @RequiredArgsConstructor
-final class DownCommandGatewayMessageListener implements MessageListener {
+public class TenantGatewayImpl implements TenantGateway {
+
+	private final TenantMapper tenantMapper;
 
 	@Override
-	public CompletableFuture<MessageId> onMessage(MqttMessage message) {
-		log.info("【Netty-MQTT-Client】 => 网关消息【下发】处理器，接收主题【{}】消息", message.topic());
-		return CompletableFuture.completedFuture(null);
-	}
-
-	@Override
-	public MqttMessageType getMessageType() {
-		return MqttMessageType.DOWN_COMMAND_GATEWAY_MESSAGE;
+	public String getTenantCode(UserE userE) {
+		TenantDO tenantDO = tenantMapper.selectById(userE.getTenantId());
+		return ObjectUtils.isNotNull(tenantDO) ? tenantDO.getCode() : null;
 	}
 
 }

@@ -23,10 +23,12 @@ import org.apache.pulsar.client.api.PulsarClientException;
 import org.apache.pulsar.client.api.SubscriptionType;
 import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.config.SystemSettingsProperties;
+import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.fory.constant.ForyConstants;
 import org.laokou.common.mqtt.client.MqttClientManager;
 import org.laokou.common.mqtt.client.MqttEventLoop;
 import org.laokou.common.mqtt.client.MqttForyFactory;
+import org.laokou.common.mqtt.client.SpringMqttClientProperties;
 import org.laokou.iot.device.gatewayimpl.mcp.DeviceMcpMapper;
 import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -48,6 +50,11 @@ public class IotConfig {
 				ForyConstants.C_244);
 		MqttForyFactory.INSTANCE.register(org.laokou.common.mqtt.client.message.UpReportPropertiesDeviceMessage.class,
 				ForyConstants.C_245);
+		MqttForyFactory.INSTANCE.register(org.laokou.common.mqtt.client.message.DownCommandGatewayMessage.class,
+				ForyConstants.C_246);
+		MqttForyFactory.INSTANCE.register(org.laokou.common.mqtt.client.message.UpCommandReplyGatewayMessage.class,
+				ForyConstants.C_247);
+		ForyFactory.INSTANCE.register(org.laokou.iot.gateway.dto.event.GatewayCommandEvent.class, ForyConstants.C_248);
 	}
 
 	@Bean
@@ -70,8 +77,8 @@ public class IotConfig {
 	}
 
 	@Bean(destroyMethod = "close")
-	MqttEventLoop mqttEventLoop() {
-		return new MqttEventLoop(32);
+	MqttEventLoop mqttEventLoop(SpringMqttClientProperties springMqttClientProperties) {
+		return new MqttEventLoop(springMqttClientProperties);
 	}
 
 	/**

@@ -17,13 +17,28 @@
 
 package org.laokou.iot.gateway.convertor;
 
+import org.laokou.common.context.util.UserUtils;
+import org.laokou.common.core.util.MapUtils;
+import org.laokou.common.fory.util.ForyJsonUtils;
+import org.laokou.iot.gateway.dto.event.GatewayCommandEvent;
+import org.laokou.common.mqtt.client.message.DownCommandGatewayMessage;
+import org.laokou.iot.device.gatewayimpl.database.dataobject.DeviceDO;
 import org.laokou.iot.gateway.dto.clientobject.GatewayCO;
+import org.laokou.iot.gateway.dto.clientobject.GatewayCommandCO;
+import org.laokou.iot.gateway.dto.clientobject.GatewayPropertiesCO;
 import org.laokou.iot.gateway.factory.GatewayDomainFactory;
+import org.laokou.iot.gateway.gatewayimpl.database.dataobject.GatewayCommandDO;
 import org.laokou.iot.gateway.gatewayimpl.database.dataobject.GatewayDO;
 import org.laokou.iot.gateway.model.GatewayA;
+import org.laokou.iot.gateway.model.GatewayCommandA;
+import org.laokou.iot.gateway.model.entity.GatewayCommandE;
 import org.laokou.iot.gateway.model.entity.GatewayE;
+import org.laokou.iot.gateway.model.enums.Status;
+import org.springframework.util.StringUtils;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -45,6 +60,82 @@ public final class GatewayConvertor {
 		gatewayDO.setSessionId(gatewayE.getSessionId());
 		gatewayDO.setRemark(gatewayE.getRemark());
 		return gatewayDO;
+	}
+
+	public static GatewayCommandE toEntity(GatewayDO gatewayDO, DeviceDO deviceDO, String command,
+			Map<String, Object> param) {
+		return GatewayDomainFactory.createGatewayCommandE()
+			.toBuilder()
+			.gatewaySn(gatewayDO.getSn())
+			.gatewayId(gatewayDO.getId())
+			.command(command)
+			.param(MapUtils.isEmpty(param) ? null : ForyJsonUtils.toJsonStr(param))
+			.deviceId(deviceDO != null ? deviceDO.getId() : null)
+			.deviceName(deviceDO != null ? deviceDO.getName() : null)
+			.deviceSn(deviceDO != null ? deviceDO.getSn() : null)
+			.topic(String.format("down/%s/%s/command", UserUtils.getTenantCode(), gatewayDO.getSn()))
+			.status(Status.PENDING.getCode())
+			.sessionId(gatewayDO.getSessionId())
+			.build();
+	}
+
+	public static DownCommandGatewayMessage toMessage(GatewayCommandEvent event) {
+		DownCommandGatewayMessage downCommandGatewayMessage = new DownCommandGatewayMessage();
+		downCommandGatewayMessage.setCommand(event.getCommand());
+		downCommandGatewayMessage.setParam(event.getParam());
+		downCommandGatewayMessage.setDeviceName(event.getDeviceName());
+		downCommandGatewayMessage.setGatewaySn(event.getGatewaySn());
+		downCommandGatewayMessage.setDeviceSn(event.getDeviceSn());
+		downCommandGatewayMessage.setTimestamp(System.currentTimeMillis());
+		downCommandGatewayMessage.setRequestId(event.getCommandId());
+		downCommandGatewayMessage.setTenantCode(event.getTenantCode());
+		return downCommandGatewayMessage;
+	}
+
+	public static GatewayCommandEvent toEvent(GatewayCommandDO gatewayCommandDO) {
+		GatewayCommandEvent gatewayCommandEvent = new GatewayCommandEvent();
+		gatewayCommandEvent.setCommandId(gatewayCommandDO.getId());
+		gatewayCommandEvent.setGatewaySn(gatewayCommandDO.getGatewaySn());
+		gatewayCommandEvent.setDeviceName(gatewayCommandDO.getDeviceName());
+		gatewayCommandEvent.setDeviceSn(gatewayCommandDO.getDeviceSn());
+		gatewayCommandEvent.setParam(StringUtils.hasText(gatewayCommandDO.getParam())
+				? ForyJsonUtils.toBean(gatewayCommandDO.getParam(), Map.class) : Collections.EMPTY_MAP);
+		gatewayCommandEvent.setCommand(gatewayCommandDO.getCommand());
+		gatewayCommandEvent.setTopic(gatewayCommandDO.getTopic());
+		gatewayCommandEvent.setTenantCode(UserUtils.getTenantCode());
+		gatewayCommandEvent.setSessionId(gatewayCommandDO.getSessionId());
+		return gatewayCommandEvent;
+	}
+
+	public static GatewayCommandDO toDataObject(GatewayCommandA gatewayCommandA) {
+		GatewayCommandDO gatewayCommandDO = new GatewayCommandDO();
+		GatewayCommandE gatewayCommandE = gatewayCommandA.getGatewayCommandE();
+		gatewayCommandDO.setId(gatewayCommandA.getId());
+		gatewayCommandDO.setGatewaySn(gatewayCommandE.getGatewaySn());
+		gatewayCommandDO.setGatewayId(gatewayCommandE.getGatewayId());
+		gatewayCommandDO.setDeviceId(gatewayCommandE.getDeviceId());
+		gatewayCommandDO.setDeviceName(gatewayCommandE.getDeviceName());
+		gatewayCommandDO.setDeviceSn(gatewayCommandE.getDeviceSn());
+		gatewayCommandDO.setTopic(gatewayCommandE.getTopic());
+		gatewayCommandDO.setStatus(gatewayCommandE.getStatus());
+		gatewayCommandDO.setParam(gatewayCommandE.getParam());
+		gatewayCommandDO.setCommand(gatewayCommandE.getCommand());
+		gatewayCommandDO.setCreateTime(gatewayCommandA.getCreateTime());
+		gatewayCommandDO.setSessionId(gatewayCommandE.getSessionId());
+		return gatewayCommandDO;
+	}
+
+	public static GatewayPropertiesCO toClientObject(GatewayDO gatewayDO, Object obj1, Object obj2) {
+		GatewayPropertiesCO gatewayPropertiesCO = new GatewayPropertiesCO();
+		gatewayPropertiesCO.setSn(gatewayDO.getSn());
+		gatewayPropertiesCO.setName(gatewayDO.getName());
+		if (obj1 instanceof String str) {
+			gatewayPropertiesCO.setTimestamp(Long.parseLong(str));
+		}
+		if (obj2 instanceof String str) {
+			gatewayPropertiesCO.setProperties(ForyJsonUtils.toBean(str, Map.class));
+		}
+		return gatewayPropertiesCO;
 	}
 
 	public static List<GatewayCO> toClientObjects(List<GatewayDO> list) {
@@ -71,6 +162,33 @@ public final class GatewayConvertor {
 			.sessionId(gatewayCO.getSessionId())
 			.remark(gatewayCO.getRemark())
 			.build();
+	}
+
+	public static List<GatewayCommandCO> toClientObjectList(List<GatewayCommandDO> list) {
+		return list.stream().map(GatewayConvertor::toClientObject).toList();
+	}
+
+	public static GatewayCommandCO toClientObject(GatewayCommandDO gatewayCommandDO) {
+		GatewayCommandCO gatewayCommandCO = new GatewayCommandCO();
+		gatewayCommandCO.setId(gatewayCommandDO.getId());
+		gatewayCommandCO.setCreateTime(gatewayCommandDO.getCreateTime());
+		gatewayCommandCO.setSessionId(gatewayCommandDO.getSessionId());
+		gatewayCommandCO.setGatewayId(gatewayCommandDO.getGatewayId());
+		gatewayCommandCO.setGatewaySn(gatewayCommandDO.getGatewaySn());
+		gatewayCommandCO.setCommand(gatewayCommandDO.getCommand());
+		gatewayCommandCO.setTopic(gatewayCommandDO.getTopic());
+		gatewayCommandCO.setDeviceId(gatewayCommandDO.getDeviceId());
+		gatewayCommandCO.setDeviceSn(gatewayCommandDO.getDeviceSn());
+		gatewayCommandCO.setDeviceName(gatewayCommandDO.getDeviceName());
+		gatewayCommandCO.setParam(gatewayCommandDO.getParam());
+		gatewayCommandCO.setErrorMessage(gatewayCommandDO.getErrorMessage());
+		gatewayCommandCO.setStatus(gatewayCommandDO.getStatus());
+		gatewayCommandCO.setReplyPayload(gatewayCommandDO.getReplyPayload());
+		gatewayCommandCO.setReplyStatus(gatewayCommandDO.getReplyStatus());
+		gatewayCommandCO.setDownTime(gatewayCommandDO.getDownTime());
+		gatewayCommandCO.setReplyTime(gatewayCommandDO.getReplyTime());
+		gatewayCommandCO.setReplyMessage(gatewayCommandDO.getReplyMessage());
+		return gatewayCommandCO;
 	}
 
 }

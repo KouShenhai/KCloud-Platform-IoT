@@ -23,6 +23,8 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
+import io.netty.channel.epoll.Epoll;
+import io.netty.channel.epoll.EpollSocketChannel;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.channel.uring.IoUring;
@@ -59,6 +61,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
@@ -89,6 +92,8 @@ public final class NettyMqttClient implements MqttClient {
 
 	private final List<MessageListener> listeners;
 
+	private final AtomicLong receivedDeviceMsgCount;
+
 	public NettyMqttClient(MqttClientProperties properties, MqttEventLoop mqttEventLoop,
 			List<MessageListener> listeners) {
 		this.state = new AtomicReference<>(ClientState.DISCONNECTED);
@@ -99,6 +104,7 @@ public final class NettyMqttClient implements MqttClient {
 		this.properties = properties;
 		this.mqttEventLoop = mqttEventLoop;
 		this.listeners = listeners;
+		this.receivedDeviceMsgCount = new AtomicLong(0);
 	}
 
 	@Override
@@ -122,16 +128,14 @@ public final class NettyMqttClient implements MqttClient {
 		this.state.set(ClientState.CLOSED);
 		cancelReconnectTask();
 		clearInflight();
-		if (this.ch != null) {
-			this.ch.close();
-		}
+		closeChannel();
 		this.timer.stop();
 	}
 
 	@Override
 	public void publish(String topic, byte[] payload, MqttQoS qos) {
 		if (state.get() != ClientState.CONNECTED || this.ch == null || !this.ch.isActive()) {
-			throw new BizException("MQTT client is not connected");
+			throw new BizException("B_MQTT_ClientNotConnected", "MQTT client is not connected");
 		}
 		if (qos == MqttQoS.AT_MOST_ONCE) {
 			if (this.state.get() != ClientState.CONNECTED) {
@@ -145,7 +149,7 @@ public final class NettyMqttClient implements MqttClient {
 			// 写入缓存
 			boolean ok = inflightStore.putIfAbsent(msg);
 			if (!ok) {
-				throw new BizException("Message is in inflight state");
+				throw new BizException("B_MQTT_MessageInflightState", "Message is in inflight state");
 			}
 			writePublish(topic, msg.getPayload(), qos, packetId, false, _ -> handleDisconnect());
 		}
@@ -220,10 +224,10 @@ public final class NettyMqttClient implements MqttClient {
 					ch.pipeline()
 						.addLast("mqttEncoder", MqttEncoder.INSTANCE)
 						.addLast("mqttDecoder", new MqttDecoder(properties.getMaxBytesInMessage()))
-						// 写空闲 keepAlive * 0.5 发心跳，读空闲 keepAlive * 1.5 还没收到任何报文 → 判定死亡
+						// 读空闲 keepAlive * 1.5 还没收到任何报文 → 判定死亡
 						.addLast("idleStateHandler",
-								new IdleStateHandler((long) (1.5 * properties.getKeepAliveTimeSeconds()),
-										(long) (0.5 * properties.getKeepAliveTimeSeconds()), 0, TimeUnit.SECONDS))
+								new IdleStateHandler((long) (1.5 * properties.getKeepAliveTimeSeconds()), 0, 0,
+										TimeUnit.SECONDS))
 						.addLast("nettyMqttHandler", new MqttClientHandler(NettyMqttClient.this));
 				}
 			});
@@ -328,19 +332,23 @@ public final class NettyMqttClient implements MqttClient {
 	}
 
 	private Class<? extends SocketChannel> getChannel() {
-		if (isIoUringAvailable()) {
+		if (SystemUtils.isLinux() && IoUring.isAvailable()) {
 			log.info("Use IoUringSocketChannel");
 			return IoUringSocketChannel.class;
+		}
+		if (SystemUtils.isLinux() && Epoll.isAvailable()) {
+			log.info("Use EpollSocketChannel");
+			return EpollSocketChannel.class;
 		}
 		log.info("Use NioSocketChannel");
 		return NioSocketChannel.class;
 	}
 
-	private boolean isIoUringAvailable() {
-		if (SystemUtils.isLinux()) {
-			return IoUring.isAvailable();
+	private void closeChannel() {
+		if (this.ch != null) {
+			this.ch.close();
+			this.ch = null;
 		}
-		return false;
 	}
 
 }

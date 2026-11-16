@@ -358,6 +358,13 @@ declare namespace API {
 		co?: GatewayCO;
 	};
 
+	type DownGatewayCommandCmd = {
+		gatewayId?: number;
+		deviceId?: number;
+		command?: string;
+		param?: Record<string, any>;
+	};
+
 	type GatewayPageQry = {
 		pageNum?: number;
 		pageSize?: number;

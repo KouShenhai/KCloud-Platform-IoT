@@ -29,11 +29,16 @@ import org.laokou.iot.gateway.api.GatewaysServiceI;
 import org.laokou.iot.gateway.dto.GatewayExportCmd;
 import org.laokou.iot.gateway.dto.GatewayGetQry;
 import org.laokou.iot.gateway.dto.GatewayImportCmd;
+import org.laokou.iot.gateway.dto.GatewayDownCommandCmd;
 import org.laokou.iot.gateway.dto.GatewayModifyCmd;
 import org.laokou.iot.gateway.dto.GatewayPageQry;
+import org.laokou.iot.gateway.dto.GatewayCommandPageQry;
+import org.laokou.iot.gateway.dto.clientobject.GatewayCommandCO;
+import org.laokou.iot.gateway.dto.GatewayPropertiesGetQry;
 import org.laokou.iot.gateway.dto.GatewayRemoveCmd;
 import org.laokou.iot.gateway.dto.GatewaySaveCmd;
 import org.laokou.iot.gateway.dto.clientobject.GatewayCO;
+import org.laokou.iot.gateway.dto.clientobject.GatewayPropertiesCO;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -115,6 +120,49 @@ public class GatewaysController {
 	@Operation(summary = "查看网关详情", description = "查看网关详情")
 	public Result<GatewayCO> getGatewayById(@PathVariable Long id) {
 		return gatewaysServiceI.getGatewayById(new GatewayGetQry(id));
+	}
+
+	@TraceLog
+	@GetMapping("/v1/gateways/{id}/properties")
+	@PreAuthorize("hasAuthority('read') and hasAuthority('iot:gateway:preview')")
+	@Operation(summary = "查看网关属性", description = "查看网关属性")
+	public Result<GatewayPropertiesCO> getGatewayPropertiesById(@PathVariable Long id) {
+		return gatewaysServiceI.getGatewayPropertiesById(new GatewayPropertiesGetQry(id));
+	}
+
+	@Idempotent
+	@PostMapping("/v1/gateways/commands/reboot-gateway-command")
+	@PreAuthorize("hasAuthority('write') and hasAuthority('iot:gateway:reboot-gateway-command')")
+	@OperateLog(module = "网关管理", operation = "下发重启网关指令")
+	@Operation(summary = "下发重启网关指令", description = "下发重启网关指令")
+	public void downRebootGatewayCommand(@Validated @RequestBody GatewayDownCommandCmd cmd) {
+		gatewaysServiceI.downGatewayCommand(cmd);
+	}
+
+	@Idempotent
+	@PostMapping("/v1/gateways/commands/read-device-properties-command")
+	@PreAuthorize("hasAuthority('write') and hasAuthority('iot:gateway:read-device-properties-command')")
+	@OperateLog(module = "网关管理", operation = "下发读取设备属性指令")
+	@Operation(summary = "下发读取设备属性指令", description = "下发读取设备属性指令")
+	public void downReadDevicePropertiesCommand(@Validated @RequestBody GatewayDownCommandCmd cmd) {
+		gatewaysServiceI.downGatewayCommand(cmd);
+	}
+
+	@Idempotent
+	@PostMapping("/v1/gateways/commands/write-device-properties-command")
+	@PreAuthorize("hasAuthority('write') and hasAuthority('iot:gateway:write-device-properties-command')")
+	@OperateLog(module = "网关管理", operation = "下发写入设备属性指令")
+	@Operation(summary = "下发写入设备属性指令", description = "下发写入设备属性指令")
+	public void downWriteDevicePropertiesCommand(@Validated @RequestBody GatewayDownCommandCmd cmd) {
+		gatewaysServiceI.downGatewayCommand(cmd);
+	}
+
+	@TraceLog
+	@PostMapping("/v1/gateways/commands/page")
+	@PreAuthorize("hasAuthority('read') and hasAuthority('iot:gateway:page-command')")
+	@Operation(summary = "分页查询网关指令列表", description = "分页查询网关指令列表")
+	public Result<Page<GatewayCommandCO>> pageGatewayCommand(@Validated @RequestBody GatewayCommandPageQry qry) {
+		return gatewaysServiceI.pageGatewayCommand(qry);
 	}
 
 }

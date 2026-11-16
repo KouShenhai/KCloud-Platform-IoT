@@ -78,7 +78,7 @@ image:doc/image/img.png[COLA架构图,400,400,align=center]
 |image:doc/image/project/9.png[物模型页面]    |image:doc/image/project/10.png[产品类别页面]
 |image:doc/image/project/11.png[国际化菜单页面]    |image:doc/image/project/12.png[API文档页面]
 |image:doc/image/project/13.png[数据字典页面]    |image:doc/image/project/14.png[数据源页面]
-|image:doc/image/project/15.png[会话页面]    |
+|image:doc/image/project/15.png[会话页面]    |image:doc/image/project/16.png[网关页面]
 |===
 
 === 🌿 服务器配置
@@ -147,6 +147,8 @@ https://docs.qq.com/sheet/DUGhCdGVZWmVxT0VJ[开发计划（需要登录）]
 
 🚀 会话管理【查询/保存/修改/删除/查看/开启/关闭】
 
+🚀 网关管理【查询/保存/修改/删除/查看/预览/重启】
+
 === 💡 系统架构
 
 image::doc/image/老寇IoT云平台架构图.png[架构图,align=center]
@@ -176,7 +178,7 @@ image::doc/image/老寇IoT云平台业务架构图.png[架构图,align=center]
 |Elasticsearch               |9.5.6
 |Netty                       |4.2.20.Final
 |Kafka                       |4.3.1
-|Pulsar                      |4.2.4
+|Pulsar                      |5.0.1
 |EMQX                        |5.8.8
 |TimescaleDB                 |17
 |TDengine                    |3.3.6.13

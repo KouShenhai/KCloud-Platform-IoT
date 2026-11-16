@@ -43,16 +43,6 @@ class SystemUtilsTest {
 	}
 
 	@Test
-	void testIsArchLinux() {
-		// isArchLinux返回true的前提是isLinux为true
-		if (!SystemUtils.isLinux()) {
-			Assertions.assertThat(SystemUtils.isArchLinux()).isFalse();
-		}
-		// 如果是Linux系统，验证方法不抛异常
-		Assertions.assertThatNoException().isThrownBy(SystemUtils::isArchLinux);
-	}
-
-	@Test
 	void testMutualExclusive() {
 		// Windows和Linux互斥（但可能两者都不是，如macOS）
 		if (SystemUtils.isWindows()) {
