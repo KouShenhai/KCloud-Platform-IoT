@@ -109,7 +109,7 @@ public class GatewayCommandCO extends ClientObject {
 	/**
 	 * 指令下发时间.
 	 */
-	private Instant dispatchTime;
+	private Instant downTime;
 
 	/**
 	 * 指令回复时间.

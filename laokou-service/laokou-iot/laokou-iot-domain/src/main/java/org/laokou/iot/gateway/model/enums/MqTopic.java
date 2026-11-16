@@ -15,25 +15,43 @@
  *
  */
 
-package org.laokou.iot.gateway.dto;
+package org.laokou.iot.gateway.model.enums;
 
-import lombok.Data;
-import org.laokou.common.i18n.dto.CommonCommand;
-
-import java.util.Map;
+import lombok.Getter;
 
 /**
+ * mq枚举.
+ *
  * @author laokou
  */
-@Data
-public class GatewayDispatchCommandCmd extends CommonCommand {
+@Getter
+public enum MqTopic {
 
-	private Long gatewayId;
+	DOWN_COMMAND_GATEWAY_MESSAGE("down_command_gateway_message", "下发指令网关消息") {
+		@Override
+		public String getTopic() {
+			return DOWN_COMMAND_GATEWAY_MESSAGE_TOPIC;
+		}
 
-	private Long deviceId;
+		@Override
+		public int getNumPartitions() {
+			return 2;
+		}
+	};
 
-	private String command;
+	private final String code;
 
-	private Map<String, Object> param;
+	private final String desc;
+
+	MqTopic(String code, String desc) {
+		this.code = code;
+		this.desc = desc;
+	}
+
+	public abstract String getTopic();
+
+	public abstract int getNumPartitions();
+
+	public static final String DOWN_COMMAND_GATEWAY_MESSAGE_TOPIC = "iot-down-command-gateway-message";
 
 }

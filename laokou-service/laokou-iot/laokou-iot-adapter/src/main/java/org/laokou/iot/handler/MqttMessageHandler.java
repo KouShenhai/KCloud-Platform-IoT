@@ -19,17 +19,21 @@ package org.laokou.iot.handler;
 
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import io.netty.handler.codec.mqtt.MqttQoS;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.pulsar.client.api.SubscriptionType;
 import org.apache.pulsar.common.schema.SchemaType;
 import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.util.MapUtils;
+import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.fory.util.ForyJsonUtils;
 import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.laokou.common.i18n.util.ResourceExtUtils;
+import org.laokou.iot.gateway.dto.event.GatewayCommandEvent;
+import org.laokou.common.mqtt.client.MqttClientManager;
 import org.laokou.common.mqtt.client.MqttForyFactory;
 import org.laokou.common.mqtt.client.message.MqttMessageType;
 import org.laokou.common.mqtt.client.message.UpCommandReplyGatewayMessage;
@@ -38,20 +42,25 @@ import org.laokou.common.mqtt.client.message.UpReportPropertiesGatewayMessage;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.laokou.common.redis.util.RedisUtils;
 import org.laokou.common.tenant.constant.DSConstants;
+import org.laokou.iot.gateway.convertor.GatewayConvertor;
 import org.laokou.iot.gateway.gatewayimpl.database.GatewayCommandMapper;
 import org.laokou.iot.gateway.gatewayimpl.database.dataobject.GatewayCommandDO;
+import org.laokou.iot.gateway.model.enums.MqTopic;
 import org.laokou.iot.gateway.model.enums.ReplyStatus;
+import org.laokou.iot.gateway.model.enums.Status;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.pulsar.annotation.PulsarListener;
 import org.springframework.pulsar.annotation.PulsarListeners;
 import org.springframework.pulsar.listener.AckMode;
 import org.springframework.pulsar.listener.Acknowledgement;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author laokou
@@ -68,14 +77,58 @@ public final class MqttMessageHandler {
 
 	private final TransactionalUtils transactionalUtils;
 
+	private final MqttClientManager mqttClientManager;
+
 	public MqttMessageHandler(RedisUtils redisUtils, GatewayCommandMapper gatewayCommandMapper,
-			TransactionalUtils transactionalUtils) throws IOException {
+			TransactionalUtils transactionalUtils, MqttClientManager mqttClientManager) throws IOException {
 		this.redisUtils = redisUtils;
 		this.gatewayCommandMapper = gatewayCommandMapper;
 		this.transactionalUtils = transactionalUtils;
+		this.mqttClientManager = mqttClientManager;
 		this.script = new DefaultRedisScript<>(
 				ResourceExtUtils.getResource("lua/set_properties.lua").getContentAsString(StandardCharsets.UTF_8),
 				Long.class);
+	}
+
+	// @formatter:off
+	@PulsarListeners(value = {
+		@PulsarListener(
+			topics = "persistent://${system-settings.tenant-code}/gateway/" + MqTopic.DOWN_COMMAND_GATEWAY_MESSAGE_TOPIC,
+			subscriptionName = "${system-settings.tenant-code}",
+			schemaType = SchemaType.BYTES,
+			ackMode = AckMode.MANUAL,
+			subscriptionType = SubscriptionType.Shared
+		)
+	})
+	// @formatter:on
+	public void handleDownCommandGatewayMessage(byte[] msg, Acknowledgement ack) {
+		try {
+			DynamicDataSourceContextHolder.push(DSConstants.IOT);
+			if (ForyFactory.INSTANCE.deserialize(msg) instanceof GatewayCommandEvent event) {
+				AtomicReference<String> errorMsg = new AtomicReference<>("");
+				try {
+					mqttClientManager.publish(event.getSessionId(), event.getTopic(),
+							MqttForyFactory.INSTANCE.serialize(GatewayConvertor.toMessage(event)),
+							MqttQoS.AT_LEAST_ONCE);
+				}
+				catch (Exception ex) {
+					log.error("发布MQTT消息失败，错误信息：{}", ex.getMessage(), ex);
+					errorMsg.set(ex.getMessage());
+				}
+				finally {
+					transactionalUtils.executeInTransaction(() -> updateGatewayCommand(errorMsg.get(),
+							event.getCommandId(), gatewayCommandMapper.selectVersion(event.getCommandId())));
+				}
+			}
+			ack.acknowledge();
+		}
+		catch (Exception ex) {
+			log.error("handleDownCommandGatewayMessage error", ex);
+			ack.nack();
+		}
+		finally {
+			DynamicDataSourceContextHolder.clear();
+		}
 	}
 
 	// @formatter:off
@@ -174,6 +227,17 @@ public final class MqttMessageHandler {
 			.set(GatewayCommandDO::getReplyMessage, upCommandReplyGatewayMessage.getMessage())
 			.set(GatewayCommandDO::getVersion, version + 1)
 			.eq(GatewayCommandDO::getId, upCommandReplyGatewayMessage.getRequestId())
+			.eq(GatewayCommandDO::getVersion, version));
+	}
+
+	private void updateGatewayCommand(String errorMsg, Long commandId, Integer version) {
+		gatewayCommandMapper.update(Wrappers.lambdaUpdate(GatewayCommandDO.class)
+			.set(GatewayCommandDO::getErrorMessage, errorMsg)
+			.set(GatewayCommandDO::getDownTime, InstantUtils.now())
+			.set(GatewayCommandDO::getStatus,
+					StringUtils.hasText(errorMsg) ? Status.FAILURE.getCode() : Status.SUCCESS.getCode())
+			.set(GatewayCommandDO::getVersion, version + 1)
+			.eq(GatewayCommandDO::getId, commandId)
 			.eq(GatewayCommandDO::getVersion, version));
 	}
 

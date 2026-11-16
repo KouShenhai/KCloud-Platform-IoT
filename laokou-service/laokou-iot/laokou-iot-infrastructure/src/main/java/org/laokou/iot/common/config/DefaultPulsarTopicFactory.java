@@ -79,6 +79,9 @@ final class DefaultPulsarTopicFactory implements PulsarTopicFactory {
 		for (MqTopic mqTopic : MqTopic.values()) {
 			createTopic(topics, sessionNamespace, mqTopic.getTopic(), mqTopic.getNumPartitions());
 		}
+		for (org.laokou.iot.gateway.model.enums.MqTopic mqTopic : org.laokou.iot.gateway.model.enums.MqTopic.values()) {
+			createTopic(topics, gatewayNamespace, mqTopic.getTopic(), mqTopic.getNumPartitions());
+		}
 	}
 
 	private void createTopic(Topics topics, String namespace, String mqTopic, int numPartitions)

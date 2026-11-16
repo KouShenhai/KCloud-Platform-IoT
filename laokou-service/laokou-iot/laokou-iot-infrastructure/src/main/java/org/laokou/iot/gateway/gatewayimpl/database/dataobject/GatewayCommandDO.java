@@ -102,7 +102,7 @@ public class GatewayCommandDO extends BaseDO {
 	/**
 	 * 指令下发时间.
 	 */
-	private Instant dispatchTime;
+	private Instant downTime;
 
 	/**
 	 * 指令回复时间.

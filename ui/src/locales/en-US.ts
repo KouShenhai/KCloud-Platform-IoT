@@ -313,7 +313,7 @@ export default {
 	'iot.gateway.command.status.0': 'Pending',
 	'iot.gateway.command.status.1': 'Succeeded',
 	'iot.gateway.command.status.2': 'Failed',
-	'iot.gateway.command.dispatchTime': 'Dispatch time',
+	'iot.gateway.command.downTime': 'Down time',
 	'iot.gateway.command.replyTime': 'Reply time',
 	'iot.gateway.command.topic': 'Topic',
 	'iot.gateway.command.param': 'Parameters',

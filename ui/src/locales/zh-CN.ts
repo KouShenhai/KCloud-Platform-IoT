@@ -313,7 +313,7 @@ export default {
 	'iot.gateway.command.status.0': '待处理',
 	'iot.gateway.command.status.1': '成功',
 	'iot.gateway.command.status.2': '失败',
-	'iot.gateway.command.dispatchTime': '下发时间',
+	'iot.gateway.command.downTime': '下发时间',
 	'iot.gateway.command.replyTime': '回复时间',
 	'iot.gateway.command.topic': '主题',
 	'iot.gateway.command.param': '指令参数',

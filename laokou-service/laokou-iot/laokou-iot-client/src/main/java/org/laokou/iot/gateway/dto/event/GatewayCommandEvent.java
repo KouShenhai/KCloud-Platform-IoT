@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.mqtt.client;
+package org.laokou.iot.gateway.dto.event;
 
 import lombok.Data;
 

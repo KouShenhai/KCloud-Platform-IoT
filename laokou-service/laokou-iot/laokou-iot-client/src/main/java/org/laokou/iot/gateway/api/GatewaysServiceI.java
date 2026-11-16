@@ -22,7 +22,7 @@ import org.laokou.common.i18n.dto.Result;
 import org.laokou.iot.gateway.dto.GatewayExportCmd;
 import org.laokou.iot.gateway.dto.GatewayGetQry;
 import org.laokou.iot.gateway.dto.GatewayImportCmd;
-import org.laokou.iot.gateway.dto.GatewayDispatchCommandCmd;
+import org.laokou.iot.gateway.dto.GatewayDownCommandCmd;
 import org.laokou.iot.gateway.dto.GatewayModifyCmd;
 import org.laokou.iot.gateway.dto.GatewayPageQry;
 import org.laokou.iot.gateway.dto.GatewayCommandPageQry;
@@ -92,7 +92,7 @@ public interface GatewaysServiceI {
 	/**
 	 * 下发网关指令.
 	 */
-	void dispatchGatewayCommand(GatewayDispatchCommandCmd cmd);
+	void downGatewayCommand(GatewayDownCommandCmd cmd);
 
 	/**
 	 * 分页查询网关指令.

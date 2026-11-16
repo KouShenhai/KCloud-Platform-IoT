@@ -3,7 +3,7 @@ import { GatewayPreviewDrawer } from '@/pages/IoT/Device/GatewayPreviewDrawer';
 import {
 	getGatewayById,
 	pageGateway,
-	rebootGateway,
+	rebootGatewayCommand,
 	removeGateway,
 } from '@/services/iot/gateway';
 import { trim } from '@/utils/format';
@@ -57,7 +57,10 @@ export default () => {
 				rebootModalOpen.current = false;
 			},
 			onOk: async () => {
-				rebootGateway(record.id, rebootRequestId).then(res => {
+				rebootGatewayCommand({
+					gatewayId: record?.id,
+					command: 'reboot_gateway',
+				}, rebootRequestId).then(res => {
 					if (res.code === 'OK') {
 						message.success(t('iot.gateway.reboot.success'));
 					}
@@ -173,7 +176,7 @@ export default () => {
 						{t('iot.gateway.preview.button')}
 					</a>
 				),
-				access.canGatewayRebootCommand &&  (
+				access.canDownRebootGatewayCommand &&  (
 					<a key="reboot" onClick={() => confirmReboot(record)}>
 						{t('iot.gateway.reboot.button')}
 					</a>

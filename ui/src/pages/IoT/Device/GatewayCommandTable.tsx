@@ -77,8 +77,8 @@ export const GatewayCommandTable = ({ id }: { id: GatewayId }) => {
 						width: 100,
 					},
 					{
-						title: t('dispatchTime'),
-						dataIndex: 'dispatchTime',
+						title: t('downTime'),
+						dataIndex: 'downTime',
 						width: 210,
 					},
 					{

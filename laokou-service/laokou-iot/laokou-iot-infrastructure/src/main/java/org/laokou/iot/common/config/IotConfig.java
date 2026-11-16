@@ -23,10 +23,9 @@ import org.apache.pulsar.client.api.PulsarClientException;
 import org.apache.pulsar.client.api.SubscriptionType;
 import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.config.SystemSettingsProperties;
+import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.fory.constant.ForyConstants;
-import org.laokou.common.mqtt.client.GatewayCommandEventHandler;
 import org.laokou.common.mqtt.client.MqttClientManager;
-import org.laokou.common.mqtt.client.MqttDisruptor;
 import org.laokou.common.mqtt.client.MqttEventLoop;
 import org.laokou.common.mqtt.client.MqttForyFactory;
 import org.laokou.common.mqtt.client.SpringMqttClientProperties;
@@ -55,6 +54,7 @@ public class IotConfig {
 				ForyConstants.C_246);
 		MqttForyFactory.INSTANCE.register(org.laokou.common.mqtt.client.message.UpCommandReplyGatewayMessage.class,
 				ForyConstants.C_247);
+		ForyFactory.INSTANCE.register(org.laokou.iot.gateway.dto.event.GatewayCommandEvent.class, ForyConstants.C_248);
 	}
 
 	@Bean
@@ -69,11 +69,6 @@ public class IotConfig {
 			name = "enabled")
 	DeviceMcpMapper deviceMcpMapper0() {
 		return new DeviceMcpMapper(null);
-	}
-
-	@Bean(initMethod = "start", destroyMethod = "close")
-	MqttDisruptor mqttDisruptor(GatewayCommandEventHandler gatewayCommandEventHandler) {
-		return new MqttDisruptor(gatewayCommandEventHandler);
 	}
 
 	@Bean(destroyMethod = "close")

@@ -29,7 +29,7 @@ import org.laokou.iot.gateway.api.GatewaysServiceI;
 import org.laokou.iot.gateway.dto.GatewayExportCmd;
 import org.laokou.iot.gateway.dto.GatewayGetQry;
 import org.laokou.iot.gateway.dto.GatewayImportCmd;
-import org.laokou.iot.gateway.dto.GatewayDispatchCommandCmd;
+import org.laokou.iot.gateway.dto.GatewayDownCommandCmd;
 import org.laokou.iot.gateway.dto.GatewayModifyCmd;
 import org.laokou.iot.gateway.dto.GatewayPageQry;
 import org.laokou.iot.gateway.dto.GatewayCommandPageQry;
@@ -135,8 +135,8 @@ public class GatewaysController {
 	@PreAuthorize("hasAuthority('write') and hasAuthority('iot:gateway:reboot-gateway-command')")
 	@OperateLog(module = "网关管理", operation = "下发重启网关指令")
 	@Operation(summary = "下发重启网关指令", description = "下发重启网关指令")
-	public void dispatchRebootGatewayCommand(@Validated @RequestBody GatewayDispatchCommandCmd cmd) {
-		gatewaysServiceI.dispatchGatewayCommand(cmd);
+	public void downRebootGatewayCommand(@Validated @RequestBody GatewayDownCommandCmd cmd) {
+		gatewaysServiceI.downGatewayCommand(cmd);
 	}
 
 	@Idempotent
@@ -144,8 +144,8 @@ public class GatewaysController {
 	@PreAuthorize("hasAuthority('write') and hasAuthority('iot:gateway:read-device-properties-command')")
 	@OperateLog(module = "网关管理", operation = "下发读取设备属性指令")
 	@Operation(summary = "下发读取设备属性指令", description = "下发读取设备属性指令")
-	public void dispatchReadDevicePropertiesCommand(@Validated @RequestBody GatewayDispatchCommandCmd cmd) {
-		gatewaysServiceI.dispatchGatewayCommand(cmd);
+	public void downReadDevicePropertiesCommand(@Validated @RequestBody GatewayDownCommandCmd cmd) {
+		gatewaysServiceI.downGatewayCommand(cmd);
 	}
 
 	@Idempotent
@@ -153,8 +153,8 @@ public class GatewaysController {
 	@PreAuthorize("hasAuthority('write') and hasAuthority('iot:gateway:write-device-properties-command')")
 	@OperateLog(module = "网关管理", operation = "下发写入设备属性指令")
 	@Operation(summary = "下发写入设备属性指令", description = "下发写入设备属性指令")
-	public void dispatchWriteDevicePropertiesCommand(@Validated @RequestBody GatewayDispatchCommandCmd cmd) {
-		gatewaysServiceI.dispatchGatewayCommand(cmd);
+	public void downWriteDevicePropertiesCommand(@Validated @RequestBody GatewayDownCommandCmd cmd) {
+		gatewaysServiceI.downGatewayCommand(cmd);
 	}
 
 	@TraceLog

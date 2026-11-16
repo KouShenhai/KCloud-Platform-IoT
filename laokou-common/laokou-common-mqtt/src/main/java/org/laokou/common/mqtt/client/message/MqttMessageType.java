@@ -51,7 +51,7 @@ public enum MqttMessageType {
 
 		@Override
 		public int getNumPartitions() {
-			return 1;
+			return 2;
 		}
 
 	},
@@ -171,7 +171,7 @@ public enum MqttMessageType {
 
 	},
 
-	UP_REPORT_PROPERTIES_GATEWAY_MESSAGE("up_report_properties_gateway_message", "上报设备属性【上行】") {
+	UP_REPORT_PROPERTIES_GATEWAY_MESSAGE("up_report_properties_gateway_message", "上报网关属性【上行】") {
 		@Override
 		public String getTopic() {
 			return "up/+/+/properties/report";

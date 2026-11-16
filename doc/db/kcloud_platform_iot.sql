@@ -402,7 +402,7 @@ CREATE TABLE "public"."iot_gateway_command" (
 	"status" int2 NOT NULL DEFAULT 0,
 	"reply_payload" json,
 	"reply_status" int2,
-	"dispatch_time" timestamp(6),
+	"down_time" timestamp(6),
 	"reply_time" timestamp(6),
 	"reply_message" varchar(100)
 )
@@ -425,7 +425,7 @@ COMMENT ON COLUMN "public"."iot_gateway_command"."device_id" IS '设备ID';
 COMMENT ON COLUMN "public"."iot_gateway_command"."device_sn" IS '设备序列号';
 COMMENT ON COLUMN "public"."iot_gateway_command"."device_name" IS '设备名称';
 COMMENT ON COLUMN "public"."iot_gateway_command"."param" IS '指令参数';
-COMMENT ON COLUMN "public"."iot_gateway_command"."dispatch_time" IS '指令下发时间';
+COMMENT ON COLUMN "public"."iot_gateway_command"."down_time" IS '指令下发时间';
 COMMENT ON COLUMN "public"."iot_gateway_command"."error_message" IS '错误信息';
 COMMENT ON COLUMN "public"."iot_gateway_command"."status" IS '指令状态 0待处理 1成功 2失败';
 COMMENT ON COLUMN "public"."iot_gateway_command"."reply_payload" IS '指令回复内容';

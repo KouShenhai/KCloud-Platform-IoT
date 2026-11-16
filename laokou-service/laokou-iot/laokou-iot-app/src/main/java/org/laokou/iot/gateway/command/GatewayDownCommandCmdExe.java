@@ -28,7 +28,7 @@ import org.laokou.iot.device.gatewayimpl.database.DeviceMapper;
 import org.laokou.iot.device.gatewayimpl.database.dataobject.DeviceDO;
 import org.laokou.iot.gateway.ability.GatewayDomainService;
 import org.laokou.iot.gateway.convertor.GatewayConvertor;
-import org.laokou.iot.gateway.dto.GatewayDispatchCommandCmd;
+import org.laokou.iot.gateway.dto.GatewayDownCommandCmd;
 import org.laokou.iot.gateway.factory.GatewayDomainFactory;
 import org.laokou.iot.gateway.gatewayimpl.database.GatewayMapper;
 import org.laokou.iot.gateway.gatewayimpl.database.dataobject.GatewayDO;
@@ -41,7 +41,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class GatewayDispatchCommandCmdExe {
+public class GatewayDownCommandCmdExe {
 
 	private final GatewayMapper gatewayMapper;
 
@@ -52,7 +52,7 @@ public class GatewayDispatchCommandCmdExe {
 	private final GatewayDomainService gatewayDomainService;
 
 	@CommandLog
-	public void execute(GatewayDispatchCommandCmd cmd) {
+	public void execute(GatewayDownCommandCmd cmd) {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.IOT);
 			GatewayDO gatewayDO = gatewayMapper.selectById(cmd.getGatewayId());

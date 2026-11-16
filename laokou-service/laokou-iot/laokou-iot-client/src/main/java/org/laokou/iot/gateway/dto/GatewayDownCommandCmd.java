@@ -15,13 +15,25 @@
  *
  */
 
-package org.laokou.common.mqtt.client;
+package org.laokou.iot.gateway.dto;
 
-import com.lmax.disruptor.EventHandler;
+import lombok.Data;
+import org.laokou.common.i18n.dto.CommonCommand;
+
+import java.util.Map;
 
 /**
  * @author laokou
  */
-public interface GatewayCommandEventHandler extends EventHandler<GatewayCommandEvent> {
+@Data
+public class GatewayDownCommandCmd extends CommonCommand {
+
+	private Long gatewayId;
+
+	private Long deviceId;
+
+	private String command;
+
+	private Map<String, Object> param;
 
 }
