@@ -105,7 +105,7 @@ public final class MqttMessageHandler {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.IOT);
 			if (ForyFactory.INSTANCE.deserialize(msg) instanceof GatewayCommandEvent event) {
-				AtomicReference<String> errorMsg = new AtomicReference<>("");
+				AtomicReference<String> errorMsg = new AtomicReference<>(null);
 				try {
 					mqttClientManager.publish(event.getSessionId(), event.getTopic(),
 							MqttForyFactory.INSTANCE.serialize(GatewayConvertor.toMessage(event)),
