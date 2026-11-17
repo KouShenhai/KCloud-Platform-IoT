@@ -152,6 +152,7 @@ public final class NettyMqttClient implements MqttClient {
 				throw new BizException("B_MQTT_MessageInflightState", "Message is in inflight state");
 			}
 			writePublish(topic, msg.getPayload(), qos, packetId, false, _ -> handleDisconnect());
+			scheduleAckTimeout(msg);
 		}
 	}
 
@@ -261,6 +262,10 @@ public final class NettyMqttClient implements MqttClient {
 
 	private void onAckTimeout(OutboundMessage msg) {
 		if (this.state.get() != ClientState.CONNECTED || this.ch == null || !this.ch.isActive()) {
+			return;
+		}
+		// 已被 ACK 处理掉
+		if (inflightStore.get(msg.getPacketId()) != msg) {
 			return;
 		}
 		retransmit(msg);

@@ -250,9 +250,8 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 
 	private void onPubComp(MqttMessage msg) {
 		int packetId = ((MqttMessageIdVariableHeader) msg.variableHeader()).messageId();
-		OutboundMessage message = client.getInflightStore().get(packetId);
-		if (message != null && message.getState() == State.WAIT_PUBACK
-				&& client.getInflightStore().putIfAbsent(message)) {
+		OutboundMessage message = client.getInflightStore().remove(packetId);
+		if (message != null && message.getState() == State.WAIT_PUBCOMP) {
 			client.cancelAckTimeout(message);
 		}
 	}
@@ -294,8 +293,7 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 	}
 
 	private void sendAck(ChannelHandlerContext ctx, MqttMessageType type, int packetId) {
-		MqttQoS ackQos = (type == MqttMessageType.PUBREL) ? MqttQoS.AT_LEAST_ONCE : MqttQoS.AT_MOST_ONCE;
-		MqttFixedHeader header = new MqttFixedHeader(type, false, ackQos, false, 0);
+		MqttFixedHeader header = new MqttFixedHeader(type, false, MqttQoS.AT_MOST_ONCE, false, 0);
 		MqttMessage ack = type == MqttMessageType.PUBACK
 				? new MqttPubAckMessage(header, MqttMessageIdVariableHeader.from(packetId))
 				: new MqttMessage(header, MqttMessageIdVariableHeader.from(packetId));
