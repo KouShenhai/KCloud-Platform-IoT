@@ -242,8 +242,8 @@ public final class NettyMqttClient implements MqttClient {
 				Channel channel = future.channel();
 				channel.writeAndFlush(buildConnectMessage()).addListener(fu -> {
 					if (!fu.isSuccess()) {
-						log.error("【Netty-MQTT-Client】 => 发送到 MQTT Broker 连接消息失败，错误信息：{}", f.cause().getMessage(),
-								f.cause());
+						log.error("【Netty-MQTT-Client】 => 发送到 MQTT Broker 连接消息失败，错误信息：{}", fu.cause().getMessage(),
+								fu.cause());
 						channel.close();
 						handleDisconnect();
 					}
@@ -306,7 +306,7 @@ public final class NettyMqttClient implements MqttClient {
 		MqttFixedHeader fixedHeader = new MqttFixedHeader(MqttMessageType.CONNECT, false, MqttQoS.AT_MOST_ONCE, false,
 				0);
 		MqttConnectVariableHeader variableHeader = new MqttConnectVariableHeader(MqttVersion.MQTT_5.protocolName(),
-				MqttVersion.MQTT_5.protocolLevel(), true, true, false, 0, false, true,
+				MqttVersion.MQTT_5.protocolLevel(), true, true, false, 0, false, properties.isCleanSession(),
 				properties.getKeepAliveTimeSeconds(), MqttProperties.NO_PROPERTIES);
 		MqttConnectPayload payload = new MqttConnectPayload(properties.getClientId(), null, null,
 				properties.getUsername(), properties.getPassword().getBytes(StandardCharsets.UTF_8));

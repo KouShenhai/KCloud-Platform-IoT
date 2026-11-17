@@ -30,7 +30,6 @@ import io.netty.handler.codec.mqtt.MqttMessageType;
 import io.netty.handler.codec.mqtt.MqttPubAckMessage;
 import io.netty.handler.codec.mqtt.MqttPublishMessage;
 import io.netty.handler.codec.mqtt.MqttQoS;
-import io.netty.handler.codec.mqtt.MqttReasonCodes;
 import io.netty.handler.codec.mqtt.MqttSubAckMessage;
 import io.netty.handler.codec.mqtt.MqttSubscribeMessage;
 import io.netty.handler.codec.mqtt.MqttSubscribePayload;
@@ -173,9 +172,7 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 
 	private void onSubAck(MqttSubAckMessage msg) {
 		int packetId = msg.variableHeader().messageId();
-		int granted = msg.payload().grantedQoSLevels().isEmpty() ? MqttReasonCodes.SubAck.UNSPECIFIED_ERROR.byteValue()
-				: msg.payload().grantedQoSLevels().getFirst();
-		if (granted == MqttReasonCodes.SubAck.UNSPECIFIED_ERROR.byteValue()) {
+		if (msg.payload().grantedQoSLevels().isEmpty()) {
 			log.info("【Netty-MQTT-Client】 => 订阅 MQTT Broker 主题失败, packetId：{}", packetId);
 		}
 		else {

@@ -20,7 +20,10 @@ package org.laokou.common.mqtt.client.listener;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.pulsar.client.api.MessageId;
+import org.jspecify.annotations.NonNull;
+import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.common.mqtt.client.message.MqttMessageType;
+import org.springframework.pulsar.core.PulsarTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CompletableFuture;
@@ -35,10 +38,15 @@ import java.util.concurrent.CompletableFuture;
 @RequiredArgsConstructor
 final class UpAlarmEventGatewayMessageListener implements MessageListener {
 
+	private final PulsarTemplate<@NonNull Object> pulsarTemplate;
+
+	private final SystemSettingsProperties systemSettingsProperties;
+
 	@Override
 	public CompletableFuture<MessageId> onMessage(MqttMessage message) {
 		log.info("【Netty-MQTT-Client】 => 设备报警事件消息【上行】处理器，接收主题【{}】消息", message.topic());
-		return CompletableFuture.completedFuture(null);
+		return pulsarTemplate.sendAsync(String.format("persistent://%s/device/%s",
+				systemSettingsProperties.getTenantCode(), getMessageType().getMqTopic()), message.payload());
 	}
 
 	@Override
