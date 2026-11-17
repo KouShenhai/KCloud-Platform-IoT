@@ -116,8 +116,9 @@ public final class MqttMessageHandler {
 					errorMsg.set(ex.getMessage());
 				}
 				finally {
+					Integer version = gatewayCommandMapper.selectVersion(event.getCommandId());
 					transactionalUtils.executeInTransaction(() -> updateGatewayCommand(errorMsg.get(),
-							event.getCommandId(), gatewayCommandMapper.selectVersion(event.getCommandId())));
+							event.getCommandId(), version == null ? 0 : version));
 				}
 			}
 			ack.acknowledge();
@@ -147,8 +148,9 @@ public final class MqttMessageHandler {
 			DynamicDataSourceContextHolder.push(DSConstants.IOT);
 			if (MqttForyFactory.INSTANCE
 				.deserialize(msg) instanceof UpCommandReplyGatewayMessage upCommandReplyGatewayMessage) {
-				transactionalUtils.executeInTransaction(() -> updateGatewayCommand(upCommandReplyGatewayMessage,
-						gatewayCommandMapper.selectVersion(upCommandReplyGatewayMessage.getRequestId())));
+				Integer version = gatewayCommandMapper.selectVersion(upCommandReplyGatewayMessage.getRequestId());
+				transactionalUtils.executeInTransaction(
+						() -> updateGatewayCommand(upCommandReplyGatewayMessage, version == null ? 0 : version));
 			}
 			ack.acknowledge();
 		}
