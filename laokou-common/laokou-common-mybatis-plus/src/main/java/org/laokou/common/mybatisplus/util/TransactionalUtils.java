@@ -84,7 +84,7 @@ public class TransactionalUtils {
 			}
 			catch (Exception ex) {
 				r.setRollbackOnly();
-				log.error("操作失败，错误信息：{}", ex.getMessage(), ex);
+				log.error("操作数据库失败，错误信息：{}", ex.getMessage(), ex);
 				throw new SystemException("S_DS_OperateError", ex.getMessage(), ex);
 			}
 		}, propagationBehavior,isolationLevel, readOnly);
@@ -100,7 +100,7 @@ public class TransactionalUtils {
 			}
 			catch (Exception e) {
 				r.setRollbackOnly();
-				log.error("操作失败，错误信息：{}", e.getMessage());
+				log.error("操作数据库失败，错误信息：{}", e.getMessage());
 				throw new SystemException("S_DS_OperateError", e.getMessage(), e);
 			}
 		}, propagationBehavior,isolationLevel, readOnly);
