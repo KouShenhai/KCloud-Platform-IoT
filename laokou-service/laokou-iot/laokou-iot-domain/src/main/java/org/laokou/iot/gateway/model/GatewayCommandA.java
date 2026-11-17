@@ -24,6 +24,7 @@ import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.iot.gateway.model.entity.GatewayCommandE;
 import org.laokou.iot.gateway.model.enums.Command;
+import org.laokou.iot.gateway.model.exception.CommandNotFoundException;
 
 import java.io.Serial;
 import java.util.Arrays;
@@ -57,7 +58,7 @@ public class GatewayCommandA extends AggregateRoot {
 
 	public void checkCommand() {
 		if (!Arrays.stream(Command.values()).map(Command::getCode).toList().contains(gatewayCommandE.getCommand())) {
-			throw new IllegalStateException("Command not exist");
+			throw new CommandNotFoundException("B_Gateway_CommandNotFound", "指令不存在");
 		}
 	}
 
