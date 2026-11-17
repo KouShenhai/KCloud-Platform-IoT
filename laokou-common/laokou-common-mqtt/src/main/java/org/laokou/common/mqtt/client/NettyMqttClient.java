@@ -127,7 +127,7 @@ public final class NettyMqttClient implements MqttClient {
 	public void disconnect() {
 		this.state.set(ClientState.CLOSED);
 		cancelReconnectTask();
-		clearInflight();
+		pauseInflight();
 		closeChannel();
 		this.timer.stop();
 	}
@@ -177,7 +177,7 @@ public final class NettyMqttClient implements MqttClient {
 			state.set(ClientState.DISCONNECTED);
 			return;
 		}
-		clearInflight();
+		pauseInflight();
 		scheduleReconnect();
 	}
 
@@ -188,10 +188,30 @@ public final class NettyMqttClient implements MqttClient {
 		}
 	}
 
-	void clearInflight() {
+	/**
+	 * 断线时暂停所有在途消息：只取消超时定时器，消息保留在 in-flight 表中，等待重连后续传。 不清表 —— QoS1/2 的投递保证要求客户端重发未确认消息，即使
+	 * cleanSession=true。
+	 */
+	void pauseInflight() {
 		for (int i = 1; i <= 0xFFFF; i++) {
-			OutboundMessage msg = inflightStore.remove(i);
-			cancelAckTimeout(msg);
+			cancelAckTimeout(inflightStore.get(i));
+		}
+	}
+
+	/**
+	 * 重连成功（收到 CONNACK）后恢复续传： - 状态 WAIT_PUBACK / WAIT_PUBREC → 重发 PUBLISH (DUP=1) - 状态
+	 * WAIT_PUBCOMP → 重发 PUBREL (DUP=1)
+	 */
+	void retransmitInflight() {
+		if (state.get() != ClientState.CONNECTED || this.ch == null || !this.ch.isActive()) {
+			return;
+		}
+		for (int i = 1; i <= 0xFFFF; i++) {
+			OutboundMessage msg = inflightStore.get(i);
+			if (msg != null) {
+				retransmit(msg);
+				scheduleAckTimeout(msg);
+			}
 		}
 	}
 

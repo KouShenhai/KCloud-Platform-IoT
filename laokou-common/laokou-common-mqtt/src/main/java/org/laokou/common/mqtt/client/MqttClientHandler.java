@@ -189,7 +189,7 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 					returnCode);
 			if (client.getState().compareAndSet(ClientState.CONNECTING, ClientState.DISCONNECTED)) {
 				client.cancelReconnectTask();
-				client.clearInflight();
+				client.retransmitInflight();
 			}
 		}
 		else {
