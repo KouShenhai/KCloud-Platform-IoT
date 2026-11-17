@@ -294,7 +294,8 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 	}
 
 	private void sendAck(ChannelHandlerContext ctx, MqttMessageType type, int packetId) {
-		MqttFixedHeader header = new MqttFixedHeader(type, false, MqttQoS.AT_LEAST_ONCE, false, 0);
+		MqttQoS ackQos = (type == MqttMessageType.PUBREL) ? MqttQoS.AT_LEAST_ONCE : MqttQoS.AT_MOST_ONCE;
+		MqttFixedHeader header = new MqttFixedHeader(type, false, ackQos, false, 0);
 		MqttMessage ack = type == MqttMessageType.PUBACK
 				? new MqttPubAckMessage(header, MqttMessageIdVariableHeader.from(packetId))
 				: new MqttMessage(header, MqttMessageIdVariableHeader.from(packetId));
