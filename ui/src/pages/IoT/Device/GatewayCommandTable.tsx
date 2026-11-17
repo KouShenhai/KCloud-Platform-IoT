@@ -126,11 +126,11 @@ export const GatewayCommandTable = ({ id }: { id: GatewayId }) => {
 			valueEnum: {
 				0: {
 					text: t('iot.gateway.command.replyStatus.0'),
-					status: 'Error',
+					status: 'Success',
 				},
 				1: {
 					text: t('iot.gateway.command.replyStatus.1'),
-					status: 'Success',
+					status: 'Error',
 				},
 			},
 		},

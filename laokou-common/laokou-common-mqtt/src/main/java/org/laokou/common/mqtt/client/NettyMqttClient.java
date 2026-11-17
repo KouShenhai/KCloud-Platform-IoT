@@ -127,7 +127,7 @@ public final class NettyMqttClient implements MqttClient {
 	public void disconnect() {
 		this.state.set(ClientState.CLOSED);
 		cancelReconnectTask();
-		clearInflight();
+		pauseInflight();
 		closeChannel();
 		this.timer.stop();
 	}
@@ -152,6 +152,7 @@ public final class NettyMqttClient implements MqttClient {
 				throw new BizException("B_MQTT_MessageInflightState", "Message is in inflight state");
 			}
 			writePublish(topic, msg.getPayload(), qos, packetId, false, _ -> handleDisconnect());
+			scheduleAckTimeout(msg);
 		}
 	}
 
@@ -176,8 +177,42 @@ public final class NettyMqttClient implements MqttClient {
 			state.set(ClientState.DISCONNECTED);
 			return;
 		}
-		clearInflight();
+		pauseInflight();
 		scheduleReconnect();
+	}
+
+	void cancelReconnectTask() {
+		if (this.reconnectTask != null) {
+			this.reconnectTask.cancel();
+			this.reconnectTask = null;
+		}
+	}
+
+	/**
+	 * 断线时暂停所有在途消息：只取消超时定时器，消息保留在 in-flight 表中，等待重连后续传。 不清表 —— QoS1/2 的投递保证要求客户端重发未确认消息，即使
+	 * cleanSession=true。
+	 */
+	void pauseInflight() {
+		for (int i = 1; i <= 0xFFFF; i++) {
+			cancelAckTimeout(inflightStore.get(i));
+		}
+	}
+
+	/**
+	 * 重连成功（收到 CONNACK）后恢复续传： - 状态 WAIT_PUBACK / WAIT_PUBREC → 重发 PUBLISH (DUP=1) - 状态
+	 * WAIT_PUBCOMP → 重发 PUBREL (DUP=1)
+	 */
+	void retransmitInflight() {
+		if (state.get() != ClientState.CONNECTED || this.ch == null || !this.ch.isActive()) {
+			return;
+		}
+		for (int i = 1; i <= 0xFFFF; i++) {
+			OutboundMessage msg = inflightStore.get(i);
+			if (msg != null) {
+				retransmit(msg);
+				scheduleAckTimeout(msg);
+			}
+		}
 	}
 
 	void cancelAckTimeout(OutboundMessage msg) {
@@ -242,8 +277,8 @@ public final class NettyMqttClient implements MqttClient {
 				Channel channel = future.channel();
 				channel.writeAndFlush(buildConnectMessage()).addListener(fu -> {
 					if (!fu.isSuccess()) {
-						log.error("【Netty-MQTT-Client】 => 发送到 MQTT Broker 连接消息失败，错误信息：{}", f.cause().getMessage(),
-								f.cause());
+						log.error("【Netty-MQTT-Client】 => 发送到 MQTT Broker 连接消息失败，错误信息：{}", fu.cause().getMessage(),
+								fu.cause());
 						channel.close();
 						handleDisconnect();
 					}
@@ -252,15 +287,12 @@ public final class NettyMqttClient implements MqttClient {
 		});
 	}
 
-	private void clearInflight() {
-		for (int i = 1; i <= 0xFFFF; i++) {
-			OutboundMessage msg = inflightStore.remove(i);
-			cancelAckTimeout(msg);
-		}
-	}
-
 	private void onAckTimeout(OutboundMessage msg) {
 		if (this.state.get() != ClientState.CONNECTED || this.ch == null || !this.ch.isActive()) {
+			return;
+		}
+		// 已被 ACK 处理掉
+		if (inflightStore.get(msg.getPacketId()) != msg) {
 			return;
 		}
 		retransmit(msg);
@@ -306,18 +338,11 @@ public final class NettyMqttClient implements MqttClient {
 		MqttFixedHeader fixedHeader = new MqttFixedHeader(MqttMessageType.CONNECT, false, MqttQoS.AT_MOST_ONCE, false,
 				0);
 		MqttConnectVariableHeader variableHeader = new MqttConnectVariableHeader(MqttVersion.MQTT_5.protocolName(),
-				MqttVersion.MQTT_5.protocolLevel(), true, true, false, 0, false, true,
+				MqttVersion.MQTT_5.protocolLevel(), true, true, false, 0, false, properties.isCleanSession(),
 				properties.getKeepAliveTimeSeconds(), MqttProperties.NO_PROPERTIES);
 		MqttConnectPayload payload = new MqttConnectPayload(properties.getClientId(), null, null,
 				properties.getUsername(), properties.getPassword().getBytes(StandardCharsets.UTF_8));
 		return new MqttConnectMessage(fixedHeader, variableHeader, payload);
-	}
-
-	private void cancelReconnectTask() {
-		if (this.reconnectTask != null) {
-			this.reconnectTask.cancel();
-			this.reconnectTask = null;
-		}
 	}
 
 	private void writePublish(String topic, byte[] payload, MqttQoS qos, int packetId, boolean dup,

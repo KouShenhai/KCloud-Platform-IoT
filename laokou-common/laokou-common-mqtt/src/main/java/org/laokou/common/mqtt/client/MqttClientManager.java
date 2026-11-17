@@ -30,7 +30,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class MqttClientManager implements AutoCloseable {
 
-	private final Map<Long, MqttClient> clients = new ConcurrentHashMap<>();
+	private final Map<Long, MqttClient> clients = new ConcurrentHashMap<>(4096);
 
 	public void open(Long id, MqttClientProperties properties, MqttEventLoop mqttEventLoop,
 			List<MessageListener> listeners) {

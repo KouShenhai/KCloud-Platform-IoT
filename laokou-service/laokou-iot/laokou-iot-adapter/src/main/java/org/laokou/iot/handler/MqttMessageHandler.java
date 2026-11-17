@@ -32,7 +32,6 @@ import org.laokou.common.i18n.util.InstantUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.laokou.common.i18n.util.ResourceExtUtils;
-import org.laokou.iot.gateway.dto.event.GatewayCommandEvent;
 import org.laokou.common.mqtt.client.MqttClientManager;
 import org.laokou.common.mqtt.client.MqttForyFactory;
 import org.laokou.common.mqtt.client.message.MqttMessageType;
@@ -43,6 +42,7 @@ import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.laokou.common.redis.util.RedisUtils;
 import org.laokou.common.tenant.constant.DSConstants;
 import org.laokou.iot.gateway.convertor.GatewayConvertor;
+import org.laokou.iot.gateway.dto.event.GatewayCommandEvent;
 import org.laokou.iot.gateway.gatewayimpl.database.GatewayCommandMapper;
 import org.laokou.iot.gateway.gatewayimpl.database.dataobject.GatewayCommandDO;
 import org.laokou.iot.gateway.model.enums.MqTopic;
@@ -60,7 +60,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author laokou
@@ -105,18 +104,16 @@ public final class MqttMessageHandler {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.IOT);
 			if (ForyFactory.INSTANCE.deserialize(msg) instanceof GatewayCommandEvent event) {
-				AtomicReference<String> errorMsg = new AtomicReference<>("");
 				try {
 					mqttClientManager.publish(event.getSessionId(), event.getTopic(),
 							MqttForyFactory.INSTANCE.serialize(GatewayConvertor.toMessage(event)),
 							MqttQoS.AT_LEAST_ONCE);
+					transactionalUtils.executeInTransaction(() -> updateGatewayCommand(null, event.getCommandId(),
+							gatewayCommandMapper.selectVersion(event.getCommandId())));
 				}
 				catch (Exception ex) {
 					log.error("发布MQTT消息失败，错误信息：{}", ex.getMessage(), ex);
-					errorMsg.set(ex.getMessage());
-				}
-				finally {
-					transactionalUtils.executeInTransaction(() -> updateGatewayCommand(errorMsg.get(),
+					transactionalUtils.executeInTransaction(() -> updateGatewayCommand(ex.getMessage(),
 							event.getCommandId(), gatewayCommandMapper.selectVersion(event.getCommandId())));
 				}
 			}
@@ -225,7 +222,8 @@ public final class MqttMessageHandler {
 					ObjectUtils.equals(upCommandReplyGatewayMessage.getMessage(), StatusCode.OK)
 							? ReplyStatus.SUCCESS.getCode() : ReplyStatus.FAILURE.getCode())
 			.set(GatewayCommandDO::getReplyMessage, upCommandReplyGatewayMessage.getMessage())
-			.set(GatewayCommandDO::getVersion, version + 1)
+			.set(GatewayCommandDO::getVersion, version == null ? 0 : version + 1)
+			.set(GatewayCommandDO::getStatus, Status.SUCCESS.getCode())
 			.eq(GatewayCommandDO::getId, upCommandReplyGatewayMessage.getRequestId())
 			.eq(GatewayCommandDO::getVersion, version));
 	}
@@ -236,7 +234,7 @@ public final class MqttMessageHandler {
 			.set(GatewayCommandDO::getDownTime, InstantUtils.now())
 			.set(GatewayCommandDO::getStatus,
 					StringUtils.hasText(errorMsg) ? Status.FAILURE.getCode() : Status.SUCCESS.getCode())
-			.set(GatewayCommandDO::getVersion, version + 1)
+			.set(GatewayCommandDO::getVersion, version == null ? 0 : version + 1)
 			.eq(GatewayCommandDO::getId, commandId)
 			.eq(GatewayCommandDO::getVersion, version));
 	}
