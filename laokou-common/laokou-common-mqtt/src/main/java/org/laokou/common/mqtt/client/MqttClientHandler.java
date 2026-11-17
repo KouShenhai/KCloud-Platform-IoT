@@ -117,15 +117,15 @@ import java.util.concurrent.TimeUnit;
 final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 
 	private static final Set<MqttConnectReturnCode> FATAL_CODES = Set.of(
-			// 0x86 认证失败
+			// MQTT 3.1.1: 0x04 认证失败
 			MqttConnectReturnCode.CONNECTION_REFUSED_BAD_USER_NAME_OR_PASSWORD,
-			// 认证失败
+			// MQTT 5: 0x86 认证失败
 			MqttConnectReturnCode.CONNECTION_REFUSED_BAD_USERNAME_OR_PASSWORD,
-			// 0x87 无权限
+			// 0x05 (3.1.1) / 0x87 (v5) 无权限
 			MqttConnectReturnCode.CONNECTION_REFUSED_NOT_AUTHORIZED,
-			// ClientId 非法
+			// MQTT 5: 0x85 ClientId 非法
 			MqttConnectReturnCode.CONNECTION_REFUSED_CLIENT_IDENTIFIER_NOT_VALID,
-			// 被封禁
+			// MQTT 5: 0x8A 被封禁
 			MqttConnectReturnCode.CONNECTION_REFUSED_BANNED,
 			// 协议版本不匹配（配置问题）
 			MqttConnectReturnCode.CONNECTION_REFUSED_UNACCEPTABLE_PROTOCOL_VERSION);
@@ -187,9 +187,10 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 			// 不可恢复：重连一万次也是同样结果，退出重连循环，交给上层
 			log.error("【Netty-MQTT-Client】 => 客户端ID：{}，连接被拒绝（致命错误，不再重连），错误码：{}", client.getProperties().getClientId(),
 					returnCode);
-			client.getState().set(ClientState.DISCONNECTED);
-			client.cancelReconnectTask();
-			client.clearInflight();
+			if (client.getState().compareAndSet(ClientState.CONNECTING, ClientState.DISCONNECTED)) {
+				client.cancelReconnectTask();
+				client.clearInflight();
+			}
 		}
 		else {
 			log.error("【Netty-MQTT-Client】 => 客户端ID：{}，连接 MQTT Broker 失败，错误信息：{}", client.getProperties().getClientId(),
@@ -357,6 +358,7 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+		log.error("【Netty-MQTT-Client】 => 连接异常，错误信息：{}", cause.getMessage(), cause);
 		ctx.close();
 	}
 
