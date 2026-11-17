@@ -39,6 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.pulsar.client.api.MessageId;
 import org.laokou.common.mqtt.client.listener.MessageListener;
 
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
@@ -115,6 +116,20 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 
+	private static final Set<MqttConnectReturnCode> FATAL_CODES = Set.of(
+			// 0x86 认证失败
+			MqttConnectReturnCode.CONNECTION_REFUSED_BAD_USER_NAME_OR_PASSWORD,
+			// 认证失败
+			MqttConnectReturnCode.CONNECTION_REFUSED_BAD_USERNAME_OR_PASSWORD,
+			// 0x87 无权限
+			MqttConnectReturnCode.CONNECTION_REFUSED_NOT_AUTHORIZED,
+			// ClientId 非法
+			MqttConnectReturnCode.CONNECTION_REFUSED_CLIENT_IDENTIFIER_NOT_VALID,
+			// 被封禁
+			MqttConnectReturnCode.CONNECTION_REFUSED_BANNED,
+			// 协议版本不匹配（配置问题）
+			MqttConnectReturnCode.CONNECTION_REFUSED_UNACCEPTABLE_PROTOCOL_VERSION);
+
 	private volatile ScheduledFuture<?> pingFuture;
 
 	private final NettyMqttClient client;
@@ -158,16 +173,29 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 		MqttConnectReturnCode returnCode = msg.variableHeader().connectReturnCode();
 		if (returnCode == MqttConnectReturnCode.CONNECTION_ACCEPTED) {
 			log.info("【Netty-MQTT-Client】 => 客户端ID：{}，连接 MQTT Broker 成功", client.getProperties().getClientId());
+			// 用户已主动断开，放弃这次连接
+			if (!client.getState().compareAndSet(ClientState.CONNECTING, ClientState.CONNECTED)) {
+				ch.close();
+				return;
+			}
 			client.setCh(ch);
 			client.getReconnectAttempts().set(0);
-			client.getState().set(ClientState.CONNECTED);
 			subscribe(ch);
+			return;
+		}
+		else if (FATAL_CODES.contains(returnCode)) {
+			// 不可恢复：重连一万次也是同样结果，退出重连循环，交给上层
+			log.error("【Netty-MQTT-Client】 => 客户端ID：{}，连接被拒绝（致命错误，不再重连），错误码：{}", client.getProperties().getClientId(),
+					returnCode);
+			client.getState().set(ClientState.DISCONNECTED);
+			client.cancelReconnectTask();
+			client.clearInflight();
 		}
 		else {
 			log.error("【Netty-MQTT-Client】 => 客户端ID：{}，连接 MQTT Broker 失败，错误信息：{}", client.getProperties().getClientId(),
 					returnCode);
-			ch.close();
 		}
+		ch.close();
 	}
 
 	private void onSubAck(MqttSubAckMessage msg) {
@@ -246,6 +274,10 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 					}
 				});
 		}
+		else {
+			// 重复 PUBREL（之前的 PUBCOMP 丢了）：重答 PUBCOMP，不重复投递
+			sendAck(ctx, MqttMessageType.PUBCOMP, packetId);
+		}
 	}
 
 	private void onPubComp(MqttMessage msg) {
@@ -263,7 +295,7 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 		MqttQoS mqttQoS = msg.fixedHeader().qosLevel();
 		switch (mqttQoS) {
 			case AT_MOST_ONCE -> onInboundMessage(msg.variableHeader().topicName(), ByteBufUtil.getBytes(msg.payload()),
-					MqttQoS.AT_LEAST_ONCE)
+					MqttQoS.AT_MOST_ONCE)
 				.whenComplete((_, ex) -> {
 					if (ex != null) {
 						log.error("【Netty-MQTT-Client】 => 处理 MQTT 消息失败，topic: {}, packetId: {}，错误信息：{}",

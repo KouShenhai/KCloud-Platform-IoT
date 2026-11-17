@@ -181,6 +181,20 @@ public final class NettyMqttClient implements MqttClient {
 		scheduleReconnect();
 	}
 
+	void cancelReconnectTask() {
+		if (this.reconnectTask != null) {
+			this.reconnectTask.cancel();
+			this.reconnectTask = null;
+		}
+	}
+
+	void clearInflight() {
+		for (int i = 1; i <= 0xFFFF; i++) {
+			OutboundMessage msg = inflightStore.remove(i);
+			cancelAckTimeout(msg);
+		}
+	}
+
 	void cancelAckTimeout(OutboundMessage msg) {
 		if (msg != null && msg.getTimeoutTask() instanceof Timeout timeout) {
 			timeout.cancel();
@@ -253,13 +267,6 @@ public final class NettyMqttClient implements MqttClient {
 		});
 	}
 
-	private void clearInflight() {
-		for (int i = 1; i <= 0xFFFF; i++) {
-			OutboundMessage msg = inflightStore.remove(i);
-			cancelAckTimeout(msg);
-		}
-	}
-
 	private void onAckTimeout(OutboundMessage msg) {
 		if (this.state.get() != ClientState.CONNECTED || this.ch == null || !this.ch.isActive()) {
 			return;
@@ -316,13 +323,6 @@ public final class NettyMqttClient implements MqttClient {
 		MqttConnectPayload payload = new MqttConnectPayload(properties.getClientId(), null, null,
 				properties.getUsername(), properties.getPassword().getBytes(StandardCharsets.UTF_8));
 		return new MqttConnectMessage(fixedHeader, variableHeader, payload);
-	}
-
-	private void cancelReconnectTask() {
-		if (this.reconnectTask != null) {
-			this.reconnectTask.cancel();
-			this.reconnectTask = null;
-		}
 	}
 
 	private void writePublish(String topic, byte[] payload, MqttQoS qos, int packetId, boolean dup,
