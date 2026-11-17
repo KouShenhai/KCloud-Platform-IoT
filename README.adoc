@@ -184,7 +184,7 @@ image::doc/image/老寇IoT云平台业务架构图.png[架构图,align=center]
 |TDengine                    |3.3.6.13
 |Flyway                      |13.12.1
 |Sentinel                    |1.8.9
-|Fory                        |1.7.7
+|Fory                        |1.7.8
 |===
 
 ==== 🍺 相关技术
