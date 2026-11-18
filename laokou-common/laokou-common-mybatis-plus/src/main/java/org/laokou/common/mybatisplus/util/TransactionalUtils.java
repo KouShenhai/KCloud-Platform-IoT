@@ -19,6 +19,7 @@ package org.laokou.common.mybatisplus.util;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.common.exception.SystemException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -77,10 +78,13 @@ public class TransactionalUtils {
 		executeWithoutResult(r -> {
 			try {
 				executor.execute();
+			} catch (GlobalException gex) {
+				r.setRollbackOnly();
+				throw gex;
 			}
 			catch (Exception ex) {
 				r.setRollbackOnly();
-				log.error("操作失败，错误信息：{}", ex.getMessage(), ex);
+				log.error("操作数据库失败，错误信息：{}", ex.getMessage(), ex);
 				throw new SystemException("S_DS_OperateError", ex.getMessage(), ex);
 			}
 		}, propagationBehavior,isolationLevel, readOnly);
@@ -90,10 +94,13 @@ public class TransactionalUtils {
 		return execute(r -> {
 			try {
 				return executor.execute();
+			} catch (GlobalException gex) {
+				r.setRollbackOnly();
+				throw gex;
 			}
 			catch (Exception e) {
 				r.setRollbackOnly();
-				log.error("操作失败，错误信息：{}", e.getMessage());
+				log.error("操作数据库失败，错误信息：{}", e.getMessage());
 				throw new SystemException("S_DS_OperateError", e.getMessage(), e);
 			}
 		}, propagationBehavior,isolationLevel, readOnly);

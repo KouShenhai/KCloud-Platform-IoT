@@ -30,6 +30,9 @@ import java.util.Locale;
 @Data
 public final class MqttClientProperties {
 
+	/**
+	 * 租户编码.
+	 */
 	private String tenantCode = "laokouyun";
 
 	/**
@@ -77,6 +80,9 @@ public final class MqttClientProperties {
 	 */
 	private long ackTimeoutMs = 5000;
 
+	/**
+	 * 标识.
+	 */
 	private String identifier = UUIDGenerator.generateUUID().substring(0, 16);
 
 	public String getClientId() {
