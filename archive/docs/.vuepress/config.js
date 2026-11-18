@@ -63,6 +63,7 @@ module.exports = {
 							{text: 'gRPC配置', link: '/pages/4953b1/'},
 							{text: 'ID生成器', link: '/pages/b69cd9/'},
 							{text: 'Flyway配置', link: '/pages/a0baf8/'},
+							{text: 'MQTT配置', link: '/pages/606bf7/'},
 						]
 					},
 					{
