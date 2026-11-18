@@ -18,10 +18,15 @@
 package org.laokou.iot.gateway.command;
 
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
+import io.netty.handler.codec.mqtt.MqttQoS;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.mqtt.client.GatewayCommandFutureManager;
+import org.laokou.common.mqtt.client.MqttClientManager;
+import org.laokou.common.mqtt.client.MqttForyFactory;
+import org.laokou.common.mqtt.client.message.UpCommandReplyGatewayMessage;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.laokou.common.tenant.constant.DSConstants;
 import org.laokou.iot.device.gatewayimpl.database.DeviceMapper;
@@ -34,6 +39,11 @@ import org.laokou.iot.gateway.gatewayimpl.database.GatewayMapper;
 import org.laokou.iot.gateway.gatewayimpl.database.dataobject.GatewayDO;
 import org.laokou.iot.gateway.model.GatewayCommandA;
 import org.springframework.stereotype.Component;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * @author laokou
@@ -51,8 +61,12 @@ public class GatewayDownCommandCmdExe {
 
 	private final GatewayDomainService gatewayDomainService;
 
+	private final MqttClientManager mqttClientManager;
+
+	private final GatewayCommandFutureManager gatewayCommandFutureManager;
+
 	@CommandLog
-	public void execute(GatewayDownCommandCmd cmd) {
+	public CompletableFuture<> execute(GatewayDownCommandCmd cmd) throws ExecutionException, InterruptedException, TimeoutException {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.IOT);
 			GatewayDO gatewayDO = gatewayMapper.selectById(cmd.getGatewayId());
@@ -60,7 +74,12 @@ public class GatewayDownCommandCmdExe {
 					: null;
 			GatewayCommandA gatewayCommandA = GatewayDomainFactory.createGatewayCommandA()
 				.create(GatewayConvertor.toEntity(gatewayDO, deviceDO, cmd.getCommand(), cmd.getParam()));
-			transactionalUtils.executeInTransaction(() -> gatewayDomainService.createGatewayCommand(gatewayCommandA));
+			CompletableFuture<UpCommandReplyGatewayMessage> future = gatewayCommandFutureManager.put(gatewayCommandA.getId());
+			// 发布 MQTT 消息
+			mqttClientManager.publish(gatewayDO.getSessionId(), gatewayCommandA.getGatewayCommandE().getTopic(), MqttForyFactory.INSTANCE.serialize(GatewayConvertor.toMessage(gatewayCommandA, cmd.getParam())), MqttQoS.AT_LEAST_ONCE);
+			// 挂起线程
+			UpCommandReplyGatewayMessage upCommandReplyGatewayMessage = future.get(3, TimeUnit.SECONDS);
+			//transactionalUtils.executeInTransaction(() -> gatewayDomainService.createGatewayCommand(gatewayCommandA));
 		}
 		catch (Exception ex) {
 			log.error("下发重启网关指令失败，错误信息：{}", ex.getMessage(), ex);

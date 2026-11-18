@@ -73,10 +73,4 @@
 		<include refid="selectConditions"/>
 	</select>
 
-  <select id="selectVersion" resultType="integer">
-    select version
-    from iot_gateway_command
-    where id = #{id}
-  </select>
-
 </mapper>

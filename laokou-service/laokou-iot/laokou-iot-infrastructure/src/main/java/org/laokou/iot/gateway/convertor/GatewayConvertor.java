@@ -20,7 +20,6 @@ package org.laokou.iot.gateway.convertor;
 import org.laokou.common.context.util.UserUtils;
 import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.fory.util.ForyJsonUtils;
-import org.laokou.iot.gateway.dto.event.GatewayCommandEvent;
 import org.laokou.common.mqtt.client.message.DownCommandGatewayMessage;
 import org.laokou.iot.device.gatewayimpl.database.dataobject.DeviceDO;
 import org.laokou.iot.gateway.dto.clientobject.GatewayCO;
@@ -33,10 +32,7 @@ import org.laokou.iot.gateway.model.GatewayA;
 import org.laokou.iot.gateway.model.GatewayCommandA;
 import org.laokou.iot.gateway.model.entity.GatewayCommandE;
 import org.laokou.iot.gateway.model.entity.GatewayE;
-import org.laokou.iot.gateway.model.enums.Status;
-import org.springframework.util.StringUtils;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -74,37 +70,22 @@ public final class GatewayConvertor {
 			.deviceName(deviceDO != null ? deviceDO.getName() : null)
 			.deviceSn(deviceDO != null ? deviceDO.getSn() : null)
 			.topic(String.format("down/%s/%s/command", UserUtils.getTenantCode(), gatewayDO.getSn()))
-			.status(Status.PENDING.getCode())
-			.sessionId(gatewayDO.getSessionId())
 			.build();
 	}
 
-	public static DownCommandGatewayMessage toMessage(GatewayCommandEvent event) {
+	public static DownCommandGatewayMessage toMessage(GatewayCommandA gatewayCommandA, Map<String, Object> param) {
 		DownCommandGatewayMessage downCommandGatewayMessage = new DownCommandGatewayMessage();
-		downCommandGatewayMessage.setCommand(event.getCommand());
-		downCommandGatewayMessage.setParam(event.getParam());
-		downCommandGatewayMessage.setDeviceName(event.getDeviceName());
-		downCommandGatewayMessage.setGatewaySn(event.getGatewaySn());
-		downCommandGatewayMessage.setDeviceSn(event.getDeviceSn());
+		GatewayCommandE gatewayCommandE = gatewayCommandA.getGatewayCommandE();
+		downCommandGatewayMessage.setCommand(gatewayCommandE.getCommand());
+		downCommandGatewayMessage.setParam(param);
+		downCommandGatewayMessage.setDeviceName(gatewayCommandE.getDeviceName());
+		downCommandGatewayMessage.setGatewaySn(gatewayCommandE.getGatewaySn());
+		downCommandGatewayMessage.setDeviceSn(gatewayCommandE.getDeviceSn());
+		downCommandGatewayMessage.setDeviceName(gatewayCommandE.getDeviceName());
 		downCommandGatewayMessage.setTimestamp(System.currentTimeMillis());
-		downCommandGatewayMessage.setRequestId(event.getCommandId());
-		downCommandGatewayMessage.setTenantCode(event.getTenantCode());
+		downCommandGatewayMessage.setRequestId(gatewayCommandA.getId());
+		downCommandGatewayMessage.setTenantCode(UserUtils.getTenantCode());
 		return downCommandGatewayMessage;
-	}
-
-	public static GatewayCommandEvent toEvent(GatewayCommandDO gatewayCommandDO) {
-		GatewayCommandEvent gatewayCommandEvent = new GatewayCommandEvent();
-		gatewayCommandEvent.setCommandId(gatewayCommandDO.getId());
-		gatewayCommandEvent.setGatewaySn(gatewayCommandDO.getGatewaySn());
-		gatewayCommandEvent.setDeviceName(gatewayCommandDO.getDeviceName());
-		gatewayCommandEvent.setDeviceSn(gatewayCommandDO.getDeviceSn());
-		gatewayCommandEvent.setParam(StringUtils.hasText(gatewayCommandDO.getParam())
-				? ForyJsonUtils.toBean(gatewayCommandDO.getParam(), Map.class) : Collections.EMPTY_MAP);
-		gatewayCommandEvent.setCommand(gatewayCommandDO.getCommand());
-		gatewayCommandEvent.setTopic(gatewayCommandDO.getTopic());
-		gatewayCommandEvent.setTenantCode(UserUtils.getTenantCode());
-		gatewayCommandEvent.setSessionId(gatewayCommandDO.getSessionId());
-		return gatewayCommandEvent;
 	}
 
 	public static GatewayCommandDO toDataObject(GatewayCommandA gatewayCommandA) {
@@ -121,7 +102,6 @@ public final class GatewayConvertor {
 		gatewayCommandDO.setParam(gatewayCommandE.getParam());
 		gatewayCommandDO.setCommand(gatewayCommandE.getCommand());
 		gatewayCommandDO.setCreateTime(gatewayCommandA.getCreateTime());
-		gatewayCommandDO.setSessionId(gatewayCommandE.getSessionId());
 		return gatewayCommandDO;
 	}
 
@@ -172,7 +152,6 @@ public final class GatewayConvertor {
 		GatewayCommandCO gatewayCommandCO = new GatewayCommandCO();
 		gatewayCommandCO.setId(gatewayCommandDO.getId());
 		gatewayCommandCO.setCreateTime(gatewayCommandDO.getCreateTime());
-		gatewayCommandCO.setSessionId(gatewayCommandDO.getSessionId());
 		gatewayCommandCO.setGatewayId(gatewayCommandDO.getGatewayId());
 		gatewayCommandCO.setGatewaySn(gatewayCommandDO.getGatewaySn());
 		gatewayCommandCO.setCommand(gatewayCommandDO.getCommand());

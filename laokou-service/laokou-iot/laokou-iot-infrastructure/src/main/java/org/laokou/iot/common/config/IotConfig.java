@@ -25,6 +25,7 @@ import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.fory.constant.ForyConstants;
+import org.laokou.common.mqtt.client.GatewayCommandFutureManager;
 import org.laokou.common.mqtt.client.MqttClientManager;
 import org.laokou.common.mqtt.client.MqttEventLoop;
 import org.laokou.common.mqtt.client.MqttForyFactory;
@@ -62,6 +63,11 @@ public class IotConfig {
 			name = "enabled")
 	DeviceMcpMapper deviceMcpMapper(ToolCallbackProvider syncMcpToolCallbackProvider) {
 		return new DeviceMcpMapper(syncMcpToolCallbackProvider);
+	}
+
+	@Bean(destroyMethod = "close")
+	GatewayCommandFutureManager gatewayCommandFutureManager() {
+		return new GatewayCommandFutureManager();
 	}
 
 	@Bean

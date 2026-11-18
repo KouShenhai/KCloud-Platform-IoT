@@ -27,11 +27,9 @@ import lombok.Getter;
 @Getter
 public enum Status {
 
-	PENDING(0, "待处理"),
+	SUCCESS(0, "成功"),
 
-	SUCCESS(1, "成功"),
-
-	FAILURE(2, "失败");
+	FAILURE(1, "失败");
 
 	private final int code;
 

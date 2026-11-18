@@ -41,11 +41,6 @@ public class GatewayCommandCO extends ClientObject {
 	private Instant createTime;
 
 	/**
-	 * 会话ID.
-	 */
-	private Long sessionId;
-
-	/**
 	 * 网关ID.
 	 */
 	private Long gatewayId;

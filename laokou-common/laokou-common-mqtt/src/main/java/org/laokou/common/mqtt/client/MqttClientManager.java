@@ -28,7 +28,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author laokou
  */
-public class MqttClientManager implements AutoCloseable {
+public class MqttClientManager {
 
 	private final Map<Long, MqttClient> clients = new ConcurrentHashMap<>(4096);
 
@@ -49,7 +49,6 @@ public class MqttClientManager implements AutoCloseable {
 		client.publish(topic, payload, qos);
 	}
 
-	@Override
 	public void close() {
 		clients.keySet().forEach(this::close);
 	}
