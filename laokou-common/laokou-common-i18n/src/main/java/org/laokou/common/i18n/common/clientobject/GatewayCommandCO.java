@@ -15,38 +15,29 @@
  *
  */
 
-package org.laokou.common.mqtt.client.message;
+package org.laokou.common.i18n.common.clientobject;
 
 import lombok.Data;
 
-/**
- * @author laokou
- */
+import java.io.Serializable;
+import java.util.Map;
+
 @Data
-public class GatewayPropertiesMessage {
+public final class GatewayCommandCO implements Serializable {
 
-	private String diskTotal;
+	/**
+	 * 时间戳.
+	 */
+	private Long timestamp;
 
-	private String diskUsed;
+	/**
+	 * 内容.
+	 */
+	private Map<String, Object> payload;
 
-	private String diskUsage;
-
-	private String cpuUsage;
-
-	private String memTotal;
-
-	private String memUsed;
-
-	private String memUsage;
-
-	private String uptime;
-
-	private String gatewaySn;
-
-	private String version;
-
-	private long timestamp;
-
-	private int interval;
+	/**
+	 * 信息.
+	 */
+	private String message;
 
 }

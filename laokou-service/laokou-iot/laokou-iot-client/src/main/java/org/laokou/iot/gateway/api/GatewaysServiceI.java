@@ -17,21 +17,25 @@
 
 package org.laokou.iot.gateway.api;
 
+import org.laokou.common.i18n.common.clientobject.GatewayCommandCO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.iot.gateway.dto.GatewayCommandPageQry;
+import org.laokou.iot.gateway.dto.GatewayDownCommandCmd;
 import org.laokou.iot.gateway.dto.GatewayExportCmd;
 import org.laokou.iot.gateway.dto.GatewayGetQry;
 import org.laokou.iot.gateway.dto.GatewayImportCmd;
-import org.laokou.iot.gateway.dto.GatewayDownCommandCmd;
 import org.laokou.iot.gateway.dto.GatewayModifyCmd;
 import org.laokou.iot.gateway.dto.GatewayPageQry;
-import org.laokou.iot.gateway.dto.GatewayCommandPageQry;
-import org.laokou.iot.gateway.dto.clientobject.GatewayCommandCO;
 import org.laokou.iot.gateway.dto.GatewayPropertiesGetQry;
 import org.laokou.iot.gateway.dto.GatewayRemoveCmd;
 import org.laokou.iot.gateway.dto.GatewaySaveCmd;
 import org.laokou.iot.gateway.dto.clientobject.GatewayCO;
 import org.laokou.iot.gateway.dto.clientobject.GatewayPropertiesCO;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeoutException;
 
 /**
  *
@@ -92,11 +96,13 @@ public interface GatewaysServiceI {
 	/**
 	 * 下发网关指令.
 	 */
-	void downGatewayCommand(GatewayDownCommandCmd cmd);
+	CompletableFuture<GatewayCommandCO> downGatewayCommand(GatewayDownCommandCmd cmd)
+			throws ExecutionException, InterruptedException, TimeoutException;
 
 	/**
 	 * 分页查询网关指令.
 	 */
-	Result<Page<GatewayCommandCO>> pageGatewayCommand(GatewayCommandPageQry qry);
+	Result<Page<org.laokou.iot.gateway.dto.clientobject.GatewayCommandCO>> pageGatewayCommand(
+			GatewayCommandPageQry qry);
 
 }

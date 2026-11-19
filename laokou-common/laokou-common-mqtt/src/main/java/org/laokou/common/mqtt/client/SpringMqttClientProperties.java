@@ -18,8 +18,10 @@
 package org.laokou.common.mqtt.client;
 
 import lombok.Data;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 /**
  * @author laokou
@@ -27,8 +29,19 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 @ConfigurationProperties(prefix = "spring.mqtt-client")
-public final class SpringMqttClientProperties {
+public final class SpringMqttClientProperties implements InitializingBean {
 
 	private int coreSize = 16;
+
+	private String clientId;
+
+	private int commandReplyTimeoutSeconds = 3;
+
+	@Override
+	public void afterPropertiesSet() {
+		if (!StringUtils.hasText(clientId)) {
+			throw new IllegalArgumentException("clientId is required");
+		}
+	}
 
 }

@@ -17,30 +17,22 @@
 
 package org.laokou.iot.handler;
 
-import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
-import io.netty.handler.codec.mqtt.MqttQoS;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.pulsar.client.api.SubscriptionType;
 import org.apache.pulsar.common.schema.SchemaType;
 import org.jspecify.annotations.NonNull;
-import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.fory.util.ForyJsonUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.laokou.common.i18n.util.ResourceExtUtils;
 import org.laokou.common.mqtt.client.MqttForyFactory;
 import org.laokou.common.mqtt.client.message.MqttMessageType;
-import org.laokou.common.mqtt.client.message.UpCommandReplyGatewayMessage;
 import org.laokou.common.mqtt.client.message.UpReportPropertiesDeviceMessage;
 import org.laokou.common.mqtt.client.message.UpReportPropertiesGatewayMessage;
 import org.laokou.common.redis.util.RedisUtils;
-import org.laokou.common.tenant.constant.DSConstants;
-import org.laokou.iot.gateway.convertor.GatewayConvertor;
-import org.laokou.iot.gateway.dto.event.GatewayCommandEvent;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.pulsar.annotation.PulsarListener;
 import org.springframework.pulsar.annotation.PulsarListeners;
 import org.springframework.pulsar.listener.AckMode;
-import org.springframework.pulsar.listener.Acknowledgement;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -64,63 +56,6 @@ public final class MqttMessageHandler {
 		this.script = new DefaultRedisScript<>(
 				ResourceExtUtils.getResource("lua/set_properties.lua").getContentAsString(StandardCharsets.UTF_8),
 				Long.class);
-	}
-
-	// @formatter:on
-	public void handleDownCommandGatewayMessage(byte[] msg, Acknowledgement ack) {
-		try {
-			DynamicDataSourceContextHolder.push(DSConstants.IOT);
-			if (ForyFactory.INSTANCE.deserialize(msg) instanceof GatewayCommandEvent event) {
-				try {
-
-					transactionalUtils.executeInTransaction(() -> updateGatewayCommand(null, event.getCommandId(),
-							gatewayCommandMapper.selectVersion(event.getCommandId())));
-				}
-				catch (Exception ex) {
-					log.error("发布MQTT消息失败，错误信息：{}", ex.getMessage(), ex);
-					transactionalUtils.executeInTransaction(() -> updateGatewayCommand(ex.getMessage(),
-							event.getCommandId(), gatewayCommandMapper.selectVersion(event.getCommandId())));
-				}
-			}
-			ack.acknowledge();
-		}
-		catch (Exception ex) {
-			log.error("handleDownCommandGatewayMessage error", ex);
-			ack.nack();
-		}
-		finally {
-			DynamicDataSourceContextHolder.clear();
-		}
-	}
-
-	// @formatter:off
-	@PulsarListeners(value = {
-		@PulsarListener(
-			topics = "persistent://${system-settings.tenant-code}/gateway/" + MqttMessageType.UP_COMMAND_REPLY_GATEWAY_MESSAGE_TOPIC,
-			subscriptionName = "${system-settings.tenant-code}",
-			schemaType = SchemaType.BYTES,
-			ackMode = AckMode.MANUAL,
-			subscriptionType = SubscriptionType.Shared
-		)
-	})
-	// @formatter:on
-	public void handleUpCommandReplyGatewayMessage(byte[] msg, Acknowledgement ack) {
-		try {
-			DynamicDataSourceContextHolder.push(DSConstants.IOT);
-			if (MqttForyFactory.INSTANCE
-				.deserialize(msg) instanceof UpCommandReplyGatewayMessage upCommandReplyGatewayMessage) {
-				transactionalUtils.executeInTransaction(() -> updateGatewayCommand(upCommandReplyGatewayMessage,
-						gatewayCommandMapper.selectVersion(upCommandReplyGatewayMessage.getRequestId())));
-			}
-			ack.acknowledge();
-		}
-		catch (Exception ex) {
-			log.error("handleUpCommandReplyGatewayMessage error", ex);
-			ack.nack();
-		}
-		finally {
-			DynamicDataSourceContextHolder.clear();
-		}
 	}
 
 	// @formatter:off

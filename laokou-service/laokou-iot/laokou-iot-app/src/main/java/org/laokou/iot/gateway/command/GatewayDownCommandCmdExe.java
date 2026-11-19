@@ -22,11 +22,12 @@ import io.netty.handler.codec.mqtt.MqttQoS;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.domain.annotation.CommandLog;
+import org.laokou.common.i18n.common.clientobject.GatewayCommandCO;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.mqtt.client.GatewayCommandFutureManager;
 import org.laokou.common.mqtt.client.MqttClientManager;
 import org.laokou.common.mqtt.client.MqttForyFactory;
-import org.laokou.common.mqtt.client.message.UpCommandReplyGatewayMessage;
+import org.laokou.common.mqtt.client.SpringMqttClientProperties;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
 import org.laokou.common.tenant.constant.DSConstants;
 import org.laokou.iot.device.gatewayimpl.database.DeviceMapper;
@@ -40,6 +41,7 @@ import org.laokou.iot.gateway.gatewayimpl.database.dataobject.GatewayDO;
 import org.laokou.iot.gateway.model.GatewayCommandA;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -63,10 +65,13 @@ public class GatewayDownCommandCmdExe {
 
 	private final MqttClientManager mqttClientManager;
 
+	private final SpringMqttClientProperties springMqttClientProperties;
+
 	private final GatewayCommandFutureManager gatewayCommandFutureManager;
 
 	@CommandLog
-	public CompletableFuture<> execute(GatewayDownCommandCmd cmd) throws ExecutionException, InterruptedException, TimeoutException {
+	public CompletableFuture<GatewayCommandCO> execute(GatewayDownCommandCmd cmd)
+			throws ExecutionException, InterruptedException, TimeoutException {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.IOT);
 			GatewayDO gatewayDO = gatewayMapper.selectById(cmd.getGatewayId());
@@ -74,12 +79,21 @@ public class GatewayDownCommandCmdExe {
 					: null;
 			GatewayCommandA gatewayCommandA = GatewayDomainFactory.createGatewayCommandA()
 				.create(GatewayConvertor.toEntity(gatewayDO, deviceDO, cmd.getCommand(), cmd.getParam()));
-			CompletableFuture<UpCommandReplyGatewayMessage> future = gatewayCommandFutureManager.put(gatewayCommandA.getId());
-			// 发布 MQTT 消息
-			mqttClientManager.publish(gatewayDO.getSessionId(), gatewayCommandA.getGatewayCommandE().getTopic(), MqttForyFactory.INSTANCE.serialize(GatewayConvertor.toMessage(gatewayCommandA, cmd.getParam())), MqttQoS.AT_LEAST_ONCE);
-			// 挂起线程
-			UpCommandReplyGatewayMessage upCommandReplyGatewayMessage = future.get(3, TimeUnit.SECONDS);
-			//transactionalUtils.executeInTransaction(() -> gatewayDomainService.createGatewayCommand(gatewayCommandA));
+			Long commandId = gatewayCommandA.getId();
+			CompletableFuture<GatewayCommandCO> future = gatewayCommandFutureManager.put(gatewayCommandA.getId())
+				.orTimeout(springMqttClientProperties.getCommandReplyTimeoutSeconds(), TimeUnit.SECONDS);
+			String errorMessage = toPublishMessage(gatewayDO, gatewayCommandA, cmd.getParam());
+			return future.whenCompleteAsync((reply, err) -> {
+				if (reply == null) {
+					gatewayCommandFutureManager.remove(commandId);
+				}
+				if (err != null) {
+					log.error("GatewayDownCommandCmdExe execute error:", err);
+				}
+				log.info(reply == null ? "请求超时" : "请求成功");
+				log.info(errorMessage);
+				// transactionalUtils.executeInTransaction(() -> {});
+			});
 		}
 		catch (Exception ex) {
 			log.error("下发重启网关指令失败，错误信息：{}", ex.getMessage(), ex);
@@ -87,6 +101,19 @@ public class GatewayDownCommandCmdExe {
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();
+		}
+	}
+
+	public String toPublishMessage(GatewayDO gatewayDO, GatewayCommandA gatewayCommandA, Map<String, Object> param) {
+		try {
+			// 发布 MQTT 消息
+			mqttClientManager.publish(gatewayDO.getSessionId(), gatewayCommandA.getGatewayCommandE().getTopic(),
+					MqttForyFactory.INSTANCE.serialize(GatewayConvertor.toMessage(gatewayCommandA, param)),
+					MqttQoS.AT_LEAST_ONCE);
+			return null;
+		}
+		catch (Exception ex) {
+			return ex.getMessage();
 		}
 	}
 

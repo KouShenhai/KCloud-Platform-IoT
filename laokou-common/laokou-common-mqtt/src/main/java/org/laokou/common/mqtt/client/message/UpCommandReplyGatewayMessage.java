@@ -30,7 +30,7 @@ import java.util.Map;
  * @author laokou
  */
 @Data
-public class UpCommandReplyGatewayMessage implements Serializable {
+public final class UpCommandReplyGatewayMessage implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = ForyConstants.C_247;

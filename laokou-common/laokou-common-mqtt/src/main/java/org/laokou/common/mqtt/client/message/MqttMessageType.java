@@ -21,6 +21,7 @@ import io.netty.handler.codec.mqtt.MqttQoS;
 import io.netty.handler.codec.mqtt.MqttTopicSubscription;
 import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -36,7 +37,7 @@ public enum MqttMessageType {
 	UP_COMMAND_REPLY_GATEWAY_MESSAGE("up_command_reply_gateway_message", "网关指令回复【上行】") {
 		@Override
 		public String getTopic() {
-			return "up/+/+/command/reply";
+			return "up/+/command/reply";
 		}
 
 		@Override
@@ -52,6 +53,11 @@ public enum MqttMessageType {
 		@Override
 		public int getNumPartitions() {
 			return 2;
+		}
+
+		@Override
+		public boolean isShared() {
+			return false;
 		}
 
 	},
@@ -77,6 +83,11 @@ public enum MqttMessageType {
 			return 1;
 		}
 
+		@Override
+		public boolean isShared() {
+			return true;
+		}
+
 	},
 
 	DOWN_REPORT_OTA_REPLY_GATEWAY_MESSAGE("down_report_ota_reply_gateway_message", "上报网关固件信息回复【下发】") {
@@ -98,6 +109,11 @@ public enum MqttMessageType {
 		@Override
 		public int getNumPartitions() {
 			return 1;
+		}
+
+		@Override
+		public boolean isShared() {
+			return true;
 		}
 
 	},
@@ -123,6 +139,11 @@ public enum MqttMessageType {
 			return 1;
 		}
 
+		@Override
+		public boolean isShared() {
+			return true;
+		}
+
 	},
 
 	DOWN_UPGRADE_OTA_REPLY_GATEWAY_MESSAGE("down_upgrade_ota_reply_gateway_message", "升级网关固件回复【下发】") {
@@ -144,6 +165,11 @@ public enum MqttMessageType {
 		@Override
 		public int getNumPartitions() {
 			return 1;
+		}
+
+		@Override
+		public boolean isShared() {
+			return true;
 		}
 
 	},
@@ -169,6 +195,11 @@ public enum MqttMessageType {
 			return 1;
 		}
 
+		@Override
+		public boolean isShared() {
+			return true;
+		}
+
 	},
 
 	UP_REPORT_PROPERTIES_GATEWAY_MESSAGE("up_report_properties_gateway_message", "上报网关属性【上行】") {
@@ -192,6 +223,11 @@ public enum MqttMessageType {
 			return 2;
 		}
 
+		@Override
+		public boolean isShared() {
+			return true;
+		}
+
 	},
 
 	UP_REPORT_PROPERTIES_DEVICE_MESSAGE("up_report_properties_device_message", "上报设备属性【上行】") {
@@ -213,6 +249,11 @@ public enum MqttMessageType {
 		@Override
 		public int getNumPartitions() {
 			return 4;
+		}
+
+		@Override
+		public boolean isShared() {
+			return true;
 		}
 
 	},
@@ -239,6 +280,11 @@ public enum MqttMessageType {
 			return 2;
 		}
 
+		@Override
+		public boolean isShared() {
+			return true;
+		}
+
 	};
 
 	private final String code;
@@ -258,13 +304,23 @@ public enum MqttMessageType {
 
 	public abstract int getNumPartitions();
 
-	public static List<MqttTopicSubscription> getTopics(String tenantCode) {
-		return Arrays.stream(values())
+	public abstract boolean isShared();
+
+	public static List<MqttTopicSubscription> getTopics(String tenantCode, String clientId) {
+		ArrayList<MqttTopicSubscription> list = new ArrayList<>(values().length);
+		list.addAll(Arrays.stream(values())
+			.filter(item -> !item.isShared())
+			.map(item -> new MqttTopicSubscription(item.getTopic().replace("\\+", Matcher.quoteReplacement(clientId)),
+					item.getMqttQos()))
+			.toList());
+		list.addAll(Arrays.stream(values())
+			.filter(MqttMessageType::isShared)
 			.map(item -> new MqttTopicSubscription(
 					String.format("$share/iot/%s",
 							item.getTopic().replaceFirst("\\+", Matcher.quoteReplacement(tenantCode))),
 					item.getMqttQos()))
-			.toList();
+			.toList());
+		return list;
 	}
 
 	public static final String UP_REPORT_PROPERTIES_DEVICE_MESSAGE_TOPIC = "iot-up-report-properties-device-message";

@@ -20,6 +20,7 @@ package org.laokou.iot.web;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.laokou.common.i18n.common.clientobject.GatewayCommandCO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
@@ -33,7 +34,6 @@ import org.laokou.iot.gateway.dto.GatewayDownCommandCmd;
 import org.laokou.iot.gateway.dto.GatewayModifyCmd;
 import org.laokou.iot.gateway.dto.GatewayPageQry;
 import org.laokou.iot.gateway.dto.GatewayCommandPageQry;
-import org.laokou.iot.gateway.dto.clientobject.GatewayCommandCO;
 import org.laokou.iot.gateway.dto.GatewayPropertiesGetQry;
 import org.laokou.iot.gateway.dto.GatewayRemoveCmd;
 import org.laokou.iot.gateway.dto.GatewaySaveCmd;
@@ -51,6 +51,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeoutException;
 
 /**
  *
@@ -135,8 +139,10 @@ public class GatewaysController {
 	@PreAuthorize("hasAuthority('write') and hasAuthority('iot:gateway:reboot-gateway-command')")
 	@OperateLog(module = "网关管理", operation = "下发重启网关指令")
 	@Operation(summary = "下发重启网关指令", description = "下发重启网关指令")
-	public void downRebootGatewayCommand(@Validated @RequestBody GatewayDownCommandCmd cmd) {
-		gatewaysServiceI.downGatewayCommand(cmd);
+	public CompletableFuture<GatewayCommandCO> downRebootGatewayCommand(
+			@Validated @RequestBody GatewayDownCommandCmd cmd)
+			throws ExecutionException, InterruptedException, TimeoutException {
+		return gatewaysServiceI.downGatewayCommand(cmd);
 	}
 
 	@Idempotent
@@ -144,8 +150,10 @@ public class GatewaysController {
 	@PreAuthorize("hasAuthority('write') and hasAuthority('iot:gateway:read-device-properties-command')")
 	@OperateLog(module = "网关管理", operation = "下发读取设备属性指令")
 	@Operation(summary = "下发读取设备属性指令", description = "下发读取设备属性指令")
-	public void downReadDevicePropertiesCommand(@Validated @RequestBody GatewayDownCommandCmd cmd) {
-		gatewaysServiceI.downGatewayCommand(cmd);
+	public CompletableFuture<GatewayCommandCO> downReadDevicePropertiesCommand(
+			@Validated @RequestBody GatewayDownCommandCmd cmd)
+			throws ExecutionException, InterruptedException, TimeoutException {
+		return gatewaysServiceI.downGatewayCommand(cmd);
 	}
 
 	@Idempotent
@@ -153,15 +161,18 @@ public class GatewaysController {
 	@PreAuthorize("hasAuthority('write') and hasAuthority('iot:gateway:write-device-properties-command')")
 	@OperateLog(module = "网关管理", operation = "下发写入设备属性指令")
 	@Operation(summary = "下发写入设备属性指令", description = "下发写入设备属性指令")
-	public void downWriteDevicePropertiesCommand(@Validated @RequestBody GatewayDownCommandCmd cmd) {
-		gatewaysServiceI.downGatewayCommand(cmd);
+	public CompletableFuture<GatewayCommandCO> downWriteDevicePropertiesCommand(
+			@Validated @RequestBody GatewayDownCommandCmd cmd)
+			throws ExecutionException, InterruptedException, TimeoutException {
+		return gatewaysServiceI.downGatewayCommand(cmd);
 	}
 
 	@TraceLog
 	@PostMapping("/v1/gateways/commands/page")
 	@PreAuthorize("hasAuthority('read') and hasAuthority('iot:gateway:page-command')")
 	@Operation(summary = "分页查询网关指令列表", description = "分页查询网关指令列表")
-	public Result<Page<GatewayCommandCO>> pageGatewayCommand(@Validated @RequestBody GatewayCommandPageQry qry) {
+	public Result<Page<org.laokou.iot.gateway.dto.clientobject.GatewayCommandCO>> pageGatewayCommand(
+			@Validated @RequestBody GatewayCommandPageQry qry) {
 		return gatewaysServiceI.pageGatewayCommand(qry);
 	}
 
