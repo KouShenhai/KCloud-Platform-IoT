@@ -61,8 +61,13 @@ export default () => {
 					gatewayId: record?.id,
 					command: 'reboot_gateway',
 				}, rebootRequestId).then(res => {
-					if (res.code === 'OK') {
+					// @ts-ignore
+					if (res?.data?.message === 'OK') {
 						message.success(t('iot.gateway.reboot.success'));
+					// @ts-ignore
+					} else if (res?.data?.message) {
+						// @ts-ignore
+						message.error(res?.data?.message);
 					}
 				})
 			},

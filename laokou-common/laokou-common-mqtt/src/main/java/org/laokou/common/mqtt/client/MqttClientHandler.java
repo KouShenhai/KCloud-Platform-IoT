@@ -352,7 +352,7 @@ final class MqttClientHandler extends SimpleChannelInboundHandler<MqttMessage> {
 				new MqttFixedHeader(MqttMessageType.SUBSCRIBE, false, MqttQoS.AT_LEAST_ONCE, false, 0),
 				MqttMessageIdVariableHeader.from(client.getPacketIdGenerator().nextId()),
 				new MqttSubscribePayload(org.laokou.common.mqtt.client.message.MqttMessageType
-					.getTopics(client.getProperties().getTenantCode())));
+					.getTopics(client.getProperties().getTenantCode(), client.getProperties().getClientId())));
 		client.writeAndFlush(channel, subscribeMsg, _ -> channel.close());
 	}
 

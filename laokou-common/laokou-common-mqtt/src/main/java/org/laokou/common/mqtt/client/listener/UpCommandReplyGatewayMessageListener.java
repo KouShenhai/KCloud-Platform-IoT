@@ -20,11 +20,10 @@ package org.laokou.common.mqtt.client.listener;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.pulsar.client.api.MessageId;
-import org.jspecify.annotations.NonNull;
-import org.laokou.common.core.config.SystemSettingsProperties;
+import org.laokou.common.mqtt.client.GatewayCommandFutureManager;
+import org.laokou.common.mqtt.client.MqttForyFactory;
 import org.laokou.common.mqtt.client.message.MqttMessageType;
-import org.laokou.common.mqtt.client.util.PulsarUtils;
-import org.springframework.pulsar.core.PulsarTemplate;
+import org.laokou.common.mqtt.client.message.UpCommandReplyGatewayMessage;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CompletableFuture;
@@ -39,15 +38,19 @@ import java.util.concurrent.CompletableFuture;
 @RequiredArgsConstructor
 final class UpCommandReplyGatewayMessageListener implements MessageListener {
 
-	private final PulsarTemplate<@NonNull Object> pulsarTemplate;
-
-	private final SystemSettingsProperties systemSettingsProperties;
+	private final GatewayCommandFutureManager gatewayCommandFutureManager;
 
 	@Override
 	public CompletableFuture<MessageId> onMessage(MqttMessage message) {
-		return pulsarTemplate.sendAsync(
-				PulsarUtils.getGatewayTopic(systemSettingsProperties.getTenantCode(), getMessageType().getMqTopic()),
-				message.payload());
+		if (MqttForyFactory.INSTANCE
+			.deserialize(message.payload()) instanceof UpCommandReplyGatewayMessage upCommandReplyGatewayMessage) {
+			CompletableFuture<UpCommandReplyGatewayMessage> future = gatewayCommandFutureManager
+				.remove(upCommandReplyGatewayMessage.getRequestId());
+			if (future != null) {
+				future.complete(upCommandReplyGatewayMessage);
+			}
+		}
+		return CompletableFuture.completedFuture(null);
 	}
 
 	@Override

@@ -29,6 +29,7 @@ import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.mqtt.client.MqttClientManager;
 import org.laokou.common.mqtt.client.MqttClientProperties;
 import org.laokou.common.mqtt.client.MqttEventLoop;
+import org.laokou.common.mqtt.client.SpringMqttClientProperties;
 import org.laokou.common.mqtt.client.listener.MessageListener;
 import org.laokou.common.tenant.constant.DSConstants;
 import org.laokou.iot.session.convertor.SessionConvertor;
@@ -56,6 +57,8 @@ import java.util.List;
 public final class SessionMessageHandler implements ApplicationListener<@NonNull ApplicationReadyEvent> {
 
 	private final SystemSettingsProperties systemSettingsProperties;
+
+	private final SpringMqttClientProperties springMqttClientProperties;
 
 	private final SessionMapper sessionMapper;
 
@@ -135,7 +138,8 @@ public final class SessionMessageHandler implements ApplicationListener<@NonNull
 	}
 
 	private void open(SessionDO sessionDO) {
-		MqttClientProperties properties = SessionConvertor.toProperties(sessionDO, systemSettingsProperties);
+		MqttClientProperties properties = SessionConvertor.toProperties(sessionDO, systemSettingsProperties,
+				springMqttClientProperties);
 		mqttClientManager.open(sessionDO.getId(), properties, mqttEventLoop, listeners);
 	}
 

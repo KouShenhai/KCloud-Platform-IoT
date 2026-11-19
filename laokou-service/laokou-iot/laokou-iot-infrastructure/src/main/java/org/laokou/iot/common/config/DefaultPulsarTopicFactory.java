@@ -28,7 +28,9 @@ import org.apache.pulsar.common.policies.data.TenantInfoImpl;
 import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.iot.session.model.enums.MqTopic;
 import org.laokou.common.mqtt.client.message.MqttMessageType;
+import org.springframework.util.StringUtils;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -73,14 +75,13 @@ final class DefaultPulsarTopicFactory implements PulsarTopicFactory {
 			namespaces.createNamespace(sessionNamespace);
 		}
 		log.info("create topic for namespace {}", sessionNamespace);
-		for (MqttMessageType mqttMessageType : MqttMessageType.values()) {
+		for (MqttMessageType mqttMessageType : Arrays.stream(MqttMessageType.values())
+			.filter(item -> StringUtils.hasText(item.getTopic()))
+			.toList()) {
 			createTopic(topics, gatewayNamespace, mqttMessageType.getMqTopic(), mqttMessageType.getNumPartitions());
 		}
 		for (MqTopic mqTopic : MqTopic.values()) {
 			createTopic(topics, sessionNamespace, mqTopic.getTopic(), mqTopic.getNumPartitions());
-		}
-		for (org.laokou.iot.gateway.model.enums.MqTopic mqTopic : org.laokou.iot.gateway.model.enums.MqTopic.values()) {
-			createTopic(topics, gatewayNamespace, mqTopic.getTopic(), mqTopic.getNumPartitions());
 		}
 	}
 

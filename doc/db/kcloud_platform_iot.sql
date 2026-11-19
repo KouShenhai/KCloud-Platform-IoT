@@ -389,20 +389,19 @@ CREATE TABLE "public"."iot_gateway_command" (
 	"version" int4 NOT NULL DEFAULT 0,
 	"tenant_id" int8 NOT NULL DEFAULT 1,
 	"dept_id" int8 NOT NULL DEFAULT 1,
-	"session_id" int8 NOT NULL,
 	"gateway_id" int8 NOT NULL,
 	"gateway_sn" varchar(64)  NOT NULL,
 	"command" varchar(50) NOT NULL,
 	"topic" varchar(200) NOT NULL,
+	"reply_topic" varchar(200) NOT NULL,
 	"device_id" int8,
 	"device_sn" varchar(64),
 	"device_name" varchar(100),
 	"param" json,
-	"error_message" varchar(200),
+	"message" varchar(200),
 	"status" int2 NOT NULL DEFAULT 0,
 	"reply_payload" json,
 	"reply_status" int2,
-	"down_time" timestamp(6),
 	"reply_time" timestamp(6),
 	"reply_message" varchar(100)
 )
@@ -416,20 +415,19 @@ COMMENT ON COLUMN "public"."iot_gateway_command"."del_flag" IS '删除标识 0�
 COMMENT ON COLUMN "public"."iot_gateway_command"."version" IS '版本号';
 COMMENT ON COLUMN "public"."iot_gateway_command"."tenant_id" IS '租户ID';
 COMMENT ON COLUMN "public"."iot_gateway_command"."dept_id" IS '部门ID';
-COMMENT ON COLUMN "public"."iot_gateway_command"."session_id" IS '会话ID';
 COMMENT ON COLUMN "public"."iot_gateway_command"."gateway_id" IS '网关ID';
 COMMENT ON COLUMN "public"."iot_gateway_command"."gateway_sn" IS '网关序列号';
-COMMENT ON COLUMN "public"."iot_gateway_command"."topic" IS '主题';
-COMMENT ON COLUMN "public"."iot_gateway_command"."command" IS '指令 reboot_gateway重启网关指令 read_device_properties读取设备属性指令 write_device_properties写入设备属性指令';
+COMMENT ON COLUMN "public"."iot_gateway_command"."topic" IS '指令下发主题';
+COMMENT ON COLUMN "public"."iot_gateway_command"."reply_topic" IS '指令回复主题';
+COMMENT ON COLUMN "public"."iot_gateway_command"."command" IS '下发指令 reboot_gateway重启网关指令 read_device_properties读取设备属性指令 write_device_properties写入设备属性指令';
 COMMENT ON COLUMN "public"."iot_gateway_command"."device_id" IS '设备ID';
 COMMENT ON COLUMN "public"."iot_gateway_command"."device_sn" IS '设备序列号';
 COMMENT ON COLUMN "public"."iot_gateway_command"."device_name" IS '设备名称';
-COMMENT ON COLUMN "public"."iot_gateway_command"."param" IS '指令参数';
-COMMENT ON COLUMN "public"."iot_gateway_command"."down_time" IS '指令下发时间';
-COMMENT ON COLUMN "public"."iot_gateway_command"."error_message" IS '错误信息';
-COMMENT ON COLUMN "public"."iot_gateway_command"."status" IS '指令状态 0待处理 1成功 2失败';
+COMMENT ON COLUMN "public"."iot_gateway_command"."param" IS '指令下发参数';
+COMMENT ON COLUMN "public"."iot_gateway_command"."message" IS '指令下发信息';
+COMMENT ON COLUMN "public"."iot_gateway_command"."status" IS '指令下发状态 0成功 1失败';
 COMMENT ON COLUMN "public"."iot_gateway_command"."reply_payload" IS '指令回复内容';
-COMMENT ON COLUMN "public"."iot_gateway_command"."reply_status" IS '指令回复状态 0失败 1成功';
+COMMENT ON COLUMN "public"."iot_gateway_command"."reply_status" IS '指令回复状态 0成功 1失败';
 COMMENT ON COLUMN "public"."iot_gateway_command"."reply_time" IS '指令回复时间';
 COMMENT ON COLUMN "public"."iot_gateway_command"."reply_message" IS '指令回复信息';
 COMMENT ON TABLE "public"."iot_gateway_command" IS '网关指令';

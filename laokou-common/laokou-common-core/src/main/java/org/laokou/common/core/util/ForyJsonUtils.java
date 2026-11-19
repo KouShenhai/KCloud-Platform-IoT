@@ -15,43 +15,30 @@
  *
  */
 
-package org.laokou.iot.gateway.model.enums;
+package org.laokou.common.core.util;
 
-import lombok.Getter;
+import org.apache.fory.json.ForyJson;
 
 /**
- * mq枚举.
- *
  * @author laokou
  */
-@Getter
-public enum MqTopic {
+public final class ForyJsonUtils {
 
-	DOWN_COMMAND_GATEWAY_MESSAGE("down_command_gateway_message", "下发指令网关消息") {
-		@Override
-		public String getTopic() {
-			return DOWN_COMMAND_GATEWAY_MESSAGE_TOPIC;
-		}
+	private static final ForyJson JSON = ForyJson.builder().build();
 
-		@Override
-		public int getNumPartitions() {
-			return 2;
-		}
-	};
-
-	private final String code;
-
-	private final String desc;
-
-	MqTopic(String code, String desc) {
-		this.code = code;
-		this.desc = desc;
+	private ForyJsonUtils() {
 	}
 
-	public abstract String getTopic();
+	public static String toJsonStr(Object obj) {
+		return JSON.toJson(obj);
+	}
 
-	public abstract int getNumPartitions();
+	public static <T> T toBean(String json, Class<T> clazz) {
+		return JSON.fromJson(json, clazz);
+	}
 
-	public static final String DOWN_COMMAND_GATEWAY_MESSAGE_TOPIC = "iot-down-command-gateway-message";
+	public static <T> T toBean(byte[] bytes, Class<T> clazz) {
+		return JSON.fromJson(bytes, clazz);
+	}
 
 }

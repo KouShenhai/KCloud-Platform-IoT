@@ -23,8 +23,8 @@ import org.apache.pulsar.client.api.PulsarClientException;
 import org.apache.pulsar.client.api.SubscriptionType;
 import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.config.SystemSettingsProperties;
-import org.laokou.common.fory.config.ForyFactory;
 import org.laokou.common.fory.constant.ForyConstants;
+import org.laokou.common.mqtt.client.GatewayCommandFutureManager;
 import org.laokou.common.mqtt.client.MqttClientManager;
 import org.laokou.common.mqtt.client.MqttEventLoop;
 import org.laokou.common.mqtt.client.MqttForyFactory;
@@ -54,7 +54,6 @@ public class IotConfig {
 				ForyConstants.C_246);
 		MqttForyFactory.INSTANCE.register(org.laokou.common.mqtt.client.message.UpCommandReplyGatewayMessage.class,
 				ForyConstants.C_247);
-		ForyFactory.INSTANCE.register(org.laokou.iot.gateway.dto.event.GatewayCommandEvent.class, ForyConstants.C_248);
 	}
 
 	@Bean
@@ -62,6 +61,11 @@ public class IotConfig {
 			name = "enabled")
 	DeviceMcpMapper deviceMcpMapper(ToolCallbackProvider syncMcpToolCallbackProvider) {
 		return new DeviceMcpMapper(syncMcpToolCallbackProvider);
+	}
+
+	@Bean(destroyMethod = "close")
+	GatewayCommandFutureManager gatewayCommandFutureManager() {
+		return new GatewayCommandFutureManager();
 	}
 
 	@Bean
