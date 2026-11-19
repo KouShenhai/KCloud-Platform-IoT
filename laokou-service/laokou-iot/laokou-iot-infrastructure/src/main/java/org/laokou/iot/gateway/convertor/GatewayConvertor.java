@@ -120,7 +120,8 @@ public final class GatewayConvertor {
 		gatewayCommandDO.setCreateTime(gatewayCommandA.getCreateTime());
 		gatewayCommandDO.setReplyMessage(gatewayCommandE.getReplyMessage());
 		gatewayCommandDO.setReplyPayload(gatewayCommandE.getReplyPayload());
-		gatewayCommandDO.setReplyStatus(gatewayCommandE.getStatus() == Status.FAIL.getCode() ? null : gatewayCommandE.getReplyStatus());
+		gatewayCommandDO.setReplyStatus(
+				gatewayCommandE.getStatus() == Status.FAIL.getCode() ? null : gatewayCommandE.getReplyStatus());
 		gatewayCommandDO.setReplyTopic(gatewayCommandE.getReplyTopic());
 		gatewayCommandDO.setReplyTime(gatewayCommandE.getReplyTime());
 		gatewayCommandDO.setCreator(gatewayCommandE.getCreator());

@@ -74,7 +74,7 @@ public class GatewayCommandA extends AggregateRoot {
 			.replyPayload(MapUtils.isNotEmpty(replyPayload) ? ForyJsonUtils.toJsonStr(replyPayload) : null)
 			.replyMessage(replyMessage)
 			.replyStatus(ObjectUtils.equals(StatusCode.OK, replyMessage) ? Status.SUCCESS.getCode()
-							: Status.FAILURE.getCode())
+					: Status.FAILURE.getCode())
 			.message(err != null ? err.getCause().getMessage() : null)
 			.status(err != null ? Status.FAILURE.getCode() : Status.SUCCESS.getCode())
 			.build();
