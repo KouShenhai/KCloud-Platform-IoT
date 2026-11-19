@@ -23,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.i18n.common.clientobject.GatewayCommandCO;
+import org.laokou.common.i18n.util.JacksonUtils;
 import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.common.mqtt.client.GatewayCommandFutureManager;
 import org.laokou.common.mqtt.client.MqttClientManager;
@@ -46,6 +47,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author laokou
@@ -80,9 +82,11 @@ public class GatewayDownCommandCmdExe {
 			GatewayCommandA gatewayCommandA = GatewayDomainFactory.createGatewayCommandA()
 				.create(GatewayConvertor.toEntity(gatewayDO, deviceDO, cmd.getCommand(), cmd.getParam()));
 			Long commandId = gatewayCommandA.getId();
-			CompletableFuture<GatewayCommandCO> future = gatewayCommandFutureManager.put(gatewayCommandA.getId())
+			CompletableFuture<GatewayCommandCO> future = gatewayCommandFutureManager.put(gatewayCommandA.getId(), new CompletableFuture<>())
 				.orTimeout(springMqttClientProperties.getCommandReplyTimeoutSeconds(), TimeUnit.SECONDS);
-			String errorMessage = toPublishMessage(gatewayDO, gatewayCommandA, cmd.getParam());
+			AtomicReference<String> errorMessage = new AtomicReference<>();
+			// 发布 MQTT 消息
+			Thread.startVirtualThread(() -> errorMessage.set(toPublishMessage(gatewayDO, gatewayCommandA, cmd.getParam())));
 			return future.whenCompleteAsync((reply, err) -> {
 				if (reply == null) {
 					gatewayCommandFutureManager.remove(commandId);
@@ -91,7 +95,8 @@ public class GatewayDownCommandCmdExe {
 					log.error("GatewayDownCommandCmdExe execute error:", err);
 				}
 				log.info(reply == null ? "请求超时" : "请求成功");
-				log.info(errorMessage);
+				log.info(JacksonUtils.toJsonStr(reply));
+				log.info(errorMessage.get());
 				// transactionalUtils.executeInTransaction(() -> {});
 			});
 		}
@@ -106,11 +111,10 @@ public class GatewayDownCommandCmdExe {
 
 	public String toPublishMessage(GatewayDO gatewayDO, GatewayCommandA gatewayCommandA, Map<String, Object> param) {
 		try {
-			// 发布 MQTT 消息
 			mqttClientManager.publish(gatewayDO.getSessionId(), gatewayCommandA.getGatewayCommandE().getTopic(),
 					MqttForyFactory.INSTANCE.serialize(GatewayConvertor.toMessage(gatewayCommandA, param)),
 					MqttQoS.AT_LEAST_ONCE);
-			return null;
+			return "3333333333333";
 		}
 		catch (Exception ex) {
 			return ex.getMessage();

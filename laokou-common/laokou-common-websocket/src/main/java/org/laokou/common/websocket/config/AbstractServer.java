@@ -80,7 +80,7 @@ public abstract class AbstractServer implements Server {
 	@Override
 	public final void start() {
 		if (running.get()) {
-			log.error("【WebSocket-Server】 => 已启动监听，端口：{}，运行状态【true已启动，false已停止】：{}", port, running.get());
+			log.error("【WebSocket-Server】 => 已启动服务监听，端口：{}", port);
 			return;
 		}
 		// -Dnetty.server.parentgroup.size=2 -Dnetty.server.childgroup.size=32
@@ -108,7 +108,7 @@ public abstract class AbstractServer implements Server {
 			if (ObjectUtils.isNotNull(worker)) {
 				worker.shutdownGracefully();
 			}
-			log.info("优雅关闭，释放资源，运行状态【true已启动，false已停止】：{}", running.get());
+			log.info("优雅关闭，释放资源");
 		}
 	}
 
@@ -128,10 +128,11 @@ public abstract class AbstractServer implements Server {
 	private ChannelFuture bind(final AbstractBootstrap<?, ?> bootstrap) {
 		return bootstrap.bind(host, port).addListener(future -> {
 			if (!future.isSuccess()) {
-				log.error("【WebSocket-Server】 => 启动失败，端口{}被占用", port);
+				log.error("【WebSocket-Server】 => 启动失败，端口 {} 被占用", port);
 			}
 			else {
-				log.info("【WebSocket-Server】 => 启动成功，端口{}已绑定，运行状态【true已启动，false已停止】：{}", port, running.getAndSet(true));
+				running.set(true);
+				log.info("【WebSocket-Server】 => 启动成功，端口 {} 已绑定", port);
 			}
 		});
 	}

@@ -27,8 +27,9 @@ public final class GatewayCommandFutureManager {
 
 	private final Map<Long, CompletableFuture<GatewayCommandCO>> futures = new ConcurrentHashMap<>(8192);
 
-	public CompletableFuture<GatewayCommandCO> put(Long id) {
-		return futures.put(id, new CompletableFuture<>());
+	public CompletableFuture<GatewayCommandCO> put(Long id, CompletableFuture<GatewayCommandCO> future) {
+		futures.put(id, future);
+		return future;
 	}
 
 	public CompletableFuture<GatewayCommandCO> remove(Long id) {

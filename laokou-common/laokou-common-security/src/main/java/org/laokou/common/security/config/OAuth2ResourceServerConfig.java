@@ -90,8 +90,7 @@ public class OAuth2ResourceServerConfig {
 	@Bean
 	@Order(Ordered.HIGHEST_PRECEDENCE + 1000)
 	@ConditionalOnMissingBean(SecurityFilterChain.class)
-	SecurityFilterChain resourceFilterChain(OpaqueTokenIntrospector opaqueTokenIntrospector,
-                                            SpringUtils springUtils, OAuth2ResourceServerProperties oAuth2ResourceServerProperties, HttpSecurity http)
+	SecurityFilterChain resourceFilterChain(OpaqueTokenIntrospector opaqueTokenIntrospector, SpringUtils springUtils, OAuth2ResourceServerProperties oAuth2ResourceServerProperties, HttpSecurity http)
 			{
 		return http
 			.authorizeHttpRequests(customizer(oAuth2ResourceServerProperties, springUtils))
@@ -101,7 +100,6 @@ public class OAuth2ResourceServerConfig {
 					.preload(true)
 					.maxAgeInSeconds(31536000)))
 			.requestCache(AbstractHttpConfigurer::disable)
-			.securityContext(AbstractHttpConfigurer::disable)
 			.csrf(AbstractHttpConfigurer::disable)
 			.cors(AbstractHttpConfigurer::disable)
 			.httpBasic(AbstractHttpConfigurer::disable)
