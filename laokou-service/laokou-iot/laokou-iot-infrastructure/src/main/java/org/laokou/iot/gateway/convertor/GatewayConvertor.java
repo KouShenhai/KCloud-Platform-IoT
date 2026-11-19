@@ -18,9 +18,11 @@
 package org.laokou.iot.gateway.convertor;
 
 import org.laokou.common.context.util.UserUtils;
+import org.laokou.common.core.util.ForyJsonUtils;
 import org.laokou.common.core.util.MapUtils;
-import org.laokou.common.fory.util.ForyJsonUtils;
+import org.laokou.common.mqtt.client.SpringMqttClientProperties;
 import org.laokou.common.mqtt.client.message.DownCommandGatewayMessage;
+import org.laokou.common.mqtt.client.message.UpCommandReplyGatewayMessage;
 import org.laokou.iot.device.gatewayimpl.database.dataobject.DeviceDO;
 import org.laokou.iot.gateway.dto.clientobject.GatewayCO;
 import org.laokou.iot.gateway.dto.clientobject.GatewayCommandCO;
@@ -58,8 +60,15 @@ public final class GatewayConvertor {
 		return gatewayDO;
 	}
 
+	public static UpCommandReplyGatewayMessage toMessage() {
+		UpCommandReplyGatewayMessage upCommandReplyGatewayMessage = new UpCommandReplyGatewayMessage();
+		upCommandReplyGatewayMessage.setMessage("指令下发超时");
+		upCommandReplyGatewayMessage.setPayload(null);
+		return upCommandReplyGatewayMessage;
+	}
+
 	public static GatewayCommandE toEntity(GatewayDO gatewayDO, DeviceDO deviceDO, String command,
-			Map<String, Object> param) {
+			Map<String, Object> param, SpringMqttClientProperties springMqttClientProperties) {
 		return GatewayDomainFactory.createGatewayCommandE()
 			.toBuilder()
 			.gatewaySn(gatewayDO.getSn())
@@ -69,7 +78,11 @@ public final class GatewayConvertor {
 			.deviceId(deviceDO != null ? deviceDO.getId() : null)
 			.deviceName(deviceDO != null ? deviceDO.getName() : null)
 			.deviceSn(deviceDO != null ? deviceDO.getSn() : null)
+			.replyTopic(String.format("up/%s/command/reply", springMqttClientProperties.getClientId()))
 			.topic(String.format("down/%s/%s/command", UserUtils.getTenantCode(), gatewayDO.getSn()))
+			.creator(UserUtils.getUserId())
+			.tenantId(UserUtils.getTenantId())
+			.deptId(UserUtils.getDeptId())
 			.build();
 	}
 
@@ -101,7 +114,17 @@ public final class GatewayConvertor {
 		gatewayCommandDO.setStatus(gatewayCommandE.getStatus());
 		gatewayCommandDO.setParam(gatewayCommandE.getParam());
 		gatewayCommandDO.setCommand(gatewayCommandE.getCommand());
+		gatewayCommandDO.setMessage(gatewayCommandE.getMessage());
 		gatewayCommandDO.setCreateTime(gatewayCommandA.getCreateTime());
+		gatewayCommandDO.setReplyMessage(gatewayCommandE.getReplyMessage());
+		gatewayCommandDO.setReplyPayload(gatewayCommandE.getReplyPayload());
+		gatewayCommandDO.setReplyStatus(gatewayCommandE.getReplyStatus());
+		gatewayCommandDO.setReplyTopic(gatewayCommandE.getReplyTopic());
+		gatewayCommandDO.setReplyTime(gatewayCommandE.getReplyTime());
+		gatewayCommandDO.setCreator(gatewayCommandE.getCreator());
+		gatewayCommandDO.setEditor(gatewayCommandE.getCreator());
+		gatewayCommandDO.setTenantId(gatewayCommandE.getTenantId());
+		gatewayCommandDO.setDeptId(gatewayCommandE.getDeptId());
 		return gatewayCommandDO;
 	}
 
@@ -160,11 +183,10 @@ public final class GatewayConvertor {
 		gatewayCommandCO.setDeviceSn(gatewayCommandDO.getDeviceSn());
 		gatewayCommandCO.setDeviceName(gatewayCommandDO.getDeviceName());
 		gatewayCommandCO.setParam(gatewayCommandDO.getParam());
-		gatewayCommandCO.setErrorMessage(gatewayCommandDO.getErrorMessage());
+		gatewayCommandCO.setMessage(gatewayCommandDO.getMessage());
 		gatewayCommandCO.setStatus(gatewayCommandDO.getStatus());
 		gatewayCommandCO.setReplyPayload(gatewayCommandDO.getReplyPayload());
 		gatewayCommandCO.setReplyStatus(gatewayCommandDO.getReplyStatus());
-		gatewayCommandCO.setDownTime(gatewayCommandDO.getDownTime());
 		gatewayCommandCO.setReplyTime(gatewayCommandDO.getReplyTime());
 		gatewayCommandCO.setReplyMessage(gatewayCommandDO.getReplyMessage());
 		return gatewayCommandCO;

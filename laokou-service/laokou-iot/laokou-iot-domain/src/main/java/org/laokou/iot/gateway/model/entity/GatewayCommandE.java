@@ -48,6 +48,21 @@ public class GatewayCommandE implements Serializable {
 	private Long id;
 
 	/**
+	 * 部门ID.
+	 */
+	private Long deptId;
+
+	/**
+	 * 租户ID.
+	 */
+	private Long tenantId;
+
+	/**
+	 * 创建者.
+	 */
+	private Long creator;
+
+	/**
 	 * 网关ID.
 	 */
 	private Long gatewayId;
@@ -57,16 +72,22 @@ public class GatewayCommandE implements Serializable {
 	 */
 	private String gatewaySn;
 
+	// @formatter:off
 	/**
-	 * 指令 reboot_gateway重启网关指令 read_device_properties读取设备属性指令
-	 * write_device_properties写入设备属性指令.
+	 * 下发指令 reboot_gateway重启网关指令 read_device_properties读取设备属性指令 write_device_properties写入设备属性指令.
 	 */
+	// @formatter:on
 	private String command;
 
 	/**
-	 * 主题.
+	 * 指令下发主题.
 	 */
 	private String topic;
+
+	/**
+	 * 指令回复主题.
+	 */
+	private String replyTopic;
 
 	/**
 	 * 设备ID.
@@ -84,34 +105,29 @@ public class GatewayCommandE implements Serializable {
 	private String deviceName;
 
 	/**
-	 * 指令参数，JSON格式.
+	 * 指令下发参数.
 	 */
 	private String param;
 
 	/**
-	 * 错误信息.
+	 * 指令下发信息.
 	 */
-	private String errorMessage;
+	private String message;
 
 	/**
-	 * 指令状态 0待处理 1成功 2失败.
+	 * 指令下发状态 0成功 1失败.
 	 */
 	private Integer status;
 
 	/**
-	 * 指令回复内容，JSON格式.
+	 * 指令回复内容.
 	 */
 	private String replyPayload;
 
 	/**
-	 * 指令回复状态 0失败 1成功.
+	 * 指令回复状态 0成功 1失败.
 	 */
 	private Integer replyStatus;
-
-	/**
-	 * 指令下发时间.
-	 */
-	private Instant downTime;
 
 	/**
 	 * 指令回复时间.

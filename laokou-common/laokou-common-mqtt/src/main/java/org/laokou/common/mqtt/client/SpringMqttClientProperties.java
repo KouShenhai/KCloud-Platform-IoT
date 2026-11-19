@@ -35,7 +35,7 @@ public final class SpringMqttClientProperties implements InitializingBean {
 
 	private String clientId;
 
-	private int commandReplyTimeoutSeconds = 3;
+	private int commandReplyTimeoutSeconds = 1;
 
 	@Override
 	public void afterPropertiesSet() {

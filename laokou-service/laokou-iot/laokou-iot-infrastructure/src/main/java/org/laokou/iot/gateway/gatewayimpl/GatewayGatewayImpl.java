@@ -22,11 +22,9 @@ import org.laokou.iot.gateway.convertor.GatewayConvertor;
 import org.laokou.iot.gateway.gateway.GatewayGateway;
 import org.laokou.iot.gateway.gatewayimpl.database.GatewayCommandMapper;
 import org.laokou.iot.gateway.gatewayimpl.database.GatewayMapper;
-import org.laokou.iot.gateway.gatewayimpl.database.dataobject.GatewayCommandDO;
 import org.laokou.iot.gateway.gatewayimpl.database.dataobject.GatewayDO;
 import org.laokou.iot.gateway.model.GatewayA;
 import org.laokou.iot.gateway.model.GatewayCommandA;
-import org.springframework.pulsar.core.PulsarTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -44,8 +42,6 @@ public class GatewayGatewayImpl implements GatewayGateway {
 	private final GatewayMapper gatewayMapper;
 
 	private final GatewayCommandMapper gatewayCommandMapper;
-
-	private final PulsarTemplate<Object> pulsarTemplate;
 
 	@Override
 	public void createGateway(GatewayA gatewayA) {
@@ -66,8 +62,7 @@ public class GatewayGatewayImpl implements GatewayGateway {
 
 	@Override
 	public void createGatewayCommand(GatewayCommandA gatewayCommandA) {
-		GatewayCommandDO gatewayCommandDO = GatewayConvertor.toDataObject(gatewayCommandA);
-		gatewayCommandMapper.insert(gatewayCommandDO);
+		gatewayCommandMapper.insert(GatewayConvertor.toDataObject(gatewayCommandA));
 	}
 
 }

@@ -49,7 +49,7 @@ spring:
     timeout-per-shutdown-phase: "2m"
   mqtt-client:
     core-size: 32
-    client-id: KPFI10000
+    client-id: ${CLIENT_ID:KPFI10000}
     command-reply-timeout-seconds: 1
   websocket-server:
     port: 13000

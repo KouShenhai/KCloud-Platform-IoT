@@ -17,7 +17,7 @@
 
 package org.laokou.iot.gateway.api;
 
-import org.laokou.common.i18n.common.clientobject.GatewayCommandCO;
+import org.laokou.iot.gateway.dto.clientobject.GatewayCommandReplyCO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.iot.gateway.dto.GatewayCommandPageQry;
@@ -96,7 +96,7 @@ public interface GatewaysServiceI {
 	/**
 	 * 下发网关指令.
 	 */
-	CompletableFuture<GatewayCommandCO> downGatewayCommand(GatewayDownCommandCmd cmd)
+	CompletableFuture<GatewayCommandReplyCO> downGatewayCommand(GatewayDownCommandCmd cmd)
 			throws ExecutionException, InterruptedException, TimeoutException;
 
 	/**

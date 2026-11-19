@@ -20,7 +20,7 @@ package org.laokou.iot.web;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.i18n.common.clientobject.GatewayCommandCO;
+import org.laokou.iot.gateway.dto.clientobject.GatewayCommandReplyCO;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.idempotent.annotation.Idempotent;
@@ -139,7 +139,7 @@ public class GatewaysController {
 	@PreAuthorize("hasAuthority('write') and hasAuthority('iot:gateway:reboot-gateway-command')")
 	@OperateLog(module = "网关管理", operation = "下发重启网关指令")
 	@Operation(summary = "下发重启网关指令", description = "下发重启网关指令")
-	public CompletableFuture<GatewayCommandCO> downRebootGatewayCommand(
+	public CompletableFuture<GatewayCommandReplyCO> downRebootGatewayCommand(
 			@Validated @RequestBody GatewayDownCommandCmd cmd)
 			throws ExecutionException, InterruptedException, TimeoutException {
 		return gatewaysServiceI.downGatewayCommand(cmd);
@@ -150,7 +150,7 @@ public class GatewaysController {
 	@PreAuthorize("hasAuthority('write') and hasAuthority('iot:gateway:read-device-properties-command')")
 	@OperateLog(module = "网关管理", operation = "下发读取设备属性指令")
 	@Operation(summary = "下发读取设备属性指令", description = "下发读取设备属性指令")
-	public CompletableFuture<GatewayCommandCO> downReadDevicePropertiesCommand(
+	public CompletableFuture<GatewayCommandReplyCO> downReadDevicePropertiesCommand(
 			@Validated @RequestBody GatewayDownCommandCmd cmd)
 			throws ExecutionException, InterruptedException, TimeoutException {
 		return gatewaysServiceI.downGatewayCommand(cmd);
@@ -161,7 +161,7 @@ public class GatewaysController {
 	@PreAuthorize("hasAuthority('write') and hasAuthority('iot:gateway:write-device-properties-command')")
 	@OperateLog(module = "网关管理", operation = "下发写入设备属性指令")
 	@Operation(summary = "下发写入设备属性指令", description = "下发写入设备属性指令")
-	public CompletableFuture<GatewayCommandCO> downWriteDevicePropertiesCommand(
+	public CompletableFuture<GatewayCommandReplyCO> downWriteDevicePropertiesCommand(
 			@Validated @RequestBody GatewayDownCommandCmd cmd)
 			throws ExecutionException, InterruptedException, TimeoutException {
 		return gatewaysServiceI.downGatewayCommand(cmd);

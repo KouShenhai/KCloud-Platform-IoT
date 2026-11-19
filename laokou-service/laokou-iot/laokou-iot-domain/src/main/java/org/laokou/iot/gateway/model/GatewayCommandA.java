@@ -18,16 +18,22 @@
 package org.laokou.iot.gateway.model;
 
 import lombok.Getter;
+import org.laokou.common.core.util.ForyJsonUtils;
+import org.laokou.common.core.util.MapUtils;
 import org.laokou.common.i18n.annotation.Entity;
 import org.laokou.common.i18n.common.IdGenerator;
+import org.laokou.common.i18n.common.exception.StatusCode;
 import org.laokou.common.i18n.dto.AggregateRoot;
 import org.laokou.common.i18n.util.InstantUtils;
+import org.laokou.common.i18n.util.ObjectUtils;
 import org.laokou.iot.gateway.model.entity.GatewayCommandE;
 import org.laokou.iot.gateway.model.enums.Command;
+import org.laokou.iot.gateway.model.enums.Status;
 import org.laokou.iot.gateway.model.exception.CommandNotFoundException;
 
 import java.io.Serial;
 import java.util.Arrays;
+import java.util.Map;
 
 /**
  * 网关指令聚合根.
@@ -60,6 +66,19 @@ public class GatewayCommandA extends AggregateRoot {
 		if (!Arrays.stream(Command.values()).map(Command::getCode).toList().contains(gatewayCommandE.getCommand())) {
 			throw new CommandNotFoundException("B_Gateway_CommandNotFound", "指令不存在");
 		}
+	}
+
+	public void getReplyInfo(Map<String, Object> replyPayload, String replyMessage, Long timestamp, Throwable err) {
+		this.gatewayCommandE = gatewayCommandE.toBuilder()
+			.replyTime(timestamp != null ? InstantUtils.getInstantOfTimestamp(timestamp) : null)
+			.replyPayload(MapUtils.isNotEmpty(replyPayload) ? ForyJsonUtils.toJsonStr(replyPayload) : null)
+			.replyMessage(replyMessage)
+			.replyStatus(replyPayload == null ? null
+					: ObjectUtils.equals(StatusCode.OK, replyMessage) ? Status.SUCCESS.getCode()
+							: Status.FAILURE.getCode())
+			.message(err != null ? err.getCause().getMessage() : null)
+			.status(err != null ? Status.FAILURE.getCode() : Status.SUCCESS.getCode())
+			.build();
 	}
 
 }

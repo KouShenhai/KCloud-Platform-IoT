@@ -20,7 +20,7 @@ package org.laokou.iot.gateway.service;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
-import org.laokou.common.i18n.common.clientobject.GatewayCommandCO;
+import org.laokou.iot.gateway.dto.clientobject.GatewayCommandReplyCO;
 import org.laokou.iot.gateway.api.GatewaysServiceI;
 import org.laokou.iot.gateway.command.GatewayDownCommandCmdExe;
 import org.laokou.iot.gateway.command.GatewayExportCmdExe;
@@ -106,7 +106,7 @@ public class GatewaysServiceImpl implements GatewaysServiceI {
 	}
 
 	@Override
-	public CompletableFuture<GatewayCommandCO> downGatewayCommand(GatewayDownCommandCmd cmd)
+	public CompletableFuture<GatewayCommandReplyCO> downGatewayCommand(GatewayDownCommandCmd cmd)
 			throws ExecutionException, InterruptedException, TimeoutException {
 		return gatewayDownCommandCmdExe.execute(cmd);
 	}

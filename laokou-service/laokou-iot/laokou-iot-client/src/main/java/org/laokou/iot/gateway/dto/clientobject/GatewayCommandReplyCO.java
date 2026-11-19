@@ -15,29 +15,15 @@
  *
  */
 
-package org.laokou.common.i18n.common.clientobject;
-
-import lombok.Data;
+package org.laokou.iot.gateway.dto.clientobject;
 
 import java.io.Serializable;
 import java.util.Map;
 
-@Data
-public final class GatewayCommandCO implements Serializable {
-
-	/**
-	 * 时间戳.
-	 */
-	private Long timestamp;
-
-	/**
-	 * 内容.
-	 */
-	private Map<String, Object> payload;
-
-	/**
-	 * 信息.
-	 */
-	private String message;
+/**
+ * @param payload 指令回复内容.
+ * @param message 指令回复信息.
+ */
+public record GatewayCommandReplyCO(Map<String, Object> payload, String message) implements Serializable {
 
 }

@@ -15,7 +15,7 @@
  *
  */
 
-package org.laokou.common.fory.util;
+package org.laokou.common.core.util;
 
 import org.apache.fory.json.ForyJson;
 

@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.pulsar.client.api.SubscriptionType;
 import org.apache.pulsar.common.schema.SchemaType;
 import org.jspecify.annotations.NonNull;
-import org.laokou.common.fory.util.ForyJsonUtils;
+import org.laokou.common.core.util.ForyJsonUtils;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.laokou.common.i18n.util.ResourceExtUtils;
 import org.laokou.common.mqtt.client.MqttForyFactory;
