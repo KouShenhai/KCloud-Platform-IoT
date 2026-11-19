@@ -19,6 +19,7 @@ package org.laokou.iot.session.convertor;
 
 import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.common.mqtt.client.MqttClientProperties;
+import org.laokou.common.mqtt.client.SpringMqttClientProperties;
 import org.laokou.iot.session.dto.clientobject.SessionCO;
 import org.laokou.iot.session.factory.SessionDomainFactory;
 import org.laokou.iot.session.gatewayimpl.database.dataobject.SessionDO;
@@ -39,13 +40,14 @@ public final class SessionConvertor {
 	}
 
 	public static MqttClientProperties toProperties(SessionDO sessionDO,
-			SystemSettingsProperties systemSettingsProperties) {
+			SystemSettingsProperties systemSettingsProperties, SpringMqttClientProperties springMqttClientProperties) {
 		MqttClientProperties properties = new MqttClientProperties();
 		properties.setHost(sessionDO.getHost());
 		properties.setPort(sessionDO.getPort());
 		properties.setUsername(sessionDO.getUsername());
 		properties.setPassword(sessionDO.getPassword());
 		properties.setTenantCode(systemSettingsProperties.getTenantCode());
+		properties.setClientId(springMqttClientProperties.getClientId());
 		return properties;
 	}
 

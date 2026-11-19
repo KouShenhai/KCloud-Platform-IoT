@@ -24,6 +24,7 @@ import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.common.mqtt.client.MqttClient;
 import org.laokou.common.mqtt.client.MqttEventLoop;
 import org.laokou.common.mqtt.client.NettyMqttClient;
+import org.laokou.common.mqtt.client.SpringMqttClientProperties;
 import org.laokou.iot.session.convertor.SessionConvertor;
 import org.laokou.iot.session.gateway.SessionGateway;
 import org.laokou.iot.session.gatewayimpl.database.SessionMapper;
@@ -49,6 +50,8 @@ public class SessionGatewayImpl implements SessionGateway {
 	private final MqttEventLoop mqttEventLoop;
 
 	private final SystemSettingsProperties systemSettingsProperties;
+
+	private final SpringMqttClientProperties springMqttClientProperties;
 
 	@Override
 	public void createSession(SessionA sessionA) throws MqttException {
@@ -78,7 +81,8 @@ public class SessionGatewayImpl implements SessionGateway {
 	}
 
 	private void verifyConnect(SessionDO sessionDO) throws MqttException {
-		MqttClient mqttClient = new NettyMqttClient(SessionConvertor.toProperties(sessionDO, systemSettingsProperties),
+		MqttClient mqttClient = new NettyMqttClient(
+				SessionConvertor.toProperties(sessionDO, systemSettingsProperties, springMqttClientProperties),
 				mqttEventLoop, Collections.emptyList());
 		mqttClient.test();
 	}

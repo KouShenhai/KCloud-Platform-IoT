@@ -30,7 +30,7 @@ import java.util.Map;
  * @author laokou
  */
 @Data
-public class UpReportPropertiesDeviceMessage implements Serializable {
+public final class UpReportPropertiesDeviceMessage implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = ForyConstants.C_245;

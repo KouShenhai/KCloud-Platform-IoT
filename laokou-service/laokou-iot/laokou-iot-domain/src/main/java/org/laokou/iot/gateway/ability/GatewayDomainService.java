@@ -48,8 +48,6 @@ public class GatewayDomainService {
 	}
 
 	public void createGatewayCommand(GatewayCommandA gatewayCommandA) {
-		// 校验类型
-		gatewayCommandA.checkCommand();
 		gatewayGateway.createGatewayCommand(gatewayCommandA);
 	}
 

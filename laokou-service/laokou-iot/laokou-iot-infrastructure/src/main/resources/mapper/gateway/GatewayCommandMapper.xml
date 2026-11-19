@@ -52,14 +52,15 @@
 		       gateway_sn,
 		       command,
 		       topic,
+		       reply_topic,
 		       device_sn,
 		       device_name,
 		       param,
-		       error_message,
+		       message,
 		       status,
 		       reply_payload,
 		       reply_status,
-		       down_time,
+		       create_time,
 		       reply_time,
 		       reply_message
 		from iot_gateway_command
@@ -72,11 +73,5 @@
 		select count(1) from iot_gateway_command
 		<include refid="selectConditions"/>
 	</select>
-
-  <select id="selectVersion" resultType="integer">
-    select version
-    from iot_gateway_command
-    where id = #{id}
-  </select>
 
 </mapper>

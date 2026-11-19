@@ -15,12 +15,12 @@
  *
  */
 
-package org.laokou.common.fory;
+package org.laokou.common.core;
 
 import lombok.Data;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.laokou.common.fory.util.ForyJsonUtils;
+import org.laokou.common.core.util.ForyJsonUtils;
 
 /**
  * @author laokou

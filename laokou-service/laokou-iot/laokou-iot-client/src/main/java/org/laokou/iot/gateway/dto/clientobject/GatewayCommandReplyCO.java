@@ -15,34 +15,15 @@
  *
  */
 
-package org.laokou.iot.gateway.dto.event;
+package org.laokou.iot.gateway.dto.clientobject;
 
-import lombok.Data;
-
+import java.io.Serializable;
 import java.util.Map;
 
 /**
- * @author laokou
+ * @param payload 指令回复内容.
+ * @param message 指令回复信息.
  */
-@Data
-public final class GatewayCommandEvent {
-
-	private Long sessionId;
-
-	private Long commandId;
-
-	private String tenantCode;
-
-	private String gatewaySn;
-
-	private String topic;
-
-	private String deviceSn;
-
-	private String deviceName;
-
-	private String command;
-
-	private Map<String, Object> param;
+public record GatewayCommandReplyCO(Map<String, Object> payload, String message) implements Serializable {
 
 }

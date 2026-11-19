@@ -59,8 +59,8 @@ export const GatewayCommandTable = ({ id }: { id: GatewayId }) => {
 			width: 85,
 		},
 		{
-			title: t('iot.gateway.command.id'),
-			dataIndex: 'id',
+			title: t('iot.gateway.command.gatewaySn'),
+			dataIndex: 'gatewaySn',
 			valueType: 'text',
 			hideInSearch: true,
 			width: 180,
@@ -106,14 +106,10 @@ export const GatewayCommandTable = ({ id }: { id: GatewayId }) => {
 			valueEnum: {
 				0: {
 					text: t('iot.gateway.command.status.0'),
-					status: 'Processing',
+					status: 'Success',
 				},
 				1: {
 					text: t('iot.gateway.command.status.1'),
-					status: 'Success',
-				},
-				2: {
-					text: t('iot.gateway.command.status.2'),
 					status: 'Error'
 				},
 			},
@@ -136,7 +132,8 @@ export const GatewayCommandTable = ({ id }: { id: GatewayId }) => {
 		},
 		{
 			title: t('iot.gateway.command.downTime'),
-			dataIndex: 'downTime',
+			key: 'createTime',
+			dataIndex: 'createTime',
 			valueType: 'dateTime',
 			hideInSearch: true,
 			width: 160,
@@ -149,15 +146,7 @@ export const GatewayCommandTable = ({ id }: { id: GatewayId }) => {
 			width: 160,
 		},
 		{
-			title: t('common.createTime'),
-			key: 'createTime',
-			dataIndex: 'createTime',
-			valueType: 'dateTime',
-			hideInSearch: true,
-			width: 160,
-		},
-		{
-			title: t('common.createTime'),
+			title: t('iot.gateway.command.downTime'),
 			dataIndex: 'createTime',
 			valueType: 'dateRange',
 			hideInTable: true,
@@ -223,7 +212,8 @@ export const GatewayCommandTable = ({ id }: { id: GatewayId }) => {
 								'deviceName',
 								'topic',
 								'param',
-								'errorMessage',
+								'message',
+								'replyTopic',
 								'replyPayload',
 								'replyMessage',
 							] as const

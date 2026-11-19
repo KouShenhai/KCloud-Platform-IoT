@@ -20,6 +20,7 @@ package org.laokou.iot.gateway.service;
 import lombok.RequiredArgsConstructor;
 import org.laokou.common.i18n.dto.Page;
 import org.laokou.common.i18n.dto.Result;
+import org.laokou.iot.gateway.dto.clientobject.GatewayCommandReplyCO;
 import org.laokou.iot.gateway.api.GatewaysServiceI;
 import org.laokou.iot.gateway.command.GatewayDownCommandCmdExe;
 import org.laokou.iot.gateway.command.GatewayExportCmdExe;
@@ -38,13 +39,16 @@ import org.laokou.iot.gateway.dto.GatewayDownCommandCmd;
 import org.laokou.iot.gateway.dto.GatewayModifyCmd;
 import org.laokou.iot.gateway.dto.GatewayPageQry;
 import org.laokou.iot.gateway.dto.GatewayCommandPageQry;
-import org.laokou.iot.gateway.dto.clientobject.GatewayCommandCO;
 import org.laokou.iot.gateway.dto.GatewayPropertiesGetQry;
 import org.laokou.iot.gateway.dto.GatewayRemoveCmd;
 import org.laokou.iot.gateway.dto.GatewaySaveCmd;
 import org.laokou.iot.gateway.dto.clientobject.GatewayCO;
 import org.laokou.iot.gateway.dto.clientobject.GatewayPropertiesCO;
 import org.springframework.stereotype.Service;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeoutException;
 
 /**
  *
@@ -102,6 +106,12 @@ public class GatewaysServiceImpl implements GatewaysServiceI {
 	}
 
 	@Override
+	public CompletableFuture<GatewayCommandReplyCO> downGatewayCommand(GatewayDownCommandCmd cmd)
+			throws ExecutionException, InterruptedException, TimeoutException {
+		return gatewayDownCommandCmdExe.execute(cmd);
+	}
+
+	@Override
 	public Result<Page<GatewayCO>> pageGateway(GatewayPageQry qry) {
 		return gatewayPageQryExe.execute(qry);
 	}
@@ -117,12 +127,8 @@ public class GatewaysServiceImpl implements GatewaysServiceI {
 	}
 
 	@Override
-	public void downGatewayCommand(GatewayDownCommandCmd cmd) {
-		gatewayDownCommandCmdExe.execute(cmd);
-	}
-
-	@Override
-	public Result<Page<GatewayCommandCO>> pageGatewayCommand(GatewayCommandPageQry qry) {
+	public Result<Page<org.laokou.iot.gateway.dto.clientobject.GatewayCommandCO>> pageGatewayCommand(
+			GatewayCommandPageQry qry) {
 		return gatewayCommandPageQryExe.execute(qry);
 	}
 

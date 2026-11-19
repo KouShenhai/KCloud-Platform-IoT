@@ -181,14 +181,14 @@ export type GatewayCommand = {
 	deviceSn?: string | null;
 	deviceName?: string | null;
 	topic?: string | null;
+	replyTopic?: string | null;
 	param?: string | null;
 	status?: number | null;
-	errorMessage?: string | null;
+	message?: string | null;
 	replyPayload?: string | null;
 	replyStatus?: number | null;
 	replyMessage?: string | null;
 	createTime?: string | number | null;
-	downTime?: string | number | null;
 	replyTime?: string | number | null;
 };
 

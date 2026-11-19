@@ -31,7 +31,7 @@ import java.util.Map;
  * @author laokou
  */
 @Data
-public class DownCommandGatewayMessage implements Serializable {
+public final class DownCommandGatewayMessage implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = ForyConstants.C_246;

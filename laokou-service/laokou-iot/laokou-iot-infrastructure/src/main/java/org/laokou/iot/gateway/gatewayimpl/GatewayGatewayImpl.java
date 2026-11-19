@@ -18,19 +18,13 @@
 package org.laokou.iot.gateway.gatewayimpl;
 
 import lombok.RequiredArgsConstructor;
-import org.laokou.common.context.util.UserUtils;
-import org.laokou.common.fory.config.ForyFactory;
-import org.laokou.common.mqtt.client.util.PulsarUtils;
 import org.laokou.iot.gateway.convertor.GatewayConvertor;
 import org.laokou.iot.gateway.gateway.GatewayGateway;
 import org.laokou.iot.gateway.gatewayimpl.database.GatewayCommandMapper;
 import org.laokou.iot.gateway.gatewayimpl.database.GatewayMapper;
-import org.laokou.iot.gateway.gatewayimpl.database.dataobject.GatewayCommandDO;
 import org.laokou.iot.gateway.gatewayimpl.database.dataobject.GatewayDO;
 import org.laokou.iot.gateway.model.GatewayA;
 import org.laokou.iot.gateway.model.GatewayCommandA;
-import org.laokou.iot.gateway.model.enums.MqTopic;
-import org.springframework.pulsar.core.PulsarTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -48,8 +42,6 @@ public class GatewayGatewayImpl implements GatewayGateway {
 	private final GatewayMapper gatewayMapper;
 
 	private final GatewayCommandMapper gatewayCommandMapper;
-
-	private final PulsarTemplate<Object> pulsarTemplate;
 
 	@Override
 	public void createGateway(GatewayA gatewayA) {
@@ -70,11 +62,7 @@ public class GatewayGatewayImpl implements GatewayGateway {
 
 	@Override
 	public void createGatewayCommand(GatewayCommandA gatewayCommandA) {
-		GatewayCommandDO gatewayCommandDO = GatewayConvertor.toDataObject(gatewayCommandA);
-		gatewayCommandMapper.insert(gatewayCommandDO);
-		pulsarTemplate.sendAsync(
-				PulsarUtils.getGatewayTopic(UserUtils.getTenantCode(), MqTopic.DOWN_COMMAND_GATEWAY_MESSAGE_TOPIC),
-				ForyFactory.INSTANCE.serialize(GatewayConvertor.toEvent(gatewayCommandDO)));
+		gatewayCommandMapper.insert(GatewayConvertor.toDataObject(gatewayCommandA));
 	}
 
 }
