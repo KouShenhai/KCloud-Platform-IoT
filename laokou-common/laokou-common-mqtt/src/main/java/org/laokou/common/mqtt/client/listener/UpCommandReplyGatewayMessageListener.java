@@ -20,7 +20,6 @@ package org.laokou.common.mqtt.client.listener;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.pulsar.client.api.MessageId;
-import org.laokou.common.i18n.common.clientobject.GatewayCommandCO;
 import org.laokou.common.mqtt.client.GatewayCommandFutureManager;
 import org.laokou.common.mqtt.client.MqttForyFactory;
 import org.laokou.common.mqtt.client.message.MqttMessageType;
@@ -45,10 +44,10 @@ final class UpCommandReplyGatewayMessageListener implements MessageListener {
 	public CompletableFuture<MessageId> onMessage(MqttMessage message) {
 		if (MqttForyFactory.INSTANCE
 			.deserialize(message.payload()) instanceof UpCommandReplyGatewayMessage upCommandReplyGatewayMessage) {
-			CompletableFuture<GatewayCommandCO> future = gatewayCommandFutureManager
+			CompletableFuture<UpCommandReplyGatewayMessage> future = gatewayCommandFutureManager
 				.remove(upCommandReplyGatewayMessage.getRequestId());
 			if (future != null) {
-				future.complete(toClientObject(upCommandReplyGatewayMessage));
+				future.complete(upCommandReplyGatewayMessage);
 			}
 		}
 		return CompletableFuture.completedFuture(null);
@@ -58,13 +57,5 @@ final class UpCommandReplyGatewayMessageListener implements MessageListener {
 	public MqttMessageType getMessageType() {
 		return MqttMessageType.UP_COMMAND_REPLY_GATEWAY_MESSAGE;
 	}
-
-	private GatewayCommandCO toClientObject(UpCommandReplyGatewayMessage upCommandReplyGatewayMessage) {
-		GatewayCommandCO gatewayCommandCO = new GatewayCommandCO();
-		gatewayCommandCO.setMessage(upCommandReplyGatewayMessage.getMessage());
-		gatewayCommandCO.setPayload(upCommandReplyGatewayMessage.getPayload());
-		gatewayCommandCO.setTimestamp(upCommandReplyGatewayMessage.getTimestamp());
-		return gatewayCommandCO;
-	};
 
 }

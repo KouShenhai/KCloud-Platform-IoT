@@ -17,7 +17,7 @@
 
 package org.laokou.common.mqtt.client;
 
-import org.laokou.common.i18n.common.clientobject.GatewayCommandCO;
+import org.laokou.common.mqtt.client.message.UpCommandReplyGatewayMessage;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -25,14 +25,14 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public final class GatewayCommandFutureManager {
 
-	private final Map<Long, CompletableFuture<GatewayCommandCO>> futures = new ConcurrentHashMap<>(8192);
+	private final Map<Long, CompletableFuture<UpCommandReplyGatewayMessage>> futures = new ConcurrentHashMap<>(8192);
 
-	public CompletableFuture<GatewayCommandCO> put(Long id, CompletableFuture<GatewayCommandCO> future) {
+	public CompletableFuture<UpCommandReplyGatewayMessage> put(Long id, CompletableFuture<UpCommandReplyGatewayMessage> future) {
 		futures.put(id, future);
 		return future;
 	}
 
-	public CompletableFuture<GatewayCommandCO> remove(Long id) {
+	public CompletableFuture<UpCommandReplyGatewayMessage> remove(Long id) {
 		return futures.remove(id);
 	}
 
