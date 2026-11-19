@@ -20,6 +20,7 @@ package org.laokou.iot.gateway.convertor;
 import org.laokou.common.context.util.UserUtils;
 import org.laokou.common.core.util.ForyJsonUtils;
 import org.laokou.common.core.util.MapUtils;
+import org.laokou.common.log.model.enums.Status;
 import org.laokou.common.mqtt.client.SpringMqttClientProperties;
 import org.laokou.common.mqtt.client.message.DownCommandGatewayMessage;
 import org.laokou.common.mqtt.client.message.UpCommandReplyGatewayMessage;
@@ -35,6 +36,7 @@ import org.laokou.iot.gateway.model.GatewayCommandA;
 import org.laokou.iot.gateway.model.entity.GatewayCommandE;
 import org.laokou.iot.gateway.model.entity.GatewayE;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -63,7 +65,7 @@ public final class GatewayConvertor {
 	public static UpCommandReplyGatewayMessage toMessage() {
 		UpCommandReplyGatewayMessage upCommandReplyGatewayMessage = new UpCommandReplyGatewayMessage();
 		upCommandReplyGatewayMessage.setMessage("指令下发超时");
-		upCommandReplyGatewayMessage.setPayload(null);
+		upCommandReplyGatewayMessage.setPayload(Collections.emptyMap());
 		return upCommandReplyGatewayMessage;
 	}
 
@@ -118,7 +120,7 @@ public final class GatewayConvertor {
 		gatewayCommandDO.setCreateTime(gatewayCommandA.getCreateTime());
 		gatewayCommandDO.setReplyMessage(gatewayCommandE.getReplyMessage());
 		gatewayCommandDO.setReplyPayload(gatewayCommandE.getReplyPayload());
-		gatewayCommandDO.setReplyStatus(gatewayCommandE.getReplyStatus());
+		gatewayCommandDO.setReplyStatus(gatewayCommandE.getStatus() == Status.FAIL.getCode() ? null : gatewayCommandE.getReplyStatus());
 		gatewayCommandDO.setReplyTopic(gatewayCommandE.getReplyTopic());
 		gatewayCommandDO.setReplyTime(gatewayCommandE.getReplyTime());
 		gatewayCommandDO.setCreator(gatewayCommandE.getCreator());
@@ -175,11 +177,10 @@ public final class GatewayConvertor {
 		GatewayCommandCO gatewayCommandCO = new GatewayCommandCO();
 		gatewayCommandCO.setId(gatewayCommandDO.getId());
 		gatewayCommandCO.setCreateTime(gatewayCommandDO.getCreateTime());
-		gatewayCommandCO.setGatewayId(gatewayCommandDO.getGatewayId());
 		gatewayCommandCO.setGatewaySn(gatewayCommandDO.getGatewaySn());
 		gatewayCommandCO.setCommand(gatewayCommandDO.getCommand());
 		gatewayCommandCO.setTopic(gatewayCommandDO.getTopic());
-		gatewayCommandCO.setDeviceId(gatewayCommandDO.getDeviceId());
+		gatewayCommandCO.setReplyTopic(gatewayCommandDO.getReplyTopic());
 		gatewayCommandCO.setDeviceSn(gatewayCommandDO.getDeviceSn());
 		gatewayCommandCO.setDeviceName(gatewayCommandDO.getDeviceName());
 		gatewayCommandCO.setParam(gatewayCommandDO.getParam());
