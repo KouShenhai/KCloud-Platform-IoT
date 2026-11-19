@@ -23,6 +23,11 @@
       <version>${revision}</version>
     </dependency>
     <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-iotdb</artifactId>
+      <version>${revision}</version>
+    </dependency>
+    <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
     </dependency>
@@ -35,6 +40,12 @@
       <groupId>org.laokou</groupId>
       <artifactId>laokou-common-elasticsearch</artifactId>
       <version>${revision}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.laokou</groupId>
+      <artifactId>laokou-common-test</artifactId>
+      <version>${revision}</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 

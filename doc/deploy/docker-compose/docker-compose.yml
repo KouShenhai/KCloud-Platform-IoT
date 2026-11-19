@@ -246,7 +246,7 @@ services:
       - iot_network
   # tcp连接 127.0.0.1:6667 root/root
   iotdb:
-    image: apache/iotdb:latest
+    image: apache/iotdb:2.0.8
     hostname: iotdb
     container_name: iotdb
     # 保持容器在没有守护程序的情况下运行

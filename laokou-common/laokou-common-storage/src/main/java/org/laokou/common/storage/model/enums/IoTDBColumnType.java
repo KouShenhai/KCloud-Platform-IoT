@@ -25,4 +25,44 @@ import lombok.Getter;
 @Getter
 public enum IoTDBColumnType {
 
+	BOOLEAN("boolean", "Boolean", "BOOLEAN", "RLE"), INT32("int", "32-bit integer", "INT32", "TS_2DIFF"),
+	INT64("long", "64-bit integer", "INT64", "TS_2DIFF"), FLOAT("float", "Single-precision number", "FLOAT", "GORILLA"),
+	DOUBLE("double", "Double-precision number", "DOUBLE", "GORILLA"), TEXT("text", "Text", "TEXT", "PLAIN"),
+	STRING("string", "String", "STRING", "PLAIN"), BLOB("blob", "Binary value", "BLOB", "PLAIN"),
+	DATE("date", "Date", "DATE", "TS_2DIFF"), TIMESTAMP("timestamp", "Timestamp", "TIMESTAMP", "TS_2DIFF");
+
+	private final String code;
+
+	private final String desc;
+
+	private final String dataType;
+
+	private final String encoding;
+
+	IoTDBColumnType(String code, String desc, String dataType, String encoding) {
+		this.code = code;
+		this.desc = desc;
+		this.dataType = dataType;
+		this.encoding = encoding;
+	}
+
+	public static IoTDBColumnType fromCode(String code) {
+		if (code == null || code.isBlank()) {
+			throw new IllegalArgumentException("IoTDB measurement type is required");
+		}
+		return switch (code.trim().toUpperCase(java.util.Locale.ROOT)) {
+			case "BOOL", "BOOLEAN" -> BOOLEAN;
+			case "INT", "INTEGER", "INT32" -> INT32;
+			case "LONG", "INT64" -> INT64;
+			case "FLOAT" -> FLOAT;
+			case "DOUBLE" -> DOUBLE;
+			case "TEXT" -> TEXT;
+			case "STRING", "ENUM" -> STRING;
+			case "BLOB" -> BLOB;
+			case "DATE" -> DATE;
+			case "TIMESTAMP" -> TIMESTAMP;
+			default -> throw new IllegalArgumentException("Unsupported IoTDB measurement type: " + code);
+		};
+	}
+
 }
