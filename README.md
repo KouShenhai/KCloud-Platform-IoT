@@ -171,6 +171,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级单体架构和微�
 |         EMQX         |    5.8.8     |
 |     TimescaleDB      |      17      |
 |       TDengine       |   3.3.6.13   |
+|        IoTDB         |    2.0.8     |
 |        Flyway        |   13.12.1    |
 |       Sentinel       |    1.8.9     |
 |         Fory         |    1.7.8     |
@@ -199,7 +200,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级单体架构和微�
 - 持久层框架：Mybatis Plus
 - 序列化&反序列化：Jackson & Fory
 - 数据库：Postgresql
-- 时序数据库：TimescaleDB & TDengine & InfluxDB
+- 时序数据库：TimescaleDB & TDengine & IoTDB & InfluxDB
 - 数据库迁移：Flyway
 - 链路&指标采集：Micrometer
 
@@ -233,6 +234,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级单体架构和微�
         └── laokou-common-data-cache               --- 数据缓存组件
         └── laokou-common-mybatis-plus             --- 对象映射组件
         └── laokou-common-tdengine                 --- 时序数据库组件
+        └── laokou-common-iotdb                    --- IoTDB时序数据库组件
 ├── laokou-cloud
         └── laokou-nacos                           --- 服务治理
         └── laokou-gateway                         --- API网关

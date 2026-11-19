@@ -19,6 +19,8 @@ package org.laokou.common.storage.model.enums;
 
 import lombok.Getter;
 import org.laokou.common.i18n.util.EnumParser;
+import org.laokou.common.storage.iotdb.IoTDB;
+import org.laokou.common.storage.iotdb.IoTDBConfig;
 import org.laokou.common.storage.tdengine.TDengine;
 import org.laokou.common.storage.tdengine.TDengineConfig;
 import org.laokou.common.storage.model.valueobject.SourceV;
@@ -47,7 +49,9 @@ public enum StoragePolicy {
 	IOTDB("iotdb", "IoTDB") {
 		@Override
 		public DataSource toDataSource(SourceV sourceV) {
-			return null;
+			IoTDBConfig config = new IoTDBConfig(sourceV.endpoint(), sourceV.username(), sourceV.password(),
+					sourceV.dbName());
+			return new IoTDB(config);
 		}
 	},
 

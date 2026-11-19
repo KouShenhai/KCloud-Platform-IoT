@@ -90,6 +90,7 @@
     <module>laokou-common-domain</module>
     <module>laokou-common-log</module>
     <module>laokou-common-test</module>
+    <module>laokou-common-iotdb</module>
     <module>laokou-common-tdengine</module>
     <module>laokou-common-tenant</module>
     <module>laokou-common-mail</module>
