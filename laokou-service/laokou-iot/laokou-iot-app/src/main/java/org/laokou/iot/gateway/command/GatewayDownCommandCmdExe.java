@@ -93,10 +93,13 @@ public class GatewayDownCommandCmdExe {
 						springMqttClientProperties.getCommandReplyTimeoutSeconds(), TimeUnit.SECONDS)
 				.whenComplete((_, _) -> gatewayCommandFutureManager.remove(commandId));
 			// 发布 MQTT 消息
-			return CompletableFuture.runAsync(() -> mqttClientManager.publish(gatewayDO.getSessionId(),
-					gatewayCommandA.getGatewayCommandE().getTopic(),
-					MqttForyFactory.INSTANCE.serialize(GatewayConvertor.toMessage(gatewayCommandA, springMqttClientProperties, cmd.getParam())),
-					MqttQoS.AT_LEAST_ONCE), virtualThreadExecutor)
+			return CompletableFuture.runAsync(
+					() -> mqttClientManager.publish(gatewayDO.getSessionId(),
+							gatewayCommandA.getGatewayCommandE().getTopic(),
+							MqttForyFactory.INSTANCE.serialize(GatewayConvertor.toMessage(gatewayCommandA,
+									springMqttClientProperties, cmd.getParam())),
+							MqttQoS.AT_LEAST_ONCE),
+					virtualThreadExecutor)
 				.whenComplete((_, err) -> {
 					if (err != null) {
 						future.completeExceptionally(err);

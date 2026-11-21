@@ -88,7 +88,8 @@ public final class GatewayConvertor {
 			.build();
 	}
 
-	public static DownCommandGatewayMessage toMessage(GatewayCommandA gatewayCommandA, SpringMqttClientProperties springMqttClientProperties, Map<String, Object> param) {
+	public static DownCommandGatewayMessage toMessage(GatewayCommandA gatewayCommandA,
+			SpringMqttClientProperties springMqttClientProperties, Map<String, Object> param) {
 		DownCommandGatewayMessage downCommandGatewayMessage = new DownCommandGatewayMessage();
 		GatewayCommandE gatewayCommandE = gatewayCommandA.getGatewayCommandE();
 		downCommandGatewayMessage.setCommand(gatewayCommandE.getCommand());
