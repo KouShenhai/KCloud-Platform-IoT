@@ -138,8 +138,8 @@ public final class SessionMessageHandler implements ApplicationListener<@NonNull
 	}
 
 	private void open(SessionDO sessionDO) {
-		MqttClientProperties properties = SessionConvertor.toProperties(sessionDO, systemSettingsProperties,
-				springMqttClientProperties);
+		MqttClientProperties properties = SessionConvertor.toProperties(sessionDO,
+				systemSettingsProperties.getTenantCode(), springMqttClientProperties);
 		mqttClientManager.open(sessionDO.getId(), properties, mqttEventLoop, listeners);
 	}
 

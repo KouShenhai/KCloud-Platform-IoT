@@ -30,6 +30,7 @@ import org.laokou.iot.gateway.model.entity.GatewayCommandE;
 import org.laokou.iot.gateway.model.enums.Command;
 import org.laokou.iot.gateway.model.enums.Status;
 import org.laokou.iot.gateway.model.exception.CommandNotFoundException;
+import org.springframework.util.StringUtils;
 
 import java.io.Serial;
 import java.util.Arrays;
@@ -68,15 +69,15 @@ public class GatewayCommandA extends AggregateRoot {
 		}
 	}
 
-	public void getReplyInfo(Map<String, Object> replyPayload, String replyMessage, Long timestamp, Throwable err) {
+	public void getReplyInfo(Map<String, Object> replyPayload, String replyMessage, Long timestamp, String message) {
 		this.gatewayCommandE = gatewayCommandE.toBuilder()
 			.replyTime(timestamp != null ? InstantUtils.getInstantOfTimestamp(timestamp) : null)
 			.replyPayload(MapUtils.isNotEmpty(replyPayload) ? ForyJsonUtils.toJsonStr(replyPayload) : null)
 			.replyMessage(replyMessage)
 			.replyStatus(ObjectUtils.equals(StatusCode.OK, replyMessage) ? Status.SUCCESS.getCode()
 					: Status.FAILURE.getCode())
-			.message(err != null ? err.getCause().getMessage() : null)
-			.status(err != null ? Status.FAILURE.getCode() : Status.SUCCESS.getCode())
+			.message(message)
+			.status(StringUtils.hasText(message) ? Status.FAILURE.getCode() : Status.SUCCESS.getCode())
 			.build();
 	}
 
