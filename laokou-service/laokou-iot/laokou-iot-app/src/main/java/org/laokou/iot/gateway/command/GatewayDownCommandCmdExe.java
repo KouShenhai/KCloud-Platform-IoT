@@ -21,15 +21,19 @@ import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import io.netty.handler.codec.mqtt.MqttQoS;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.laokou.common.context.util.UserUtils;
+import org.laokou.common.core.util.ForyJsonUtils;
 import org.laokou.common.domain.annotation.CommandLog;
 import org.laokou.common.i18n.common.exception.GlobalException;
 import org.laokou.common.i18n.util.ObjectUtils;
+import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.laokou.common.mqtt.client.GatewayCommandFutureManager;
 import org.laokou.common.mqtt.client.MqttClientManager;
 import org.laokou.common.mqtt.client.MqttForyFactory;
 import org.laokou.common.mqtt.client.SpringMqttClientProperties;
 import org.laokou.common.mqtt.client.message.UpCommandReplyGatewayMessage;
 import org.laokou.common.mybatisplus.util.TransactionalUtils;
+import org.laokou.common.redis.util.RedisUtils;
 import org.laokou.common.tenant.constant.DSConstants;
 import org.laokou.iot.device.gatewayimpl.database.DeviceMapper;
 import org.laokou.iot.device.gatewayimpl.database.dataobject.DeviceDO;
@@ -41,8 +45,11 @@ import org.laokou.iot.gateway.factory.GatewayDomainFactory;
 import org.laokou.iot.gateway.gatewayimpl.database.GatewayMapper;
 import org.laokou.iot.gateway.gatewayimpl.database.dataobject.GatewayDO;
 import org.laokou.iot.gateway.model.GatewayCommandA;
+import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -73,6 +80,8 @@ public class GatewayDownCommandCmdExe {
 
 	private final ExecutorService virtualThreadExecutor;
 
+	private final RedisUtils redisUtils;
+
 	@CommandLog
 	public CompletableFuture<GatewayCommandReplyCO> execute(GatewayDownCommandCmd cmd)
 			throws ExecutionException, InterruptedException, TimeoutException {
@@ -86,6 +95,11 @@ public class GatewayDownCommandCmdExe {
 						springMqttClientProperties));
 			// 校验类型
 			gatewayCommandA.checkCommand();
+			if (isOffline(gatewayCommandA)) {
+				return CompletableFuture.completedFuture(new GatewayCommandReplyCO(null, "网关已离线"))
+					.whenCompleteAsync((_, _) -> createGatewayCommand(new UpCommandReplyGatewayMessage(),
+							gatewayCommandA, "网关已离线"));
+			}
 			Long commandId = gatewayCommandA.getId();
 			CompletableFuture<UpCommandReplyGatewayMessage> future = gatewayCommandFutureManager
 				.put(gatewayCommandA.getId(), new CompletableFuture<>())
@@ -107,11 +121,12 @@ public class GatewayDownCommandCmdExe {
 				})
 				.whenCompleteAsync((_, err) -> {
 					if (err != null) {
-						createGatewayCommand(new UpCommandReplyGatewayMessage(), gatewayCommandA, err);
+						createGatewayCommand(new UpCommandReplyGatewayMessage(), gatewayCommandA,
+								err.getCause().getMessage());
 					}
 				}, virtualThreadExecutor)
 				.thenCompose(_ -> future)
-				.whenCompleteAsync((reply, err) -> createGatewayCommand(reply, gatewayCommandA, err),
+				.whenCompleteAsync((reply, _) -> createGatewayCommand(reply, gatewayCommandA, null),
 						virtualThreadExecutor)
 				.thenApply(reply -> new GatewayCommandReplyCO(reply.getPayload(), reply.getMessage()));
 		}
@@ -128,15 +143,31 @@ public class GatewayDownCommandCmdExe {
 	}
 
 	private void createGatewayCommand(UpCommandReplyGatewayMessage reply, GatewayCommandA gatewayCommandA,
-			Throwable err) {
+			String message) {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.IOT);
-			gatewayCommandA.getReplyInfo(reply.getPayload(), reply.getMessage(), reply.getTimestamp(), err);
+			gatewayCommandA.getReplyInfo(reply.getPayload(), reply.getMessage(), reply.getTimestamp(), message);
 			transactionalUtils.executeInTransaction(() -> gatewayDomainService.createGatewayCommand(gatewayCommandA));
 		}
 		finally {
 			DynamicDataSourceContextHolder.clear();
 		}
+	}
+
+	@SuppressWarnings({ "rawtypes" })
+	private boolean isOffline(GatewayCommandA gatewayCommandA) {
+		String gatewayPropertiesKey = RedisKeyUtils.getGatewayPropertiesKey(UserUtils.getTenantCode(),
+				gatewayCommandA.getGatewayCommandE().getGatewaySn());
+		DefaultRedisScript<List> script = new DefaultRedisScript<>(
+				"return redis.call('HMGET', KEYS[1], 'timestamp', 'data')", List.class);
+		List<?> values = redisUtils.redisTemplate().execute(script, List.of(gatewayPropertiesKey));
+		if (values.getFirst() instanceof String str1 && values.get(1) instanceof String str2) {
+			Map<String, Object> map = ForyJsonUtils.toBean(str2, Map.class);
+			long timestamp = Long.parseLong(str1);
+			long interval = (long) map.get("interval");
+			return System.currentTimeMillis() > timestamp + interval * 1000L;
+		}
+		return true;
 	}
 
 }
