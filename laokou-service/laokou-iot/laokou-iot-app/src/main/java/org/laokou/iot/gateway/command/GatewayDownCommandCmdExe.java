@@ -95,7 +95,7 @@ public class GatewayDownCommandCmdExe {
 			// 发布 MQTT 消息
 			return CompletableFuture.runAsync(() -> mqttClientManager.publish(gatewayDO.getSessionId(),
 					gatewayCommandA.getGatewayCommandE().getTopic(),
-					MqttForyFactory.INSTANCE.serialize(GatewayConvertor.toMessage(gatewayCommandA, cmd.getParam())),
+					MqttForyFactory.INSTANCE.serialize(GatewayConvertor.toMessage(gatewayCommandA, springMqttClientProperties, cmd.getParam())),
 					MqttQoS.AT_LEAST_ONCE), virtualThreadExecutor)
 				.whenComplete((_, err) -> {
 					if (err != null) {

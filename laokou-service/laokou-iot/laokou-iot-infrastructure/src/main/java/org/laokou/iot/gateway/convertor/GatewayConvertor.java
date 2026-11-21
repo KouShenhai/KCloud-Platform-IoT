@@ -88,7 +88,7 @@ public final class GatewayConvertor {
 			.build();
 	}
 
-	public static DownCommandGatewayMessage toMessage(GatewayCommandA gatewayCommandA, Map<String, Object> param) {
+	public static DownCommandGatewayMessage toMessage(GatewayCommandA gatewayCommandA, SpringMqttClientProperties springMqttClientProperties, Map<String, Object> param) {
 		DownCommandGatewayMessage downCommandGatewayMessage = new DownCommandGatewayMessage();
 		GatewayCommandE gatewayCommandE = gatewayCommandA.getGatewayCommandE();
 		downCommandGatewayMessage.setCommand(gatewayCommandE.getCommand());
@@ -100,6 +100,7 @@ public final class GatewayConvertor {
 		downCommandGatewayMessage.setTimestamp(System.currentTimeMillis());
 		downCommandGatewayMessage.setRequestId(gatewayCommandA.getId());
 		downCommandGatewayMessage.setTenantCode(UserUtils.getTenantCode());
+		downCommandGatewayMessage.setMetadata(Map.of("clientId", springMqttClientProperties.getClientId()));
 		return downCommandGatewayMessage;
 	}
 
