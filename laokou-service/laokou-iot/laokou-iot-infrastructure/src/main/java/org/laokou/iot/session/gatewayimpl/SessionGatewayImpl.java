@@ -20,7 +20,7 @@ package org.laokou.iot.session.gatewayimpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.mqttv5.common.MqttException;
-import org.laokou.common.core.config.SystemSettingsProperties;
+import org.laokou.common.context.util.UserUtils;
 import org.laokou.common.mqtt.client.MqttClient;
 import org.laokou.common.mqtt.client.MqttEventLoop;
 import org.laokou.common.mqtt.client.NettyMqttClient;
@@ -48,8 +48,6 @@ public class SessionGatewayImpl implements SessionGateway {
 	private final SessionMapper sessionMapper;
 
 	private final MqttEventLoop mqttEventLoop;
-
-	private final SystemSettingsProperties systemSettingsProperties;
 
 	private final SpringMqttClientProperties springMqttClientProperties;
 
@@ -82,7 +80,7 @@ public class SessionGatewayImpl implements SessionGateway {
 
 	private void verifyConnect(SessionDO sessionDO) throws MqttException {
 		MqttClient mqttClient = new NettyMqttClient(
-				SessionConvertor.toProperties(sessionDO, systemSettingsProperties, springMqttClientProperties),
+				SessionConvertor.toProperties(sessionDO, UserUtils.getTenantCode(), springMqttClientProperties),
 				mqttEventLoop, Collections.emptyList());
 		mqttClient.test();
 	}

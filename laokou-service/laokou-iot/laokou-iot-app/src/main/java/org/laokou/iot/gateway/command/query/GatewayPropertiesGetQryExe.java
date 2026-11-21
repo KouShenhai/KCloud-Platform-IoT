@@ -20,7 +20,7 @@ package org.laokou.iot.gateway.command.query;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.laokou.common.core.config.SystemSettingsProperties;
+import org.laokou.common.context.util.UserUtils;
 import org.laokou.common.i18n.dto.Result;
 import org.laokou.common.i18n.util.RedisKeyUtils;
 import org.laokou.common.redis.util.RedisUtils;
@@ -45,8 +45,6 @@ public class GatewayPropertiesGetQryExe {
 
 	private final GatewayMapper gatewayMapper;
 
-	private final SystemSettingsProperties systemSettingsProperties;
-
 	private final RedisUtils redisUtils;
 
 	@SuppressWarnings({ "rawtypes" })
@@ -54,8 +52,8 @@ public class GatewayPropertiesGetQryExe {
 		try {
 			DynamicDataSourceContextHolder.push(DSConstants.IOT);
 			GatewayDO gatewayDO = gatewayMapper.selectById(qry.getId());
-			String gatewayPropertiesKey = RedisKeyUtils
-				.getGatewayPropertiesKey(systemSettingsProperties.getTenantCode(), gatewayDO.getSn());
+			String gatewayPropertiesKey = RedisKeyUtils.getGatewayPropertiesKey(UserUtils.getTenantCode(),
+					gatewayDO.getSn());
 			DefaultRedisScript<List> script = new DefaultRedisScript<>(
 					"return redis.call('HMGET', KEYS[1], 'timestamp', 'data')", List.class);
 			List<?> values = redisUtils.redisTemplate().execute(script, List.of(gatewayPropertiesKey));
