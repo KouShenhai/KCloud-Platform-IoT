@@ -88,6 +88,7 @@ module.exports = {
 				]
 			},
 			{text: '赞助', link: '/pages/1b12ed/'},
+			{text: '技术进阶', link: '/pages/'},
 		],
 		sidebarDepth: 2, // 侧边栏显示深度，默认1，最大2（显示到h3标题）
 		logo: '/img/logo.png', // 导航栏logo
