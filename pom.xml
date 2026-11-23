@@ -100,8 +100,6 @@
     <native-maven-plugin.version>1.1.18</native-maven-plugin.version>
     <!--versions-maven-plugin版本-->
     <versions-maven-plugin.version>2.25.1</versions-maven-plugin.version>
-    <!-- asciidoctor-maven-plugin版本 -->
-    <asciidoctor-maven-plugin.version>3.2.0</asciidoctor-maven-plugin.version>
     <!-- spring-javaformat-maven-plugin版本 -->
     <spring-javaformat-maven-plugin.version>0.0.48</spring-javaformat-maven-plugin.version>
     <!-- maven-archetype-plugin版本 -->
@@ -112,8 +110,6 @@
     <checkstyle.version>14.4.0</checkstyle.version>
     <!-- spring-javaformat-checkstyle版本 -->
     <spring-javaformat-checkstyle.version>0.0.48</spring-javaformat-checkstyle.version>
-    <!-- spring-asciidoctor-backends版本 -->
-    <spring-asciidoctor-backends.version>0.0.7</spring-asciidoctor-backends.version>
     <!-- protobuf-maven-plugin版本 -->
     <protobuf-maven-plugin.version>5.1.12</protobuf-maven-plugin.version>
     <!-- central-publishing-maven-plugin版本 -->
@@ -1139,30 +1135,6 @@
             </configuration>
           </execution>
         </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.asciidoctor</groupId>
-        <artifactId>asciidoctor-maven-plugin</artifactId>
-        <version>${asciidoctor-maven-plugin.version}</version>
-        <executions>
-          <execution>
-            <id>generate-html-documentation</id>
-            <phase>prepare-package</phase>
-            <goals>
-              <goal>process-asciidoc</goal>
-            </goals>
-            <configuration>
-              <backend>spring-html</backend>
-            </configuration>
-          </execution>
-        </executions>
-        <dependencies>
-          <dependency>
-            <groupId>io.spring.asciidoctor.backends</groupId>
-            <artifactId>spring-asciidoctor-backends</artifactId>
-            <version>${spring-asciidoctor-backends.version}</version>
-          </dependency>
-        </dependencies>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
