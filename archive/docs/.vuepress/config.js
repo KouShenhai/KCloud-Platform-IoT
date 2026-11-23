@@ -78,6 +78,7 @@ module.exports = {
 							{text: 'Codex+IDA反编译', link: '/pages/a9ef6a/'},
 							{text: 'Docker安装Mysql9.6.0', link: '/pages/d8380c/'},
 							{text: '老毛桃安装操作系统', link: '/pages/44248f/'},
+							{text: 'ARM64网关连接4G网络【物联网卡】', link: '/pages/c7f70b/'},
 						]
 					},
 					{
