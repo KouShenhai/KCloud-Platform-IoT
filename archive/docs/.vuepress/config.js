@@ -89,7 +89,11 @@ module.exports = {
 				]
 			},
 			{text: '赞助', link: '/pages/1b12ed/'},
-			{text: '技术进阶', link: '/pages/'},
+			{text: '技术进阶', link: '/pages/dd2400', items: [
+					{text: 'Netty实现Netty MQTT Client', link: '/pages/dd2400/'},
+				]
+
+			},
 		],
 		sidebarDepth: 2, // 侧边栏显示深度，默认1，最大2（显示到h3标题）
 		logo: '/img/logo.png', // 导航栏logo

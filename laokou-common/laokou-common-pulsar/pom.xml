@@ -14,8 +14,8 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-pulsar</artifactId>
+      <groupId>org.apache.pulsar</groupId>
+      <artifactId>pulsar-spring-boot-starter</artifactId>
       <exclusions>
         <exclusion>
           <groupId>com.google.errorprone</groupId>

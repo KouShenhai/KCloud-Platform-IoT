@@ -24,7 +24,7 @@ import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.common.mqtt.client.message.MqttMessageType;
 import org.laokou.common.mqtt.client.util.PulsarUtils;
-import org.springframework.pulsar.core.PulsarTemplate;
+import org.apache.pulsar.spring.core.PulsarTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CompletableFuture;

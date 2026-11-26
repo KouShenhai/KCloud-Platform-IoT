@@ -24,7 +24,7 @@ import org.apache.pulsar.client.admin.PulsarAdmin;
 import org.apache.pulsar.client.admin.PulsarAdminException;
 import org.apache.pulsar.client.admin.Tenants;
 import org.apache.pulsar.client.admin.Topics;
-import org.apache.pulsar.common.policies.data.TenantInfoImpl;
+import org.apache.pulsar.common.policies.data.TenantInfo;
 import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.iot.session.model.enums.MqTopic;
 import org.laokou.common.mqtt.client.message.MqttMessageType;
@@ -53,7 +53,7 @@ final class DefaultPulsarTopicFactory implements PulsarTopicFactory {
 		Tenants tenants = pulsarAdmin.tenants();
 		Namespaces namespaces = pulsarAdmin.namespaces();
 		Topics topics = pulsarAdmin.topics();
-		TenantInfoImpl tenantInfo = TenantInfoImpl.builder()
+		TenantInfo tenantInfo = TenantInfo.builder()
 			.adminRoles(Set.of())
 			.allowedClusters(new HashSet<>(pulsarAdmin.clusters().getClusters()))
 			.build();
