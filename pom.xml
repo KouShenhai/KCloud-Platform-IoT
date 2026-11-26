@@ -159,7 +159,7 @@
     <!-- redisson版本 -->
     <redisson.version>4.8.0</redisson.version>
     <!-- mcp版本 -->
-    <mcp.version>2.1.0</mcp.version>
+    <mcp.version>2.2.0</mcp.version>
     <!-- lombok版本 -->
     <lombok.version>1.18.48</lombok.version>
     <!-- postgresql版本 -->
@@ -169,7 +169,7 @@
     <!-- jsoup版本 -->
     <jsoup.version>1.24.1</jsoup.version>
     <!-- jasypt版本 -->
-    <jasypt.version>4.0.4</jasypt.version>
+    <jasypt.version>3.0.5</jasypt.version>
     <!-- easy-captcha版本 -->
     <easy-captcha.version>1.6.2</easy-captcha.version>
     <!-- guava版本 -->
@@ -198,6 +198,8 @@
     <spring-kafka.version>4.2.0</spring-kafka.version>
     <!-- spring-pulsar版本 -->
     <spring-pulsar.version>3.0.0-M1</spring-pulsar.version>
+    <!-- pulsar版本 -->
+    <pulsar.version>5.0.1</pulsar.version>
     <!-- disruptor版本 -->
     <disruptor.version>4.0.0</disruptor.version>
     <!-- transmittable-thread-local版本 -->
@@ -258,6 +260,26 @@
 
   <dependencyManagement>
     <dependencies>
+
+      <!-- =============================== 定义 Pulsar 版本 =============================== -->
+      <dependency>
+        <groupId>org.apache.pulsar</groupId>
+        <artifactId>pulsar-bom</artifactId>
+        <version>${pulsar.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- =============================== 定义 Pulsar 版本 =============================== -->
+
+      <!-- =============================== 定义 Netty 版本 =============================== -->
+      <dependency>
+        <groupId>io.netty</groupId>
+        <artifactId>netty-bom</artifactId>
+        <version>${netty.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- =============================== 定义 Netty 版本 =============================== -->
 
       <!-- =============================== 定义 Spring Boot 版本 =============================== -->
       <dependency>
@@ -368,16 +390,6 @@
         <scope>import</scope>
       </dependency>
       <!-- =============================== 定义 Micrometer Tracing 版本 =============================== -->
-
-      <!-- =============================== 定义 Netty 版本 =============================== -->
-      <dependency>
-        <groupId>io.netty</groupId>
-        <artifactId>netty-bom</artifactId>
-        <version>${netty.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <!-- =============================== 定义 Netty 版本 =============================== -->
 
       <!-- =============================== 定义 gRPC 版本 =============================== -->
       <dependency>
