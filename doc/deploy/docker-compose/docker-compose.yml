@@ -15,7 +15,7 @@
 #  */
 services:
   apisix:
-    image: apache/apisix:3.19.0-ubuntu
+    image: apache/apisix:3.21.0-ubuntu
     container_name: apisix
     restart: always
     environment:
@@ -35,7 +35,7 @@ services:
     networks:
       - iot_network
   mongodb:
-    image: mongo:9.0.4
+    image: mongo:9.0.8
     container_name: mongodb
     # 保持容器在没有守护程序的情况下运行
     tty: true
@@ -91,7 +91,7 @@ services:
       - MYSQL_ROOT_PASSWORD=laokou123
       - TZ=Asia/Shanghai
   loki:
-    image: grafana/loki:3.7.9
+    image: grafana/loki:3.7.10
     container_name: loki
     # 保持容器在没有守护程序的情况下运行
     tty: true
@@ -130,7 +130,7 @@ services:
   # 默认账号/密码 admin/admin
   # 新密码 laokou123
   grafana:
-    image: grafana/grafana:13.3.0
+    image: grafana/grafana:13.3.2
     container_name: grafana
     # 保持容器在没有守护程序的情况下运行
     tty: true
