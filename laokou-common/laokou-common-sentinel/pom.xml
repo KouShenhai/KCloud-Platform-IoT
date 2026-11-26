@@ -34,7 +34,7 @@
       <version>${revision}</version>
     </dependency>
     <dependency>
-      <groupId>com.alibaba.cloud</groupId>
+      <groupId>org.laokou.cloud</groupId>
       <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
       <exclusions>
         <exclusion>
@@ -44,7 +44,7 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>com.alibaba.cloud</groupId>
+      <groupId>org.laokou.cloud</groupId>
       <artifactId>spring-cloud-alibaba-sentinel-datasource</artifactId>
     </dependency>
     <dependency>
@@ -52,7 +52,7 @@
       <artifactId>sentinel-datasource-nacos</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.alibaba.cloud</groupId>
+      <groupId>org.laokou.cloud</groupId>
       <artifactId>spring-cloud-circuitbreaker-sentinel</artifactId>
     </dependency>
   </dependencies>

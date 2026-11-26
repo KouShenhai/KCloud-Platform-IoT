@@ -126,8 +126,8 @@
     <spring-boot.version>4.1.2</spring-boot.version>
     <!-- spring-cloud版本 -->
     <spring-cloud.version>2025.1.4</spring-cloud.version>
-    <!-- cloud-alibaba版本 -->
-    <spring-cloud-alibaba.version>2025.1.0.0</spring-cloud-alibaba.version>
+    <!-- spring-cloud-alibaba-plus版本 -->
+    <spring-cloud-alibaba-plus.version>2026.0.0.0</spring-cloud-alibaba-plus.version>
     <!-- spring-framework版本 -->
     <spring-framework.version>7.0.10</spring-framework.version>
     <!-- spring-data版本 -->
@@ -277,15 +277,15 @@
       </dependency>
       <!-- =============================== 定义 Spring Cloud 版本 =============================== -->
 
-      <!-- =============================== 定义 Spring Cloud Alibaba 版本 =============================== -->
+      <!-- =============================== 定义 Spring Cloud Alibaba Plus 版本 =============================== -->
       <dependency>
-        <groupId>com.alibaba.cloud</groupId>
+        <groupId>org.laokou.cloud</groupId>
         <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-        <version>${spring-cloud-alibaba.version}</version>
+        <version>${spring-cloud-alibaba-plus.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-      <!-- =============================== 定义 Spring Cloud Alibaba 版本 =============================== -->
+      <!-- =============================== 定义 Spring Cloud Alibaba Plus 版本 =============================== -->
 
       <!-- =============================== 定义 Spring Framework 版本 =============================== -->
       <dependency>

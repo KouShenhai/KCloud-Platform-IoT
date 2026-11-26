@@ -31,24 +31,12 @@
 
   <dependencies>
     <dependency>
-      <groupId>com.alibaba.cloud</groupId>
+      <groupId>org.laokou.cloud</groupId>
       <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>com.alibaba.nacos</groupId>
-          <artifactId>nacos-client</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
-      <groupId>com.alibaba.cloud</groupId>
+      <groupId>org.laokou.cloud</groupId>
       <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>com.alibaba.nacos</groupId>
-          <artifactId>nacos-client</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.springframework.cloud</groupId>
@@ -81,11 +69,6 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-configuration-processor</artifactId>
       <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>com.alibaba.nacos</groupId>
-      <artifactId>nacos-client</artifactId>
-      <version>${nacos.version}</version>
     </dependency>
     <dependency>
       <groupId>org.laokou</groupId>
