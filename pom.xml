@@ -432,6 +432,7 @@
       </dependency>
       <!-- =============================== 定义 Mcp 版本 =============================== -->
 
+      <!-- =============================== 定义 Pulsar Spring 版本 =============================== -->
       <dependency>
         <groupId>org.apache.pulsar</groupId>
         <artifactId>pulsar-spring-bom</artifactId>
@@ -439,6 +440,7 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+      <!-- =============================== 定义 Pulsar Spring 版本 =============================== -->
 
       <dependency>
         <groupId>org.apache.fesod</groupId>
