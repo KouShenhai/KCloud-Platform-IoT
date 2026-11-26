@@ -41,7 +41,7 @@ KCloud-Platform-IoT（老寇IoT云平台）是一个企业级单体架构和微�
 <a href="https://spring.io/projects/spring-authorization-server" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Security&message=7.2.0&color=green" alt="Spring Security"/></a>
 <a href="https://spring.io/projects/spring-boot" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Boot&message=4.2.0&color=green" alt="Spring Boot"/></a>
 <a href="https://spring.io/projects/spring-cloud" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Cloud&message=2026.0.0&color=green" alt="Spring Cloud"/></a>
-<a href="https://github.com/alibaba/spring-cloud-alibaba" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Cloud%20Alibaba%20Plus&message=2026.0.0.0&color=orange" alt="Spring Cloud Alibaba Plus"/></a>
+<a href="https://github.com/KouShenhai/spring-cloud-alibaba-plus" target="_blank"><img src="https://img.shields.io/static/v1?label=Spring%20Cloud%20Alibaba%20Plus&message=2026.0.0.0&color=orange" alt="Spring Cloud Alibaba Plus"/></a>
 
 <a href="https://www.graalvm.org/downloads" target="_blank"><img src="https://img.shields.io/badge/GraalVM-25.0.0-blue.svg" alt="GraalVM"/></a>
 <a href="https://maven.apache.org/" target="_blank"><img src="https://img.shields.io/badge/Maven-3.9.11-blue" alt="Maven"/></a>
