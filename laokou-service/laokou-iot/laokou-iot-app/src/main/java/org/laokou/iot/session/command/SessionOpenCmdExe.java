@@ -35,7 +35,7 @@ import org.laokou.iot.session.model.SessionA;
 import org.laokou.iot.session.model.enums.MqTopic;
 import org.laokou.iot.session.model.enums.OperateType;
 import org.laokou.iot.session.model.enums.State;
-import org.springframework.pulsar.core.PulsarTemplate;
+import org.apache.pulsar.spring.core.PulsarTemplate;
 import org.springframework.stereotype.Component;
 
 /**

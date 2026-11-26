@@ -81,7 +81,7 @@
     <!-- maven-compiler-plugin版本 -->
     <maven-compiler-plugin.version>3.16.0</maven-compiler-plugin.version>
     <!-- spring-boot-maven-plugin版本 -->
-    <spring-boot-maven-plugin.version>4.2.0</spring-boot-maven-plugin.version>
+    <spring-boot-maven-plugin.version>${spring-boot.version}</spring-boot-maven-plugin.version>
     <!-- maven-surefire-plugin版本 -->
     <maven-surefire-plugin.version>3.6.1</maven-surefire-plugin.version>
     <!-- maven-failsafe-plugin版本 -->
@@ -97,11 +97,9 @@
     <!-- native-maven-plugin版本 -->
     <native-maven-plugin.version>1.1.1</native-maven-plugin.version>
     <!-- versions-maven-plugin版本 -->
-    <native-maven-plugin.version>1.1.19</native-maven-plugin.version>
+    <native-maven-plugin.version>1.1.18</native-maven-plugin.version>
     <!--versions-maven-plugin版本-->
-    <versions-maven-plugin.version>2.25.3</versions-maven-plugin.version>
-    <!-- asciidoctor-maven-plugin版本 -->
-    <asciidoctor-maven-plugin.version>3.2.0</asciidoctor-maven-plugin.version>
+    <versions-maven-plugin.version>2.25.1</versions-maven-plugin.version>
     <!-- spring-javaformat-maven-plugin版本 -->
     <spring-javaformat-maven-plugin.version>0.0.48</spring-javaformat-maven-plugin.version>
     <!-- maven-archetype-plugin版本 -->
@@ -112,10 +110,8 @@
     <checkstyle.version>14.4.0</checkstyle.version>
     <!-- spring-javaformat-checkstyle版本 -->
     <spring-javaformat-checkstyle.version>0.0.48</spring-javaformat-checkstyle.version>
-    <!-- spring-asciidoctor-backends版本 -->
-    <spring-asciidoctor-backends.version>0.0.7</spring-asciidoctor-backends.version>
     <!-- protobuf-maven-plugin版本 -->
-    <protobuf-maven-plugin.version>5.1.13</protobuf-maven-plugin.version>
+    <protobuf-maven-plugin.version>5.1.12</protobuf-maven-plugin.version>
     <!-- central-publishing-maven-plugin版本 -->
     <central-publishing-maven-plugin.version>0.12.0</central-publishing-maven-plugin.version>
     <!-- maven-source-plugin版本 -->
@@ -127,19 +123,19 @@
     <!-- flatten-maven-plugin版本 -->
     <flatten-maven-plugin.version>1.9.0</flatten-maven-plugin.version>
     <!-- spring-boot版本 -->
-    <spring-boot.version>4.1.2</spring-boot.version>
+    <spring-boot.version>4.2.0</spring-boot.version>
     <!-- spring-cloud版本 -->
-    <spring-cloud.version>2025.1.4</spring-cloud.version>
-    <!-- cloud-alibaba版本 -->
-    <spring-cloud-alibaba.version>2025.1.0.0</spring-cloud-alibaba.version>
+    <spring-cloud.version>2026.0.0</spring-cloud.version>
+    <!-- spring-cloud-alibaba-plus版本 -->
+    <spring-cloud-alibaba-plus.version>2026.0.0.0</spring-cloud-alibaba-plus.version>
     <!-- spring-framework版本 -->
-    <spring-framework.version>7.0.10</spring-framework.version>
+    <spring-framework.version>7.1.0</spring-framework.version>
     <!-- spring-data版本 -->
-    <spring-data.version>2026.0.2</spring-data.version>
+    <spring-data.version>2026.1.0</spring-data.version>
     <!-- spring-security版本 -->
-    <spring-security.version>7.1.2</spring-security.version>
+    <spring-security.version>7.2.0</spring-security.version>
     <!-- spring-ai版本 -->
-    <spring-ai.version>2.0.2</spring-ai.version>
+    <spring-ai.version>2.1.0</spring-ai.version>
     <!-- springdoc-openapi版本 -->
     <springdoc-openapi.version>3.2.0</springdoc-openapi.version>
     <!-- testcontainers版本 -->
@@ -163,7 +159,7 @@
     <!-- redisson版本 -->
     <redisson.version>4.8.0</redisson.version>
     <!-- mcp版本 -->
-    <mcp.version>2.1.0</mcp.version>
+    <mcp.version>2.2.0</mcp.version>
     <!-- lombok版本 -->
     <lombok.version>1.18.48</lombok.version>
     <!-- postgresql版本 -->
@@ -173,7 +169,7 @@
     <!-- jsoup版本 -->
     <jsoup.version>1.24.1</jsoup.version>
     <!-- jasypt版本 -->
-    <jasypt.version>4.0.4</jasypt.version>
+    <jasypt.version>3.0.5</jasypt.version>
     <!-- easy-captcha版本 -->
     <easy-captcha.version>1.6.2</easy-captcha.version>
     <!-- guava版本 -->
@@ -187,7 +183,7 @@
     <!-- fesod版本 -->
     <fesod.version>2.1.0-incubating</fesod.version>
     <!-- s3版本 -->
-    <s3.version>2.59.10</s3.version>
+    <s3.version>2.57.11</s3.version>
     <!-- dynamic-datasource版本 -->
     <dynamic-datasource.version>4.6.0</dynamic-datasource.version>
     <!-- httpclient5版本 -->
@@ -199,7 +195,11 @@
     <!-- ip2region版本 -->
     <ip2region.version>3.3.8</ip2region.version>
     <!-- spring-kafka版本 -->
-    <spring-kafka.version>4.1.2</spring-kafka.version>
+    <spring-kafka.version>4.2.0</spring-kafka.version>
+    <!-- spring-pulsar版本 -->
+    <spring-pulsar.version>3.0.0-M1</spring-pulsar.version>
+    <!-- pulsar版本 -->
+    <pulsar.version>5.0.1</pulsar.version>
     <!-- disruptor版本 -->
     <disruptor.version>4.0.0</disruptor.version>
     <!-- transmittable-thread-local版本 -->
@@ -213,7 +213,7 @@
     <!-- browscap-java版本 -->
     <browscap-java.version>1.5.1</browscap-java.version>
     <!-- flyway版本 -->
-    <flyway.version>13.13.0</flyway.version>
+    <flyway.version>13.12.1</flyway.version>
     <!-- archunit-junit5版本 -->
     <archunit-junit5.version>1.5.1</archunit-junit5.version>
     <!-- caffeine版本 -->
@@ -223,7 +223,7 @@
     <!-- influxdb-client-java版本 -->
     <influxdb-client-java.version>8.0.0</influxdb-client-java.version>
     <!-- reactor-core版本 -->
-    <reactor-core.version>3.8.8</reactor-core.version>
+    <reactor-core.version>3.9.0</reactor-core.version>
     <!-- opencsv版本 -->
     <opencsv.version>5.12.0</opencsv.version>
     <!-- wiremock版本 -->
@@ -261,6 +261,26 @@
   <dependencyManagement>
     <dependencies>
 
+      <!-- =============================== 定义 Pulsar 版本 =============================== -->
+      <dependency>
+        <groupId>org.apache.pulsar</groupId>
+        <artifactId>pulsar-bom</artifactId>
+        <version>${pulsar.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- =============================== 定义 Pulsar 版本 =============================== -->
+
+      <!-- =============================== 定义 Netty 版本 =============================== -->
+      <dependency>
+        <groupId>io.netty</groupId>
+        <artifactId>netty-bom</artifactId>
+        <version>${netty.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- =============================== 定义 Netty 版本 =============================== -->
+
       <!-- =============================== 定义 Spring Boot 版本 =============================== -->
       <dependency>
         <groupId>org.springframework.boot</groupId>
@@ -281,15 +301,15 @@
       </dependency>
       <!-- =============================== 定义 Spring Cloud 版本 =============================== -->
 
-      <!-- =============================== 定义 Spring Cloud Alibaba 版本 =============================== -->
+      <!-- =============================== 定义 Spring Cloud Alibaba Plus 版本 =============================== -->
       <dependency>
-        <groupId>com.alibaba.cloud</groupId>
+        <groupId>org.laokou.cloud</groupId>
         <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-        <version>${spring-cloud-alibaba.version}</version>
+        <version>${spring-cloud-alibaba-plus.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-      <!-- =============================== 定义 Spring Cloud Alibaba 版本 =============================== -->
+      <!-- =============================== 定义 Spring Cloud Alibaba Plus 版本 =============================== -->
 
       <!-- =============================== 定义 Spring Framework 版本 =============================== -->
       <dependency>
@@ -371,16 +391,6 @@
       </dependency>
       <!-- =============================== 定义 Micrometer Tracing 版本 =============================== -->
 
-      <!-- =============================== 定义 Netty 版本 =============================== -->
-      <dependency>
-        <groupId>io.netty</groupId>
-        <artifactId>netty-bom</artifactId>
-        <version>${netty.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <!-- =============================== 定义 Netty 版本 =============================== -->
-
       <!-- =============================== 定义 gRPC 版本 =============================== -->
       <dependency>
         <groupId>io.grpc</groupId>
@@ -433,6 +443,16 @@
         <scope>import</scope>
       </dependency>
       <!-- =============================== 定义 Mcp 版本 =============================== -->
+
+      <!-- =============================== 定义 Pulsar Spring 版本 =============================== -->
+      <dependency>
+        <groupId>org.apache.pulsar</groupId>
+        <artifactId>pulsar-spring-bom</artifactId>
+        <version>${spring-pulsar.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- =============================== 定义 Pulsar Spring 版本 =============================== -->
 
       <dependency>
         <groupId>org.apache.fesod</groupId>
@@ -1139,30 +1159,6 @@
             </configuration>
           </execution>
         </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.asciidoctor</groupId>
-        <artifactId>asciidoctor-maven-plugin</artifactId>
-        <version>${asciidoctor-maven-plugin.version}</version>
-        <executions>
-          <execution>
-            <id>generate-html-documentation</id>
-            <phase>prepare-package</phase>
-            <goals>
-              <goal>process-asciidoc</goal>
-            </goals>
-            <configuration>
-              <backend>spring-html</backend>
-            </configuration>
-          </execution>
-        </executions>
-        <dependencies>
-          <dependency>
-            <groupId>io.spring.asciidoctor.backends</groupId>
-            <artifactId>spring-asciidoctor-backends</artifactId>
-            <version>${spring-asciidoctor-backends.version}</version>
-          </dependency>
-        </dependencies>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

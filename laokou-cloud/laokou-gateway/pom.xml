@@ -115,7 +115,7 @@
       <artifactId>caffeine</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.alibaba.cloud</groupId>
+      <groupId>org.laokou.cloud</groupId>
       <artifactId>spring-cloud-alibaba-sentinel-gateway</artifactId>
     </dependency>
     <dependency>

@@ -40,10 +40,10 @@ import org.laokou.iot.session.gatewayimpl.database.dataobject.SessionDO;
 import org.laokou.iot.session.model.enums.MqTopic;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
-import org.springframework.pulsar.annotation.PulsarListener;
-import org.springframework.pulsar.annotation.PulsarListeners;
-import org.springframework.pulsar.listener.AckMode;
-import org.springframework.pulsar.listener.Acknowledgement;
+import org.apache.pulsar.spring.annotation.PulsarListener;
+import org.apache.pulsar.spring.annotation.PulsarListeners;
+import org.apache.pulsar.spring.listener.AckMode;
+import org.apache.pulsar.spring.listener.Acknowledgement;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

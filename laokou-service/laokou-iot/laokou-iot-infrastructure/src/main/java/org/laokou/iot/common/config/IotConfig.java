@@ -21,6 +21,8 @@ import org.apache.pulsar.client.admin.PulsarAdmin;
 import org.apache.pulsar.client.api.BatchReceivePolicy;
 import org.apache.pulsar.client.api.PulsarClientException;
 import org.apache.pulsar.client.api.SubscriptionType;
+import org.apache.pulsar.spring.annotation.PulsarListenerConsumerBuilderCustomizer;
+import org.apache.pulsar.spring.core.PulsarAdministration;
 import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.common.fory.constant.ForyConstants;
@@ -34,8 +36,6 @@ import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.pulsar.annotation.PulsarListenerConsumerBuilderCustomizer;
-import org.springframework.pulsar.core.PulsarAdministration;
 
 import java.util.concurrent.TimeUnit;
 

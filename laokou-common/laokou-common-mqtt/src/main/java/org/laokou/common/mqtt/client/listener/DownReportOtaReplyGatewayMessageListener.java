@@ -20,11 +20,11 @@ package org.laokou.common.mqtt.client.listener;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.pulsar.client.api.MessageId;
+import org.apache.pulsar.spring.core.PulsarTemplate;
 import org.jspecify.annotations.NonNull;
 import org.laokou.common.core.config.SystemSettingsProperties;
 import org.laokou.common.mqtt.client.message.MqttMessageType;
 import org.laokou.common.mqtt.client.util.PulsarUtils;
-import org.springframework.pulsar.core.PulsarTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CompletableFuture;
