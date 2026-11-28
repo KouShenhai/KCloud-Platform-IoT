@@ -147,7 +147,7 @@ services:
       - iot_network
   # admin/laokou123
   influxdb:
-    image: influxdb:2.9.1
+    image: influxdb:2.10.1
     container_name: influxdb
     # 保持容器在没有守护程序的情况下运行
     tty: true
